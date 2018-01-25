@@ -21,6 +21,7 @@ ghc-options:
 
 default-extensions:
   - NoImplicitPrelude
+  - OverloadedStrings
 
 dependencies:
   - base >= 4.8 && < 4.11
