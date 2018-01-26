@@ -1,10 +1,10 @@
 resolver: lts-10.3
 
 packages:
-  - .
+  - lib
+  - server
 
 extra-deps:
-  - miso-0.12.0.0
   - servant-0.12.1
   - servant-server-0.12
 

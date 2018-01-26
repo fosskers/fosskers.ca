@@ -8,9 +8,6 @@ maintainer: colingw@gmail.com
 license: BSD3
 git: git://github.com/fosskers/fosskers.ca.git
 
-extra-source-files:
-  - README.org
-
 ghc-options:
   - -fwarn-unused-imports
   - -fwarn-unused-binds
@@ -29,20 +26,4 @@ dependencies:
   - text >= 1.2 && < 1.3
 
 library:
-  source-dirs: lib
-
-executables:
-  site:
-    source-dirs: site
-    main: Site.hs
-    dependencies:
-      - fosskers
-      - miso >= 0.10 && < 0.13
-
-  server:
-    source-dirs: server
-    main: Server.hs
-    dependencies:
-      - fosskers
-      - servant >= 0.11 && < 0.13
-      - servant-server >= 0.11 && < 0.13
+  source-dirs: .

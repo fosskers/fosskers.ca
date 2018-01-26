@@ -5,4 +5,4 @@ import Protolude
 ---
 
 main :: IO ()
-main = putText "Hello, Miso!"
+main = putText "Hello, Miso!!"
