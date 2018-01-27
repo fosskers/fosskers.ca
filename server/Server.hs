@@ -1,40 +1,33 @@
 {-# LANGUAGE DataKinds, TypeOperators #-}
 {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
-{-# LANGUAGE TupleSections #-}
+{-# LANGUAGE TupleSections, ViewPatterns #-}
 
 module Main ( main ) where
 
 import           Control.Arrow ((&&&))
-import           Data.Aeson (ToJSON)
 import           Data.Char (isAlpha)
 import           Data.Default (def)
 import qualified Data.HashMap.Strict as M
 import           Data.Proxy
-import qualified Data.Set as S
 import qualified Data.Text as T
 import           Filesystem.Path (basename)
 import qualified Network.Wai.Handler.Warp as W
 import           Options.Generic
 import           Protolude
 import           Servant.API
-import           Servant.HTML.Blaze
 import           Servant.Server
 import           Shelly (ls, readfile, toTextIgnore, shelly)
 import           Text.Blaze.Html (Html)
 import           Text.Pandoc.Class (runPure)
 import           Text.Pandoc.Readers.Org (readOrg)
 import           Text.Pandoc.Writers.HTML (writeHtml5)
+import           Types
 
 ---
 
 newtype Args = Args { port :: Maybe Int <?> "Port to listen for requests on." } deriving (Generic, ParseRecord)
 
 newtype Env = Env { posts :: M.HashMap Text (M.HashMap Text Int, Html) }
-
-data Blog = Blog { title :: Text, freqs :: M.HashMap Text Int } deriving (Generic, ToJSON)
-
-type API = "posts" :> Get '[JSON] [Blog]
-  :<|> "posts" :> Capture "post" Text :> Get '[HTML] Html
 
 server :: Env -> Server API
 server env = pure (blogs env)
@@ -50,10 +43,9 @@ html t = either (const Nothing) Just $ runPure h
 
 -- | A mapping of word frequencies.
 freq :: Text -> M.HashMap Text Int
-freq = M.fromList . map ((maybe "死毒殺悪厄魔" T.toLower . head) &&& length) . group . sort . filter p . T.words . T.map f
-  where f c | isAlpha c = c
-            | otherwise = ' '
-        p = uncurry (&&) . ((> 2) &&& (< 13)) . T.length
+freq = M.fromList . map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . sort . map T.toLower . filter p . T.words . T.map f
+  where f c = bool ' ' c $ isAlpha c
+        p (T.length -> l) = l > 2 && l < 13
 
 blogs :: Env -> [Blog]
 blogs = map (\(t, (m, _)) -> Blog t m) . M.toList . posts
