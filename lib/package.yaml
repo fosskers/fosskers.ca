@@ -23,10 +23,8 @@ default-extensions:
 dependencies:
   - base >= 4.8 && < 4.11
   - aeson >= 1.2 && < 1.3
-  - blaze-html >= 0.9 && < 0.10
   - protolude >= 0.2 && < 0.3
   - servant >= 0.11 && < 0.13
-  - servant-blaze >= 0.7 && < 0.8
   - text >= 1.2 && < 1.3
   - unordered-containers
 
