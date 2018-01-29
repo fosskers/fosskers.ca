@@ -1,6 +1,8 @@
-* Nix
+#+TITLE: Nix and Dante for Haskell Dev in Emacs
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-theme.css"/>
 
-** Initial Setup
+* Initial Setup
 
 https://github.com/Gabriel439/haskell-nix
 
@@ -31,14 +33,14 @@ set -x NIX_PATH 'nixpkgs=/home/colin/.nix-defexpr/channels/nixpkgs'
 set -x NIX_SSL_CERT_FILE '/etc/ssl/certs/ca-certificates.crt'
 #+END_EXAMPLE
 
-** Haskell Specifics
+* Haskell Specifics
 
 The advice here assumes a straight-forward Haskell project - a single simple
 library or executable without multiple subprojects or dependency overrides.
 It demonstrates how to benchmark, profile, integrate with Travis, and integrate
 with Emacs/Spacemacs.
 
-*** Auto-generate Nix Config
+** Auto-generate Nix Config
 
 ~cabal2nix~ can be used to generate nix expressions from ~.cabal~ files.
 This can be installed via:
@@ -67,7 +69,7 @@ hpack; cabal2nix . > default.nix    # Fish syntax
 hpack && cabal2nix . > default.nix  # Bash syntax
 #+END_EXAMPLE
 
-*** Developing in a Nix Shell
+** Developing in a Nix Shell
 
 A full nix-based project is defined by three files:
 
@@ -94,7 +96,7 @@ So, this snippet can be safely cargo-culted around to our various projects.
 Without the ~doBenchmark~ line, our benchmark dependencies would not be visible
 inside the Nix Shell.
 
-*** Defining a ~release.nix~
+** Defining a ~release.nix~
 
 Generally necessary for Travis, and for actually installing your package
 into some Nix store.
@@ -136,7 +138,7 @@ nix-build --attr my-subproject release.nix
 
 There are a number of other ways to customize a Haskell build, which are [[https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/lib.nix][listed here]].
 
-*** Profiling
+** Profiling
 
 Nix makes this fairly easy. First, we add the following to a ~~/.config/nixpkgs/config.nix~:
 
@@ -188,9 +190,9 @@ would be our benchmark suite. To do that:
 Based on the results, we can make code changes, remove the profiling options,
 regenerate ~default.nix~, and benchmark as usual in our normal Nix Shell.
 
-** Emacs Integration
+* Emacs Integration
 
-*** Installing ~Dante~
+** Installing ~Dante~
 
 Spacemacs' ~haskell~ layer on the ~develop~ branch has support for [[https://github.com/jyp/dante][Dante]],
 which automatically uses ~nix~ if it detects a ~shell.nix~ and a ~default.nix~.
@@ -228,7 +230,7 @@ By running ~SPC m s e~ on the comment line, our code will transform into this:
 
 In theory this obviates the need for an actual REPL.
 
-*** Getting Dante to work with Test and Benchmark suites
+** Getting Dante to work with Test and Benchmark suites
 
 Out of the box, Dante doesn't automatically handle multiple compilation targets.
 By this, I mean a single ~.cabal~ that specifies a library, test suite, and
@@ -249,11 +251,11 @@ line of our ~Test.hs~ file:
 Navigating to ~Test.hs~ will then boot an extra Nix'd ~cabal repl~ and flycheck
 session specifically for this file.
 
-** CI Services
+* CI Services
 
 Of the available choices, good ol' Travis seems to have the simplest setup.
 
-*** Travis
+** Travis
 
 [[https://docs.travis-ci.com/user/languages/nix/][Official instructions here.]]
 
@@ -287,23 +289,23 @@ here's a ~.travis.yml~ that will help:
     - nix-build --attr vectortiles release.nix
 #+END_SRC
 
-*** Hercules
+** Hercules
 
 [[https://github.com/hercules-ci/hercules][Github repository]]
 
 It's a new CI system for Nix projects that aims to replace Hydra, but it still
 seems [[https://github.com/hercules-ci/hercules/issues/5][distant from its 1.0 release]].
 
-*** CircleCI
+** CircleCI
 
 This doesn't seem to support Nix at all.
 
-*** Self-run Hydra
+** Self-run Hydra
 
 While the "native" choice for Nix, this seems way too complicated for the lay
 library author.
 
-** Comparison to Stack
+* Comparison to Stack
 
 I want to give Nix+dante a fair shot. In terms of personal programming philosophy,
 I'm motivated by high power-to-simplicity ratios (hence Haskell). After a few days
@@ -338,7 +340,7 @@ And the advantages of Stack:
   versions.
 - ~intero~ has a simpler setup, and I miss the REPL a little bit
 
-** Resources
+* Resources
 
 - [[https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure][Official Nix guide for Haskell packages]]
 - [[http://vaibhavsagar.com/blog/2018/01/03/static-haskell-nix/][Building static Haskell binaries]]

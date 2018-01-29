@@ -9,7 +9,7 @@ license: BSD3
 git: git://github.com/fosskers/fosskers.ca.git
 
 extra-source-files:
-  - ../blog/*
+  - ../blog/*.org
 
 ghc-options:
   - -fwarn-unused-imports
