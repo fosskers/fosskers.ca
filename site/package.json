@@ -7,12 +7,10 @@
     "pulp": "pulp --psc-package",
     "pscid": "pscid",
     "install": "psc-package install",
-    "prepack": "prepack"
   },
   "author": "Colin Woodbury",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "prepack": "^0.2.20",
     "psc-package": "^0.2.5",
     "pscid": "^2.0.2",
     "pulp": "^12.0.1",
