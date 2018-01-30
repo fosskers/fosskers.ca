@@ -53,5 +53,5 @@ main = do
   Args (Helpful p) <- getRecord "Backend server for fosskers.ca"
   ps <- shelly orgs
   let prt = maybe 8081 identity p
-  putText $ "Running on port " <> show prt
+  putText $ "Listening on port " <> show prt
   W.run prt . app $ Env ps

@@ -9,9 +9,11 @@ import Types
 
 ---
 
+-- | Generic representations of the Haskell types I want to convert to Purescript.
 types :: [SumType 'Haskell]
 types = [ mkSumType (Proxy :: Proxy Blog) ]
 
 main :: IO ()
--- main = writeAPIModule "." _ (Proxy :: Proxy API)
-main = writePSTypes "frontend" (buildBridge defaultBridge) types
+main = do
+  writePSTypes "site" (buildBridge defaultBridge) types
+  writeAPIModule "site" defaultBridgeProxy (Proxy :: Proxy API)
