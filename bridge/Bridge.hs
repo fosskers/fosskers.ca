@@ -15,5 +15,5 @@ types = [ mkSumType (Proxy :: Proxy Blog) ]
 
 main :: IO ()
 main = do
-  writePSTypes "site" (buildBridge defaultBridge) types
-  writeAPIModule "site" defaultBridgeProxy (Proxy :: Proxy API)
+  writePSTypes "site/src" (buildBridge defaultBridge) types
+  writeAPIModule "site/src" defaultBridgeProxy (Proxy :: Proxy API)
