@@ -3,6 +3,12 @@
     "set": "psc-0.11.7",
     "source": "https://github.com/purescript/package-sets.git",
     "depends": [
+        "functors",
+        "errors",
+        "affjax",
+        "random",
+        "maps",
+        "servant-support",
         "halogen",
         "psci-support",
         "console",
