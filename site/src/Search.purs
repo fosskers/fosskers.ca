@@ -17,11 +17,9 @@ import Types (Language(..))
 
 data Query a = Update String a | SelectLang Language a
 
-type Input = Language
-
 type State = { keywords :: Array String, language :: Language }
 
-component :: forall m. H.Component HH.HTML Query Input Void m
+component :: forall m. H.Component HH.HTML Query Language (Array String) m
 component = H.component { initialState: const { keywords: mempty, language: English }
                         , render
                         , eval
@@ -32,10 +30,10 @@ render state = HH.div_
                [ HH.input [ HP.placeholder label, HE.onValueInput (\s -> Just $ Update s unit) ]
                , HH.text $ intercalate " " state.keywords ]
   where label = case state.language of
-          English  -> "Enter keywords to search by."
+          English  -> "Enter keywords to search by"
           Japanese -> "キーワードで検索"
 
-eval :: forall m. Query ~> H.ComponentDSL State Query Void m
+eval :: forall m. Query ~> H.ComponentDSL State Query (Array String) m
 eval = case _ of
   Update s next -> do
     curr <- H.gets _.keywords
