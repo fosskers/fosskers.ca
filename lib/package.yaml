@@ -23,10 +23,10 @@ default-extensions:
 dependencies:
   - base >= 4.8 && < 4.11
   - aeson >= 1.2 && < 1.3
+  - containers
   - protolude >= 0.2 && < 0.3
   - servant >= 0.11 && < 0.13
   - text >= 1.2 && < 1.3
-  - unordered-containers
 
 library:
   source-dirs: .

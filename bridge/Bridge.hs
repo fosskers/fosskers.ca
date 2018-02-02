@@ -5,7 +5,7 @@ module Main where
 import Language.PureScript.Bridge
 import Protolude
 import Servant.PureScript
-import Types
+import Common
 
 ---
 
