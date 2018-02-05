@@ -30,8 +30,8 @@ app :: Env -> Application
 app = serve (Proxy :: Proxy API) . server
 
 -- | A mapping of word frequencies.
-freq :: Text -> M.Map Text Int
-freq = M.fromList . map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . sort . map T.toLower . filter p . T.words . T.map f
+freq :: Text -> [(Text, Int)]
+freq = map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . sort . map T.toLower . filter p . T.words . T.map f
   where f c = bool ' ' c $ isAlpha c
         p (T.length -> l) = l > 2 && l < 13
 
