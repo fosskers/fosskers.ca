@@ -38,7 +38,7 @@ eval = case _ of
   Update s next -> do
     curr <- H.gets _.keywords
     -- | Avoiding `modify` calls prevents spurrious rerendering.
-    unless (null curr && S.null s) $ H.modify (_ { keywords = S.split (S.Pattern " ") s })
+    unless ((null curr && S.null s) || S.length s < 3) $ H.modify (_ { keywords = S.split (S.Pattern " ") s })
     pure next
   SelectLang l next -> do
     lang <- H.gets _.language
