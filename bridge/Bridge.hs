@@ -13,7 +13,10 @@ import Servant.PureScript
 
 -- | Generic representations of the Haskell types I want to convert to Purescript.
 types :: [SumType 'Haskell]
-types = [ mkSumType (Proxy :: Proxy Blog) ]
+types = [ mkSumType (Proxy :: Proxy Blog)
+        , mkSumType (Proxy :: Proxy Title)
+        , mkSumType (Proxy :: Proxy Date)
+        , mkSumType (Proxy :: Proxy Path) ]
 
 main :: IO ()
 main = do
