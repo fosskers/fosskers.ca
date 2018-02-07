@@ -5,10 +5,9 @@
 
 module Main ( main ) where
 
-import           Common hiding (engTitle, japTitle, date)
+import           Common
 import           Control.Arrow ((&&&))
 import           Control.Lens
-import           Control.Natural
 import           Data.Bitraversable
 import           Data.Char (isAlpha)
 import           Data.Proxy
@@ -17,6 +16,7 @@ import           Data.Validation
 import           Filesystem.Path (basename)
 import qualified Network.Wai.Handler.Warp as W
 import           Options.Generic
+import           Org (parseEng, parseJap)
 import           Protolude hiding (FilePath)
 import           Servant.Server
 import           Shelly hiding (path)
@@ -69,15 +69,9 @@ orgs = do
             AccFailure errs  -> pure $ AccFailure errs
 
         h :: Text -> Text -> Text -> AccValidation (NonEmpty Text) Blog
-        h fname eng jap = (\et jt d -> Blog et jt d (Path fname) (freq eng)) <$> engTitle <*> japTitle <*> date
-          where engLines = T.lines eng
-                japLines = T.lines jap
-                engTitle = Title . T.drop 9 <$> valid (fname <> ": Title Missing") (engLines ^? ix 0)
-                japTitle = Title . T.drop 9 <$> valid (fname <> ": タイトル無し") (japLines ^? ix 0)
-                date     = Date  . T.drop 8 <$> valid (fname <> ": Date Missing") (engLines ^? ix 1)
-
-valid :: e -> (Maybe ~> AccValidation (NonEmpty e))
-valid e = validationNel . maybe (Left e) Right
+        h fname eng jap = (\(et,d) jt -> Blog et jt d (Path fname) (freq eng)) <$> parseE <*> parseJ
+          where parseE = validationNel $ parseEng eng
+                parseJ = validationNel $ parseJap jap
 
 -- TODO I don't like the way this feels/looks
 eread :: FilePath -> Sh (Either Text Text)

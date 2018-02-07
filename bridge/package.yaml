@@ -23,6 +23,7 @@ default-extensions:
 dependencies:
   - fosskers
   - base >= 4.8 && < 4.11
+  - hourglass >= 0.2 && < 0.3
   - protolude >= 0.2 && < 0.3
   - purescript-bridge >= 0.11 && < 0.12
   - servant-purescript >= 0.9 && < 0.10

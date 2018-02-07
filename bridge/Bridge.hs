@@ -1,6 +1,5 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE StandaloneDeriving, DeriveGeneric #-}
 
 module Main ( main ) where
 
@@ -8,6 +7,7 @@ import Common
 import Language.PureScript.Bridge
 import Protolude
 import Servant.PureScript
+import Time.Types
 
 ---
 

@@ -36,8 +36,6 @@ executables:
     main: Server.hs
     dependencies:
       - fosskers
-      - blaze-html >= 0.9 && < 0.10
-      - data-default
       - lens >= 4.15 && < 4.17
       - natural-transformation >= 0.4 && < 0.5
       - optparse-generic >= 1.2 && < 1.3
