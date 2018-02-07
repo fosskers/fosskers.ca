@@ -1,4 +1,5 @@
 #+TITLE: Nix and Dante for Haskell Dev in Emacs
+#+DATE: 2018 January
 #+AUTHOR: Colin
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-theme.css"/>
 

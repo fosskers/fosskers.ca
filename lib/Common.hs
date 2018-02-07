@@ -11,4 +11,14 @@ import Servant.API
 
 type API = "posts" :> Get '[JSON] [Blog]
 
-data Blog = Blog { title :: Text, freqs :: [(Text, Int)] } deriving (Generic, ToJSON)
+newtype Title = Title Text deriving (Generic, ToJSON)
+
+newtype Date = Date Text deriving (Generic, ToJSON)
+
+newtype Path = Path Text deriving (Generic, ToJSON)
+
+data Blog = Blog { engTitle :: Title
+                 , japTitle :: Title
+                 , date     :: Date
+                 , filename :: Path
+                 , freqs    :: [(Text, Int)] } deriving (Generic, ToJSON)
