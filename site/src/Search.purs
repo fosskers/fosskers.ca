@@ -4,14 +4,16 @@ import Prelude
 
 import Data.Array (null)
 import Data.Foldable (intercalate)
+import Data.Lens.Record (prop)
 import Data.Maybe (Maybe(..))
 import Data.Monoid (mempty)
 import Data.String as S
+import Data.Symbol (SProxy(..))
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
-import Types (Language(..))
+import Types (Language(..), update)
 
 ---
 
@@ -40,7 +42,4 @@ eval = case _ of
     -- | Avoiding `modify` calls prevents spurrious rerendering.
     unless ((null curr && S.null s) || S.length s < 3) $ H.modify (_ { keywords = S.split (S.Pattern " ") s })
     pure next
-  SelectLang l next -> do
-    lang <- H.gets _.language
-    unless (l == lang) $ H.modify (_ { language = l })
-    pure next
+  SelectLang l next -> update (prop (SProxy :: SProxy "language")) l *> pure next

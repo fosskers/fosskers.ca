@@ -3,10 +3,12 @@ module Content ( component, Query(..) ) where
 import Prelude
 
 import Blog as Blog
+import Data.Lens.Record (prop)
 import Data.Maybe (Maybe(..))
+import Data.Symbol (SProxy(..))
 import Halogen as H
 import Halogen.HTML as HH
-import Types (Language, Tab(Blog, About))
+import Types (Language, Tab(Blog, About), update)
 
 ---
 
@@ -33,4 +35,4 @@ render state = case state.tab of
 eval :: forall m. Query ~> H.ParentDSL State Query Blog.Query Slot Void m
 eval = case _ of
   LangChanged l next -> H.query BlogSlot (Blog.LangChanged l unit) *> pure next
-  TabChanged t next  -> H.modify (_ { tab = t }) *> pure next
+  TabChanged t next  -> update (prop (SProxy :: SProxy "tab")) t *> pure next

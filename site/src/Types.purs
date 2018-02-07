@@ -9,9 +9,10 @@ import Data.Lens (Lens', (.~), (^.))
 ---
 
 data Language = English | Japanese
-derive instance eqLanguage :: Eq Language
+derive instance languageEq :: Eq Language
 
 data Tab = About | Blog
+derive instance tabEq :: Eq Tab
 derive instance tabGeneric :: Generic Tab
 
 -- | Updates some State, so long as it hasn't changed.
