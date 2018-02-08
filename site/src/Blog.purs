@@ -42,24 +42,13 @@ component = H.lifecycleParentComponent { initialState: const state
                                        , finalizer: Nothing }
   where state = { language: English, options: mempty, keywords: mempty, selected: Nothing }
 
-eval :: forall e. Query ~> H.ParentDSL State Query Search.Query Slot Void (Effects e)
-eval = case _ of
-  LangChanged l next   -> update (prop (SProxy :: SProxy "language")) l *> pure next
-  NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
-  Selected s next      -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
-  Initialize next      -> do
-    _ <- HQ.fork do
-      posts <- H.lift getPosts
-      H.modify (_ { options = catMaybes $ map asPost posts })
-    pure next
-
 render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
 render s = HH.div_ $ [ search ] <> choices s <> [ post s ]
   where search = HH.div_ [ HH.slot SearchSlot Search.component s.language (HE.input NewKeywords) ]
 
 post :: forall c q. State -> HH.HTML c q
 post state = maybe (HH.div_ []) f state.selected
-  where f s = HH.iframe [ HP.src $ "../blog/" <> s <> postfix <> ".html" ]
+  where f s = HH.iframe [ HP.src $ "assets/" <> s <> postfix <> ".html" ]
         postfix = case state.language of
           English  -> ""
           Japanese -> "-jp"
@@ -75,3 +64,17 @@ choices state = map f options
         g p = any (\kw -> member kw p.freqs) state.keywords
         options | null state.keywords = sortWith (_.date) state.options
                 | otherwise = filter g state.options  -- TODO Sort by hits
+
+eval :: forall e. Query ~> H.ParentDSL State Query Search.Query Slot Void (Effects e)
+eval = case _ of
+  LangChanged l next   -> update (prop (SProxy :: SProxy "language")) l *> pure next
+  NewKeywords kws next -> do
+    -- H.lift <<< liftAff <<< log $ "Blog: New keywords -> " <> intercalate " " kws
+    update (prop (SProxy :: SProxy "keywords")) kws *> pure next
+  Selected s next      -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
+  Initialize next      -> do
+    -- H.lift <<< liftAff $ log "Fetching posts!"
+    _ <- HQ.fork do
+      posts <- H.lift getPosts
+      H.modify (_ { options = catMaybes $ map asPost posts })
+    pure next

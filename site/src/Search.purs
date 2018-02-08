@@ -38,8 +38,15 @@ render state = HH.div_
 eval :: forall m. Query ~> H.ComponentDSL State Query (Array String) m
 eval = case _ of
   Update s next -> do
-    curr <- H.gets _.keywords
-    -- | Avoiding `modify` calls prevents spurrious rerendering.
-    unless ((null curr && S.null s) || S.length s < 3) $ H.modify (_ { keywords = S.split (S.Pattern " ") s })
+    state <- H.get
+    case state.keywords of
+      curr | S.length s > 2 -> do
+        let kws = S.split (S.Pattern " ") s
+        H.modify (_ { keywords = kws })
+        H.raise kws
+      curr | not (null curr) && S.length s < 3 -> do
+        H.modify (_ { keywords = (mempty :: Array String) })
+        H.raise mempty
+      _ -> pure unit
     pure next
   SelectLang l next -> update (prop (SProxy :: SProxy "language")) l *> pure next

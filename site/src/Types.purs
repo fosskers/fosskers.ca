@@ -4,6 +4,7 @@ import Prelude
 
 import Common as C
 import Control.Monad.Aff (Aff)
+import Control.Monad.Aff.Console (CONSOLE, log)
 import Control.Monad.Except (ExceptT, runExceptT)
 import Control.Monad.Reader (ReaderT, runReaderT)
 import Control.Monad.State (class MonadState, gets, modify)
@@ -16,7 +17,7 @@ import Data.Lens (Lens', (.~), (^.))
 import Data.Map (Map, fromFoldable)
 import Data.Maybe (Maybe)
 import Network.HTTP.Affjax (AJAX)
-import Servant.PureScript.Affjax (AjaxError)
+import Servant.PureScript.Affjax (AjaxError, errorToString)
 import Servant.PureScript.Settings (SPSettings_, defaultSettings)
 import ServerAPI (SPParams_(..))
 import Time.Types (Date(..))
@@ -42,14 +43,13 @@ update l a = do
 -- EXTRA BRIDGING HELP
 ----------------------
 
-type Effects eff = ReaderT (SPSettings_ SPParams_) (ExceptT AjaxError (Aff (ajax :: AJAX | eff)))
+type Effects eff = ReaderT (SPSettings_ SPParams_) (ExceptT AjaxError (Aff (ajax :: AJAX, console :: CONSOLE | eff)))
 
--- TODO Log the error instead of dumping it?
-runEffects :: forall eff. Effects eff ~> Aff (ajax :: AJAX | eff)
-runEffects e = runExceptT (runReaderT e settings) >>= either (const empty) pure
+runEffects :: forall eff. Effects eff ~> Aff (ajax :: AJAX, console :: CONSOLE | eff)
+runEffects eff = runExceptT (runReaderT eff settings) >>= either (\e -> log (errorToString e) *> empty) pure
 
 settings :: SPSettings_ SPParams_
-settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080" }
+settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080/" }
 
 -- | I couldn't find a way to more cleanly "post-process" the bridged-over
 -- AssocList into a `Map`. Unfortunately `Map` can't be bridged directly, due

@@ -2,6 +2,7 @@ module Main ( main ) where
 
 import Prelude
 
+import Control.Monad.Aff.Console (CONSOLE)
 import Control.Monad.Eff (Eff)
 import Halogen.Aff as HA
 import Halogen.Component as HC
@@ -12,7 +13,7 @@ import Types (runEffects)
 
 ---
 
-main :: Eff (HA.HalogenEffects (ajax :: AX.AJAX)) Unit
+main :: Eff (HA.HalogenEffects (ajax :: AX.AJAX, console :: CONSOLE)) Unit
 main = HA.runHalogenAff do
   body <- HA.awaitBody
   runUI (HC.hoist runEffects Page.component) unit body
