@@ -25,9 +25,11 @@ dependencies:
   - aeson >= 1.2 && < 1.3
   - containers
   - hourglass >= 0.2 && < 0.3
+  - lucid >= 2.9 && < 2.10
   - megaparsec >= 6.3 && < 6.5
   - protolude >= 0.2 && < 0.3
   - servant >= 0.11 && < 0.13
+  - servant-lucid >= 0.7 && < 0.8
   - text >= 1.2 && < 1.3
 
 library:

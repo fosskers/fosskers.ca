@@ -4,13 +4,19 @@
 module Common where
 
 import Data.Aeson (ToJSON)
+import Lucid
 import Protolude
 import Servant.API
+import Servant.HTML.Lucid
 import Time.Types
 
 ---
 
-type API = "posts" :> Get '[JSON] [Blog]
+type JsonAPI = "posts" :> Get '[JSON] [Blog]
+
+type API = JsonAPI
+  :<|> "assets" :> Raw
+  :<|> Get '[HTML] (Html ())
 
 newtype Title = Title Text deriving (Eq, Show, Generic, ToJSON)
 

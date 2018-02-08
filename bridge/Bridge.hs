@@ -30,4 +30,4 @@ types = [ mkSumType (Proxy :: Proxy Blog)
 main :: IO ()
 main = do
   writePSTypes "site/src" (buildBridge $ defaultBridge <|> monthBridge) types
-  writeAPIModule "site/src" defaultBridgeProxy (Proxy :: Proxy API)
+  writeAPIModule "site/src" defaultBridgeProxy (Proxy :: Proxy JsonAPI)

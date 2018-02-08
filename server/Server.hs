@@ -1,22 +1,24 @@
 {-# LANGUAGE DataKinds, TypeOperators, Rank2Types #-}
 {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
 {-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE OverloadedStrings #-}
 
 module Main ( main ) where
 
 import           Common
 import           Control.Arrow ((&&&))
-import           Control.Lens
+import           Control.Lens hiding (index)
 import           Data.Char (isAlpha)
 import           Data.Proxy
 import qualified Data.Text as T
 import           Filesystem.Path (basename)
+import           Lucid
 import qualified Network.Wai.Handler.Warp as W
 import           Options.Generic
 import           Org (parseEng, parseJap)
 import           Protolude hiding (FilePath)
+import           Servant.API
 import           Servant.Server
+import           Servant.Utils.StaticFiles (serveDirectoryFileServer)
 import           Shelly hiding (path)
 
 ---
@@ -26,16 +28,19 @@ newtype Args = Args { port :: Maybe Int <?> "Port to listen for requests on." } 
 newtype Env = Env { posts :: [Blog] }
 
 server :: Env -> Server API
-server env = pure (posts env)
+server env = pure (posts env) :<|> serveDirectoryFileServer "assets" :<|> pure index
 
 app :: Env -> Application
 app = serve (Proxy :: Proxy API) . server
 
+index :: Html ()
+index = html_ . body_ $ script_ [src_ "assets/app.js"] ("" :: Text)
+
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
-freq = map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . sort . map T.toLower . filter p . T.words . T.map f
+freq = map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . sort . map T.toLower . filter g . T.words . T.map f
   where f c = bool ' ' c $ isAlpha c
-        p (T.length -> l) = l > 2 && l < 13
+        g (T.length -> l) = l > 2 && l < 13
 
 org :: Text -> Sh ()
 org f = run_ "emacs" [f, "--batch", "-f", "org-html-export-to-html", "--kill"]
@@ -43,7 +48,7 @@ org f = run_ "emacs" [f, "--batch", "-f", "org-html-export-to-html", "--kill"]
 -- | The expected filepath of the Japanese version of some blog post,
 -- given its full English filepath.
 japPath :: Text -> Text
-japPath path = T.dropEnd 4 path <> "-jap.org"
+japPath path = T.dropEnd 4 path <> "-jp.org"
 
 -- | Render all ORG files to HTML, also yielding word frequencies for each file.
 --
@@ -56,7 +61,7 @@ orgs = do
   cd "blog"
   files <- filter (T.isSuffixOf ".org") <$> lsT "."
   traverse_ org files
-  vs <- traverse g $ filter (not . T.isSuffixOf "-jap.org") files
+  vs <- traverse g $ filter (not . T.isSuffixOf "-jp.org") files
   pure $ partitionEithers vs
   where g :: Text -> Sh (Either Text Blog)
         g f = do
