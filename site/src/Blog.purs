@@ -2,12 +2,15 @@ module Blog ( component, Query(..) ) where
 
 import Prelude
 
-import Common (Blog(..), Date, Path, Title, _Path, _Title)
-import Data.Array (filter)
+import Common (_Path, _Title)
+import Control.Monad.Aff.Class (class MonadAff)
+import Control.Monad.Error.Class (class MonadError)
+import Control.Monad.Reader (class MonadAsk)
+import Data.Array (catMaybes, filter, sortWith)
 import Data.Foldable (any, null)
 import Data.Lens ((^.))
 import Data.Lens.Record (prop)
-import Data.Map (Map, fromFoldable, member)
+import Data.Map (member)
 import Data.Maybe (Maybe(..), maybe)
 import Data.Monoid (mempty)
 import Data.Symbol (SProxy(..))
@@ -15,15 +18,20 @@ import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
+import Halogen.Query.HalogenM as HQ
+import Network.HTTP.Affjax (AJAX)
 import Search as Search
-import Types (Language(..), update)
+import Servant.PureScript.Affjax (AjaxError)
+import Servant.PureScript.Settings (SPSettings_)
+import ServerAPI (SPParams_, getPosts)
+import Types (Language(Japanese, English), Post, asPost, update)
 
 ---
 
 data Query a = LangChanged Language a
              | NewKeywords (Array String) a
              | Selected String a
-             | NewPosts (Array Blog) a
+             | Initialize a
 
 type State = { language :: Language, options :: Array Post, keywords :: Array String, selected :: Maybe String }
 
@@ -31,18 +39,29 @@ data Slot = SearchSlot
 derive instance eqSlot  :: Eq Slot
 derive instance ordSlot :: Ord Slot
 
-type Post = { engTitle :: Title, japTitle :: Title, date :: Date, filename :: Path, freqs :: Map String Int }
-
--- | I couldn't find a way to more cleanly "post-process" the bridged-over
--- AssocList into a `Map`. Unfortunately `Map` can't be bridged directly, due
--- to issues with `Generic`.
-asPost :: Blog -> Post
-asPost (Blog b) = { engTitle: b.engTitle, japTitle: b.japTitle, date: b.date, filename: b.filename, freqs: f }
-  where f = fromFoldable b.freqs
-
-component :: forall m. H.Component HH.HTML Query Unit Void m
-component = H.parentComponent { initialState: const state, render, eval, receiver: const Nothing }
+component :: forall e m.
+  MonadAff (ajax :: AJAX | e) m =>
+  MonadAsk (SPSettings_ SPParams_) m =>
+  MonadError AjaxError m =>
+  H.Component HH.HTML Query Unit Void m
+component = H.lifecycleParentComponent { initialState: const state
+                                       , render
+                                       , eval
+                                       , receiver: const Nothing
+                                       , initializer: Just $ Initialize unit
+                                       , finalizer: Nothing }
   where state = { language: English, options: mempty, keywords: mempty, selected: Nothing }
+
+        eval :: Query ~> H.ParentDSL State Query Search.Query Slot Void m
+        eval = case _ of
+          LangChanged l next   -> update (prop (SProxy :: SProxy "language")) l *> pure next
+          NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
+          Selected s next      -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
+          Initialize next      -> do
+            _ <- HQ.fork do
+              posts <- H.lift getPosts
+              H.modify (_ { options = catMaybes $ map asPost posts })
+            pure next
 
 render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
 render s = HH.div_ $ [ search ] <> choices s <> [ post s ]
@@ -64,12 +83,5 @@ choices state = map f options
                   fname = p.filename ^. _Path
               in HH.a [ HP.href "#", HE.onClick $ const (Just $ Selected fname unit) ] [ HH.h3_ [ HH.text title ] ]
         g p = any (\kw -> member kw p.freqs) state.keywords
-        options | null state.keywords = state.options -- TODO Sort by date
+        options | null state.keywords = sortWith (_.date) state.options
                 | otherwise = filter g state.options  -- TODO Sort by hits
-
-eval :: forall m. Query ~> H.ParentDSL State Query Search.Query Slot Void m
-eval = case _ of
-  LangChanged l next   -> update (prop (SProxy :: SProxy "language")) l *> pure next
-  NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
-  Selected s next      -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
-  NewPosts ps next     -> H.modify (_ { options = map asPost ps }) *> pure next

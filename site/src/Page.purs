@@ -10,7 +10,7 @@ import Data.Maybe (Maybe(..))
 import Halogen as H
 import Halogen.Component.ChildPath as CP
 import Halogen.HTML as HH
-import Types (Language(..), Tab)
+import Types (Language(..), Tab, Effects)
 
 ---
 
@@ -20,18 +20,17 @@ type ChildQuery = Coproduct2 Bar.Query Content.Query
 
 type ChildSlot = Either2 Unit Unit
 
-component :: forall m. H.Component HH.HTML Query Unit Void m
+component :: forall e. H.Component HH.HTML Query Unit Void (Effects e)
 component = H.parentComponent { initialState: const { language: English }
                               , render
                               , eval
                               , receiver: const Nothing }
-
-render :: forall s m. s -> H.ParentHTML Query ChildQuery ChildSlot m
-render _ = HH.div_
-  [ HH.slot' CP.cp1 unit Bar.component unit (Just <<< f)
-  , HH.slot' CP.cp2 unit Content.component unit absurd ]
-  where f (Bar.LangChanged l _) = LangChanged l unit
-        f (Bar.TabChanged t _)  = TabChanged t unit
+  where render :: forall s. s -> H.ParentHTML Query ChildQuery ChildSlot (Effects e)
+        render _ = HH.div_
+                   [ HH.slot' CP.cp1 unit Bar.component unit (Just <<< f)
+                   , HH.slot' CP.cp2 unit Content.component unit absurd ]
+                   where f (Bar.LangChanged l _) = LangChanged l unit
+                         f (Bar.TabChanged t _)  = TabChanged t unit
 
 eval :: forall s m. Query ~> H.ParentDSL s Query ChildQuery ChildSlot Void m
 eval = case _ of
