@@ -3,9 +3,6 @@ module Blog ( component, Query(..) ) where
 import Prelude
 
 import Common (_Path, _Title)
-import Control.Monad.Aff.Class (class MonadAff)
-import Control.Monad.Error.Class (class MonadError)
-import Control.Monad.Reader (class MonadAsk)
 import Data.Array (catMaybes, filter, sortWith)
 import Data.Foldable (any, null)
 import Data.Lens ((^.))
@@ -19,12 +16,9 @@ import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Query.HalogenM as HQ
-import Network.HTTP.Affjax (AJAX)
 import Search as Search
-import Servant.PureScript.Affjax (AjaxError)
-import Servant.PureScript.Settings (SPSettings_)
-import ServerAPI (SPParams_, getPosts)
-import Types (Language(Japanese, English), Post, asPost, update)
+import ServerAPI (getPosts)
+import Types (Language(Japanese, English), Post, Effects, asPost, update)
 
 ---
 
@@ -39,11 +33,7 @@ data Slot = SearchSlot
 derive instance eqSlot  :: Eq Slot
 derive instance ordSlot :: Ord Slot
 
-component :: forall e m.
-  MonadAff (ajax :: AJAX | e) m =>
-  MonadAsk (SPSettings_ SPParams_) m =>
-  MonadError AjaxError m =>
-  H.Component HH.HTML Query Unit Void m
+component :: forall e. H.Component HH.HTML Query Unit Void (Effects e)
 component = H.lifecycleParentComponent { initialState: const state
                                        , render
                                        , eval
@@ -52,16 +42,16 @@ component = H.lifecycleParentComponent { initialState: const state
                                        , finalizer: Nothing }
   where state = { language: English, options: mempty, keywords: mempty, selected: Nothing }
 
-        eval :: Query ~> H.ParentDSL State Query Search.Query Slot Void m
-        eval = case _ of
-          LangChanged l next   -> update (prop (SProxy :: SProxy "language")) l *> pure next
-          NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
-          Selected s next      -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
-          Initialize next      -> do
-            _ <- HQ.fork do
-              posts <- H.lift getPosts
-              H.modify (_ { options = catMaybes $ map asPost posts })
-            pure next
+eval :: forall e. Query ~> H.ParentDSL State Query Search.Query Slot Void (Effects e)
+eval = case _ of
+  LangChanged l next   -> update (prop (SProxy :: SProxy "language")) l *> pure next
+  NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
+  Selected s next      -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
+  Initialize next      -> do
+    _ <- HQ.fork do
+      posts <- H.lift getPosts
+      H.modify (_ { options = catMaybes $ map asPost posts })
+    pure next
 
 render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
 render s = HH.div_ $ [ search ] <> choices s <> [ post s ]

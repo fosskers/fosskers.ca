@@ -25,12 +25,13 @@ component = H.parentComponent { initialState: const { language: English }
                               , render
                               , eval
                               , receiver: const Nothing }
-  where render :: forall s. s -> H.ParentHTML Query ChildQuery ChildSlot (Effects e)
-        render _ = HH.div_
-                   [ HH.slot' CP.cp1 unit Bar.component unit (Just <<< f)
-                   , HH.slot' CP.cp2 unit Content.component unit absurd ]
-                   where f (Bar.LangChanged l _) = LangChanged l unit
-                         f (Bar.TabChanged t _)  = TabChanged t unit
+
+render :: forall s e. s -> H.ParentHTML Query ChildQuery ChildSlot (Effects e)
+render _ = HH.div_
+           [ HH.slot' CP.cp1 unit Bar.component unit (Just <<< f)
+           , HH.slot' CP.cp2 unit Content.component unit absurd ]
+  where f (Bar.LangChanged l _) = LangChanged l unit
+        f (Bar.TabChanged t _)  = TabChanged t unit
 
 eval :: forall s m. Query ~> H.ParentDSL s Query ChildQuery ChildSlot Void m
 eval = case _ of
