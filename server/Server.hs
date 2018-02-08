@@ -8,11 +8,9 @@ module Main ( main ) where
 import           Common
 import           Control.Arrow ((&&&))
 import           Control.Lens
-import           Data.Bitraversable
 import           Data.Char (isAlpha)
 import           Data.Proxy
 import qualified Data.Text as T
-import           Data.Validation
 import           Filesystem.Path (basename)
 import qualified Network.Wai.Handler.Warp as W
 import           Options.Generic
@@ -59,19 +57,16 @@ orgs = do
   files <- filter (T.isSuffixOf ".org") <$> lsT "."
   traverse_ org files
   vs <- traverse g $ filter (not . T.isSuffixOf "-jap.org") files
-  pure . first (foldMap toList) . partitionEithers $ map toEither vs
-  where g f = do
+  pure $ partitionEithers vs
+  where g :: Text -> Sh (Either Text Blog)
+        g f = do
           let engPath = fromText f
           engContent <- eread engPath
           japContent <- eread . fromText $ japPath f
-          case bitraverse validationNel validationNel (engContent, japContent) of
-            AccSuccess (e,j) -> pure $ h (toTextIgnore $ basename engPath) e j
-            AccFailure errs  -> pure $ AccFailure errs
+          pure . join $ h (toTextIgnore $ basename engPath) <$> engContent <*> japContent
 
-        h :: Text -> Text -> Text -> AccValidation (NonEmpty Text) Blog
-        h fname eng jap = (\(et,d) jt -> Blog et jt d (Path fname) (freq eng)) <$> parseE <*> parseJ
-          where parseE = validationNel $ parseEng eng
-                parseJ = validationNel $ parseJap jap
+        h :: Text -> Text -> Text -> Either Text Blog
+        h fname eng jap = (\(et,d) jt -> Blog et jt d (Path fname) (freq eng)) <$> parseEng eng <*> parseJap jap
 
 -- TODO I don't like the way this feels/looks
 eread :: FilePath -> Sh (Either Text Text)
