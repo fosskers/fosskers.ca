@@ -34,6 +34,8 @@ render state = HH.div_
   [ HH.text "fosskers.ca"
   , a About $ bool "自己紹介" "About" (state.language == English)
   , a Blog  $ bool "ブログ" "Blog" (state.language == English)
+  , HH.a [ HP.href "https://github.com/fosskers" ] [ HH.text "Github" ]
+  , HH.a [ HP.href "https://twitter.com/fosskers" ] [ HH.text "Twitter" ]
   , HH.slot LangSlot LangToggle.component unit (HE.input LangChanged) ]
   where a tab txt = HH.a [ HP.href "#", HE.onClick $ const (Just $ TabChanged tab unit) ] [ HH.text txt ]
 
