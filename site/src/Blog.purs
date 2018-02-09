@@ -3,14 +3,16 @@ module Blog ( component, Query(..) ) where
 import Prelude
 
 import Common (_Path, _Title)
-import Data.Array (catMaybes, filter, sortWith)
-import Data.Foldable (any, null)
+import Data.Array (catMaybes, filter, reverse, sortWith)
+import Data.Foldable (any, intercalate, null)
 import Data.Lens ((^.))
 import Data.Lens.Record (prop)
-import Data.Map (member)
+import Data.Map as M
 import Data.Maybe (Maybe(..), maybe)
 import Data.Monoid (mempty)
+import Data.Set as S
 import Data.Symbol (SProxy(..))
+import Data.Tuple (Tuple(..), snd)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
@@ -23,11 +25,11 @@ import Types (Effects, Language(Japanese, English), Post, asPost, localizedDate,
 ---
 
 data Query a = LangChanged Language a
-             | NewKeywords (Array String) a
+             | NewKeywords (S.Set String) a
              | Selected String a
              | Initialize a
 
-type State = { language :: Language, options :: Array Post, keywords :: Array String, selected :: Maybe String }
+type State = { language :: Language, options :: Array Post, keywords :: S.Set String, selected :: Maybe String }
 
 data Slot = SearchSlot
 derive instance eqSlot  :: Eq Slot
@@ -55,25 +57,28 @@ post state = maybe (HH.div_ []) f state.selected
 
 -- | If no keywords, rank by date. Otherwise, rank by "search hits".
 choices :: forall c. State -> Array (HH.HTML c (Query Unit))
-choices state = map f options
-  where f p = let title = case state.language of
+choices s = map f options
+  where f p = let title = case s.language of
                     English  -> p.engTitle ^. _Title
                     Japanese -> p.japTitle ^. _Title
                   fname = p.filename ^. _Path
+                  matches = map (\(Tuple k v) -> k <> ": " <> show v <> " mentions")
+                            <<< reverse <<< sortWith snd <<< M.toUnfoldable $ hitsOnly p
               in HH.div_
                  [ HH.a [ HP.href "#", HE.onClick $ const (Just $ Selected fname unit) ]
                         [ HH.h3_ [ HH.text title ] ]
-                 , HH.text $ localizedDate state.language p.date ]
-        g p = any (\kw -> member kw p.freqs) state.keywords
-        options | null state.keywords = sortWith (_.date) state.options
-                | otherwise = filter g state.options  -- TODO Sort by hits
+                 , HH.text $ intercalate ", " matches
+                 , HH.text $ localizedDate s.language p.date ]
+        g p = any (\kw -> M.member kw p.freqs) s.keywords
+        options | null s.keywords = reverse $ sortWith (_.date) s.options
+                | otherwise = reverse <<< sortWith hitsOnly $ filter g s.options
+        hitsOnly p = M.filterKeys (\k -> S.member k s.keywords) p.freqs
 
+    -- H.lift <<< liftAff <<< log $ "Blog: New keywords -> " <> intercalate " " kws
 eval :: forall e. Query ~> H.ParentDSL State Query Search.Query Slot Void (Effects e)
 eval = case _ of
   LangChanged l next   -> update (prop (SProxy :: SProxy "language")) l *> pure next
-  NewKeywords kws next -> do
-    -- H.lift <<< liftAff <<< log $ "Blog: New keywords -> " <> intercalate " " kws
-    update (prop (SProxy :: SProxy "keywords")) kws *> pure next
+  NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
   Selected s next      -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
   Initialize next      -> do
     _ <- HQ.fork do
