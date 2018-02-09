@@ -11,7 +11,7 @@ import Control.Monad.State (class MonadState, gets, modify)
 import Control.Plus (empty)
 import Data.Date as D
 import Data.Either (either)
-import Data.Enum (toEnum)
+import Data.Enum (fromEnum, toEnum)
 import Data.Generic (class Generic)
 import Data.Lens (Lens', (.~), (^.))
 import Data.Map (Map, fromFoldable)
@@ -38,6 +38,10 @@ update :: forall s a m. MonadState s m => Eq a => Lens' s a -> a -> m Unit
 update l a = do
   curr <- gets (_ ^. l)
   unless (a == curr) $ modify (_ # l .~ a)
+
+localizedDate :: Language -> D.Date -> String
+localizedDate English  d = show (fromEnum $ D.year d) <> " " <> show (D.month d) <> " " <> show (fromEnum $ D.day d)
+localizedDate Japanese d = show (fromEnum $ D.year d) <> "年" <> show (fromEnum $ D.month d) <> "月" <> show (fromEnum $ D.day d) <> "日"
 
 ----------------------
 -- EXTRA BRIDGING HELP

@@ -18,7 +18,7 @@ import Halogen.HTML.Properties as HP
 import Halogen.Query.HalogenM as HQ
 import Search as Search
 import ServerAPI (getPosts)
-import Types (Language(Japanese, English), Post, Effects, asPost, update)
+import Types (Effects, Language(Japanese, English), Post, asPost, localizedDate, update)
 
 ---
 
@@ -60,7 +60,10 @@ choices state = map f options
                     English  -> p.engTitle ^. _Title
                     Japanese -> p.japTitle ^. _Title
                   fname = p.filename ^. _Path
-              in HH.a [ HP.href "#", HE.onClick $ const (Just $ Selected fname unit) ] [ HH.h3_ [ HH.text title ] ]
+              in HH.div_
+                 [ HH.a [ HP.href "#", HE.onClick $ const (Just $ Selected fname unit) ]
+                        [ HH.h3_ [ HH.text title ] ]
+                 , HH.text $ localizedDate state.language p.date ]
         g p = any (\kw -> member kw p.freqs) state.keywords
         options | null state.keywords = sortWith (_.date) state.options
                 | otherwise = filter g state.options  -- TODO Sort by hits
@@ -73,7 +76,6 @@ eval = case _ of
     update (prop (SProxy :: SProxy "keywords")) kws *> pure next
   Selected s next      -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
   Initialize next      -> do
-    -- H.lift <<< liftAff $ log "Fetching posts!"
     _ <- HQ.fork do
       posts <- H.lift getPosts
       H.modify (_ { options = catMaybes $ map asPost posts })
