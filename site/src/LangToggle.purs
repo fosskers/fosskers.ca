@@ -30,8 +30,8 @@ render state = HH.div [ HP.class_ $ H.ClassName "btn-group"
                                , HP.attr (H.AttrName "type") "button"
                                , HE.onClick (HE.input_ $ Toggle l) ]
                      [ HH.text t ]
-        colour l | l == state.language = "btn-secondary"
-                 | otherwise = "btn-outline-secondary"
+        colour l | l == state.language = "btn-info"
+                 | otherwise = "btn-outline-info"
 
 eval :: forall m. Query ~> H.ComponentDSL State Query Language m
 eval = case _ of

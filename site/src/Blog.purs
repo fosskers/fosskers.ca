@@ -1,9 +1,9 @@
-module Blog ( component, Query(..) ) where
+module Blog ( component, Query(..), Input ) where
 
 import Prelude
 
 import Common (_Path, _Title)
-import Data.Array (catMaybes, filter, reverse, sortWith)
+import Data.Array (filter, reverse, sortWith)
 import Data.Foldable (any, intercalate, null)
 import Data.Lens ((^.))
 import Data.Lens.Record (prop)
@@ -17,32 +17,30 @@ import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
-import Halogen.Query.HalogenM as HQ
 import Search as Search
-import ServerAPI (getPosts)
-import Types (Effects, Language(Japanese, English), Post, asPost, defaultLang, localizedDate, update)
+import Types (Effects, Language(Japanese, English), Post, defaultLang, localizedDate, update)
 
 ---
 
 data Query a = LangChanged Language a
              | NewKeywords (S.Set String) a
              | Selected String a
-             | Initialize a
+             | Initialize Input a
 
-type State = { language :: Language, options :: Array Post, keywords :: S.Set String, selected :: Maybe String }
+type State = { language :: Language, posts :: Array Post, keywords :: S.Set String, selected :: Maybe String }
+
+type Input = { language :: Language, posts :: Array Post }
 
 data Slot = SearchSlot
 derive instance eqSlot  :: Eq Slot
 derive instance ordSlot :: Ord Slot
 
-component :: forall e. H.Component HH.HTML Query Unit Void (Effects e)
-component = H.lifecycleParentComponent { initialState: const state
-                                       , render
-                                       , eval
-                                       , receiver: const Nothing
-                                       , initializer: Just $ Initialize unit
-                                       , finalizer: Nothing }
-  where state = { language: defaultLang, options: mempty, keywords: mempty, selected: Nothing }
+component :: forall e. H.Component HH.HTML Query Input Void (Effects e)
+component = H.parentComponent { initialState: const state
+                              , render
+                              , eval
+                              , receiver: HE.input Initialize }
+  where state = { language: defaultLang, posts: mempty, keywords: mempty, selected: Nothing }
 
 render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
 render s = HH.div_ $ [ search ] <> choices s <> [ post s ]
@@ -70,18 +68,16 @@ choices s = map f options
                  , HH.text $ intercalate ", " matches
                  , HH.text $ localizedDate s.language p.date ]
         g p = any (\kw -> M.member kw p.freqs) s.keywords
-        options | null s.keywords = reverse $ sortWith (_.date) s.options
-                | otherwise = reverse <<< sortWith hitsOnly $ filter g s.options
+        options | null s.keywords = reverse $ sortWith (_.date) s.posts
+                | otherwise = reverse <<< sortWith hitsOnly $ filter g s.posts
         hitsOnly p = M.filterKeys (\k -> S.member k s.keywords) p.freqs
 
     -- H.lift <<< liftAff <<< log $ "Blog: New keywords -> " <> intercalate " " kws
 eval :: forall e. Query ~> H.ParentDSL State Query Search.Query Slot Void (Effects e)
 eval = case _ of
-  LangChanged l next   -> update (prop (SProxy :: SProxy "language")) l *> pure next
-  NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
-  Selected s next      -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
-  Initialize next      -> do
-    _ <- HQ.fork do
-      posts <- H.lift getPosts
-      H.modify (_ { options = catMaybes $ map asPost posts })
+  LangChanged l next    -> update (prop (SProxy :: SProxy "language")) l *> pure next
+  NewKeywords kws next  -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
+  Selected s next       -> update (prop (SProxy :: SProxy "selected")) (Just s) *> pure next
+  Initialize input next -> do
+    H.modify (_ { language = input.language, posts = input.posts })
     pure next
