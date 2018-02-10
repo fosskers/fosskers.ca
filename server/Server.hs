@@ -34,7 +34,12 @@ app :: Env -> Application
 app = serve (Proxy :: Proxy API) . server
 
 index :: Html ()
-index = html_ . body_ $ script_ [src_ "assets/app.js"] ("" :: Text)
+index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
+  where h = do
+          title_ "fosskers.ca"
+          meta_ [charset_ "utf-8"]
+          link_ [ rel_ "stylesheet"
+                , href_ "assets/bootstrap.min.css" ]
 
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
