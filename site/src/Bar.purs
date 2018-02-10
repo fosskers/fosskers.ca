@@ -9,7 +9,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import LangToggle as LangToggle
-import Types (Language(..), Tab(..))
+import Types (Language(..), Tab(..), defaultLang, defaultTab)
 
 ---
 
@@ -17,29 +17,49 @@ data Query a = LangChanged Language a | TabChanged Tab a
 
 type Message = Query Unit
 
-type State = { language :: Language }
+type State = { language :: Language, tab :: Tab }
 
 data Slot = LangSlot
 derive instance eqSlot  :: Eq Slot
 derive instance ordSlot :: Ord Slot
 
 component :: forall m. H.Component HH.HTML Query Unit Message m
-component = H.parentComponent { initialState: const { language: English }
+component = H.parentComponent { initialState: const { language: defaultLang, tab: defaultTab }
                               , render
                               , eval
                               , receiver: const Nothing }
 
 render :: forall m. State -> H.ParentHTML Query LangToggle.Query Slot m
-render state = HH.div_
-  [ HH.text "fosskers.ca"
-  , a About $ bool "自己紹介" "About" (state.language == English)
-  , a Blog  $ bool "ブログ" "Blog" (state.language == English)
-  , HH.a [ HP.href "https://github.com/fosskers" ] [ HH.text "Github" ]
-  , HH.a [ HP.href "https://twitter.com/fosskers" ] [ HH.text "Twitter" ]
-  , HH.slot LangSlot LangToggle.component unit (HE.input LangChanged) ]
-  where a tab txt = HH.a [ HP.href "#", HE.onClick $ const (Just $ TabChanged tab unit) ] [ HH.text txt ]
+render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ]]
+  [ HH.a [ HP.href "#", HP.class_ (H.ClassName "navbar-brand") ] [ HH.text "fosskers.ca" ]
+  , HH.button [ HP.class_ (H.ClassName "navbar-toggler")
+              , HP.attr (H.AttrName "type") "button"
+              , HP.attr (H.AttrName "data-toggle") "collapse"
+              , HP.attr (H.AttrName "data-target") "#navbarLinks"
+              , HP.attr (H.AttrName "aria-controls") "navbarLinks"
+              , HP.attr (H.AttrName "aria-expanded") "false"
+              , HP.attr (H.AttrName "aria-label") "Toggle navigation" ]
+    [ HH.span [ HP.class_ (H.ClassName "navbar-toggler-icon")] []]
+  , HH.div [ HP.id_ "navbarLinks", HP.classes $ map H.ClassName [ "collapse", "navbar-collapse"]]
+    [ HH.div [ HP.class_ $ H.ClassName "navbar-nav" ]
+      [ tabSwitch About $ bool "自己紹介" "About" (state.language == English)
+      , tabSwitch Blog  $ bool "ブログ" "Blog" (state.language == English)
+      , a "https://github.com/fosskers" "Github"
+      , a "https://twitter.com/fosskers" $ bool "ツイッター" "Twitter" (state.language == English) ]
+    ]
+ , HH.slot LangSlot LangToggle.component unit (HE.input LangChanged) ]
+  where tabSwitch tab txt = HH.a [ HP.href "#"
+                                 , HP.classes $ map H.ClassName [ "nav-item", "nav-link", bool "" "active" (tab == state.tab) ]
+                                 , HE.onClick $ const (Just $ TabChanged tab unit) ]
+                            [ HH.text txt ]
+        a url t = HH.a [ HP.href url, HP.classes $ map H.ClassName [ "nav-item", "nav-link" ] ] [ HH.text t ]
 
 eval :: forall m. Query ~> H.ParentDSL State Query LangToggle.Query Slot Message m
 eval = case _ of
   LangChanged l next -> H.modify (_ { language = l }) *> H.raise (LangChanged l unit) *> pure next
-  TabChanged t next  -> H.raise (TabChanged t unit) *> pure next
+  TabChanged t next  -> do
+    curr <- H.gets _.tab
+    unless (t == curr) $ do
+      H.modify (_ { tab = t })
+      H.raise (TabChanged t unit)
+    pure next

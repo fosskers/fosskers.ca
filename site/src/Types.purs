@@ -27,9 +27,15 @@ import Time.Types (Date(..))
 data Language = English | Japanese
 derive instance languageEq :: Eq Language
 
+defaultLang :: Language
+defaultLang = English
+
 data Tab = About | Blog
 derive instance tabEq :: Eq Tab
 derive instance tabGeneric :: Generic Tab
+
+defaultTab :: Tab
+defaultTab = Blog
 
 type Post = { engTitle :: C.Title, japTitle :: C.Title, date :: D.Date, filename :: C.Path, freqs :: Map String Int }
 

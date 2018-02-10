@@ -6,22 +6,38 @@ import Data.Maybe (Maybe(..))
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
-import Types (Language(..))
+import Halogen.HTML.Properties as HP
+import Types (Language(..), defaultLang)
 
 ---
 
 data Query a = Toggle Language a
 
+type State = { language :: Language }
+
 component :: forall m. H.Component HH.HTML Query Unit Language m
-component = H.component { initialState: const unit
+component = H.component { initialState: const { language: defaultLang }
                         , render
                         , eval
                         , receiver: const Nothing }
 
-render :: forall s. s -> H.ComponentHTML Query
-render _ = HH.div_ [ button English "English", button Japanese "日本語" ]
-  where button l t = HH.button [ HE.onClick (HE.input_ $ Toggle l) ] [ HH.text t ]
+render :: State -> H.ComponentHTML Query
+render state = HH.div [ HP.class_ $ H.ClassName "btn-group"
+                      , HP.attr (H.AttrName "role") "group"
+                      , HP.attr (H.AttrName "aria-label") "Language Toggle" ]
+               [ button English "English", button Japanese "日本語" ]
+  where button l t = HH.button [ HP.classes $ map H.ClassName [ "btn", colour l ]
+                               , HP.attr (H.AttrName "type") "button"
+                               , HE.onClick (HE.input_ $ Toggle l) ]
+                     [ HH.text t ]
+        colour l | l == state.language = "btn-secondary"
+                 | otherwise = "btn-outline-secondary"
 
-eval :: forall s m. Query ~> H.ComponentDSL s Query Language m
+eval :: forall m. Query ~> H.ComponentDSL State Query Language m
 eval = case _ of
-  Toggle lang next -> H.raise lang *> pure next
+  Toggle lang next -> do
+    curr <- H.gets _.language
+    unless (lang == curr) $ do
+      H.modify (_ { language = lang })
+      H.raise lang
+    pure next
