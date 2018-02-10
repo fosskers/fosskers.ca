@@ -8,7 +8,7 @@ import Data.Maybe (Maybe(..))
 import Data.Symbol (SProxy(..))
 import Halogen as H
 import Halogen.HTML as HH
-import Types (Language, Tab(Blog, About), Effects, update)
+import Types (Effects, Language, Tab(Blog, About), defaultTab, update)
 
 ---
 
@@ -22,7 +22,7 @@ derive instance eqSlot  :: Eq Slot
 derive instance ordSlot :: Ord Slot
 
 component :: forall e. H.Component HH.HTML Query Unit Void (Effects e)
-component = H.parentComponent { initialState: const { tab: Blog }
+component = H.parentComponent { initialState: const { tab: defaultTab }
                               , render
                               , eval
                               , receiver: const Nothing }

@@ -12,7 +12,7 @@ import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
-import Types (Language(..), update)
+import Types (Language(..), defaultLang, update)
 
 ---
 
@@ -21,7 +21,7 @@ data Query a = Update String a | SelectLang Language a
 type State = { keywords :: Set.Set String, language :: Language }
 
 component :: forall m. H.Component HH.HTML Query Language (Set.Set String) m
-component = H.component { initialState: const { keywords: mempty, language: English }
+component = H.component { initialState: const { keywords: mempty, language: defaultLang }
                         , render
                         , eval
                         , receiver: HE.input SelectLang }

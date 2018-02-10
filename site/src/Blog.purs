@@ -20,7 +20,7 @@ import Halogen.HTML.Properties as HP
 import Halogen.Query.HalogenM as HQ
 import Search as Search
 import ServerAPI (getPosts)
-import Types (Effects, Language(Japanese, English), Post, asPost, localizedDate, update)
+import Types (Effects, Language(Japanese, English), Post, asPost, defaultLang, localizedDate, update)
 
 ---
 
@@ -42,7 +42,7 @@ component = H.lifecycleParentComponent { initialState: const state
                                        , receiver: const Nothing
                                        , initializer: Just $ Initialize unit
                                        , finalizer: Nothing }
-  where state = { language: English, options: mempty, keywords: mempty, selected: Nothing }
+  where state = { language: defaultLang, options: mempty, keywords: mempty, selected: Nothing }
 
 render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
 render s = HH.div_ $ [ search ] <> choices s <> [ post s ]
