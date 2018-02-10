@@ -37,7 +37,8 @@ index :: Html ()
 index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
   where h = do
           title_ "fosskers.ca"
-          meta_ [charset_ "utf-8"]
+          meta_ [ charset_ "utf-8" ]
+          meta_ [ name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no" ]
           link_ [ rel_ "stylesheet"
                 , href_ "assets/bootstrap.min.css" ]
 
