@@ -2,10 +2,12 @@ module Bar ( component, Query(..), Message ) where
 
 import Prelude
 
+import CSS (em, fontSize)
 import Control.Error.Util (bool)
 import Data.Maybe (Maybe(..))
 import Halogen as H
 import Halogen.HTML as HH
+import Halogen.HTML.CSS as HC
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import LangToggle as LangToggle
@@ -44,15 +46,17 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
     [ HH.div [ HP.class_ $ H.ClassName "navbar-nav" ]
       [ tabSwitch About $ bool "自己紹介" "About" (state.language == English)
       , tabSwitch Blog  $ bool "ブログ" "Blog" (state.language == English)
-      , a "https://github.com/fosskers" "Github"
-      , a "https://twitter.com/fosskers" $ bool "ツイッター" "Twitter" (state.language == English) ]
+      , a "https://github.com/fosskers" "fa-github"
+      , a "https://twitter.com/fosskers" "fa-twitter" ]
     ]
  , HH.slot LangSlot LangToggle.component unit (HE.input LangChanged) ]
   where tabSwitch tab txt = HH.a [ HP.href "#"
                                  , HP.classes $ map H.ClassName [ "nav-item", "nav-link", bool "" "active" (tab == state.tab) ]
                                  , HE.onClick $ const (Just $ TabChanged tab unit) ]
                             [ HH.text txt ]
-        a url t = HH.a [ HP.href url, HP.classes $ map H.ClassName [ "nav-item", "nav-link" ] ] [ HH.text t ]
+        a url i = HH.a [ HP.href url
+                       , HP.classes $ map H.ClassName [ "fab", i, "nav-item", "nav-link" ]
+                       , HC.style <<< fontSize $ em 1.33333 ] []
 
 eval :: forall m. Query ~> H.ParentDSL State Query LangToggle.Query Slot Message m
 eval = case _ of
