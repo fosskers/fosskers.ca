@@ -41,6 +41,10 @@ index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
           meta_ [ name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no" ]
           link_ [ rel_ "stylesheet"
                 , href_ "assets/bootstrap.min.css" ]
+          link_ [ rel_ "stylesheet"
+                , href_ "assets/fontawesome.min.css" ]
+          link_ [ rel_ "stylesheet"
+                , href_ "assets/fa-brands.min.css" ]
 
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
