@@ -27,9 +27,11 @@ component = H.component { initialState: const { keywords: mempty, language: defa
                         , receiver: HE.input SelectLang }
 
 render :: State -> H.ComponentHTML Query
-render state = HH.div_ [ HH.input [ HP.placeholder label, HE.onValueInput (\s -> Just $ Update s unit) ]]
+render state = HH.div_ [ HH.input [ HP.placeholder label
+                                  , HP.class_ $ H.ClassName "form-control"
+                                  , HE.onValueInput (\s -> Just $ Update s unit) ]]
   where label = case state.language of
-          English  -> "Enter keywords to search by"
+          English  -> "Filter posts by keywords"
           Japanese -> "キーワードで検索"
 
 eval :: forall m. Query ~> H.ComponentDSL State Query (Set.Set String) m

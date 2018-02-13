@@ -2,7 +2,10 @@ module Blog ( component, Query(..) ) where
 
 import Prelude
 
+import Bootstrap (colN, col_, container, row, row_)
+import CSS (paddingTop, pct)
 import Common (_Path, _Title)
+import Control.Error.Util (bool)
 import Data.Array (catMaybes, filter, reverse, sortWith)
 import Data.Foldable (any, intercalate, null)
 import Data.Lens ((^.))
@@ -15,6 +18,7 @@ import Data.Symbol (SProxy(..))
 import Data.Tuple (Tuple(..), snd)
 import Halogen as H
 import Halogen.HTML as HH
+import Halogen.HTML.CSS as HC
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Query.HalogenM as HQ
@@ -45,30 +49,36 @@ component = H.lifecycleParentComponent { initialState: const state
   where state = { language: defaultLang, posts: mempty, keywords: mempty, selected: Nothing }
 
 render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
-render s = HH.div_ $ [ search ] <> choices s <> [ post s ]
-  where search = HH.div_ [ HH.slot SearchSlot Search.component s.language (HE.input NewKeywords) ]
+render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $ [ search ] <> choices s <> [ post s ]
+  where search = row_ [ col_ [ HH.slot SearchSlot Search.component s.language (HE.input NewKeywords) ] ]
 
 post :: forall c q. State -> HH.HTML c q
 post state = maybe (HH.div_ []) f state.selected
-  where f s = HH.iframe [ HP.src $ "assets/" <> s <> postfix <> ".html" ]
+  where f s = row_ [ col_ [ HH.iframe [ HP.src $ "assets/" <> s <> postfix <> ".html" ]]]
         postfix = case state.language of
           English  -> ""
           Japanese -> "-jp"
 
 -- | If no keywords, rank by date. Otherwise, rank by "search hits".
 choices :: forall c. State -> Array (HH.HTML c (Query Unit))
-choices s = map f options
+choices s = options >>= f
   where f p = let title = case s.language of
                     English  -> p.engTitle ^. _Title
                     Japanese -> p.japTitle ^. _Title
                   fname = p.filename ^. _Path
-                  matches = map (\(Tuple k v) -> k <> ": " <> show v <> " mentions")
+                  foobar = case s.language of
+                    English  -> "Keyword hits: "
+                    Japanese -> "キーワード出現回数：　"
+                  matches = map (\(Tuple k v) -> k <> " × " <> show v)
                             <<< reverse <<< sortWith snd <<< M.toUnfoldable $ hitsOnly p
-              in HH.div_
-                 [ HH.a [ HP.href "#", HE.onClick $ const (Just $ Selected fname unit) ]
-                        [ HH.h3_ [ HH.text title ] ]
-                 , HH.text $ intercalate ", " matches
-                 , HH.text $ localizedDate s.language p.date ]
+              in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
+                   [ col_ [ HH.a [ HP.href "#", HE.onClick $ const (Just $ Selected fname unit) ]
+                            [ HH.h3_ [ HH.text title ] ] ]
+                   ]
+                 , row_ $ [ colN 3 [] [ HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
+                   <> bool [] [ col_ [ HH.b_ [ HH.text foobar ]
+                                     , HH.text $ intercalate ", " matches ]] (not $ null matches)
+                 ]
         g p = any (\kw -> M.member kw p.freqs) s.keywords
         options | null s.keywords = reverse $ sortWith (_.date) s.posts
                 | otherwise = reverse <<< sortWith hitsOnly $ filter g s.posts

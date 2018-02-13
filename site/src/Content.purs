@@ -34,8 +34,7 @@ render :: forall e. State -> H.ParentHTML Query Blog.Query Slot (Effects e)
 render state = HH.div_
                [ HH.div (hide Blog)
                  [ HH.slot BlogSlot Blog.component state.language absurd ]
-               , HH.div (hide About) [ HH.text "hi there!" ]
-               ]
+               , HH.div (hide About) [ HH.text "hi there!" ] ]
   where hide t = bool [ CSS.style $ display displayNone ] [] (t == state.tab)
 
 eval :: forall e. Query ~> H.ParentDSL State Query Blog.Query Slot Void (Effects e)
