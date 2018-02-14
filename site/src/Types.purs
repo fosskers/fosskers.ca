@@ -9,6 +9,7 @@ import Control.Monad.Except (ExceptT, runExceptT)
 import Control.Monad.Reader (ReaderT, runReaderT)
 import Control.Monad.State (class MonadState, gets, modify)
 import Control.Plus (empty)
+import DOM (DOM)
 import Data.Date as D
 import Data.Either (either)
 import Data.Enum (fromEnum, toEnum)
@@ -53,9 +54,10 @@ localizedDate Japanese d = show (fromEnum $ D.year d) <> "年" <> show (fromEnum
 -- EXTRA BRIDGING HELP
 ----------------------
 
-type Effects eff = ReaderT (SPSettings_ SPParams_) (ExceptT AjaxError (Aff (ajax :: AJAX, console :: CONSOLE | eff)))
+type Effects eff = ReaderT (SPSettings_ SPParams_)
+                   (ExceptT AjaxError (Aff (ajax :: AJAX, console :: CONSOLE, dom :: DOM | eff)))
 
-runEffects :: forall eff. Effects eff ~> Aff (ajax :: AJAX, console :: CONSOLE | eff)
+runEffects :: forall eff. Effects eff ~> Aff (ajax :: AJAX, console :: CONSOLE, dom :: DOM | eff)
 runEffects eff = runExceptT (runReaderT eff settings) >>= either (\e -> log (errorToString e) *> empty) pure
 
 settings :: SPSettings_ SPParams_

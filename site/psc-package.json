@@ -1,8 +1,10 @@
 {
     "name": "fosskers",
-    "set": "psc-0.11.7",
-    "source": "https://github.com/purescript/package-sets.git",
+    "set": "testing",
+    "source": "",
     "depends": [
+        "domparser",
+        "dom-classy",
         "halogen-css",
         "argonaut-generic-codecs",
         "datetime",
