@@ -8,7 +8,6 @@ import Common (Path, _Path, _Title)
 import Control.Error.Util (bool)
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff.Class (liftAff)
-import Control.Monad.Aff.Console (CONSOLE, log)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
 import DOM (DOM)
@@ -18,7 +17,7 @@ import DOM.Node.NodeList (item, length)
 import DOM.Node.Types (Node)
 import Data.Array (catMaybes, filter, head, range, reverse, sortWith)
 import Data.Foldable (any, intercalate, null)
-import Data.Lens ((^.), (^?))
+import Data.Lens ((^.))
 import Data.Lens.Record (prop)
 import Data.Map as M
 import Data.Maybe (Maybe(Just, Nothing), maybe)
@@ -36,7 +35,7 @@ import Halogen.Query.HalogenM as HQ
 import Network.HTTP.Affjax (AJAX, get)
 import Search as Search
 import ServerAPI (getPosts)
-import Types (Effects, Language(Japanese, English), Post, asPost, defaultLang, localizedDate, update)
+import Types (Effects, Language(Japanese, English), Post, asPost, defaultLang, localizedDate, localizedPath, update)
 
 ---
 
@@ -69,28 +68,18 @@ selection :: forall m. State -> Array (H.ParentHTML Query Search.Query Slot m)
 selection s = [ search ] <> choices s
   where search = row_ [ col_ [ HH.slot SearchSlot Search.component s.language (HE.input NewKeywords) ] ]
 
-xhrtest :: forall e. Aff ( ajax :: AJAX, console :: CONSOLE, dom :: DOM | e ) (Array Node)
-xhrtest = do
-  log "Before..."
-  res <- get "/xhrtest"
-  log "After! Parse time..."
+-- | Make a request for blog post content.
+xhr :: forall e. String -> Aff ( ajax :: AJAX, dom :: DOM | e ) (Array Node)
+xhr p = do
+  res <- get $ "/blog/" <> p
   liftEff do
     parser <- newDOMParser
     let doc = parseHTMLFromString res.response parser
     body <- firstChild doc >>= (map join <<< traverse lastChild)
-    case body of
-      Nothing -> pure []
-      Just el -> children el
+    maybe (pure []) children body
 
 post :: forall c q. HH.HTML c q
 post = HH.div [ HP.ref (H.RefLabel "blogpost") ] []
-
--- post :: forall c q. State -> HH.HTML c q
--- post state = maybe (HH.div_ []) f state.selected
-  -- where f s = row_ [ col_  [ HH.a [ HP.attr (H.AttrName "href") $ "assets/" <> s <> postfix <> ".html" ]
-        -- postfix = case state.language of
-          -- English  -> ""
-          -- Japanese -> "-jp"
 
 -- | If no keywords, rank by date. Otherwise, rank by "search hits".
 choices :: forall c. State -> Array (HH.HTML c (Query Unit))
@@ -104,7 +93,8 @@ choices s = options >>= f
                   matches = map (\(Tuple k v) -> k <> " × " <> show v)
                             <<< reverse <<< sortWith snd <<< M.toUnfoldable $ hitsOnly p
               in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
-                   [ col_ [ HH.a [ HP.href "#", HE.onClick $ const (Just $ Selected p.filename unit) ]
+                   [ col_ [ HH.a [ HP.href "#"
+                                 , HE.onClick $ const (Just $ Selected (localizedPath s.language p.filename) unit) ]
                             [ HH.h3_ [ HH.text title ] ] ]
                    ]
                  , row_ $ [ colN 3 [] [ HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
@@ -123,11 +113,11 @@ eval = case _ of
   NewKeywords kws next  -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
   Selected s next       -> do
     curr <- H.gets _.selected
-    let fname = s ^? _Path
-    unless (fname == curr) $ do
-      H.modify (_ { selected = fname })
+    let fname = s ^. _Path
+    unless (Just fname == curr) $ do
+      H.modify (_ { selected = Just fname })
       htmls <- H.getHTMLElementRef (H.RefLabel "blogpost")
-      traverse_ (\el -> liftAff xhrtest >>= liftEff <<< replaceChildren el) htmls
+      traverse_ (\el -> liftAff (xhr fname) >>= liftEff <<< replaceChildren el) htmls
     pure next
   Initialize next -> do
     _ <- HQ.fork do

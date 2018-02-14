@@ -50,6 +50,10 @@ localizedDate :: Language -> D.Date -> String
 localizedDate English  d = show (fromEnum $ D.year d) <> " " <> show (D.month d) <> " " <> show (fromEnum $ D.day d)
 localizedDate Japanese d = show (fromEnum $ D.year d) <> "年" <> show (fromEnum $ D.month d) <> "月" <> show (fromEnum $ D.day d) <> "日"
 
+localizedPath :: Language -> C.Path -> C.Path
+localizedPath English p = p
+localizedPath Japanese (C.Path p) = C.Path $ p <> "-jp"
+
 ----------------------
 -- EXTRA BRIDGING HELP
 ----------------------
