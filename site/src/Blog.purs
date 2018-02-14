@@ -4,7 +4,7 @@ import Prelude
 
 import Bootstrap (colN, col_, container, row, row_)
 import CSS (paddingTop, pct)
-import Common (_Path, _Title)
+import Common (Path, _Path, _Title)
 import Control.Error.Util (bool)
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff.Class (liftAff)
@@ -16,12 +16,12 @@ import DOM.Classy.Node (class IsNode, appendChild, childNodes, firstChild, lastC
 import DOM.DOMParser (newDOMParser, parseHTMLFromString)
 import DOM.Node.NodeList (item, length)
 import DOM.Node.Types (Node)
-import Data.Array (catMaybes, filter, range, reverse, sortWith)
+import Data.Array (catMaybes, filter, head, range, reverse, sortWith)
 import Data.Foldable (any, intercalate, null)
-import Data.Lens ((^.))
+import Data.Lens ((^.), (^?))
 import Data.Lens.Record (prop)
 import Data.Map as M
-import Data.Maybe (Maybe(Just, Nothing))
+import Data.Maybe (Maybe(Just, Nothing), maybe)
 import Data.Monoid (mempty)
 import Data.Set as S
 import Data.Symbol (SProxy(..))
@@ -42,7 +42,7 @@ import Types (Effects, Language(Japanese, English), Post, asPost, defaultLang, l
 
 data Query a = LangChanged Language a
              | NewKeywords (S.Set String) a
-             | Selected String a
+             | Selected Path a
              | Initialize a
 
 type State = { language :: Language, posts :: Array Post, keywords :: S.Set String, selected :: Maybe String }
@@ -93,14 +93,13 @@ choices s = options >>= f
   where f p = let title = case s.language of
                     English  -> p.engTitle ^. _Title
                     Japanese -> p.japTitle ^. _Title
-                  fname = p.filename ^. _Path
                   hits = case s.language of
                     English  -> "Keyword hits: "
                     Japanese -> "キーワード出現回数：　"
                   matches = map (\(Tuple k v) -> k <> " × " <> show v)
                             <<< reverse <<< sortWith snd <<< M.toUnfoldable $ hitsOnly p
               in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
-                   [ col_ [ HH.a [ HP.href "#", HE.onClick $ const (Just $ Selected fname unit) ]
+                   [ col_ [ HH.a [ HP.href "#", HE.onClick $ const (Just $ Selected p.filename unit) ]
                             [ HH.h3_ [ HH.text title ] ] ]
                    ]
                  , row_ $ [ colN 3 [] [ HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
@@ -108,7 +107,7 @@ choices s = options >>= f
                                      , HH.text $ intercalate ", " matches ]] (not $ null matches)
                  ]
         g p = any (\kw -> M.member kw p.freqs) s.keywords
-        options | null s.keywords = reverse $ sortWith (_.date) s.posts
+        options | null s.keywords = s.posts
                 | otherwise = reverse <<< sortWith hitsOnly $ filter g s.posts
         hitsOnly p = M.filterKeys (\k -> S.member k s.keywords) p.freqs
 
@@ -119,15 +118,18 @@ eval = case _ of
   NewKeywords kws next  -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
   Selected s next       -> do
     curr <- H.gets _.selected
-    unless (Just s == curr) $ do
-      H.modify (_ { selected = Just s })
+    let fname = s ^? _Path
+    unless (fname == curr) $ do
+      H.modify (_ { selected = fname })
       htmls <- H.getHTMLElementRef (H.RefLabel "blogpost")
       traverse_ (\el -> liftAff xhrtest >>= liftEff <<< replaceChildren el) htmls
     pure next
   Initialize next -> do
     _ <- HQ.fork do
-      posts <- H.lift getPosts
-      H.modify (_ { posts = catMaybes $ map asPost posts })
+      rawPosts <- H.lift getPosts
+      let posts = reverse <<< sortWith _.date <<< catMaybes $ map asPost rawPosts
+      H.modify (_ { posts = posts })
+      maybe (pure unit) (\p -> eval $ Selected p.filename unit) $ head posts
     pure next
 
 replaceChildren :: forall e n m. IsNode n => IsNode m => n -> Array m -> Eff ( dom :: DOM | e ) Unit
