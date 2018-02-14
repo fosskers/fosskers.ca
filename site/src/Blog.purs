@@ -4,7 +4,7 @@ import Prelude
 
 import Bootstrap (colN, col_, fluid, row, row_)
 import CSS (paddingTop, pct)
-import Common (Path, _Path, _Title)
+import Common (_Title)
 import Control.Error.Util (bool)
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff.Class (liftAff)
@@ -35,7 +35,7 @@ import Halogen.Query.HalogenM as HQ
 import Network.HTTP.Affjax (AJAX, get)
 import Search as Search
 import ServerAPI (getPosts)
-import Types (Effects, Language(Japanese, English), Post, asPost, defaultLang, localizedDate, localizedPath, update)
+import Types (Effects, Language(Japanese, English), Path, Post, asPost, defaultLang, localizedDate, renderPath, setLang, update)
 
 ---
 
@@ -44,7 +44,7 @@ data Query a = LangChanged Language a
              | Selected Path a
              | Initialize a
 
-type State = { language :: Language, posts :: Array Post, keywords :: S.Set String, selected :: Maybe String }
+type State = { language :: Language, posts :: Array Post, keywords :: S.Set String, selected :: Maybe Path }
 
 data Slot = SearchSlot
 derive instance eqSlot  :: Eq Slot
@@ -94,7 +94,7 @@ choices s = options >>= f
                             <<< reverse <<< sortWith snd <<< M.toUnfoldable $ hitsOnly p
               in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
                    [ col_ [ HH.a [ HP.href "#"
-                                 , HE.onClick $ const (Just $ Selected (localizedPath s.language p.filename) unit) ]
+                                 , HE.onClick $ const (Just $ Selected p.path unit) ]
                             [ HH.h3_ [ HH.text title ] ] ]
                    ]
                  , row_ $ [ colN 3 [] [ HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
@@ -109,22 +109,27 @@ choices s = options >>= f
     -- H.lift <<< liftAff <<< log $ "Blog: New keywords -> " <> intercalate " " kws
 eval :: forall e. Query ~> H.ParentDSL State Query Search.Query Slot Void (Effects e)
 eval = case _ of
-  LangChanged l next    -> update (prop (SProxy :: SProxy "language")) l *> pure next
   NewKeywords kws next  -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
-  Selected s next       -> do
+  LangChanged l next    -> do
+    curr <- H.gets _.language
+    unless (l == curr) $ do
+      H.modify (_ { language = l })
+      choice <- H.gets _.selected
+      traverse_ (\s -> eval $ Selected (setLang l s) unit) choice
+    pure next
+  Selected s next -> do
     curr <- H.gets _.selected
-    let fname = s ^. _Path
-    unless (Just fname == curr) $ do
-      H.modify (_ { selected = Just fname })
+    unless (Just s == curr) $ do
+      H.modify (_ { selected = Just s })
       htmls <- H.getHTMLElementRef (H.RefLabel "blogpost")
-      traverse_ (\el -> liftAff (xhr fname) >>= liftEff <<< replaceChildren el) htmls
+      traverse_ (\el -> liftAff (xhr $ renderPath s) >>= liftEff <<< replaceChildren el) htmls
     pure next
   Initialize next -> do
     _ <- HQ.fork do
       rawPosts <- H.lift getPosts
       let posts = reverse <<< sortWith _.date <<< catMaybes $ map asPost rawPosts
       H.modify (_ { posts = posts })
-      maybe (pure unit) (\p -> eval $ Selected p.filename unit) $ head posts
+      traverse_ (\p -> eval $ Selected p.path unit) $ head posts
     pure next
 
 replaceChildren :: forall e n m. IsNode n => IsNode m => n -> Array m -> Eff ( dom :: DOM | e ) Unit

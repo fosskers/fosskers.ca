@@ -2,6 +2,7 @@ module Types where
 
 import Prelude
 
+import Common (_Path)
 import Common as C
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff.Console (CONSOLE, log)
@@ -38,7 +39,10 @@ derive instance tabGeneric :: Generic Tab
 defaultTab :: Tab
 defaultTab = Blog
 
-type Post = { engTitle :: C.Title, japTitle :: C.Title, date :: D.Date, filename :: C.Path, freqs :: Map String Int }
+data Path = Path String Language
+derive instance pathEq :: Eq Path
+
+type Post = { engTitle :: C.Title, japTitle :: C.Title, date :: D.Date, path :: Path, freqs :: Map String Int }
 
 -- | Updates some State, so long as it hasn't changed.
 update :: forall s a m. MonadState s m => Eq a => Lens' s a -> a -> m Unit
@@ -50,9 +54,12 @@ localizedDate :: Language -> D.Date -> String
 localizedDate English  d = show (fromEnum $ D.year d) <> " " <> show (D.month d) <> " " <> show (fromEnum $ D.day d)
 localizedDate Japanese d = show (fromEnum $ D.year d) <> "年" <> show (fromEnum $ D.month d) <> "月" <> show (fromEnum $ D.day d) <> "日"
 
-localizedPath :: Language -> C.Path -> C.Path
-localizedPath English p = p
-localizedPath Japanese (C.Path p) = C.Path $ p <> "-jp"
+renderPath :: Path -> String
+renderPath (Path t English) = t
+renderPath (Path t Japanese) = t <> "-jp"
+
+setLang :: Language -> Path -> Path
+setLang l (Path t _) = Path t l
 
 ----------------------
 -- EXTRA BRIDGING HELP
@@ -73,7 +80,11 @@ settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080/" }
 asPost :: C.Blog -> Maybe Post
 asPost (C.Blog b) = map g $ asDate b.date
   where f   = fromFoldable b.freqs
-        g d = { engTitle: b.engTitle, japTitle: b.japTitle, date: d, filename: b.filename, freqs: f }
+        g d = { engTitle: b.engTitle
+              , japTitle: b.japTitle
+              , date: d
+              , path: Path (b.filename ^. _Path) English
+              , freqs: f }
 
 -- | I'd love a more direct bridge between the Haskell and Purescript `Date` types.
 asDate :: Date -> Maybe D.Date
