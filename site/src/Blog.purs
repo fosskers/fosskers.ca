@@ -2,7 +2,7 @@ module Blog ( component, Query(..) ) where
 
 import Prelude
 
-import Bootstrap (colN, col_, container, row, row_)
+import Bootstrap (colN, col_, fluid, row, row_)
 import CSS (paddingTop, pct)
 import Common (Path, _Path, _Title)
 import Control.Error.Util (bool)
@@ -61,7 +61,12 @@ component = H.lifecycleParentComponent { initialState: const state
   where state = { language: defaultLang, posts: mempty, keywords: mempty, selected: Nothing }
 
 render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
-render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $ [ search ] <> choices s <> [ post s ]
+render s = fluid [ HC.style <<< paddingTop $ pct 1.0 ]
+           [ row_ [ colN 4 [] $ selection s
+                  , col_ [ post ] ]]
+
+selection :: forall m. State -> Array (H.ParentHTML Query Search.Query Slot m)
+selection s = [ search ] <> choices s
   where search = row_ [ col_ [ HH.slot SearchSlot Search.component s.language (HE.input NewKeywords) ] ]
 
 xhrtest :: forall e. Aff ( ajax :: AJAX, console :: CONSOLE, dom :: DOM | e ) (Array Node)
@@ -77,8 +82,8 @@ xhrtest = do
       Nothing -> pure []
       Just el -> children el
 
-post :: forall c q. State -> HH.HTML c q
-post _ = HH.div [ HP.ref (H.RefLabel "blogpost") ] []
+post :: forall c q. HH.HTML c q
+post = HH.div [ HP.ref (H.RefLabel "blogpost") ] []
 
 -- post :: forall c q. State -> HH.HTML c q
 -- post state = maybe (HH.div_ []) f state.selected

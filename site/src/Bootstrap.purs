@@ -10,6 +10,9 @@ import Halogen.HTML.Properties as HP
 
 ---
 
+fluid :: forall p i. Node HTMLdiv p i
+fluid as hs = HH.div ([ HP.class_ $ H.ClassName "container-fluid" ] <> as) hs
+
 container :: forall p i. Node HTMLdiv p i
 container as hs = HH.div ([ HP.class_ $ H.ClassName "container" ] <> as) hs
 
