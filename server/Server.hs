@@ -51,6 +51,8 @@ index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
           link_ [ rel_ "stylesheet"
                 , href_ "assets/fa-brands.min.css" ]
           link_ [ rel_ "stylesheet"
+                , href_ "assets/fa-solid.min.css" ]
+          link_ [ rel_ "stylesheet"
                 , href_ "assets/fosskers.css" ]
 
 -- | A mapping of word frequencies.

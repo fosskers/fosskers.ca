@@ -92,9 +92,10 @@ choices s = options >>= f
               in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
                    [ col_ [ HH.a [ HP.href "#"
                                  , HE.onClick $ const (Just $ Selected p.path unit) ]
-                            [ HH.h3_ [ HH.text title ] ] ]
-                   ]
-                 , row_ $ [ colN 3 [] [ HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
+                            [ HH.h3_ [ HH.text title ]]]]
+                 , row_ $ [ colN 4 [] [ HH.a [ HP.href $ "/blog/" <> renderPath p.path
+                                             , HP.classes $ map H.ClassName [ "fas", "fa-link" ] ] []
+                                      , HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
                    <> bool [] [ col_ [ HH.b_ [ HH.text hits ]
                                      , HH.text $ intercalate ", " matches ]] (not $ null matches)
                  ]
