@@ -20,7 +20,6 @@ type API = JsonAPI
   :<|> "blog" :> Capture "post" Text :> Get '[SHB.HTML] B.Html
   :<|> "assets" :> Raw
   :<|> "webfonts" :> Raw
-  :<|> "xhrtest" :> Get '[SHL.HTML] (Html ())
   :<|> Get '[SHL.HTML] (Html ())
 
 newtype Title = Title Text deriving (Eq, Show, Generic, ToJSON)

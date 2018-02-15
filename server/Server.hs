@@ -34,7 +34,6 @@ server env = pure (stats env)
   :<|> (\p -> maybe (throwError err404) pure . M.lookup p $ posts env)
   :<|> serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
-  :<|> pure xhrtest
   :<|> pure index
 
 app :: Env -> Application
@@ -54,9 +53,6 @@ index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
                 , href_ "assets/fa-brands.min.css" ]
           link_ [ rel_ "stylesheet"
                 , href_ "assets/fosskers.css" ]
-
-xhrtest :: Html ()
-xhrtest = div_ "XHR Test successful!" *> div_ "Oh dang, another one"
 
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
