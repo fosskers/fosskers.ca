@@ -8,7 +8,6 @@ import           Common
 import           Control.Arrow ((&&&))
 import           Control.Lens hiding (index)
 import           Data.Char (isAlpha)
-import           Data.Default
 import qualified Data.HashMap.Strict as M
 import           Data.Proxy
 import qualified Data.Text as T
@@ -23,9 +22,6 @@ import           Servant.Server
 import           Servant.Utils.StaticFiles (serveDirectoryFileServer)
 import           Shelly hiding (path)
 import qualified Text.Blaze.Html as B
-import           Text.Pandoc.Class (runPure)
-import           Text.Pandoc.Readers.Org (readOrg)
-import           Text.Pandoc.Writers.HTML (writeHtml5)
 
 ---
 
@@ -56,6 +52,8 @@ index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
                 , href_ "assets/fontawesome.min.css" ]
           link_ [ rel_ "stylesheet"
                 , href_ "assets/fa-brands.min.css" ]
+          link_ [ rel_ "stylesheet"
+                , href_ "assets/fosskers.css" ]
 
 xhrtest :: Html ()
 xhrtest = div_ "XHR Test successful!" *> div_ "Oh dang, another one"
@@ -66,16 +64,16 @@ freq = map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . s
   where f c = bool ' ' c $ isAlpha c
         g (T.length -> l) = l > 2 && l < 13
 
--- org :: Text -> Sh ()
--- org f = run_ "emacs" [f, "--batch", "-f", "org-html-export-to-html", "--kill"]
+org :: Text -> Sh ()
+org f = run_ "emacs" [f, "--batch", "-f", "org-html-export-to-html", "--kill"]
 
 -- | The expected filepath of the Japanese version of some blog post,
 -- given its full English filepath.
 jPath :: Text -> Text
 jPath path = T.dropEnd 4 path <> "-jp.org"
 
-orgHtml :: Text -> Either Text B.Html
-orgHtml = first (const "Pandoc parsing error") . runPure . (readOrg def >=> writeHtml5 def)
+htmlPath :: Text -> Text
+htmlPath path = T.dropEnd 4 path <> ".html"
 
 -- | Render all ORG files to HTML, also yielding word frequencies for each file.
 --
@@ -87,7 +85,7 @@ orgs :: Sh ([Text], [Blog], M.HashMap Text B.Html)
 orgs = do
   cd "blog"
   files <- filter (T.isSuffixOf ".org") <$> lsT "."
-  -- traverse_ org files
+  traverse_ org files
   vs <- traverse g $ filter (not . T.isSuffixOf "-jp.org") files
   let (errs, (blogs, pairs)) = second unzip $ partitionEithers vs
   pure $ (errs, blogs, M.fromList $ concat pairs)
@@ -97,13 +95,17 @@ orgs = do
               japPath = fromText $ jPath f
           engContent <- eread engPath
           japContent <- eread . fromText $ jPath f
+          engHtml    <- eread . fromText $ htmlPath f
+          japHtml    <- eread . fromText . htmlPath $ jPath f
           pure $ do
             engC <- engContent
             japC <- japContent
+            engH <- engHtml
+            japH <- japHtml
             let ebase = toTextIgnore $ basename engPath
                 jbase = toTextIgnore $ basename japPath
             blog <- h ebase engC japC
-            html <- traverse (traverse orgHtml) [(ebase, engC), (jbase, japC)]
+            let html = [(ebase, engH), (jbase, japH)] & traverse . _2 %~ B.preEscapedToHtml
             pure (blog, html)
 
         h :: Text -> Text -> Text -> Either Text Blog

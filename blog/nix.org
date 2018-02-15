@@ -1,7 +1,7 @@
 #+TITLE: Nix and Dante for Haskell Dev in Emacs
 #+DATE: 2018-01-10
 #+AUTHOR: Colin
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-theme.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
 
 * Initial Setup
 
