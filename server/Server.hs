@@ -1,6 +1,6 @@
 {-# LANGUAGE DataKinds, TypeOperators, Rank2Types #-}
 {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
-{-# LANGUAGE ViewPatterns, TupleSections #-}
+{-# LANGUAGE ViewPatterns #-}
 
 module Main ( main ) where
 
@@ -21,13 +21,12 @@ import           Servant.API
 import           Servant.Server
 import           Servant.Utils.StaticFiles (serveDirectoryFileServer)
 import           Shelly hiding (path)
-import qualified Text.Blaze.Html as B
 
 ---
 
 newtype Args = Args { port :: Maybe Int <?> "Port to listen for requests on." } deriving (Generic, ParseRecord)
 
-data Env = Env { stats :: [Blog], posts :: M.HashMap Text B.Html }
+data Env = Env { stats :: [Blog], posts :: M.HashMap Text (Html ()) }
 
 server :: Env -> Server API
 server env = pure (stats env)
@@ -77,15 +76,15 @@ htmlPath path = T.dropEnd 4 path <> ".html"
 --   - Every English article has a Japanese analogue
 --   - The true title always appears on the first line of the file
 --   - The original (ballpark) date of writing is on the second line of the "base" file
-orgs :: Sh ([Text], [Blog], M.HashMap Text B.Html)
+orgs :: Sh ([Text], [Blog], M.HashMap Text (Html ()))
 orgs = do
   cd "blog"
   files <- filter (T.isSuffixOf ".org") <$> lsT "."
   traverse_ org files
   vs <- traverse g $ filter (not . T.isSuffixOf "-jp.org") files
   let (errs, (blogs, pairs)) = second unzip $ partitionEithers vs
-  pure $ (errs, blogs, M.fromList $ concat pairs)
-  where g :: Text -> Sh (Either Text (Blog, [(Text, B.Html)]))
+  pure (errs, blogs, M.fromList $ concat pairs)
+  where g :: Text -> Sh (Either Text (Blog, [(Text, Html ())]))
         g f = do
           let engPath = fromText f
               japPath = fromText $ jPath f
@@ -101,7 +100,7 @@ orgs = do
             let ebase = toTextIgnore $ basename engPath
                 jbase = toTextIgnore $ basename japPath
             blog <- h ebase engC japC
-            let html = [(ebase, engH), (jbase, japH)] & traverse . _2 %~ B.preEscapedToHtml
+            let html = [(ebase, engH), (jbase, japH)] & traverse . _2 %~ toHtmlRaw
             pure (blog, html)
 
         h :: Text -> Text -> Text -> Either Text Blog
