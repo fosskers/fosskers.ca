@@ -11,7 +11,7 @@ import Control.Monad.Aff.Class (liftAff)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
 import DOM (DOM)
-import DOM.Classy.Node (class IsNode, appendChild, childNodes, firstChild, lastChild, removeChild)
+import DOM.Classy.Node (class IsNode, appendChild, childNodes, lastChild, removeChild)
 import DOM.DOMParser (newDOMParser, parseHTMLFromString)
 import DOM.Node.NodeList (item, length)
 import DOM.Node.Types (Node)
@@ -75,7 +75,7 @@ xhr p = do
   liftEff do
     parser <- newDOMParser
     let doc = parseHTMLFromString res.response parser
-    body <- firstChild doc >>= (map join <<< traverse lastChild)
+    body <- lastChild doc >>= (map join <<< traverse lastChild)
     maybe (pure []) children body
 
 post :: forall c q. HH.HTML c q
@@ -84,12 +84,9 @@ post = HH.div [ HP.ref (H.RefLabel "blogpost") ] []
 -- | If no keywords, rank by date. Otherwise, rank by "search hits".
 choices :: forall c. State -> Array (HH.HTML c (Query Unit))
 choices s = options >>= f
-  where f p = let title = case s.language of
-                    English  -> p.engTitle ^. _Title
-                    Japanese -> p.japTitle ^. _Title
-                  hits = case s.language of
-                    English  -> "Keyword hits: "
-                    Japanese -> "キーワード出現回数：　"
+  where f p = let Tuple title hits = case s.language of
+                    English  -> Tuple (p.engTitle ^. _Title) "Keyword hits: "
+                    Japanese -> Tuple (p.japTitle ^. _Title) "キーワード出現回数：　"
                   matches = map (\(Tuple k v) -> k <> " × " <> show v)
                             <<< reverse <<< sortWith snd <<< M.toUnfoldable $ hitsOnly p
               in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
