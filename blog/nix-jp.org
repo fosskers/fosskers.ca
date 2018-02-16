@@ -1,0 +1,349 @@
+#+TITLE: NixとDante
+#+DATE: 2018-01-10
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+JAPANESE!
+
+* Initial Setup
+
+https://github.com/Gabriel439/haskell-nix
+
+I'm going to ignore ~tinc~ and ~styx~, two third-party tools for Haskell/Nix
+integration.
+
+The ~nix~ package in the AUR doesn't seem to setup the Nix environment
+properly. I'm now trying the official way:
+
+#+BEGIN_EXAMPLE
+curl https://nixos.org/nix/install | sh
+#+END_EXAMPLE
+
+View a script that sets environment variables:
+
+#+BEGIN_EXAMPLE
+less /home/colin/.nix-profile/etc/profile.d/nix.sh
+#+END_EXAMPLE
+
+This script assumes Bash, and I use ~fish~, so I've set the following
+the variables myself:
+
+#+BEGIN_EXAMPLE
+set -x PATH ... '/home/colin/.nix-profile/bin'
+
+# Nix
+set -x NIX_PATH 'nixpkgs=/home/colin/.nix-defexpr/channels/nixpkgs'
+set -x NIX_SSL_CERT_FILE '/etc/ssl/certs/ca-certificates.crt'
+#+END_EXAMPLE
+
+* Haskell Specifics
+
+The advice here assumes a straight-forward Haskell project - a single simple
+library or executable without multiple subprojects or dependency overrides.
+It demonstrates how to benchmark, profile, integrate with Travis, and integrate
+with Emacs/Spacemacs.
+
+** Auto-generate Nix Config
+
+~cabal2nix~ can be used to generate nix expressions from ~.cabal~ files.
+This can be installed via:
+
+#+BEGIN_EXAMPLE
+nix-env -i cabal2nix
+#+END_EXAMPLE
+
+Then generate a nixified version of your ~.cabal~ file (you'll need to do this
+every time your ~.cabal~ changes):
+
+#+BEGIN_EXAMPLE
+cabal2nix . > default.nix
+#+END_EXAMPLE
+
+If you prefer /hpack/, grab it via:
+
+#+BEGIN_EXAMPLE
+nix-env --install --attr nixpkgs.haskellPackages.hpack
+#+END_EXAMPLE
+
+And generate your ~default.nix~ via:
+
+#+BEGIN_EXAMPLE
+hpack; cabal2nix . > default.nix    # Fish syntax
+hpack && cabal2nix . > default.nix  # Bash syntax
+#+END_EXAMPLE
+
+** Developing in a Nix Shell
+
+A full nix-based project is defined by three files:
+
+- ~default.nix~
+- ~shell.nix~
+- ~release.nix~
+
+But only the first two are needed for usual development.
+The command ~nix-shell~ invokes a jailed environment where all our project's
+dependencies are visible to ~cabal~, so we can ~cabal test~ and ~cabal bench~
+as usual. The following ~shell.nix~ file will allow ~nix-shell~ to load all
+necessary dependencies:
+
+#+BEGIN_SRC nix
+let nixpkgs = import <nixpkgs> {};
+    orig = nixpkgs.pkgs.haskellPackages.callPackage ./default.nix {};
+in (nixpkgs.pkgs.haskell.lib.doBenchmark orig).env
+#+END_SRC
+
+Notice that provided we have a ~default.nix~ (which is the usual name for the
+file output by ~cabal2nix~), there is nothing project-specific about this.
+So, this snippet can be safely cargo-culted around to our various projects.
+
+Without the ~doBenchmark~ line, our benchmark dependencies would not be visible
+inside the Nix Shell.
+
+** Defining a ~release.nix~
+
+Generally necessary for Travis, and for actually installing your package
+into some Nix store.
+
+#+BEGIN_SRC nix
+let
+  config = {
+    packageOverrides = pkgs: {
+      haskellPackages = pkgs.haskellPackages.override {
+        overrides = haskellPackagesNew: haskellPackagesOld: {
+          vectortiles = haskellPackagesNew.callPackage ./default.nix { };
+        };
+      };
+    };
+  };
+
+  pkgs =
+    import <nixpkgs> { inherit config; };
+
+in
+  { vectortiles = pkgs.haskellPackages.vectortiles;
+  }
+#+END_SRC
+
+There are shorter forms, but this one allows for easy overriding of specific
+settings or dependencies, should we need to do that.
+
+To build some full project:
+
+#+BEGIN_EXAMPLE
+nix-build release.nix
+#+END_EXAMPLE
+
+To build some "sub-derivation" within a larger, composite project:
+
+#+BEGIN_EXAMPLE
+nix-build --attr my-subproject release.nix
+#+END_EXAMPLE
+
+There are a number of other ways to customize a Haskell build, which are [[https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/lib.nix][listed here]].
+
+** Profiling
+
+Nix makes this fairly easy. First, we add the following to a ~~/.config/nixpkgs/config.nix~:
+
+#+BEGIN_SRC nix
+{
+  packageOverrides = super: let self = super.pkgs; in
+  {
+    profiledHaskellPackages = self.haskellPackages.override {
+      overrides = self: super: {
+        mkDerivation = args: super.mkDerivation (args // {
+          enableLibraryProfiling = true;
+        });
+      };
+    };
+  };
+}
+#+END_SRC
+
+Now in the project we want to profile, we create a new ~profiling-shell.nix~:
+
+#+BEGIN_SRC nix
+let nixpkgs = import <nixpkgs> {};
+    orig = nixpkgs.pkgs.profiledHaskellPackages.callPackage ./default.nix {};
+in (nixpkgs.pkgs.haskell.lib.doBenchmark orig).env
+#+END_SRC
+
+Almost identical to our normal ~shell.nix~, except for the usage of
+~profiledHaskellPackages~, which we just defined globally.
+Now, an invocation of ~nix-shell profiling-shell.nix~ will rebuild /every/
+dependency in our project with profiling enabled. The first time this is done
+it will take quite a long time. Luckily this doesn't corrupt our Nix store -
+a vanilla ~nix-shell~ does seem to present us with our regular dependencies
+again, without redownloading or rebuilding.
+
+*WARNING:* A ~nix-collect-garbage -d~ will wipe away all the custom-built
+libs from our Nix Store, and we'd have to build them again if they're needed.
+
+If we're writing a library, the closest executable on hand that we could profile
+would be our benchmark suite. To do that:
+
+- Add ~-prof~ and ~-fprof-auto~ to our benchmark's GHC options
+- Regenerate ~default.nix~
+- Enter our profiling shell: ~nix-shell profiling-shell.nix~
+- ~cabal configure --enable-library-profiling --enable-benchmarks~
+- ~cabal build~
+- ~dist/build/projname/projname-bench +RTS -p~
+- Look at the produced ~projname-bench.prof~ file
+
+Based on the results, we can make code changes, remove the profiling options,
+regenerate ~default.nix~, and benchmark as usual in our normal Nix Shell.
+
+* Emacs Integration
+
+** Installing ~Dante~
+
+Spacemacs' ~haskell~ layer on the ~develop~ branch has support for [[https://github.com/jyp/dante][Dante]],
+which automatically uses ~nix~ if it detects a ~shell.nix~ and a ~default.nix~.
+Our haskell layer line should look like this:
+
+#+BEGIN_SRC lisp
+  (haskell :variables haskell-completion-backend 'dante)
+#+END_SRC
+
+Now we add the following to the ~dotspacemacs/user-config~ section of our ~.spacemacs~:
+
+#+BEGIN_SRC lisp
+  (add-hook 'dante-mode-hook 'flycheck-mode)
+#+END_SRC
+
+or else Dante might not activate itself properly when opening a Haskell file.
+
+Dante provides no REPL, and the usual ~SPC m s b~ doesn't work. To test out
+some Haskell, we can do this instead:
+
+#+BEGIN_SRC haskell
+  -- >>> foo 5
+  foo :: Int -> String
+  foo = show
+#+END_SRC
+
+By running ~SPC m s e~ on the comment line, our code will transform into this:
+
+#+BEGIN_SRC haskell
+  -- >>> foo 5
+  -- "5"
+  foo :: Int -> String
+  foo = show
+#+END_SRC
+
+In theory this obviates the need for an actual REPL.
+
+** Getting Dante to work with Test and Benchmark suites
+
+Out of the box, Dante doesn't automatically handle multiple compilation targets.
+By this, I mean a single ~.cabal~ that specifies a library, test suite, and
+benchmark suite all in the same file, say. By default, when navigating to our
+test and benchmark code, Flycheck will freak out and claim that many of our
+imported libraries aren't in scope.
+
+The solution to this is to use file-local emacs variables in our test/bench
+source files. We can use the emacs function ~add-file-local-variable-prop-line~ to set
+~dante-target~ to the name of our test/benchmark suite names. So for a test suite
+named ~vectortiles-test~, we'd see at the following Haskell comment at the first
+line of our ~Test.hs~ file:
+
+#+BEGIN_SRC haskell
+  -- -*- dante-target: "vectortiles-test"; -*-
+#+END_SRC
+
+Navigating to ~Test.hs~ will then boot an extra Nix'd ~cabal repl~ and flycheck
+session specifically for this file.
+
+* CI Services
+
+Of the available choices, good ol' Travis seems to have the simplest setup.
+
+** Travis
+
+[[https://docs.travis-ci.com/user/languages/nix/][Official instructions here.]]
+
+Pretty low friction. For a package named ~vectortiles~, a complete ~.travis.yml~
+boils down to:
+
+#+BEGIN_SRC yaml
+  # Run the build without Docker. It's *much* faster this way.
+  sudo: true
+  language: nix
+  script: nix-build --attr vectortiles release.nix
+#+END_SRC
+
+This setup will have our CI fail properly when tests fail. It should
+run in only a few minutes, even though every dependency is redownloaded
+every time.
+
+If you're an [[https://github.com/sol/hpack][hpack]] fan and never commit your auto-generated ~.cabal~,
+here's a ~.travis.yml~ that will help:
+
+#+BEGIN_SRC nix
+  # Run the build without Docker. It's *much* faster this way.
+  sudo: true
+
+  language: nix
+
+  before_install: nix-env --install --attr nixpkgs.haskellPackages.hpack
+
+  script:
+    - hpack
+    - nix-build --attr vectortiles release.nix
+#+END_SRC
+
+** Hercules
+
+[[https://github.com/hercules-ci/hercules][Github repository]]
+
+It's a new CI system for Nix projects that aims to replace Hydra, but it still
+seems [[https://github.com/hercules-ci/hercules/issues/5][distant from its 1.0 release]].
+
+** CircleCI
+
+This doesn't seem to support Nix at all.
+
+** Self-run Hydra
+
+While the "native" choice for Nix, this seems way too complicated for the lay
+library author.
+
+* Comparison to Stack
+
+I want to give Nix+dante a fair shot. In terms of personal programming philosophy,
+I'm motivated by high power-to-simplicity ratios (hence Haskell). After a few days
+of dealing with Nix and Dante, here are the advantages that I see:
+
+- Much faster "first compile" thanks to remotely cached, prebuilt libraries
+  (this also affects CI runs, Heroku deploys, etc.)
+- "Auto-updating" resolvers (i.e. no need to manually increment the "nightly" date)
+- Simpler Travis config
+- Non-haskell dependency management
+- Convenient connection with [[https://github.com/sol/doctest][doctest]]. If you've added a comment that's runnable
+  by Dante into a docstring, say:
+
+#+BEGIN_SRC haskell
+  -- | Very well-worded docstring here.
+  --
+  -- >>> inc 1
+  -- 2
+  inc :: Int -> Int
+  inc n = n + 1
+#+END_SRC
+
+This is also the syntax that's understood by doctest as being a proof of
+correctness, so future changes to ~inc~ will have to pass the test that
+you originally set via a live Dante run (and not something hand-written).
+
+And the advantages of Stack:
+
+- Simpler initial setup for Haskell beginners (i.e. just ~stack build~)
+- Slightly stronger "it will always build" guarantee? A ~stack.yaml~ seems like
+  a stronger constract for a sane environment when it comes to GHC and library
+  versions.
+- ~intero~ has a simpler setup, and I miss the REPL a little bit
+
+* Resources
+
+- [[https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure][Official Nix guide for Haskell packages]]
+- [[http://vaibhavsagar.com/blog/2018/01/03/static-haskell-nix/][Building static Haskell binaries]]

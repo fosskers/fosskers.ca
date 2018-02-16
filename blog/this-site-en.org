@@ -1,6 +1,7 @@
 #+TITLE: Websites with Servant and Halogen
+#+DATE: 2018-02-01
 #+AUTHOR: Colin
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-theme.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
 
 * Haskell
 * Purescript
@@ -82,3 +83,29 @@ To run the ~pscid~ daemon:
 #+BEGIN_SRC bash
   npm run pulp test
 #+END_SRC
+
+** Production
+
+Install a Javascript minifier:
+
+#+BEGIN_SRC bash
+  npm install uglify-js --save-dev
+#+END_SRC
+
+Add an ~npm~ command for it in ~package.json~:
+
+#+BEGIN_SRC json
+  "scripts": {
+      ...,
+      "uglify": "uglifyjs"
+  }
+#+END_SRC
+
+Minify your bundled Javascript:
+
+#+BEGIN_SRC bash
+  npm run uglify -- app.js --output min.js --compress --mangle
+#+END_SRC
+
+The behaviour of the minified code seems to be the same, and the file size
+is less than half of the original human-readable code.
