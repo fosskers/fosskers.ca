@@ -18,6 +18,7 @@ import Data.Generic (class Generic)
 import Data.Lens (Lens', (.~), (^.))
 import Data.Map (Map, fromFoldable)
 import Data.Maybe (Maybe)
+import Data.String as S
 import Network.HTTP.Affjax (AJAX)
 import Servant.PureScript.Affjax (AjaxError, errorToString)
 import Servant.PureScript.Settings (SPSettings_, defaultSettings)
@@ -32,6 +33,15 @@ derive instance languageEq :: Eq Language
 defaultLang :: Language
 defaultLang = English
 
+suffix :: Language -> String
+suffix English  = "-en"
+suffix Japanese = "-jp"
+
+postLang :: Post -> Language
+postLang p = case takeRight 3 (p.path ^. _Path) of
+  "-jp" -> Japanese
+  _     -> English
+
 data Tab = About | Blog
 derive instance tabEq :: Eq Tab
 derive instance tabGeneric :: Generic Tab
@@ -39,10 +49,7 @@ derive instance tabGeneric :: Generic Tab
 defaultTab :: Tab
 defaultTab = Blog
 
-data Path = Path String Language
-derive instance pathEq :: Eq Path
-
-type Post = { engTitle :: C.Title, japTitle :: C.Title, date :: D.Date, path :: Path, freqs :: Map String Int }
+type Post = { title :: C.Title, date :: D.Date, path :: C.Path, freqs :: Map String Int }
 
 -- | Updates some State, so long as it hasn't changed.
 update :: forall s a m. MonadState s m => Eq a => Lens' s a -> a -> m Unit
@@ -54,12 +61,16 @@ localizedDate :: Language -> D.Date -> String
 localizedDate English  d = show (fromEnum $ D.year d) <> " " <> show (D.month d) <> " " <> show (fromEnum $ D.day d)
 localizedDate Japanese d = show (fromEnum $ D.year d) <> "年" <> show (fromEnum $ D.month d) <> "月" <> show (fromEnum $ D.day d) <> "日"
 
-renderPath :: Path -> String
-renderPath (Path t English) = t
-renderPath (Path t Japanese) = t <> "-jp"
+localizedPath :: Language -> C.Path -> C.Path
+localizedPath l (C.Path p) = C.Path $ dropRight 3 p <> suffix l
 
-setLang :: Language -> Path -> Path
-setLang l (Path t _) = Path t l
+-- | Temporarily stolen from the latest version of `Data.String`, since it
+-- wasn't included in the version available in the psc packageset.
+dropRight :: Int -> String -> String
+dropRight i s = S.take (S.length s - i) s
+
+takeRight :: Int -> String -> String
+takeRight i s = S.drop (S.length s - i) s
 
 ----------------------
 -- EXTRA BRIDGING HELP
@@ -79,12 +90,7 @@ settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080/" }
 -- to issues with `Generic`.
 asPost :: C.Blog -> Maybe Post
 asPost (C.Blog b) = map g $ asDate b.date
-  where f   = fromFoldable b.freqs
-        g d = { engTitle: b.engTitle
-              , japTitle: b.japTitle
-              , date: d
-              , path: Path (b.filename ^. _Path) English
-              , freqs: f }
+  where g d = { title: b.title, date: d, path: b.filename, freqs: fromFoldable b.freqs }
 
 -- | I'd love a more direct bridge between the Haskell and Purescript `Date` types.
 asDate :: Date -> Maybe D.Date

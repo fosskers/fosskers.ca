@@ -4,7 +4,7 @@ import Prelude
 
 import Bootstrap (colN, col_, fluid, row, row_)
 import CSS (paddingTop, pct)
-import Common (_Title)
+import Common (Path, _Path, _Title)
 import Control.Error.Util (bool)
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff.Class (liftAff)
@@ -17,7 +17,7 @@ import DOM.Node.NodeList (item, length)
 import DOM.Node.Types (Node)
 import Data.Array (catMaybes, filter, head, range, reverse, sortWith)
 import Data.Foldable (any, intercalate, null)
-import Data.Lens ((^.))
+import Data.Lens (_Just, (^.), (^?))
 import Data.Lens.Record (prop)
 import Data.Map as M
 import Data.Maybe (Maybe(Just, Nothing), maybe)
@@ -35,7 +35,7 @@ import Halogen.Query.HalogenM as HQ
 import Network.HTTP.Affjax (AJAX, get)
 import Search as Search
 import ServerAPI (getPosts)
-import Types (Effects, Language(Japanese, English), Path, Post, asPost, defaultLang, localizedDate, renderPath, setLang, update)
+import Types (Effects, Language(Japanese, English), Post, asPost, defaultLang, localizedDate, localizedPath, postLang, update)
 
 ---
 
@@ -83,25 +83,25 @@ post = HH.div [ HP.ref (H.RefLabel "blogpost") ] []
 
 -- | If no keywords, rank by date. Otherwise, rank by "search hits".
 choices :: forall c. State -> Array (HH.HTML c (Query Unit))
-choices s = options >>= f
-  where f p = let Tuple title hits = case s.language of
-                    English  -> Tuple (p.engTitle ^. _Title) "Keyword hits: "
-                    Japanese -> Tuple (p.japTitle ^. _Title) "キーワード出現回数：　"
+choices s = options (filter (\p -> postLang p == s.language) s.posts) >>= f
+  where f p = let hits = case s.language of
+                    English  -> "Keyword hits: "
+                    Japanese -> "キーワード出現回数：　"
                   matches = map (\(Tuple k v) -> k <> " × " <> show v)
                             <<< reverse <<< sortWith snd <<< M.toUnfoldable $ hitsOnly p
               in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
                    [ col_ [ HH.a [ HP.href "#"
                                  , HE.onClick $ const (Just $ Selected p.path unit) ]
-                            [ HH.h3_ [ HH.text title ]]]]
-                 , row_ $ [ colN 4 [] [ HH.a [ HP.href $ "/blog/" <> renderPath p.path
+                            [ HH.h3_ [ HH.text $ p.title ^. _Title ]]]]
+                 , row_ $ [ colN 4 [] [ HH.a [ HP.href $ "/blog/" <> p.path ^. _Path
                                              , HP.classes $ map H.ClassName [ "fas", "fa-link" ] ] []
                                       , HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
                    <> bool [] [ col_ [ HH.b_ [ HH.text hits ]
                                      , HH.text $ intercalate ", " matches ]] (not $ null matches)
                  ]
         g p = any (\kw -> M.member kw p.freqs) s.keywords
-        options | null s.keywords = s.posts
-                | otherwise = reverse <<< sortWith hitsOnly $ filter g s.posts
+        options ps | null s.keywords = ps
+                   | otherwise = reverse <<< sortWith hitsOnly $ filter g ps
         hitsOnly p = M.filterKeys (\k -> S.member k s.keywords) p.freqs
 
     -- H.lift <<< liftAff <<< log $ "Blog: New keywords -> " <> intercalate " " kws
@@ -113,14 +113,14 @@ eval = case _ of
     unless (l == curr) $ do
       H.modify (_ { language = l })
       choice <- H.gets _.selected
-      traverse_ (\s -> eval $ Selected (setLang l s) unit) choice
+      traverse_ (\s -> eval $ Selected (localizedPath l s) unit) choice
     pure next
   Selected s next -> do
     curr <- H.gets _.selected
-    unless (Just s == curr) $ do
+    unless (s ^? _Path == curr ^? _Just <<< _Path) $ do
       H.modify (_ { selected = Just s })
       htmls <- H.getHTMLElementRef (H.RefLabel "blogpost")
-      traverse_ (\el -> liftAff (xhr $ renderPath s) >>= liftEff <<< replaceChildren el) htmls
+      traverse_ (\el -> liftAff (xhr $ s ^. _Path) >>= liftEff <<< replaceChildren el) htmls
     pure next
   Initialize next -> do
     _ <- HQ.fork do
