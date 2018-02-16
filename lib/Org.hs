@@ -26,5 +26,5 @@ date = do
   day   <- L.decimal
   pure $ Date year month day
 
-parseOrg :: Text -> Either Text (Title, Date)
-parseOrg = first (toS . parseErrorPretty) . parse org "ORG file"
+parseOrg :: Text -> Text -> Either Text (Title, Date)
+parseOrg fp t = first (toS . parseErrorPretty) $ parse org (toS fp) t

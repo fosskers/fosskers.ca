@@ -90,7 +90,7 @@ orgs = do
             c <- content
             h <- html
             let base = toTextIgnore $ basename path
-            (t, d) <- parseOrg c
+            (t, d) <- parseOrg f c
             pure (Blog t d (Path base) (freq c), (base, toHtmlRaw h))
 
 -- TODO I don't like the way this feels/looks
