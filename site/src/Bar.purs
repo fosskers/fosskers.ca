@@ -46,7 +46,7 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
     [ HH.div [ HP.class_ $ H.ClassName "navbar-nav" ]
       [ tabSwitch About $ bool "自己紹介" "About" (state.language == English)
       , tabSwitch Blog  $ bool "ブログ" "Blog" (state.language == English)
-      , HH.a [ HP.href "https://stackoverflow.com/story/colinwoodbury"
+      , HH.a [ HP.href "https://stackoverflow.com/cv/colinwoodbury"
              , HP.classes $ map H.ClassName [ "nav-item", "nav-link"]] [ HH.text "CV" ]
       , a "https://github.com/fosskers" "fa-github"
       , a "https://twitter.com/fosskers" "fa-twitter" ]
