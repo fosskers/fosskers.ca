@@ -35,7 +35,7 @@ import Halogen.Query.HalogenM as HQ
 import Network.HTTP.Affjax (AJAX, get)
 import Search as Search
 import ServerAPI (getPosts)
-import Types (Effects, Language(Japanese, English), Post, asPost, defaultLang, localizedDate, localizedPath, postLang, update)
+import Types (Effects, Language, Post, asPost, defaultLang, localizedDate, localizedPath, postLang, update)
 
 ---
 
@@ -86,10 +86,7 @@ post = HH.div [ HP.ref (H.RefLabel "blogpost") ] []
 -- | If no keywords, rank by date. Otherwise, rank by "search hits".
 choices :: forall c. State -> Array (HH.HTML c (Query Unit))
 choices s = options (filter (\p -> postLang p == s.language) s.posts) >>= f
-  where f p = let hits = case s.language of
-                    English  -> "Keyword hits: "
-                    Japanese -> "キーワード出現回数：　"
-                  matches = map (\(Tuple k v) -> k <> " × " <> show v)
+  where f p = let matches = map (\(Tuple k v) -> k <> " × " <> show v)
                             <<< reverse <<< sortWith snd <<< M.toUnfoldable $ hitsOnly p
               in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
                    [ col_ [ HH.a [ HP.href "#"
@@ -98,8 +95,7 @@ choices s = options (filter (\p -> postLang p == s.language) s.posts) >>= f
                  , row_ $ [ colN 5 [] [ HH.a [ HP.href $ "/blog/" <> p.path ^. _Path
                                              , HP.classes $ map H.ClassName [ "fas", "fa-link" ] ] []
                                       , HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
-                   <> bool [] [ col_ [ HH.b_ [ HH.text hits ]
-                                     , HH.text $ intercalate ", " matches ]] (not $ null matches)
+                   <> bool [] [ col_ [ HH.text $ intercalate ", " matches ]] (not $ null matches)
                  ]
         g p = any (\kw -> M.member kw p.freqs) s.keywords
         options ps | null s.keywords = ps
