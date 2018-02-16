@@ -61,8 +61,10 @@ component = H.lifecycleParentComponent { initialState: const state
 
 render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
 render s = fluid [ HC.style <<< paddingTop $ pct 1.0 ]
-           [ row_ [ colN 4 [] $ selection s
-                  , col_ [ post ] ]]
+           [ row_ [ colN 3 [] $ selection s
+                  , col_ [ post ]
+                  , colN 3 [] []
+                  ]]
 
 selection :: forall m. State -> Array (H.ParentHTML Query Search.Query Slot m)
 selection s = [ search ] <> choices s
@@ -92,8 +94,8 @@ choices s = options (filter (\p -> postLang p == s.language) s.posts) >>= f
               in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
                    [ col_ [ HH.a [ HP.href "#"
                                  , HE.onClick $ const (Just $ Selected p.path unit) ]
-                            [ HH.h3_ [ HH.text $ p.title ^. _Title ]]]]
-                 , row_ $ [ colN 4 [] [ HH.a [ HP.href $ "/blog/" <> p.path ^. _Path
+                            [ HH.h4_ [ HH.text $ p.title ^. _Title ]]]]
+                 , row_ $ [ colN 5 [] [ HH.a [ HP.href $ "/blog/" <> p.path ^. _Path
                                              , HP.classes $ map H.ClassName [ "fas", "fa-link" ] ] []
                                       , HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
                    <> bool [] [ col_ [ HH.b_ [ HH.text hits ]
