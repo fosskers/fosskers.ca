@@ -30,8 +30,7 @@ deriving instance ToJSON Month
 
 newtype Path = Path Text deriving (Generic, ToJSON)
 
-data Blog = Blog { engTitle :: Title
-                 , japTitle :: Title
+data Blog = Blog { title    :: Title
                  , date     :: Date
                  , filename :: Path
                  , freqs    :: [(Text, Int)] } deriving (Generic, ToJSON)
