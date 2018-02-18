@@ -10,6 +10,7 @@ import           Control.Lens hiding (index)
 import           Data.Char (isAlpha)
 import qualified Data.HashMap.Strict as M
 import           Data.Proxy
+import qualified Data.Set as S
 import qualified Data.Text as T
 import           Filesystem.Path (basename)
 import           Lucid
@@ -57,15 +58,20 @@ index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
 
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
-freq = map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . sort . map T.toLower . filter g . T.words . T.map f
+freq = map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . sort . filter g . map T.toLower . T.words . T.map f
   where f c = bool ' ' c $ isAlpha c
-        g (T.length -> l) = l > 2 && l < 13
+        g w = let l = T.length w in l > 2 && l < 13 && not (S.member w functionWords)
 
 org :: Text -> Sh ()
 org f = run_ "emacs" [f, "--batch", "-f", "org-html-export-to-html", "--kill"]
 
 htmlPath :: Text -> Text
 htmlPath path = T.dropEnd 4 path <> ".html"
+
+functionWords :: S.Set Text
+functionWords = S.fromList [ "and", "but", "for", "our", "the", "that", "this", "these", "those", "then", "than"
+                           , "what", "when", "where", "will", "your", "you", "are", "can", "has", "have"
+                           , "here", "there", "how", "who", "its", "just", "not", "now", "only", "they" ]
 
 -- | Render all ORG files to HTML, also yielding word frequencies for each file.
 --
