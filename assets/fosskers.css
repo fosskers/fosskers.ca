@@ -19,6 +19,7 @@ pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
 pre.src-lisp:before { content: 'Lisp'; }
 pre.src-haskell:before { content: 'Haskell'; }
 pre.src-nix:before { content: 'Nix'; }
+pre.src-yaml:before { content: 'YAML'; }
 table { border-collapse:collapse; }
 caption.t-above { caption-side: top; }
 caption.t-bottom { caption-side: bottom; }
