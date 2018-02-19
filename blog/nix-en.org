@@ -1,42 +1,53 @@
-#+TITLE: Nix and Dante for Haskell Dev in Emacs
+#+TITLE: Haskell Development with Nix and Dante
 #+DATE: 2018-01-10
 #+AUTHOR: Colin
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
 
+I recently learned enough about Nix to try it for my everyday Haskell development.
+Below describes my entire setup and workflow.
+
 * Initial Setup
 
-https://github.com/Gabriel439/haskell-nix
+I'm on Arch Linux and so reached for the ~nix~ package in the AUR first, but it
+doesn't seem to set up the Nix environment properly. The [[https://nixos.org/nix/manual/#chap-quick-start][official install method]]
+mostly worked:
 
-I'm going to ignore ~tinc~ and ~styx~, two third-party tools for Haskell/Nix
-integration.
-
-The ~nix~ package in the AUR doesn't seem to setup the Nix environment
-properly. I'm now trying the official way:
-
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC bash
 curl https://nixos.org/nix/install | sh
-#+END_EXAMPLE
+#+END_SRC
 
-View a script that sets environment variables:
+You may have to manually fiddle with the write permissions of the newly created
+~/nix~ directory usind ~chmod~.
 
-#+BEGIN_EXAMPLE
+To view a script that sets environment variables:
+
+#+BEGIN_SRC bash
 less /home/colin/.nix-profile/etc/profile.d/nix.sh
-#+END_EXAMPLE
+#+END_SRC
 
 This script assumes Bash, and I use ~fish~, so I've set the following
-the variables myself:
+the variables myself in my ~/home/colin/.config/fish/config.fish~:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC fish
 set -x PATH ... '/home/colin/.nix-profile/bin'
 
 # Nix
 set -x NIX_PATH 'nixpkgs=/home/colin/.nix-defexpr/channels/nixpkgs'
 set -x NIX_SSL_CERT_FILE '/etc/ssl/certs/ca-certificates.crt'
-#+END_EXAMPLE
+#+END_SRC
+
+The last line is distribution specific, so make sure to check what's right
+for you in the ~nix.sh~ script mentioned above.
 
 * Haskell Specifics
 
-The advice here assumes a straight-forward Haskell project - a single simple
+In general, [[https://github.com/Gabriel439/haskell-nix][Gabriel Gonzales' beginner guide]] is good for understanding how to
+structure typical project config.
+
+I've ignored ~tinc~ and ~styx~, two third-party tools for Haskell/Nix integration,
+since I wanted the vanilla experience.
+
+The advice here otherwise assumes a straight-forward Haskell project - a single simple
 library or executable without multiple subprojects or dependency overrides.
 It demonstrates how to benchmark, profile, integrate with Travis, and integrate
 with Emacs/Spacemacs.
@@ -46,29 +57,34 @@ with Emacs/Spacemacs.
 ~cabal2nix~ can be used to generate nix expressions from ~.cabal~ files.
 This can be installed via:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC bash
 nix-env -i cabal2nix
-#+END_EXAMPLE
+#+END_SRC
 
-Then generate a nixified version of your ~.cabal~ file (you'll need to do this
-every time your ~.cabal~ changes):
+Then to generate a nixified version of a ~.cabal~ file (we'll need to do this
+every time our ~.cabal~ changes):
 
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC bash
 cabal2nix . > default.nix
-#+END_EXAMPLE
+#+END_SRC
 
-If you prefer /hpack/, grab it via:
+If you prefer ~hpack~, grab it via:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC bash
 nix-env --install --attr nixpkgs.haskellPackages.hpack
-#+END_EXAMPLE
+#+END_SRC
 
-And generate your ~default.nix~ via:
+And generate our ~default.nix~ via:
 
-#+BEGIN_EXAMPLE
-hpack; cabal2nix . > default.nix    # Fish syntax
-hpack && cabal2nix . > default.nix  # Bash syntax
-#+END_EXAMPLE
+#+BEGIN_SRC bash
+hpack && cabal2nix . > default.nix
+#+END_SRC
+
+or in ~fish~:
+
+#+BEGIN_SRC fish
+hpack; cabal2nix . > default.nix
+#+END_SRC
 
 ** Developing in a Nix Shell
 
@@ -100,7 +116,7 @@ inside the Nix Shell.
 ** Defining a ~release.nix~
 
 Generally necessary for Travis, and for actually installing your package
-into some Nix store.
+into some Nix store. Assuming a package called ~vectortiles~:
 
 #+BEGIN_SRC nix
 let
@@ -123,19 +139,19 @@ in
 #+END_SRC
 
 There are shorter forms, but this one allows for easy overriding of specific
-settings or dependencies, should we need to do that.
+settings or dependencies, [[https://github.com/Gabriel439/haskell-nix/blob/master/project1/README.md#changing-versions][should we need to do that.]]
 
 To build some full project:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC bash
 nix-build release.nix
-#+END_EXAMPLE
+#+END_SRC
 
 To build some "sub-derivation" within a larger, composite project:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC bash
 nix-build --attr my-subproject release.nix
-#+END_EXAMPLE
+#+END_SRC
 
 There are a number of other ways to customize a Haskell build, which are [[https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/lib.nix][listed here]].
 
@@ -195,7 +211,9 @@ regenerate ~default.nix~, and benchmark as usual in our normal Nix Shell.
 
 ** Installing ~Dante~
 
-Spacemacs' ~haskell~ layer on the ~develop~ branch has support for [[https://github.com/jyp/dante][Dante]],
+If using vanilla Emacs, follow [[https://github.com/jyp/dante#installation][Dante's own installation instructions.]]
+
+If using Spacemacs, the ~haskell~ layer on the ~develop~ branch has support for [[https://github.com/jyp/dante][Dante]],
 which automatically uses ~nix~ if it detects a ~shell.nix~ and a ~default.nix~.
 Our haskell layer line should look like this:
 
@@ -229,20 +247,20 @@ By running ~SPC m s e~ on the comment line, our code will transform into this:
   foo = show
 #+END_SRC
 
-In theory this obviates the need for an actual REPL.
+Together with Flycheck, this (in theory) obviates the need for an actual REPL.
 
 ** Getting Dante to work with Test and Benchmark suites
 
 Out of the box, Dante doesn't automatically handle multiple compilation targets.
 By this, I mean a single ~.cabal~ that specifies a library, test suite, and
-benchmark suite all in the same file, say. By default, when navigating to our
-test and benchmark code, Flycheck will freak out and claim that many of our
+benchmark suite, say. By default, when navigating to our
+test and benchmark code, Flycheck will complain that many of our
 imported libraries aren't in scope.
 
 The solution to this is to use file-local emacs variables in our test/bench
 source files. We can use the emacs function ~add-file-local-variable-prop-line~ to set
 ~dante-target~ to the name of our test/benchmark suite names. So for a test suite
-named ~vectortiles-test~, we'd see at the following Haskell comment at the first
+named ~vectortiles-test~, we'd see the following Haskell comment on the first
 line of our ~Test.hs~ file:
 
 #+BEGIN_SRC haskell
@@ -264,8 +282,7 @@ Pretty low friction. For a package named ~vectortiles~, a complete ~.travis.yml~
 boils down to:
 
 #+BEGIN_SRC yaml
-  # Run the build without Docker. It's *much* faster this way.
-  sudo: true
+  sudo: true  # Runs the build without Docker. It's *much* faster this way.
   language: nix
   script: nix-build --attr vectortiles release.nix
 #+END_SRC
@@ -278,7 +295,6 @@ If you're an [[https://github.com/sol/hpack][hpack]] fan and never commit your a
 here's a ~.travis.yml~ that will help:
 
 #+BEGIN_SRC nix
-  # Run the build without Docker. It's *much* faster this way.
   sudo: true
 
   language: nix
@@ -292,25 +308,28 @@ here's a ~.travis.yml~ that will help:
 
 ** Hercules
 
-[[https://github.com/hercules-ci/hercules][Github repository]]
+[[https://github.com/hercules-ci/hercules][Github repository]].
 
 It's a new CI system for Nix projects that aims to replace Hydra, but it still
 seems [[https://github.com/hercules-ci/hercules/issues/5][distant from its 1.0 release]].
 
 ** CircleCI
 
-This doesn't seem to support Nix at all.
+CircleCI has [[https://circleci.com/docs/1.0/language-haskell/][Haskell support]], but Nix support doesn't seem to be first-class.
+[[https://discuss.circleci.com/t/caching-root-directory-nix-not-working/10626][Here's some evidence]] that someone has it at least partly working.
 
 ** Self-run Hydra
+
+[[https://nixos.org/hydra/][Official site]].
 
 While the "native" choice for Nix, this seems way too complicated for the lay
 library author.
 
 * Comparison to Stack
 
-I want to give Nix+dante a fair shot. In terms of personal programming philosophy,
-I'm motivated by high power-to-simplicity ratios (hence Haskell). After a few days
-of dealing with Nix and Dante, here are the advantages that I see:
+I wanted to give Nix/Dante a fair shot. In terms of personal programming philosophy,
+I'm motivated by high power-to-simplicity ratios (hence Haskell). After porting a
+project to use Nix/Dante from Stack/Intero, here are the advantages that I see:
 
 - Much faster "first compile" thanks to remotely cached, prebuilt libraries
   (this also affects CI runs, Heroku deploys, etc.)
@@ -333,15 +352,25 @@ This is also the syntax that's understood by doctest as being a proof of
 correctness, so future changes to ~inc~ will have to pass the test that
 you originally set via a live Dante run (and not something hand-written).
 
-And the advantages of Stack:
+And the advantages of Stack/Intero:
 
-- Simpler initial setup for Haskell beginners (i.e. just ~stack build~)
-- Slightly stronger "it will always build" guarantee? A ~stack.yaml~ seems like
+- Vastly simpler initial setup for Haskell beginners (i.e. just ~stack build~)
+- Overall simpler project config (a minimal legal ~stack.yaml~ is one line long).
+- Slightly stronger "it will always build" guarantee. A ~stack.yaml~ seems like
   a stronger constract for a sane environment when it comes to GHC and library
   versions.
-- ~intero~ has a simpler setup, and I miss the REPL a little bit
+- ~intero~ has a simpler setup, a REPL, better support for auto-completion, and
+  [[https://github.com/commercialhaskell/intero/issues/524][auto-filling of holes]].
+- ~stack~ 's various UX improvements:
+  - File watching: ~stack build --haddock-deps --test --file-watch --fast~
+  - Non-fiddly ~stack test~ and ~stack bench~
+  - Offline docs: ~stack haddock --open foobar~
+  - Dependency graphs: ~stack dot --external --prune base,ghc-prim,integer-gmp,deepseq,array | dot -Tjpg -o deps.jpg~
+  - ~stack upload .~
 
 * Resources
 
 - [[https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure][Official Nix guide for Haskell packages]]
+- [[https://github.com/Gabriel439/haskell-nix][Gabriel Gonzales' Nix Guide]]
 - [[http://vaibhavsagar.com/blog/2018/01/03/static-haskell-nix/][Building static Haskell binaries]]
+- [[https://github.com/jyp/dante][Dante Mode]] for Emacs
