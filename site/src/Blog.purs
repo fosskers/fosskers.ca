@@ -91,7 +91,7 @@ choices s = options (filter (\p -> postLang p == s.language) s.posts) >>= f
               in [ row [ HC.style <<< paddingTop $ pct 1.0 ]
                    [ col_ [ HH.a [ HP.href "#"
                                  , HE.onClick $ const (Just $ Selected p.path unit) ]
-                            [ HH.h4_ [ HH.text $ p.title ^. _Title ]]]]
+                            [ HH.h5_ [ HH.text $ p.title ^. _Title ]]]]
                  , row_ $ [ colN 5 [] [ HH.a [ HP.href $ "/blog/" <> p.path ^. _Path
                                              , HP.classes $ map H.ClassName [ "fas", "fa-link" ] ] []
                                       , HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
