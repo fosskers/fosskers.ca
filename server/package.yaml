@@ -45,4 +45,5 @@ executables:
       - servant-server >= 0.11 && < 0.13
       - shelly >= 1.7 && < 1.8
       - system-filepath
+      - wai-extra >= 3.0 && < 3.1
       - warp >= 3.2 && < 3.3

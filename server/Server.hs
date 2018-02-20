@@ -15,6 +15,7 @@ import qualified Data.Text as T
 import           Filesystem.Path (basename)
 import           Lucid
 import qualified Network.Wai.Handler.Warp as W
+import           Network.Wai.Middleware.Gzip
 import           Options.Generic
 import           Org (parseOrg)
 import           Protolude hiding (FilePath)
@@ -37,7 +38,7 @@ server env = pure (stats env)
   :<|> pure index
 
 app :: Env -> Application
-app = serve (Proxy :: Proxy API) . server
+app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server
 
 index :: Html ()
 index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
