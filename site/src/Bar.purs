@@ -11,7 +11,7 @@ import Halogen.HTML.CSS as HC
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import LangToggle as LangToggle
-import Types (Language(..), Tab(..), defaultLang, defaultTab)
+import Types (Language(..), Tab(..), Three(..), defaultLang, defaultTab)
 
 ---
 
@@ -44,21 +44,25 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
     [ HH.span [ HP.class_ (H.ClassName "navbar-toggler-icon")] []]
   , HH.div [ HP.id_ "navbarLinks", HP.classes $ map H.ClassName [ "collapse", "navbar-collapse"]]
     [ HH.div [ HP.class_ $ H.ClassName "navbar-nav" ]
-      [ tabSwitch About $ bool "自己紹介" "About" (state.language == English)
-      , tabSwitch Blog  $ bool "ブログ" "Blog" (state.language == English)
+      [ tabSwitch About a
+      , tabSwitch Blog  b
       , HH.a [ HP.href "https://stackoverflow.com/cv/colinwoodbury"
-             , HP.classes $ map H.ClassName [ "nav-item", "nav-link"]] [ HH.text "CV" ]
-      , a "https://github.com/fosskers" "fa-github"
-      , a "https://twitter.com/fosskers" "fa-twitter" ]
+             , HP.classes $ map H.ClassName [ "nav-item", "nav-link"]]
+        [ HH.text c ]
+      , icon "https://github.com/fosskers" "fa-github"
+      , icon "https://twitter.com/fosskers" "fa-twitter" ]
     ]
  , HH.slot LangSlot LangToggle.component unit (HE.input LangChanged) ]
   where tabSwitch tab txt = HH.a [ HP.href "#"
                                  , HP.classes $ map H.ClassName [ "nav-item", "nav-link", bool "" "active" (tab == state.tab) ]
                                  , HE.onClick $ const (Just $ TabChanged tab unit) ]
                             [ HH.text txt ]
-        a url i = HH.a [ HP.href url
-                       , HP.classes $ map H.ClassName [ "fab", i, "nav-item", "nav-link" ]
-                       , HC.style <<< fontSize $ em 1.33333 ] []
+        icon url i = HH.a [ HP.href url
+                          , HP.classes $ map H.ClassName [ "fab", i, "nav-item", "nav-link" ]
+                          , HC.style <<< fontSize $ em 1.33333 ] []
+        Three a b c = case state.language of
+          English  -> Three "About" "Blog" "CV"
+          Japanese -> Three "自己紹介" "ブログ" "履歴書"
 
 eval :: forall m. Query ~> H.ParentDSL State Query LangToggle.Query Slot Message m
 eval = case _ of

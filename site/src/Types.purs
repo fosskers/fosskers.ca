@@ -72,6 +72,9 @@ dropRight i s = S.take (S.length s - i) s
 takeRight :: Int -> String -> String
 takeRight i s = S.drop (S.length s - i) s
 
+-- | Dealing with the official 3-Tuples is annoying.
+data Three a b c = Three a b c
+
 ----------------------
 -- EXTRA BRIDGING HELP
 ----------------------

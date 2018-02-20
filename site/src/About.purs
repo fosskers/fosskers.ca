@@ -7,12 +7,9 @@ import CSS (paddingTop, pct)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Types (Language(..))
+import Types (Language(..), Three(..))
 
 ---
-
--- | Dealing with the official 3-Tuples is annoying.
-data Three a b c = Three a b c
 
 about :: forall c q. Language -> HH.HTML c q
 about l = container [HC.style <<< paddingTop $ pct 1.0]
