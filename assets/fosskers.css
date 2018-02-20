@@ -21,7 +21,11 @@ pre.src-haskell:before { content: 'Haskell'; }
 pre.src-nix:before { content: 'Nix'; }
 pre.src-yaml:before { content: 'YAML'; }
 pre.src-fish:before { content: 'Fish'; }
-table { border-collapse:collapse; }
+pre.src-js:before { content: 'Javascript'; }
+table{margin:auto;border-top:2px solid;border-collapse:collapse}
+table,thead{border-bottom:2px solid}
+table td+td,table th+th{border-left:1px solid gray}
+table tr{border-top:1px solid #d3d3d3}
 caption.t-above { caption-side: top; }
 caption.t-bottom { caption-side: bottom; }
 td, th { vertical-align:top; }
