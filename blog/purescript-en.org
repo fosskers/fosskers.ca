@@ -1,0 +1,428 @@
+#+TITLE: Websites with Servant and Purescript/Halogen
+#+DATE: 2018-02-01
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+* Haskell
+
+[[http://haskell-servant.readthedocs.io/en/stable/][Servant]] is /fantastic/ for writing web servers. The brevity alone makes it my
+favourite of all the frameworks I've ever tried in any language. It has a
+healthly ecosystem, and in this case, integrates well with Purescript.
+
+This section assumes a ~stack~-based Haskell project and familiarity with
+Servant.
+
+** Project Structure
+
+In order for code-sharing with Purescript to work well later, I recommend we
+split the backend into three parts, each with their own ~.cabal~ (or ~package.yaml~):
+
+#+BEGIN_SRC yaml
+  resolver: lts-10.6
+
+  packages:
+    - lib
+    - server
+    - bridge
+
+  extra-deps:
+    - servant-0.12.1
+    - servant-server-0.12
+    - servant-foreign-0.10.2
+#+END_SRC
+
+Our servant ~API~ type and anything else we want to "bridge" to Purescript
+is going to live in ~lib~, while the backend logic itself will be in ~server~.
+
+** Code Sharing with Purescript
+
+Two libraries will help us:
+
+- ~purescript-bridge~: Generate Purescript types that match given Haskell ones
+- ~servant-purescript~: Generate Purescript code to query Servant JSON endpoints
+
+Since ~servant-purescript~ only seems to want to work for JSON endpoints, I have
+something like this in the ~lib~ package's ~Common~ module:
+
+#+BEGIN_SRC haskell
+  type JsonAPI = "posts" :> Get '[JSON] [Blog]
+
+  type API = JsonAPI
+    :<|> "blog" :> Capture "post" Text :> Get '[HTML] (Html ())
+    :<|> "assets" :> Raw
+    :<|> "webfonts" :> Raw
+    :<|> Get '[HTML] (Html ())
+#+END_SRC
+
+Where ~JsonAPI~ is all we want to bridge over. The following snippet shows the
+contents of our ~bridge~ subpackage:
+
+#+BEGIN_SRC haskell
+  {-# LANGUAGE DataKinds, FlexibleContexts #-}
+
+  module Main where
+
+  import Common
+  import Language.PureScript.Bridge
+  import Servant.PureScript
+  import Time.Types
+
+  -- | Generic representations of the Haskell types I want to convert to Purescript.
+  -- This generates /new/ Purescript code.
+  types :: [SumType 'Haskell]
+  types = [ mkSumType (Proxy :: Proxy Blog) ]
+
+  -- | A custom "bridge". Signals that we want to connect a Haskell type to an
+  -- existing Purescript type of identical structure. Doesn't generate new code,
+  -- just helps with JSON decoding.
+  monthBridge :: BridgePart
+  monthBridge = typeName ^== "Month" >> pure psMonth
+
+  psMonth :: PSType
+  psMonth = TypeInfo { _typePackage    = "purescript-datetime"
+                     , _typeModule     = "Data.Date"
+                     , _typeName       = "Month"
+                     , _typeParameters = [] }
+
+  main :: IO ()
+  main = do
+    writePSTypes "site/src" (buildBridge $ defaultBridge <|> monthBridge) types
+    writeAPIModule "site/src" defaultBridgeProxy (Proxy :: Proxy JsonAPI)
+#+END_SRC
+
+~stack exec -- bridge~ will then generate legal Purescript into ~site/src~.
+See the Purescript section below for how to interact with this generated code.
+
+** Serving Assets
+
+"Just serve any file from the directory I indicate." Easy:
+
+#+BEGIN_SRC haskell
+  import Servant.Utils.StaticFiles (serveDirectoryFileServer)
+
+  type API = ... :<|> "assets" :> Raw
+
+  server :: Server API
+  server = ... :<|> serveDirectoryFileServer "assets"
+#+END_SRC
+
+** Avoiding Static HTML
+
+Since Purescript is generating our UI, we don't actually need to commit any HTML files.
+Our ~index.html~ can also be produced on-the-fly by our backend:
+
+#+BEGIN_SRC haskell
+  import Lucid
+  import Servant.HTML.Lucid
+
+  -- | The final `Get` here will match on `/`, the site's root.
+  type API = ... :<|> Get '[HTML] (Html ())
+
+  index :: Html ()
+  index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
+    where h = do
+            title_ "fosskers.ca"
+            link_ [ rel_ "stylesheet", href_ "assets/fosskers.css" ]
+
+  server :: Server API
+  server = ... :<|> pure index
+#+END_SRC
+
+* Purescript
+
+** Setup
+
+This requires [[https://www.npmjs.com/][npm]] to be installed.
+
+*** Tools
+
+The canonical dev environment for Purescript requires some use of ~npm~.
+First we generate a ~package.json~, our "project level" config:
+
+#+BEGIN_SRC bash
+  npm init
+#+END_SRC
+
+Next we install some tools.
+I'm usually hesitant when it comes to installing packages outside the purview
+of my system's package manager, but the following will install all the tools
+we need into a project-local ~node-modules~ directory:
+
+#+BEGIN_SRC bash
+  npm install purescript pulp psc-package pscid purescript-psa uglify-js --save-dev
+#+END_SRC
+
+- ~purescript~: The compiler
+- ~pulp~: The canonical build tool
+- ~psc-package~: The package manager for Purescript libraries
+- ~pscid~: A compilation daemon, similar to ~stack build --file-watch~
+- ~purescript-psa~: Used by ~pulp~ to display nicer compiler errors
+- ~uglify-js~: For minimizing our final "production bundle"
+
+We'll notice these appear as dependency entries in our ~package.json~.
+
+~npm~ also lets us define project-local commands to use the tools we just installed.
+Here are some useful ones we can enter into ~package.json~:
+
+#+BEGIN_SRC js
+  ...
+  "scripts": {
+      "pulp": "pulp --psc-package",
+      "pscid": "pscid",
+      "install": "psc-package install",
+      "uglify": "uglifyjs"
+  },
+  ...
+#+END_SRC
+
+*** Packages
+
+Now, to generate some more scaffolding:
+
+#+BEGIN_SRC bash
+  npm run pulp init
+#+END_SRC
+
+This produces:
+
+- ~psc-package.json~: Where we define library dependencies
+- ~src/Main.purs~
+- ~test/Main.purs~
+
+We can check [[https://pursuit.purescript.org/][Pursuit]] for the list of available PureScript libraries, and install
+them with:
+
+#+BEGIN_SRC bash
+  # Install the package `purescript-halogen`.
+  # Notice that the `purescript-` is left off here.
+  npm run install halogen
+#+END_SRC
+
+This will install the version of ~halogen~ that's pinned in the [[https://github.com/purescript/package-sets][psc package set]] we're using.
+If the installation was successful, we'll notice ~halogen~ appear in our ~psc-package.json~.
+
+*** Spacemacs Integration
+
+The [[http://spacemacs.org/layers/+lang/purescript/README.html][Purescript Layer]] works quite nicely out of the box. In order for Spacemacs
+to detect our npm-installed tools, we configure our Purescript layer like so:
+
+#+BEGIN_SRC lisp
+  (purescript :variables psc-ide-use-npm-bin t)
+#+END_SRC
+
+I also found it necessary to add the following to ~dotspacemacs/user-config~:
+
+#+BEGIN_SRC lisp
+  (add-hook 'purescript-mode-hook 'flycheck-mode)
+#+END_SRC
+
+Handy Keybindings:
+
+| Keys          | Effect                                                             |
+|---------------+--------------------------------------------------------------------|
+| ~SPC m m s~   | Start a ~pscid~ session (enables auto-completion and auto-imports) |
+| ~SPC m m i a~ | Import the symbol at ~point~                                       |
+
+** Common Commands
+
+To compile all library dependencies and our code into CommonJS-compatible Javascript:
+
+#+BEGIN_SRC bash
+  npm run pulp build
+#+END_SRC
+
+To bundle only what's needed into a single ~.js~ file:
+
+#+BEGIN_SRC bash
+  npm run pulp -- build --to app.js
+#+END_SRC
+
+To run the ~pscid~ daemon:
+
+#+BEGIN_SRC bash
+  npm run pscid
+#+END_SRC
+
+To run our test suites:
+
+#+BEGIN_SRC bash
+  npm run pulp test
+#+END_SRC
+
+To minify our bundled Javascript:
+
+#+BEGIN_SRC bash
+  npm run uglify -- app.js --output min.js --compress --mangle
+#+END_SRC
+
+The behaviour of the minified code seems to be the same, and the file size
+is less than half of the original human-readable code.
+
+
+** Halogen
+
+Before writing anything, I read the [[https://github.com/slamdata/purescript-halogen/tree/master/docs][official Halogen guide]] and found it quite good.
+It equipped me with 95% of what I needed to know to be productive, having written no
+Purescript before. The rest I gained by reading about [[https://github.com/purescript/documentation/blob/master/language/Differences-from-Haskell.md][the differences between Purescript and Haskell]]
+and through experimentation, the fruits of which I explain below.
+
+*** Avoiding Rerendering
+
+Every time ~H.put~ or ~H.modify~ is called in our ~eval~ function, the
+component will be rerendered. Here's a helper function that will only
+update a part of our state if it has actually changed:
+
+#+BEGIN_SRC purescript
+  -- | Updates some State, so long as it hasn't changed.
+  update :: forall s a m. MonadState s m => Eq a => Lens' s a -> a -> m Unit
+  update l a = do
+    curr <- gets (_ ^. l)
+    unless (a == curr) $ modify (_ # l .~ a)
+#+END_SRC
+
+Example of usage:
+
+#+BEGIN_SRC purescript
+  eval = case _ do
+    NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
+    ...  -- more cases here
+#+END_SRC
+
+~prop~, when given a record field name, yields a ~Lens~ into that field.
+
+*** Handling Types Imposed by ~servant-purescript~
+
+To query the endpoint ~type JsonAPI = "posts" :> Get '[JSON] [Blog]~, ~servant-purescript~
+spat out:
+
+#+BEGIN_SRC purescript
+  getPosts :: forall eff m.
+              MonadAsk (SPSettings_ SPParams_) m =>
+              MonadError AjaxError m =>
+              MonadAff ( ajax :: AJAX | eff ) m
+              => m (Array Blog)
+#+END_SRC
+
+Simple Halogen components leave their effect Monad parameter as ~m~ on functions
+like ~eval~. However, if we want to call ~getPosts~ at any point, its constraints
+will pervasively spread across our components. To avoid giant type signatures
+are lots of repeated imports, I added the following to a central ~Types.purs~ module:
+
+#+BEGIN_SRC purescript
+  type Effects eff = ReaderT (SPSettings_ SPParams_)
+                     (ExceptT AjaxError (Aff (ajax :: AJAX, console :: CONSOLE, dom :: DOM | eff)))
+
+  runEffects :: forall eff. Effects eff ~> Aff (ajax :: AJAX, console :: CONSOLE, dom :: DOM | eff)
+  runEffects eff = runExceptT (runReaderT eff settings) >>= either (\e -> log (errorToString e) *> empty) pure
+
+  settings :: SPSettings_ SPParams_
+  settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080/" }
+#+END_SRC
+
+Which simplifies type signatures to things like:
+
+#+BEGIN_SRC purescript
+  component :: forall e. H.Component HH.HTML Query Unit Void (Effects e)
+#+END_SRC
+
+Our ~main~ then only requires a little bit of massaging via ~hoist~:
+
+#+BEGIN_SRC purescript
+  import Halogen.Aff as HA
+  import Halogen.Component as HC
+
+  main :: Eff (HA.HalogenEffects (ajax :: AJAX, console :: CONSOLE)) Unit
+  main = HA.runHalogenAff do
+    body <- HA.awaitBody
+    runUI (HC.hoist runEffects Page.component) unit body
+#+END_SRC
+
+*** Effectful Component Initialization
+
+A component might need to be created with some long-lived information, say from
+our server. Making that request requires an Effect, but when and how should that
+Effect be performed? The answer is to use a "lifecycle component":
+
+#+BEGIN_SRC purescript
+  data Query a = ... | Initialize a
+
+  -- `lifecycleParentComponent` also exists.
+  component :: forall e. H.Component HH.HTML Query Unit Void (Effects e)
+  component = H.lifecycleComponent { initialState: const state
+                                   , render
+                                   , eval
+                                   , receiver: const Nothing
+                                   , initializer: Just $ Initialize unit
+                                   , finalizer: Nothing }
+    where state = ...
+
+  eval :: forall e. Query ~> H.ComponentDSL State Query Void (Effects e)
+  eval = case _ of
+    ...  -- cases for other query terms.
+    Initialize next -> do
+      _ <- HQ.fork do
+        posts <- H.lift getPosts
+        H.modify (_ { posts = posts })
+      pure next
+#+END_SRC
+
+It's important to ~fork~ this initial request, or else our component won't
+render for the first time until the request is complete.
+
+*** Requesting and Injecting HTML
+
+For technical reasons, the HTML of these blog posts only exists at runtime.
+When you select a post to read on the /Blog/ page, you might notice in your
+~Network~ tab that only a single XHR is made to the backend to fetch the
+content (i.e. the whole page isn't reloaded). Accomplishing this required
+the ~affjax~, ~domparser~ and ~dom-classy~ libraries, along with the following
+custom code:
+
+#+BEGIN_SRC purescript
+  -- | Make a request for blog post content.
+  xhr :: forall e. String -> Aff ( ajax :: AJAX, dom :: DOM | e ) (Array Node)
+  xhr p = do
+    res <- get $ "/blog/" <> p
+    liftEff do
+      parser <- newDOMParser
+      let doc = parseHTMLFromString res.response parser
+      body <- lastChild doc >>= (map join <<< traverse lastChild)
+      maybe (pure []) children body
+
+  replaceChildren :: forall e n m. IsNode n => IsNode m => n -> Array m -> Eff ( dom :: DOM | e ) Unit
+  replaceChildren el news = removeChildren el *> traverse_ (\n -> appendChild n el) news
+
+  removeChildren :: forall n e. IsNode n => n -> Eff ( dom :: DOM | e ) Unit
+  removeChildren el = children el >>= traverse_ (\n -> removeChild n el)
+
+  children :: forall n e. IsNode n => n -> Eff ( dom :: DOM | e ) (Array Node)
+  children el = do
+    kids <- childNodes el
+    len  <- length kids
+    let ixs = range 0 (len - 1)
+    catMaybes <$> traverse (\i -> item i kids) ixs
+#+END_SRC
+
+Now we have the tools in-hand to manipulate the DOM outside the purview of Halogen.
+To inject our content, we need a placeholder ~<div>~:
+
+#+BEGIN_SRC purescript
+  post :: forall c q. HH.HTML c q
+  post = HH.div [ HP.ref (H.RefLabel "blogpost") ] []
+#+END_SRC
+
+~posts~ would be part of the greater HTML tree defined in ~render~. The important
+part is the ~RefLabel~. We can update its actual contents in our ~eval~ function:
+
+#+BEGIN_SRC purescript
+  eval :: forall e. Query ~> H.ComponentDSL State Query Void (Effects e)
+  eval = case _ of
+    ...  -- other cases
+    Selected s next -> do
+      curr <- H.gets _.selected
+      unless (s == curr) $ do
+        H.modify (_ { selected = s })
+        htmls <- H.getHTMLElementRef (H.RefLabel "blogpost")
+        traverse_ (\el -> liftAff (xhr s) >>= liftEff <<< replaceChildren el) htmls
+      pure next
+#+END_SRC

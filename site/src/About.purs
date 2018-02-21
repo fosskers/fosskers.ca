@@ -25,7 +25,7 @@ about l = container [HC.style <<< paddingTop $ pct 1.0]
         ]
   where Three a j q = case l of
           English  -> Three english "Jack in a sunbeam." "Qtip mentoring me on Category Theory."
-          Japanese -> Three japanese "日差しに耐えられないジャック" "キューチップ博士は圏論の教鞭を執る"
+          Japanese -> Three japanese "日差しに負けるジャック" "キューチップ博士は圏論の教鞭を執る"
 
 english :: forall c q. Array (HH.HTML c q)
 english = [ HH.p_
