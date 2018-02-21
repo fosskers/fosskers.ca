@@ -1,5 +1,5 @@
 #+TITLE: Websites with Servant and Purescript/Halogen
-#+DATE: 2018-02-01
+#+DATE: 2018-02-21
 #+AUTHOR: Colin
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
 
@@ -18,7 +18,7 @@ In order for code-sharing with Purescript to work well later, I recommend we
 split the backend into three parts, each with their own ~.cabal~ (or ~package.yaml~):
 
 #+BEGIN_SRC yaml
-  resolver: lts-10.6
+  resolver: lts-10.6  # As of 2018 February
 
   packages:
     - lib
@@ -62,14 +62,13 @@ contents of our ~bridge~ subpackage:
 
   module Main where
 
-  import Common
+  import Common (Blog, JsonAPI)
   import Language.PureScript.Bridge
   import Servant.PureScript
   import Time.Types
 
   -- | Generic representations of the Haskell types I want to convert to Purescript.
-  -- This generates /new/ Purescript code. The `Blog` type comes from the
-  -- `Common` module.
+  -- This generates /new/ Purescript code.
   types :: [SumType 'Haskell]
   types = [ mkSumType (Proxy :: Proxy Blog) ]
 
@@ -290,7 +289,7 @@ component will be rerendered. Here's a helper function that will only
 update a part of our state if it has actually changed:
 
 #+BEGIN_SRC purescript
-  -- | Updates some State, so long as it hasn't changed.
+  -- | Updates some State only if it's changed.
   update :: forall s a m. MonadState s m => Eq a => Lens' s a -> a -> m Unit
   update l a = do
     curr <- gets (_ ^. l)

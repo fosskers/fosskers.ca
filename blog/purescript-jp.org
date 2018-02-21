@@ -1,0 +1,425 @@
+#+TITLE: ServantとPurescript/Halogenでウェブ開発
+#+DATE: 2018-02-21
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+* Haskell
+
+ウェブ・サーバーを開発する時はやっぱり[[http://haskell-servant.readthedocs.io/en/stable/][Servant]]。俺の経験では、どの言語のどのフレームワークでも
+開発効率が一番高い。幸い、Purescriptとの統合も容易。
+
+このガイドを使うに前もって必要なのは「stack」と「Servant」の経験。
+
+** プロジェクト設定
+
+後でPurescriptとのコードシェアがうまくいく様にbackendを三つに分けることを勧める。
+それぞれの部分にはちゃんと ~.cabal~ または ~package.yaml~ を与える。
+stack設定はこう：
+
+#+BEGIN_SRC yaml
+  resolver: lts-10.6  # ２０１８年2月現在
+
+  packages:
+    - lib      # Purescriptとシェアしたい全て。ServantのAPIタイプも含めて！
+    - server   # Backendの本格的コード。
+    - bridge   # `lib`を使ってPurescriptを生み出してくれるコード。
+
+  extra-deps:
+    - servant-0.12.1
+    - servant-server-0.12
+    - servant-foreign-0.10.2
+#+END_SRC
+
+** Purescriptとのコードシェア
+
+二つのlibrariesが助けてくれる：
+
+- ~purescript-bridge~: 指摘したHaskellタイプと一致するPurescriptを生み出す。
+- ~servant-purescript~: BackendのJSON endpointsが問えるPurescriptを生み出す。
+
+どうやら ~servant-purescript~ はJSON endpointsでしか使えん様で、本サイトの ~Common~
+module にはこういうのがある：
+
+#+BEGIN_SRC haskell
+  type JsonAPI = "posts" :> Get '[JSON] [Blog]
+
+  type API = JsonAPI
+    :<|> "blog" :> Capture "post" Text :> Get '[HTML] (Html ())
+    :<|> "assets" :> Raw
+    :<|> "webfonts" :> Raw
+    :<|> Get '[HTML] (Html ())
+#+END_SRC
+
+Purescriptとシェアしたいのは ~JsonAPI~ だけ。で、 ~bridge~ のプログラムには：
+
+#+BEGIN_SRC haskell
+  {-# LANGUAGE DataKinds, FlexibleContexts #-}
+
+  module Main where
+
+  import Common (Blog, JsonAPI)
+  import Language.PureScript.Bridge
+  import Servant.PureScript
+  import Time.Types
+
+  -- | Purescriptにしたい自分のHaskellタイプ。新しいPurescriptが出る。
+  types :: [SumType 'Haskell]
+  types = [ mkSumType (Proxy :: Proxy Blog) ]
+
+  -- | 自作「bridge」。形の全く同じHaskellとPurescriptのタイプを繋げたいと意味する。
+  -- 新しいコードは出ない。ただJSON decodingの際にだけ使われる。
+  monthBridge :: BridgePart
+  monthBridge = typeName ^== "Month" >> pure psMonth
+
+  psMonth :: PSType
+  psMonth = TypeInfo { _typePackage    = "purescript-datetime"
+                     , _typeModule     = "Data.Date"
+                     , _typeName       = "Month"
+                     , _typeParameters = [] }
+
+  main :: IO ()
+  main = do
+    writePSTypes "site/src" (buildBridge $ defaultBridge <|> monthBridge) types
+    writeAPIModule "site/src" defaultBridgeProxy (Proxy :: Proxy JsonAPI)
+#+END_SRC
+
+~stack exec -- bridge~ を使ってみると、 ~site/src~ に新しいPurescriptコードが現れる。
+下記の「Halogen」の所にこのコードをどう使うかは説明される。
+
+** Assetsの分配
+
+あるディレクトリーのファイルをそのまま分配するのは簡単：
+
+#+BEGIN_SRC haskell
+  import Servant.Utils.StaticFiles (serveDirectoryFileServer)
+
+  type API = ... :<|> "assets" :> Raw
+
+  server :: Server API
+  server = ... :<|> serveDirectoryFileServer "assets"
+#+END_SRC
+
+これでassets (~.js~ や ~.css~ のファイル)を全部 ~assets/~ に放り込める。
+
+*** 自動圧縮
+
+ちょっとコードを足すだけでサーバーから出されるAssetsの重さを数倍軽くしてくれる[[https://hackage.haskell.org/package/wai-extra][wai-extra]]：
+
+#+BEGIN_SRC haskell
+  import Network.Wai.Middleware.Gzip
+
+  app :: Application
+  app = gzip (def { gzipFiles = GzipCompress }) $ serve (Proxy :: Proxy API) server
+  -- 元はこんな感じ：
+  --   app = serve (Proxy :: Proxy API) server
+#+END_SRC
+
+** 無HTML
+
+PurescriptがUIを管理するおかげでHTMLファイルをコミットする必要は実はない。
+~index.html~ さえbackendが出してくれる：
+
+#+BEGIN_SRC haskell
+  import Lucid
+  import Servant.HTML.Lucid
+
+  -- | この最後の`Get`がサイトの本（`/`）に一致する。
+  type API = ... :<|> Get '[HTML] (Html ())
+
+  index :: Html ()
+  index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
+    where h = do
+            title_ "fosskers.ca"
+            link_ [ rel_ "stylesheet", href_ "assets/fosskers.css" ]
+
+  server :: Server API
+  server = ... :<|> pure index
+#+END_SRC
+
+* Purescript
+
+** 最初の設定
+
+[[https://www.npmjs.com/][npm]]をインストールしてから進む事。
+
+*** ツール
+
+もっとも扱いやすいPurescript開発環境を築くにはちょっと ~npm~ を利用しないと。
+これで ~package.json~ が生まれる：
+
+#+BEGIN_SRC bash
+  npm init
+#+END_SRC
+
+次はツールをインストール。普段はディストロのpackage manager意外のを使うのは
+あまり気に入らんけど、この場合は心配ない。次のコマンドで必要のツールが全部
+プロジェクト・ディレクトリー（ ~node-modules/~ の中）だけにインストールされる：
+
+#+BEGIN_SRC bash
+  npm install purescript pulp psc-package pscid purescript-psa uglify-js --save-dev
+#+END_SRC
+
+- ~purescript~: コンパイラ
+- ~pulp~: ~cabal~ みたいなbuild tool
+- ~psc-package~: Purescript librariesのpackage manager
+- ~pscid~: ~stack build --file-watch~ みたいなコンパイラ・デーモン
+- ~purescript-psa~: ~pulp~ に使われてより解りやすいコンパイル・エラーを出す
+- ~uglify-js~: Javascriptの圧縮のため
+
+上のコマンドで ~package.json~ にもこのツールの名前が現れる。実際に使うには
+~package.json~ にこれを：
+
+#+BEGIN_SRC js
+  ...
+  "scripts": {
+      "pulp": "pulp --psc-package",
+      "pscid": "pscid",
+      "install": "psc-package install",
+      "uglify": "uglifyjs"
+  },
+  ...
+#+END_SRC
+
+*** Purescriptパッケージ
+
+上で開発に必要なツールだけがインストールされた。Purescriptのプロジェク設定やコードらしきファイルが
+まだない。出そう：
+
+#+BEGIN_SRC bash
+  npm run pulp init
+#+END_SRC
+
+これで作られるのは：
+
+- ~psc-package.json~: Library Dependenciesを示す所
+- ~src/Main.purs~
+- ~test/Main.purs~
+
+[[https://pursuit.purescript.org/][Pursuit]]ではありのPurescript Librariesを調べたりできる。インストールするのも楽：
+
+#+BEGIN_SRC bash
+  # `purescript-halogen`というパッケージをインストールする。
+  # 注意：`purescript-`の部分を除く事。
+  npm run install halogen
+#+END_SRC
+
+ダウンロードされるバージョンは ~psc-package.json~ に設定される[[https://github.com/purescript/package-sets][psc・パッケージ・セット]]のバージョンによって違ってくる。
+ダウンロードが成功したら ~halogen~ の名前がdependencyとして ~psc-package.json~ に現れる。
+
+*** Spacemacsでの使用
+
+そのまま[[http://spacemacs.org/layers/+lang/purescript/README.html][PureScript Layer]]を使おう。 ~npm~ でインストールしたツールもちゃんと見つかる様に
+こう設定しよう：
+
+#+BEGIN_SRC lisp
+  (purescript :variables psc-ide-use-npm-bin t)
+#+END_SRC
+
+下を ~dotspacemacs/user-config~ にも追加する必要があるみたい：
+
+#+BEGIN_SRC lisp
+  (add-hook 'purescript-mode-hook 'flycheck-mode)
+#+END_SRC
+
+便利なKeybindings:
+
+| キー          | 結果                           |
+|---------------+--------------------------------|
+| ~SPC m m s~   | ~pscid~ 発動                   |
+| ~SPC m m i a~ | ~point~ にある関数を自動インポート |
+
+** 便利なコマンド
+
+Librariesもプロジェクト・コードも全部コンパイル：
+
+#+BEGIN_SRC bash
+  npm run pulp build
+#+END_SRC
+
+必要なコードだけJavascriptに変える（いわゆる「dead code elimination」）：
+
+#+BEGIN_SRC bash
+  npm run pulp -- build --to app.js
+#+END_SRC
+
+コンパイラ・デーモンを発動：
+
+#+BEGIN_SRC bash
+  npm run pscid
+#+END_SRC
+
+テストの確認：
+
+#+BEGIN_SRC bash
+  npm run pulp test
+#+END_SRC
+
+~pulp build~ で作られたJavascriptを更に圧縮：
+
+#+BEGIN_SRC bash
+  npm run uglify -- app.js --output min.js --compress --mangle
+#+END_SRC
+
+コードの長さは半分ぐらい減る。
+
+** Halogen
+
+本格的に開発を始める前にHalogenの[[https://github.com/slamdata/purescript-halogen/tree/master/docs][公式ガイド]]（英語）を全部読んだ。
+内容を理解したところで開発に必要な知識の9割ぐらい取って、残りは[[https://github.com/purescript/documentation/blob/master/language/Differences-from-Haskell.md][HaskellとPurescriptの区別]]を調べたり
+試行錯誤したりして解った。発見したことは下記で。
+
+*** 無駄のレンダリングの回避
+
+~eval~ の関数の中で ~H.put~ と ~H.modify~ が使われる度にそのコンポーネントが
+再レンダリングされる。下のコードを使えばstateが本当に変わる時にだけ再レンダリング
+が行われる：
+
+#+BEGIN_SRC purescript
+  -- | 変わった限りStateをアップデート。
+  update :: forall s a m. MonadState s m => Eq a => Lens' s a -> a -> m Unit
+  update l a = do
+    curr <- gets (_ ^. l)
+    unless (a == curr) $ modify (_ # l .~ a)
+#+END_SRC
+
+利用の例：
+
+#+BEGIN_SRC purescript
+  eval = case _ do
+    NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
+    ...  -- more cases here
+#+END_SRC
+
+~prop~ の説明は[[https://pursuit.purescript.org/packages/purescript-profunctor-lenses/3.8.0/docs/Data.Lens.Record#v:prop][こちら]]。
+
+*** ~servant-purescript~ が出したタイプや関数の扱い
+
+~type JsonAPI = "posts" :> Get '[JSON] [Blog]~ から ~servant-purescript~ はこれを吐き出す：
+
+#+BEGIN_SRC purescript
+  getPosts :: forall eff m.
+              MonadAsk (SPSettings_ SPParams_) m =>
+              MonadError AjaxError m =>
+              MonadAff ( ajax :: AJAX | eff ) m
+              => m (Array Blog)
+#+END_SRC
+
+普段、コンポーネントの関数のEffect Monad Parameterは ~m~ で平気だけど、 ~getPosts~
+を使うとすぐ ~MonadAsk~ なんじゃらかんじゃらが広がってしまう。長くて醜いtype signaturesと
+何回も同じインポートを繰り返すのを避けるために ~Types.purs~ にはこれを入れた：
+
+#+BEGIN_SRC purescript
+  type Effects eff = ReaderT (SPSettings_ SPParams_)
+                     (ExceptT AjaxError (Aff (ajax :: AJAX, console :: CONSOLE, dom :: DOM | eff)))
+
+  runEffects :: forall eff. Effects eff ~> Aff (ajax :: AJAX, console :: CONSOLE, dom :: DOM | eff)
+  runEffects eff = runExceptT (runReaderT eff settings) >>= either (\e -> log (errorToString e) *> empty) pure
+
+  settings :: SPSettings_ SPParams_
+  settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080/" }
+#+END_SRC
+
+そして関数たちのsignaturesはこう簡単に：
+
+#+BEGIN_SRC purescript
+  component :: forall e. H.Component HH.HTML Query Unit Void (Effects e)
+#+END_SRC
+
+~main~ をちょっとだけ ~hoist~ で支えると全部無事にコンパイルするはず：
+
+#+BEGIN_SRC purescript
+  import Halogen.Aff as HA
+  import Halogen.Component as HC
+
+  main :: Eff (HA.HalogenEffects (ajax :: AJAX, console :: CONSOLE)) Unit
+  main = HA.runHalogenAff do
+    body <- HA.awaitBody
+    runUI (HC.hoist runEffects Page.component) unit body
+#+END_SRC
+
+*** Effectのあるコンポーネント発動
+
+サーバー等から情報がないと発動できないコンポーネントも時々ある。こういう場合、普通の
+~H.component~ （または ~H.parentComponent~ ）の代わりに ~H.lifecycleComponent~
+が必要になってくる。
+
+#+BEGIN_SRC purescript
+  data Query a = ... | Initialize a
+
+  -- `lifecycleParentComponent`もある。
+  component :: forall e. H.Component HH.HTML Query Unit Void (Effects e)
+  component = H.lifecycleComponent { initialState: const state
+                                   , render
+                                   , eval
+                                   , receiver: const Nothing
+                                   , initializer: Just $ Initialize unit
+                                   , finalizer: Nothing }
+    where state = ...
+
+  eval :: forall e. Query ~> H.ComponentDSL State Query Void (Effects e)
+  eval = case _ of
+    ...  -- cases for other query terms.
+    Initialize next -> do
+      _ <- HQ.fork do
+        posts <- H.lift getPosts
+        H.modify (_ { posts = posts })
+      pure next
+#+END_SRC
+
+注意： ~fork~ しないとリクエストが返るまで何も動かん！
+
+*** HTMLの要求と注入
+
+訳あって本サイトのブログのHTMLはruntimeにしか存在しない。記事を選んでクリックしたら
+一つのXHRだけがされて返事のHTMLはそのままページに注入される。これを達成するには
+三つにlibraryが必要だった： ~affjax~ ・ ~domparser~ ・ ~dom-classy~
+
+下のコードでサーバーへのHTML要求ができる：
+
+#+BEGIN_SRC purescript
+  -- | サーバーへHTML要求。
+  xhr :: forall e. String -> Aff ( ajax :: AJAX, dom :: DOM | e ) (Array Node)
+  xhr p = do
+    res <- get $ "/blog/" <> p
+    liftEff do
+      parser <- newDOMParser
+      let doc = parseHTMLFromString res.response parser
+      body <- lastChild doc >>= (map join <<< traverse lastChild)
+      maybe (pure []) children body
+
+  replaceChildren :: forall e n m. IsNode n => IsNode m => n -> Array m -> Eff ( dom :: DOM | e ) Unit
+  replaceChildren el news = removeChildren el *> traverse_ (\n -> appendChild n el) news
+
+  removeChildren :: forall n e. IsNode n => n -> Eff ( dom :: DOM | e ) Unit
+  removeChildren el = children el >>= traverse_ (\n -> removeChild n el)
+
+  children :: forall n e. IsNode n => n -> Eff ( dom :: DOM | e ) (Array Node)
+  children el = do
+    kids <- childNodes el
+    len  <- length kids
+    let ixs = range 0 (len - 1)
+    catMaybes <$> traverse (\i -> item i kids) ixs
+#+END_SRC
+
+~children~ などで ~halogen~ の管轄外で直接DOMを弄れる。まずはプレースホルダーの ~<div>~ を：
+
+#+BEGIN_SRC purescript
+  post :: forall c q. HH.HTML c q
+  post = HH.div [ HP.ref (H.RefLabel "blogpost") ] []
+#+END_SRC
+
+もらったHTMLは後でここに入る。 ~post~ 自体は勿論いつもの ~render~ 関数のどこかに入る。
+大事なのは ~RefLabel~ 。実際内容を注ぎ込みたいと ~eval~ で：
+
+#+BEGIN_SRC purescript
+  eval :: forall e. Query ~> H.ComponentDSL State Query Void (Effects e)
+  eval = case _ of
+    ...  -- other cases
+    Selected s next -> do
+      curr <- H.gets _.selected
+      unless (s == curr) $ do
+        H.modify (_ { selected = s })
+        htmls <- H.getHTMLElementRef (H.RefLabel "blogpost")
+        traverse_ (\el -> liftAff (xhr s) >>= liftEff <<< replaceChildren el) htmls
+      pure next
+#+END_SRC
