@@ -36,7 +36,7 @@ is going to live in ~lib~, while the backend logic itself will be in ~server~.
 
 ** Code Sharing with Purescript
 
-Two libraries will help us:
+Two libraries help us:
 
 - ~purescript-bridge~: Generate Purescript types that match given Haskell ones
 - ~servant-purescript~: Generate Purescript code to query Servant JSON endpoints
@@ -68,7 +68,8 @@ contents of our ~bridge~ subpackage:
   import Time.Types
 
   -- | Generic representations of the Haskell types I want to convert to Purescript.
-  -- This generates /new/ Purescript code.
+  -- This generates /new/ Purescript code. The `Blog` type comes from the
+  -- `Common` module.
   types :: [SumType 'Haskell]
   types = [ mkSumType (Proxy :: Proxy Blog) ]
 
@@ -104,6 +105,22 @@ See the Purescript section below for how to interact with this generated code.
 
   server :: Server API
   server = ... :<|> serveDirectoryFileServer "assets"
+#+END_SRC
+
+All of our ~.js~ and ~.css~ files can live in ~assets/~ now.
+
+*** Automatic Gzipping
+
+This greatly reduces the size of assets being transfered to the user, for
+very little effort on our part. Via the [[https://hackage.haskell.org/package/wai-extra][wai-extra]] library:
+
+#+BEGIN_SRC haskell
+  import Network.Wai.Middleware.Gzip
+
+  app :: Application
+  app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server
+  -- Previously:
+  --   app = serve (Proxy :: Proxy API) . server
 #+END_SRC
 
 ** Avoiding Static HTML
@@ -146,7 +163,7 @@ First we generate a ~package.json~, our "project level" config:
 Next we install some tools.
 I'm usually hesitant when it comes to installing packages outside the purview
 of my system's package manager, but the following will install all the tools
-we need into a project-local ~node-modules~ directory:
+we need into a project-local ~node-modules/~ directory:
 
 #+BEGIN_SRC bash
   npm install purescript pulp psc-package pscid purescript-psa uglify-js --save-dev
@@ -306,7 +323,7 @@ spat out:
 Simple Halogen components leave their effect Monad parameter as ~m~ on functions
 like ~eval~. However, if we want to call ~getPosts~ at any point, its constraints
 will pervasively spread across our components. To avoid giant type signatures
-are lots of repeated imports, I added the following to a central ~Types.purs~ module:
+and lots of repeated imports, I added the following to a central ~Types.purs~ module:
 
 #+BEGIN_SRC purescript
   type Effects eff = ReaderT (SPSettings_ SPParams_)
@@ -411,7 +428,7 @@ To inject our content, we need a placeholder ~<div>~:
   post = HH.div [ HP.ref (H.RefLabel "blogpost") ] []
 #+END_SRC
 
-~posts~ would be part of the greater HTML tree defined in ~render~. The important
+~post~ would be part of the greater HTML tree defined in ~render~. The important
 part is the ~RefLabel~. We can update its actual contents in our ~eval~ function:
 
 #+BEGIN_SRC purescript
