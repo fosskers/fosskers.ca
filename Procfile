@@ -1,1 +1,1 @@
-web: server --heroku
+web: server
