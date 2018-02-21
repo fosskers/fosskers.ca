@@ -118,9 +118,9 @@ very little effort on our part. Via the [[https://hackage.haskell.org/package/wa
   import Network.Wai.Middleware.Gzip
 
   app :: Application
-  app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server
+  app = gzip (def { gzipFiles = GzipCompress }) $ serve (Proxy :: Proxy API) server
   -- Previously:
-  --   app = serve (Proxy :: Proxy API) . server
+  --   app = serve (Proxy :: Proxy API) server
 #+END_SRC
 
 ** Avoiding Static HTML
