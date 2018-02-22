@@ -65,9 +65,6 @@ freq = map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . s
   where f c = bool ' ' c $ isAlpha c
         g w = let l = T.length w in l > 2 && l < 13 && not (S.member w functionWords)
 
--- org :: Text -> Sh ()
--- org f = run_ "emacs" [f, "--batch", "-f", "org-html-export-to-html", "--kill"]
-
 htmlPath :: Text -> Text
 htmlPath path = T.dropEnd 4 path <> ".html"
 
@@ -86,7 +83,6 @@ orgs :: Sh ([Text], [Blog], M.HashMap Text (Html ()))
 orgs = do
   cd "blog"
   files <- filter (T.isSuffixOf ".org") <$> lsT "."
-  -- traverse_ org files
   vs <- traverse g files
   let (errs, (blogs, pairs)) = second unzip $ partitionEithers vs
   pure (errs, blogs, M.fromList pairs)
