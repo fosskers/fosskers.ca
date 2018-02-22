@@ -23,10 +23,12 @@ import           Servant.API
 import           Servant.Server
 import           Servant.Utils.StaticFiles (serveDirectoryFileServer)
 import           Shelly hiding (path)
+import           System.Environment (lookupEnv)
 
 ---
 
-newtype Args = Args { port :: Maybe Int <?> "Port to listen for requests on." } deriving (Generic, ParseRecord)
+newtype Args = Args { port :: Maybe Int <?> "Port to listen for requests on, otherwise $PORT" }
+  deriving (Generic, ParseRecord)
 
 data Env = Env { stats :: [Blog], posts :: M.HashMap Text (Html ()) }
 
@@ -113,6 +115,7 @@ main = do
   Args (Helpful p) <- getRecord "Backend server for fosskers.ca"
   (errs, ps, hs) <- shelly orgs
   traverse_ putText errs
-  let prt = maybe 8081 identity p
+  herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
+  let prt = maybe 8081 identity $ p <|> herokuPort
   putText $ "Listening on port " <> show prt
   W.run prt . app $ Env ps hs
