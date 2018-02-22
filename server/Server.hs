@@ -1,6 +1,5 @@
 {-# LANGUAGE DataKinds, TypeOperators, Rank2Types #-}
 {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
-{-# LANGUAGE ViewPatterns #-}
 
 module Main ( main ) where
 
@@ -27,23 +26,24 @@ import           System.Environment (lookupEnv)
 
 ---
 
-newtype Args = Args { port :: Maybe Int <?> "Port to listen for requests on, otherwise $PORT" }
+data Args = Args { port :: Maybe Int <?> "Port to listen for requests on, otherwise $PORT"
+                 , js   :: Text      <?> "Javascript bundle to serve" }
   deriving (Generic, ParseRecord)
 
-data Env = Env { stats :: [Blog], posts :: M.HashMap Text (Html ()) }
+data Env = Env { stats :: [Blog], posts :: M.HashMap Text (Html ()), bundle :: Text }
 
 server :: Env -> Server API
 server env = pure (stats env)
   :<|> (\p -> maybe (throwError err404) pure . M.lookup p $ posts env)
   :<|> serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
-  :<|> pure index
+  :<|> pure (index $ bundle env)
 
 app :: Env -> Application
 app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server
 
-index :: Html ()
-index = html_ $ head_ h *> body_ (script_ [src_ "assets/app.js"] ("" :: Text))
+index :: Text -> Html ()
+index j = html_ $ head_ h *> body_ (script_ [src_ $ "assets/" <> j] ("" :: Text))
   where h = do
           title_ "fosskers.ca"
           meta_ [ charset_ "utf-8" ]
@@ -112,10 +112,10 @@ eread path = do
 
 main :: IO ()
 main = do
-  Args (Helpful p) <- getRecord "Backend server for fosskers.ca"
+  Args (Helpful p) (Helpful j) <- getRecord "Backend server for fosskers.ca"
   (errs, ps, hs) <- shelly orgs
   traverse_ putText errs
   herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
   let prt = maybe 8081 identity $ p <|> herokuPort
   putText $ "Listening on port " <> show prt
-  W.run prt . app $ Env ps hs
+  W.run prt . app $ Env ps hs j
