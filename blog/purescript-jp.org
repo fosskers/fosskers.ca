@@ -86,9 +86,9 @@ Purescriptとシェアしたいのは ~JsonAPI~ だけ。で、 ~bridge~ のプ�
 ~stack exec -- bridge~ を使ってみると、 ~site/src~ に新しいPurescriptコードが現れる。
 下記の「Halogen」の所にこのコードをどう使うかは説明される。
 
-** Assetsの分配
+** Assetsの提供
 
-あるディレクトリーのファイルをそのまま分配するのは簡単：
+あるディレクトリーのファイルをそのまま提供するのは簡単：
 
 #+BEGIN_SRC haskell
   import Servant.Utils.StaticFiles (serveDirectoryFileServer)
