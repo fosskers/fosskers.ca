@@ -294,7 +294,7 @@ every time.
 If you're an [[https://github.com/sol/hpack][hpack]] fan and never commit your auto-generated ~.cabal~,
 here's a ~.travis.yml~ that will help:
 
-#+BEGIN_SRC nix
+#+BEGIN_SRC yaml
   sudo: true
 
   language: nix
