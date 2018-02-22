@@ -3,7 +3,7 @@
   "repository": "https://github.com/fosskers/fosskers.ca",
   "buildpacks": [
     {
-      "url": "https://github.com/mfine/heroku-buildpack-stack.git"
+      "url": "https://github.com/mfine/heroku-buildpack-stack"
     }
   ]
 }
