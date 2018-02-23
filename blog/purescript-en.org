@@ -332,7 +332,7 @@ and lots of repeated imports, I added the following to a central ~Types.purs~ mo
   runEffects eff = runExceptT (runReaderT eff settings) >>= either (\e -> log (errorToString e) *> empty) pure
 
   settings :: SPSettings_ SPParams_
-  settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080/" }
+  settings = defaultSettings $ SPParams_ { baseURL: "/" }
 #+END_SRC
 
 Which simplifies type signatures to things like:

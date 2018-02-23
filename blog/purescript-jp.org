@@ -316,7 +316,7 @@ Librariesもプロジェクト・コードも全部コンパイル：
   runEffects eff = runExceptT (runReaderT eff settings) >>= either (\e -> log (errorToString e) *> empty) pure
 
   settings :: SPSettings_ SPParams_
-  settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080/" }
+  settings = defaultSettings $ SPParams_ { baseURL: "/" }
 #+END_SRC
 
 そして関数たちのsignaturesはこう簡単に：
