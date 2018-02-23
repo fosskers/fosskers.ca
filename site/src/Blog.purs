@@ -92,7 +92,7 @@ choices s = options (filter (\p -> postLang p == s.language) s.posts) >>= f
                    [ col_ [ HH.a [ HP.href "#"
                                  , HE.onClick $ const (Just $ Selected p.path unit) ]
                             [ HH.h5_ [ HH.text $ p.title ^. _Title ]]]]
-                 , row_ $ [ colN 5 [] [ HH.a [ HP.href $ "/blog/" <> p.path ^. _Path
+                 , row_ $ [ colN 5 [] [ HH.a [ HP.href $ "/blog/" <> p.path ^. _Path <> ".html"
                                              , HP.classes $ map H.ClassName [ "fas", "fa-link" ] ] []
                                       , HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
                    <> bool [] [ col_ [ HH.text $ intercalate ", " matches ]] (not $ null matches)
