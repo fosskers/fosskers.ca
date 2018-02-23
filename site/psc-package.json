@@ -1,7 +1,7 @@
 {
     "name": "fosskers",
-    "set": "testing",
-    "source": "",
+    "set": "master",
+    "source": "https://github.com/fosskers/package-sets.git",
     "depends": [
         "domparser",
         "dom-classy",

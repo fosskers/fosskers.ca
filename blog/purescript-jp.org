@@ -86,9 +86,9 @@ Purescriptとシェアしたいのは ~JsonAPI~ だけ。で、 ~bridge~ のプ�
 ~stack exec -- bridge~ を使ってみると、 ~site/src~ に新しいPurescriptコードが現れる。
 下記の「Halogen」の所にこのコードをどう使うかは説明される。
 
-** Assetsの分配
+** Assetsの提供
 
-あるディレクトリーのファイルをそのまま分配するのは簡単：
+あるディレクトリーのファイルをそのまま提供するのは簡単：
 
 #+BEGIN_SRC haskell
   import Servant.Utils.StaticFiles (serveDirectoryFileServer)
@@ -174,7 +174,7 @@ PurescriptがUIを管理するおかげでHTMLファイルをコミットする�
   "scripts": {
       "pulp": "pulp --psc-package",
       "pscid": "pscid",
-      "install": "psc-package install",
+      "psc": "psc-package",
       "uglify": "uglifyjs"
   },
   ...
@@ -200,7 +200,7 @@ PurescriptがUIを管理するおかげでHTMLファイルをコミットする�
 #+BEGIN_SRC bash
   # `purescript-halogen`というパッケージをインストールする。
   # 注意：`purescript-`の部分を除く事。
-  npm run install halogen
+  npm run psc -- install halogen
 #+END_SRC
 
 ダウンロードされるバージョンは ~psc-package.json~ に設定される[[https://github.com/purescript/package-sets][psc・パッケージ・セット]]のバージョンによって違ってくる。
@@ -229,6 +229,18 @@ PurescriptがUIを管理するおかげでHTMLファイルをコミットする�
 | ~SPC m m i a~ | ~point~ にある関数を自動インポート |
 
 ** 便利なコマンド
+
+~package.json~ にあるツールを全部（再）ダウンロード：
+
+#+BEGIN_SRC bash
+  npm install
+#+END_SRC
+
+~psc-package.json~ にあるlibrary dependenciesを全部（再）ダウンロード：
+
+#+BEGIN_SRC bash
+  npm run psc -- update
+#+END_SRC
 
 Librariesもプロジェクト・コードも全部コンパイル：
 
@@ -268,7 +280,7 @@ Librariesもプロジェクト・コードも全部コンパイル：
 内容を理解したところで開発に必要な知識の9割ぐらい取って、残りは[[https://github.com/purescript/documentation/blob/master/language/Differences-from-Haskell.md][HaskellとPurescriptの区別]]を調べたり
 試行錯誤したりして解った。発見したことは下記で。
 
-*** 無駄のレンダリングの回避
+*** 無駄なレンダリングの回避
 
 ~eval~ の関数の中で ~H.put~ と ~H.modify~ が使われる度にそのコンポーネントが
 再レンダリングされる。下のコードを使えばstateが本当に変わる時にだけ再レンダリング
@@ -316,7 +328,7 @@ Librariesもプロジェクト・コードも全部コンパイル：
   runEffects eff = runExceptT (runReaderT eff settings) >>= either (\e -> log (errorToString e) *> empty) pure
 
   settings :: SPSettings_ SPParams_
-  settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080/" }
+  settings = defaultSettings $ SPParams_ { baseURL: "/" }
 #+END_SRC
 
 そして関数たちのsignaturesはこう簡単に：

@@ -73,7 +73,7 @@ selection s = [ search ] <> choices s
 -- | Make a request for blog post content.
 xhr :: forall e. String -> Aff ( ajax :: AJAX, dom :: DOM | e ) (Array Node)
 xhr p = do
-  res <- get $ "/blog/" <> p
+  res <- get $ "/blog/" <> p <> ".html"
   liftEff do
     parser <- newDOMParser
     let doc = parseHTMLFromString res.response parser

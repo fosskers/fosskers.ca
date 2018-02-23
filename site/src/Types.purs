@@ -86,7 +86,7 @@ runEffects :: forall eff. Effects eff ~> Aff (ajax :: AJAX, console :: CONSOLE, 
 runEffects eff = runExceptT (runReaderT eff settings) >>= either (\e -> log (errorToString e) *> empty) pure
 
 settings :: SPSettings_ SPParams_
-settings = defaultSettings $ SPParams_ { baseURL: "http://localhost:8080/" }
+settings = defaultSettings $ SPParams_ { baseURL: "/" }
 
 -- | I couldn't find a way to more cleanly "post-process" the bridged-over
 -- AssocList into a `Map`. Unfortunately `Map` can't be bridged directly, due

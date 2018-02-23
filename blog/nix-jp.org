@@ -275,7 +275,7 @@ Emacsの「file-local variables」を使えばこの問題を避けれる。
 
 ~hpack~ も混ぜたかったらどうぞ：
 
-#+BEGIN_SRC nix
+#+BEGIN_SRC yaml
   sudo: true
 
   language: nix

@@ -1,0 +1,911 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-02-23 Fri 08:16 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ServantとPurescript/Halogenでウェブ開発</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Colin" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">ServantとPurescript/Halogenでウェブ開発</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge517c7e">1. Haskell</a>
+<ul>
+<li><a href="#org060d06e">1.1. プロジェクト設定</a></li>
+<li><a href="#orgdef4f29">1.2. Purescriptとのコードシェア</a></li>
+<li><a href="#orgec28b74">1.3. Assetsの提供</a>
+<ul>
+<li><a href="#orgdf30af4">1.3.1. 自動圧縮</a></li>
+</ul>
+</li>
+<li><a href="#org267d43a">1.4. 無HTML</a></li>
+</ul>
+</li>
+<li><a href="#org70f1af4">2. Purescript</a>
+<ul>
+<li><a href="#org342599c">2.1. 最初の設定</a>
+<ul>
+<li><a href="#org00cfae1">2.1.1. ツール</a></li>
+<li><a href="#org696a852">2.1.2. Purescriptパッケージ</a></li>
+<li><a href="#orgbfa8b9e">2.1.3. Spacemacsでの使用</a></li>
+</ul>
+</li>
+<li><a href="#org3f27c2c">2.2. 便利なコマンド</a></li>
+<li><a href="#org5764b62">2.3. Halogen</a>
+<ul>
+<li><a href="#org64c95b7">2.3.1. 無駄なレンダリングの回避</a></li>
+<li><a href="#org76cba73">2.3.2. <code>servant-purescript</code> が出したタイプや関数の扱い</a></li>
+<li><a href="#org15cddac">2.3.3. Effectのあるコンポーネント発動</a></li>
+<li><a href="#orga245af1">2.3.4. HTMLの要求と注入</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge517c7e" class="outline-2">
+<h2 id="orge517c7e"><span class="section-number-2">1</span> Haskell</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+ウェブ・サーバーを開発する時はやっぱり<a href="http://haskell-servant.readthedocs.io/en/stable/">Servant</a>。俺の経験では、どの言語のどのフレームワークでも
+開発効率が一番高い。幸い、Purescriptとの統合も容易。
+</p>
+
+<p>
+このガイドを使うに前もって必要なのは「stack」と「Servant」の経験。
+</p>
+</div>
+
+<div id="outline-container-org060d06e" class="outline-3">
+<h3 id="org060d06e"><span class="section-number-3">1.1</span> プロジェクト設定</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+後でPurescriptとのコードシェアがうまくいく様にbackendを三つに分けることを勧める。
+それぞれの部分にはちゃんと <code>.cabal</code> または <code>package.yaml</code> を与える。
+stack設定はこう：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #715ab1;">resolver</span>: lts-10.6  <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">&#65298;&#65296;&#65297;&#65304;&#24180;2&#26376;&#29694;&#22312;</span>
+
+<span style="color: #715ab1;">packages</span>:
+  - lib      <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Purescript&#12392;&#12471;&#12455;&#12450;&#12375;&#12383;&#12356;&#20840;&#12390;&#12290;Servant&#12398;API&#12479;&#12452;&#12503;&#12418;&#21547;&#12417;&#12390;&#65281;</span>
+  - server   <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Backend&#12398;&#26412;&#26684;&#30340;&#12467;&#12540;&#12489;&#12290;</span>
+  - bridge   <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">`lib`&#12434;&#20351;&#12387;&#12390;Purescript&#12434;&#29983;&#12415;&#20986;&#12375;&#12390;&#12367;&#12428;&#12427;&#12467;&#12540;&#12489;&#12290;</span>
+
+<span style="color: #715ab1;">extra-deps</span>:
+  - servant-0.12.1
+  - servant-server-0.12
+  - servant-foreign-0.10.2
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdef4f29" class="outline-3">
+<h3 id="orgdef4f29"><span class="section-number-3">1.2</span> Purescriptとのコードシェア</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+二つのlibrariesが助けてくれる：
+</p>
+
+<ul class="org-ul">
+<li><code>purescript-bridge</code>: 指摘したHaskellタイプと一致するPurescriptを生み出す。</li>
+<li><code>servant-purescript</code>: BackendのJSON endpointsが問えるPurescriptを生み出す。</li>
+</ul>
+
+<p>
+どうやら <code>servant-purescript</code> はJSON endpointsでしか使えん様で、本サイトの <code>Common</code>
+module にはこういうのがある：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">JsonAPI</span> <span style="color: #715ab1;">=</span> <span style="color: #2d9574;">"posts"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Get</span> '<span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">JSON</span><span style="color: #3a81c3;">]</span> <span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">Blog</span><span style="color: #3a81c3;">]</span>
+
+<span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">API</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">JsonAPI</span>
+  <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #2d9574;">"blog"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Capture</span> <span style="color: #2d9574;">"post"</span> <span style="color: #ba2f59; font-weight: bold;">Text</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Get</span> '<span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">HTML</span><span style="color: #3a81c3;">]</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Html</span> <span style="color: #6c3163; font-weight: bold;">()</span><span style="color: #3a81c3;">)</span>
+  <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #2d9574;">"assets"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raw</span>
+  <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #2d9574;">"webfonts"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raw</span>
+  <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Get</span> '<span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">HTML</span><span style="color: #3a81c3;">]</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Html</span> <span style="color: #6c3163; font-weight: bold;">()</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Purescriptとシェアしたいのは <code>JsonAPI</code> だけ。で、 <code>bridge</code> のプログラムには：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #6c3163;">{-# LANGUAGE DataKinds, FlexibleContexts #-}</span>
+
+<span style="color: #3a81c3; font-weight: bold;">module</span> <span style="color: #ba2f59; font-weight: bold;">Main</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
+
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Common</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Blog</span>, <span style="color: #ba2f59; font-weight: bold;">JsonAPI</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Language.PureScript.Bridge</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Servant.PureScript</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Time.Types</span>
+
+<span style="color: #da8b55;">-- | Purescript&#12395;&#12375;&#12383;&#12356;&#33258;&#20998;&#12398;Haskell&#12479;&#12452;&#12503;&#12290;&#26032;&#12375;&#12356;Purescript&#12364;&#20986;&#12427;&#12290;</span>
+<span style="color: #6c3163; font-weight: bold;">types</span> <span style="color: #715ab1;">::</span> <span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">SumType</span> '<span style="color: #ba2f59; font-weight: bold;">Haskell</span><span style="color: #3a81c3;">]</span>
+<span style="color: #6c3163; font-weight: bold;">types</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3;">[</span> mkSumType <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #ba2f59; font-weight: bold;">Blog</span><span style="color: #6c3163;">)</span> <span style="color: #3a81c3;">]</span>
+
+<span style="color: #da8b55;">-- | &#33258;&#20316;&#12300;bridge&#12301;&#12290;&#24418;&#12398;&#20840;&#12367;&#21516;&#12376;Haskell&#12392;Purescript&#12398;&#12479;&#12452;&#12503;&#12434;&#32331;&#12370;&#12383;&#12356;&#12392;&#24847;&#21619;&#12377;&#12427;&#12290;</span>
+<span style="color: #da8b55;">-- &#26032;&#12375;&#12356;&#12467;&#12540;&#12489;&#12399;&#20986;&#12394;&#12356;&#12290;&#12383;&#12384;JSON decoding&#12398;&#38555;&#12395;&#12384;&#12369;&#20351;&#12431;&#12428;&#12427;&#12290;</span>
+<span style="color: #6c3163; font-weight: bold;">monthBridge</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">BridgePart</span>
+<span style="color: #6c3163; font-weight: bold;">monthBridge</span> <span style="color: #715ab1;">=</span> typeName <span style="color: #715ab1;">^==</span> <span style="color: #2d9574;">"Month"</span> <span style="color: #715ab1;">&gt;&gt;</span> pure psMonth
+
+<span style="color: #6c3163; font-weight: bold;">psMonth</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">PSType</span>
+<span style="color: #6c3163; font-weight: bold;">psMonth</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">TypeInfo</span> <span style="color: #3a81c3;">{</span> _typePackage    <span style="color: #715ab1;">=</span> <span style="color: #2d9574;">"purescript-datetime"</span>
+                   , _typeModule     <span style="color: #715ab1;">=</span> <span style="color: #2d9574;">"Data.Date"</span>
+                   , _typeName       <span style="color: #715ab1;">=</span> <span style="color: #2d9574;">"Month"</span>
+                   , _typeParameters <span style="color: #715ab1;">=</span> <span style="color: #6c3163; font-weight: bold;">[]</span> <span style="color: #3a81c3;">}</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  writePSTypes <span style="color: #2d9574;">"site/src"</span> <span style="color: #3a81c3;">(</span>buildBridge <span style="color: #715ab1;">$</span> defaultBridge <span style="color: #715ab1;">&lt;|&gt;</span> monthBridge<span style="color: #3a81c3;">)</span> types
+  writeAPIModule <span style="color: #2d9574;">"site/src"</span> defaultBridgeProxy <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #ba2f59; font-weight: bold;">JsonAPI</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+<code>stack exec -- bridge</code> を使ってみると、 <code>site/src</code> に新しいPurescriptコードが現れる。
+下記の「Halogen」の所にこのコードをどう使うかは説明される。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgec28b74" class="outline-3">
+<h3 id="orgec28b74"><span class="section-number-3">1.3</span> Assetsの提供</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+あるディレクトリーのファイルをそのまま提供するのは簡単：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Servant.Utils.StaticFiles</span> <span style="color: #3a81c3;">(</span>serveDirectoryFileServer<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">API</span> <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #2d9574;">"assets"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raw</span>
+
+<span style="color: #6c3163; font-weight: bold;">server</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Server</span> <span style="color: #ba2f59; font-weight: bold;">API</span>
+<span style="color: #6c3163; font-weight: bold;">server</span> <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> serveDirectoryFileServer <span style="color: #2d9574;">"assets"</span>
+</pre>
+</div>
+
+<p>
+これでassets (<code>.js</code> や <code>.css</code> のファイル)を全部 <code>assets/</code> に放り込める。
+</p>
+</div>
+
+<div id="outline-container-orgdf30af4" class="outline-4">
+<h4 id="orgdf30af4"><span class="section-number-4">1.3.1</span> 自動圧縮</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+ちょっとコードを足すだけでサーバーから出されるAssetsの重さを数倍軽くしてくれる<a href="https://hackage.haskell.org/package/wai-extra">wai-extra</a>：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Network.Wai.Middleware.Gzip</span>
+
+<span style="color: #6c3163; font-weight: bold;">app</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Application</span>
+<span style="color: #6c3163; font-weight: bold;">app</span> <span style="color: #715ab1;">=</span> gzip <span style="color: #3a81c3;">(</span>def <span style="color: #6c3163;">{</span> gzipFiles <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">GzipCompress</span> <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">$</span> serve <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #ba2f59; font-weight: bold;">API</span><span style="color: #3a81c3;">)</span> server
+<span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">&#20803;&#12399;&#12371;&#12435;&#12394;&#24863;&#12376;&#65306;</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">--   </span><span style="color: #2aa1ae; background-color: #ecf3ec;">app = serve (Proxy :: Proxy API) server</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org267d43a" class="outline-3">
+<h3 id="org267d43a"><span class="section-number-3">1.4</span> 無HTML</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+PurescriptがUIを管理するおかげでHTMLファイルをコミットする必要は実はない。
+<code>index.html</code> さえbackendが出してくれる：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Lucid</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Servant.HTML.Lucid</span>
+
+<span style="color: #da8b55;">-- | &#12371;&#12398;&#26368;&#24460;&#12398;`Get`&#12364;&#12469;&#12452;&#12488;&#12398;&#26412;&#65288;`/`&#65289;&#12395;&#19968;&#33268;&#12377;&#12427;&#12290;</span>
+<span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">API</span> <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Get</span> '<span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">HTML</span><span style="color: #3a81c3;">]</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Html</span> <span style="color: #6c3163; font-weight: bold;">()</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">index</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Html</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">index</span> <span style="color: #715ab1;">=</span> html_ <span style="color: #715ab1;">$</span> head_ h <span style="color: #715ab1;">*&gt;</span> body_ <span style="color: #3a81c3;">(</span>script_ <span style="color: #6c3163;">[</span>src_ <span style="color: #2d9574;">"assets/app.js"</span><span style="color: #6c3163;">]</span> <span style="color: #6c3163;">(</span><span style="color: #2d9574;">""</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Text</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">where</span> h <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+          title_ <span style="color: #2d9574;">"fosskers.ca"</span>
+          link_ <span style="color: #3a81c3;">[</span> rel_ <span style="color: #2d9574;">"stylesheet"</span>, href_ <span style="color: #2d9574;">"assets/fosskers.css"</span> <span style="color: #3a81c3;">]</span>
+
+<span style="color: #6c3163; font-weight: bold;">server</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Server</span> <span style="color: #ba2f59; font-weight: bold;">API</span>
+<span style="color: #6c3163; font-weight: bold;">server</span> <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> pure index
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org70f1af4" class="outline-2">
+<h2 id="org70f1af4"><span class="section-number-2">2</span> Purescript</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org342599c" class="outline-3">
+<h3 id="org342599c"><span class="section-number-3">2.1</span> 最初の設定</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<a href="https://www.npmjs.com/">npm</a>をインストールしてから進む事。
+</p>
+</div>
+
+<div id="outline-container-org00cfae1" class="outline-4">
+<h4 id="org00cfae1"><span class="section-number-4">2.1.1</span> ツール</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+もっとも扱いやすいPurescript開発環境を築くにはちょっと <code>npm</code> を利用しないと。
+これで <code>package.json</code> が生まれる：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm init
+</pre>
+</div>
+
+<p>
+次はツールをインストール。普段はディストロのpackage manager意外のを使うのは
+あまり気に入らんけど、この場合は心配ない。次のコマンドで必要のツールが全部
+プロジェクト・ディレクトリー（ <code>node-modules/</code> の中）だけにインストールされる：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm install purescript pulp psc-package pscid purescript-psa uglify-js --save-dev
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>purescript</code>: コンパイラ</li>
+<li><code>pulp</code>: <code>cabal</code> みたいなbuild tool</li>
+<li><code>psc-package</code>: Purescript librariesのpackage manager</li>
+<li><code>pscid</code>: <code>stack build --file-watch</code> みたいなコンパイラ・デーモン</li>
+<li><code>purescript-psa</code>: <code>pulp</code> に使われてより解りやすいコンパイル・エラーを出す</li>
+<li><code>uglify-js</code>: Javascriptの圧縮のため</li>
+</ul>
+
+<p>
+上のコマンドで <code>package.json</code> にもこのツールの名前が現れる。実際に使うには
+<code>package.json</code> にこれを：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">...
+<span style="color: #2d9574;">"scripts"</span>: <span style="color: #3a81c3;">{</span>
+    <span style="color: #2d9574;">"pulp"</span>: <span style="color: #2d9574;">"pulp --psc-package"</span>,
+    <span style="color: #2d9574;">"pscid"</span>: <span style="color: #2d9574;">"pscid"</span>,
+    <span style="color: #2d9574;">"psc"</span>: <span style="color: #2d9574;">"psc-package"</span>,
+    <span style="color: #2d9574;">"uglify"</span>: <span style="color: #2d9574;">"uglifyjs"</span>
+<span style="color: #3a81c3;">}</span>,
+...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org696a852" class="outline-4">
+<h4 id="org696a852"><span class="section-number-4">2.1.2</span> Purescriptパッケージ</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+上で開発に必要なツールだけがインストールされた。Purescriptのプロジェク設定やコードらしきファイルが
+まだない。出そう：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pulp init
+</pre>
+</div>
+
+<p>
+これで作られるのは：
+</p>
+
+<ul class="org-ul">
+<li><code>psc-package.json</code>: Library Dependenciesを示す所</li>
+<li><code>src/Main.purs</code></li>
+<li><code>test/Main.purs</code></li>
+</ul>
+
+<p>
+<a href="https://pursuit.purescript.org/">Pursuit</a>ではありのPurescript Librariesを調べたりできる。インストールするのも楽：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">`purescript-halogen`&#12392;&#12356;&#12358;&#12497;&#12483;&#12465;&#12540;&#12472;&#12434;&#12452;&#12531;&#12473;&#12488;&#12540;&#12523;&#12377;&#12427;&#12290;</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">&#27880;&#24847;&#65306;`purescript-`&#12398;&#37096;&#20998;&#12434;&#38500;&#12367;&#20107;&#12290;</span>
+npm run psc -- install halogen
+</pre>
+</div>
+
+<p>
+ダウンロードされるバージョンは <code>psc-package.json</code> に設定される<a href="https://github.com/purescript/package-sets">psc・パッケージ・セット</a>のバージョンによって違ってくる。
+ダウンロードが成功したら <code>halogen</code> の名前がdependencyとして <code>psc-package.json</code> に現れる。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbfa8b9e" class="outline-4">
+<h4 id="orgbfa8b9e"><span class="section-number-4">2.1.3</span> Spacemacsでの使用</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p>
+そのまま<a href="http://spacemacs.org/layers/+lang/purescript/README.html">PureScript Layer</a>を使おう。 <code>npm</code> でインストールしたツールもちゃんと見つかる様に
+こう設定しよう：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #3a81c3;">(</span>purescript <span style="color: #3a81c3;">:variables</span> psc-ide-use-npm-bin t<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+下を <code>dotspacemacs/user-config</code> にも追加する必要があるみたい：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #3a81c3;">(</span>add-hook 'purescript-mode-hook 'flycheck-mode<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+便利なKeybindings:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">キー</th>
+<th scope="col" class="org-left">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>SPC m m s</code></td>
+<td class="org-left"><code>pscid</code> 発動</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC m m i a</code></td>
+<td class="org-left"><code>point</code> にある関数を自動インポート</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3f27c2c" class="outline-3">
+<h3 id="org3f27c2c"><span class="section-number-3">2.2</span> 便利なコマンド</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<code>package.json</code> にあるツールを全部（再）ダウンロード：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm install
+</pre>
+</div>
+
+<p>
+<code>psc-package.json</code> にあるlibrary dependenciesを全部（再）ダウンロード：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run psc -- update
+</pre>
+</div>
+
+<p>
+Librariesもプロジェクト・コードも全部コンパイル：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pulp build
+</pre>
+</div>
+
+<p>
+必要なコードだけJavascriptに変える（いわゆる「dead code elimination」）：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pulp -- build --to app.js
+</pre>
+</div>
+
+<p>
+コンパイラ・デーモンを発動：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pscid
+</pre>
+</div>
+
+<p>
+テストの確認：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pulp test
+</pre>
+</div>
+
+<p>
+<code>pulp build</code> で作られたJavascriptを更に圧縮：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run uglify -- app.js --output min.js --compress --mangle
+</pre>
+</div>
+
+<p>
+コードの長さは半分ぐらい減る。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5764b62" class="outline-3">
+<h3 id="org5764b62"><span class="section-number-3">2.3</span> Halogen</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+本格的に開発を始める前にHalogenの<a href="https://github.com/slamdata/purescript-halogen/tree/master/docs">公式ガイド</a>（英語）を全部読んだ。
+内容を理解したところで開発に必要な知識の9割ぐらい取って、残りは<a href="https://github.com/purescript/documentation/blob/master/language/Differences-from-Haskell.md">HaskellとPurescriptの区別</a>を調べたり
+試行錯誤したりして解った。発見したことは下記で。
+</p>
+</div>
+
+<div id="outline-container-org64c95b7" class="outline-4">
+<h4 id="org64c95b7"><span class="section-number-4">2.3.1</span> 無駄なレンダリングの回避</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+<code>eval</code> の関数の中で <code>H.put</code> と <code>H.modify</code> が使われる度にそのコンポーネントが
+再レンダリングされる。下のコードを使えばstateが本当に変わる時にだけ再レンダリング
+が行われる：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #da8b55;">-- | &#22793;&#12431;&#12387;&#12383;&#38480;&#12426;State&#12434;&#12450;&#12483;&#12503;&#12487;&#12540;&#12488;&#12290;</span>
+<span style="color: #6c3163; font-weight: bold;">update</span> <span style="color: #715ab1;">::</span> forall s a m<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">MonadState</span> s m <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Eq</span> a <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Lens'</span> s a <span style="color: #715ab1;">-&gt;</span> a <span style="color: #715ab1;">-&gt;</span> m <span style="color: #ba2f59; font-weight: bold;">Unit</span>
+<span style="color: #6c3163; font-weight: bold;">update</span> l a <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  curr <span style="color: #715ab1;">&lt;-</span> gets <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">^.</span> l<span style="color: #3a81c3;">)</span>
+  unless <span style="color: #3a81c3;">(</span>a <span style="color: #715ab1;">==</span> curr<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">$</span> modify <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">#</span> l <span style="color: #715ab1;">.~</span> a<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+利用の例：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  <span style="color: #ba2f59; font-weight: bold;">NewKeywords</span> kws next <span style="color: #715ab1;">-&gt;</span> update <span style="color: #3a81c3;">(</span>prop <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">SProxy</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">SProxy</span> <span style="color: #2d9574;">"keywords"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> kws <span style="color: #715ab1;">*&gt;</span> pure next
+  <span style="color: #715ab1;">...</span>  <span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">more cases here</span>
+</pre>
+</div>
+
+<p>
+<code>prop</code> の説明は<a href="https://pursuit.purescript.org/packages/purescript-profunctor-lenses/3.8.0/docs/Data.Lens.Record#v:prop">こちら</a>。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org76cba73" class="outline-4">
+<h4 id="org76cba73"><span class="section-number-4">2.3.2</span> <code>servant-purescript</code> が出したタイプや関数の扱い</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+<code>type JsonAPI = "posts" :&gt; Get '[JSON] [Blog]</code> から <code>servant-purescript</code> はこれを吐き出す：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">getPosts</span> <span style="color: #715ab1;">::</span> forall eff m<span style="color: #715ab1;">.</span>
+            <span style="color: #ba2f59; font-weight: bold;">MonadAsk</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">SPSettings_</span> <span style="color: #ba2f59; font-weight: bold;">SPParams_</span><span style="color: #3a81c3;">)</span> m <span style="color: #715ab1;">=&gt;</span>
+            <span style="color: #ba2f59; font-weight: bold;">MonadError</span> <span style="color: #ba2f59; font-weight: bold;">AjaxError</span> m <span style="color: #715ab1;">=&gt;</span>
+            <span style="color: #ba2f59; font-weight: bold;">MonadAff</span> <span style="color: #3a81c3;">(</span> ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span> <span style="color: #715ab1;">|</span> eff <span style="color: #3a81c3;">)</span> m
+            <span style="color: #715ab1;">=&gt;</span> m <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Array</span> <span style="color: #ba2f59; font-weight: bold;">Blog</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+普段、コンポーネントの関数のEffect Monad Parameterは <code>m</code> で平気だけど、 <code>getPosts</code>
+を使うとすぐ <code>MonadAsk</code> なんじゃらかんじゃらが広がってしまう。長くて醜いtype signaturesと
+何回も同じインポートを繰り返すのを避けるために <code>Types.purs</code> にはこれを入れた：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">Effects</span> eff <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">ReaderT</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">SPSettings_</span> <span style="color: #ba2f59; font-weight: bold;">SPParams_</span><span style="color: #3a81c3;">)</span>
+                   <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ExceptT</span> <span style="color: #ba2f59; font-weight: bold;">AjaxError</span> <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">Aff</span> <span style="color: #2d9574;">(</span>ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span>, console <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">CONSOLE</span>, dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> eff<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">runEffects</span> <span style="color: #715ab1;">::</span> forall eff<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">Effects</span> eff <span style="color: #715ab1;">~&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Aff</span> <span style="color: #3a81c3;">(</span>ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span>, console <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">CONSOLE</span>, dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> eff<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">runEffects</span> eff <span style="color: #715ab1;">=</span> runExceptT <span style="color: #3a81c3;">(</span>runReaderT eff settings<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">&gt;&gt;=</span> either <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>e <span style="color: #715ab1;">-&gt;</span> log <span style="color: #6c3163;">(</span>errorToString e<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">*&gt;</span> empty<span style="color: #3a81c3;">)</span> pure
+
+<span style="color: #6c3163; font-weight: bold;">settings</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">SPSettings_</span> <span style="color: #ba2f59; font-weight: bold;">SPParams_</span>
+<span style="color: #6c3163; font-weight: bold;">settings</span> <span style="color: #715ab1;">=</span> defaultSettings <span style="color: #715ab1;">$</span> <span style="color: #ba2f59; font-weight: bold;">SPParams_</span> <span style="color: #3a81c3;">{</span> baseURL<span style="color: #ba2f59; font-weight: bold;">:</span> <span style="color: #2d9574;">"/"</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+そして関数たちのsignaturesはこう簡単に：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">component</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">H.Component</span> <span style="color: #ba2f59; font-weight: bold;">HH.HTML</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span> <span style="color: #ba2f59; font-weight: bold;">Void</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Effects</span> e<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+<code>main</code> をちょっとだけ <code>hoist</code> で支えると全部無事にコンパイルするはず：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Halogen.Aff</span> <span style="color: #3a81c3; font-weight: bold;">as</span> <span style="color: #ba2f59; font-weight: bold;">HA</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Halogen.Component</span> <span style="color: #3a81c3; font-weight: bold;">as</span> <span style="color: #ba2f59; font-weight: bold;">HC</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Eff</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">HA.HalogenEffects</span> <span style="color: #6c3163;">(</span>ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span>, console <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">CONSOLE</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">HA</span><span style="color: #715ab1;">.</span>runHalogenAff <span style="color: #3a81c3; font-weight: bold;">do</span>
+  body <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">HA</span><span style="color: #715ab1;">.</span>awaitBody
+  runUI <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">HC</span><span style="color: #715ab1;">.</span>hoist runEffects <span style="color: #ba2f59; font-weight: bold;">Page</span><span style="color: #715ab1;">.</span>component<span style="color: #3a81c3;">)</span> unit body
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org15cddac" class="outline-4">
+<h4 id="org15cddac"><span class="section-number-4">2.3.3</span> Effectのあるコンポーネント発動</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<p>
+サーバー等から情報がないと発動できないコンポーネントも時々ある。こういう場合、普通の
+<code>H.component</code> （または <code>H.parentComponent</code> ）の代わりに <code>H.lifecycleComponent</code>
+が必要になってくる。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> a <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #715ab1;">|</span> <span style="color: #ba2f59; font-weight: bold;">Initialize</span> a
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">`lifecycleParentComponent`&#12418;&#12354;&#12427;&#12290;</span>
+<span style="color: #6c3163; font-weight: bold;">component</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">H.Component</span> <span style="color: #ba2f59; font-weight: bold;">HH.HTML</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span> <span style="color: #ba2f59; font-weight: bold;">Void</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Effects</span> e<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">component</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>lifecycleComponent <span style="color: #3a81c3;">{</span> initialState<span style="color: #ba2f59; font-weight: bold;">:</span> const state
+                                 , render
+                                 , eval
+                                 , receiver<span style="color: #ba2f59; font-weight: bold;">:</span> const <span style="color: #ba2f59; font-weight: bold;">Nothing</span>
+                                 , initializer<span style="color: #ba2f59; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Just</span> <span style="color: #715ab1;">$</span> <span style="color: #ba2f59; font-weight: bold;">Initialize</span> unit
+                                 , finalizer<span style="color: #ba2f59; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Nothing</span> <span style="color: #3a81c3;">}</span>
+  <span style="color: #3a81c3; font-weight: bold;">where</span> state <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span>
+
+<span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #715ab1;">~&gt;</span> <span style="color: #ba2f59; font-weight: bold;">H.ComponentDSL</span> <span style="color: #ba2f59; font-weight: bold;">State</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #ba2f59; font-weight: bold;">Void</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Effects</span> e<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #3a81c3; font-weight: bold;">of</span>
+  <span style="color: #715ab1;">...</span>  <span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">cases for other query terms.</span>
+  <span style="color: #ba2f59; font-weight: bold;">Initialize</span> next <span style="color: #715ab1;">-&gt;</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">HQ</span><span style="color: #715ab1;">.</span>fork <span style="color: #3a81c3; font-weight: bold;">do</span>
+      posts <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>lift getPosts
+      <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>modify <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #6c3163;">{</span> posts <span style="color: #715ab1;">=</span> posts <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span>
+    pure next
+</pre>
+</div>
+
+<p>
+注意： <code>fork</code> しないとリクエストが返るまで何も動かん！
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga245af1" class="outline-4">
+<h4 id="orga245af1"><span class="section-number-4">2.3.4</span> HTMLの要求と注入</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<p>
+訳あって本サイトのブログのHTMLはruntimeにしか存在しない。記事を選んでクリックしたら
+一つのXHRだけがされて返事のHTMLはそのままページに注入される。これを達成するには
+三つにlibraryが必要だった： <code>affjax</code> ・ <code>domparser</code> ・ <code>dom-classy</code>
+</p>
+
+<p>
+下のコードでサーバーへのHTML要求ができる：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #da8b55;">-- | &#12469;&#12540;&#12496;&#12540;&#12408;HTML&#35201;&#27714;&#12290;</span>
+<span style="color: #6c3163; font-weight: bold;">xhr</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">String</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Aff</span> <span style="color: #3a81c3;">(</span> ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span>, dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> e <span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Array</span> <span style="color: #ba2f59; font-weight: bold;">Node</span><span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">xhr</span> p <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  res <span style="color: #715ab1;">&lt;-</span> get <span style="color: #715ab1;">$</span> <span style="color: #2d9574;">"/blog/"</span> <span style="color: #715ab1;">&lt;&gt;</span> p
+  liftEff <span style="color: #3a81c3; font-weight: bold;">do</span>
+    parser <span style="color: #715ab1;">&lt;-</span> newDOMParser
+    <span style="color: #3a81c3; font-weight: bold;">let</span> doc <span style="color: #715ab1;">=</span> parseHTMLFromString res<span style="color: #715ab1;">.</span>response parser
+    body <span style="color: #715ab1;">&lt;-</span> lastChild doc <span style="color: #715ab1;">&gt;&gt;=</span> <span style="color: #3a81c3;">(</span>map join <span style="color: #715ab1;">&lt;&lt;&lt;</span> traverse lastChild<span style="color: #3a81c3;">)</span>
+    maybe <span style="color: #3a81c3;">(</span>pure <span style="color: #6c3163; font-weight: bold;">[]</span><span style="color: #3a81c3;">)</span> children body
+
+<span style="color: #6c3163; font-weight: bold;">replaceChildren</span> <span style="color: #715ab1;">::</span> forall e n m<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">IsNode</span> n <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">IsNode</span> m <span style="color: #715ab1;">=&gt;</span> n <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Array</span> m <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Eff</span> <span style="color: #3a81c3;">(</span> dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> e <span style="color: #3a81c3;">)</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span>
+<span style="color: #6c3163; font-weight: bold;">replaceChildren</span> el news <span style="color: #715ab1;">=</span> removeChildren el <span style="color: #715ab1;">*&gt;</span> traverse_ <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>n <span style="color: #715ab1;">-&gt;</span> appendChild n el<span style="color: #3a81c3;">)</span> news
+
+<span style="color: #6c3163; font-weight: bold;">removeChildren</span> <span style="color: #715ab1;">::</span> forall n e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">IsNode</span> n <span style="color: #715ab1;">=&gt;</span> n <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Eff</span> <span style="color: #3a81c3;">(</span> dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> e <span style="color: #3a81c3;">)</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span>
+<span style="color: #6c3163; font-weight: bold;">removeChildren</span> el <span style="color: #715ab1;">=</span> children el <span style="color: #715ab1;">&gt;&gt;=</span> traverse_ <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>n <span style="color: #715ab1;">-&gt;</span> removeChild n el<span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">children</span> <span style="color: #715ab1;">::</span> forall n e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">IsNode</span> n <span style="color: #715ab1;">=&gt;</span> n <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Eff</span> <span style="color: #3a81c3;">(</span> dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> e <span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Array</span> <span style="color: #ba2f59; font-weight: bold;">Node</span><span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">children</span> el <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  kids <span style="color: #715ab1;">&lt;-</span> childNodes el
+  len  <span style="color: #715ab1;">&lt;-</span> length kids
+  <span style="color: #3a81c3; font-weight: bold;">let</span> ixs <span style="color: #715ab1;">=</span> range <span style="color: #4e3163;">0</span> <span style="color: #3a81c3;">(</span>len <span style="color: #715ab1;">-</span> <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+  catMaybes <span style="color: #715ab1;">&lt;$&gt;</span> traverse <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>i <span style="color: #715ab1;">-&gt;</span> item i kids<span style="color: #3a81c3;">)</span> ixs
+</pre>
+</div>
+
+<p>
+<code>children</code> などで <code>halogen</code> の管轄外で直接DOMを弄れる。まずはプレースホルダーの <code>&lt;div&gt;</code> を：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">post</span> <span style="color: #715ab1;">::</span> forall c q<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">HH.HTML</span> c q
+<span style="color: #6c3163; font-weight: bold;">post</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">HH</span><span style="color: #715ab1;">.</span>div <span style="color: #3a81c3;">[</span> <span style="color: #ba2f59; font-weight: bold;">HP</span><span style="color: #715ab1;">.</span>ref <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">H.RefLabel</span> <span style="color: #2d9574;">"blogpost"</span><span style="color: #6c3163;">)</span> <span style="color: #3a81c3;">]</span> <span style="color: #3a81c3; font-weight: bold;">[]</span>
+</pre>
+</div>
+
+<p>
+もらったHTMLは後でここに入る。 <code>post</code> 自体は勿論いつもの <code>render</code> 関数のどこかに入る。
+大事なのは <code>RefLabel</code> 。実際内容を注ぎ込みたいと <code>eval</code> で：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #715ab1;">~&gt;</span> <span style="color: #ba2f59; font-weight: bold;">H.ComponentDSL</span> <span style="color: #ba2f59; font-weight: bold;">State</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #ba2f59; font-weight: bold;">Void</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Effects</span> e<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #3a81c3; font-weight: bold;">of</span>
+  <span style="color: #715ab1;">...</span>  <span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">other cases</span>
+  <span style="color: #ba2f59; font-weight: bold;">Selected</span> s next <span style="color: #715ab1;">-&gt;</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    curr <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>gets <span style="color: #3a81c3; font-weight: bold;">_</span><span style="color: #715ab1;">.</span>selected
+    unless <span style="color: #3a81c3;">(</span>s <span style="color: #715ab1;">==</span> curr<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+      <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>modify <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #6c3163;">{</span> selected <span style="color: #715ab1;">=</span> s <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span>
+      htmls <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>getHTMLElementRef <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">H.RefLabel</span> <span style="color: #2d9574;">"blogpost"</span><span style="color: #3a81c3;">)</span>
+      traverse_ <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>el <span style="color: #715ab1;">-&gt;</span> liftAff <span style="color: #6c3163;">(</span>xhr s<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">&gt;&gt;=</span> liftEff <span style="color: #715ab1;">&lt;&lt;&lt;</span> replaceChildren el<span style="color: #3a81c3;">)</span> htmls
+    pure next
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-02-21</p>
+<p class="author">Author: Colin</p>
+<p class="date">Created: 2018-02-23 Fri 08:16</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
