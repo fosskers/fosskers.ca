@@ -15,7 +15,7 @@ import Time.Types
 type JsonAPI = "posts" :> Get '[JSON] [Blog]
 
 type API = JsonAPI
-  :<|> "blog" :> Capture "post" Text :> Get '[HTML] (Html ())
+  :<|> "blog" :> Raw
   :<|> "assets" :> Raw
   :<|> "webfonts" :> Raw
   :<|> Get '[HTML] (Html ())
