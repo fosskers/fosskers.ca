@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-02-23 Fri 08:05 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NixとDanteでHaskell開発</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="こりん" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">NixとDanteでHaskell開発</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org6a9145a">1. 最初の設定</a></li>
+<li><a href="#org741836b">2. Haskellの詳細</a>
+<ul>
+<li><a href="#orgfb45992">2.1. Nix設定の自動生成</a></li>
+<li><a href="#org3cf0691">2.2. Nix Shellでの開発</a></li>
+<li><a href="#org85346ea">2.3. <code>release.nix</code> の定義</a></li>
+<li><a href="#orgdbc6257">2.4. Profiling</a></li>
+</ul>
+</li>
+<li><a href="#org747a911">3. Emacsでの使用</a>
+<ul>
+<li><a href="#org45db8a6">3.1. <code>Dante</code> をインストール</a></li>
+<li><a href="#org5a0f2c6">3.2. Danteとtestsとbenchmarks</a></li>
+</ul>
+</li>
+<li><a href="#org465a8fe">4. 継続的インテグレーション</a>
+<ul>
+<li><a href="#orgd73e3fb">4.1. Travis</a></li>
+<li><a href="#orgd13a817">4.2. Hercules</a></li>
+<li><a href="#org90e5aaf">4.3. CircleCI</a></li>
+<li><a href="#org2d4db3c">4.4. Hydraを自分で</a></li>
+</ul>
+</li>
+<li><a href="#orgb718c27">5. Stackとの比べ</a></li>
+<li><a href="#org8064da6">6. 資源</a></li>
+</ul>
+</div>
+</div>
+<p>
+日頃のHaskell開発で使ってみるために（やっと）Nixを身につけた。下記は俺のNix設定と
+開発の流れの説明。
+</p>
+
+<div id="outline-container-org6a9145a" class="outline-2">
+<h2 id="org6a9145a"><span class="section-number-2">1</span> 最初の設定</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+ディストロはArch Linuxやけん、最初はAURの <code>nix</code> パッケージをインストールしてみたけど、
+どうやらnix environmentがちゃんとできあがらんやった。<a href="https://nixos.org/nix/">nixos.org</a>からの<a href="https://nixos.org/nix/manual/#chap-quick-start">公式方法</a>は逆にほぼうまくいった：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">curl https://nixos.org/nix/install | sh
+</pre>
+</div>
+
+<p>
+作られた <code>/nix</code> directoryのwrite許可を自分で正す必要もあるかしれんけん要注意。
+</p>
+
+<p>
+Environment variablesを設定するscriptを確認するには：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">less /home/colin/.nix-profile/etc/profile.d/nix.sh
+</pre>
+</div>
+
+<p>
+このscriptはbashしか存在しないと思い込んでて俺はfishのユーザーで、少し自分で設定
+を書く必要があった。 <code>/home/colin/.config/fish/config.fish</code> に：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fish">set -x PATH ... '/home/colin/.nix-profile/bin'
+
+# Nix
+set -x NIX_PATH 'nixpkgs=/home/colin/.nix-defexpr/channels/nixpkgs'
+set -x NIX_SSL_CERT_FILE '/etc/ssl/certs/ca-certificates.crt'
+</pre>
+</div>
+
+<p>
+最後の行はディストロによって違うけん、上で言った <code>nix.sh</code> の中身で確認しとってね。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org741836b" class="outline-2">
+<h2 id="org741836b"><span class="section-number-2">2</span> Haskellの詳細</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Nixでのプロジェクト設定は一般的にどんな感じか解るには<a href="https://github.com/Gabriel439/haskell-nix">Gabriel GonzalesのNix初心者ガイド</a>(英語）はなかなか
+いい資源。
+</p>
+
+<p>
+下記は簡単なプロジェクト向き：benchmarksとprofilingがしたい一つのlibraryかプログラム。
+TravisCIとの統合、Emacsでの使い方の説明も含めてる。
+</p>
+</div>
+
+<div id="outline-container-orgfb45992" class="outline-3">
+<h3 id="orgfb45992"><span class="section-number-3">2.1</span> Nix設定の自動生成</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+プロジェクトの中で <code>cabal2nix</code> を使って、「nix expressions」を <code>.cabal</code> から作り出せる。
+インストールするには：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">nix-env -i cabal2nix
+</pre>
+</div>
+
+<p>
+で、Nix設定を作り出そう：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">cabal2nix . &gt; default.nix
+</pre>
+</div>
+
+<p>
+<code>.cabal</code> が変わる度にせんといかんさね。
+</p>
+
+<p>
+むしろ <code>hpack</code> が好みやったら：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">nix-env --install --attr nixpkgs.haskellPackages.hpack
+</pre>
+</div>
+
+<p>
+と：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">hpack &amp;&amp; cabal2nix . &gt; default.nix
+</pre>
+</div>
+
+<p>
+または <code>fish</code> で：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fish">hpack; cabal2nix . &gt; default.nix
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3cf0691" class="outline-3">
+<h3 id="org3cf0691"><span class="section-number-3">2.2</span> Nix Shellでの開発</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Nixでのプロジェクトは三つのファイルで完成する：
+</p>
+
+<ul class="org-ul">
+<li><code>default.nix</code></li>
+<li><code>shell.nix</code></li>
+<li><code>release.nix</code></li>
+</ul>
+
+<p>
+が、普通の開発で最初の二つだけが必要になってくる。
+<code>nix-shell</code> を使えばプロジェクトだけのdependenciesが入ってくる
+秘密森みたいな環境ができあがる。中にはいつも通り <code>cabal test</code> と <code>cabal bench</code>
+が使えて、他のプロジェクトのdependenciesなどが邪魔して来ない。
+</p>
+
+<p>
+プロジェクトに下記の内容の <code>shell.nix</code> ファイルを作れば <code>nix-shell</code> が利用できるようになる：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span style="color: #3a81c3; font-weight: bold;">let</span> <span style="color: #715ab1;">nixpkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #4e3163;">&lt;nixpkgs&gt;</span> <span style="color: #3a81c3;">{}</span>;
+    <span style="color: #715ab1;">orig</span> = nixpkgs.pkgs.haskellPackages.callPackage <span style="color: #4e3163;">./default.nix</span> <span style="color: #3a81c3;">{}</span>;
+<span style="color: #3a81c3; font-weight: bold;">in</span> <span style="color: #3a81c3;">(</span>nixpkgs.pkgs.haskell.lib.doBenchmark orig<span style="color: #3a81c3;">)</span>.env
+</pre>
+</div>
+
+<p>
+よく見ると、本プロジェクトに関係するファイルの名前などが一切参考されていない・・・
+ということは、これと全く同じ内容のファイルをどのプロジェクトでも使える。
+</p>
+
+<p>
+注意： <code>doBenchmark</code> の部分がないと、benchmarkのdependenciesがshellに入って
+来ない。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org85346ea" class="outline-3">
+<h3 id="org85346ea"><span class="section-number-3">2.3</span> <code>release.nix</code> の定義</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Travisの時と正式にパッケージをあるNix Storeにインストールしたい時に
+必要になってくる。例えばパッケージが「vectortiles」というと：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span style="color: #3a81c3; font-weight: bold;">let</span>
+  <span style="color: #715ab1;">config</span> = <span style="color: #3a81c3;">{</span>
+    <span style="color: #715ab1;">packageOverrides</span> = pkgs: <span style="color: #6c3163;">{</span>
+      <span style="color: #715ab1;">haskellPackages</span> = pkgs.haskellPackages.override <span style="color: #2d9574;">{</span>
+        <span style="color: #715ab1;">overrides</span> = haskellPackagesNew: haskellPackagesOld: <span style="color: #67b11d;">{</span>
+          <span style="color: #715ab1;">vectortiles</span> = haskellPackagesNew.callPackage <span style="color: #4e3163;">./default.nix</span> <span style="color: #b1951d;">{</span> <span style="color: #b1951d;">}</span>;
+        <span style="color: #67b11d;">}</span>;
+      <span style="color: #2d9574;">}</span>;
+    <span style="color: #6c3163;">}</span>;
+  <span style="color: #3a81c3;">}</span>;
+
+  <span style="color: #715ab1;">pkgs</span> =
+    <span style="color: #3a81c3;">import</span> <span style="color: #4e3163;">&lt;nixpkgs&gt;</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3; font-weight: bold;">inherit</span> config; <span style="color: #3a81c3;">}</span>;
+
+<span style="color: #3a81c3; font-weight: bold;">in</span>
+  <span style="color: #3a81c3;">{</span> <span style="color: #715ab1;">vectortiles</span> = pkgs.haskellPackages.vectortiles;
+  <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+もっと短いのもあるけど、設定を<a href="https://github.com/Gabriel439/haskell-nix/blob/master/project1/README.md#changing-versions">より細かく変えたい時</a>にこの形が便利。
+</p>
+
+<p>
+プロジェクトを丸ごとコンパイル：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">nix-build release.nix
+</pre>
+</div>
+
+<p>
+コンパイル方の細かい選択肢は<a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/lib.nix">こちら</a>。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdbc6257" class="outline-3">
+<h3 id="orgdbc6257"><span class="section-number-3">2.4</span> Profiling</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+具体的にコードのどこが遅かったりすると知りたい時にprofilingやね。
+Nixでこれが結構楽。まず <code>~/.config/nixpkgs/config.nix</code> を新しく作って、この内容を入れる：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span style="color: #3a81c3;">{</span>
+  <span style="color: #715ab1;">packageOverrides</span> = super: <span style="color: #3a81c3; font-weight: bold;">let</span> <span style="color: #715ab1;">self</span> = super.pkgs; <span style="color: #3a81c3; font-weight: bold;">in</span>
+  <span style="color: #6c3163;">{</span>
+    <span style="color: #715ab1;">profiledHaskellPackages</span> = self.haskellPackages.override <span style="color: #2d9574;">{</span>
+      <span style="color: #715ab1;">overrides</span> = self: super: <span style="color: #67b11d;">{</span>
+        <span style="color: #715ab1;">mkDerivation</span> = args: super.mkDerivation <span style="color: #b1951d;">(</span>args // <span style="color: #3a81c3;">{</span>
+          <span style="color: #715ab1;">enableLibraryProfiling</span> = <span style="color: #3a81c3;">true</span>;
+        <span style="color: #3a81c3;">}</span><span style="color: #b1951d;">)</span>;
+      <span style="color: #67b11d;">}</span>;
+    <span style="color: #2d9574;">}</span>;
+  <span style="color: #6c3163;">}</span>;
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+で、profileしたいプロジェクトで <code>profiling-shell.nix</code> を新しく：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span style="color: #3a81c3; font-weight: bold;">let</span> <span style="color: #715ab1;">nixpkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #4e3163;">&lt;nixpkgs&gt;</span> <span style="color: #3a81c3;">{}</span>;
+    <span style="color: #715ab1;">orig</span> = nixpkgs.pkgs.profiledHaskellPackages.callPackage <span style="color: #4e3163;">./default.nix</span> <span style="color: #3a81c3;">{}</span>;
+<span style="color: #3a81c3; font-weight: bold;">in</span> <span style="color: #3a81c3;">(</span>nixpkgs.pkgs.haskell.lib.doBenchmark orig<span style="color: #3a81c3;">)</span>.env
+</pre>
+</div>
+
+<p>
+普通の <code>shell.nix</code> と殆ど一緒。ただ今回はさっき書いた <code>profiledHaskellPackages</code> の部分
+も含めてる。 <code>nix-shell profiling-shell.nix</code> をしてみると、profiling用のdependenciesが
+全てコンパイルし直される。一回目じゃかなり時間かかる。
+</p>
+
+<p>
+俺が調べた限り、普通のNix Storeにあったdependenciesがまだ健在。いつも通り <code>nix-shell</code> を
+使うとprofiling用のdependenciesは使われない。
+</p>
+
+<p>
+注意： <code>nix-collect-garbage -d</code> をしない事！すると時間をかけてコンパイルしたprofiling用の
+dependenciesが全部なくなる。
+</p>
+
+<p>
+よし何かprofileしよう・・・　作りよるのはlibraryやったらbenchmarksのexecutableでよかろうか？
+方法：
+</p>
+
+<ul class="org-ul">
+<li><code>-prof</code> と <code>-fprof-auto</code> をbenchmarkのGHC optionsに追加</li>
+<li><code>default.nix</code> を生成し直す</li>
+<li>Profiling shellに入る: <code>nix-shell profiling-shell.nix</code></li>
+<li><code>cabal configure --enable-library-profiling --enable-benchmarks</code></li>
+<li><code>cabal build</code></li>
+<li><code>dist/build/projname/projname-bench +RTS -p</code></li>
+<li>できた <code>projname-bench.prof</code> の中身を見る</li>
+</ul>
+
+<p>
+(上でprojnameは勿論、あなたが作りよるプロジェクトの名前）
+</p>
+
+<p>
+結果によるとコードを訂正したり、普通の <code>nix-shell</code> で開発を進めれる。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org747a911" class="outline-2">
+<h2 id="org747a911"><span class="section-number-2">3</span> Emacsでの使用</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>dante-mode</code> は色々と助けてくれる。
+プロジェクトに <code>shell.nix</code> と <code>default.nix</code> が確認されると自動的にDanteが発動する。
+ま、まずインストールせんと。
+</p>
+</div>
+
+<div id="outline-container-org45db8a6" class="outline-3">
+<h3 id="org45db8a6"><span class="section-number-3">3.1</span> <code>Dante</code> をインストール</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+普通のEmacsやったら<a href="https://github.com/jyp/dante#installation">こちら</a>。
+</p>
+
+<p>
+Spacemacs（の <code>develop</code> branch!）のユーザーだと、そのままDanteが使える。
+<code>.spacemacs</code> でHaskell Layerをこう設定しよう：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #3a81c3;">(</span>haskell <span style="color: #3a81c3;">:variables</span> haskell-completion-backend 'dante<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+そして <code>dotspacemacs/user-config</code> にこれを追加：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #3a81c3;">(</span>add-hook 'dante-mode-hook 'flycheck-mode<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+これがないとDanteの機嫌が悪くなる。
+</p>
+
+<p>
+DanteにREPLがない。いつもの <code>SPC m s b</code> も何もせん。ある関数を試すには：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">&gt;&gt;&gt; foo 5</span>
+<span style="color: #6c3163; font-weight: bold;">foo</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">String</span>
+<span style="color: #6c3163; font-weight: bold;">foo</span> <span style="color: #715ab1;">=</span> show
+</pre>
+</div>
+
+<p>
+コメントの所に <code>SPC m s e</code> したら、コードはこう変わる：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">&gt;&gt;&gt; foo 5</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">"5"</span>
+<span style="color: #6c3163; font-weight: bold;">foo</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">String</span>
+<span style="color: #6c3163; font-weight: bold;">foo</span> <span style="color: #715ab1;">=</span> show
+</pre>
+</div>
+
+<p>
+これさえできればDanteの論理によるとREPLが要らないそうだ。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5a0f2c6" class="outline-3">
+<h3 id="org5a0f2c6"><span class="section-number-3">3.2</span> Danteとtestsとbenchmarks</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+上の設定だけでDanteはtestのbenchmarkのファイルでちゃんと発動しない。
+Emacsの「file-local variables」を使えばこの問題を避けれる。
+</p>
+
+<p>
+<code>vectortiles</code> というプロジェクトで <code>Test.hs</code> というファイルがあるとして、まず開いてみる。
+<code>add-file-local-variable-prop-line</code> というEmacs関数を使うと選択肢が出る。
+<code>dante-target</code> を選んでこれを <code>vectortiles-test</code> (<code>.cabal</code> の中との同じ名前)に設定すると、
+ファイルの最初の行にこのコメントが現れる：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">-*- dante-target: "vectortiles-test"; -*-</span>
+</pre>
+</div>
+
+<p>
+この後 <code>Test.hs</code> を開く度にDanteがちゃんと発動する。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org465a8fe" class="outline-2">
+<h2 id="org465a8fe"><span class="section-number-2">4</span> 継続的インテグレーション</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+やっぱりTravisが一番？
+</p>
+</div>
+
+<div id="outline-container-orgd73e3fb" class="outline-3">
+<h3 id="orgd73e3fb"><span class="section-number-3">4.1</span> Travis</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<a href="https://docs.travis-ci.com/user/languages/nix/">公式の指示</a>
+</p>
+
+<p>
+結構簡単。パッケージが <code>vectortiles</code> というと、この <code>.travis.yml</code> で十分：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #715ab1;">sudo</span>: true  <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">&#12300;Docker&#25244;&#12365;&#12301;&#12290;&#12371;&#12358;&#12420;&#12387;&#12383;&#26041;&#12364;&#12363;&#12394;&#12426;&#36895;&#12356;&#12290;</span>
+<span style="color: #715ab1;">language</span>: nix
+<span style="color: #715ab1;">script</span>: nix-build --attr vectortiles release.nix
+</pre>
+</div>
+
+<p>
+期待通り、testが失敗するとCIも失敗する。Dependenciesが毎回ダウンロードされる割に
+数分で終始するはず。
+</p>
+
+<p>
+<code>hpack</code> も混ぜたかったらどうぞ：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #715ab1;">sudo</span>: <span style="color: #4e3163;">true</span>
+
+<span style="color: #715ab1;">language</span>: nix
+
+<span style="color: #715ab1;">before_install</span>: nix-env --install --attr nixpkgs.haskellPackages.hpack
+
+<span style="color: #715ab1;">script</span>:
+  - hpack
+  - nix-build --attr vectortiles release.nix
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd13a817" class="outline-3">
+<h3 id="orgd13a817"><span class="section-number-3">4.2</span> Hercules</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<a href="https://github.com/hercules-ci/hercules">Github repository</a>.
+</p>
+
+<p>
+NixのためだけのCIシステム。極新しくて、「1.0」が<a href="https://github.com/hercules-ci/hercules/issues/5">まだまだ遠いみたい</a>。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org90e5aaf" class="outline-3">
+<h3 id="org90e5aaf"><span class="section-number-3">4.3</span> CircleCI</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+CircleCIではHaskellのCIは<a href="https://circleci.com/docs/1.0/language-haskell/">一応できる</a>けどNixは優先されてないようだ。
+一人ぐらいは<a href="https://discuss.circleci.com/t/caching-root-directory-nix-not-working/10626">頑張ってるみたい</a>やけど。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2d4db3c" class="outline-3">
+<h3 id="org2d4db3c"><span class="section-number-3">4.4</span> Hydraを自分で</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+<a href="https://nixos.org/hydra/">公式サイト</a>
+</p>
+
+<p>
+Nixと言えば当たり前かもしれんけど、俺みたいな平凡開発者には複雑すぎる。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb718c27" class="outline-2">
+<h2 id="orgb718c27"><span class="section-number-2">5</span> Stackとの比べ</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+「慣れとるのと違う、諦めよう」とかせずに、しばらくはNixとDanteで頑張ってみたかった。
+あるプロジェクトを丸ごとstackからNixに移してから、次のNix/Danteの長所が見えてきた：
+</p>
+
+<ul class="org-ul">
+<li>普通開発の時も、CIの時も、Herokuなどに展開する時も、dependencyダウンロードの速さ</li>
+<li>Travis設定の簡単さ</li>
+<li>Haskellじゃないdependenciesの整理</li>
+<li><a href="https://github.com/sol/doctest">doctest</a>との協力。 Danteで作ったコメントがあれば：</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #da8b55;">-- | &#12371;&#12398;&#38306;&#25968;&#12399;&#20309;&#12392;&#12363;&#12371;&#12358;&#12392;&#12363;&#12290;</span>
+<span style="color: #da8b55;">--</span>
+<span style="color: #da8b55;">-- &gt;&gt;&gt; inc 1</span>
+<span style="color: #da8b55;">-- 2</span>
+<span style="color: #6c3163; font-weight: bold;">inc</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Int</span>
+<span style="color: #6c3163; font-weight: bold;">inc</span> n <span style="color: #715ab1;">=</span> n <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">1</span>
+</pre>
+</div>
+
+<p>
+このシンタックスも <code>doctest</code> に理解されて、関数の正当性の証明にもなる。
+<code>inc</code> が変わって証明が崩れると、何かの間違いにすぐ気づかされる。
+</p>
+
+<p>
+そしてStack/Interoの長所：
+</p>
+
+<ul class="org-ul">
+<li>インストールの簡単さ（特に初心者にとって）</li>
+<li>プロジェクト設定の簡単さ（最小限、 <code>stack.yaml</code> は一つの行で十分）</li>
+<li>Nixより「コンパイルは絶対成功する」という保証が強い</li>
+<li><code>intero</code> の設定は簡単で、Danteより機能が多い</li>
+<li><code>cabal</code> にない <code>stack</code> の様々な機能：
+<ul class="org-ul">
+<li>File watchが便利すぎる: <code>stack build --haddock-deps --test --file-watch --fast</code></li>
+<li><code>stack test</code> と <code>stack bench</code> が短くて解りやすい</li>
+<li>オフライン・ドキュメンテーション: <code>stack haddock --open foobar</code></li>
+<li>Dependency graphs: <code>stack dot --external --prune base,ghc-prim,integer-gmp,deepseq,array | dot -Tjpg -o deps.jpg</code></li>
+<li><code>stack upload .</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8064da6" class="outline-2">
+<h2 id="org8064da6"><span class="section-number-2">6</span> 資源</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li><a href="https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure">NixのHaskellパッケージ公式ガイド</a></li>
+<li><a href="https://github.com/Gabriel439/haskell-nix">Gabriel GonzalesのNix初心者ガイド</a></li>
+<li><a href="http://vaibhavsagar.com/blog/2018/01/03/static-haskell-nix/">Building static Haskell binaries</a></li>
+<li>Emacsの<a href="https://github.com/jyp/dante">dante-mode</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-01-10</p>
+<p class="author">Author: こりん</p>
+<p class="date">Created: 2018-02-23 Fri 08:05</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
