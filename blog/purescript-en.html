@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-02-23 Fri 08:14 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Websites with Servant and Purescript/Halogen</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Colin" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Websites with Servant and Purescript/Halogen</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge18d3c0">1. Haskell</a>
+<ul>
+<li><a href="#org317e76d">1.1. Project Structure</a></li>
+<li><a href="#org55b8b1c">1.2. Code Sharing with Purescript</a></li>
+<li><a href="#org1f70432">1.3. Serving Assets</a>
+<ul>
+<li><a href="#orgac4c05b">1.3.1. Automatic Gzipping</a></li>
+</ul>
+</li>
+<li><a href="#org656a7d3">1.4. Avoiding Static HTML</a></li>
+</ul>
+</li>
+<li><a href="#orgde60f79">2. Purescript</a>
+<ul>
+<li><a href="#org23a4a99">2.1. Setup</a>
+<ul>
+<li><a href="#orgc1a22dc">2.1.1. Tools</a></li>
+<li><a href="#org3e91223">2.1.2. Packages</a></li>
+<li><a href="#org937d1bd">2.1.3. Spacemacs Integration</a></li>
+</ul>
+</li>
+<li><a href="#org48b0ff0">2.2. Common Commands</a></li>
+<li><a href="#org518a5ca">2.3. Halogen</a>
+<ul>
+<li><a href="#org8fecce4">2.3.1. Avoiding Rerendering</a></li>
+<li><a href="#org146eda2">2.3.2. Handling Types Imposed by <code>servant-purescript</code></a></li>
+<li><a href="#org8d04e2a">2.3.3. Effectful Component Initialization</a></li>
+<li><a href="#org1f5cf32">2.3.4. Requesting and Injecting HTML</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge18d3c0" class="outline-2">
+<h2 id="orge18d3c0"><span class="section-number-2">1</span> Haskell</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://haskell-servant.readthedocs.io/en/stable/">Servant</a> is <i>fantastic</i> for writing web servers. The brevity alone makes it my
+favourite of all the frameworks I've ever tried in any language. It has a
+healthly ecosystem, and in this case, integrates well with Purescript.
+</p>
+
+<p>
+This section assumes a <code>stack</code>-based Haskell project and familiarity with
+Servant.
+</p>
+</div>
+
+<div id="outline-container-org317e76d" class="outline-3">
+<h3 id="org317e76d"><span class="section-number-3">1.1</span> Project Structure</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+In order for code-sharing with Purescript to work well later, I recommend we
+split the backend into three parts, each with their own <code>.cabal</code> (or <code>package.yaml</code>):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #715ab1;">resolver</span>: lts-10.6  <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">As of 2018 February</span>
+
+<span style="color: #715ab1;">packages</span>:
+  - lib
+  - server
+  - bridge
+
+<span style="color: #715ab1;">extra-deps</span>:
+  - servant-0.12.1
+  - servant-server-0.12
+  - servant-foreign-0.10.2
+</pre>
+</div>
+
+<p>
+Our servant <code>API</code> type and anything else we want to "bridge" to Purescript
+is going to live in <code>lib</code>, while the backend logic itself will be in <code>server</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org55b8b1c" class="outline-3">
+<h3 id="org55b8b1c"><span class="section-number-3">1.2</span> Code Sharing with Purescript</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Two libraries help us:
+</p>
+
+<ul class="org-ul">
+<li><code>purescript-bridge</code>: Generate Purescript types that match given Haskell ones</li>
+<li><code>servant-purescript</code>: Generate Purescript code to query Servant JSON endpoints</li>
+</ul>
+
+<p>
+Since <code>servant-purescript</code> only seems to want to work for JSON endpoints, I have
+something like this in the <code>lib</code> package's <code>Common</code> module:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">JsonAPI</span> <span style="color: #715ab1;">=</span> <span style="color: #2d9574;">"posts"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Get</span> '<span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">JSON</span><span style="color: #3a81c3;">]</span> <span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">Blog</span><span style="color: #3a81c3;">]</span>
+
+<span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">API</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">JsonAPI</span>
+  <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #2d9574;">"blog"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Capture</span> <span style="color: #2d9574;">"post"</span> <span style="color: #ba2f59; font-weight: bold;">Text</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Get</span> '<span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">HTML</span><span style="color: #3a81c3;">]</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Html</span> <span style="color: #6c3163; font-weight: bold;">()</span><span style="color: #3a81c3;">)</span>
+  <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #2d9574;">"assets"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raw</span>
+  <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #2d9574;">"webfonts"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raw</span>
+  <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Get</span> '<span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">HTML</span><span style="color: #3a81c3;">]</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Html</span> <span style="color: #6c3163; font-weight: bold;">()</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Where <code>JsonAPI</code> is all we want to bridge over. The following snippet shows the
+contents of our <code>bridge</code> subpackage:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #6c3163;">{-# LANGUAGE DataKinds, FlexibleContexts #-}</span>
+
+<span style="color: #3a81c3; font-weight: bold;">module</span> <span style="color: #ba2f59; font-weight: bold;">Main</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
+
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Common</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Blog</span>, <span style="color: #ba2f59; font-weight: bold;">JsonAPI</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Language.PureScript.Bridge</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Servant.PureScript</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Time.Types</span>
+
+<span style="color: #da8b55;">-- | Generic representations of the Haskell types I want to convert to Purescript.</span>
+<span style="color: #da8b55;">-- This generates </span><span style="color: #da8b55; font-style: italic;">/new/</span><span style="color: #da8b55;"> Purescript code.</span>
+<span style="color: #6c3163; font-weight: bold;">types</span> <span style="color: #715ab1;">::</span> <span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">SumType</span> '<span style="color: #ba2f59; font-weight: bold;">Haskell</span><span style="color: #3a81c3;">]</span>
+<span style="color: #6c3163; font-weight: bold;">types</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3;">[</span> mkSumType <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #ba2f59; font-weight: bold;">Blog</span><span style="color: #6c3163;">)</span> <span style="color: #3a81c3;">]</span>
+
+<span style="color: #da8b55;">-- | A custom "bridge". Signals that we want to connect a Haskell type to an</span>
+<span style="color: #da8b55;">-- existing Purescript type of identical structure. Doesn't generate new code,</span>
+<span style="color: #da8b55;">-- just helps with JSON decoding.</span>
+<span style="color: #6c3163; font-weight: bold;">monthBridge</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">BridgePart</span>
+<span style="color: #6c3163; font-weight: bold;">monthBridge</span> <span style="color: #715ab1;">=</span> typeName <span style="color: #715ab1;">^==</span> <span style="color: #2d9574;">"Month"</span> <span style="color: #715ab1;">&gt;&gt;</span> pure psMonth
+
+<span style="color: #6c3163; font-weight: bold;">psMonth</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">PSType</span>
+<span style="color: #6c3163; font-weight: bold;">psMonth</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">TypeInfo</span> <span style="color: #3a81c3;">{</span> _typePackage    <span style="color: #715ab1;">=</span> <span style="color: #2d9574;">"purescript-datetime"</span>
+                   , _typeModule     <span style="color: #715ab1;">=</span> <span style="color: #2d9574;">"Data.Date"</span>
+                   , _typeName       <span style="color: #715ab1;">=</span> <span style="color: #2d9574;">"Month"</span>
+                   , _typeParameters <span style="color: #715ab1;">=</span> <span style="color: #6c3163; font-weight: bold;">[]</span> <span style="color: #3a81c3;">}</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  writePSTypes <span style="color: #2d9574;">"site/src"</span> <span style="color: #3a81c3;">(</span>buildBridge <span style="color: #715ab1;">$</span> defaultBridge <span style="color: #715ab1;">&lt;|&gt;</span> monthBridge<span style="color: #3a81c3;">)</span> types
+  writeAPIModule <span style="color: #2d9574;">"site/src"</span> defaultBridgeProxy <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #ba2f59; font-weight: bold;">JsonAPI</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+<code>stack exec -- bridge</code> will then generate legal Purescript into <code>site/src</code>.
+See the Purescript section below for how to interact with this generated code.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1f70432" class="outline-3">
+<h3 id="org1f70432"><span class="section-number-3">1.3</span> Serving Assets</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+"Just serve any file from the directory I indicate." Easy:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Servant.Utils.StaticFiles</span> <span style="color: #3a81c3;">(</span>serveDirectoryFileServer<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">API</span> <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #2d9574;">"assets"</span> <span style="color: #ba2f59; font-weight: bold;">:&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raw</span>
+
+<span style="color: #6c3163; font-weight: bold;">server</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Server</span> <span style="color: #ba2f59; font-weight: bold;">API</span>
+<span style="color: #6c3163; font-weight: bold;">server</span> <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> serveDirectoryFileServer <span style="color: #2d9574;">"assets"</span>
+</pre>
+</div>
+
+<p>
+All of our <code>.js</code> and <code>.css</code> files can live in <code>assets/</code> now.
+</p>
+</div>
+
+<div id="outline-container-orgac4c05b" class="outline-4">
+<h4 id="orgac4c05b"><span class="section-number-4">1.3.1</span> Automatic Gzipping</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+This greatly reduces the size of assets being transfered to the user, for
+very little effort on our part. Via the <a href="https://hackage.haskell.org/package/wai-extra">wai-extra</a> library:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Network.Wai.Middleware.Gzip</span>
+
+<span style="color: #6c3163; font-weight: bold;">app</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Application</span>
+<span style="color: #6c3163; font-weight: bold;">app</span> <span style="color: #715ab1;">=</span> gzip <span style="color: #3a81c3;">(</span>def <span style="color: #6c3163;">{</span> gzipFiles <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">GzipCompress</span> <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">$</span> serve <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Proxy</span> <span style="color: #ba2f59; font-weight: bold;">API</span><span style="color: #3a81c3;">)</span> server
+<span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Previously:</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">--   </span><span style="color: #2aa1ae; background-color: #ecf3ec;">app = serve (Proxy :: Proxy API) server</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org656a7d3" class="outline-3">
+<h3 id="org656a7d3"><span class="section-number-3">1.4</span> Avoiding Static HTML</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Since Purescript is generating our UI, we don't actually need to commit any HTML files.
+Our <code>index.html</code> can also be produced on-the-fly by our backend:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Lucid</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Servant.HTML.Lucid</span>
+
+<span style="color: #da8b55;">-- | The final `Get` here will match on `/`, the site's root.</span>
+<span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">API</span> <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Get</span> '<span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">HTML</span><span style="color: #3a81c3;">]</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Html</span> <span style="color: #6c3163; font-weight: bold;">()</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">index</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Html</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">index</span> <span style="color: #715ab1;">=</span> html_ <span style="color: #715ab1;">$</span> head_ h <span style="color: #715ab1;">*&gt;</span> body_ <span style="color: #3a81c3;">(</span>script_ <span style="color: #6c3163;">[</span>src_ <span style="color: #2d9574;">"assets/app.js"</span><span style="color: #6c3163;">]</span> <span style="color: #6c3163;">(</span><span style="color: #2d9574;">""</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Text</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">where</span> h <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+          title_ <span style="color: #2d9574;">"fosskers.ca"</span>
+          link_ <span style="color: #3a81c3;">[</span> rel_ <span style="color: #2d9574;">"stylesheet"</span>, href_ <span style="color: #2d9574;">"assets/fosskers.css"</span> <span style="color: #3a81c3;">]</span>
+
+<span style="color: #6c3163; font-weight: bold;">server</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Server</span> <span style="color: #ba2f59; font-weight: bold;">API</span>
+<span style="color: #6c3163; font-weight: bold;">server</span> <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #ba2f59; font-weight: bold;">:&lt;|&gt;</span> pure index
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgde60f79" class="outline-2">
+<h2 id="orgde60f79"><span class="section-number-2">2</span> Purescript</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org23a4a99" class="outline-3">
+<h3 id="org23a4a99"><span class="section-number-3">2.1</span> Setup</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+This requires <a href="https://www.npmjs.com/">npm</a> to be installed.
+</p>
+</div>
+
+<div id="outline-container-orgc1a22dc" class="outline-4">
+<h4 id="orgc1a22dc"><span class="section-number-4">2.1.1</span> Tools</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+The canonical dev environment for Purescript requires some use of <code>npm</code>.
+First we generate a <code>package.json</code>, our "project level" config:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm init
+</pre>
+</div>
+
+<p>
+Next we install some tools.
+I'm usually hesitant when it comes to installing packages outside the purview
+of my system's package manager, but the following will install all the tools
+we need into a project-local <code>node-modules/</code> directory:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm install purescript pulp psc-package pscid purescript-psa uglify-js --save-dev
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>purescript</code>: The compiler</li>
+<li><code>pulp</code>: The canonical build tool</li>
+<li><code>psc-package</code>: The package manager for Purescript libraries</li>
+<li><code>pscid</code>: A compilation daemon, similar to <code>stack build --file-watch</code></li>
+<li><code>purescript-psa</code>: Used by <code>pulp</code> to display nicer compiler errors</li>
+<li><code>uglify-js</code>: For minimizing our final "production bundle"</li>
+</ul>
+
+<p>
+We'll notice these appear as dependency entries in our <code>package.json</code>.
+</p>
+
+<p>
+<code>npm</code> also lets us define project-local commands to use the tools we just installed.
+Here are some useful ones we can enter into <code>package.json</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">...
+<span style="color: #2d9574;">"scripts"</span>: <span style="color: #3a81c3;">{</span>
+    <span style="color: #2d9574;">"pulp"</span>: <span style="color: #2d9574;">"pulp --psc-package"</span>,
+    <span style="color: #2d9574;">"pscid"</span>: <span style="color: #2d9574;">"pscid"</span>,
+    <span style="color: #2d9574;">"psc"</span>: <span style="color: #2d9574;">"psc-package"</span>,
+    <span style="color: #2d9574;">"uglify"</span>: <span style="color: #2d9574;">"uglifyjs"</span>
+<span style="color: #3a81c3;">}</span>,
+...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3e91223" class="outline-4">
+<h4 id="org3e91223"><span class="section-number-4">2.1.2</span> Packages</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+Now, to generate some more scaffolding:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pulp init
+</pre>
+</div>
+
+<p>
+This produces:
+</p>
+
+<ul class="org-ul">
+<li><code>psc-package.json</code>: Where we define library dependencies</li>
+<li><code>src/Main.purs</code></li>
+<li><code>test/Main.purs</code></li>
+</ul>
+
+<p>
+We can check <a href="https://pursuit.purescript.org/">Pursuit</a> for the list of available PureScript libraries, and install
+them with:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Install the package `purescript-halogen`.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Notice that the `purescript-` is left off here.</span>
+npm run psc -- install halogen
+</pre>
+</div>
+
+<p>
+This will install the version of <code>halogen</code> that's pinned in the <a href="https://github.com/purescript/package-sets">psc package set</a> we're using.
+If the installation was successful, we'll notice <code>halogen</code> appear in our <code>psc-package.json</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org937d1bd" class="outline-4">
+<h4 id="org937d1bd"><span class="section-number-4">2.1.3</span> Spacemacs Integration</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p>
+The <a href="http://spacemacs.org/layers/+lang/purescript/README.html">Purescript Layer</a> works quite nicely out of the box. In order for Spacemacs
+to detect our npm-installed tools, we configure our Purescript layer like so:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #3a81c3;">(</span>purescript <span style="color: #3a81c3;">:variables</span> psc-ide-use-npm-bin t<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+I also found it necessary to add the following to <code>dotspacemacs/user-config</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #3a81c3;">(</span>add-hook 'purescript-mode-hook 'flycheck-mode<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Handy Keybindings:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Keys</th>
+<th scope="col" class="org-left">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>SPC m m s</code></td>
+<td class="org-left">Start a <code>pscid</code> session (enables auto-completion and auto-imports)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC m m i a</code></td>
+<td class="org-left">Import the symbol at <code>point</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org48b0ff0" class="outline-3">
+<h3 id="org48b0ff0"><span class="section-number-3">2.2</span> Common Commands</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+To (re)download all tool dependencies marked in <code>package.json</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm install
+</pre>
+</div>
+
+<p>
+To (re)download all library dependencies marked in <code>psc-package.json</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run psc -- update
+</pre>
+</div>
+
+<p>
+To compile all library dependencies and our code into CommonJS-compatible Javascript:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pulp build
+</pre>
+</div>
+
+<p>
+To bundle only what's needed into a single <code>.js</code> file:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pulp -- build --to app.js
+</pre>
+</div>
+
+<p>
+To run the <code>pscid</code> daemon:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pscid
+</pre>
+</div>
+
+<p>
+To run our test suites:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pulp test
+</pre>
+</div>
+
+<p>
+To minify our bundled Javascript:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run uglify -- app.js --output min.js --compress --mangle
+</pre>
+</div>
+
+<p>
+The behaviour of the minified code seems to be the same, and the file size
+is less than half of the original human-readable code.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org518a5ca" class="outline-3">
+<h3 id="org518a5ca"><span class="section-number-3">2.3</span> Halogen</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Before writing anything, I read the <a href="https://github.com/slamdata/purescript-halogen/tree/master/docs">official Halogen guide</a> and found it quite good.
+It equipped me with 95% of what I needed to know to be productive, having written no
+Purescript before. The rest I gained by reading about <a href="https://github.com/purescript/documentation/blob/master/language/Differences-from-Haskell.md">the differences between Purescript and Haskell</a>
+and through experimentation, the fruits of which I explain below.
+</p>
+</div>
+
+<div id="outline-container-org8fecce4" class="outline-4">
+<h4 id="org8fecce4"><span class="section-number-4">2.3.1</span> Avoiding Rerendering</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+Every time <code>H.put</code> or <code>H.modify</code> is called in our <code>eval</code> function, the
+component will be rerendered. Here's a helper function that will only
+update a part of our state if it has actually changed:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #da8b55;">-- | Updates some State only if it's changed.</span>
+<span style="color: #6c3163; font-weight: bold;">update</span> <span style="color: #715ab1;">::</span> forall s a m<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">MonadState</span> s m <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Eq</span> a <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Lens'</span> s a <span style="color: #715ab1;">-&gt;</span> a <span style="color: #715ab1;">-&gt;</span> m <span style="color: #ba2f59; font-weight: bold;">Unit</span>
+<span style="color: #6c3163; font-weight: bold;">update</span> l a <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  curr <span style="color: #715ab1;">&lt;-</span> gets <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">^.</span> l<span style="color: #3a81c3;">)</span>
+  unless <span style="color: #3a81c3;">(</span>a <span style="color: #715ab1;">==</span> curr<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">$</span> modify <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">#</span> l <span style="color: #715ab1;">.~</span> a<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Example of usage:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  <span style="color: #ba2f59; font-weight: bold;">NewKeywords</span> kws next <span style="color: #715ab1;">-&gt;</span> update <span style="color: #3a81c3;">(</span>prop <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">SProxy</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">SProxy</span> <span style="color: #2d9574;">"keywords"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> kws <span style="color: #715ab1;">*&gt;</span> pure next
+  <span style="color: #715ab1;">...</span>  <span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">more cases here</span>
+</pre>
+</div>
+
+<p>
+<code>prop</code>, when given a record field name, yields a <code>Lens</code> into that field.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org146eda2" class="outline-4">
+<h4 id="org146eda2"><span class="section-number-4">2.3.2</span> Handling Types Imposed by <code>servant-purescript</code></h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+To query the endpoint <code>type JsonAPI = "posts" :&gt; Get '[JSON] [Blog]</code>, <code>servant-purescript</code>
+spat out:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">getPosts</span> <span style="color: #715ab1;">::</span> forall eff m<span style="color: #715ab1;">.</span>
+            <span style="color: #ba2f59; font-weight: bold;">MonadAsk</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">SPSettings_</span> <span style="color: #ba2f59; font-weight: bold;">SPParams_</span><span style="color: #3a81c3;">)</span> m <span style="color: #715ab1;">=&gt;</span>
+            <span style="color: #ba2f59; font-weight: bold;">MonadError</span> <span style="color: #ba2f59; font-weight: bold;">AjaxError</span> m <span style="color: #715ab1;">=&gt;</span>
+            <span style="color: #ba2f59; font-weight: bold;">MonadAff</span> <span style="color: #3a81c3;">(</span> ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span> <span style="color: #715ab1;">|</span> eff <span style="color: #3a81c3;">)</span> m
+            <span style="color: #715ab1;">=&gt;</span> m <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Array</span> <span style="color: #ba2f59; font-weight: bold;">Blog</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Simple Halogen components leave their effect Monad parameter as <code>m</code> on functions
+like <code>eval</code>. However, if we want to call <code>getPosts</code> at any point, its constraints
+will pervasively spread across our components. To avoid giant type signatures
+and lots of repeated imports, I added the following to a central <code>Types.purs</code> module:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">Effects</span> eff <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">ReaderT</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">SPSettings_</span> <span style="color: #ba2f59; font-weight: bold;">SPParams_</span><span style="color: #3a81c3;">)</span>
+                   <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ExceptT</span> <span style="color: #ba2f59; font-weight: bold;">AjaxError</span> <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">Aff</span> <span style="color: #2d9574;">(</span>ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span>, console <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">CONSOLE</span>, dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> eff<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">runEffects</span> <span style="color: #715ab1;">::</span> forall eff<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">Effects</span> eff <span style="color: #715ab1;">~&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Aff</span> <span style="color: #3a81c3;">(</span>ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span>, console <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">CONSOLE</span>, dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> eff<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">runEffects</span> eff <span style="color: #715ab1;">=</span> runExceptT <span style="color: #3a81c3;">(</span>runReaderT eff settings<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">&gt;&gt;=</span> either <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>e <span style="color: #715ab1;">-&gt;</span> log <span style="color: #6c3163;">(</span>errorToString e<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">*&gt;</span> empty<span style="color: #3a81c3;">)</span> pure
+
+<span style="color: #6c3163; font-weight: bold;">settings</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">SPSettings_</span> <span style="color: #ba2f59; font-weight: bold;">SPParams_</span>
+<span style="color: #6c3163; font-weight: bold;">settings</span> <span style="color: #715ab1;">=</span> defaultSettings <span style="color: #715ab1;">$</span> <span style="color: #ba2f59; font-weight: bold;">SPParams_</span> <span style="color: #3a81c3;">{</span> baseURL<span style="color: #ba2f59; font-weight: bold;">:</span> <span style="color: #2d9574;">"/"</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+Which simplifies type signatures to things like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">component</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">H.Component</span> <span style="color: #ba2f59; font-weight: bold;">HH.HTML</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span> <span style="color: #ba2f59; font-weight: bold;">Void</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Effects</span> e<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Our <code>main</code> then only requires a little bit of massaging via <code>hoist</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Halogen.Aff</span> <span style="color: #3a81c3; font-weight: bold;">as</span> <span style="color: #ba2f59; font-weight: bold;">HA</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Halogen.Component</span> <span style="color: #3a81c3; font-weight: bold;">as</span> <span style="color: #ba2f59; font-weight: bold;">HC</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Eff</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">HA.HalogenEffects</span> <span style="color: #6c3163;">(</span>ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span>, console <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">CONSOLE</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">HA</span><span style="color: #715ab1;">.</span>runHalogenAff <span style="color: #3a81c3; font-weight: bold;">do</span>
+  body <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">HA</span><span style="color: #715ab1;">.</span>awaitBody
+  runUI <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">HC</span><span style="color: #715ab1;">.</span>hoist runEffects <span style="color: #ba2f59; font-weight: bold;">Page</span><span style="color: #715ab1;">.</span>component<span style="color: #3a81c3;">)</span> unit body
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8d04e2a" class="outline-4">
+<h4 id="org8d04e2a"><span class="section-number-4">2.3.3</span> Effectful Component Initialization</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<p>
+A component might need to be created with some long-lived information, say from
+our server. Making that request requires an Effect, but when and how should that
+Effect be performed? The answer is to use a "lifecycle component":
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> a <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span> <span style="color: #715ab1;">|</span> <span style="color: #ba2f59; font-weight: bold;">Initialize</span> a
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">`lifecycleParentComponent` also exists.</span>
+<span style="color: #6c3163; font-weight: bold;">component</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">H.Component</span> <span style="color: #ba2f59; font-weight: bold;">HH.HTML</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span> <span style="color: #ba2f59; font-weight: bold;">Void</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Effects</span> e<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">component</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>lifecycleComponent <span style="color: #3a81c3;">{</span> initialState<span style="color: #ba2f59; font-weight: bold;">:</span> const state
+                                 , render
+                                 , eval
+                                 , receiver<span style="color: #ba2f59; font-weight: bold;">:</span> const <span style="color: #ba2f59; font-weight: bold;">Nothing</span>
+                                 , initializer<span style="color: #ba2f59; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Just</span> <span style="color: #715ab1;">$</span> <span style="color: #ba2f59; font-weight: bold;">Initialize</span> unit
+                                 , finalizer<span style="color: #ba2f59; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Nothing</span> <span style="color: #3a81c3;">}</span>
+  <span style="color: #3a81c3; font-weight: bold;">where</span> state <span style="color: #715ab1;">=</span> <span style="color: #715ab1;">...</span>
+
+<span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #715ab1;">~&gt;</span> <span style="color: #ba2f59; font-weight: bold;">H.ComponentDSL</span> <span style="color: #ba2f59; font-weight: bold;">State</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #ba2f59; font-weight: bold;">Void</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Effects</span> e<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #3a81c3; font-weight: bold;">of</span>
+  <span style="color: #715ab1;">...</span>  <span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">cases for other query terms.</span>
+  <span style="color: #ba2f59; font-weight: bold;">Initialize</span> next <span style="color: #715ab1;">-&gt;</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">HQ</span><span style="color: #715ab1;">.</span>fork <span style="color: #3a81c3; font-weight: bold;">do</span>
+      posts <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>lift getPosts
+      <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>modify <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #6c3163;">{</span> posts <span style="color: #715ab1;">=</span> posts <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span>
+    pure next
+</pre>
+</div>
+
+<p>
+It's important to <code>fork</code> this initial request, or else our component won't
+render for the first time until the request is complete.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1f5cf32" class="outline-4">
+<h4 id="org1f5cf32"><span class="section-number-4">2.3.4</span> Requesting and Injecting HTML</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<p>
+For technical reasons, the HTML of these blog posts only exists at runtime.
+When you select a post to read on the <i>Blog</i> page, you might notice in your
+<code>Network</code> tab that only a single XHR is made to the backend to fetch the
+content (i.e. the whole page isn't reloaded). Accomplishing this required
+the <code>affjax</code>, <code>domparser</code> and <code>dom-classy</code> libraries, along with the following
+custom code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #da8b55;">-- | Make a request for blog post content.</span>
+<span style="color: #6c3163; font-weight: bold;">xhr</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">String</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Aff</span> <span style="color: #3a81c3;">(</span> ajax <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AJAX</span>, dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> e <span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Array</span> <span style="color: #ba2f59; font-weight: bold;">Node</span><span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">xhr</span> p <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  res <span style="color: #715ab1;">&lt;-</span> get <span style="color: #715ab1;">$</span> <span style="color: #2d9574;">"/blog/"</span> <span style="color: #715ab1;">&lt;&gt;</span> p
+  liftEff <span style="color: #3a81c3; font-weight: bold;">do</span>
+    parser <span style="color: #715ab1;">&lt;-</span> newDOMParser
+    <span style="color: #3a81c3; font-weight: bold;">let</span> doc <span style="color: #715ab1;">=</span> parseHTMLFromString res<span style="color: #715ab1;">.</span>response parser
+    body <span style="color: #715ab1;">&lt;-</span> lastChild doc <span style="color: #715ab1;">&gt;&gt;=</span> <span style="color: #3a81c3;">(</span>map join <span style="color: #715ab1;">&lt;&lt;&lt;</span> traverse lastChild<span style="color: #3a81c3;">)</span>
+    maybe <span style="color: #3a81c3;">(</span>pure <span style="color: #6c3163; font-weight: bold;">[]</span><span style="color: #3a81c3;">)</span> children body
+
+<span style="color: #6c3163; font-weight: bold;">replaceChildren</span> <span style="color: #715ab1;">::</span> forall e n m<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">IsNode</span> n <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">IsNode</span> m <span style="color: #715ab1;">=&gt;</span> n <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Array</span> m <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Eff</span> <span style="color: #3a81c3;">(</span> dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> e <span style="color: #3a81c3;">)</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span>
+<span style="color: #6c3163; font-weight: bold;">replaceChildren</span> el news <span style="color: #715ab1;">=</span> removeChildren el <span style="color: #715ab1;">*&gt;</span> traverse_ <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>n <span style="color: #715ab1;">-&gt;</span> appendChild n el<span style="color: #3a81c3;">)</span> news
+
+<span style="color: #6c3163; font-weight: bold;">removeChildren</span> <span style="color: #715ab1;">::</span> forall n e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">IsNode</span> n <span style="color: #715ab1;">=&gt;</span> n <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Eff</span> <span style="color: #3a81c3;">(</span> dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> e <span style="color: #3a81c3;">)</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span>
+<span style="color: #6c3163; font-weight: bold;">removeChildren</span> el <span style="color: #715ab1;">=</span> children el <span style="color: #715ab1;">&gt;&gt;=</span> traverse_ <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>n <span style="color: #715ab1;">-&gt;</span> removeChild n el<span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">children</span> <span style="color: #715ab1;">::</span> forall n e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">IsNode</span> n <span style="color: #715ab1;">=&gt;</span> n <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Eff</span> <span style="color: #3a81c3;">(</span> dom <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">DOM</span> <span style="color: #715ab1;">|</span> e <span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Array</span> <span style="color: #ba2f59; font-weight: bold;">Node</span><span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">children</span> el <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  kids <span style="color: #715ab1;">&lt;-</span> childNodes el
+  len  <span style="color: #715ab1;">&lt;-</span> length kids
+  <span style="color: #3a81c3; font-weight: bold;">let</span> ixs <span style="color: #715ab1;">=</span> range <span style="color: #4e3163;">0</span> <span style="color: #3a81c3;">(</span>len <span style="color: #715ab1;">-</span> <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+  catMaybes <span style="color: #715ab1;">&lt;$&gt;</span> traverse <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>i <span style="color: #715ab1;">-&gt;</span> item i kids<span style="color: #3a81c3;">)</span> ixs
+</pre>
+</div>
+
+<p>
+Now we have the tools in-hand to manipulate the DOM outside the purview of Halogen.
+To inject our content, we need a placeholder <code>&lt;div&gt;</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">post</span> <span style="color: #715ab1;">::</span> forall c q<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">HH.HTML</span> c q
+<span style="color: #6c3163; font-weight: bold;">post</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">HH</span><span style="color: #715ab1;">.</span>div <span style="color: #3a81c3;">[</span> <span style="color: #ba2f59; font-weight: bold;">HP</span><span style="color: #715ab1;">.</span>ref <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">H.RefLabel</span> <span style="color: #2d9574;">"blogpost"</span><span style="color: #6c3163;">)</span> <span style="color: #3a81c3;">]</span> <span style="color: #3a81c3; font-weight: bold;">[]</span>
+</pre>
+</div>
+
+<p>
+<code>post</code> would be part of the greater HTML tree defined in <code>render</code>. The important
+part is the <code>RefLabel</code>. We can update its actual contents in our <code>eval</code> function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-purescript"><span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">::</span> forall e<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #715ab1;">~&gt;</span> <span style="color: #ba2f59; font-weight: bold;">H.ComponentDSL</span> <span style="color: #ba2f59; font-weight: bold;">State</span> <span style="color: #ba2f59; font-weight: bold;">Query</span> <span style="color: #ba2f59; font-weight: bold;">Void</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Effects</span> e<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">eval</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #3a81c3; font-weight: bold;">of</span>
+  <span style="color: #715ab1;">...</span>  <span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">other cases</span>
+  <span style="color: #ba2f59; font-weight: bold;">Selected</span> s next <span style="color: #715ab1;">-&gt;</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    curr <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>gets <span style="color: #3a81c3; font-weight: bold;">_</span><span style="color: #715ab1;">.</span>selected
+    unless <span style="color: #3a81c3;">(</span>s <span style="color: #715ab1;">==</span> curr<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+      <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>modify <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #6c3163;">{</span> selected <span style="color: #715ab1;">=</span> s <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span>
+      htmls <span style="color: #715ab1;">&lt;-</span> <span style="color: #ba2f59; font-weight: bold;">H</span><span style="color: #715ab1;">.</span>getHTMLElementRef <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">H.RefLabel</span> <span style="color: #2d9574;">"blogpost"</span><span style="color: #3a81c3;">)</span>
+      traverse_ <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span>el <span style="color: #715ab1;">-&gt;</span> liftAff <span style="color: #6c3163;">(</span>xhr s<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">&gt;&gt;=</span> liftEff <span style="color: #715ab1;">&lt;&lt;&lt;</span> replaceChildren el<span style="color: #3a81c3;">)</span> htmls
+    pure next
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-02-21</p>
+<p class="author">Author: Colin</p>
+<p class="date">Created: 2018-02-23 Fri 08:14</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -185,7 +185,7 @@ Here are some useful ones we can enter into ~package.json~:
   "scripts": {
       "pulp": "pulp --psc-package",
       "pscid": "pscid",
-      "install": "psc-package install",
+      "psc": "psc-package",
       "uglify": "uglifyjs"
   },
   ...
@@ -211,7 +211,7 @@ them with:
 #+BEGIN_SRC bash
   # Install the package `purescript-halogen`.
   # Notice that the `purescript-` is left off here.
-  npm run install halogen
+  npm run psc -- install halogen
 #+END_SRC
 
 This will install the version of ~halogen~ that's pinned in the [[https://github.com/purescript/package-sets][psc package set]] we're using.
@@ -240,6 +240,18 @@ Handy Keybindings:
 | ~SPC m m i a~ | Import the symbol at ~point~                                       |
 
 ** Common Commands
+
+To (re)download all tool dependencies marked in ~package.json~:
+
+#+BEGIN_SRC bash
+  npm install
+#+END_SRC
+
+To (re)download all library dependencies marked in ~psc-package.json~:
+
+#+BEGIN_SRC bash
+  npm run psc -- update
+#+END_SRC
 
 To compile all library dependencies and our code into CommonJS-compatible Javascript:
 
