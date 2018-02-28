@@ -1,0 +1,173 @@
+#+TITLE: Deploying Haskell Programs
+#+DATE: 2018-02-28
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+You should use Nix if you have large production Haskell systems to deploy,
+a large team to coordinate with, and the ability to manage NixOS servers.
+
+You should use Docker only if you have a pre-existing container collection
+to integrate into.
+
+Otherwise, for the lay-Haskeller (myself included), I recommend Heroku for deploying
+projects.
+
+* The Simple Way: Heroku
+
+#+BEGIN_QUOTE
+I just want to take a little server I wrote and throw it on the web somewhere.
+#+END_QUOTE
+
+Heroku is the free and convenient solution for this. It is a hosting service that
+allows pushes to a Github
+~master~ branch to trigger redeploys, and it also caches dependencies so that
+subsequent redeploys are fast.
+
+The cheapest tier of Heroku machines ("dynos") is free. These dynos sleep after
+30 minutes of inactivity but reawaken quickly when called. Paid dynos don't sleep.
+
+For some of what I describe
+below there is also a ~heroku~ CLI tool, but I found it unnecessary. Also included
+below are instructions for configuring a Namecheap domain to point to Heroku, so
+our app can be /foobar.com/ instead of /foobar.herokuapp.com/.
+
+** Listening on ~$PORT~
+
+It is The Heroku Way™ for applications to listen for incoming requests on ~$PORT~.
+This can conflict with local development workflows, but we can get around that with
+the following:
+
+#+BEGIN_SRC haskell
+  {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
+
+  import qualified Network.Wai.Handler.Warp as W
+  import           Options.Generic
+  import           System.Environment (lookupEnv)
+  import           Text.Read (readMaybe)
+
+  data Args = Args { port :: Maybe Int
+                     <?> "Port to listen for requests on, otherwise $PORT" }
+    deriving (Generic, ParseRecord)
+
+  app :: Application  -- Some `wai` Application
+
+  main :: IO ()
+  main = do
+    Args (Helpful p) <- getRecord "Backend server for foobar.com"
+    herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
+    let prt = maybe 8080 id $ p <|> herokuPort
+    putStrLn $ "Listening on port " <> show prt
+    W.run prt app
+#+END_SRC
+
+Local server runs are then:
+
+#+BEGIN_SRC bash
+  stack exec -- server --port 8080
+#+END_SRC
+
+** Heroku Config: ~Procfile~
+
+We need only a ~Procfile~ commited to our repo. This defines what command Heroku should
+run after it builds our project. Example:
+
+#+BEGIN_EXAMPLE
+web: server
+#+END_EXAMPLE
+
+Where ~server~ is the name of the executable as defined in ~.cabal~. If the server
+takes other arguments, the ~Procfile~ might look something like:
+
+#+BEGIN_EXAMPLE
+web: server --js app.min.js
+#+END_EXAMPLE
+
+** Project Settings through Heroku UI
+
+All other config happens right in Heroku. We'll need both a Heroku account and
+a Github repo to link to.
+
+First, we create a new Heroku project through the UI. Once active, we should see
+the /Deploy/ tab:
+
+[[./assets/heroku00.jpg]]
+
+Ignoring the CLI instructions at the bottom, we choose Github as our deployment method,
+and connect our repo in the resulting UI.
+
+Next, head to the /Settings/ tab and find the /Buildpacks/ section:
+
+[[./assets/heroku01.jpg]]
+
+Buildpacks are script sets that Heroku uses to build projects of some language type.
+Click the /Add buildpack/ button and enter the following URL:
+
+#+BEGIN_EXAMPLE
+https://github.com/mfine/heroku-buildpack-stack
+#+END_EXAMPLE
+
+This will allow ~stack~-based projects to compile while also
+caching built dependencies. Credits to Mark Fine, Joe Nelson et al.
+for their work in this area.
+
+** Deployment
+
+~git push origin master~ should be all we need. We can also force builds on other
+branches via the /Deploy/ tab.
+
+** Connecting with Namecheap
+
+Follow [[https://stackoverflow.com/a/31549804/643684][this StackOverflow post]] - it's what I used for this website.
+
+* The Container Way: ~stack~ and Docker
+
+For a Haskell-only production environment, Docker is strictly unnecessary.
+However, if our production system is already dockerized or our project managers
+have succumb to marketing, ~stack~ can help us.
+
+By adding something like the following to our ~stack.yaml~:
+
+#+BEGIN_SRC yaml
+  image:
+    containers:
+      - base: "fpco/ubuntu-with-libgmp:14.04"
+        name: "foobar-server"
+        entrypoints:
+          - foobar-server-exe
+#+END_SRC
+
+and running:
+
+#+BEGIN_SRC bash
+  stack image container
+#+END_SRC
+
+our Docker image will build. We can then fit it in to our deployment system as necessary.
+See [[https://docs.haskellstack.org/en/stable/GUIDE/#docker][the official Stack docs]] for detailed information.
+
+* The Power Way: Nix
+
+This statement shouldn't surprise a Haskeller:
+
+#+BEGIN_QUOTE
+There are sets of conditions which, only when taken together, produce paradigm shifts.
+#+END_QUOTE
+
+Haskell gains its strength from taking laziness, immutability, and referential
+transparency as its grounding philosophies. Faithfully used together, you
+"pop out on the other side" of some funnel between paradigms. Many other
+human systems are probably like this, including Nix. Taken half-way, you
+stay stuck in the funnel and don't see the benefits.
+
+I spent some time learning Nix for Haskell development, and came to these conclusions:
+
+- Nix supercedes Docker
+- Nix is the future (once its UX is improved)
+- Currently, you only gain the full benefit of Nix by going "all in"
+
+All-in means using Nix for both development and deployment. For development
+alone, I found it to fill essentially the same role as ~stack~ (i.e. "manage my deps")
+but with a slightly worse UX.
+
+Unfortunately for this article, I've never deployed anything using Nix and so I can't
+comment further. If you have, please consider extending this section through Github.
