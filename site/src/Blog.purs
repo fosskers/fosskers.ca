@@ -121,11 +121,12 @@ eval = case _ of
       traverse_ (\el -> liftAff (xhr $ s ^. _Path) >>= liftEff <<< replaceChildren el) htmls
     pure next
   Initialize next -> do
+    l <- H.gets _.language
     _ <- HQ.fork do
       rawPosts <- H.lift getPosts
       let posts = reverse <<< sortWith _.date <<< catMaybes $ map asPost rawPosts
       H.modify (_ { posts = posts })
-      traverse_ (\p -> eval $ Selected p.path unit) $ head posts
+      traverse_ (\p -> eval $ Selected p.path unit) <<< head $ filter (\p -> postLang p == l) posts
     pure next
 
 replaceChildren :: forall e n m. IsNode n => IsNode m => n -> Array m -> Eff ( dom :: DOM | e ) Unit
