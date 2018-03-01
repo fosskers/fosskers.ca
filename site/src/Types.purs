@@ -37,7 +37,7 @@ suffix :: Language -> String
 suffix English  = "-en"
 suffix Japanese = "-jp"
 
-postLang :: Post -> Language
+postLang :: forall r. { path :: C.Path | r } -> Language
 postLang p = case takeRight 3 (p.path ^. _Path) of
   "-jp" -> Japanese
   _     -> English

@@ -3,6 +3,7 @@
     "set": "master",
     "source": "https://github.com/fosskers/package-sets.git",
     "depends": [
+        "test-unit",
         "domparser",
         "dom-classy",
         "halogen-css",
