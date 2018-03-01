@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-01 Thu 12:45 -->
+<!-- 2018-03-01 Thu 12:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Deploying Haskell Programs</title>
+<title>Haskellプログラムの出荷</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Colin" />
+<meta name="author" content="こりん" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -230,76 +230,74 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Deploying Haskell Programs</h1>
+<h1 class="title">Haskellプログラムの出荷</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org44c2495">1. The Simple Way: Heroku</a>
+<li><a href="#org724bd5a">1. 楽の道： Heroku</a>
 <ul>
-<li><a href="#orga623eb6">1.1. Listening on <code>$PORT</code></a></li>
-<li><a href="#org61e2099">1.2. Heroku Config: <code>Procfile</code></a></li>
-<li><a href="#orgbc1b3bc">1.3. Project Settings through Heroku UI</a></li>
-<li><a href="#orgb97f2d8">1.4. Deployment</a></li>
-<li><a href="#org6ef6c5a">1.5. Connecting with Namecheap</a></li>
+<li><a href="#orgefe15ba">1.1. <code>$PORT</code> からリクエスト</a></li>
+<li><a href="#orgd8ef5da">1.2. Herokuの設定</a>
+<ul>
+<li><a href="#orga6868c1">1.2.1. Repoでの <code>Procfile</code></a></li>
+<li><a href="#org4478ca1">1.2.2. Heroku.comで</a></li>
 </ul>
 </li>
-<li><a href="#org63af36e">2. The Container Way: <code>stack</code> and Docker</a></li>
-<li><a href="#org43356d8">3. The Power Way: Nix</a></li>
+<li><a href="#org6db2b9f">1.3. 出荷</a></li>
+<li><a href="#org48d38a4">1.4. Namecheapとの接続</a></li>
+</ul>
+</li>
+<li><a href="#org8b1a9e1">2. コンテナの道： <code>stack</code> とDocker</a></li>
+<li><a href="#org120946f">3. 将来の道： Nix</a></li>
 </ul>
 </div>
 </div>
 <p>
-You should use Nix if you have large production Haskell systems to deploy,
-a large team to coordinate with, and the ability to manage NixOS servers.
+ 大規模のシステムがあったりチームの人数が多かったりNixOSのサーバーを管理する能力（または余裕）
+があったりしたら「Nix」を選ぼう。
 </p>
 
 <p>
-You should use Docker only if you have a pre-existing container collection
-to integrate into.
+既にコンテナ・システムがあって混ぜたいHaskellはただ一部だけの場合は「Docker」
+を使ってよし。
 </p>
 
 <p>
-Otherwise, for the lay-Haskeller (myself included), I recommend Heroku for deploying
-projects.
+他には「Heroku」が凡Haskeller（自分を含めて）にとって一番使いやすい。
 </p>
 
-<div id="outline-container-org44c2495" class="outline-2">
-<h2 id="org44c2495"><span class="section-number-2">1</span> The Simple Way: Heroku</h2>
+<div id="outline-container-org724bd5a" class="outline-2">
+<h2 id="org724bd5a"><span class="section-number-2">1</span> 楽の道： Heroku</h2>
 <div class="outline-text-2" id="text-1">
 <blockquote>
 <p>
-I just want to take a little server I wrote and throw it on the web somewhere.
+ただ小規模のサーバーをどっか載せたい。
 </p>
 </blockquote>
 
 <p>
-Heroku is the free and convenient solution for this. It is a hosting service that
-allows pushes to a Github
-<code>master</code> branch to trigger redeploys, and it also caches dependencies so that
-subsequent redeploys are fast.
+「Heroku」はこれにぴったり。 <code>git push</code> だけで自動出荷ができて、再出荷が速くなる様に
+<code>stack</code> でダウンロードされるdependenciesが全部キャッシュされる。
 </p>
 
 <p>
-The cheapest tier of Heroku machines ("dynos") is free. These dynos sleep after
-30 minutes of inactivity but reawaken quickly when called. Paid dynos don't sleep.
+Herokuのサーバーは「dyno」といって、一番安いのは無料。30分経ってサーバーにリクエストが
+なければ眠ってしまうけど、また呼んだら数秒で再起動する。有料の「dyno」は眠ったりせん。
 </p>
 
 <p>
-For some of what I describe
-below there is also a <code>heroku</code> CLI tool, but I found it unnecessary. Also included
-below are instructions for configuring a Namecheap domain to point to Heroku, so
-our app can be <i>foobar.com</i> instead of <i>foobar.herokuapp.com</i>.
+プロジェクト管理に <code>heroku</code> のCLIツールがあるらしいけどこの簡単な場合には必要ない。
+下にも「Namecheap」との接続方法の説明も含めてる。
 </p>
 </div>
 
-<div id="outline-container-orga623eb6" class="outline-3">
-<h3 id="orga623eb6"><span class="section-number-3">1.1</span> Listening on <code>$PORT</code></h3>
+<div id="outline-container-orgefe15ba" class="outline-3">
+<h3 id="orgefe15ba"><span class="section-number-3">1.1</span> <code>$PORT</code> からリクエスト</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-It is The Heroku Way™ for applications to listen for incoming requests on <code>$PORT</code>.
-This can conflict with local development workflows, but we can get around that with
-the following:
+Herokuに載せるサーバーはいつもの80・8080・443とかじゃなくて <code>$PORT</code> からリクエストを取らないといけない。
+まだ開発中だとこれが少し厄介かもしれんけど、下のコードを使えば問題にならない：
 </p>
 
 <div class="org-src-container">
@@ -327,7 +325,7 @@ the following:
 </div>
 
 <p>
-Local server runs are then:
+開発中、サーバーの機動はこうなる：
 </p>
 
 <div class="org-src-container">
@@ -337,12 +335,16 @@ Local server runs are then:
 </div>
 </div>
 
-<div id="outline-container-org61e2099" class="outline-3">
-<h3 id="org61e2099"><span class="section-number-3">1.2</span> Heroku Config: <code>Procfile</code></h3>
+<div id="outline-container-orgd8ef5da" class="outline-3">
+<h3 id="orgd8ef5da"><span class="section-number-3">1.2</span> Herokuの設定</h3>
 <div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-orga6868c1" class="outline-4">
+<h4 id="orga6868c1"><span class="section-number-4">1.2.1</span> Repoでの <code>Procfile</code></h4>
+<div class="outline-text-4" id="text-1-2-1">
 <p>
-We need only a <code>Procfile</code> commited to our repo. This defines what command Heroku should
-run after it builds our project. Example:
+コミットしなければならないのは <code>Procfile</code> というファイルだけ。Herokuがプロジェクトを構築した後
+<code>Procfile</code> にあるコマンドを実行する。例：
 </p>
 
 <pre class="example">
@@ -350,8 +352,8 @@ web: server
 </pre>
 
 <p>
-Where <code>server</code> is the name of the executable as defined in <code>.cabal</code>. If the server
-takes other arguments, the <code>Procfile</code> might look something like:
+<code>server</code> とは <code>.cabal</code> に決めたexecutableの名前。プログラム引数もあったら
+こんな感じ：
 </p>
 
 <pre class="example">
@@ -360,17 +362,16 @@ web: server --js app.min.js
 </div>
 </div>
 
-<div id="outline-container-orgbc1b3bc" class="outline-3">
-<h3 id="orgbc1b3bc"><span class="section-number-3">1.3</span> Project Settings through Heroku UI</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-org4478ca1" class="outline-4">
+<h4 id="org4478ca1"><span class="section-number-4">1.2.2</span> Heroku.comで</h4>
+<div class="outline-text-4" id="text-1-2-2">
 <p>
-All other config happens right in Heroku. We'll need both a Heroku account and
-a Github repo to link to.
+他の設定は全部直接Herokuのサイトでできる。勿論登録しないといかん。
 </p>
 
 <p>
-First, we create a new Heroku project through the UI. Once active, we should see
-the <i>Deploy</i> tab:
+「Dashboard」に入ったらまずは新しい「Heroku・アプリ」を作る（右上で「New」から「Create New App」）。
+できたら「Deploy」のタブが見えてくるはず：
 </p>
 
 
@@ -380,12 +381,11 @@ the <i>Deploy</i> tab:
 </div>
 
 <p>
-Ignoring the CLI instructions at the bottom, we choose Github as our deployment method,
-and connect our repo in the resulting UI.
+ページの後半に見える「CLI」指示を無視して出荷方法を「Github」と選んで繋げたいrepoを入れるだけ。
 </p>
 
 <p>
-Next, head to the <i>Settings</i> tab and find the <i>Buildpacks</i> section:
+次は「Settings」のタブでの「Buildpacks」の所：
 </p>
 
 
@@ -395,8 +395,8 @@ Next, head to the <i>Settings</i> tab and find the <i>Buildpacks</i> section:
 </div>
 
 <p>
-Buildpacks are script sets that Heroku uses to build projects of some language type.
-Click the <i>Add buildpack</i> button and enter the following URL:
+「Buildpack」とはHeroku用語。言語そろぞれにあって、構築に必要な複数のスクリプトの意味。
+<code>stack</code> を使う「buildpack」を入れよう。「Add buildpack」をクリックしてこれを：
 </p>
 
 <pre class="example">
@@ -404,44 +404,43 @@ https://github.com/mfine/heroku-buildpack-stack
 </pre>
 
 <p>
-This will allow <code>stack</code>-based projects to compile while also
-caching built dependencies. Credits to Mark Fine, Joe Nelson et al.
-for their work in this area.
+<code>stack</code> を使うプロジェクトはこれで構築してdependenciesがキャッシュされる。
+HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさん達に感謝。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6db2b9f" class="outline-3">
+<h3 id="org6db2b9f"><span class="section-number-3">1.3</span> 出荷</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<code>git push origin master</code> だけ！
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb97f2d8" class="outline-3">
-<h3 id="orgb97f2d8"><span class="section-number-3">1.4</span> Deployment</h3>
+<div id="outline-container-org48d38a4" class="outline-3">
+<h3 id="org48d38a4"><span class="section-number-3">1.4</span> Namecheapとの接続</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
-<code>git push origin master</code> should be all we need. We can also force builds on other
-branches via the <i>Deploy</i> tab.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org6ef6c5a" class="outline-3">
-<h3 id="org6ef6c5a"><span class="section-number-3">1.5</span> Connecting with Namecheap</h3>
-<div class="outline-text-3" id="text-1-5">
-<p>
-Follow <a href="https://stackoverflow.com/a/31549804/643684">this StackOverflow post</a> - it's what I used for this website.
+具体的な指示は<a href="https://stackoverflow.com/a/31549804/643684">こちら</a>。
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org63af36e" class="outline-2">
-<h2 id="org63af36e"><span class="section-number-2">2</span> The Container Way: <code>stack</code> and Docker</h2>
+<div id="outline-container-org8b1a9e1" class="outline-2">
+<h2 id="org8b1a9e1"><span class="section-number-2">2</span> コンテナの道： <code>stack</code> とDocker</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-For a Haskell-only production environment, Docker is strictly unnecessary.
-However, if our production system is already dockerized or our project managers
-have succumb to marketing, <code>stack</code> can help us.
+個人的に言うと、HaskellだけのシステムだったらDockerは必要ない。まあ開発者としてこういう
+判断はよく上がするもんだから、仕方なくコンテナを使わざるを得ないのであれば <code>stack</code> がまた
+助けてくれる。
 </p>
 
 <p>
-By adding something like the following to our <code>stack.yaml</code>:
+<code>stack.yaml</code> にこんなの入れれば：
 </p>
 
 <div class="org-src-container">
@@ -455,7 +454,7 @@ By adding something like the following to our <code>stack.yaml</code>:
 </div>
 
 <p>
-and running:
+そしてこのコマンドをやって：
 </p>
 
 <div class="org-src-container">
@@ -464,60 +463,32 @@ and running:
 </div>
 
 <p>
-our Docker image will build. We can then fit it in to our deployment system as necessary.
-See <a href="https://docs.haskellstack.org/en/stable/GUIDE/#docker">the official Stack docs</a> for detailed information.
+Dockerのイメージが構築される。できたらいつものコンテナ出荷システムに混ぜれる。
+より細かい指示は <code>stack</code> の<a href="https://docs.haskellstack.org/en/stable/GUIDE/#docker">公式サイト</a>へ（英語）。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org43356d8" class="outline-2">
-<h2 id="org43356d8"><span class="section-number-2">3</span> The Power Way: Nix</h2>
+<div id="outline-container-org120946f" class="outline-2">
+<h2 id="org120946f"><span class="section-number-2">3</span> 将来の道： Nix</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-This statement shouldn't surprise a Haskeller:
-</p>
-
-<blockquote>
-<p>
-There are sets of conditions which, only when taken together, produce paradigm shifts.
-</p>
-</blockquote>
-
-<p>
-Haskell gains its strength from taking laziness, immutability, and referential
-transparency as its grounding philosophies. Faithfully used together, you
-"pop out on the other side" of some funnel between paradigms. Many other
-human systems are probably like this, including Nix. Taken half-way, you
-stay stuck in the funnel and don't see the benefits.
+Nixは確かに強い。ただ、全面的に使わないと本当の利益が出ないと思う。「全面」とは開発と出荷両面。
+開発だけに利用すると <code>stack</code> と役割も便利さもほぼ変わらない。
 </p>
 
 <p>
-I spent some time learning Nix for Haskell development, and came to these conclusions:
-</p>
-
-<ul class="org-ul">
-<li>Nix supercedes Docker</li>
-<li>Nix is the future (once its UX is improved)</li>
-<li>Currently, you only gain the full benefit of Nix by going "all in"</li>
-</ul>
-
-<p>
-All-in means using Nix for both development and deployment. For development
-alone, I found it to fill essentially the same role as <code>stack</code> (i.e. "manage my deps")
-but with a slightly worse UX.
-</p>
-
-<p>
-Unfortunately for this article, I've never deployed anything using Nix and so I can't
-comment further. If you have, please consider extending this section through Github.
+・・・と言ってもまだNixが未来だと感じる。本当に勧めたい。残念ながら俺は
+出荷には使ったことがないからこれ以上は何も言えないけど、もしこれを呼んでいる人にそんな
+経験があれば、是非Githubでこの部分を足してください。
 </p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2018-02-28</p>
-<p class="author">Author: Colin</p>
-<p class="date">Created: 2018-03-01 Thu 12:45</p>
+<p class="author">Author: こりん</p>
+<p class="date">Created: 2018-03-01 Thu 12:43</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -1,0 +1,147 @@
+#+TITLE: Haskellプログラムの出荷
+#+DATE: 2018-02-28
+#+AUTHOR: こりん
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+ 大規模のシステムがあったりチームの人数が多かったりNixOSのサーバーを管理する能力（または余裕）
+があったりしたら「Nix」を選ぼう。
+
+既にコンテナ・システムがあって混ぜたいHaskellはただ一部だけの場合は「Docker」
+を使ってよし。
+
+他には「Heroku」が凡Haskeller（自分を含めて）にとって一番使いやすい。
+
+* 楽の道： Heroku
+
+#+BEGIN_QUOTE
+ただ小規模のサーバーをどっか載せたい。
+#+END_QUOTE
+
+「Heroku」はこれにぴったり。 ~git push~ だけで自動出荷ができて、再出荷が速くなる様に
+~stack~ でダウンロードされるdependenciesが全部キャッシュされる。
+
+Herokuのサーバーは「dyno」といって、一番安いのは無料。30分経ってサーバーにリクエストが
+なければ眠ってしまうけど、また呼んだら数秒で再起動する。有料の「dyno」は眠ったりせん。
+
+プロジェクト管理に ~heroku~ のCLIツールがあるらしいけどこの簡単な場合には必要ない。
+下にも「Namecheap」との接続方法の説明も含めてる。
+
+** ~$PORT~ からリクエスト
+
+Herokuに載せるサーバーはいつもの80・8080・443とかじゃなくて ~$PORT~ からリクエストを取らないといけない。
+まだ開発中だとこれが少し厄介かもしれんけど、下のコードを使えば問題にならない：
+
+#+BEGIN_SRC haskell
+  {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
+
+  import qualified Network.Wai.Handler.Warp as W
+  import           Options.Generic
+  import           System.Environment (lookupEnv)
+  import           Text.Read (readMaybe)
+
+  data Args = Args { port :: Maybe Int
+                     <?> "Port to listen for requests on, otherwise $PORT" }
+    deriving (Generic, ParseRecord)
+
+  app :: Application  -- Some `wai` Application
+
+  main :: IO ()
+  main = do
+    Args (Helpful p) <- getRecord "Backend server for foobar.com"
+    herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
+    let prt = maybe 8080 id $ p <|> herokuPort
+    putStrLn $ "Listening on port " <> show prt
+    W.run prt app
+#+END_SRC
+
+開発中、サーバーの機動はこうなる：
+
+#+BEGIN_SRC bash
+  stack exec -- server --port 8080
+#+END_SRC
+
+** Herokuの設定
+
+*** Repoでの ~Procfile~
+
+コミットしなければならないのは ~Procfile~ というファイルだけ。Herokuがプロジェクトを構築した後
+~Procfile~ にあるコマンドを実行する。例：
+
+#+BEGIN_EXAMPLE
+web: server
+#+END_EXAMPLE
+
+~server~ とは ~.cabal~ に決めたexecutableの名前。プログラム引数もあったら
+こんな感じ：
+
+#+BEGIN_EXAMPLE
+web: server --js app.min.js
+#+END_EXAMPLE
+
+*** Heroku.comで
+
+他の設定は全部直接Herokuのサイトでできる。勿論登録しないといかん。
+
+「Dashboard」に入ったらまずは新しい「Heroku・アプリ」を作る（右上で「New」から「Create New App」）。
+できたら「Deploy」のタブが見えてくるはず：
+
+[[./blog/heroku00.jpg]]
+
+ページの後半に見える「CLI」指示を無視して出荷方法を「Github」と選んで繋げたいrepoを入れるだけ。
+
+次は「Settings」のタブでの「Buildpacks」の所：
+
+[[./blog/heroku01.jpg]]
+
+「Buildpack」とはHeroku用語。言語そろぞれにあって、構築に必要な複数のスクリプトの意味。
+~stack~ を使う「buildpack」を入れよう。「Add buildpack」をクリックしてこれを：
+
+#+BEGIN_EXAMPLE
+https://github.com/mfine/heroku-buildpack-stack
+#+END_EXAMPLE
+
+~stack~ を使うプロジェクトはこれで構築してdependenciesがキャッシュされる。
+HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさん達に感謝。
+
+** 出荷
+
+~git push origin master~ だけ！
+
+** Namecheapとの接続
+
+具体的な指示は[[https://stackoverflow.com/a/31549804/643684][こちら]]。
+
+* コンテナの道： ~stack~ とDocker
+
+個人的に言うと、HaskellだけのシステムだったらDockerは必要ない。まあ開発者としてこういう
+判断はよく上がするもんだから、仕方なくコンテナを使わざるを得ないのであれば ~stack~ がまた
+助けてくれる。
+
+~stack.yaml~ にこんなの入れれば：
+
+#+BEGIN_SRC yaml
+  image:
+    containers:
+      - base: "fpco/ubuntu-with-libgmp:14.04"
+        name: "foobar-server"
+        entrypoints:
+          - foobar-server-exe
+#+END_SRC
+
+そしてこのコマンドをやって：
+
+#+BEGIN_SRC bash
+  stack image container
+#+END_SRC
+
+Dockerのイメージが構築される。できたらいつものコンテナ出荷システムに混ぜれる。
+より細かい指示は ~stack~ の[[https://docs.haskellstack.org/en/stable/GUIDE/#docker][公式サイト]]へ（英語）。
+
+* 将来の道： Nix
+
+Nixは確かに強い。ただ、全面的に使わないと本当の利益が出ないと思う。「全面」とは開発と出荷両面。
+開発だけに利用すると ~stack~ と役割も便利さもほぼ変わらない。
+
+・・・と言ってもまだNixが未来だと感じる。本当に勧めたい。残念ながら俺は
+出荷には使ったことがないからこれ以上は何も言えないけど、もしこれを呼んでいる人にそんな
+経験があれば、是非Githubでこの部分を足してください。
