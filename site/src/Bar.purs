@@ -32,7 +32,7 @@ component = H.parentComponent { initialState: const { language: defaultLang, tab
                               , receiver: const Nothing }
 
 render :: forall m. State -> H.ParentHTML Query LangToggle.Query Slot m
-render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ]]
+render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-md", "navbar-dark", "bg-dark" ]]
   [ HH.a [ HP.href "#", HP.class_ (H.ClassName "navbar-brand") ] [ HH.text "fosskers.ca" ]
   , HH.button [ HP.class_ (H.ClassName "navbar-toggler")
               , HP.attr (H.AttrName "type") "button"
