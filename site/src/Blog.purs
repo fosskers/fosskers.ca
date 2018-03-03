@@ -61,9 +61,9 @@ component = H.lifecycleParentComponent { initialState: const state
 
 render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
 render s = fluid [ HC.style <<< paddingTop $ pct 1.0 ]
-           [ row_ [ colN 3 [] $ selection s
-                  , col_ [ post ]
-                  , colN 3 [] []
+           [ row_ [ HH.div [ HP.classes $ map H.ClassName [ "col-xs-12", "col-md-3" ]] $ selection s
+                  , HH.div [ HP.classes $ map H.ClassName [ "col-xs-12", "col-md-6" ]] [ post ]
+                  , HH.div [ HP.classes [ H.ClassName "col-md-3" ]] []
                   ]]
 
 selection :: forall m. State -> Array (H.ParentHTML Query Search.Query Slot m)
