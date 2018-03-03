@@ -18,6 +18,7 @@ ghc-options:
   - -fwarn-unused-matches
   - -fwarn-incomplete-patterns
   - -fwarn-incomplete-uni-patterns
+  - -O2
 
 default-extensions:
   - NoImplicitPrelude
