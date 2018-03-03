@@ -13,8 +13,8 @@ import Types (Language(..), Three(..))
 
 about :: forall c q. Language -> HH.HTML c q
 about l = container [HC.style <<< paddingTop $ pct 1.0]
-        [ row_ [ HH.div [ HP.classes $ map HH.ClassName [ "col-10", "offset-1" ]] a ]
-        , row_ [ HH.div [ HP.classes $ map HH.ClassName [ "col-5", "offset-1" ]]
+        [ row_ [ HH.div [ HP.classes $ map HH.ClassName [ "col-10", "offset-md-1" ]] a ]
+        , row_ [ HH.div [ HP.classes $ map HH.ClassName [ "col-5", "offset-md-1" ]]
                  [ row_ [ col_ [ HH.img [ HP.src "assets/jack.jpg" ]]]
                  , row_ [ col_ [ HH.i_ [ HH.text j ]]]
                  ]
