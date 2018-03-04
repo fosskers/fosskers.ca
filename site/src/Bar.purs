@@ -51,7 +51,7 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
         [ HH.text c ]
       , icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       , icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
-      , icon "mailto:colingw@gmail.com" ["fas", "fa-envelope" ]
+      , icon "mailto:colingw@gmail.com" [ "fas", "fa-envelope" ]
       ]
     ]
  , HH.slot LangSlot LangToggle.component unit (HE.input LangChanged) ]
