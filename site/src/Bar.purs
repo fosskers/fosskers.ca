@@ -49,8 +49,10 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
       , HH.a [ HP.href "https://stackoverflow.com/cv/colinwoodbury"
              , HP.classes $ map H.ClassName [ "nav-item", "nav-link"]]
         [ HH.text c ]
-      , icon "https://github.com/fosskers" "fa-github"
-      , icon "https://twitter.com/fosskers" "fa-twitter" ]
+      , icon "https://github.com/fosskers" [ "fab", "fa-github" ]
+      , icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
+      , icon "mailto:colingw@gmail.com" ["fas", "fa-envelope" ]
+      ]
     ]
  , HH.slot LangSlot LangToggle.component unit (HE.input LangChanged) ]
   where tabSwitch tab txt = HH.a [ HP.href "#"
@@ -58,7 +60,7 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
                                  , HE.onClick $ const (Just $ TabChanged tab unit) ]
                             [ HH.text txt ]
         icon url i = HH.a [ HP.href url
-                          , HP.classes $ map H.ClassName [ "fab", i, "nav-item", "nav-link" ]
+                          , HP.classes $ map H.ClassName $ i <> [ "nav-item", "nav-link" ]
                           , HC.style <<< fontSize $ em 1.33333 ] []
         Three a b c = case state.language of
           English  -> Three "About" "Blog" "CV"
