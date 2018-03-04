@@ -2,7 +2,7 @@ module Blog ( component, Query(..) ) where
 
 import Prelude
 
-import Bootstrap (colN, col_, fluid, row, row_)
+import Bootstrap (col_, fluid, row, row_)
 import CSS (paddingTop, pct)
 import Common (Path, _Path, _Title)
 import Control.Error.Util (bool)
@@ -92,10 +92,12 @@ choices s = options (filter (\p -> postLang p == s.language) s.posts) >>= f
                    [ col_ [ HH.a [ HP.href "#"
                                  , HE.onClick $ const (Just $ Selected p.path unit) ]
                             [ HH.h5_ [ HH.text $ p.title ^. _Title ]]]]
-                 , row_ $ [ colN 5 [] [ HH.a [ HP.href $ "/blog/" <> p.path ^. _Path <> ".html"
-                                             , HP.classes $ map H.ClassName [ "fas", "fa-link" ] ] []
-                                      , HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
-                   <> bool [] [ col_ [ HH.text $ intercalate ", " matches ]] (not $ null matches)
+                 , row_ $ [ HH.div [ HP.classes $ map H.ClassName [ "col-xs-12", "col-md-6" ] ]
+                            [ HH.a [ HP.href $ "/blog/" <> p.path ^. _Path <> ".html"
+                                   , HP.classes $ map H.ClassName [ "fas", "fa-link" ] ] []
+                            , HH.i_ [ HH.text $ localizedDate s.language p.date ] ] ]
+                   <> bool [] [ HH.div [ HP.classes $ map H.ClassName [ "col-xs-12", "col-md-6" ]]
+                                [ HH.text $ intercalate ", " matches ]] (not $ null matches)
                  ]
         g p = any (\kw -> M.member kw p.freqs) s.keywords
         options ps | null s.keywords = ps
