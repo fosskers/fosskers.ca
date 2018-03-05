@@ -61,7 +61,7 @@ instance ToXml Blog where
 
 -- | Format a `Date` in a way acceptable to RSS feeds.
 dtt :: Date -> [Char]
-dtt d@(Date ye mo da) = printf ("%s, %d %s %d 00:00:00 GMT") wd da mo' ye
+dtt d@(Date ye mo da) = printf "%s, %d %s %d 00:00:00 GMT" wd da mo' ye
   where wd :: [Char]
         wd = take 3 . show $ getWeekDay d
         mo' :: [Char]
