@@ -2,8 +2,7 @@ module Types where
 
 import Prelude
 
-import Common (_Path)
-import Common as C
+import Fosskers.Common as C
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff.Console (CONSOLE, log)
 import Control.Monad.Except (ExceptT, runExceptT)
@@ -38,7 +37,7 @@ suffix English  = "-en"
 suffix Japanese = "-jp"
 
 postLang :: forall r. { path :: C.Path | r } -> Language
-postLang p = case takeRight 3 (p.path ^. _Path) of
+postLang p = case takeRight 3 (p.path ^. C._Path) of
   "-jp" -> Japanese
   _     -> English
 

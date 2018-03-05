@@ -4,7 +4,7 @@ import Prelude
 
 import Bootstrap (col_, fluid, row, row_)
 import CSS (paddingTop, pct)
-import Common (Path, _Path, _Title)
+import Fosskers.Common (Path, _Path, _Title)
 import Control.Error.Util (bool)
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff.Class (liftAff)
