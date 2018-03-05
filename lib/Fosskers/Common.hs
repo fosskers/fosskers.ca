@@ -6,6 +6,8 @@ module Fosskers.Common where
 import           Data.Aeson (ToJSON)
 import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
+import qualified Data.Text as T
+import           Fosskers.XML
 import           Lucid
 import           Protolude
 import           Servant.API
@@ -20,6 +22,8 @@ type JsonAPI = "posts" :> Get '[JSON] [Blog]
 
 type API = JsonAPI
   :<|> "blog" :> Raw
+  :<|> "rss-en" :> Get '[XML] Blogs
+  :<|> "rss-jp" :> Get '[XML] Blogs
   :<|> "assets" :> Raw
   :<|> "webfonts" :> Raw
   :<|> Get '[HTML] (Html ())
@@ -32,7 +36,15 @@ deriving instance ToJSON Date
 deriving instance Generic Month
 deriving instance ToJSON Month
 
+data Language = English | Japanese deriving (Eq, Ord, Show)
+
 newtype Path = Path Text deriving (Generic, ToJSON)
+
+pathLang :: Path -> Maybe Language
+pathLang (Path p) = case T.takeEnd 3 p of
+  "-en" -> Just English
+  "-jp" -> Just Japanese
+  _     -> Nothing
 
 data Blog = Blog { title    :: Title
                  , date     :: Date

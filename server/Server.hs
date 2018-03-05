@@ -34,9 +34,14 @@ data Env = Env { stats :: [Blog], bundle :: Text }
 server :: Env -> Server API
 server env = pure (stats env)
   :<|> serveDirectoryFileServer "blog"
+  :<|> pure (rss (stats env) English)
+  :<|> pure (rss (stats env) Japanese)
   :<|> serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
   :<|> pure (index $ bundle env)
+
+rss :: [Blog] -> Language -> Blogs
+rss bs l = Blogs . reverse . sortOn date $ filter (\b -> pathLang (filename b) == Just l) bs
 
 app :: Env -> Application
 app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server
