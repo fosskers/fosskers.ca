@@ -9,3 +9,4 @@ extra-deps:
   - servant-0.12.1
   - servant-server-0.12
   - servant-foreign-0.10.2
+  - xmlbf-0.3

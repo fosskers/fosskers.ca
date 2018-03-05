@@ -3,12 +3,16 @@
 
 module Fosskers.Common where
 
-import Data.Aeson (ToJSON)
-import Lucid
-import Protolude
-import Servant.API
-import Servant.HTML.Lucid
-import Time.Types
+import           Data.Aeson (ToJSON)
+import qualified Data.HashMap.Strict as HM
+import           Data.Hourglass (getWeekDay)
+import           Lucid
+import           Protolude
+import           Servant.API
+import           Servant.HTML.Lucid
+import           Text.Printf
+import           Time.Types
+import           Xmlbf
 
 ---
 
@@ -34,3 +38,24 @@ data Blog = Blog { title    :: Title
                  , date     :: Date
                  , filename :: Path
                  , freqs    :: [(Text, Int)] } deriving (Generic, ToJSON)
+
+instance ToXml Blog where
+  toXml (Blog (Title t) d (Path p) _) = [b]
+    where b = element' "item" mempty
+              [ element' "title" mempty [ text t ]
+              , element' "link" mempty [ text $ "http://fosskers.ca/blog/" <> p <> ".html" ]
+              , element' "pubDate" mempty [ text . toS $ dtt d ]
+              , element' "description" mempty [ text t ]]
+
+-- | Format a `Date` in a way acceptable to RSS feeds.
+dtt :: Date -> [Char]
+dtt d@(Date ye mo da) = printf ("%s, %d %s %d 00:00:00 GMT") wd da mo' ye
+  where wd :: [Char]
+        wd = take 3 . show $ getWeekDay d
+        mo' :: [Char]
+        mo' = take 3 $ show mo
+
+newtype Blogs = Blogs [Blog]
+
+instance ToXml Blogs where
+  toXml (Blogs bs) = [ element' "rss" (HM.singleton "version" "2.0") [ element' "channel" mempty $ bs >>= toXml ]]
