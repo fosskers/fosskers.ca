@@ -3,7 +3,7 @@
 
 module Main ( main ) where
 
-import Common
+import Fosskers.Common
 import Language.PureScript.Bridge
 import Protolude
 import Servant.PureScript

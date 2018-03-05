@@ -3,7 +3,6 @@
 
 module Main ( main ) where
 
-import           Common
 import           Control.Arrow ((&&&))
 import           Control.Lens hiding (index)
 import           Data.Char (isAlpha)
@@ -11,11 +10,12 @@ import           Data.Proxy
 import qualified Data.Set as S
 import qualified Data.Text as T
 import           Filesystem.Path (basename)
+import           Fosskers.Common
+import           Fosskers.Org (parseOrg)
 import           Lucid
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Generic
-import           Org (parseOrg)
 import           Protolude hiding (FilePath)
 import           Servant.API
 import           Servant.Server

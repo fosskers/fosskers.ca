@@ -1,8 +1,8 @@
 module Main where
 
-import           Common (Title(Title))
 import qualified Data.Text as T
-import           Org
+import           Fosskers.Common (Title(Title))
+import           Fosskers.Org
 import           Protolude
 import           Test.Tasty
 import           Test.Tasty.HUnit

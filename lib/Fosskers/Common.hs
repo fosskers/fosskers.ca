@@ -1,7 +1,7 @@
 {-# LANGUAGE DataKinds, TypeOperators #-}
 {-# LANGUAGE DeriveGeneric, DeriveAnyClass, StandaloneDeriving #-}
 
-module Common where
+module Fosskers.Common where
 
 import Data.Aeson (ToJSON)
 import Lucid

@@ -1,7 +1,7 @@
-module Org where
+module Fosskers.Org where
 
-import           Common (Title(..))
 import           Data.Bifunctor (first)
+import           Fosskers.Common (Title(..))
 import           Protolude
 import           Text.Megaparsec
 import           Text.Megaparsec.Char
