@@ -70,4 +70,9 @@ dtt d@(Date ye mo da) = printf "%s, %d %s %d 00:00:00 GMT" wd da mo' ye
 newtype Blogs = Blogs [Blog]
 
 instance ToXml Blogs where
-  toXml (Blogs bs) = [ element' "rss" (HM.singleton "version" "2.0") [ element' "channel" mempty $ bs >>= toXml ]]
+  toXml (Blogs bs) = [ element' "rss" (HM.singleton "version" "2.0")
+                       [ element' "channel" mempty (info <> (bs >>= toXml)) ]]
+    where info = [ element' "title" mempty [ text "Fosskers.ca Blog" ]
+                 , element' "link" mempty [ text "http://fosskers.ca" ]
+                 , element' "description" mempty [ text "Articles on Haskell, Functional Programming, and Japanese" ]
+                 ]
