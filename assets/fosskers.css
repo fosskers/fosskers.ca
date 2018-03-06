@@ -18,6 +18,7 @@ pre.src-bash:before { content: 'Bash'; }
 pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
 pre.src-lisp:before { content: 'Lisp'; }
 pre.src-haskell:before { content: 'Haskell'; }
+pre.src-purescript:before { content: 'Purescript'; }
 pre.src-nix:before { content: 'Nix'; }
 pre.src-yaml:before { content: 'YAML'; }
 pre.src-fish:before { content: 'Fish'; }
