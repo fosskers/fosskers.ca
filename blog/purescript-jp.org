@@ -435,3 +435,49 @@ Librariesもプロジェクト・コードも全部コンパイル：
         traverse_ (\el -> liftAff (xhr s) >>= liftEff <<< replaceChildren el) htmls
       pure next
 #+END_SRC
+* Deployment
+
+基本的にHaskellのデプロイメントとなれば「Heroku」を勧める。[[https://fosskers.ca/blog/deploying-haskell-jp.html][別のポスト]]に一般の説明がある。
+それを読んだ上で ~heroku-buildpack-stack~ の仕組みを利用して「Purescript」も含めれる。
+
+** ~Makefile~ の定義
+
+幸い ~heroku-buildpack-stack~ のスクリプトがユーザー（俺たち）からの ~Makefile~ がないか
+確認してから構築に入る。ない場合はただ：
+
+#+BEGIN_SRC bash
+  stack build --copy-bins
+#+END_SRC
+
+あった場合は ~make~ と ~make install~ のコマンドが行われる。大体 ~make~ イコール ~bash~
+だから、その事実を利用して ~npm~ や ~purescript~ dependenciesや全部ダウンロードして
+もらおう：
+
+#+BEGIN_SRC makefile
+  default:
+    stack build
+    stack exec -- bridge
+    wget --quiet https://nodejs.org/dist/v8.9.4/node-v8.9.4-linux-x64.tar.xz
+    tar xf node-v8.9.4-linux-x64.tar.xz
+    export PATH="/app/node-v8.9.4-linux-x64/bin:${PATH}" && cd site && \
+      npm install && \
+      npm run psc -- update && \
+      npm run pulp -- build --to app.js && \
+      npm run uglify -- app.js --output app.min.js --compress --mangle && \
+      mkdir -p ../.local/bin/ && \
+      cp app.min.js ../.local/bin/
+
+  install:
+    stack build --copy-bins
+#+END_SRC
+
+最後の辺、 ~app.min.js~ がコピーされるのがある。理由はHerokuがデプロイを完成した時、dynoに
+残るファイルは元々あったファイル（即ちgitに入ってるファイル）と構築中に ~/app/.local/bin~
+に移動させられたファイルだけ（実行ファイルも。だから ~--copy-bins~ ）。サーバーに ~app.min.js~ が見つけられる
+様に ~assets/~ にソフトリンクをコミットすれば十分：
+
+#+BEGIN_SRC bash
+  ln -s ../.local/bin/app.min.js app.min.js
+#+END_SRC
+
+そしてサーバーにはいつも通り ~/assets/app.min.js~ が出せるはず。

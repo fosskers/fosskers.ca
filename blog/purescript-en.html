@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-02-23 Fri 08:14 -->
+<!-- 2018-03-06 Tue 15:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Websites with Servant and Purescript/Halogen</title>
@@ -235,44 +235,49 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge18d3c0">1. Haskell</a>
+<li><a href="#org15b2d39">1. Haskell</a>
 <ul>
-<li><a href="#org317e76d">1.1. Project Structure</a></li>
-<li><a href="#org55b8b1c">1.2. Code Sharing with Purescript</a></li>
-<li><a href="#org1f70432">1.3. Serving Assets</a>
+<li><a href="#orgf4556c2">1.1. Project Structure</a></li>
+<li><a href="#org2a4e975">1.2. Code Sharing with Purescript</a></li>
+<li><a href="#org2efe33e">1.3. Serving Assets</a>
 <ul>
-<li><a href="#orgac4c05b">1.3.1. Automatic Gzipping</a></li>
+<li><a href="#orge5d0293">1.3.1. Automatic Gzipping</a></li>
 </ul>
 </li>
-<li><a href="#org656a7d3">1.4. Avoiding Static HTML</a></li>
+<li><a href="#org32b8a51">1.4. Avoiding Static HTML</a></li>
 </ul>
 </li>
-<li><a href="#orgde60f79">2. Purescript</a>
+<li><a href="#orgd9fd39c">2. Purescript</a>
 <ul>
-<li><a href="#org23a4a99">2.1. Setup</a>
+<li><a href="#org7ac931a">2.1. Setup</a>
 <ul>
-<li><a href="#orgc1a22dc">2.1.1. Tools</a></li>
-<li><a href="#org3e91223">2.1.2. Packages</a></li>
-<li><a href="#org937d1bd">2.1.3. Spacemacs Integration</a></li>
+<li><a href="#orgc02bb9a">2.1.1. Tools</a></li>
+<li><a href="#orgc3ec692">2.1.2. Packages</a></li>
+<li><a href="#orge4ac98d">2.1.3. Spacemacs Integration</a></li>
 </ul>
 </li>
-<li><a href="#org48b0ff0">2.2. Common Commands</a></li>
-<li><a href="#org518a5ca">2.3. Halogen</a>
+<li><a href="#org033365a">2.2. Common Commands</a></li>
+<li><a href="#org027b021">2.3. Halogen</a>
 <ul>
-<li><a href="#org8fecce4">2.3.1. Avoiding Rerendering</a></li>
-<li><a href="#org146eda2">2.3.2. Handling Types Imposed by <code>servant-purescript</code></a></li>
-<li><a href="#org8d04e2a">2.3.3. Effectful Component Initialization</a></li>
-<li><a href="#org1f5cf32">2.3.4. Requesting and Injecting HTML</a></li>
+<li><a href="#org8bc8eed">2.3.1. Avoiding Rerendering</a></li>
+<li><a href="#org49cc2d8">2.3.2. Handling Types Imposed by <code>servant-purescript</code></a></li>
+<li><a href="#orgaf503b6">2.3.3. Effectful Component Initialization</a></li>
+<li><a href="#orgb9c286c">2.3.4. Requesting and Injecting HTML</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#orge1fda4b">3. Deployment</a>
+<ul>
+<li><a href="#orgd8ce63d">3.1. Defining a <code>Makefile</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge18d3c0" class="outline-2">
-<h2 id="orge18d3c0"><span class="section-number-2">1</span> Haskell</h2>
+<div id="outline-container-org15b2d39" class="outline-2">
+<h2 id="org15b2d39"><span class="section-number-2">1</span> Haskell</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <a href="http://haskell-servant.readthedocs.io/en/stable/">Servant</a> is <i>fantastic</i> for writing web servers. The brevity alone makes it my
@@ -286,8 +291,8 @@ Servant.
 </p>
 </div>
 
-<div id="outline-container-org317e76d" class="outline-3">
-<h3 id="org317e76d"><span class="section-number-3">1.1</span> Project Structure</h3>
+<div id="outline-container-orgf4556c2" class="outline-3">
+<h3 id="orgf4556c2"><span class="section-number-3">1.1</span> Project Structure</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 In order for code-sharing with Purescript to work well later, I recommend we
@@ -316,8 +321,8 @@ is going to live in <code>lib</code>, while the backend logic itself will be in 
 </div>
 </div>
 
-<div id="outline-container-org55b8b1c" class="outline-3">
-<h3 id="org55b8b1c"><span class="section-number-3">1.2</span> Code Sharing with Purescript</h3>
+<div id="outline-container-org2a4e975" class="outline-3">
+<h3 id="org2a4e975"><span class="section-number-3">1.2</span> Code Sharing with Purescript</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Two libraries help us:
@@ -390,8 +395,8 @@ See the Purescript section below for how to interact with this generated code.
 </div>
 </div>
 
-<div id="outline-container-org1f70432" class="outline-3">
-<h3 id="org1f70432"><span class="section-number-3">1.3</span> Serving Assets</h3>
+<div id="outline-container-org2efe33e" class="outline-3">
+<h3 id="org2efe33e"><span class="section-number-3">1.3</span> Serving Assets</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 "Just serve any file from the directory I indicate." Easy:
@@ -412,8 +417,8 @@ All of our <code>.js</code> and <code>.css</code> files can live in <code>assets
 </p>
 </div>
 
-<div id="outline-container-orgac4c05b" class="outline-4">
-<h4 id="orgac4c05b"><span class="section-number-4">1.3.1</span> Automatic Gzipping</h4>
+<div id="outline-container-orge5d0293" class="outline-4">
+<h4 id="orge5d0293"><span class="section-number-4">1.3.1</span> Automatic Gzipping</h4>
 <div class="outline-text-4" id="text-1-3-1">
 <p>
 This greatly reduces the size of assets being transfered to the user, for
@@ -433,8 +438,8 @@ very little effort on our part. Via the <a href="https://hackage.haskell.org/pac
 </div>
 </div>
 
-<div id="outline-container-org656a7d3" class="outline-3">
-<h3 id="org656a7d3"><span class="section-number-3">1.4</span> Avoiding Static HTML</h3>
+<div id="outline-container-org32b8a51" class="outline-3">
+<h3 id="org32b8a51"><span class="section-number-3">1.4</span> Avoiding Static HTML</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Since Purescript is generating our UI, we don't actually need to commit any HTML files.
@@ -462,20 +467,20 @@ Our <code>index.html</code> can also be produced on-the-fly by our backend:
 </div>
 </div>
 
-<div id="outline-container-orgde60f79" class="outline-2">
-<h2 id="orgde60f79"><span class="section-number-2">2</span> Purescript</h2>
+<div id="outline-container-orgd9fd39c" class="outline-2">
+<h2 id="orgd9fd39c"><span class="section-number-2">2</span> Purescript</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org23a4a99" class="outline-3">
-<h3 id="org23a4a99"><span class="section-number-3">2.1</span> Setup</h3>
+<div id="outline-container-org7ac931a" class="outline-3">
+<h3 id="org7ac931a"><span class="section-number-3">2.1</span> Setup</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 This requires <a href="https://www.npmjs.com/">npm</a> to be installed.
 </p>
 </div>
 
-<div id="outline-container-orgc1a22dc" class="outline-4">
-<h4 id="orgc1a22dc"><span class="section-number-4">2.1.1</span> Tools</h4>
+<div id="outline-container-orgc02bb9a" class="outline-4">
+<h4 id="orgc02bb9a"><span class="section-number-4">2.1.1</span> Tools</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 The canonical dev environment for Purescript requires some use of <code>npm</code>.
@@ -531,8 +536,8 @@ Here are some useful ones we can enter into <code>package.json</code>:
 </div>
 </div>
 
-<div id="outline-container-org3e91223" class="outline-4">
-<h4 id="org3e91223"><span class="section-number-4">2.1.2</span> Packages</h4>
+<div id="outline-container-orgc3ec692" class="outline-4">
+<h4 id="orgc3ec692"><span class="section-number-4">2.1.2</span> Packages</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <p>
 Now, to generate some more scaffolding:
@@ -572,8 +577,8 @@ If the installation was successful, we'll notice <code>halogen</code> appear in 
 </div>
 </div>
 
-<div id="outline-container-org937d1bd" class="outline-4">
-<h4 id="org937d1bd"><span class="section-number-4">2.1.3</span> Spacemacs Integration</h4>
+<div id="outline-container-orge4ac98d" class="outline-4">
+<h4 id="orge4ac98d"><span class="section-number-4">2.1.3</span> Spacemacs Integration</h4>
 <div class="outline-text-4" id="text-2-1-3">
 <p>
 The <a href="http://spacemacs.org/layers/+lang/purescript/README.html">Purescript Layer</a> works quite nicely out of the box. In order for Spacemacs
@@ -628,8 +633,8 @@ Handy Keybindings:
 </div>
 </div>
 
-<div id="outline-container-org48b0ff0" class="outline-3">
-<h3 id="org48b0ff0"><span class="section-number-3">2.2</span> Common Commands</h3>
+<div id="outline-container-org033365a" class="outline-3">
+<h3 id="org033365a"><span class="section-number-3">2.2</span> Common Commands</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 To (re)download all tool dependencies marked in <code>package.json</code>:
@@ -702,8 +707,8 @@ is less than half of the original human-readable code.
 </div>
 
 
-<div id="outline-container-org518a5ca" class="outline-3">
-<h3 id="org518a5ca"><span class="section-number-3">2.3</span> Halogen</h3>
+<div id="outline-container-org027b021" class="outline-3">
+<h3 id="org027b021"><span class="section-number-3">2.3</span> Halogen</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Before writing anything, I read the <a href="https://github.com/slamdata/purescript-halogen/tree/master/docs">official Halogen guide</a> and found it quite good.
@@ -713,8 +718,8 @@ and through experimentation, the fruits of which I explain below.
 </p>
 </div>
 
-<div id="outline-container-org8fecce4" class="outline-4">
-<h4 id="org8fecce4"><span class="section-number-4">2.3.1</span> Avoiding Rerendering</h4>
+<div id="outline-container-org8bc8eed" class="outline-4">
+<h4 id="org8bc8eed"><span class="section-number-4">2.3.1</span> Avoiding Rerendering</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <p>
 Every time <code>H.put</code> or <code>H.modify</code> is called in our <code>eval</code> function, the
@@ -748,8 +753,8 @@ Example of usage:
 </div>
 </div>
 
-<div id="outline-container-org146eda2" class="outline-4">
-<h4 id="org146eda2"><span class="section-number-4">2.3.2</span> Handling Types Imposed by <code>servant-purescript</code></h4>
+<div id="outline-container-org49cc2d8" class="outline-4">
+<h4 id="org49cc2d8"><span class="section-number-4">2.3.2</span> Handling Types Imposed by <code>servant-purescript</code></h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 To query the endpoint <code>type JsonAPI = "posts" :&gt; Get '[JSON] [Blog]</code>, <code>servant-purescript</code>
@@ -810,8 +815,8 @@ Our <code>main</code> then only requires a little bit of massaging via <code>hoi
 </div>
 </div>
 
-<div id="outline-container-org8d04e2a" class="outline-4">
-<h4 id="org8d04e2a"><span class="section-number-4">2.3.3</span> Effectful Component Initialization</h4>
+<div id="outline-container-orgaf503b6" class="outline-4">
+<h4 id="orgaf503b6"><span class="section-number-4">2.3.3</span> Effectful Component Initialization</h4>
 <div class="outline-text-4" id="text-2-3-3">
 <p>
 A component might need to be created with some long-lived information, say from
@@ -850,8 +855,8 @@ render for the first time until the request is complete.
 </div>
 </div>
 
-<div id="outline-container-org1f5cf32" class="outline-4">
-<h4 id="org1f5cf32"><span class="section-number-4">2.3.4</span> Requesting and Injecting HTML</h4>
+<div id="outline-container-orgb9c286c" class="outline-4">
+<h4 id="orgb9c286c"><span class="section-number-4">2.3.4</span> Requesting and Injecting HTML</h4>
 <div class="outline-text-4" id="text-2-3-4">
 <p>
 For technical reasons, the HTML of these blog posts only exists at runtime.
@@ -921,11 +926,84 @@ part is the <code>RefLabel</code>. We can update its actual contents in our <cod
 </div>
 </div>
 </div>
+<div id="outline-container-orge1fda4b" class="outline-2">
+<h2 id="orge1fda4b"><span class="section-number-2">3</span> Deployment</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+In general I recommend deploying simple Haskell servers via Heroku.
+I have detailed instructions for this <a href="https://fosskers.ca/blog/deploying-haskell-en.html">in another post</a>.
+Luckily we're also able to leverage the mechanics of <code>heroku-buildpack-stack</code>
+to fetch all NPM and Purescript dependencies and build our JS bundle
+during the deployment process itself.
+</p>
+</div>
+
+<div id="outline-container-orgd8ce63d" class="outline-3">
+<h3 id="orgd8ce63d"><span class="section-number-3">3.1</span> Defining a <code>Makefile</code></h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+The build scripts of <code>heroku-buildpack-stack</code> look for a <code>Makefile</code> in our repo
+during deployment. If they don't find one, compiling our project amounts to:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">stack build --copy-bins
+</pre>
+</div>
+
+<p>
+Otherwise, that <code>Makefile</code> allows us to do anything that <code>bash</code> can do,
+including install <code>npm</code>.
+</p>
+
+<p>
+The build scripts will run both <code>make</code> and <code>make install</code>, so let's have our
+<code>Makefile</code> look like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-makefile"><span style="color: #6c3163; font-weight: bold;">default</span>:
+  stack build
+  stack exec -- bridge
+  <span style="color: #6c3163; font-weight: bold;">wget --quiet https</span>://nodejs.org/dist/v8.<span style="color: #4e3163;">9</span>.<span style="color: #4e3163;">4/node-v8</span>.<span style="color: #4e3163;">9</span>.<span style="color: #4e3163;">4-linux-x64</span>.tar.xz
+  tar xf node-v8.<span style="color: #4e3163;">9</span>.<span style="color: #4e3163;">4-linux-x64</span>.tar.xz
+  export PATH=<span style="color: #2d9574;">"/app/node-v8.9.4-linux-x64/bin:${</span><span style="color: #715ab1;">PATH</span><span style="color: #2d9574;">}"</span> &amp;&amp; cd site &amp;&amp; \
+    npm install &amp;&amp; \
+    npm run psc -- update &amp;&amp; \
+    npm run pulp -- build --to app.js &amp;&amp; \
+    npm run uglify -- app.js --output app.min.js --compress --mangle &amp;&amp; \
+    mkdir -p ../.local/bin/ &amp;&amp; \
+    cp app.min.js ../.local/bin/
+
+<span style="color: #6c3163; font-weight: bold;">install</span>:
+  stack build --copy-bins
+</pre>
+</div>
+
+<p>
+Notice that we copy <code>app.min.js</code> . This is because after deployment we're left
+with a clean working tree - only things copied to <code>/app/.local/bin/</code> remain
+from the compilation process (<code>--copy-bin</code> moved our executables here too).
+For our site to actually see our JS, I suggest committing a symlink in our
+usual <code>assets/</code> directory:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">ln -s ../.local/bin/app.min.js app.min.js
+</pre>
+</div>
+
+<p>
+And then the server can serve it normally via the <code>assets/</code> endpoint.
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2018-02-21</p>
 <p class="author">Author: Colin</p>
-<p class="date">Created: 2018-02-23 Fri 08:14</p>
+<p class="date">Created: 2018-03-06 Tue 15:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

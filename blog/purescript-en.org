@@ -454,3 +454,55 @@ part is the ~RefLabel~. We can update its actual contents in our ~eval~ function
         traverse_ (\el -> liftAff (xhr s) >>= liftEff <<< replaceChildren el) htmls
       pure next
 #+END_SRC
+* Deployment
+
+In general I recommend deploying simple Haskell servers via Heroku.
+I have detailed instructions for this [[https://fosskers.ca/blog/deploying-haskell-en.html][in another post]].
+Luckily we're also able to leverage the mechanics of ~heroku-buildpack-stack~
+to fetch all NPM and Purescript dependencies and build our JS bundle
+during the deployment process itself.
+
+** Defining a ~Makefile~
+
+The build scripts of ~heroku-buildpack-stack~ look for a ~Makefile~ in our repo
+during deployment. If they don't find one, compiling our project amounts to:
+
+#+BEGIN_SRC bash
+  stack build --copy-bins
+#+END_SRC
+
+Otherwise, that ~Makefile~ allows us to do anything that ~bash~ can do,
+including install ~npm~.
+
+The build scripts will run both ~make~ and ~make install~, so let's have our
+~Makefile~ look like:
+
+#+BEGIN_SRC makefile
+  default:
+    stack build
+    stack exec -- bridge
+    wget --quiet https://nodejs.org/dist/v8.9.4/node-v8.9.4-linux-x64.tar.xz
+    tar xf node-v8.9.4-linux-x64.tar.xz
+    export PATH="/app/node-v8.9.4-linux-x64/bin:${PATH}" && cd site && \
+      npm install && \
+      npm run psc -- update && \
+      npm run pulp -- build --to app.js && \
+      npm run uglify -- app.js --output app.min.js --compress --mangle && \
+      mkdir -p ../.local/bin/ && \
+      cp app.min.js ../.local/bin/
+
+  install:
+    stack build --copy-bins
+#+END_SRC
+
+Notice that we copy ~app.min.js~ . This is because after deployment we're left
+with a clean working tree - only things copied to ~/app/.local/bin/~ remain
+from the compilation process (~--copy-bin~ moved our executables here too).
+For our site to actually see our JS, I suggest committing a symlink in our
+usual ~assets/~ directory:
+
+#+BEGIN_SRC bash
+  ln -s ../.local/bin/app.min.js app.min.js
+#+END_SRC
+
+And then the server can serve it normally via the ~assets/~ endpoint.

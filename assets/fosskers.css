@@ -13,8 +13,8 @@ pre { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; padding: 8pt; font-f
 pre.src{overflow:auto;padding-top:1.2em;position:relative;font-size:80%}
 pre.src:before{display:block;position:absolute;background-color:#ccccd0;top:0;right:0;padding:.25em .5em;border-bottom-left-radius:8px;border:0;color:#fff;font-size:80%}
 pre.src:hover:before { display: inline;}
-pre.src-sh:before { content: 'sh'; }
-pre.src-bash:before { content: 'sh'; }
+pre.src-sh:before { content: 'Bash'; }
+pre.src-bash:before { content: 'Bash'; }
 pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
 pre.src-lisp:before { content: 'Lisp'; }
 pre.src-haskell:before { content: 'Haskell'; }
@@ -22,6 +22,7 @@ pre.src-nix:before { content: 'Nix'; }
 pre.src-yaml:before { content: 'YAML'; }
 pre.src-fish:before { content: 'Fish'; }
 pre.src-js:before { content: 'Javascript'; }
+pre.src-makefile:before { content: 'Makefile'; }
 table{margin:auto;border-top:2px solid;border-collapse:collapse}
 table,thead{border-bottom:2px solid}
 table td+td,table th+th{border-left:1px solid gray}
