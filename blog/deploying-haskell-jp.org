@@ -1,4 +1,4 @@
-#+TITLE: Haskellプログラムの出荷
+#+TITLE: Haskellプログラムのデプロイメント
 #+DATE: 2018-02-28
 #+AUTHOR: こりん
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
@@ -17,7 +17,7 @@
 ただ小規模のサーバーをどっか載せたい。
 #+END_QUOTE
 
-「Heroku」はこれにぴったり。 ~git push~ だけで自動出荷ができて、再出荷が速くなる様に
+「Heroku」はこれにぴったり。 ~git push~ だけで自動デプロイメントができて、再デプロイが速くなる様に
 ~stack~ でダウンロードされるdependenciesが全部キャッシュされる。
 
 Herokuのサーバーは「dyno」といって、一番安いのは無料。30分経ってサーバーにリクエストが
@@ -87,7 +87,7 @@ web: server --js app.min.js
 
 [[./blog/heroku00.jpg]]
 
-ページの後半に見える「CLI」指示を無視して出荷方法を「Github」と選んで繋げたいrepoを入れるだけ。
+ページの後半に見える「CLI」指示を無視してデプロイ方法を「Github」と選んで繋げたいrepoを入れるだけ。
 
 次は「Settings」のタブでの「Buildpacks」の所：
 
@@ -103,7 +103,7 @@ https://github.com/mfine/heroku-buildpack-stack
 ~stack~ を使うプロジェクトはこれで構築してdependenciesがキャッシュされる。
 HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさん達に感謝。
 
-** 出荷
+** デプロイメント
 
 ~git push origin master~ だけ！
 
@@ -155,14 +155,14 @@ yourdomain.com.herokudns.com
   stack image container
 #+END_SRC
 
-Dockerのイメージが構築される。できたらいつものコンテナ出荷システムに混ぜれる。
+Dockerのイメージが構築される。できたらいつものコンテナ・デプロイメント・システムに混ぜれる。
 より細かい指示は ~stack~ の[[https://docs.haskellstack.org/en/stable/GUIDE/#docker][公式サイト]]へ（英語）。
 
 * 将来の道： Nix
 
-Nixは確かに強い。ただ、全面的に使わないと本当の利益が出ないと思う。「全面」とは開発と出荷両面。
+Nixは確かに強い。ただ、全面的に使わないと本当の利益が出ないと思う。「全面」とは開発とデプロイメント両面。
 開発だけに利用すると ~stack~ と役割も便利さもほぼ変わらない。
 
 ・・・と言ってもまだNixが未来だと感じる。本当に勧めたい。残念ながら俺は
-出荷には使ったことがないからこれ以上は何も言えないけど、もしこれを呼んでいる人にそんな
+デプロイメントには使ったことがないからこれ以上は何も言えないけど、もしこれを呼んでいる人にそんな
 経験があれば、是非Githubでこの部分を足してください。
