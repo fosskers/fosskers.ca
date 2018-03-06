@@ -1,8 +1,9 @@
 module Fosskers.Org where
 
+import           ClassyPrelude
 import           Data.Bifunctor (first)
+import           Data.Void (Void)
 import           Fosskers.Common (Title(..))
-import           Protolude
 import           Text.Megaparsec
 import           Text.Megaparsec.Char
 import qualified Text.Megaparsec.Char.Lexer as L
@@ -16,7 +17,7 @@ org :: Parser (Title, Date)
 org = (,) <$> title <*> date <* takeRest
 
 title :: Parser Title
-title = Title . toS <$> (string "#+TITLE: " *> someTill anyChar newline)
+title = Title . pack <$> (string "#+TITLE: " *> someTill anyChar newline)
 
 date :: Parser Date
 date = do
@@ -27,4 +28,4 @@ date = do
   pure $ Date year month day
 
 parseOrg :: Text -> Text -> Either Text (Title, Date)
-parseOrg fp t = first (toS . parseErrorPretty) $ parse org (toS fp) t
+parseOrg fp t = first (pack . parseErrorPretty) $ parse org (unpack fp) t

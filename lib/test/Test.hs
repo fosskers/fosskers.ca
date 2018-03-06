@@ -1,9 +1,9 @@
 module Main where
 
+import           ClassyPrelude
 import qualified Data.Text as T
 import           Fosskers.Common (Title(Title))
 import           Fosskers.Org
-import           Protolude
 import           Test.Tasty
 import           Test.Tasty.HUnit
 import           Text.Megaparsec (parse)

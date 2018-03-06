@@ -3,8 +3,8 @@
 
 module Main ( main ) where
 
+import           ClassyPrelude hiding (FilePath, index)
 import           Control.Arrow ((&&&))
-import           Control.Lens hiding (index)
 import           Data.Char (isAlpha)
 import           Data.Proxy
 import qualified Data.Set as S
@@ -16,7 +16,6 @@ import           Lucid
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Generic
-import           Protolude hiding (FilePath)
 import           Servant.API
 import           Servant.Server
 import           Servant.Utils.StaticFiles (serveDirectoryFileServer)
@@ -67,7 +66,7 @@ index j = html_ $ head_ h *> body_ (script_ [src_ $ "assets/" <> j] ("" :: Text)
 
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
-freq = map ((maybe "死毒殺悪厄魔" identity . head) &&& length) . group . sort . filter g . map T.toLower . T.words . T.map f
+freq = map ((maybe "死毒殺悪厄魔" head . fromNullable) &&& length) . group . sort . filter g . map T.toLower . T.words . T.map f
   where f c = bool ' ' c $ isAlpha c
         g w = let l = T.length w in l > 2 && l < 13 && not (S.member w functionWords)
 
@@ -110,8 +109,8 @@ main :: IO ()
 main = do
   Args (Helpful p) (Helpful j) <- getRecord "Backend server for fosskers.ca"
   (errs, ps) <- shelly orgs
-  traverse_ putText errs
-  herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
-  let prt = maybe 8081 identity $ p <|> herokuPort
-  putText $ "Listening on port " <> show prt
+  traverse_ say errs
+  herokuPort <- (>>= readMay) <$> lookupEnv "PORT"
+  let prt = fromMaybe 8081 $ p <|> herokuPort
+  say $ "Listening on port " <> tshow prt
   W.run prt . app $ Env ps j

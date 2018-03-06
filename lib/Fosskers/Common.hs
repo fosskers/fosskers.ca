@@ -3,12 +3,12 @@
 
 module Fosskers.Common where
 
+import           ClassyPrelude
 import           Data.Aeson (ToJSON)
 import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
 import qualified Data.Text as T
 import           Lucid
-import           Protolude
 import           Servant.API
 import           Servant.HTML.Lucid
 import           Servant.XML
@@ -56,7 +56,7 @@ instance ToXml Blog where
     where b = element' "item" mempty
               [ element' "title" mempty [ text t ]
               , element' "link" mempty [ text $ "http://fosskers.ca/blog/" <> p <> ".html" ]
-              , element' "pubDate" mempty [ text . toS $ dtt d ]
+              , element' "pubDate" mempty [ text . pack $ dtt d ]
               , element' "description" mempty [ text t ]]
 
 -- | Format a `Date` in a way acceptable to RSS feeds.

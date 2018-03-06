@@ -3,9 +3,10 @@
 
 module Main ( main ) where
 
+import ClassyPrelude
+import Data.Proxy (Proxy(..))
 import Fosskers.Common
 import Language.PureScript.Bridge
-import Protolude
 import Servant.PureScript
 import Time.Types
 
