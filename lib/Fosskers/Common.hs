@@ -7,11 +7,11 @@ import           Data.Aeson (ToJSON)
 import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
 import qualified Data.Text as T
-import           Fosskers.XML
 import           Lucid
 import           Protolude
 import           Servant.API
 import           Servant.HTML.Lucid
+import           Servant.XML
 import           Text.Printf
 import           Time.Types
 import           Xmlbf
