@@ -111,6 +111,27 @@ HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさ
 
 具体的な指示は[[https://stackoverflow.com/a/31549804/643684][こちら]]。
 
+*** HTTPS
+
+有料の「dyno」だったらHerokuは[[https://letsencrypt.org/][Let's Encrypt]]を通して自動的にHTTPSの管理をしてくれる。ちょっと
+だけNamecheapの設定を変えればHTTPSは我が手に。
+
+Namecheapでは各ホストの ~Value~ を
+
+#+BEGIN_EXAMPLE
+yourappname.herokuapp.com
+#+END_EXAMPLE
+
+からこれに変える：
+
+#+BEGIN_EXAMPLE
+yourdomain.com.herokudns.com
+#+END_EXAMPLE
+
+このサイトの場合、 ~fosskers.herokuapp.com~ が ~fosskers.ca.herokudns.com~ になった。
+ネットの隅まで設定変換が広がるのは少し時間かかるけど、できたらそのまま ~https://yourdomain.com~
+が使えるはず。
+
 * コンテナの道： ~stack~ とDocker
 
 個人的に言うと、HaskellだけのシステムだったらDockerは必要ない。まあ開発者としてこういう

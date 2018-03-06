@@ -66,7 +66,8 @@ Local server runs are then:
   stack exec -- server --port 8080
 #+END_SRC
 
-** Heroku Config: ~Procfile~
+** Heroku Settings
+*** Committing a ~Procfile~
 
 We need only a ~Procfile~ commited to our repo. This defines what command Heroku should
 run after it builds our project. Example:
@@ -82,7 +83,7 @@ takes other arguments, the ~Procfile~ might look something like:
 web: server --js app.min.js
 #+END_EXAMPLE
 
-** Project Settings through Heroku UI
+*** Settings through Heroku UI
 
 All other config happens right in Heroku. We'll need both a Heroku account and
 a Github repo to link to.
@@ -118,6 +119,26 @@ branches via the /Deploy/ tab.
 ** Connecting with Namecheap
 
 Follow [[https://stackoverflow.com/a/31549804/643684][this StackOverflow post]] - it's what I used for this website.
+
+*** HTTPS
+
+Heroku handles HTTPS for paid dynos automatically via [[https://letsencrypt.org/][Let's Encrypt]]. For our Namecheap settings
+to cooperate, we must change (within Namecheap's dashboard) the ~Value~ field
+of each DNS record from:
+
+#+BEGIN_EXAMPLE
+yourappname.herokuapp.com
+#+END_EXAMPLE
+
+to (note the extension!):
+
+#+BEGIN_EXAMPLE
+yourdomain.com.herokudns.com
+#+END_EXAMPLE
+
+So for this site, I changed ~fosskers.herokuapp.com~ to ~fosskers.ca.herokudns.com~.
+The changes will take time to propagate around the internet, but once they do you
+should have ~https://yourdomain.com~ working without any extra configuration.
 
 * The Container Way: ~stack~ and Docker
 

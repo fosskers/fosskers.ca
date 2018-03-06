@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-01 Thu 12:45 -->
+<!-- 2018-03-06 Tue 13:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Deploying Haskell Programs</title>
@@ -235,17 +235,25 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org44c2495">1. The Simple Way: Heroku</a>
+<li><a href="#orgd03ed75">1. The Simple Way: Heroku</a>
 <ul>
-<li><a href="#orga623eb6">1.1. Listening on <code>$PORT</code></a></li>
-<li><a href="#org61e2099">1.2. Heroku Config: <code>Procfile</code></a></li>
-<li><a href="#orgbc1b3bc">1.3. Project Settings through Heroku UI</a></li>
-<li><a href="#orgb97f2d8">1.4. Deployment</a></li>
-<li><a href="#org6ef6c5a">1.5. Connecting with Namecheap</a></li>
+<li><a href="#org08d911f">1.1. Listening on <code>$PORT</code></a></li>
+<li><a href="#orgcb00da6">1.2. Heroku Settings</a>
+<ul>
+<li><a href="#orgf4d70da">1.2.1. Committing a <code>Procfile</code></a></li>
+<li><a href="#org57651b0">1.2.2. Settings through Heroku UI</a></li>
 </ul>
 </li>
-<li><a href="#org63af36e">2. The Container Way: <code>stack</code> and Docker</a></li>
-<li><a href="#org43356d8">3. The Power Way: Nix</a></li>
+<li><a href="#org7e43689">1.3. Deployment</a></li>
+<li><a href="#org3bbde0a">1.4. Connecting with Namecheap</a>
+<ul>
+<li><a href="#orgfbc4d72">1.4.1. HTTPS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb611c7e">2. The Container Way: <code>stack</code> and Docker</a></li>
+<li><a href="#org5032346">3. The Power Way: Nix</a></li>
 </ul>
 </div>
 </div>
@@ -264,8 +272,8 @@ Otherwise, for the lay-Haskeller (myself included), I recommend Heroku for deplo
 projects.
 </p>
 
-<div id="outline-container-org44c2495" class="outline-2">
-<h2 id="org44c2495"><span class="section-number-2">1</span> The Simple Way: Heroku</h2>
+<div id="outline-container-orgd03ed75" class="outline-2">
+<h2 id="orgd03ed75"><span class="section-number-2">1</span> The Simple Way: Heroku</h2>
 <div class="outline-text-2" id="text-1">
 <blockquote>
 <p>
@@ -293,8 +301,8 @@ our app can be <i>foobar.com</i> instead of <i>foobar.herokuapp.com</i>.
 </p>
 </div>
 
-<div id="outline-container-orga623eb6" class="outline-3">
-<h3 id="orga623eb6"><span class="section-number-3">1.1</span> Listening on <code>$PORT</code></h3>
+<div id="outline-container-org08d911f" class="outline-3">
+<h3 id="org08d911f"><span class="section-number-3">1.1</span> Listening on <code>$PORT</code></h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 It is The Heroku Way™ for applications to listen for incoming requests on <code>$PORT</code>.
@@ -337,9 +345,13 @@ Local server runs are then:
 </div>
 </div>
 
-<div id="outline-container-org61e2099" class="outline-3">
-<h3 id="org61e2099"><span class="section-number-3">1.2</span> Heroku Config: <code>Procfile</code></h3>
+<div id="outline-container-orgcb00da6" class="outline-3">
+<h3 id="orgcb00da6"><span class="section-number-3">1.2</span> Heroku Settings</h3>
 <div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-orgf4d70da" class="outline-4">
+<h4 id="orgf4d70da"><span class="section-number-4">1.2.1</span> Committing a <code>Procfile</code></h4>
+<div class="outline-text-4" id="text-1-2-1">
 <p>
 We need only a <code>Procfile</code> commited to our repo. This defines what command Heroku should
 run after it builds our project. Example:
@@ -360,9 +372,9 @@ web: server --js app.min.js
 </div>
 </div>
 
-<div id="outline-container-orgbc1b3bc" class="outline-3">
-<h3 id="orgbc1b3bc"><span class="section-number-3">1.3</span> Project Settings through Heroku UI</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-org57651b0" class="outline-4">
+<h4 id="org57651b0"><span class="section-number-4">1.2.2</span> Settings through Heroku UI</h4>
+<div class="outline-text-4" id="text-1-2-2">
 <p>
 All other config happens right in Heroku. We'll need both a Heroku account and
 a Github repo to link to.
@@ -410,10 +422,11 @@ for their work in this area.
 </p>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgb97f2d8" class="outline-3">
-<h3 id="orgb97f2d8"><span class="section-number-3">1.4</span> Deployment</h3>
-<div class="outline-text-3" id="text-1-4">
+<div id="outline-container-org7e43689" class="outline-3">
+<h3 id="org7e43689"><span class="section-number-3">1.3</span> Deployment</h3>
+<div class="outline-text-3" id="text-1-3">
 <p>
 <code>git push origin master</code> should be all we need. We can also force builds on other
 branches via the <i>Deploy</i> tab.
@@ -421,18 +434,47 @@ branches via the <i>Deploy</i> tab.
 </div>
 </div>
 
-<div id="outline-container-org6ef6c5a" class="outline-3">
-<h3 id="org6ef6c5a"><span class="section-number-3">1.5</span> Connecting with Namecheap</h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-org3bbde0a" class="outline-3">
+<h3 id="org3bbde0a"><span class="section-number-3">1.4</span> Connecting with Namecheap</h3>
+<div class="outline-text-3" id="text-1-4">
 <p>
 Follow <a href="https://stackoverflow.com/a/31549804/643684">this StackOverflow post</a> - it's what I used for this website.
 </p>
 </div>
+
+<div id="outline-container-orgfbc4d72" class="outline-4">
+<h4 id="orgfbc4d72"><span class="section-number-4">1.4.1</span> HTTPS</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+Heroku handles HTTPS for paid dynos automatically via <a href="https://letsencrypt.org/">Let's Encrypt</a>. For our Namecheap settings
+to cooperate, we must change (within Namecheap's dashboard) the <code>Value</code> field
+of each DNS record from:
+</p>
+
+<pre class="example">
+yourappname.herokuapp.com
+</pre>
+
+<p>
+to (note the extension!):
+</p>
+
+<pre class="example">
+yourdomain.com.herokudns.com
+</pre>
+
+<p>
+So for this site, I changed <code>fosskers.herokuapp.com</code> to <code>fosskers.ca.herokudns.com</code>.
+The changes will take time to propagate around the internet, but once they do you
+should have <code>https://yourdomain.com</code> working without any extra configuration.
+</p>
+</div>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org63af36e" class="outline-2">
-<h2 id="org63af36e"><span class="section-number-2">2</span> The Container Way: <code>stack</code> and Docker</h2>
+<div id="outline-container-orgb611c7e" class="outline-2">
+<h2 id="orgb611c7e"><span class="section-number-2">2</span> The Container Way: <code>stack</code> and Docker</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 For a Haskell-only production environment, Docker is strictly unnecessary.
@@ -470,8 +512,8 @@ See <a href="https://docs.haskellstack.org/en/stable/GUIDE/#docker">the official
 </div>
 </div>
 
-<div id="outline-container-org43356d8" class="outline-2">
-<h2 id="org43356d8"><span class="section-number-2">3</span> The Power Way: Nix</h2>
+<div id="outline-container-org5032346" class="outline-2">
+<h2 id="org5032346"><span class="section-number-2">3</span> The Power Way: Nix</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This statement shouldn't surprise a Haskeller:
@@ -517,7 +559,7 @@ comment further. If you have, please consider extending this section through Git
 <div id="postamble" class="status">
 <p class="date">Date: 2018-02-28</p>
 <p class="author">Author: Colin</p>
-<p class="date">Created: 2018-03-01 Thu 12:45</p>
+<p class="date">Created: 2018-03-06 Tue 13:49</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

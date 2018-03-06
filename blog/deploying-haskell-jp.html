@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-01 Thu 12:43 -->
+<!-- 2018-03-06 Tue 14:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Haskellプログラムの出荷</title>
@@ -235,21 +235,25 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org724bd5a">1. 楽の道： Heroku</a>
+<li><a href="#orgd68fd8d">1. 楽の道： Heroku</a>
 <ul>
-<li><a href="#orgefe15ba">1.1. <code>$PORT</code> からリクエスト</a></li>
-<li><a href="#orgd8ef5da">1.2. Herokuの設定</a>
+<li><a href="#org2a7f1f3">1.1. <code>$PORT</code> からリクエスト</a></li>
+<li><a href="#org13dab9d">1.2. Herokuの設定</a>
 <ul>
-<li><a href="#orga6868c1">1.2.1. Repoでの <code>Procfile</code></a></li>
-<li><a href="#org4478ca1">1.2.2. Heroku.comで</a></li>
+<li><a href="#org49022f5">1.2.1. Repoでの <code>Procfile</code></a></li>
+<li><a href="#org3e25619">1.2.2. Heroku.comで</a></li>
 </ul>
 </li>
-<li><a href="#org6db2b9f">1.3. 出荷</a></li>
-<li><a href="#org48d38a4">1.4. Namecheapとの接続</a></li>
+<li><a href="#org486f740">1.3. 出荷</a></li>
+<li><a href="#org25bd8f0">1.4. Namecheapとの接続</a>
+<ul>
+<li><a href="#org88d01ca">1.4.1. HTTPS</a></li>
 </ul>
 </li>
-<li><a href="#org8b1a9e1">2. コンテナの道： <code>stack</code> とDocker</a></li>
-<li><a href="#org120946f">3. 将来の道： Nix</a></li>
+</ul>
+</li>
+<li><a href="#org5a0ded6">2. コンテナの道： <code>stack</code> とDocker</a></li>
+<li><a href="#orgf02a593">3. 将来の道： Nix</a></li>
 </ul>
 </div>
 </div>
@@ -267,8 +271,8 @@ for the JavaScript code in this tag.
 他には「Heroku」が凡Haskeller（自分を含めて）にとって一番使いやすい。
 </p>
 
-<div id="outline-container-org724bd5a" class="outline-2">
-<h2 id="org724bd5a"><span class="section-number-2">1</span> 楽の道： Heroku</h2>
+<div id="outline-container-orgd68fd8d" class="outline-2">
+<h2 id="orgd68fd8d"><span class="section-number-2">1</span> 楽の道： Heroku</h2>
 <div class="outline-text-2" id="text-1">
 <blockquote>
 <p>
@@ -292,8 +296,8 @@ Herokuのサーバーは「dyno」といって、一番安いのは無料。30�
 </p>
 </div>
 
-<div id="outline-container-orgefe15ba" class="outline-3">
-<h3 id="orgefe15ba"><span class="section-number-3">1.1</span> <code>$PORT</code> からリクエスト</h3>
+<div id="outline-container-org2a7f1f3" class="outline-3">
+<h3 id="org2a7f1f3"><span class="section-number-3">1.1</span> <code>$PORT</code> からリクエスト</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Herokuに載せるサーバーはいつもの80・8080・443とかじゃなくて <code>$PORT</code> からリクエストを取らないといけない。
@@ -335,12 +339,12 @@ Herokuに載せるサーバーはいつもの80・8080・443とかじゃなく�
 </div>
 </div>
 
-<div id="outline-container-orgd8ef5da" class="outline-3">
-<h3 id="orgd8ef5da"><span class="section-number-3">1.2</span> Herokuの設定</h3>
+<div id="outline-container-org13dab9d" class="outline-3">
+<h3 id="org13dab9d"><span class="section-number-3">1.2</span> Herokuの設定</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
-<div id="outline-container-orga6868c1" class="outline-4">
-<h4 id="orga6868c1"><span class="section-number-4">1.2.1</span> Repoでの <code>Procfile</code></h4>
+<div id="outline-container-org49022f5" class="outline-4">
+<h4 id="org49022f5"><span class="section-number-4">1.2.1</span> Repoでの <code>Procfile</code></h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 コミットしなければならないのは <code>Procfile</code> というファイルだけ。Herokuがプロジェクトを構築した後
@@ -362,8 +366,8 @@ web: server --js app.min.js
 </div>
 </div>
 
-<div id="outline-container-org4478ca1" class="outline-4">
-<h4 id="org4478ca1"><span class="section-number-4">1.2.2</span> Heroku.comで</h4>
+<div id="outline-container-org3e25619" class="outline-4">
+<h4 id="org3e25619"><span class="section-number-4">1.2.2</span> Heroku.comで</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <p>
 他の設定は全部直接Herokuのサイトでできる。勿論登録しないといかん。
@@ -411,8 +415,8 @@ HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさ
 </div>
 </div>
 
-<div id="outline-container-org6db2b9f" class="outline-3">
-<h3 id="org6db2b9f"><span class="section-number-3">1.3</span> 出荷</h3>
+<div id="outline-container-org486f740" class="outline-3">
+<h3 id="org486f740"><span class="section-number-3">1.3</span> 出荷</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 <code>git push origin master</code> だけ！
@@ -420,18 +424,50 @@ HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさ
 </div>
 </div>
 
-<div id="outline-container-org48d38a4" class="outline-3">
-<h3 id="org48d38a4"><span class="section-number-3">1.4</span> Namecheapとの接続</h3>
+<div id="outline-container-org25bd8f0" class="outline-3">
+<h3 id="org25bd8f0"><span class="section-number-3">1.4</span> Namecheapとの接続</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 具体的な指示は<a href="https://stackoverflow.com/a/31549804/643684">こちら</a>。
 </p>
 </div>
+
+<div id="outline-container-org88d01ca" class="outline-4">
+<h4 id="org88d01ca"><span class="section-number-4">1.4.1</span> HTTPS</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+有料の「dyno」だったらHerokuは<a href="https://letsencrypt.org/">Let's Encrypt</a>を通して自動的にHTTPSの管理をしてくれる。ちょっと
+だけNamecheapの設定を変えればHTTPSは我が手に。
+</p>
+
+<p>
+Namecheapでは各ホストの <code>Value</code> を
+</p>
+
+<pre class="example">
+yourappname.herokuapp.com
+</pre>
+
+<p>
+からこれに変える：
+</p>
+
+<pre class="example">
+yourdomain.com.herokudns.com
+</pre>
+
+<p>
+このサイトの場合、 <code>fosskers.herokuapp.com</code> が <code>fosskers.ca.herokudns.com</code> になった。
+ネットの隅まで設定変換が広がるのは少し時間かかるけど、できたらそのまま <code>https://yourdomain.com</code>
+が使えるはず。
+</p>
+</div>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org8b1a9e1" class="outline-2">
-<h2 id="org8b1a9e1"><span class="section-number-2">2</span> コンテナの道： <code>stack</code> とDocker</h2>
+<div id="outline-container-org5a0ded6" class="outline-2">
+<h2 id="org5a0ded6"><span class="section-number-2">2</span> コンテナの道： <code>stack</code> とDocker</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 個人的に言うと、HaskellだけのシステムだったらDockerは必要ない。まあ開発者としてこういう
@@ -469,8 +505,8 @@ Dockerのイメージが構築される。できたらいつものコンテナ�
 </div>
 </div>
 
-<div id="outline-container-org120946f" class="outline-2">
-<h2 id="org120946f"><span class="section-number-2">3</span> 将来の道： Nix</h2>
+<div id="outline-container-orgf02a593" class="outline-2">
+<h2 id="orgf02a593"><span class="section-number-2">3</span> 将来の道： Nix</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Nixは確かに強い。ただ、全面的に使わないと本当の利益が出ないと思う。「全面」とは開発と出荷両面。
@@ -488,7 +524,7 @@ Nixは確かに強い。ただ、全面的に使わないと本当の利益が�
 <div id="postamble" class="status">
 <p class="date">Date: 2018-02-28</p>
 <p class="author">Author: こりん</p>
-<p class="date">Created: 2018-03-01 Thu 12:43</p>
+<p class="date">Created: 2018-03-06 Tue 14:00</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
