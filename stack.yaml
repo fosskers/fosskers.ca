@@ -1,4 +1,4 @@
-resolver: lts-10.9
+resolver: lts-11.0
 
 packages:
   - lib
@@ -7,9 +7,6 @@ packages:
 
 extra-deps:
   - html-entities-1.1.4.2
-  - servant-0.12.1
-  - servant-server-0.12
-  - servant-foreign-0.10.2
-  - servant-xml-1.0.1
+  - servant-xml-1.0.1.1
   - xmlbf-0.3
   - xmlbf-xeno-0.1.1
