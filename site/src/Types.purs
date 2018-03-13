@@ -41,7 +41,7 @@ postLang p = case takeRight 3 (p.path ^. C._Path) of
   "-jp" -> Japanese
   _     -> English
 
-data Tab = About | Blog
+data Tab = About | Blog | Kanji
 derive instance tabEq :: Eq Tab
 derive instance tabGeneric :: Generic Tab
 
@@ -73,6 +73,8 @@ takeRight i s = S.drop (S.length s - i) s
 
 -- | Dealing with the official 3-Tuples is annoying.
 data Three a b c = Three a b c
+
+data Four a b c d = Four a b c d
 
 ----------------------
 -- EXTRA BRIDGING HELP

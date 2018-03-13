@@ -11,7 +11,7 @@ import Halogen.HTML.CSS as HC
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import LangToggle as LangToggle
-import Types (Language(..), Tab(..), Three(..), defaultLang, defaultTab)
+import Types (Four(..), Language(..), Tab(..), defaultLang, defaultTab)
 
 ---
 
@@ -46,6 +46,7 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
     [ HH.div [ HP.class_ $ H.ClassName "navbar-nav" ]
       [ tabSwitch About a
       , tabSwitch Blog  b
+      , tabSwitch Kanji k
       , HH.a [ HP.href "https://stackoverflow.com/cv/colinwoodbury"
              , HP.classes $ map H.ClassName [ "nav-item", "nav-link"]]
         [ HH.text c ]
@@ -63,9 +64,9 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
         icon url i = HH.a [ HP.href url
                           , HP.classes $ map H.ClassName $ i <> [ "nav-item", "nav-link" ]
                           , HC.style <<< fontSize $ em 1.33333 ] []
-        Three a b c = case state.language of
-          English  -> Three "About" "Blog" "CV"
-          Japanese -> Three "自己紹介" "ブログ" "履歴書"
+        Four a b k c = case state.language of
+          English  -> Four "About" "Blog" "Kanji" "CV"
+          Japanese -> Four "自己紹介" "ブログ" "漢字分析" "履歴書"
 
 eval :: forall m. Query ~> H.ParentDSL State Query LangToggle.Query Slot Message m
 eval = case _ of
