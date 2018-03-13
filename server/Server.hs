@@ -118,5 +118,6 @@ main = do
   traverse_ say errs
   herokuPort <- (>>= readMay) <$> lookupEnv "PORT"
   let prt = fromMaybe 8081 $ p <|> herokuPort
-  say $ "Listening on port " <> tshow prt
+  cores <- getNumCapabilities
+  say $ "Listening on port " <> tshow prt <> " with " <> tshow cores <> " cores"
   W.run prt . app $ Env ps j

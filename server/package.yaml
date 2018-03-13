@@ -20,6 +20,7 @@ ghc-options:
   - -fwarn-incomplete-uni-patterns
   - -O2
   - -threaded
+  - -with-rtsopts=-N
 
 default-extensions:
   - NoImplicitPrelude
