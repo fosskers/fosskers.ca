@@ -3,14 +3,16 @@
 
 module Main ( main ) where
 
-import           ClassyPrelude hiding (FilePath, index)
+import           ClassyPrelude hiding (FilePath, index, Handler)
 import           Control.Arrow ((&&&))
+import           Control.Concurrent (getNumCapabilities)
 import           Data.Char (isAlpha)
 import           Data.Proxy
 import qualified Data.Set as S
 import qualified Data.Text as T
 import           Filesystem.Path (basename)
 import           Fosskers.Common
+import           Fosskers.Kanji (analysis)
 import           Fosskers.Org (parseOrg)
 import           Lucid
 import qualified Network.Wai.Handler.Warp as W
@@ -31,13 +33,17 @@ data Args = Args { port :: Maybe Int <?> "Port to listen for requests on, otherw
 data Env = Env { stats :: [Blog], bundle :: Text }
 
 server :: Env -> Server API
-server env = pure (stats env)
+server env = jsonServer env
   :<|> serveDirectoryFileServer "blog"
   :<|> pure (rss (stats env) English)
   :<|> pure (rss (stats env) Japanese)
   :<|> serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
   :<|> pure (index $ bundle env)
+
+-- | Split off from `server` to avoid type issues.
+jsonServer :: Env -> Server JsonAPI
+jsonServer env = pure (stats env) :<|> pure . analysis
 
 rss :: [Blog] -> Language -> Blogs
 rss bs l = Blogs . reverse . sortOn date $ filter (\b -> pathLang (filename b) == Just l) bs

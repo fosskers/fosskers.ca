@@ -7,6 +7,7 @@ packages:
 
 extra-deps:
   - html-entities-1.1.4.2
+  - kanji-3.1.0.1
   - servant-xml-1.0.1.1
   - xmlbf-0.3
   - xmlbf-xeno-0.1.1

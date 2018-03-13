@@ -8,6 +8,7 @@ import           Data.Aeson (ToJSON)
 import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
 import qualified Data.Text as T
+import           Fosskers.Kanji
 import           Lucid
 import           Servant.API
 import           Servant.HTML.Lucid
@@ -19,6 +20,7 @@ import           Xmlbf
 ---
 
 type JsonAPI = "posts" :> Get '[JSON] [Blog]
+  :<|> "kanji" :> ReqBody '[JSON] Text :> Get '[JSON] Analysis
 
 type API = JsonAPI
   :<|> "blog" :> Raw
