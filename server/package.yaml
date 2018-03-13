@@ -19,6 +19,7 @@ ghc-options:
   - -fwarn-incomplete-patterns
   - -fwarn-incomplete-uni-patterns
   - -O2
+  - -threaded
 
 default-extensions:
   - NoImplicitPrelude

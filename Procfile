@@ -1,1 +1,1 @@
-web: server --js app.min.js
+web: server --js app.min.js +RTS -N
