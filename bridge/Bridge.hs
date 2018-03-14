@@ -44,7 +44,8 @@ types = [ mkSumType (Proxy :: Proxy Blog)
         , mkSumType (Proxy :: Proxy Path)
         , mkSumType (Proxy :: Proxy Analysis)
         , mkSumType (Proxy :: Proxy Kanji)
-        , mkSumType (Proxy :: Proxy Level) ]
+        , mkSumType (Proxy :: Proxy Level)
+        ]
 
 main :: IO ()
 main = do

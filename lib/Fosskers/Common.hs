@@ -20,7 +20,7 @@ import           Xmlbf
 ---
 
 type JsonAPI = "posts" :> Get '[JSON] [Blog]
-  :<|> "kanji" :> ReqBody '[JSON] Text :> Get '[JSON] Analysis
+  :<|> "kanji" :> ReqBody '[JSON] Text :> Post '[JSON] Analysis
 
 type API = JsonAPI
   :<|> "blog" :> Raw
