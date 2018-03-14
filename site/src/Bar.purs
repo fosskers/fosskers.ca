@@ -11,7 +11,7 @@ import Halogen.HTML.CSS as HC
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import LangToggle as LangToggle
-import Types (Four(..), Language(..), Tab(..), defaultLang, defaultTab)
+import Types (Five(Five), Language(English, Japanese), Tab(Kanji, Blog, About), defaultLang, defaultTab)
 
 ---
 
@@ -46,7 +46,24 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
     [ HH.div [ HP.class_ $ H.ClassName "navbar-nav" ]
       [ tabSwitch About a
       , tabSwitch Blog  b
-      , tabSwitch Kanji k
+      , HH.div [ HP.classes $ map H.ClassName [ "nav-item", "dropdown"]]
+        [ HH.a [ HP.href "#"
+               , HP.classes $ map H.ClassName [ "nav-link", "dropdown-toggle" ]
+               , HP.attr (H.AttrName "id") "navbarDropdown"
+               , HP.attr (H.AttrName "role") "button"
+               , HP.attr (H.AttrName "data-toggle") "dropdown"
+               , HP.attr (H.AttrName "aria-haspopup") "true"
+               , HP.attr (H.AttrName "aria-expanded") "false" ]
+          [ HH.text t ]
+        , HH.div [ HP.classes $ map H.ClassName [ "dropdown-menu" ]
+                 , HP.attr (H.AttrName "aria-labelledby") "navbarDropdown"
+                 ]
+          [ HH.a [ HP.href "#"
+                 , HP.class_ (H.ClassName "dropdown-item")
+                 , HE.onClick $ const (Just $ TabChanged Kanji unit) ]
+            [ HH.text k ]
+          ]
+        ]
       , HH.a [ HP.href "https://stackoverflow.com/cv/colinwoodbury"
              , HP.classes $ map H.ClassName [ "nav-item", "nav-link"]]
         [ HH.text c ]
@@ -64,9 +81,9 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
         icon url i = HH.a [ HP.href url
                           , HP.classes $ map H.ClassName $ i <> [ "nav-item", "nav-link" ]
                           , HC.style <<< fontSize $ em 1.33333 ] []
-        Four a b k c = case state.language of
-          English  -> Four "About" "Blog" "Kanji" "CV"
-          Japanese -> Four "自己紹介" "ブログ" "漢字分析" "履歴書"
+        Five a b t k c = case state.language of
+          English  -> Five "About" "Blog" "Tools" "Kanji Analysis" "CV"
+          Japanese -> Five "自己紹介" "ブログ" "ツール" "漢字分析" "履歴書"
 
 eval :: forall m. Query ~> H.ParentDSL State Query LangToggle.Query Slot Message m
 eval = case _ of

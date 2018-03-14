@@ -76,6 +76,8 @@ data Three a b c = Three a b c
 
 data Four a b c d = Four a b c d
 
+data Five a b c d e = Five a b c d e
+
 ----------------------
 -- EXTRA BRIDGING HELP
 ----------------------
