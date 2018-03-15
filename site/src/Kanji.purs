@@ -4,6 +4,7 @@ import Prelude
 
 import Bootstrap (col_, fluid, row_)
 import CSS (paddingTop, pct)
+import Data.Generic (gShow)
 import Data.Lens.Record (prop)
 import Data.Maybe (Maybe(..))
 import Data.Symbol (SProxy(..))
@@ -42,11 +43,16 @@ render s = fluid [ HC.style <<< paddingTop $ pct 1.0 ]
                  ]
                ]
              ]
+           , row_
+             [ col_
+               [ HH.text $ gShow s.result ]
+             ]
            ]
 
 eval :: forall e. Query ~> H.ComponentDSL State Query Void (Effects e)
 eval = case _ of
   LangChanged l next -> update (prop (SProxy :: SProxy "language")) l *> pure next
+  Update "" next -> H.modify (_ { result = Nothing }) *> pure next
   Update s next -> do
     _ <- HQ.fork do
       a <- H.lift $ postKanji s
