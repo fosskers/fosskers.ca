@@ -2,9 +2,11 @@ module Types where
 
 import Prelude
 
-import Fosskers.Common as C
 import Control.Monad.Aff (Aff)
+import Control.Monad.Aff.AVar (AVAR)
 import Control.Monad.Aff.Console (CONSOLE, log)
+import Control.Monad.Eff.Exception (EXCEPTION)
+import Control.Monad.Eff.Ref (REF)
 import Control.Monad.Except (ExceptT, runExceptT)
 import Control.Monad.Reader (ReaderT, runReaderT)
 import Control.Monad.State (class MonadState, gets, modify)
@@ -18,6 +20,8 @@ import Data.Lens (Lens', (.~), (^.))
 import Data.Map (Map, fromFoldable)
 import Data.Maybe (Maybe)
 import Data.String as S
+import ECharts.Types (ECHARTS)
+import Fosskers.Common as C
 import Network.HTTP.Affjax (AJAX)
 import Servant.PureScript.Affjax (AjaxError, errorToString)
 import Servant.PureScript.Settings (SPSettings_, defaultSettings)
@@ -82,10 +86,16 @@ data Five a b c d e = Five a b c d e
 -- EXTRA BRIDGING HELP
 ----------------------
 
-type Effects eff = ReaderT (SPSettings_ SPParams_)
-                   (ExceptT AjaxError (Aff (ajax :: AJAX, console :: CONSOLE, dom :: DOM | eff)))
+-- | All the aggregate effects across the entire application.
+type Affects e = (ajax :: AJAX, console :: CONSOLE, dom :: DOM, avar :: AVAR, echarts :: ECHARTS, ref :: REF, exception :: EXCEPTION | e)
 
-runEffects :: forall eff. Effects eff ~> Aff (ajax :: AJAX, console :: CONSOLE, dom :: DOM | eff)
+type Effects e = Effects' (Affects e)
+
+-- | Use this to specify only certain effects. Should help increase clarity of
+-- what components can perform which effects.
+type Effects' e = ReaderT (SPSettings_ SPParams_) (ExceptT AjaxError (Aff e))
+
+runEffects :: forall eff. Effects eff ~> Aff (Affects eff)
 runEffects eff = runExceptT (runReaderT eff settings) >>= either (\e -> log (errorToString e) *> empty) pure
 
 settings :: SPSettings_ SPParams_

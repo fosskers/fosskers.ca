@@ -1,24 +1,26 @@
 {
-    "name": "fosskers",
-    "set": "master",
-    "source": "https://github.com/fosskers/package-sets.git",
-    "depends": [
-        "test-unit",
-        "domparser",
-        "dom-classy",
-        "halogen-css",
-        "argonaut-generic-codecs",
-        "datetime",
-        "functors",
-        "errors",
-        "affjax",
-        "random",
-        "maps",
-        "servant-support",
-        "halogen",
-        "psci-support",
-        "console",
-        "eff",
-        "prelude"
-    ]
+  "name": "fosskers",
+  "set": "update-halogen",
+  "source": "https://github.com/fosskers/package-sets.git",
+  "depends": [
+    "halogen-echarts",
+    "echarts",
+    "test-unit",
+    "domparser",
+    "dom-classy",
+    "halogen-css",
+    "argonaut-generic-codecs",
+    "datetime",
+    "functors",
+    "errors",
+    "affjax",
+    "random",
+    "maps",
+    "servant-support",
+    "halogen",
+    "psci-support",
+    "console",
+    "eff",
+    "prelude"
+  ]
 }

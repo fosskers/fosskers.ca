@@ -21,8 +21,6 @@ main = runTest do
     test "Language Detection" do
       Assert.assert "deploying-haskell-en should be detected as English"  $ postLang epath == English
       Assert.assert "deploying-haskell-jp should be detected as Japanese" $ postLang jpath == Japanese
-    -- test "JSON Codec" do
-    --   Assert.assert "KText Isomorphism" $ Right ktext == decoder (encoder ktext)
 
 epath :: { path :: Path }
 epath = { path: Path "deploying-haskell-en" }
