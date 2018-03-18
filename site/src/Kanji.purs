@@ -72,13 +72,11 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ]
                <<< to (A.singleton <<< density)
              ]
            , row [ HC.style <<< paddingTop $ pct 1.0 ]
-             [ col_
+             [ HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
                [ HH.slot 0 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
                  (Just <<< H.action <<< HandleEChartsMsg)
                ]
-             ]
-           , row [ HC.style <<< paddingTop $ pct 1.0 ]
-             [ col_
+             , HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
                [ HH.slot 1 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
                  (Just <<< H.action <<< HandleEChartsMsg)
                ]
