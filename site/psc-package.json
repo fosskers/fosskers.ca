@@ -1,8 +1,9 @@
 {
   "name": "fosskers",
-  "set": "update-halogen",
-  "source": "https://github.com/fosskers/package-sets.git",
+  "set": "psc-0.11.7-20180315",
+  "source": "https://github.com/purescript/package-sets.git",
   "depends": [
+    "formatters",
     "halogen-echarts",
     "echarts",
     "test-unit",
