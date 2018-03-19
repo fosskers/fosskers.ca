@@ -7,7 +7,7 @@ import CSS (paddingTop, pct)
 import Data.Array (null)
 import Data.Formatter.Number (Formatter(..), format)
 import Data.Generic (gShow)
-import Data.Int (round)
+import Data.Int (ceil, round)
 import Data.Kanji.Types (CharCat(..))
 import Data.Lens ((^.))
 import Data.Lens.Record (prop)
@@ -81,11 +81,11 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $
 
 density :: forall t340 t341. Array (Tuple CharCat Number) -> HH.HTML t341 t340
 density d = HH.div [ HP.class_ $ H.ClassName "progress"
-                   , HP.attr (H.AttrName "style") "height: 20px;" ] $
+                   , HP.attr (H.AttrName "style") "height: 35px;" ] $
             map f d
   where f (Tuple c n) =
           let Tuple colour label = g c
-              v = show <<< round $ n * 100.0
+              v = show <<< ceil $ n * 100.0
               v' = format form (n * 100.0)
           in HH.div [ HP.classes $ map H.ClassName [ "progress-bar", "progress-bar-striped", colour ]
                     , HP.attr (H.AttrName "role") "progressbar"
@@ -94,11 +94,14 @@ density d = HH.div [ HP.class_ $ H.ClassName "progress"
                     , HP.attr (H.AttrName "aria-valuemin") "0"
                     , HP.attr (H.AttrName "aria-valuemax") "100" ]
              [ HH.text $ v' <> "% " <> label ]
-        g Hanzi    = Tuple "bg-info" "Kanji"
-        g Hiragana = Tuple "bg-success" "Hiragana"
-        g Katakana = Tuple "bg-warning" "Katakana"
-        g Other    = Tuple "bg-secondary" "Non-Japanese"
-        form = Formatter { comma: false, before: 2, after: 1, abbreviations: false, sign: false }
+        g Hanzi       = Tuple "bg-info" "Kanji"
+        g Hiragana    = Tuple "bg-success" "Hiragana"
+        g Katakana    = Tuple "bg-warning" "Katakana"
+        g Numeral     = Tuple "bg-primary" "Numbers"
+        g RomanLetter = Tuple "bg-info" "Alphabet"
+        g Punctuation = Tuple "bg-dark" "Punctuation"
+        g Other       = Tuple "bg-secondary" "Other"
+        form = Formatter { comma: false, before: 1, after: 1, abbreviations: false, sign: false }
 
 -- これは日本語串糞猫牛虎山羊森林一二三
 
