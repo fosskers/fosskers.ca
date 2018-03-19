@@ -14,7 +14,7 @@ import Control.Plus (empty)
 import DOM (DOM)
 import Data.Date as D
 import Data.Either (either)
-import Data.Enum (fromEnum, toEnum)
+import Data.Enum (class Enum, fromEnum, toEnum)
 import Data.Generic (class Generic)
 import Data.Lens (Lens', (.~), (^.))
 import Data.Map (Map, fromFoldable)

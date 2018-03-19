@@ -5,12 +5,14 @@ import Prelude
 import Bootstrap (col_, container, row, row_)
 import CSS (paddingTop, pct)
 import Data.Array (null)
+import Data.Array as A
 import Data.Formatter.Number (Formatter(..), format)
 import Data.Generic (gShow)
-import Data.Int (ceil, round)
-import Data.Kanji.Types (CharCat(..))
+import Data.Int (ceil)
+import Data.Kanji.Types (CharCat(..), Level(..), _Kanji)
 import Data.Lens ((^.))
 import Data.Lens.Record (prop)
+import Data.Map as M
 import Data.Maybe (Maybe(Just, Nothing), maybe)
 import Data.String as S
 import Data.Symbol (SProxy(..))
@@ -21,7 +23,7 @@ import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
-import Fosskers.Kanji (Analysis(..), _Analysis)
+import Fosskers.Kanji (Analysis(Analysis))
 import Halogen as H
 import Halogen.ECharts as EC
 import Halogen.HTML as HH
@@ -62,11 +64,13 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $
                  ]
                ]
              ]
-           ] <> maybe [] charts s.analysis
-  where f = Formatter { comma: false, before: 2, after: 2, abbreviations: false, sign: false }
-        charts a = [
+           ] <> maybe [] charts s.analysis <>
+           [ HH.hr_
+           , HH.h5_ [ HH.text "Unknown Kanji"]
+           ] <> maybe [] A.singleton (s.analysis >>= unknowns)
+  where charts (Analysis a) = [
           row [ HC.style <<< paddingTop $ pct 1.0 ]
-          [ col_ [ density $ a ^. _Analysis <<< prop (SProxy :: SProxy "density") ]]
+          [ col_ [ density $ a ^. prop (SProxy :: SProxy "density") ]]
           , row [ HC.style <<< paddingTop $ pct 1.0 ]
             [ HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
               [ HH.slot 0 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
@@ -78,6 +82,8 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $
               ]
             ]
           ]
+        unknowns (Analysis a) = map (HH.h3_ <<< A.singleton <<< HH.text <<< S.fromCharArray <<< map (_ ^. _Kanji))
+                                $ M.lookup Unknown $ M.fromFoldable a.levelSplit
 
 density :: forall t340 t341. Array (Tuple CharCat Number) -> HH.HTML t341 t340
 density d = HH.div [ HP.class_ $ H.ClassName "progress"
