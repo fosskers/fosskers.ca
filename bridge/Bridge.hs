@@ -44,8 +44,8 @@ types = [ mkSumType (Proxy :: Proxy Blog)
         , mkSumType (Proxy :: Proxy Path)
         , mkSumType (Proxy :: Proxy Analysis)
         , mkSumType (Proxy :: Proxy Kanji)
-        , mkSumType (Proxy :: Proxy Level)
-        , mkSumType (Proxy :: Proxy CharCat)
+        , let p = (Proxy :: Proxy Level) in order p $ mkSumType p
+        , let p = (Proxy :: Proxy CharCat) in order p $ mkSumType p
         ]
 
 main :: IO ()

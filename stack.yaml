@@ -12,3 +12,5 @@ extra-deps:
   - xmlbf-xeno-0.1.1
   - git: https://github.com/fosskers/kanji
     commit: 2f9e7b4eec768e688c27a52985f3e7217d987abc
+  - git: https://github.com/fosskers/purescript-bridge
+    commit: 7bc5f27d4d1f6e5189a8eb9d3aebcbb953a48438
