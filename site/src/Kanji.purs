@@ -4,12 +4,12 @@ import Prelude
 
 import Bootstrap (col_, container, row, row_)
 import CSS (paddingTop, pct)
-import Data.Array as A
+import Data.Array (null)
 import Data.Formatter.Number (Formatter(..), format)
 import Data.Generic (gShow)
 import Data.Int (round)
-import Data.Lens (_Just, (^?))
-import Data.Lens.Getter (to)
+import Data.Kanji.Types (CharCat(..))
+import Data.Lens ((^.))
 import Data.Lens.Record (prop)
 import Data.Maybe (Maybe(Just, Nothing), maybe)
 import Data.String as S
@@ -66,12 +66,7 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $
   where f = Formatter { comma: false, before: 2, after: 2, abbreviations: false, sign: false }
         charts a = [
           row [ HC.style <<< paddingTop $ pct 1.0 ]
-          [ col_ <<< maybe [] id $
-            a ^? _Analysis
-            <<< prop (SProxy :: SProxy "density")
-            <<< _Just
-            <<< to (A.singleton <<< density)
-          ]
+          [ col_ [ density $ a ^. _Analysis <<< prop (SProxy :: SProxy "density") ]]
           , row [ HC.style <<< paddingTop $ pct 1.0 ]
             [ HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
               [ HH.slot 0 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
@@ -84,20 +79,26 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $
             ]
           ]
 
-density :: forall t340 t341. Number -> HH.HTML t341 t340
-density d = HH.div [ HP.class_ $ H.ClassName "progress" ]
-            [ HH.div [ HP.classes $ map H.ClassName [ "progress-bar", "progress-bar-striped", "bg-info" ]
-                     , HP.attr (H.AttrName "role") "progressbar"
-                     , HP.attr (H.AttrName "style") ("width: " <> v <> "%")
-                     , HP.attr (H.AttrName "aria-valuenow") v
-                     , HP.attr (H.AttrName "aria-valuemin") "0"
-                     , HP.attr (H.AttrName "aria-valuemax") "100"
-                     ]
-              [ HH.text $ v' <> "% Kanji" ]
-            ]
-  where v  = show <<< round $ d * 100.0
-        v' = format f (d * 100.0)
-        f  = Formatter { comma: false, before: 2, after: 2, abbreviations: false, sign: false }
+density :: forall t340 t341. Array (Tuple CharCat Number) -> HH.HTML t341 t340
+density d = HH.div [ HP.class_ $ H.ClassName "progress"
+                   , HP.attr (H.AttrName "style") "height: 20px;" ] $
+            map f d
+  where f (Tuple c n) =
+          let Tuple colour label = g c
+              v = show <<< round $ n * 100.0
+              v' = format form (n * 100.0)
+          in HH.div [ HP.classes $ map H.ClassName [ "progress-bar", "progress-bar-striped", colour ]
+                    , HP.attr (H.AttrName "role") "progressbar"
+                    , HP.attr (H.AttrName "style") ("width: " <> v <> "%")
+                    , HP.attr (H.AttrName "aria-valuenow") v
+                    , HP.attr (H.AttrName "aria-valuemin") "0"
+                    , HP.attr (H.AttrName "aria-valuemax") "100" ]
+             [ HH.text $ v' <> "% " <> label ]
+        g Hanzi    = Tuple "bg-info" "Kanji"
+        g Hiragana = Tuple "bg-success" "Hiragana"
+        g Katakana = Tuple "bg-warning" "Katakana"
+        g Other    = Tuple "bg-secondary" "Non-Japanese"
+        form = Formatter { comma: false, before: 2, after: 1, abbreviations: false, sign: false }
 
 -- これは日本語串糞猫牛虎山羊森林一二三
 
@@ -109,18 +110,22 @@ eval = case _ of
     _ <- HQ.fork do
       a <- H.lift $ postKanji s
       H.modify (_ { analysis = Just a })
-      void $ H.query 0 $ H.action $ EC.Set $ interpret $ byLevel a
-      void $ H.query 1 $ H.action $ EC.Set $ interpret $ lifeStages a
+      when (hasRealData a) do
+        void $ H.query 0 $ H.action $ EC.Set $ interpret $ byLevel a
+        void $ H.query 1 $ H.action $ EC.Set $ interpret $ lifeStages a
     pure next
   HandleEChartsMsg EC.Initialized next -> do
     a <- H.gets _.analysis
     case a of
       Nothing -> pure unit
-      Just a' -> do
+      Just a' -> when (hasRealData a') do
         void $ H.query 0 $ H.action $ EC.Set $ interpret $ byLevel a'
         void $ H.query 1 $ H.action $ EC.Set $ interpret $ lifeStages a'
     pure next
   HandleEChartsMsg (EC.EventRaised evt) next -> pure next
+
+hasRealData :: Analysis -> Boolean
+hasRealData (Analysis a) = not $ null a.distributions
 
 byLevel :: Analysis -> DSL' ETP.OptionI
 byLevel (Analysis a) = do
