@@ -50,7 +50,7 @@ component = H.parentComponent { initialState: const { language: defaultLang, ana
                               , receiver: HE.input LangChanged }
 
 render :: forall e. State -> H.ParentHTML Query EC.EChartsQuery Slot (Effects e)
-render s = container [ HC.style <<< paddingTop $ pct 1.0 ]
+render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $
            [ row_
              [ col_
                [ HH.div [ HP.class_ (H.ClassName "input-group") ]
@@ -62,27 +62,27 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ]
                  ]
                ]
              ]
-           , row [ HC.style <<< paddingTop $ pct 1.0 ]
-             [ col_ <<< maybe [] id $
-               s ^? prop (SProxy :: SProxy "analysis")
-               <<< _Just
-               <<< _Analysis
-               <<< prop (SProxy :: SProxy "density")
-               <<< _Just
-               <<< to (A.singleton <<< density)
-             ]
-           , row [ HC.style <<< paddingTop $ pct 1.0 ]
-             [ HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
-               [ HH.slot 0 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
-                 (Just <<< H.action <<< HandleEChartsMsg)
-               ]
-             , HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
-               [ HH.slot 1 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
-                 (Just <<< H.action <<< HandleEChartsMsg)
-               ]
-             ]
-           ]
+           ] <> maybe [] charts s.analysis
   where f = Formatter { comma: false, before: 2, after: 2, abbreviations: false, sign: false }
+        charts a = [
+          row [ HC.style <<< paddingTop $ pct 1.0 ]
+          [ col_ <<< maybe [] id $
+            a ^? _Analysis
+            <<< prop (SProxy :: SProxy "density")
+            <<< _Just
+            <<< to (A.singleton <<< density)
+          ]
+          , row [ HC.style <<< paddingTop $ pct 1.0 ]
+            [ HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
+              [ HH.slot 0 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
+                (Just <<< H.action <<< HandleEChartsMsg)
+               ]
+            , HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
+              [ HH.slot 1 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
+                (Just <<< H.action <<< HandleEChartsMsg)
+              ]
+            ]
+          ]
 
 density :: forall t340 t341. Number -> HH.HTML t341 t340
 density d = HH.div [ HP.class_ $ H.ClassName "progress" ]
