@@ -16,14 +16,14 @@ data Analysis = Analysis { levelSplit    :: [(Level, [Kanji])]  -- ^ Unique `Kan
                          , middle        :: Float  -- ^ Percent (<= 1.0) of `Kanji` learned by the end of Middle School.
                          , high          :: Float  -- ^ Percent (<= 1.0) of `Kanji` learned by the end of High School.
                          , adult         :: Float  -- ^ Percent (<= 1.0) of `Kanji` that an adult should be able to read.
-                         , density       :: Maybe Float  -- ^ Fraction (<= 1.0) of the input that was `Kanji`.
+                         , density       :: [(CharCat, Float)]  -- ^ Density of each character category in the text.
                          , distributions :: [(Level, Float)]  -- ^ Fractions of input `Kanji` that belong to each `Level`.
                          } deriving (Generic, ToJSON)
 
 analysis :: Text -> Analysis
-analysis t | T.null t = Analysis [] 0 0 0 0 Nothing []
+analysis t | T.null t = Analysis [] 0 0 0 0 [] []
            | otherwise = Analysis uniq (elementaryDen dist) (middleDen dist) (highDen dist) (adultDen dist) den (M.toList dist)
   where ks   = mapMaybe kanji $ unpack t
         uniq = M.toList . fmap S.toList $ uniques ks
         dist = levelDist ks
-        den  = Just $ kanjiDensity (T.length t) ks
+        den  = M.toList $ densities t
