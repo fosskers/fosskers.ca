@@ -4,6 +4,11 @@ import Prelude
 
 import Bootstrap (col_, container, row, row_)
 import CSS (paddingTop, pct)
+import Control.Monad.Aff.AVar (AVAR)
+import Control.Monad.Aff.Class (class MonadAff)
+import Control.Monad.Eff.Exception (EXCEPTION)
+import Control.Monad.Eff.Ref (REF)
+import DOM (DOM)
 import Data.Array (null)
 import Data.Formatter.Number (Formatter(..), format)
 import Data.Generic (gShow)
@@ -20,6 +25,7 @@ import Data.Tuple (Tuple(Tuple))
 import Data.Tuple.Nested ((/\))
 import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
+import ECharts.Types (ECHARTS)
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import Fosskers.Kanji (Analysis(Analysis))
@@ -62,18 +68,17 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $ input <> maybe [] w
         withResults (Analysis a) = charts a <> unknowns a
         charts a = [ row [ HC.style <<< paddingTop $ pct 1.0 ]
                      [ col_ [ density $ a ^. prop (SProxy :: SProxy "density") ]]
-                   , row [ HC.style <<< paddingTop $ pct 1.0 ]
-                     [ HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
-                       [ HH.slot 0 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
-                         (Just <<< H.action <<< HandleEChartsMsg)
-                       ]
-                     , HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
-                       [ HH.slot 1 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
-                         (Just <<< H.action <<< HandleEChartsMsg)
-                       ]]]
+                   , row [ HC.style <<< paddingTop $ pct 1.0 ] [ chart 0, chart 1 ]]
         unknowns a = case M.lookup Unknown $ M.fromFoldable a.levelSplit of
           Nothing -> []
           Just ks -> [ HH.hr_ , HH.h5_ [ HH.text "Kanji of Unknown Level"], HH.div_ (map weblio ks) ]
+
+chart :: forall t452 m e.
+  MonadAff ( echarts :: ECHARTS, dom :: DOM, avar :: AVAR, exception :: EXCEPTION, ref :: REF | e ) m
+   => t452 -> HH.HTML (H.ComponentSlot HH.HTML EC.EChartsQuery m t452 (Query Unit)) (Query Unit)
+chart n = HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
+          [ HH.slot n (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
+            (Just <<< H.action <<< HandleEChartsMsg) ]
 
 weblio :: forall t4 t5. Kanji -> HH.HTML t5 t4
 weblio (Kanji k) = HH.a [ HP.href $ "https://weblio.jp/content/" <> k', HP.attr (H.AttrName "style") "float: left;" ] [ HH.h3_ [ HH.text k' ]]
