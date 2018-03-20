@@ -116,8 +116,9 @@ eread path = do
      else pure . Left $ toTextIgnore path <> " doesn't exist to be read"
 
 analysisFiles :: IO (M.Map Text Text)
-analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f [ "doraemon" ]
+analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
   where f fp = fmap ((fp,) <$>) . eread $ fromText ("server/" <> fp <> ".txt")
+        files = [ "doraemon", "rashomon", "iamacat", "sumo" ]
 
 main :: IO ()
 main = do

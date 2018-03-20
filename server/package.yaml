@@ -11,6 +11,8 @@ git: git://github.com/fosskers/fosskers.ca.git
 extra-source-files:
   - ../blog/*.org
   - doraemon.txt
+  - rashomon.txt
+  - iamacat.txt
 
 ghc-options:
   - -fwarn-unused-imports
