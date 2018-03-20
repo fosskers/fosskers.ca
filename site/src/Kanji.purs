@@ -5,11 +5,10 @@ import Prelude
 import Bootstrap (col_, container, row, row_)
 import CSS (paddingTop, pct)
 import Data.Array (null)
-import Data.Array as A
 import Data.Formatter.Number (Formatter(..), format)
 import Data.Generic (gShow)
 import Data.Int (ceil)
-import Data.Kanji.Types (CharCat(..), Level(..), _Kanji)
+import Data.Kanji.Types (CharCat(Other, Punctuation, RomanLetter, Numeral, Katakana, Hiragana, Hanzi), Kanji(Kanji), Level(Unknown))
 import Data.Lens ((^.))
 import Data.Lens.Record (prop)
 import Data.Map as M
@@ -52,38 +51,33 @@ component = H.parentComponent { initialState: const { language: defaultLang, ana
                               , receiver: HE.input LangChanged }
 
 render :: forall e. State -> H.ParentHTML Query EC.EChartsQuery Slot (Effects e)
-render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $
-           [ row_
-             [ col_
-               [ HH.div [ HP.class_ (H.ClassName "input-group") ]
-                 [ HH.div [ HP.class_ (H.ClassName "input-group-prepend") ]
-                   [ HH.span [ HP.class_ (H.ClassName "input-group-text") ] [ HH.text "Input" ]]
-                 , HH.textarea [ HP.class_ (H.ClassName "form-control")
-                               , HP.attr (H.AttrName "aria-label") "Input"
-                               , HE.onValueInput (\str -> Just $ Update str unit) ]
-                 ]
-               ]
-             ]
-           ] <> maybe [] charts s.analysis <>
-           [ HH.hr_
-           , HH.h5_ [ HH.text "Unknown Kanji"]
-           ] <> maybe [] A.singleton (s.analysis >>= unknowns)
-  where charts (Analysis a) = [
-          row [ HC.style <<< paddingTop $ pct 1.0 ]
-          [ col_ [ density $ a ^. prop (SProxy :: SProxy "density") ]]
-          , row [ HC.style <<< paddingTop $ pct 1.0 ]
-            [ HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
-              [ HH.slot 0 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
-                (Just <<< H.action <<< HandleEChartsMsg)
-               ]
-            , HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
-              [ HH.slot 1 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
-                (Just <<< H.action <<< HandleEChartsMsg)
-              ]
-            ]
-          ]
-        unknowns (Analysis a) = map (HH.h3_ <<< A.singleton <<< HH.text <<< S.fromCharArray <<< map (_ ^. _Kanji))
-                                $ M.lookup Unknown $ M.fromFoldable a.levelSplit
+render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $ input <> maybe [] withResults s.analysis
+  where input = [ row_ [ col_
+                         [ HH.div [ HP.class_ (H.ClassName "input-group") ]
+                           [ HH.div [ HP.class_ (H.ClassName "input-group-prepend") ]
+                             [ HH.span [ HP.class_ (H.ClassName "input-group-text") ] [ HH.text "Input" ]]
+                           , HH.textarea [ HP.class_ (H.ClassName "form-control")
+                                         , HP.attr (H.AttrName "aria-label") "Input"
+                                         , HE.onValueInput (\str -> Just $ Update str unit) ]]]]]
+        withResults (Analysis a) = charts a <> unknowns a
+        charts a = [ row [ HC.style <<< paddingTop $ pct 1.0 ]
+                     [ col_ [ density $ a ^. prop (SProxy :: SProxy "density") ]]
+                   , row [ HC.style <<< paddingTop $ pct 1.0 ]
+                     [ HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
+                       [ HH.slot 0 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
+                         (Just <<< H.action <<< HandleEChartsMsg)
+                       ]
+                     , HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
+                       [ HH.slot 1 (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
+                         (Just <<< H.action <<< HandleEChartsMsg)
+                       ]]]
+        unknowns a = case M.lookup Unknown $ M.fromFoldable a.levelSplit of
+          Nothing -> []
+          Just ks -> [ HH.hr_ , HH.h5_ [ HH.text "Kanji of Unknown Level"], HH.div_ (map weblio ks) ]
+
+weblio :: forall t4 t5. Kanji -> HH.HTML t5 t4
+weblio (Kanji k) = HH.a [ HP.href $ "https://weblio.jp/content/" <> k', HP.attr (H.AttrName "style") "float: left;" ] [ HH.h3_ [ HH.text k' ]]
+  where k' = S.singleton k
 
 density :: forall t340 t341. Array (Tuple CharCat Number) -> HH.HTML t341 t340
 density d = HH.div [ HP.class_ $ H.ClassName "progress"
