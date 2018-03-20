@@ -25,7 +25,6 @@ import Data.Tuple (Tuple(Tuple))
 import Data.Tuple.Nested ((/\))
 import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
-import ECharts.Types (ECHARTS)
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import Fosskers.Kanji (Analysis(Analysis))
@@ -37,13 +36,14 @@ import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Query.HalogenM as HQ
 import Network.HTTP.Affjax (AJAX)
-import ServerAPI (postKanji)
-import Types (Language, Effects, Effects', defaultLang, update)
+import ServerAPI (getKanjiByText, postKanji)
+import Types (Effects, Effects', Four(..), Language, defaultLang, update)
 
 ---
 
 data Query a = LangChanged Language a
              | Update String a
+             | ButtonSelected String a
              | HandleEChartsMsg EC.EChartsMessage a
 
 type State = { language :: Language, analysis :: Maybe Analysis }
@@ -57,14 +57,50 @@ component = H.parentComponent { initialState: const { language: defaultLang, ana
                               , receiver: HE.input LangChanged }
 
 render :: forall e. State -> H.ParentHTML Query EC.EChartsQuery Slot (Effects e)
-render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $ input <> maybe [] withResults s.analysis
-  where input = [ row_ [ col_
-                         [ HH.div [ HP.class_ (H.ClassName "input-group") ]
-                           [ HH.div [ HP.class_ (H.ClassName "input-group-prepend") ]
-                             [ HH.span [ HP.class_ (H.ClassName "input-group-text") ] [ HH.text "Input" ]]
-                           , HH.textarea [ HP.class_ (H.ClassName "form-control")
-                                         , HP.attr (H.AttrName "aria-label") "Input"
-                                         , HE.onValueInput (\str -> Just $ Update str unit) ]]]]]
+render s = container [ HC.style <<< paddingTop $ pct 1.0 ]
+           $ preamble <> buttons <> input <> maybe [] withResults s.analysis
+  where preamble =
+          [ row_ [ col_
+                   [ HH.p_ [ HH.text "This is a demo of my "
+                           , HH.a [ HP.href "http://hackage.haskell.org/package/kanji" ] [ HH.text "Kanji" ]
+                           , HH.text $ " library for Haskell. Given Japanese text, it divides it into character "
+                             <> "categories, and splits all "
+                           , HH.a [ HP.href "https://en.wikipedia.org/wiki/Kanji" ] [ HH.text "漢字 (kanji)"]
+                           , HH.text " into complexity/rarity "
+                           , HH.i_ [ HH.text "Levels" ]
+                           , HH.text " as defined by the "
+                           , HH.a [ HP.href "http://www.kanken.or.jp/" ]
+                             [ HH.text "Japan Kanji Aptitude Testing Foundation."]
+                           ]
+                   , HH.p_ [ HH.text $ "Try entering text below, or select one of the sample texts"
+                             <> " to see how widely each Kanji level is used in real life."
+                           ]]]]
+        buttons = [ row_ [ col_
+                           [ HH.div [ HP.class_ (H.ClassName "btn-toolbar")
+                                    , HP.attr (H.AttrName "role") "toolbar"
+                                    , HP.attr (H.AttrName "aria-label") "Sample Texts" ]
+                             $ map button
+                             [ Four "First Group" "primary" "doraemon" "Wikipedia: Doraemon"
+                             , Four "Second Group" "warning" "sumo" "News: Asashoryu vs Hakoho"
+                             , Four "Third Group" "success" "rashomon" "Short Story: Rashomon (1915)"
+                             , Four "Last Group" "info" "iamacat" "Novel: I am a Cat (1905)"
+                             ]]]]
+        button (Four a c f t) = HH.div [ HP.classes $ map H.ClassName ["btn-group", "mr-2"]
+                                       , HP.attr (H.AttrName "role") "group"
+                                       , HP.attr (H.AttrName "aria-label") a ]
+                               [ HH.button [ HP.attr (H.AttrName "type") "button"
+                                           , HP.classes $ map H.ClassName [ "btn", "btn-outline-" <> c ]
+                                           , HE.onClick (HE.input_ $ ButtonSelected f)
+                                           ]
+                                 [ HH.text t ]]
+        input = [ row [ HC.style <<< paddingTop $ pct 1.0 ]
+                  [ col_
+                    [ HH.div [ HP.class_ (H.ClassName "input-group") ]
+                      [ HH.div [ HP.class_ (H.ClassName "input-group-prepend") ]
+                        [ HH.span [ HP.class_ (H.ClassName "input-group-text") ] [ HH.text "Input" ]]
+                      , HH.textarea [ HP.class_ (H.ClassName "form-control")
+                                    , HP.attr (H.AttrName "aria-label") "Input"
+                                    , HE.onValueInput (\str -> Just $ Update str unit) ]]]]]
         withResults (Analysis a) = charts a <> unknowns a
         charts a = [ row [ HC.style <<< paddingTop $ pct 1.0 ]
                      [ col_ [ density $ a ^. prop (SProxy :: SProxy "density") ]]
@@ -74,7 +110,7 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ] $ input <> maybe [] w
           Just ks -> [ HH.hr_ , HH.h5_ [ HH.text "Kanji of Unknown Level"], HH.div_ (map weblio ks) ]
 
 chart :: forall t452 m e.
-  MonadAff ( echarts :: ECHARTS, dom :: DOM, avar :: AVAR, exception :: EXCEPTION, ref :: REF | e ) m
+  MonadAff ( echarts :: ET.ECHARTS, dom :: DOM, avar :: AVAR, exception :: EXCEPTION, ref :: REF | e ) m
    => t452 -> HH.HTML (H.ComponentSlot HH.HTML EC.EChartsQuery m t452 (Query Unit)) (Query Unit)
 chart n = HH.div [ HP.classes $ map HH.ClassName [ "col-xs-12", "col-md-6" ]]
           [ HH.slot n (EC.echarts Nothing) ({ width: 500, height: 350 } /\ unit)
@@ -113,24 +149,27 @@ density d = HH.div [ HP.class_ $ H.ClassName "progress"
 eval :: forall e. Query ~> H.ParentDSL State Query EC.EChartsQuery Slot Void (Effects' ( ajax :: AJAX | e ))
 eval = case _ of
   LangChanged l next -> update (prop (SProxy :: SProxy "language")) l *> pure next
-  Update "" next -> H.modify (_ { analysis = Nothing }) *> pure next  -- TODO Should clear charts
+  Update "" next -> H.modify (_ { analysis = Nothing }) *> pure next
   Update s next -> do
     _ <- HQ.fork do
       a <- H.lift $ postKanji s
+      updateCharts a
       H.modify (_ { analysis = Just a })
-      when (hasRealData a) do
-        void $ H.query 0 $ H.action $ EC.Set $ interpret $ byLevel a
-        void $ H.query 1 $ H.action $ EC.Set $ interpret $ lifeStages a
     pure next
-  HandleEChartsMsg EC.Initialized next -> do
-    a <- H.gets _.analysis
-    case a of
-      Nothing -> pure unit
-      Just a' -> when (hasRealData a') do
-        void $ H.query 0 $ H.action $ EC.Set $ interpret $ byLevel a'
-        void $ H.query 1 $ H.action $ EC.Set $ interpret $ lifeStages a'
-    pure next
+  HandleEChartsMsg EC.Initialized next ->
+    (H.gets _.analysis >>= maybe (pure unit) updateCharts) *> pure next
   HandleEChartsMsg (EC.EventRaised evt) next -> pure next
+  ButtonSelected t next -> do
+    _ <- HQ.fork do
+      a <- H.lift $ getKanjiByText t
+      maybe (pure unit) updateCharts a
+      H.modify (_ { analysis = a })
+    pure next
+
+updateCharts :: forall t800 t801 t804 t805. Analysis -> H.HalogenM t805 t804 EC.EChartsQuery Int t801 t800 Unit
+updateCharts a = when (hasRealData a) do
+  void $ H.query 0 $ H.action $ EC.Set $ interpret $ byLevel a
+  void $ H.query 1 $ H.action $ EC.Set $ interpret $ lifeStages a
 
 hasRealData :: Analysis -> Boolean
 hasRealData (Analysis a) = not $ null a.distributions
