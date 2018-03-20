@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds, TypeOperators, Rank2Types #-}
 {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
+{-# LANGUAGE TupleSections #-}
 
 module Main ( main ) where
 
@@ -7,6 +8,7 @@ import           ClassyPrelude hiding (FilePath, index, Handler)
 import           Control.Arrow ((&&&))
 import           Control.Concurrent (getNumCapabilities)
 import           Data.Char (isAlpha)
+import qualified Data.Map.Strict as M
 import           Data.Proxy
 import qualified Data.Set as S
 import qualified Data.Text as T
@@ -30,7 +32,7 @@ data Args = Args { port :: Maybe Int <?> "Port to listen for requests on, otherw
                  , js   :: Text      <?> "Javascript bundle to serve" }
   deriving (Generic, ParseRecord)
 
-data Env = Env { stats :: [Blog], bundle :: Text }
+data Env = Env { stats :: [Blog], bundle :: Text, texts :: M.Map Text Text }
 
 server :: Env -> Server API
 server env = jsonServer env
@@ -43,7 +45,9 @@ server env = jsonServer env
 
 -- | Split off from `server` to avoid type issues.
 jsonServer :: Env -> Server JsonAPI
-jsonServer env = pure (stats env) :<|> pure . analysis
+jsonServer env = pure (stats env)
+  :<|> pure . analysis
+  :<|> (\t -> pure . fmap analysis . M.lookup t $ texts env)
 
 rss :: [Blog] -> Language -> Blogs
 rss bs l = Blogs . reverse . sortOn date $ filter (\b -> pathLang (filename b) == Just l) bs
@@ -111,13 +115,19 @@ eread path = do
      then Right <$> readfile path
      else pure . Left $ toTextIgnore path <> " doesn't exist to be read"
 
+analysisFiles :: IO (M.Map Text Text)
+analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f [ "doraemon" ]
+  where f fp = fmap ((fp,) <$>) . eread $ fromText ("server/" <> fp <> ".txt")
+
 main :: IO ()
 main = do
   Args (Helpful p) (Helpful j) <- getRecord "Backend server for fosskers.ca"
   (errs, ps) <- shelly orgs
   traverse_ say errs
+  afs <- analysisFiles
   herokuPort <- (>>= readMay) <$> lookupEnv "PORT"
   let prt = fromMaybe 8081 $ p <|> herokuPort
   cores <- getNumCapabilities
+  say $ "Analysis files read: " <> tshow (length afs)
   say $ "Listening on port " <> tshow prt <> " with " <> tshow cores <> " cores"
-  W.run prt . app $ Env ps j
+  W.run prt . app $ Env ps j afs

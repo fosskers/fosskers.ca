@@ -21,6 +21,7 @@ import           Xmlbf
 
 type JsonAPI = "posts" :> Get '[JSON] [Blog]
   :<|> "kanji" :> ReqBody '[JSON] Text :> Post '[JSON] Analysis
+  :<|> "kanji" :> Capture "text" Text :> Get '[JSON] (Maybe Analysis)
 
 type API = JsonAPI
   :<|> "blog" :> Raw
