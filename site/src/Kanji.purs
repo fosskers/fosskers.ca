@@ -172,7 +172,11 @@ type Labels = { kanji :: String, hira :: String, kata :: String, nums :: String,
 
 eval :: forall e. Query ~> H.ParentDSL State Query EC.EChartsQuery Slot Void (Effects' ( ajax :: AJAX | e ))
 eval = case _ of
-  LangChanged l next -> update (prop (SProxy :: SProxy "language")) l *> pure next
+  LangChanged l next -> do
+    update (prop (SProxy :: SProxy "language")) l
+    a <- H.gets _.analysis
+    maybe (pure unit) (updateCharts l) a
+    pure next
   Update "" next -> H.modify (_ { analysis = Nothing }) *> pure next
   Update s next -> do
     _ <- HQ.fork do
