@@ -8,7 +8,7 @@ import Data.Kanji.Types
 import Data.Proxy (Proxy(..))
 import Fosskers.Common
 import Fosskers.Kanji
-import Language.PureScript.Bridge
+import Language.PureScript.Bridge hiding (Language)
 import Language.PureScript.Bridge.PSTypes
 import Servant.PureScript
 import Time.Types
@@ -46,6 +46,7 @@ types = [ mkSumType (Proxy :: Proxy Blog)
         , mkSumType (Proxy :: Proxy Kanji)
         , let p = (Proxy :: Proxy Level) in order p $ mkSumType p
         , let p = (Proxy :: Proxy CharCat) in order p $ mkSumType p
+        , let p = (Proxy :: Proxy Language) in order p $ mkSumType p
         ]
 
 main :: IO ()

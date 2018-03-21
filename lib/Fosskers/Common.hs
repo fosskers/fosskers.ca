@@ -39,7 +39,7 @@ deriving instance ToJSON Date
 deriving instance Generic Month
 deriving instance ToJSON Month
 
-data Language = English | Japanese deriving (Eq, Ord, Show)
+data Language = English | Japanese deriving (Eq, Ord, Show, Generic)
 
 newtype Path = Path Text deriving (Generic, ToJSON)
 
@@ -58,7 +58,7 @@ instance ToXml Blog where
   toXml (Blog (Title t) d (Path p) _) = [b]
     where b = element' "item" mempty
               [ element' "title" mempty [ text t ]
-              , element' "link" mempty [ text $ "http://fosskers.ca/blog/" <> p <> ".html" ]
+              , element' "link" mempty [ text $ "https://fosskers.ca/blog/" <> p <> ".html" ]
               , element' "pubDate" mempty [ text . pack $ dtt d ]
               , element' "description" mempty [ text t ]]
 
@@ -76,6 +76,6 @@ instance ToXml Blogs where
   toXml (Blogs bs) = [ element' "rss" (HM.singleton "version" "2.0")
                        [ element' "channel" mempty (info <> (bs >>= toXml)) ]]
     where info = [ element' "title" mempty [ text "Fosskers.ca Blog" ]
-                 , element' "link" mempty [ text "http://fosskers.ca" ]
+                 , element' "link" mempty [ text "https://fosskers.ca" ]
                  , element' "description" mempty [ text "Articles on Haskell, Functional Programming, and Japanese" ]
                  ]
