@@ -100,9 +100,9 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ]
                 , Four "Second Group" "warning" "sumo"
                   $ bool "ニュース・朝青龍対白鵬" "News: Asashoryu vs Hakoho" (l == English)
                 , Four "Third Group" "success" "rashomon"
-                  $ bool "短篇小説・羅生門" "Short Story: Rashomon (1915)" (l == English)
+                  $ bool "短篇小説・羅生門（大正四年）" "Short Story: Rashomon (1915)" (l == English)
                 , Four "Last Group" "info" "iamacat"
-                  $ bool "小説・吾輩は猫である" "Novel: I am a Cat (1905)" (l == English)
+                  $ bool "小説・吾輩は猫である（明治三十八年）" "Novel: I am a Cat (1905)" (l == English)
                 ]]]]
         button (Four a c f t) = HH.div [ HP.classes $ map H.ClassName ["btn-group", "mr-2"]
                                        , HP.attr (H.AttrName "role") "group"
