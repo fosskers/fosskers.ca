@@ -13,10 +13,9 @@ import Data.Array (null)
 import Data.Formatter.Number (Formatter(..), format)
 import Data.Generic (gShow)
 import Data.Int (ceil)
-import Data.Kanji.Types (CharCat(Other, Punctuation, RomanLetter, Numeral, Katakana, Hiragana, Hanzi), Kanji(Kanji), Level(Unknown))
+import Data.Kanji.Types (CharCat(Other, Punctuation, RomanLetter, Numeral, Katakana, Hiragana, Hanzi), Kanji(Kanji))
 import Data.Lens ((^.))
 import Data.Lens.Record (prop)
-import Data.Map as M
 import Data.Maybe (Maybe(Just, Nothing), maybe)
 import Data.String as S
 import Data.Symbol (SProxy(..))
@@ -105,9 +104,8 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ]
         charts a = [ row [ HC.style <<< paddingTop $ pct 1.0 ]
                      [ col_ [ density $ a ^. prop (SProxy :: SProxy "density") ]]
                    , row [ HC.style <<< paddingTop $ pct 1.0 ] [ chart 0, chart 1 ]]
-        unknowns a = case M.lookup Unknown $ M.fromFoldable a.levelSplit of
-          Nothing -> []
-          Just ks -> [ HH.hr_ , HH.h5_ [ HH.text "Kanji of Unknown Level"], HH.div_ (map weblio ks) ]
+        unknowns a | null a.unknowns = [] -- = case M.lookup Unknown $ M.fromFoldable a.levelSplit of
+                   | otherwise = [ HH.hr_ , HH.h5_ [ HH.text "Kanji of Unknown Level"], HH.div_ (map weblio a.unknowns) ]
 
 chart :: forall t452 m e.
   MonadAff ( echarts :: ET.ECHARTS, dom :: DOM, avar :: AVAR, exception :: EXCEPTION, ref :: REF | e ) m

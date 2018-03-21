@@ -12,7 +12,7 @@ import qualified Data.Text as T
 ---
 
 data Analysis =
-  Analysis { levelSplit    :: [(Level, [Kanji])]  -- ^ Unique `Kanji` that appeared in each `Level`.
+  Analysis { unknowns      :: [Kanji]  -- ^ `Kanji` whose `Level` couldn't be determined.
            , elementary    :: Float  -- ^ Percent (<= 1.0) of `Kanji` learned in Elementary school.
            , middle        :: Float  -- ^ Percent (<= 1.0) of `Kanji` learned by the end of Middle School.
            , high          :: Float  -- ^ Percent (<= 1.0) of `Kanji` learned by the end of High School.
@@ -25,6 +25,6 @@ analysis :: Text -> Analysis
 analysis t | T.null t = Analysis [] 0 0 0 0 [] []
            | otherwise = Analysis uniq (elementaryDen dist) (middleDen dist) (highDen dist) (adultDen dist) den (M.toList dist)
   where ks   = mapMaybe kanji $ unpack t
-        uniq = M.toList . fmap S.toList $ uniques ks
+        uniq = maybe [] id . M.lookup Unknown . fmap S.toList $ uniques ks
         dist = levelDist ks
         den  = M.toList $ densities t
