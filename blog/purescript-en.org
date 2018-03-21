@@ -250,19 +250,13 @@ To (re)download all tool dependencies marked in ~package.json~:
 To (re)download all library dependencies marked in ~psc-package.json~:
 
 #+BEGIN_SRC bash
-  npm run psc -- update
+  npm run psc -- install
 #+END_SRC
 
 To compile all library dependencies and our code into CommonJS-compatible Javascript:
 
 #+BEGIN_SRC bash
   npm run pulp build
-#+END_SRC
-
-To bundle only what's needed into a single ~.js~ file:
-
-#+BEGIN_SRC bash
-  npm run pulp -- build --to app.js
 #+END_SRC
 
 To run the ~pscid~ daemon:
@@ -277,15 +271,17 @@ To run our test suites:
   npm run pulp test
 #+END_SRC
 
-To minify our bundled Javascript:
+To bundle and partially minimize all Purescript code and external JS deps:
+
+#+BEGIN_SRC bash
+  npm run pulp -- browserify --optimise --to app.js
+#+END_SRC
+
+To further minify our bundled Javascript:
 
 #+BEGIN_SRC bash
   npm run uglify -- app.js --output min.js --compress --mangle
 #+END_SRC
-
-The behaviour of the minified code seems to be the same, and the file size
-is less than half of the original human-readable code.
-
 
 ** Halogen
 

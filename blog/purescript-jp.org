@@ -239,19 +239,13 @@ PurescriptがUIを管理するおかげでHTMLファイルをコミットする�
 ~psc-package.json~ にあるlibrary dependenciesを全部（再）ダウンロード：
 
 #+BEGIN_SRC bash
-  npm run psc -- update
+  npm run psc -- install
 #+END_SRC
 
 Librariesもプロジェクト・コードも全部コンパイル：
 
 #+BEGIN_SRC bash
   npm run pulp build
-#+END_SRC
-
-必要なコードだけJavascriptに変える（いわゆる「dead code elimination」）：
-
-#+BEGIN_SRC bash
-  npm run pulp -- build --to app.js
 #+END_SRC
 
 コンパイラ・デーモンを発動：
@@ -266,7 +260,13 @@ Librariesもプロジェクト・コードも全部コンパイル：
   npm run pulp test
 #+END_SRC
 
-~pulp build~ で作られたJavascriptを更に圧縮：
+必要なコードだけJavascriptに変える（いわゆる「dead code elimination」）：
+
+#+BEGIN_SRC bash
+  npm run pulp -- browserify --optimise --to app.js
+#+END_SRC
+
+~pulp build~ や ~pulp browserify~ で作られたJavascriptを更に圧縮：
 
 #+BEGIN_SRC bash
   npm run uglify -- app.js --output min.js --compress --mangle

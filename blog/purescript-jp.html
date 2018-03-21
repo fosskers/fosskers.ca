@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-06 Tue 15:34 -->
+<!-- 2018-03-21 Wed 14:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ServantとPurescript/Halogenでウェブ開発</title>
@@ -235,49 +235,49 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2c83fef">1. Haskell</a>
+<li><a href="#org632a975">1. Haskell</a>
 <ul>
-<li><a href="#org726d0b2">1.1. プロジェクト設定</a></li>
-<li><a href="#org20984d1">1.2. Purescriptとのコードシェア</a></li>
-<li><a href="#org22d826a">1.3. Assetsの提供</a>
+<li><a href="#orgbda10ab">1.1. プロジェクト設定</a></li>
+<li><a href="#org4feb693">1.2. Purescriptとのコードシェア</a></li>
+<li><a href="#org7badaaa">1.3. Assetsの提供</a>
 <ul>
-<li><a href="#org2969d3c">1.3.1. 自動圧縮</a></li>
+<li><a href="#orge8275ab">1.3.1. 自動圧縮</a></li>
 </ul>
 </li>
-<li><a href="#orgdc23c76">1.4. 無HTML</a></li>
+<li><a href="#org7a222c7">1.4. 無HTML</a></li>
 </ul>
 </li>
-<li><a href="#org73fa8b2">2. Purescript</a>
+<li><a href="#orgc8e3abd">2. Purescript</a>
 <ul>
-<li><a href="#org5158071">2.1. 最初の設定</a>
+<li><a href="#org81b440d">2.1. 最初の設定</a>
 <ul>
-<li><a href="#orgfc8a021">2.1.1. ツール</a></li>
-<li><a href="#org6c02d54">2.1.2. Purescriptパッケージ</a></li>
-<li><a href="#orgb090b0c">2.1.3. Spacemacsでの使用</a></li>
+<li><a href="#org32a2c2b">2.1.1. ツール</a></li>
+<li><a href="#orgd1e81e9">2.1.2. Purescriptパッケージ</a></li>
+<li><a href="#org13db771">2.1.3. Spacemacsでの使用</a></li>
 </ul>
 </li>
-<li><a href="#orgd890932">2.2. 便利なコマンド</a></li>
-<li><a href="#orgac61e9e">2.3. Halogen</a>
+<li><a href="#org231510a">2.2. 便利なコマンド</a></li>
+<li><a href="#org29004f5">2.3. Halogen</a>
 <ul>
-<li><a href="#orgda49573">2.3.1. 無駄なレンダリングの回避</a></li>
-<li><a href="#org02a1114">2.3.2. <code>servant-purescript</code> が出したタイプや関数の扱い</a></li>
-<li><a href="#org04dd190">2.3.3. Effectのあるコンポーネント発動</a></li>
-<li><a href="#org93faad7">2.3.4. HTMLの要求と注入</a></li>
+<li><a href="#orgd8c3f85">2.3.1. 無駄なレンダリングの回避</a></li>
+<li><a href="#org589c503">2.3.2. <code>servant-purescript</code> が出したタイプや関数の扱い</a></li>
+<li><a href="#orga1e29c6">2.3.3. Effectのあるコンポーネント発動</a></li>
+<li><a href="#orge0a12ea">2.3.4. HTMLの要求と注入</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org8fa5995">3. Deployment</a>
+<li><a href="#org120bf00">3. Deployment</a>
 <ul>
-<li><a href="#org6b17ff9">3.1. <code>Makefile</code> の定義</a></li>
+<li><a href="#orgbdf2e92">3.1. <code>Makefile</code> の定義</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2c83fef" class="outline-2">
-<h2 id="org2c83fef"><span class="section-number-2">1</span> Haskell</h2>
+<div id="outline-container-org632a975" class="outline-2">
+<h2 id="org632a975"><span class="section-number-2">1</span> Haskell</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 ウェブ・サーバーを開発する時はやっぱり<a href="http://haskell-servant.readthedocs.io/en/stable/">Servant</a>。俺の経験では、どの言語のどのフレームワークでも
@@ -289,8 +289,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org726d0b2" class="outline-3">
-<h3 id="org726d0b2"><span class="section-number-3">1.1</span> プロジェクト設定</h3>
+<div id="outline-container-orgbda10ab" class="outline-3">
+<h3 id="orgbda10ab"><span class="section-number-3">1.1</span> プロジェクト設定</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 後でPurescriptとのコードシェアがうまくいく様にbackendを三つに分けることを勧める。
@@ -315,8 +315,8 @@ stack設定はこう：
 </div>
 </div>
 
-<div id="outline-container-org20984d1" class="outline-3">
-<h3 id="org20984d1"><span class="section-number-3">1.2</span> Purescriptとのコードシェア</h3>
+<div id="outline-container-org4feb693" class="outline-3">
+<h3 id="org4feb693"><span class="section-number-3">1.2</span> Purescriptとのコードシェア</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 二つのlibrariesが助けてくれる：
@@ -386,8 +386,8 @@ Purescriptとシェアしたいのは <code>JsonAPI</code> だけ。で、 <code
 </div>
 </div>
 
-<div id="outline-container-org22d826a" class="outline-3">
-<h3 id="org22d826a"><span class="section-number-3">1.3</span> Assetsの提供</h3>
+<div id="outline-container-org7badaaa" class="outline-3">
+<h3 id="org7badaaa"><span class="section-number-3">1.3</span> Assetsの提供</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 あるディレクトリーのファイルをそのまま提供するのは簡単：
@@ -408,8 +408,8 @@ Purescriptとシェアしたいのは <code>JsonAPI</code> だけ。で、 <code
 </p>
 </div>
 
-<div id="outline-container-org2969d3c" class="outline-4">
-<h4 id="org2969d3c"><span class="section-number-4">1.3.1</span> 自動圧縮</h4>
+<div id="outline-container-orge8275ab" class="outline-4">
+<h4 id="orge8275ab"><span class="section-number-4">1.3.1</span> 自動圧縮</h4>
 <div class="outline-text-4" id="text-1-3-1">
 <p>
 ちょっとコードを足すだけでサーバーから出されるAssetsの重さを数倍軽くしてくれる<a href="https://hackage.haskell.org/package/wai-extra">wai-extra</a>：
@@ -428,8 +428,8 @@ Purescriptとシェアしたいのは <code>JsonAPI</code> だけ。で、 <code
 </div>
 </div>
 
-<div id="outline-container-orgdc23c76" class="outline-3">
-<h3 id="orgdc23c76"><span class="section-number-3">1.4</span> 無HTML</h3>
+<div id="outline-container-org7a222c7" class="outline-3">
+<h3 id="org7a222c7"><span class="section-number-3">1.4</span> 無HTML</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 PurescriptがUIを管理するおかげでHTMLファイルをコミットする必要は実はない。
@@ -457,20 +457,20 @@ PurescriptがUIを管理するおかげでHTMLファイルをコミットする�
 </div>
 </div>
 
-<div id="outline-container-org73fa8b2" class="outline-2">
-<h2 id="org73fa8b2"><span class="section-number-2">2</span> Purescript</h2>
+<div id="outline-container-orgc8e3abd" class="outline-2">
+<h2 id="orgc8e3abd"><span class="section-number-2">2</span> Purescript</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org5158071" class="outline-3">
-<h3 id="org5158071"><span class="section-number-3">2.1</span> 最初の設定</h3>
+<div id="outline-container-org81b440d" class="outline-3">
+<h3 id="org81b440d"><span class="section-number-3">2.1</span> 最初の設定</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <a href="https://www.npmjs.com/">npm</a>をインストールしてから進む事。
 </p>
 </div>
 
-<div id="outline-container-orgfc8a021" class="outline-4">
-<h4 id="orgfc8a021"><span class="section-number-4">2.1.1</span> ツール</h4>
+<div id="outline-container-org32a2c2b" class="outline-4">
+<h4 id="org32a2c2b"><span class="section-number-4">2.1.1</span> ツール</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 もっとも扱いやすいPurescript開発環境を築くにはちょっと <code>npm</code> を利用しないと。
@@ -521,8 +521,8 @@ PurescriptがUIを管理するおかげでHTMLファイルをコミットする�
 </div>
 </div>
 
-<div id="outline-container-org6c02d54" class="outline-4">
-<h4 id="org6c02d54"><span class="section-number-4">2.1.2</span> Purescriptパッケージ</h4>
+<div id="outline-container-orgd1e81e9" class="outline-4">
+<h4 id="orgd1e81e9"><span class="section-number-4">2.1.2</span> Purescriptパッケージ</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <p>
 上で開発に必要なツールだけがインストールされた。Purescriptのプロジェク設定やコードらしきファイルが
@@ -562,8 +562,8 @@ npm run psc -- install halogen
 </div>
 </div>
 
-<div id="outline-container-orgb090b0c" class="outline-4">
-<h4 id="orgb090b0c"><span class="section-number-4">2.1.3</span> Spacemacsでの使用</h4>
+<div id="outline-container-org13db771" class="outline-4">
+<h4 id="org13db771"><span class="section-number-4">2.1.3</span> Spacemacsでの使用</h4>
 <div class="outline-text-4" id="text-2-1-3">
 <p>
 そのまま<a href="http://spacemacs.org/layers/+lang/purescript/README.html">PureScript Layer</a>を使おう。 <code>npm</code> でインストールしたツールもちゃんと見つかる様に
@@ -618,8 +618,8 @@ npm run psc -- install halogen
 </div>
 </div>
 
-<div id="outline-container-orgd890932" class="outline-3">
-<h3 id="orgd890932"><span class="section-number-3">2.2</span> 便利なコマンド</h3>
+<div id="outline-container-org231510a" class="outline-3">
+<h3 id="org231510a"><span class="section-number-3">2.2</span> 便利なコマンド</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>package.json</code> にあるツールを全部（再）ダウンロード：
@@ -635,7 +635,7 @@ npm run psc -- install halogen
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash">npm run psc -- update
+<pre class="src src-bash">npm run psc -- install
 </pre>
 </div>
 
@@ -645,15 +645,6 @@ Librariesもプロジェクト・コードも全部コンパイル：
 
 <div class="org-src-container">
 <pre class="src src-bash">npm run pulp build
-</pre>
-</div>
-
-<p>
-必要なコードだけJavascriptに変える（いわゆる「dead code elimination」）：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-bash">npm run pulp -- build --to app.js
 </pre>
 </div>
 
@@ -676,7 +667,16 @@ Librariesもプロジェクト・コードも全部コンパイル：
 </div>
 
 <p>
-<code>pulp build</code> で作られたJavascriptを更に圧縮：
+必要なコードだけJavascriptに変える（いわゆる「dead code elimination」）：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm run pulp -- browserify --optimise --to app.js
+</pre>
+</div>
+
+<p>
+<code>pulp build</code> や <code>pulp browserify</code> で作られたJavascriptを更に圧縮：
 </p>
 
 <div class="org-src-container">
@@ -690,8 +690,8 @@ Librariesもプロジェクト・コードも全部コンパイル：
 </div>
 </div>
 
-<div id="outline-container-orgac61e9e" class="outline-3">
-<h3 id="orgac61e9e"><span class="section-number-3">2.3</span> Halogen</h3>
+<div id="outline-container-org29004f5" class="outline-3">
+<h3 id="org29004f5"><span class="section-number-3">2.3</span> Halogen</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 本格的に開発を始める前にHalogenの<a href="https://github.com/slamdata/purescript-halogen/tree/master/docs">公式ガイド</a>（英語）を全部読んだ。
@@ -700,8 +700,8 @@ Librariesもプロジェクト・コードも全部コンパイル：
 </p>
 </div>
 
-<div id="outline-container-orgda49573" class="outline-4">
-<h4 id="orgda49573"><span class="section-number-4">2.3.1</span> 無駄なレンダリングの回避</h4>
+<div id="outline-container-orgd8c3f85" class="outline-4">
+<h4 id="orgd8c3f85"><span class="section-number-4">2.3.1</span> 無駄なレンダリングの回避</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <p>
 <code>eval</code> の関数の中で <code>H.put</code> と <code>H.modify</code> が使われる度にそのコンポーネントが
@@ -735,8 +735,8 @@ Librariesもプロジェクト・コードも全部コンパイル：
 </div>
 </div>
 
-<div id="outline-container-org02a1114" class="outline-4">
-<h4 id="org02a1114"><span class="section-number-4">2.3.2</span> <code>servant-purescript</code> が出したタイプや関数の扱い</h4>
+<div id="outline-container-org589c503" class="outline-4">
+<h4 id="org589c503"><span class="section-number-4">2.3.2</span> <code>servant-purescript</code> が出したタイプや関数の扱い</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 <code>type JsonAPI = "posts" :&gt; Get '[JSON] [Blog]</code> から <code>servant-purescript</code> はこれを吐き出す：
@@ -795,8 +795,8 @@ Librariesもプロジェクト・コードも全部コンパイル：
 </div>
 </div>
 
-<div id="outline-container-org04dd190" class="outline-4">
-<h4 id="org04dd190"><span class="section-number-4">2.3.3</span> Effectのあるコンポーネント発動</h4>
+<div id="outline-container-orga1e29c6" class="outline-4">
+<h4 id="orga1e29c6"><span class="section-number-4">2.3.3</span> Effectのあるコンポーネント発動</h4>
 <div class="outline-text-4" id="text-2-3-3">
 <p>
 サーバー等から情報がないと発動できないコンポーネントも時々ある。こういう場合、普通の
@@ -834,8 +834,8 @@ Librariesもプロジェクト・コードも全部コンパイル：
 </div>
 </div>
 
-<div id="outline-container-org93faad7" class="outline-4">
-<h4 id="org93faad7"><span class="section-number-4">2.3.4</span> HTMLの要求と注入</h4>
+<div id="outline-container-orge0a12ea" class="outline-4">
+<h4 id="orge0a12ea"><span class="section-number-4">2.3.4</span> HTMLの要求と注入</h4>
 <div class="outline-text-4" id="text-2-3-4">
 <p>
 訳あって本サイトのブログのHTMLはruntimeにしか存在しない。記事を選んでクリックしたら
@@ -905,8 +905,8 @@ Librariesもプロジェクト・コードも全部コンパイル：
 </div>
 </div>
 </div>
-<div id="outline-container-org8fa5995" class="outline-2">
-<h2 id="org8fa5995"><span class="section-number-2">3</span> Deployment</h2>
+<div id="outline-container-org120bf00" class="outline-2">
+<h2 id="org120bf00"><span class="section-number-2">3</span> Deployment</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 基本的にHaskellのデプロイメントとなれば「Heroku」を勧める。<a href="https://fosskers.ca/blog/deploying-haskell-jp.html">別のポスト</a>に一般の説明がある。
@@ -914,8 +914,8 @@ Librariesもプロジェクト・コードも全部コンパイル：
 </p>
 </div>
 
-<div id="outline-container-org6b17ff9" class="outline-3">
-<h3 id="org6b17ff9"><span class="section-number-3">3.1</span> <code>Makefile</code> の定義</h3>
+<div id="outline-container-orgbdf2e92" class="outline-3">
+<h3 id="orgbdf2e92"><span class="section-number-3">3.1</span> <code>Makefile</code> の定義</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 幸い <code>heroku-buildpack-stack</code> のスクリプトがユーザー（俺たち）からの <code>Makefile</code> がないか
@@ -974,7 +974,7 @@ Librariesもプロジェクト・コードも全部コンパイル：
 <div id="postamble" class="status">
 <p class="date">Date: 2018-02-21</p>
 <p class="author">Author: Colin</p>
-<p class="date">Created: 2018-03-06 Tue 15:34</p>
+<p class="date">Created: 2018-03-21 Wed 14:21</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
