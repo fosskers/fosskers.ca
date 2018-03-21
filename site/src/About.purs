@@ -4,10 +4,11 @@ import Prelude
 
 import Bootstrap (col_, container, row_)
 import CSS (paddingTop, pct)
+import Fosskers.Common (Language(..))
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Types (Language(..), Three(..))
+import Types (Three(..))
 
 ---
 

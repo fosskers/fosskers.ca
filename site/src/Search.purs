@@ -8,11 +8,12 @@ import Data.Monoid (mempty)
 import Data.Set as Set
 import Data.String as Str
 import Data.Symbol (SProxy(..))
+import Fosskers.Common (Language(..))
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
-import Types (Language(..), defaultLang, update)
+import Types (defaultLang, update)
 
 ---
 

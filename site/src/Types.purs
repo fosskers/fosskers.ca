@@ -14,7 +14,7 @@ import Control.Plus (empty)
 import DOM (DOM)
 import Data.Date as D
 import Data.Either (either)
-import Data.Enum (class Enum, fromEnum, toEnum)
+import Data.Enum (fromEnum, toEnum)
 import Data.Generic (class Generic)
 import Data.Lens (Lens', (.~), (^.))
 import Data.Map (Map, fromFoldable)
@@ -30,20 +30,17 @@ import Time.Types (Date(..))
 
 ---
 
-data Language = English | Japanese
-derive instance languageEq :: Eq Language
+defaultLang :: C.Language
+defaultLang = C.English
 
-defaultLang :: Language
-defaultLang = English
+suffix :: C.Language -> String
+suffix C.English  = "-en"
+suffix C.Japanese = "-jp"
 
-suffix :: Language -> String
-suffix English  = "-en"
-suffix Japanese = "-jp"
-
-postLang :: forall r. { path :: C.Path | r } -> Language
+postLang :: forall r. { path :: C.Path | r } -> C.Language
 postLang p = case takeRight 3 (p.path ^. C._Path) of
-  "-jp" -> Japanese
-  _     -> English
+  "-jp" -> C.Japanese
+  _     -> C.English
 
 data Tab = About | Blog | Kanji
 derive instance tabEq :: Eq Tab
@@ -60,11 +57,11 @@ update l a = do
   curr <- gets (_ ^. l)
   unless (a == curr) $ modify (_ # l .~ a)
 
-localizedDate :: Language -> D.Date -> String
-localizedDate English  d = show (fromEnum $ D.year d) <> " " <> show (D.month d) <> " " <> show (fromEnum $ D.day d)
-localizedDate Japanese d = show (fromEnum $ D.year d) <> "年" <> show (fromEnum $ D.month d) <> "月" <> show (fromEnum $ D.day d) <> "日"
+localizedDate :: C.Language -> D.Date -> String
+localizedDate C.English  d = show (fromEnum $ D.year d) <> " " <> show (D.month d) <> " " <> show (fromEnum $ D.day d)
+localizedDate C.Japanese d = show (fromEnum $ D.year d) <> "年" <> show (fromEnum $ D.month d) <> "月" <> show (fromEnum $ D.day d) <> "日"
 
-localizedPath :: Language -> C.Path -> C.Path
+localizedPath :: C.Language -> C.Path -> C.Path
 localizedPath l (C.Path p) = C.Path $ dropRight 3 p <> suffix l
 
 -- | Temporarily stolen from the latest version of `Data.String`, since it

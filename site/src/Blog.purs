@@ -4,7 +4,6 @@ import Prelude
 
 import Bootstrap (col_, fluid, row, row_)
 import CSS (paddingTop, pct)
-import Fosskers.Common (Path, _Path, _Title)
 import Control.Error.Util (bool)
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff.Class (liftAff)
@@ -26,6 +25,7 @@ import Data.Set as S
 import Data.Symbol (SProxy(..))
 import Data.Traversable (traverse, traverse_)
 import Data.Tuple (Tuple(..), snd)
+import Fosskers.Common (Language, Path, _Path, _Title)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
@@ -35,7 +35,7 @@ import Halogen.Query.HalogenM as HQ
 import Network.HTTP.Affjax (AJAX, get)
 import Search as Search
 import ServerAPI (getPosts)
-import Types (Effects, Language, Post, asPost, defaultLang, localizedDate, localizedPath, postLang, update)
+import Types (Effects, Post, asPost, defaultLang, localizedDate, localizedPath, postLang, update)
 
 ---
 

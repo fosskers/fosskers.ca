@@ -7,10 +7,11 @@ import Content as Content
 import Data.Either.Nested (Either2)
 import Data.Functor.Coproduct.Nested (Coproduct2)
 import Data.Maybe (Maybe(..))
+import Fosskers.Common (Language)
 import Halogen as H
 import Halogen.Component.ChildPath as CP
 import Halogen.HTML as HH
-import Types (Effects, Language, Tab, defaultLang)
+import Types (Effects, Tab, defaultLang)
 
 ---
 

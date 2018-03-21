@@ -5,13 +5,14 @@ import Prelude
 import CSS (em, fontSize)
 import Control.Error.Util (bool)
 import Data.Maybe (Maybe(..))
+import Fosskers.Common (Language(..))
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import LangToggle as LangToggle
-import Types (Five(Five), Language(English, Japanese), Tab(Kanji, Blog, About), defaultLang, defaultTab)
+import Types (Five(Five), Tab(Kanji, Blog, About), defaultLang, defaultTab)
 
 ---
 

@@ -11,12 +11,13 @@ import Data.Functor.Coproduct.Nested (Coproduct2)
 import Data.Lens.Record (prop)
 import Data.Maybe (Maybe(..))
 import Data.Symbol (SProxy(..))
+import Fosskers.Common (Language)
 import Halogen as H
 import Halogen.Component.ChildPath as CP
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as CSS
 import Kanji as Kanji
-import Types (Effects, Language, Tab(..), defaultLang, defaultTab, update)
+import Types (Effects, Tab(..), defaultLang, defaultTab, update)
 
 ---
 

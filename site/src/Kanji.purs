@@ -27,6 +27,7 @@ import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
+import Fosskers.Common (Language(..))
 import Fosskers.Kanji (Analysis(Analysis))
 import Halogen as H
 import Halogen.ECharts as EC
@@ -37,7 +38,7 @@ import Halogen.HTML.Properties as HP
 import Halogen.Query.HalogenM as HQ
 import Network.HTTP.Affjax (AJAX)
 import ServerAPI (getKanjiByText, postKanji)
-import Types (Effects, Effects', Four(..), Language(..), defaultLang, update)
+import Types (Effects, Effects', Four(..), defaultLang, update)
 
 ---
 
