@@ -14,7 +14,7 @@ import qualified Data.Set as S
 import qualified Data.Text as T
 import           Filesystem.Path (basename)
 import           Fosskers.Common
-import           Fosskers.Kanji (analysis)
+import           Fosskers.Kanji (Analysis, analysis)
 import           Fosskers.Org (parseOrg)
 import           Lucid
 import qualified Network.Wai.Handler.Warp as W
@@ -32,7 +32,7 @@ data Args = Args { port :: Maybe Int <?> "Port to listen for requests on, otherw
                  , js   :: Text      <?> "Javascript bundle to serve" }
   deriving (Generic, ParseRecord)
 
-data Env = Env { stats :: [Blog], bundle :: Text, texts :: M.Map Text Text }
+data Env = Env { stats :: [Blog], bundle :: Text, texts :: M.Map Text Analysis }
 
 server :: Env -> Server API
 server env = jsonServer env
@@ -47,7 +47,7 @@ server env = jsonServer env
 jsonServer :: Env -> Server JsonAPI
 jsonServer env = pure (stats env)
   :<|> pure . analysis
-  :<|> (\t -> pure . fmap analysis . M.lookup t $ texts env)
+  :<|> (\t -> pure . M.lookup t $ texts env)
 
 rss :: [Blog] -> Language -> Blogs
 rss bs l = Blogs . reverse . sortOn date $ filter (\b -> pathLang (filename b) == Just l) bs
@@ -131,4 +131,4 @@ main = do
   cores <- getNumCapabilities
   say $ "Analysis files read: " <> tshow (length afs)
   say $ "Listening on port " <> tshow prt <> " with " <> tshow cores <> " cores"
-  W.run prt . app $ Env ps j afs
+  W.run prt . app $ Env ps j (analysis <$> afs)
