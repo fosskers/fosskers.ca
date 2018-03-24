@@ -129,7 +129,9 @@ render s = container [ HC.style <<< paddingTop $ pct 1.0 ]
                      [ col_ [ density s.language $ a ^. prop (SProxy :: SProxy "density") ]]
                    , row [ HC.style <<< paddingTop $ pct 1.0 ] [ chart 0, chart 1 ]]
         unknowns a | null a.unknowns = []
-                   | otherwise = [ HH.hr_ , HH.h5_ [ HH.text "級が未確定の漢字"], HH.div_ (map weblio a.unknowns) ]
+                   | otherwise = [ HH.hr_
+                                 , HH.h5_ [ HH.text $ bool "級が未確定の漢字" "Kanji of Unknown Level" (s.language == English) ]
+                                 , HH.div_ (map weblio a.unknowns) ]
 
 chart :: forall t452 m e.
   MonadAff ( echarts :: ET.ECHARTS, dom :: DOM, avar :: AVAR, exception :: EXCEPTION, ref :: REF | e ) m
@@ -190,7 +192,6 @@ eval = case _ of
     s <- H.get
     maybe (pure unit) (updateCharts s.language) s.analysis
     pure next
--- (H.gets _.analysis >>= maybe (pure unit) updateCharts) *> pure next
   HandleEChartsMsg (EC.EventRaised evt) next -> pure next
   ButtonSelected t next -> do
     _ <- HQ.fork do
@@ -259,10 +260,9 @@ lifeStages l (Analysis a) = do
         E.addItem $ E.value a.elementary *> E.name labels.elem
         E.addItem $ E.value (a.middle - a.elementary) *> E.name labels.mid
         E.addItem $ E.value (a.high - a.middle) *> E.name labels.high
-        E.addItem $ E.value (a.adult - a.high) *> E.name labels.adult
-        E.addItem $ E.value (1.0 - a.adult) *> E.name labels.above
+        E.addItem $ E.value (1.0 - a.high) *> E.name labels.above
   where labels = case l of
-          English  -> { elem: "Elementary School", mid: "Middle School", high: "High School", adult: "Adulthood", above: "Higher" }
-          Japanese -> { elem: "小学校", mid: "中学校", high: "高校", adult: "大学・一般人", above: "その上" }
+          English  -> { elem: "Elementary School", mid: "Middle School", high: "High School", above: "Higher" }
+          Japanese -> { elem: "小学校", mid: "中学校", high: "高校", above: "その上" }
 
-type LifeStageLabels = { elem :: String, mid :: String, high :: String, adult :: String, above :: String }
+type LifeStageLabels = { elem :: String, mid :: String, high :: String, above :: String }
