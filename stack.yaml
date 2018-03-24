@@ -12,4 +12,4 @@ extra-deps:
   - xmlbf-0.3
   - xmlbf-xeno-0.1.1
   - git: https://github.com/fosskers/kanji
-    commit: 2f9e7b4eec768e688c27a52985f3e7217d987abc
+    commit: b6408149ac83a6135e32c946f089eac212fc8d8d
