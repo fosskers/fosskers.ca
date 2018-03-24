@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-03-23 Fri 17:06 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Japanese Kanji Analysis with Haskell</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Colin" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Japanese Kanji Analysis with Haskell</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org32bc1e3">1. Kanken - The Japan Kanji Aptitude Test</a></li>
+<li><a href="#org970cf26">2. Curiosity and Analysis</a>
+<ul>
+<li><a href="#org5f2dc74">2.1. Initial Results</a></li>
+<li><a href="#org6d869d9">2.2. Analysing Japanese Wikipedia</a></li>
+<li><a href="#orgdbfdf25">2.3. Further Work and Recommendations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+My first real Haskell program was called <i>NanQ</i>, a pun of the Japanese word
+何級 ("nan-kyuu") meaning "which level". Given some Japanese text on the command
+line, it would spit out which "level" each <a href="https://en.wikipedia.org/wiki/Kanji">Kanji</a> belonged to. Here "level" refers
+to groupings of Kanji by complexity / rarity as defined by the
+<a href="http://www.kanken.or.jp/">Japan Kanji Aptitude Testing Foundation</a> for their "Kanken".
+</p>
+
+<div id="outline-container-org32bc1e3" class="outline-2">
+<h2 id="org32bc1e3"><span class="section-number-2">1</span> Kanken - The Japan Kanji Aptitude Test</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Most Japanese have heard of this. Around 3 million people (mostly Japanese) take
+it every year. Since Kanji knowledge is critical for basic literacy in Japan,
+and so everyone must learn them, the Kanken works well as a study goal.
+Some companies even require you to pass certain levels before offering employment.
+</p>
+
+<p>
+The test has 12 levels: 10 to 3, Pre-2, 2, Pre-1, and 1.
+The first 6 six of these correspond directly to the Kanji
+learned in the 6 years of Japanese elementary school. Level 10 is the simplest,
+asking for knowledge of only 80 Kanji.
+Adults tend to go as far as Level 2, which asks for 2,136 Kanji, the <a href="https://en.wikipedia.org/wiki/J%C5%8Dy%C5%8D_kanji">standard set</a>
+defined by the Ministry of Education.
+However, getting that far isn't simple. Here are the pass rates for the year 2012:
+</p>
+
+
+<div class="figure">
+<p><img src="./blog/pass-rates.png" alt="pass-rates.png" />
+</p>
+</div>
+
+<p>
+Less than 25% of people who take Level 2 pass it.
+A friend of mine, a native teacher of Japanese herself, had to study considerably
+before being able to pass Level 2. I was able to get to Pre-2.
+</p>
+
+<p>
+What's beyond Level 2? A deep well of increasingly obscure Kanji which essentially
+amounts to Chinese. Level 1 of the test asks for around 6,000 Kanji. Perhaps
+not coincidentally, various governments of the Chinese-speaking world list
+between 6 and 7 thousand characters as their own standard sets. More characters are
+necessary for them, since Chinese languages have no other way to write.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org970cf26" class="outline-2">
+<h2 id="org970cf26"><span class="section-number-2">2</span> Curiosity and Analysis</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The tests don't just probe your ability to read and write single Kanji in
+isolation. Also examined is the ability to use them in compounds, produce
+4-symbol poetic idioms known as 四字熟語 (yo-ji-juku-go), and demonstrate
+knowledge of synonyms and antonyms, among other things.
+</p>
+
+<p>
+While working in Japan and studying Kanji in my free time, I became curious.
+How much Kanji of each level was I producing in my own writing? How about
+my students, who were young, but native speakers? How about "real" texts,
+like newspapers? Do the levels defined by the Ministry of Education match
+how Japanese Kanji are really used? Answering these questions was my original
+motivation for writing <i>NanQ</i>.
+</p>
+
+<p>
+I came back to that project every few years to give it a spruce up. Today
+it survives in the form of my <a href="http://hackage.haskell.org/package/kanji">kanji</a> Haskell library, and a demo available
+from the home page of my site, <a href="https://fosskers.ca">https://fosskers.ca</a>. Check for <i>Kanji Analysis</i>
+under the <i>Tools</i> tab.
+</p>
+</div>
+
+<div id="outline-container-org5f2dc74" class="outline-3">
+<h3 id="org5f2dc74"><span class="section-number-3">2.1</span> Initial Results</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Here's a screenshot of the demo having been ran over the <a href="https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%A9%E3%81%88%E3%82%82%E3%82%93">Wikipedia article for Doraemon</a>,
+a popular children's manga and anime:
+</p>
+
+
+<div class="figure">
+<p><img src="./blog/doraemon.png" alt="doraemon.png" />
+</p>
+</div>
+
+<p>
+Levels 10 to 5 correspond to Kanji learned in elementary school. In this particular
+text, we see these elementary Kanji take up a vast majority of all Kanji used.
+</p>
+
+<p>
+<b>Observation 1: Kanji learned in elementary school make up, on average, 86% of
+all Kanji used in Japanese texts.</b>
+</p>
+
+<p>
+The wrong conclusion to draw from this would be that 86% of <i>words</i> are made
+up of only elementary Kanji. Words like 唯一 (yui-itsu, a word that everyone knows)
+throw this off: 一 is from
+Level 10, but 唯 is from Level Pre-2. So, we can't just learn the elementary
+Kanji and call that "good enough".
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6d869d9" class="outline-3">
+<h3 id="org6d869d9"><span class="section-number-3">2.2</span> Analysing Japanese Wikipedia</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Where does that 86% number come from?
+</p>
+
+<p>
+I discovered that it was fairly simple to <a href="https://github.com/attardi/wikiextractor">extract all text</a> from <a href="https://dumps.wikimedia.org/backup-index.html">Wikipedia database dumps</a>:
+</p>
+
+<pre class="example">
+colin@yumi ~/c/h/j/data&gt; python ~/code/python/wikiextractor/WikiExtractor.py --json --processes 4 --output out/ jawiki-20180301-pages-articles-multistream.xml
+...  # Much output here
+INFO: Finished 4-process extraction of 1097409 articles in 2328.7s (471.3 art/s)
+</pre>
+
+<p>
+This produced 2.5gb of JSON from 10.3gb of original XML, based on the 2018 March 1st
+dump of the entire Japanese Wikipedia (1,100,000 articles!). With the <a href="http://hackage.haskell.org/package/streaming">streaming</a> library's support for
+<a href="https://hackage.haskell.org/package/attoparsec">attoparsec</a>, <a href="https://github.com/fosskers/jp-wiki">it was simple</a> to produce a <code>Stream (Of Value) IO ()</code> that I could
+lens into and grab only the <code>Text</code> of the article body. Then, normal application of functions
+from my <code>kanji</code> library gives us aggregate information about the whole set:
+</p>
+
+<pre class="example">
+colin@yumi ~/c/h/jp-wiki&gt; stack exec -- jp-wiki
+Starting...
+Elementary: 86.299255
+Middle School: 7.0112896
+High School: 3.1226614
+Above Joyo: 3.5650756
+Complete.
+</pre>
+
+<p>
+<b>Observation 2: On average, Wikipedia articles contain more Kanji learned
+beyond High School than during it.</b>
+</p>
+
+<p>
+Once again, let's avoid over-extrapolating and consider:
+</p>
+
+<ul class="org-ul">
+<li>that articles frequently cite people's names, and Japanese names often contain rare Kanji.
+Take the last name 澤田 (Sawada): 澤 is not a Joyo Kanji,
+but it's a common enough last name that most people should be able to read it
+(especially after meeting thousands of people during one's lifetime).</li>
+<li>that Wikipedia is written academically, and that there are articles ranging from
+<a href="https://ja.wikipedia.org/wiki/%E5%9C%8F%E8%AB%96">Category Theory</a> to <a href="https://ja.wikipedia.org/wiki/%E8%BC%AA%E5%BB%BB">the Cycle of Buddhist Reincarnation</a> to <a href="https://ja.wikipedia.org/wiki/%E7%B4%B0%E8%83%9E%E5%88%86%E8%A3%82">cell division</a> to <a href="https://ja.wikipedia.org/wiki/%E5%B1%81">farts</a>.
+If you instead scanned a million manga volumes, you'd likely end up with a
+different spread.</li>
+<li>the fact that humans learn. When you've learned 2,000 Kanji already, picking
+up a new one here and there (especially just for reading/recognition) is easy.</li>
+</ul>
+
+<p>
+Still, let's run the numbers.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Life Stage</th>
+<th scope="col" class="org-right">Expected Kanji to Learn</th>
+<th scope="col" class="org-right">Fraction of Joyo Total</th>
+<th scope="col" class="org-right">Fraction Used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Elementary School</td>
+<td class="org-right">1,006</td>
+<td class="org-right">47.1%</td>
+<td class="org-right">86.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">Middle School</td>
+<td class="org-right">601</td>
+<td class="org-right">28.1%</td>
+<td class="org-right">7.0%</td>
+</tr>
+
+<tr>
+<td class="org-left">High School (and beyond)</td>
+<td class="org-right">529</td>
+<td class="org-right">24.8%</td>
+<td class="org-right">3.1%</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Suspicious.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdbfdf25" class="outline-3">
+<h3 id="orgdbfdf25"><span class="section-number-3">2.3</span> Further Work and Recommendations</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Personally, I appreciate high standards. I think humans thrive under them.
+If it were my decision, I'd <i>increase</i> the number of Joyo Kanji to encompass
+more of the missing 3.5% we saw above. <b>Observation 2</b> hints at the necessity
+of a reshuffling as well, but we would need more data for that. Namely:
+</p>
+
+<ul class="org-ul">
+<li>What <i>distinct words</i> of various rarities contain Kanji from each level?
+Recall 唯一.</li>
+<li>How often does each individual Kanji actually appear? Should absolute freqencies
+be the prime ordering criterion, or is a bit of prescriptivism good too (re:
+rare Kanji used in Yo-ji-juku-go that nobody <i>really</i> uses)?</li>
+<li>Which Kanji have "frequency bubbles"? Say, in what subcultures or academic
+disciplines do certain Kanji appear abnormally often? How should those affect
+the overall order?</li>
+</ul>
+
+<p>
+I don't have answers to these questions, but anyone considering a reordering
+of the standard Kanji set would have to address them, or they risk wasting their
+time.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-03-21</p>
+<p class="author">Author: Colin</p>
+<p class="date">Created: 2018-03-23 Fri 17:06</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
