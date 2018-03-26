@@ -15,13 +15,13 @@ import DOM.DOMParser (newDOMParser, parseHTMLFromString)
 import DOM.Node.NodeList (item, length)
 import DOM.Node.Types (Node)
 import Data.Array (catMaybes, filter, head, range, reverse, sortWith)
+import Data.Array as A
 import Data.Foldable (any, intercalate, null)
 import Data.Lens (_Just, (^.), (^?))
 import Data.Lens.Record (prop)
 import Data.Map as M
 import Data.Maybe (Maybe(Just, Nothing), maybe)
 import Data.Monoid (mempty)
-import Data.Set as S
 import Data.Symbol (SProxy(..))
 import Data.Traversable (traverse, traverse_)
 import Data.Tuple (Tuple(..), snd)
@@ -40,11 +40,11 @@ import Types (Effects, Post, asPost, defaultLang, localizedDate, localizedPath, 
 ---
 
 data Query a = LangChanged Language a
-             | NewKeywords (S.Set String) a
+             | NewKeywords (Array String) a
              | Selected Path a
              | Initialize a
 
-type State = { language :: Language, posts :: Array Post, keywords :: S.Set String, selected :: Maybe Path }
+type State = { language :: Language, posts :: Array Post, keywords :: Array String, selected :: Maybe Path }
 
 data Slot = SearchSlot
 derive instance eqSlot  :: Eq Slot
@@ -102,7 +102,7 @@ choices s = options (filter (\p -> postLang p == s.language) s.posts) >>= f
         g p = any (\kw -> M.member kw p.freqs) s.keywords
         options ps | null s.keywords = ps
                    | otherwise = reverse <<< sortWith hitsOnly $ filter g ps
-        hitsOnly p = M.filterKeys (\k -> S.member k s.keywords) p.freqs
+        hitsOnly p = M.filterKeys (\k -> A.elem k s.keywords) p.freqs
 
     -- H.lift <<< liftAff <<< log $ "Blog: New keywords -> " <> intercalate " " kws
 eval :: forall e. Query ~> H.ParentDSL State Query Search.Query Slot Void (Effects e)
