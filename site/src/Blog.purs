@@ -8,7 +8,7 @@ import Control.Error.Util (bool)
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff.Class (liftAff)
 import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Class (liftEff)
+import Control.Monad.Eff.Class (class MonadEff, liftEff)
 import DOM (DOM)
 import DOM.Classy.Node (class IsNode, appendChild, childNodes, lastChild, removeChild)
 import DOM.DOMParser (newDOMParser, parseHTMLFromString)
@@ -16,7 +16,8 @@ import DOM.Node.NodeList (item, length)
 import DOM.Node.Types (Node)
 import Data.Array (catMaybes, filter, head, range, reverse, sortWith)
 import Data.Array as A
-import Data.Foldable (any, intercalate, null)
+import Data.Foldable (any, foldMap, intercalate, null)
+import Data.Fuzzy (FuzzyStr(..), matchStr)
 import Data.Lens (_Just, (^.), (^?))
 import Data.Lens.Record (prop)
 import Data.Map as M
@@ -25,7 +26,7 @@ import Data.Monoid (mempty)
 import Data.Symbol (SProxy(..))
 import Data.Traversable (traverse, traverse_)
 import Data.Tuple (Tuple(..), snd)
-import Fosskers.Common (Language, Path, _Path, _Title)
+import Fosskers.Common (Language(..), Path, _Path, _Title)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
@@ -42,6 +43,7 @@ import Types (Effects, Post, asPost, defaultLang, localizedDate, localizedPath, 
 data Query a = LangChanged Language a
              | NewKeywords (Array String) a
              | Selected Path a
+             | HintChosen String a
              | Initialize a
 
 type State = { language :: Language, posts :: Array Post, keywords :: Array String, selected :: Maybe Path }
@@ -59,16 +61,48 @@ component = H.lifecycleParentComponent { initialState: const state
                                        , finalizer: Nothing }
   where state = { language: defaultLang, posts: mempty, keywords: mempty, selected: Nothing }
 
-render :: forall m. State -> H.ParentHTML Query Search.Query Slot m
+render :: forall e m. MonadEff ( dom :: DOM | e ) m => State -> H.ParentHTML Query Search.Query Slot m
 render s = fluid [ HC.style <<< paddingTop $ pct 1.0 ]
            [ row_ [ HH.div [ HP.classes $ map H.ClassName [ "col-xs-12", "col-md-3" ]] $ selection s
                   , HH.div [ HP.classes $ map H.ClassName [ "col-xs-12", "col-md-6" ]] [ post ]
                   , HH.div [ HP.classes [ H.ClassName "col-md-3" ]] []
                   ]]
 
-selection :: forall m. State -> Array (H.ParentHTML Query Search.Query Slot m)
-selection s = [ search ] <> choices s
+selection :: forall e m. MonadEff ( dom :: DOM | e ) m => State -> Array (H.ParentHTML Query Search.Query Slot m)
+selection s = [ search ] <> hints s <> choices s
   where search = row_ [ col_ [ HH.slot SearchSlot Search.component s.language (HE.input NewKeywords) ] ]
+
+hints :: forall c. State -> Array (HH.HTML c (Query Unit))
+hints s | A.null s.keywords = []
+        | otherwise = maybe [] f $ A.last s.keywords
+  where ps = filter (\p -> postLang p == s.language) s.posts
+        f kw | any (\p -> M.member kw p.freqs) ps = []
+             | otherwise = let fuzzy = A.take 3
+                                       $ A.sortWith (\(FuzzyStr z) -> z.distance)
+                                       $ A.fromFoldable
+                                       $ map (\k -> matchStr true kw k)
+                                       $ M.keys
+                                       $ foldMap _.freqs ps
+                           in [ row [ HC.style $ paddingTop $ pct 1.0 ]
+                                [ col_
+                                  [ HH.text $ bool "もしかして：" "Perhaps you mean: " (s.language == English)
+                                  , HH.div [ HP.class_ (H.ClassName "btn-toolbar")
+                                           , HP.attr (H.AttrName "role") "toolbar"
+                                           , HP.attr (H.AttrName "aria-label") "Hints" ]
+                                    $ map (\(FuzzyStr z) -> hintButton z.original) fuzzy
+                                  ]
+                                ]
+                              ]
+
+hintButton :: forall c. String -> HH.HTML c (Query Unit)
+hintButton s = HH.div [ HP.classes $ map H.ClassName ["btn-group", "mr-2"]
+                      , HP.attr (H.AttrName "role") "group"
+                      , HP.attr (H.AttrName "aria-label") $ "hint-" <> s ]
+               [ HH.button [ HP.attr (H.AttrName "type") "button"
+                           , HP.classes $ map H.ClassName [ "btn", "btn-outline-secondary", "btn-sm" ]
+                           , HE.onClick (HE.input_ $ HintChosen s) ]
+                 [ HH.text s ]
+               ]
 
 -- | Make a request for blog post content.
 xhr :: forall e. String -> Aff ( ajax :: AJAX, dom :: DOM | e ) (Array Node)
@@ -107,8 +141,8 @@ choices s = options (filter (\p -> postLang p == s.language) s.posts) >>= f
     -- H.lift <<< liftAff <<< log $ "Blog: New keywords -> " <> intercalate " " kws
 eval :: forall e. Query ~> H.ParentDSL State Query Search.Query Slot Void (Effects e)
 eval = case _ of
-  NewKeywords kws next  -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
-  LangChanged l next    -> do
+  NewKeywords kws next -> update (prop (SProxy :: SProxy "keywords")) kws *> pure next
+  LangChanged l next   -> do
     curr <- H.gets _.language
     unless (l == curr) $ do
       H.modify (_ { language = l })
@@ -121,6 +155,9 @@ eval = case _ of
       H.modify (_ { selected = Just s })
       htmls <- H.getHTMLElementRef (H.RefLabel "blogpost")
       traverse_ (\el -> liftAff (xhr $ s ^. _Path) >>= liftEff <<< replaceChildren el) htmls
+    pure next
+  HintChosen s next -> do
+    void $ H.query SearchSlot $ H.action (Search.External s)
     pure next
   Initialize next -> do
     l <- H.gets _.language
