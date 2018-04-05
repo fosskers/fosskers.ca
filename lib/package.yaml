@@ -4,7 +4,7 @@ synopsis: My personal site.
 description: My personal site.
 category: Web
 author: Colin Woodbury
-maintainer: colingw@gmail.com
+maintainer: colin@fosskers.ca
 license: BSD3
 git: git://github.com/fosskers/fosskers.ca.git
 

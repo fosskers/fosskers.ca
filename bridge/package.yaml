@@ -4,7 +4,7 @@ synopsis: Convert Haskell types to Purescript types.
 description: Convert Haskell types to Purescript types.
 category: Web
 author: Colin Woodbury
-maintainer: colingw@gmail.com
+maintainer: colin@fosskers.ca
 license: BSD3
 git: git://github.com/fosskers/fosskers.ca.git
 

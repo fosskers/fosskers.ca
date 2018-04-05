@@ -70,7 +70,7 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
         [ HH.text c ]
       , icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       , icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
-      , icon "mailto:colingw@gmail.com" [ "fas", "fa-envelope" ]
+      , icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
       , icon ("/rss-" <> bool "jp" "en" (state.language == English)) [ "fas", "fa-rss" ]
       ]
     ]
