@@ -20,7 +20,7 @@ Some problems that have historically plagued raster processing systems are:
 Long-running satellite imagery programs like [[https://landsat.usgs.gov/][Landsat]] and [[https://sentinel.esa.int/web/sentinel/home][Sentinel]] continue to
 produce large imagery, so these problems remain relevant to modern systems.
 In this article I announce my new Haskell library [[https://hackage.haskell.org/package/mapalgebra][mapalgebra]] and offer a
-(hopefully) fair comparison with existing solutions.
+(hopefully) fair comparison with existing Open Source solutions.
 
 * New Library: ~mapalgebra~
 
@@ -58,7 +58,7 @@ at the foundations and offers no shortcuts.
 
 To try or develop Haskell, the book (and I) recommend [[https://docs.haskellstack.org/en/stable/README/][the Stack tool]].
 
-** Features
+** Features and Strengths
 
 ~mapalgebra~'s answer to the Raster processing problem? /Be lazy™ and parallelize everything./
 
@@ -163,7 +163,7 @@ For production systems, this means informally that the more CPUs you throw
 at the problem, the faster it will get "for free". Please do take [[https://en.wikipedia.org/wiki/Amdahl%27s_law][Amdahl's Law]]
 into account, though.
 
-** Performance
+*** Performance
 
 Decades of work have gone into GHC, the main Haskell compiler, and it can produce
 highly optimized machine code.
@@ -176,6 +176,12 @@ Haskell also has an [[https://llvm.org/][LLVM]] backend, which can be accessed w
 Not all operations benefit from it, but the ones that do gain about a 2x speed-up.
 
 A full chart of benchmarks is available below in the /Benchmarks/ section.
+
+*** Low-effort Deployment
+
+[[https://www.fosskers.ca/blog/deploying-haskell-en.html][As I've written in the past]], Haskell programs can be very simple to deploy (~git push~!).
+Haskell programs compile to a runnable binary, which thanks to ~stack~, can always
+be built reliably (i.e. no dependency hell).
 
 ** Short-comings
 
@@ -236,8 +242,8 @@ One way to handle the NoData in a typesafe way is via ~Maybe~:
 
   -- | `Maybe` has a `Monoid` instance, which by default ignores any `Nothing`
   -- that are added to it. `fmonoid` is used to smash the neighbourhood together.
-  nodatafmean :: Raster S p r c Word8 -> Raster DW p r c 512 Word8
-  nodatafmean = fmap (maybe 0 getSum) . fmonoid . strict B . fmap check . lazy
+  nodatafsum :: Raster S p r c Word8 -> Raster DW p r c 512 Word8
+  nodatafsum = fmap (maybe 0 getSum) . fmonoid . strict B . fmap check . lazy
     where check 0 = Nothing
           check n = Just $ Sum n
 #+END_SRC
@@ -322,21 +328,67 @@ I hope so.
 
 * What about Rasterio (Python)?
 
-** The Strengths of Rasterio
+[[https://github.com/mapbox/rasterio][Rasterio]] is a Python library for reading and writing GeoTIFFs, and performing
+basic Local Operations. It aims for improvement in usability over the Python
+binding provided by [[http://www.gdal.org/][GDAL]].
 
-*** Numpy
+** Philosophy and Strengths
 
-Fast fast, thanks to C.
+Rasterio's solution to the Raster processing problem? /Use C to go fast./
+
+*** GDAL and Numpy
+
+Rasterio uses GDAL, a well-known C library, for its IO. After an image has been read,
+users are given [[http://www.numpy.org/][NumPy]] arrays to work with. Rasterio thus directly benefits from
+the speed of NumPy's operations, which are all written in C at the lowest level.
+
+Both GDAL and NumPy are well-established projects with many developers behind them.
 
 *** Mindshare
 
-Many people already know how to use Python.
+Python is huge. It's installed by default on many modern systems and has a low learning
+curve. This, and the advent of NumPy/SciPy, have made it a darling of the Data Science world.
 
-** The Weaknesses of Rasterio
+This is good from an employability standpoint - what dev doesn't know / can't learn
+Python?
 
-*** Dynamic Typing
+This is also good from a research standpoint - a supervisor can feel confident in
+assigning "Learn Python" to a student as a preliminary research task.
+
+*** Low-effort Deployment
+
+Since all Python programs are just scripts, making sure GDAL is properly
+installed on the host system is about the only problem you might have.
+
+** Short-comings
+
+*** Dynamic Language
+
+Python has neither explicit types nor a compiler. This might be fine for
+prototyping, but for large or long-running projects, this approach can
+accrue technical debt. Beyond a certain code size, proposed changes become paralyzing:
+"What will the effect of me changing these function arguments be?"
+[[https://twitter.com/agoX/status/991799972155871233][You won't know until run-time]].
+
+Given the nature of Data Science, one would expect a little more rigour. To compare
+briefly to ~mapalgebra~, Rasterio will not shield you from mismatches in Projection,
+Raster size, or pixel data type. Python also brings with it all the pitfalls of being able to
+freely mix effectful (i.e. ~IO~) and non-effectful code.
+
+*How could this be fixed?* You may want to consider [[http://coconut-lang.org/][Coconut]], a dialect of Python
+with first-class support for Functional Programming and Static Types. It compiles
+to regular Python, so you shouldn't lose anything.
 
 *** No Focal Operations
+
+As far as I could find, Focal Operations (or Zonal, for that matter)
+are not provided by default by
+either Rasterio or NumPy. You may be able to replicate Focal Mean with
+some Convolution, but something more involved like Focal Gradient won't
+come prepackaged.
+
+*How could this be fixed?* If you need Focal Operations, you will have to
+write them yourself or look elsewhere.
 
 * What about GeoTrellis (Scala)?
 
@@ -346,50 +398,169 @@ vector (geometric), vector tile, and point-cloud data, and has integration with
 
 *Disclaimer:* I used to work for the team that created and maintains GeoTrellis.
 Were it not for their wisdom and support, I would not be where I am today. I thank
-them and all of [[https://www.azavea.com/][Azavea]] for everything they taught me.
+them and all of my former coworkers for everything they taught me.
 
 Any criticism of GeoTrellis here is made with the utmost respect for my former colleagues and
 their continuing effort.
 
-** Philosophy and Prime Use-Cases
+** Philosophy and Strengths
 
 GeoTrellis' answer to the Raster processing problem? /Distribution./
+
+*** Scalability
+
+#+BEGIN_QUOTE
+My data is big... and I mean /big/.
+#+END_QUOTE
+
+Gigabytes? Terabytes? No problem. GeoTrellis is built on [[http://spark.apache.org/][Apache Spark]], and
+regularly combines large imagery into colour-corrected tile layers in jobs
+that span scores of machines. The imagery it can handle and the
+processing network can both be arbitrarily big.
+
+*** IO Flexibility
+
+GeoTrellis can read GeoTIFFs from anywhere in any band count, and provides
+data structures for further processing.
+
+With the ~geotrellis-spark~ package, it's common to create [[https://en.wikipedia.org/wiki/Extract,_transform,_load][ETL]] pipelines
+that process imagery, pyramid resulting tiles, and output a range of zoom levels
+for later use in a Tile Server.
+
+With the upcoming ~2.0.0~ release, GeoTrellis also provides an implementation
+of Cloud-Optimized GeoTiff Layers. These offer a significant performance
+improvement for IO, are better suited for storage on HDFS/S3 than the old format,
+and allow GeoTrellis Layers to be viewable in QGIS.
+
+*** Feature Richness
+
+GeoTrellis is a suite of libraries, but the ~geotrellis-raster~ package alone
+boasts a number of ready-to-use GIS operations, including:
+
+- Cost Distance
+- Hydrology ops
+- Colour + ASCII rendering
+- Map Algebra
+- Rasterization (i.e. Vector -> Raster conversion)
+- Reprojection + Resampling
+- Viewshed
 
 ** Short-comings
 
 *** Opaque ~Tile~ Types
 
-Link to the Tile hierarchy image.
+Unlike the ~Raster u p r c a~ type from ~mapalgebra~, most GeoTrellis
+Raster operations yield a non-generic ~Tile~ type. In order to handle
+different underlying types, ~Tile~ forms a [[http://geotrellis.readthedocs.io/en/latest/_images/tile-hierarchy1.png][very large OO inheritance hierarchy]]
+with a lot of duplicated code.
+
+Speed is the motivation. If you want to go fast on the JVM, you need
+Arrays, Ints, and Doubles. One consequence of this is the ~foo~ / ~fooDouble~
+pattern, seen here with ~ArrayTile.map~:
+
+#+BEGIN_SRC scala
+    def map(f: Int => Int): Tile = {
+      val output = ArrayTile.alloc(cellType, cols, rows)
+      var i = 0
+      val len = size
+      while (i < len) {
+        output(i) = f(apply(i))
+        i += 1
+      }
+      output
+    }
+
+    def mapDouble(f: Double => Double): Tile = {
+      val len = size
+      val tile = ArrayTile.alloc(cellType, cols, rows)
+      var i = 0
+      while (i < len) {
+        tile.updateDouble(i, f(applyDouble(i)))
+        i += 1
+      }
+      tile
+  }
+#+END_SRC
+
+When all potential underlying types need to be simulated with ~Int~ and ~Double~,
+you get a lot of code duplication and a large surface area for bugs.
+
+*How could this be fixed?* A generic ~Tile[A]~ has [[https://github.com/locationtech/geotrellis/issues/39][long been sought]]. Since the JVM
+aggressively boxes primitives if you aren't careful, naive ~case class~ based
+solutions don't work. [[https://github.com/locationtech/geotrellis/pull/2520][Generic Map Algebra seems possible]] with typeclasses and raw
+~Array~, but
+the latest news on the wind is that GeoTrellis will look into [[https://nd4j.org/][ND4J]] Arrays instead
+to underpin ~Tile~.
 
 *** Mixed Projections and Raster Sizes
 
-I'd be a rich man if I had a nickle for every time results were incorrect because
-of faulty assumptions about what Projection our data was in.
+A common problem:
+
+#+BEGIN_QUOTE
+A: Something's not right with my results...
+
+B: Are all your projections matching?
+
+A: ...crap.
+#+END_QUOTE
+
+It's frustrating when a one-line oversight like this wastes hours of ingest time.
+Since ~Tile~ is opaque, the compiler can't protect us from errors like this.
+The result is a need to keep a lot of tiny details in your head while coding.
+
+*How could this be fixed?* Either:
+
+1. A generic ~Tile~ type that exposes a ~CRS~ in the type signature, or;
+2. Run-time checks whenever operations between two Rasters are performed, to make
+   sure the operation is legal. This would mean a /lot/ of boilerplate and opportunity
+   for bugs.
 
 *** Lack of Op Fusion
 
-Talk about EVI.
+Binary Local Operations like ~tile1 + tile2~ allocate a new ~Array~. Further,
+for each ~Array~ index in either ~Tile~, a NoData comparison is made.
+
+Let's consider EVI again:
+
+#+BEGIN_SRC scala
+  /* Enhanced Vegetation Index */
+  def evi(nir: Tile, red: Tile, blue: Tile): Tile =
+    ((nir - red) / (nir + (red * 6) - (blue * 7.5) + 1)) * 2.5
+#+END_SRC
+
+There are 8 operators here, which means many repeated iterations over the Arrays
+and many redundant NoData checks. This does bring a performance cost.
+
+*How could this be fixed?* Either by implementing a kind of ~LazyTile~ type
+which has been discussed in the past, or by improving the performance of
+current operations to the point where redundant allocations don't matter
+as much.
 
 *** API Discoverability
 
-GeoTrellis utilizes around 15 actual data types (~Tile~, ~Polygon~, etc.).
-Despite this, its scaladocs (TODO link!) present users with XXX top-level symbols.
-XXX of these are method-injection boilerplate which permit the following:
+GeoTrellis utilizes around 20 actual data types (~Tile~, ~Polygon~, etc.).
+Despite this, [[https://geotrellis.github.io/scaladocs/latest/#geotrellis.package][its scaladocs]] present users with 2,223 top-level symbols.
+Around 500 of these are method-injection boilerplate classes which permit calls
+like the following:
 
 #+BEGIN_SRC scala
+  import geotrellis.raster.mapalgebra.focal._
+
   // Given...
   val tile: Tile = ???
+  val n: Neighbourhood = Square(1)
 
-  // Some example of manually calling `focalMean`
+  // Instead of this, which looks like class instantiation...
+  val averaged1: Tile = Mean(tile, n)
 
-  // ... we can do this. Much more idiomatic!
-  val averaged: Tile = tile.focalMean
+  // ...we can do this. Much more idiomatic!
+  val averaged1: Tile = tile.focalMean(n)
 #+END_SRC
 
 For modularity reasons ~.focalMean~ isn't defined directly within the ~Tile~
 class. This is good because it keeps the ~Tile~ class clean. What isn't good
-is the resulting boilerplate: the XXX top-level symbols which a user doesn't need
-to see but is shown anyway.
+is the resulting boilerplate: the 500 extra top-level symbols which a user doesn't
+need to see but is shown anyway.
 
 Another downside is that ~.focalMean~ doesn't appear in Tile's scaladocs entry.
 The question "what can I do to a ~Tile~?" is not easy to answer. This situation
@@ -400,13 +571,133 @@ I want to turn a ~Tile~ into a ~Foo~. What do I need to import and what
 injected method do I need to call for that?
 #+END_QUOTE
 
-The pursuit of that answer has burnt a lot of user time over the years. The
-worst case scenario is when they need to ask us directly...
-Something is wrong when a library's basic functionality is not self-explanitory.
+[[http://geotrellis.readthedocs.io/en/latest/guide/faq.html#how-do-i-import-geotrellis-methods][The pursuit of that answer]] has burnt a lot of user time over the years. The
+worst case scenario is when they need to ask us directly for help manipulating
+core data structures. Something is wrong when a library's basic functionality
+is not self-explanitory.
 
-*How could this be fixed?*
+*How could this be fixed?* A few things would reduce top-level symbol count:
 
-*** Overuse of Spark
+- Aggressive use of ~private~ to hide details which aren't important for users to see.
+- ~geotrellis.foo.bar.internal~ modules which hide non-user-facing types and machinery.
+- Removal of "Verb Classes".
+- Using [[https://github.com/mpilquist/simulacrum][simulacrum-based typeclasses]] instead of ad-hoc method injection.
+- Building Scaladocs without symbols from docs / code samples / test suites included.
+
+*** Heavy Call Indirection and Method Overloading
+
+Assume we had started with:
+
+#+BEGIN_SRC scala
+  val t1: Tile = IntArrayTile.empty(512, 512).map { (c, r, _) => c * r }
+  val t2: Tile = IntArrayTile.empty(512, 512).map { (c, r, _) => c * r + 1 }
+#+END_SRC
+
+what does it take to perform a Local Sum?
+
+#+BEGIN_SRC scala
+  val result: Tile = t1 + t2
+#+END_SRC
+
+~Tile~ does not have ~+~ directly defined on it. Instead:
+
+- ~Tile~ is implicitely wrapped with ~class withTileMethods~. ([[https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/package.scala#L54][geotrellis/raster/package.scala]])
+- Along with 25 other traits, ~withTileMethods~ extends ~LocalMethods~.
+- Along with 19 other traits, ~LocalMethods~ extends ~AddMethods~. ([[https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/mapalgebra/local/LocalMethods.scala#L23][geotrellis/raster/mapalgebra/local/LocalMethods.scala]])
+- Injected method ~+~ redirects to ~localAdd~. ([[https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/mapalgebra/local/Add.scala#L57][geotrellis/raster/mapalgebra/local/Add.scala#L57]])
+- ~localAdd~ looks like it's instantiating an instance of an ~Add~ class:
+
+#+BEGIN_SRC scala
+  def localAdd(r: Tile): Tile = Add(self, r)
+#+END_SRC
+
+But it's not - this is implicitely a call to ~Add.apply~. Does ~Add~ have an
+~.apply~ method?
+
+#+BEGIN_SRC scala
+  object Add extends LocalTileBinaryOp {
+    def combine(z1: Int, z2: Int) = ...
+
+    def combine(z1: Double, z2: Double) = ...
+  }
+#+END_SRC
+
+- No, ~.apply~ is actually defined in ~LocalTileBinaryOp~, of which there are 6 overloads. ([[https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/mapalgebra/local/LocalTileBinaryOp.scala#L55][geotrellis/raster/mapalgebra/local/LocalTileBinaryOp.scala#L55]])
+- This ~.apply~ calls ~Tile.dualCombine~.
+- We have ~Int~ tiles, so this redirects to ~combine~. ([[https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/Tile.scala#L100][geotrellis/raster/Tile.scala#L100]])
+- ~combine~ is abstract, so we check which subclass it's implemented in.
+- We started with ~IntArrayTile~, but ~combine~ isn't defined there. Maybe ~MutableArrayTile~, its parent?
+- Not there either. Maybe /its/ parent, ~ArrayTile~?
+- Found it. ~combine~ is overloaded though, and redirects to another variation. ([[https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/ArrayTile.scala#L224][geotrellis/raster/ArrayTile.scala#L224]])
+- A new ~Array~ is allocated, and the given ~f~ is applied to each index. ([[https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/ArrayTile.scala#L201][geotrellis/raster/ArrayTile.scala#210]])
+- Which ~f~ is that? It's what was given to ~dualCombine~, namely ~LocalTileBinaryOp.combine~.
+- This ~combine~ is abstract. The actual code is back in ~Add.scala~ (shown above), and performs ~Int~
+  addition with some NoData checking.
+- Finally, a new ~ArrayTile~ masked as ~Tile~ is returned.
+
+This level of indirection is frequent throughout the library. It:
+
+- worsens performance
+- increases development costs by making it hard to find where anything is actually defined
+- makes the true source of bugs difficult to locate
+- gives users choice paralysis (e.g. "which method is the right one?")
+
+*How can this be fixed?* A generic ~Tile~ type and more use of typeclasses would
+decrease boilerplate and indirection. A removal of
+"Verb Classes" like ~Add~ and a reduced reliance on OO-style
+hierarchies-for-the-sake-of-hierarchies would also help.
+
+*** High-effort Deployment
+
+GeoTrellis assumes the use of Spark for many of its features.
+However, there are a number of things one has to keep in mind when deploying a
+Spark-based GeoTrellis program.
+
+*Level: Critical*
+
+Omitting one of these will almost certainly cause the Spark job to fail.
+
+- Is the JVM instance in production assigned enough RAM?
+- If running in a Docker container, do the container's memory settings conflict with
+  the JVM's?
+- Have I configured executor memory settings to the exact value that will prevent them
+  from dying at runtime or under-utilizing resources?
+- Did I request enough executor machines to be able to store the collective memory of
+  the job?
+- Is the version of Spark I'm testing with the same as the version available on AWS?
+- Is AWS running the same version of Java that I need?
+- Are my AWS credentials fed through correctly to access S3?
+- Are the exact Spark, Hadoop, and GeoTrellis dependencies marked as ~... % "provided"~
+  in ~build.sbt~ so that there aren't conflicts with AWS at runtime?
+- Did I remember to upload the most recent version of my assembled code to S3 for Spark?
+- Did I ensure I didn't assemble "stale" code? (i.e. "Don't trust ~sbt clean~.")
+
+*Level: Annoying*
+
+Omitting these will increase your AWS bill.
+
+- Have I configured things correctly such that Exception logs are available when I
+  need to find them?
+- Am I using AWS "spot instances" so that my Spark job doesn't cost too much?
+- Am I using ~RDD~ caching in the exact places that will prevent redundant work?
+- Have I made sure not to force ~RDD~ execution before I should be (with ~.count~, etc.)?
+
+If you'd rather avoid keeping track of these details, then perhaps you should seek
+an alternative to Spark. Are you sure you need it?
+
+*** Potential Overkill
+
+Spark is popular, and everyone wants to be doing "big data". Chances are, though,
+that your data isn't really that big. In which case, the Spark integration for
+GeoTrellis is not necessary for you - you may be fine with single-machine
+raster processing. If single-machine, navigating basic use of GeoTrellis
+and the effort of deploying a Spark program may not be worth it. Consider also
+that both Rasterio and ~mapalgebra~ have better single-machine performance.
+
+If you just want to do some simple Map Algebra on reasonably sized images,
+GeoTrellis is probably overkill. You might be interested instead in [[https://www.rasterfoundry.com/][Raster Foundry]],
+a web app for working with imagery visually.
+
 
 ** A Word on Scala, in General
 
@@ -414,62 +705,19 @@ Everyone is entitled to their favourite language, and with the right training
 and motivation, good work can be done in any of them.
 Hell, the software for the [[https://en.wikipedia.org/wiki/New_Horizons][New Horizons]] satellite was written in Assembly.
 That said, any group of programmers would probably agree that in general, some
-languages are better than others. What better /means/ is hard to qualify, though.
-Because it's hard, to swing to the opposite extreme and say "all languages
-are equally good" is likely more politics than anything, so let's try our best.
+languages are better than others. What better /means/ is hard to qualify, but we can try.
 
-We could measure language quality along these axes:
+Is your language expressive? Does it have good aethetics? A solid library ecosystem?
+Reasonable performance for idiomatic use? Tons of GOTCHAs?
 
-- Expressivity
-  - Some "power"-vs-characters-typed ratio.
-  - Related to Verbosity, with Assembly on one extreme and [[https://en.wikipedia.org/wiki/APL_(programming_language)][APL]] on the other.
-- Aethetics
-  - I know I've been visually offended by my own code before.
-- Library Ecosystem
-  - Languages are born and die all the time for lack of users.
-- Performance
-  - Specifically: is /idiomatic/ use of the language performant, or is the
-    language filled with...
-- GOTCHAs
-  - Not just things that confuse learners - things that also confuse and frustrate
-    experienced users.
-- Risk of Verbosity and Accidental Complexity
-  - Given an otherwise capable dev, how easy is it to accidentally write
-    complex code?
-- Beginner-centricness
-  - How long does it take to become productive?
-  - Too much or too little of this are both bad.
-- Tooling
-  - Is there a "blessed" editor for the language?
-  - What is the error feedback mechanism?
-    (Hopefully not "run it and see what fails")
-  - How are projects defined and built in the language?
-  - Does "dependency hell" exist in the language?
-- Core Development Team
-  - Are the language's core devs qualified with a good track record?
-  - How do the core devs handle feedback / criticism?
-- Community
-  - Are established members willing to teach? Are newcomers willing to learn?
-  - Where and how do members congregate and communicate?
-  - How political is the community?
-- Momentum
-  - When was the language's last major release?
-  - Is there a huge user base? A brain-drain to other languages? Should we care?
-- Learning Resources
-  - Are there books? Talks? Courses?
-
-No single axis should sway a decision to use a language. Hopefully a language's
-strong axes outweight the weak enough to maintain dev sanity.
-
-There is a meta-axis too which generalizes everything above: Order vs Chaos.
-Javascipt? Chaotic, but you can force Order upon it with best practices. Haskell?
-Ordered, but you can introduce Chaos into it with care.
+Is it easy to write complex spaghetti code? How's the learning curve? Is there
+usable, well-maintained tooling? How's the community? Do the core devs have a
+solid track record?
 
 Having written Scala professionally for 4 years, I would rank it at least
-"below average" on
-almost every axis described above, and call it more Chaotic than Ordered.
+"below average" on these criteria.
 For GIS in particular, its use should be avoided. I'll elaborate
-on the points which are relevant to GIS (and/or Data Science) below.
+on the points which are relevant to GIS (or Data Science) below.
 
 *** Performance GOTCHAs and Lack of Optimizations
 
@@ -502,10 +750,59 @@ what could labour costs be reduced to if this wasn't the case?
 different language altogether.
 
 *** No Unsigned Primitives
+
+The JVM does not have support for types like ~uint~. Raster data is often
+unsigned, so to work around this GeoTrellis has to simulate all the unsigned
+operations with signed ones. There is extra logic for this, at the cost
+of performance and code complexity.
+
+*How could this be fixed?* Wait for the JVM to support unsigned types,
+or use a different JVM language that supports them, like [[https://eta-lang.org/][Eta]].
+
 *** Aggressive Boxing of Primitives
-*** Binary Compatibility
-*** Deployment Woes
-* Benchmarks
+
+To go fast on the JVM, you need the ~Array~. However, writing this:
+
+#+BEGIN_SRC scala
+  def work[A, B](tile: Array[A]): Array[B] = {
+    ...  // transform the contents of `tile`
+  }
+#+END_SRC
+
+will not get you the result you expect. Even if you pass it a ~Array[Int]~,
+these ~Int~ will be upcasted to ~Object~ and your performance will tank.
+Knowing when this boxing occurs is a detail we shouldn't have to keep
+track of, but we do. Avoiding these problems involves a lot of boilerplate
+and code duplication in GeoTrellis.
+
+*How could this be fixed?* The [[https://github.com/non/spire][spire]] library can help with this somewhat.
+Otherwise, the Scala proposal [[https://docs.scala-lang.org/sips/opaque-types.html][SIP-35]] describes the upcoming
+"Opaque Types" in Scala 3, which could help. However, GeoTrellis is bound to
+Spark. Given that Spark still doesn't support Scala 2.12 despite its initial
+release in 2016 October, the earliest we could expect Opaque Types to be
+used in GeoTrellis would be 2022.
+
+*** 32-bit Array Indices
+
+~Array~ is indexed by ~Int~, which is a 32-bit data type. This means you
+can't have more than ~2^31~ elements in your Array. For GIS, this means your
+image can't be larger than around 47,000 by 47,000 pixels, or GeoTrellis can't read it.
+
+*How could this be fixed?* The JVM would have to make ~Array~ based on the
+~Long~ type, which is unlikely.
+
+* Comparisons
+
+** Code Samples
+
+*** Read an Image
+
+*** Write an Image
+
+*** Enhanced Vegetation Index (EVI)
+
+** Benchmarks
+
 * Resources
 
 - GT site
