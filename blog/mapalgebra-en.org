@@ -648,6 +648,22 @@ decrease boilerplate and indirection. A removal of
 "Verb Classes" like ~Add~ and a reduced reliance on OO-style
 hierarchies-for-the-sake-of-hierarchies would also help.
 
+*** Verbosity, Complexity, and Maintenance Cost
+
+It has been my experience that Haskell code is usually much shorter than Scala
+for equivalent functionality. ~mapalgebra~ has around 600 lines of code (not counting
+comments). The total line count of all modules from GeoTrellis that implement the "same"
+functionality is around 6,000.
+
+Scala has a certain quality to it that makes writing verbose code easy.
+As demonstrated in the /Indirection/ section above, it's also easy to write
+oneself into complexity.
+If GeoTrellis would be your / your company's first foray into Scala, consider
+that development and maintenance of your project may take more people than necessary.
+
+*How could this be fixed?* I don't know that it can be. Scala would have to be a
+different language altogether.
+
 *** High-effort Deployment
 
 GeoTrellis assumes the use of Spark for many of its features.
@@ -699,99 +715,6 @@ If you just want to do some simple Map Algebra on reasonably sized images,
 GeoTrellis is probably overkill. You might be interested instead in [[https://www.rasterfoundry.com/][Raster Foundry]],
 a web app for working with imagery visually.
 
-
-** A Word on Scala, in General
-
-Everyone is entitled to their favourite language, and with the right training
-and motivation, good work can be done in any of them.
-Hell, the software for the [[https://en.wikipedia.org/wiki/New_Horizons][New Horizons]] satellite was written in Assembly.
-That said, any group of programmers would probably agree that in general, some
-languages are better than others. What better /means/ is hard to qualify, but we can try.
-
-Is your language expressive? Does it have good aethetics? A solid library ecosystem?
-Reasonable performance for idiomatic use? Tons of GOTCHAs? Is it easy to write complex
-spaghetti code? How's the learning curve? Is there
-usable, well-maintained tooling? How's the community? Do the core devs have a
-solid track record?
-
-I don't consider Scala to score well on these criteria.
-For GIS in particular, Scala's use should be avoided.
-Here's why.
-
-*** Performance GOTCHAs and Lack of Optimizations
-
-~scalac~ is not an optimizing compiler. There is no ~-O2~.
-We can't write clean, idiomatic code
-and expect the compiler to "do the right thing".
-[[https://github.com/fosskers/scala-benchmarks][Naive use of the standard library]] also can't be trusted to perform well,
-even with the JIT (except tail recursion over ~List~, which rivals
-~while~ loops for speed).
-
-To achieve "performance
-Scala" you must bend the language to your will, using loops, mutable variables,
-and mutable Java collections.
-
-*How could this be fixed?* [[https://github.com/scala-native/scala-native][Scala Native]] is a Scala dialect which compiles to
-LLVM, which /does/ optimize. Unfortunately, it isn't production ready
-and only supports a subset of the standard Java libraries. Scala libraries also
-need to be specifically configured for it (Spark, and thus GeoTrellis, are not).
-
-*** Verbosity and Accidental Complexity
-
-It has been my experience that Haskell code is usually 2 to 3 times shorter than Scala
-for equivalent functionality. ~mapalgebra~ has around 600 lines of code (not counting
-comments). The total line count of all modules from GeoTrellis that implement the "same"
-functionality is around 6,000. Such surface area is bound to breed bugs, and require
-more than one human to manage it. If such code lengths are typical in Scala codebases,
-what could labour costs be reduced to if this wasn't the case?
-
-*How could this be fixed?* I don't know that it can be. Scala would have to be a
-different language altogether.
-
-*** No Unsigned Primitives
-
-The JVM does not have support for types like ~uint~. Raster data is often
-unsigned, so to work around this GeoTrellis has to simulate all the unsigned
-operations with signed ones. There is extra logic for this, at the cost
-of performance and code complexity.
-
-*How could this be fixed?* Wait for the JVM to support unsigned types,
-or use a different JVM language that supports them, like [[https://eta-lang.org/][Eta]].
-
-*** Aggressive Boxing of Primitives
-
-To go fast on the JVM, you need the ~Array~. However, writing this:
-
-#+BEGIN_SRC scala
-  def work[A, B](tile: Array[A]): Array[B] = {
-    ...  // transform the contents of `tile`
-  }
-#+END_SRC
-
-will not get you the result you expect. Even if you pass it a ~Array[Int]~,
-these ~Int~ will be upcasted to ~Object~ and your performance will tank.
-Knowing when this boxing occurs is a detail we shouldn't have to keep
-track of, but we do. Avoiding these problems involves a lot of boilerplate
-and code duplication in GeoTrellis.
-
-*How could this be fixed?* The [[https://github.com/non/spire][spire]] library can help with this somewhat.
-Otherwise, the Scala proposal [[https://docs.scala-lang.org/sips/opaque-types.html][SIP-35]] describes the upcoming
-"Opaque Types" in Scala 3, which could help. However, GeoTrellis is bound to
-Spark. Given that Spark still doesn't support Scala 2.12 despite its initial
-release in 2016 October, the earliest we could expect Opaque Types to be
-used in GeoTrellis would be 2022.
-
-*** 32-bit Array Indices
-
-~Array~ is indexed by ~Int~, which is a 32-bit data type. This means you
-can't have more than ~2^31~ elements in your Array. For GIS, this means your
-image can't be larger than around 47,000 by 47,000 pixels, or GeoTrellis can't
-read it as a single ~Tile~.
-
-Yes, we have encountered imagery that big in the wild.
-
-*How could this be fixed?* The JVM would have to make ~Array~ based on the
-~Long~ type, which is unlikely.
 
 * Comparisons
 
