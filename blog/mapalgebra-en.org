@@ -576,7 +576,8 @@ worst case scenario is when they need to ask us directly for help manipulating
 core data structures. Something is wrong when a library's basic functionality
 is not self-explanitory.
 
-*How could this be fixed?* A few things would reduce top-level symbol count:
+*How could this be fixed?* A few things would reduce top-level symbol count
+and make GeoTrellis easier to learn:
 
 - Aggressive use of ~private~ to hide details which aren't important for users to see.
 - ~geotrellis.foo.bar.internal~ modules which hide non-user-facing types and machinery.
@@ -708,16 +709,14 @@ That said, any group of programmers would probably agree that in general, some
 languages are better than others. What better /means/ is hard to qualify, but we can try.
 
 Is your language expressive? Does it have good aethetics? A solid library ecosystem?
-Reasonable performance for idiomatic use? Tons of GOTCHAs?
-
-Is it easy to write complex spaghetti code? How's the learning curve? Is there
+Reasonable performance for idiomatic use? Tons of GOTCHAs? Is it easy to write complex
+spaghetti code? How's the learning curve? Is there
 usable, well-maintained tooling? How's the community? Do the core devs have a
 solid track record?
 
-Having written Scala professionally for 4 years, I would rank it at least
-"below average" on these criteria.
-For GIS in particular, its use should be avoided. I'll elaborate
-on the points which are relevant to GIS (or Data Science) below.
+I don't consider Scala to score well on these criteria.
+For GIS in particular, Scala's use should be avoided.
+Here's why.
 
 *** Performance GOTCHAs and Lack of Optimizations
 
@@ -735,7 +734,7 @@ and mutable Java collections.
 *How could this be fixed?* [[https://github.com/scala-native/scala-native][Scala Native]] is a Scala dialect which compiles to
 LLVM, which /does/ optimize. Unfortunately, it isn't production ready
 and only supports a subset of the standard Java libraries. Scala libraries also
-need to be specifically built for it.
+need to be specifically configured for it (Spark, and thus GeoTrellis, are not).
 
 *** Verbosity and Accidental Complexity
 
@@ -786,7 +785,10 @@ used in GeoTrellis would be 2022.
 
 ~Array~ is indexed by ~Int~, which is a 32-bit data type. This means you
 can't have more than ~2^31~ elements in your Array. For GIS, this means your
-image can't be larger than around 47,000 by 47,000 pixels, or GeoTrellis can't read it.
+image can't be larger than around 47,000 by 47,000 pixels, or GeoTrellis can't
+read it as a single ~Tile~.
+
+Yes, we have encountered imagery that big in the wild.
 
 *How could this be fixed?* The JVM would have to make ~Array~ based on the
 ~Long~ type, which is unlikely.
@@ -797,11 +799,53 @@ image can't be larger than around 47,000 by 47,000 pixels, or GeoTrellis can't r
 
 *** Read an Image
 
+Reading a 512x512 singleband image.
+
+~mapalgebra~ (Haskell):
+
+#+BEGIN_SRC haskell
+  import Geography.MapAlgebra
+
+  singleband :: IO (Either String (Raster S p 512 512 Word8))
+  singleband = fromGray "path/to/image.tif"
+#+END_SRC
+
+Rasterio (Python):
+
+#+BEGIN_SRC python
+  import rasterio
+
+  def work():
+      with rasterio.open("path/to/image.tif") as dst:
+          singleband = dst.read(1)
+          # Do some work on my_raster.
+          # File is automatically closed afterward.
+#+END_SRC
+
+GeoTrellis (Scala):
+
+#+BEGIN_SRC scala
+  import geotrellis.raster.Tile
+  import geotrellis.raster.io.geotiff.SinglebandGeoTiff
+
+  def singleband: Tile =
+    SinglebandGeoTiff("path/to/image.tif").tile
+#+END_SRC
+
 *** Write an Image
+
+Write some given 512x512 Raster.
+
+#+BEGIN_SRC haskell
+  import Geography.MapAlgebra
+#+END_SRC
 
 *** Enhanced Vegetation Index (EVI)
 
 ** Benchmarks
+
+*** Local Operations
+*** Focal Operations
 
 * Resources
 
