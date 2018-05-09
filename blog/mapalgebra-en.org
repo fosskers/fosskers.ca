@@ -261,6 +261,18 @@ this operation down quite a bit. So, which'll it be? Correctness or speed?
    instead.
 4. Investigate [[https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#unboxed-sums][Unboxed Sums]] more deeply.
 
+*** Limited Histogram support
+
+As of ~v0.1.1~, Histograms (summaries of value counts in a Raster) can only
+be calculated for Rasters that contain ~Word8~ values. The function that does
+this - ~histogram~ - is extremely fast, but to be stuck with ~Word8~ is too
+limiting for real imagery.
+
+*How could this be fixed?* Histograms can be manipulated to give better spreads
+over the colours, but the most valuable way to do that is context dependent.
+I need to do more research before implementing the general case for bigger
+~Int~ types, floating types, and ADTs.
+
 *** No reprojection support
 
 There is a ~Projection~ typeclass, but instances have not been written for the
@@ -554,7 +566,7 @@ like the following:
   val averaged1: Tile = Mean(tile, n)
 
   // ...we can do this. Much more idiomatic!
-  val averaged1: Tile = tile.focalMean(n)
+  val averaged2: Tile = tile.focalMean(n)
 #+END_SRC
 
 For modularity reasons ~.focalMean~ isn't defined directly within the ~Tile~
@@ -597,6 +609,7 @@ Assume we had started with:
 what does it take to perform a Local Sum?
 
 #+BEGIN_SRC scala
+  /* The simplest interaction between two Tiles */
   val result: Tile = t1 + t2
 #+END_SRC
 
@@ -678,7 +691,7 @@ Omitting one of these will almost certainly cause the Spark job to fail.
 - If running in a Docker container, do the container's memory settings conflict with
   the JVM's?
 - Have I configured executor memory settings to the exact value that will prevent them
-  from dying at runtime or under-utilizing resources?
+  from either dying at runtime or under-utilizing resources?
 - Did I request enough executor machines to be able to store the collective memory of
   the job?
 - Is the version of Spark I'm testing with the same as the version available on AWS?
@@ -688,6 +701,7 @@ Omitting one of these will almost certainly cause the Spark job to fail.
   in ~build.sbt~ so that there aren't conflicts with AWS at runtime?
 - Did I remember to upload the most recent version of my assembled code to S3 for Spark?
 - Did I ensure I didn't assemble "stale" code? (i.e. "Don't trust ~sbt clean~.")
+- Am I using too few ~RDD~ partitions?
 
 *Level: Annoying*
 
@@ -698,6 +712,7 @@ Omitting these will increase your AWS bill.
 - Am I using AWS "spot instances" so that my Spark job doesn't cost too much?
 - Am I using ~RDD~ caching in the exact places that will prevent redundant work?
 - Have I made sure not to force ~RDD~ execution before I should be (with ~.count~, etc.)?
+- Am I using too many ~RDD~ partitions?
 
 If you'd rather avoid keeping track of these details, then perhaps you should seek
 an alternative to Spark. Are you sure you need it?
@@ -724,7 +739,7 @@ a web app for working with imagery visually.
 
 Reading a 512x512 singleband image.
 
-~mapalgebra~ (Haskell):
+~mapalgebra~:
 
 #+BEGIN_SRC haskell
   import Geography.MapAlgebra
@@ -733,7 +748,7 @@ Reading a 512x512 singleband image.
   singleband = fromGray "path/to/image.tif"
 #+END_SRC
 
-Rasterio (Python):
+Rasterio:
 
 #+BEGIN_SRC python
   import rasterio
@@ -745,7 +760,7 @@ Rasterio (Python):
           # File is automatically closed afterward.
 #+END_SRC
 
-GeoTrellis (Scala):
+GeoTrellis:
 
 #+BEGIN_SRC scala
   import geotrellis.raster.Tile
