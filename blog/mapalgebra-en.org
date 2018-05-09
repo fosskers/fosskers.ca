@@ -774,16 +774,179 @@ GeoTrellis:
 
 Write some given 512x512 Raster.
 
+~mapalgebra~:
+
 #+BEGIN_SRC haskell
   import Geography.MapAlgebra
+
+  -- | PRO: Works on Rasters of any projection, size, and pixel value.
+  --   CON: Drops GeoTIFF metadata (none was read to begin with).
+  writeItGray :: Elevator a => Raster D p r c a -> IO ()
+  writeItGray = writeImageAuto "output/path/img.tif" . _array . strict S . grayscale
+#+END_SRC
+
+Rasterio:
+
+#+BEGIN_SRC python
+  import rasterio
+
+  # PRO: Mimics the usual Python syntax for writing files.
+  # CON: Fairly verbose. Why can't most of the info passed to `open` be
+  #      determined automatically from the `tile` passed to `write`?
+  def writeItGray(tile):
+      with rasterio.open("output/path/image.tif", "w",
+                         driver="GTiff",
+                         height=tile.shape[0], width=tile.shape[1],
+                         count=1, dtype=tile.dtype) as dst:
+          dst.write(tile, 1)
+#+END_SRC
+
+GeoTrellis:
+
+#+BEGIN_SRC scala
+  import geotrellis.raster.io.geotiff.SinglebandGeoTiff
+
+  /** PROs:
+    ,*   - Simple, one method call.
+    ,*   - Maintains `Extent` and `CRS` information in GeoTIFF metadata.
+    ,* CONs:
+    ,*   - Pixel type isn't transparent. Is this writing bytes? Ints? Doubles?
+    ,*   - Returns `Unit` instead of safer `IO[Unit]`.
+    ,*/
+  def writeItGray(tile: SinglebandGeoTiff): Unit =
+    tile.write("output/path/image.tif")
+#+END_SRC
+
+*** Colour an Image
+
+~mapalgebra~:
+
+#+BEGIN_SRC haskell
+  import Geography.MapAlgebra
+
+  -- | Colouring is just Local Classification.
+  colourIt :: Raster S p r c Word8 -> Raster S p r c (Pixel RGBA Word8)
+  colourIt r = strict S . classify invisible cm $ lazy r
+    where cm = spectrum . breaks $ histogram r
+#+END_SRC
+
+Rasterio:
+
+[[http://rasterio.readthedocs.io/en/latest/topics/color.html#writing-colormaps][Official example here.]]
+
+GeoTrellis:
+
+#+BEGIN_SRC scala
+  import geotrellis.raster.Tile
+  import geotrellis.raster.render.{ColorMap, ColorRamp, ColorRamps, Png}
+  import geotrellis.raster.histogram.{Histogram, StreamingHistogram}
+
+  /** Renders straight to an encoded `Png` - there is no "coloured Raster" stage.
+    ,* It was a bit tricky to discover the precise things that need to be called
+    ,* in order to create a `ColorMap`.
+    ,*/
+  def colourIt(tile: Tile): Png = {
+    val cr: ColorRamp = ColorRamps.Viridis
+    val ht: Histogram[Double] = StreamingHistogram.fromTile(tile)
+    val cm: ColorMap = ColorMap.fromQuantileBreaks(ht, cr)
+
+    tile.renderPng(cm)
+  }
 #+END_SRC
 
 *** Enhanced Vegetation Index (EVI)
 
+~mapalgebra~:
+
+#+BEGIN_SRC haskell
+  evi :: Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double
+  evi nir red blue = 2.5 * (numer / denom)
+    where numer = nir - red
+          denom = nir + (6 * red) - (7.5 * blue) + 1
+#+END_SRC
+
+Rasterio:
+
+#+BEGIN_SRC python
+  def evi(nir, red, blue):
+      return 2.5 * ((nir - red) / (nir + (6 * red) - (7.5 * blue) + 1))
+#+END_SRC
+
+GeoTrellis:
+
+#+BEGIN_SRC scala
+  import geotrellis.raster._
+
+  def evi(nir: Tile, red: Tile, blue: Tile): Tile =
+    ((nir - red) / (nir + (red * 6) - (blue * 7.5) + 1)) * 2.5
+#+END_SRC
+
 ** Benchmarks
 
+These benchmarks were performed on a 2016 Lenovo X1 Carbon with 4 CPUs.
+
+| Language | Version               |
+|----------+-----------------------|
+| Haskell  | GHC 8.4.1 w/ LLVM 5.0 |
+| Scala    | 2.11.12 (JVM)         |
+| Python   | CPython 3.6.5         |
+
+All times are in milliseconds, shorter bars are better.
+
 *** Local Operations
+
+[[./blog/simple-local-ops.png]]
+
+These are four local ops which could be written for Python. Much more
+and NumPy has no support for them. ~mapalgebra~ and GeoTrellis both
+host a greater variety.
+
+/Local Sum/ for Rasterio looks very fast - I suspect some serious optimizations
+are occuring under the hood. By comparison, ~mapalgebra~ looks quite slow. Let's
+keep in mind however that this is a one-off measurement which doesn't demonstrate
+op fusion. Further, the cost of allocating new memory is about
+1ms here, a cost which only needs to be paid once per fused op chain.
+
+EVI demonstrates this better (watch the yellow bar):
+
+[[./blog/evi.png]]
+
+Recall that EVI has 8 chained numerical operations. As CPU count and Raster size
+increase, ~mapalgebra~ pulls ahead even of the C code that powers NumPy. We can
+expect this to improve further as [[https://summer.haskell.org/news/2018-04-23-accepted-projects.html#improving-the-ghc-code-generator][GHC develops SIMD support]].
+
+Op fusion pays off again as we perform EVI, colour a Raster, and encode it as
+a ~.png~:
+
+[[./blog/evi-to-png.png]]
+
+Rasterio was left out here, as it has no support for encoding PNGs outside
+of the IO process.
+
 *** Focal Operations
+
+~mapalgebra~ [[https://github.com/fosskers/mapalgebra/pull/3][defines more Focal Ops]] than GeoTrellis, but we measure the common ones
+here. Rasterio is left out completely, as it has no support for these.
+
+[[./blog/simple-focal-ops.png]]
+
+This is the strength of Windowed Rasters, parallelism, and LLVM optimizations.
+That said, remember those slow Surficial ops I mentioned?
+
+[[./blog/surficial-focal-ops.png]]
+
+Yikes. I really need to figure out what's killing the optimizations.
+
+** Final Thoughts
+
+If you have an existing Python code base or want to integrate with other Python
+libraries, use Rasterio. TODO talk about perf
+
+If you need a fully-featured GIS suite, or your Raster processing work would
+provably benefit from distributed computing, use GeoTrellis.
+
+If you're a Haskeller interested in GIS, a GISer interested in Haskell, or
+just want fast and safe single-machine Raster processing code, use ~mapalgebra~.
 
 * Resources
 
