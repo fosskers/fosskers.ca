@@ -1,12 +1,8 @@
-#+TITLE: Haskell and Realistic Single-Server Raster Processing
+#+TITLE: Realistic Single-Server Raster Processing
 #+DATE: 2018-04-28
 #+AUTHOR: Colin
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
-
-Alternate titles:
-
-- Haskell and the Dream of Single-Server Raster Processing
-- Consider Haskell for GIS
+#+OPTIONS: toc:2
 
 * Preface
 
@@ -19,13 +15,14 @@ Some problems that have historically plagued raster processing systems are:
 
 Long-running satellite imagery programs like [[https://landsat.usgs.gov/][Landsat]] and [[https://sentinel.esa.int/web/sentinel/home][Sentinel]] continue to
 produce large imagery, so these problems remain relevant to modern systems.
-In this article I announce my new Haskell library [[https://hackage.haskell.org/package/mapalgebra][mapalgebra]] and offer a
+In this article I announce my new Haskell library [[https://hackage.haskell.org/package/mapalgebra][mapalgebra]], propose why
+Haskell is an excellent language for GIS work, and offer a
 (hopefully) fair comparison with existing Open Source solutions.
 
 * New Library: ~mapalgebra~
 
 [[https://hackage.haskell.org/package/mapalgebra-0.1.0][mapalgebra]] is an implementation of /Map Algebra/ as defined by C. Dana Tomlin in
-his classic text /GIS and Cartographic Modeling/. It is built on the fantastic
+his classic text /GIS and Cartographic Modeling/. The library is built on the fantastic
 Parallel Array library [[https://hackage.haskell.org/package/massiv][massiv]] by Alexey Kuleshevich, and features op fusion
 (i.e. "lazy Rasters"), flexible Local Operations, extremely fast parallel
 Focal Operations, optional typesafe NoData handling, and the ability to
@@ -175,7 +172,12 @@ were useful.
 Haskell also has an [[https://llvm.org/][LLVM]] backend, which can be accessed with the ~-fllvm~ compiler flag.
 Not all operations benefit from it, but the ones that do gain about a 2x speed-up.
 
-A full chart of benchmarks is available below in the /Benchmarks/ section.
+Performance comparisons between the libraries is available below in the /Benchmarks/
+section.
+
+*** Small Library, Clear Documentation
+
+I worked the entire library down to only 600 lines or so, while providing [[https://hackage.haskell.org/package/mapalgebra-0.1.0/docs/Geography-MapAlgebra.html][ample documentation and examples]].
 
 *** Low-effort Deployment
 
@@ -230,7 +232,7 @@ Say you have this image:
 
 [[./blog/nodata.jpg]]
 
-Lots of NoData, which is pretty common for Landsat imagery. What happens if we naively
+Lots of NoData here, which is pretty common for Landsat imagery. What happens if we naively
 run a Focal Operation over it? Currently, Focal Ops only support a 3x3 square neighbourhood,
 so not much would go wrong: our data/nodata border pixels might accrue artifacts.
 This would be especially pronounced with an ~Int~ cell type and ~-2^63~ as the NoData value.
@@ -412,7 +414,7 @@ vector (geometric), vector tile, and point-cloud data, and has integration with
 Were it not for their wisdom and support, I would not be where I am today. I thank
 them and all of my former coworkers for everything they taught me.
 
-Any criticism of GeoTrellis here is made with the utmost respect for my former colleagues and
+Any written here is done so with the utmost respect for my former colleagues and
 their continuing effort.
 
 ** Philosophy and Strengths
@@ -455,9 +457,19 @@ boasts a number of ready-to-use GIS operations, including:
 - Map Algebra
 - Rasterization (i.e. Vector -> Raster conversion)
 - Reprojection + Resampling
+- Raster Stitching
 - Viewshed
 
+For Geometric data, GeoTrellis has integrations for the well-known [[https://github.com/locationtech/jts][Java Topology Suite]],
+[[http://www.geomesa.org/][GeoMesa]], and [[https://github.com/locationtech/geowave][GeoWave.]] (Everyone loves the Geo puns, don't they?)
+
+The point is, if you've got data, GeoTrellis knows how to read it and process it.
+
 ** Short-comings
+
+When you want to go fast on the JVM, it makes certain demands of you. These
+demands, along with the sheer size and scope of GeoTrellis, have created
+some issues over the years.
 
 *** Opaque ~Tile~ Types
 
@@ -494,8 +506,8 @@ pattern, seen here with ~ArrayTile.map~:
   }
 #+END_SRC
 
-When all potential underlying types need to be simulated with ~Int~ and ~Double~,
-you get a lot of code duplication and a large surface area for bugs.
+Another is that all potential underlying types (say, ~ushort~) need to be simulated
+with ~Int~ and ~Double~. This creates a lot of code duplication and a large surface area for bugs.
 
 *How could this be fixed?* A generic ~Tile[A]~ has [[https://github.com/locationtech/geotrellis/issues/39][long been sought]]. Since the JVM
 aggressively boxes primitives if you aren't careful, naive ~case class~ based
@@ -509,7 +521,8 @@ to underpin ~Tile~.
 A common problem:
 
 #+BEGIN_QUOTE
-A: Something's not right with my results...
+A: Something's not right with my results... I've poured over my code but
+   can't figure it out.
 
 B: Are all your projections matching?
 
@@ -613,7 +626,7 @@ what does it take to perform a Local Sum?
   val result: Tile = t1 + t2
 #+END_SRC
 
-~Tile~ does not have ~+~ directly defined on it. Instead:
+More than you might think. ~Tile~ does not have ~+~ directly defined on it. Instead:
 
 - ~Tile~ is implicitely wrapped with ~class withTileMethods~. ([[https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/package.scala#L54][geotrellis/raster/package.scala]])
 - Along with 25 other traits, ~withTileMethods~ extends ~LocalMethods~.
@@ -668,7 +681,7 @@ for equivalent functionality. ~mapalgebra~ has around 600 lines of code (not cou
 comments). The total line count of all modules from GeoTrellis that implement the "same"
 functionality is around 6,000.
 
-Scala has a certain quality to it that makes writing verbose code easy.
+Scala has a certain aspect to it that makes it easy to accidentally write verbose code.
 As demonstrated in the /Indirection/ section above, it's also easy to write
 oneself into complexity.
 If GeoTrellis would be your / your company's first foray into Scala, consider
@@ -683,9 +696,7 @@ GeoTrellis assumes the use of Spark for many of its features.
 However, there are a number of things one has to keep in mind when deploying a
 Spark-based GeoTrellis program.
 
-*Level: Critical*
-
-Omitting one of these will almost certainly cause the Spark job to fail.
+*Level: Critical*. Omitting one of these will almost certainly cause the Spark job to fail.
 
 - Is the JVM instance in production assigned enough RAM?
 - If running in a Docker container, do the container's memory settings conflict with
@@ -703,9 +714,7 @@ Omitting one of these will almost certainly cause the Spark job to fail.
 - Did I ensure I didn't assemble "stale" code? (i.e. "Don't trust ~sbt clean~.")
 - Am I using too few ~RDD~ partitions?
 
-*Level: Annoying*
-
-Omitting these will increase your AWS bill.
+*Level: Annoying*. Omitting these will increase your AWS bill.
 
 - Have I configured things correctly such that Exception logs are available when I
   need to find them?
@@ -734,6 +743,8 @@ a web app for working with imagery visually.
 * Comparisons
 
 ** Code Samples
+
+These are by no means comprehensive, but do give a feel for each library.
 
 *** Read an Image
 
@@ -859,6 +870,8 @@ GeoTrellis:
 ~mapalgebra~:
 
 #+BEGIN_SRC haskell
+  import Geography.MapAlgebra
+
   evi :: Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double
   evi nir red blue = 2.5 * (numer / denom)
     where numer = nir - red
@@ -891,15 +904,16 @@ These benchmarks were performed on a 2016 Lenovo X1 Carbon with 4 CPUs.
 | Scala    | 2.11.12 (JVM)         |
 | Python   | CPython 3.6.5         |
 
-All times are in milliseconds, shorter bars are better.
+All times are in milliseconds, shorter bars are better. Unless otherwise
+stated, all operations are over a 512x512 image.
 
 *** Local Operations
 
 [[./blog/simple-local-ops.png]]
 
 These are four local ops which could be written for Python. Much more
-and NumPy has no support for them. ~mapalgebra~ and GeoTrellis both
-host a greater variety.
+and NumPy has no way to approach them (say, Local Variance).
+~mapalgebra~ and GeoTrellis both host a greater variety of operations.
 
 /Local Sum/ for Rasterio looks very fast - I suspect some serious optimizations
 are occuring under the hood. By comparison, ~mapalgebra~ looks quite slow. Let's
@@ -940,17 +954,11 @@ Yikes. I really need to figure out what's killing the optimizations.
 ** Final Thoughts
 
 If you have an existing Python code base or want to integrate with other Python
-libraries, use Rasterio. TODO talk about perf
+libraries, use Rasterio. It has consistently good performance, for an albeit
+small set of possible operations.
 
 If you need a fully-featured GIS suite, or your Raster processing work would
 provably benefit from distributed computing, use GeoTrellis.
 
 If you're a Haskeller interested in GIS, a GISer interested in Haskell, or
 just want fast and safe single-machine Raster processing code, use ~mapalgebra~.
-
-* Resources
-
-- GT site
-- [[http://geotrellis.readthedocs.io/en/latest/][GeoTrellis Documentation]]
-- Link to Rasterio paper
-- ~mapalgebra~ hackage page

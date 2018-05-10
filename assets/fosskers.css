@@ -23,6 +23,8 @@ pre.src-nix:before { content: 'Nix'; }
 pre.src-yaml:before { content: 'YAML'; }
 pre.src-fish:before { content: 'Fish'; }
 pre.src-js:before { content: 'Javascript'; }
+pre.src-python:before { content: 'Python'; }
+pre.src-scala:before { content: 'Scala'; }
 pre.src-makefile:before { content: 'Makefile'; }
 table{margin:auto;border-top:2px solid;border-collapse:collapse}
 table,thead{border-bottom:2px solid}
