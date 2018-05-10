@@ -1,0 +1,1784 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-10 Thu 07:01 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Realistic Single-Server Raster Processing</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Colin" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Realistic Single-Server Raster Processing</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga095753">1. Preface</a></li>
+<li><a href="#org2efeb4f">2. New Library: <code>mapalgebra</code></a>
+<ul>
+<li><a href="#org34c9555">2.1. An Aside: The Haskell Language</a></li>
+<li><a href="#orgc8b74ca">2.2. Features and Strengths</a></li>
+<li><a href="#org5e2375a">2.3. Short-comings</a></li>
+</ul>
+</li>
+<li><a href="#orgc9e41a0">3. What about Rasterio (Python)?</a>
+<ul>
+<li><a href="#orgf6fb4dd">3.1. Philosophy and Strengths</a></li>
+<li><a href="#orgd243949">3.2. Short-comings</a></li>
+</ul>
+</li>
+<li><a href="#org1dc1bcb">4. What about GeoTrellis (Scala)?</a>
+<ul>
+<li><a href="#org4e036d6">4.1. Philosophy and Strengths</a></li>
+<li><a href="#org2d1a6a7">4.2. Short-comings</a></li>
+</ul>
+</li>
+<li><a href="#orge4e632b">5. Comparisons</a>
+<ul>
+<li><a href="#orga88dab7">5.1. Code Samples</a></li>
+<li><a href="#org6a56ce9">5.2. Benchmarks</a></li>
+<li><a href="#orga27ece3">5.3. Final Thoughts</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga095753" class="outline-2">
+<h2 id="orga095753"><span class="section-number-2">1</span> Preface</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Some problems that have historically plagued raster processing systems are:
+</p>
+
+<ul class="org-ul">
+<li>not being able to fit large images into memory</li>
+<li>not being able to index the entire image (i.e. more pixels than a 32-bit <code>int</code> type)</li>
+<li>burning time performing array algorithms serially</li>
+<li>intermediate memory allocation between operations</li>
+</ul>
+
+<p>
+Long-running satellite imagery programs like <a href="https://landsat.usgs.gov/">Landsat</a> and <a href="https://sentinel.esa.int/web/sentinel/home">Sentinel</a> continue to
+produce large imagery, so these problems remain relevant to modern systems.
+In this article I announce my new Haskell library <a href="https://hackage.haskell.org/package/mapalgebra">mapalgebra</a>, propose why
+Haskell is an excellent language for GIS work, and offer a
+(hopefully) fair comparison with existing Open Source solutions.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2efeb4f" class="outline-2">
+<h2 id="org2efeb4f"><span class="section-number-2">2</span> New Library: <code>mapalgebra</code></h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="https://hackage.haskell.org/package/mapalgebra-0.1.0">mapalgebra</a> is an implementation of <i>Map Algebra</i> as defined by C. Dana Tomlin in
+his classic text <i>GIS and Cartographic Modeling</i>. The library is built on the fantastic
+Parallel Array library <a href="https://hackage.haskell.org/package/massiv">massiv</a> by Alexey Kuleshevich, and features op fusion
+(i.e. "lazy Rasters"), flexible Local Operations, extremely fast parallel
+Focal Operations, optional typesafe NoData handling, and the ability to
+process arbitrarily large Rasters on a single machine.
+</p>
+
+<p>
+Zonal Operations are planned but not yet implemented in <code>v0.1</code>. Other aspects of
+GIS work outside of Map Algebra are not provided.
+</p>
+</div>
+
+<div id="outline-container-org34c9555" class="outline-3">
+<h3 id="org34c9555"><span class="section-number-3">2.1</span> An Aside: The Haskell Language</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<a href="https://www.haskell.org/">Haskell</a> was first released in 1990, and is a strongly-typed, lazy, purely functional language.
+These words mean specific things:
+</p>
+
+<ul class="org-ul">
+<li><b>Strongly-typed:</b> All values have explicit types and the compiler is very strict
+about enforcing typing rules</li>
+<li><b>Lazy:</b> Unneeded calculations are not performed</li>
+<li><b>Purely:</b> Functions cannot mutate shared inputs nor affect global program state</li>
+<li><b>Functional:</b> The fundamental unit of program composition is the function, and
+these can be passed to or returned from other functions</li>
+</ul>
+
+<p>
+To further differentiate Haskell from Object-Oriented languages (like Java) or
+Imperative ones (like C or Go), Haskell has no classes, loops, or mutable variables.
+Despite that, we are still able to write anything we would want to write, and
+the process is enjoyable. Haskell also boats <a href="https://hackage.haskell.org/">a vast library ecosystem</a> and
+<a href="https://docs.haskellstack.org/en/stable/README/">excellent build tooling</a>.
+</p>
+
+<p>
+If you are unfamiliar with Haskell, <a href="https://www.youtube.com/watch?v=02_H3LjqMr8">this video by Derek Banas</a> serves as a good introduction.
+To learn it in full, consider <a href="http://haskellbook.com/">The Haskell Book</a> by Chris Allen and Julie Moronuki. It starts
+at the foundations and offers no shortcuts.
+</p>
+
+<p>
+To try or develop Haskell, the book (and I) recommend <a href="https://docs.haskellstack.org/en/stable/README/">the Stack tool</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc8b74ca" class="outline-3">
+<h3 id="orgc8b74ca"><span class="section-number-3">2.2</span> Features and Strengths</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<code>mapalgebra</code>'s answer to the Raster processing problem? <i>Be lazy™ and parallelize everything.</i>
+</p>
+</div>
+
+<div id="outline-container-orgba9300e" class="outline-4">
+<h4 id="orgba9300e"><span class="section-number-4">2.2.1</span> Type Safety</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+The fundamental type provided by <code>mapalgebra</code> is the <code>Raster</code>. Its full
+type signature can look like this:
+</p>
+
+<pre class="example">
+Raster S WebMercator 256 256 Int
+       |  |          |    |   |
+       |  |          |    |   ---&gt; Data type of each pixel
+       |  |          |    ---&gt; Raster columns
+       |  |          ---&gt; Raster rows
+       |  ---&gt; Projection of the Raster
+       ---&gt; Current "memory mode".
+            `S` stands for the `Storable` typeclass, meaning
+            that this Raster is currently backed by a real
+            in-memory byte-packed Array.
+            This is either a freshly read image, or the result
+            of computing a "lazy" Raster.
+</pre>
+
+<p>
+&#x2026; or this &#x2026;
+</p>
+
+<pre class="example">
+Raster D LatLng 512 512 Word8
+       |                |
+       |                ---&gt; A byte.
+       ---&gt; A "delayed" or "lazy" Raster.
+            Likely the result of some Local Operation.
+</pre>
+
+<p>
+&#x2026; or even this.
+</p>
+
+<pre class="example">
+Raster DW p 65000 65000 (Maybe Double)
+       |  |       |      |
+       |  |       |      ---&gt; Rasters are fully polymorphic
+       |  |       |           and can hold any data type.
+       |  |       ---&gt; Huge!
+       |  ---&gt; `p` is fine if you don't care about Projection.
+       ---&gt; A "windowed" Raster, the result of a Focal Op.
+</pre>
+
+<p>
+So why all the type variables? Why isn't <code>Raster Int</code> sufficient?
+And why are there <i>numbers</i> in a type signature?
+</p>
+
+<p>
+<code>mapalgebra</code> holds this as one of its fundamental assumptions:
+</p>
+
+<blockquote>
+<p>
+Rasters of different size or projection are completely different types.
+</p>
+</blockquote>
+
+<p>
+Unless your images have the same size and projection (or you've manipulated them
+so that they do), you can't perform Local Operations between them. This eliminates
+an entire class of bugs, and reduces complexity overall.
+</p>
+
+<p>
+The numbers in the signatures are thanks to Haskell's <code>DataKinds</code> extension,
+which lets us promote values into types for the purposes of type checking.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3233d95" class="outline-4">
+<h4 id="org3233d95"><span class="section-number-4">2.2.2</span> Lazy Rasters</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+I mentioned <code>Raster S</code> above as being backed by real memory. In contrast,
+<code>Raster D</code> is a "delayed" or "lazy" Raster. Operations over/between lazy Rasters
+are always <i>fused</i> - they don't allocate additional memory between each step.
+Consider <a href="https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index">NDVI</a>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #da8b55;">-- | Doesn't care about the projection or Raster size, so long as they're</span>
+<span style="color: #da8b55;">-- all the same.</span>
+<span style="color: #6c3163; font-weight: bold;">ndvi</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span>
+<span style="color: #6c3163; font-weight: bold;">ndvi</span> nir red <span style="color: #715ab1;">=</span> <span style="color: #3a81c3;">(</span>nir <span style="color: #715ab1;">-</span> red<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">/</span> <span style="color: #3a81c3;">(</span>nir <span style="color: #715ab1;">+</span> red<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Or the <a href="https://en.wikipedia.org/wiki/Enhanced_vegetation_index">Enhanced Vegetation Index</a> calculation:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #da8b55;">-- | The constants are interpreted as lazy Rasters of only that value.</span>
+<span style="color: #6c3163; font-weight: bold;">evi</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span>
+<span style="color: #6c3163; font-weight: bold;">evi</span> nir red blue <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">2.5</span> <span style="color: #715ab1;">*</span> <span style="color: #3a81c3;">(</span>numer <span style="color: #715ab1;">/</span> denom<span style="color: #3a81c3;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">where</span> numer <span style="color: #715ab1;">=</span> nir <span style="color: #715ab1;">-</span> red
+        denom <span style="color: #715ab1;">=</span> nir <span style="color: #715ab1;">+</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">6</span> <span style="color: #715ab1;">*</span> red<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">-</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">7.5</span> <span style="color: #715ab1;">*</span> blue<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">1</span>
+</pre>
+</div>
+
+<p>
+Here we see 8 binary operations being used, but none of them perform calculations or
+allocate new memory (yet). This saves <i>a lot</i> of time that would otherwise be spent
+iterating multiple times through the Array.
+</p>
+
+<p>
+Only the application of the <code>strict</code> function on a
+<code>Raster D</code> or <code>Raster DW</code> will actually run anything and allocate a new underlying Array.
+For the purposes of GIS, that Array could have type <code>S</code> (Storable, for imagery IO.
+Primitive types only) or <code>B</code> (Boxed, for custom data types).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0503e7b" class="outline-4">
+<h4 id="org0503e7b"><span class="section-number-4">2.2.3</span> Free Parallelism</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<p>
+Good news: so long as you compile with <code>-with-rtsopts=-N</code>, code that uses
+<code>mapalgebra</code> will automatically utilize all of your CPUs for its calculations.
+No other special configuration, custom code, or developer overhead is required.
+</p>
+
+<p>
+For production systems, this means informally that the more CPUs you throw
+at the problem, the faster it will get "for free". Please do take <a href="https://en.wikipedia.org/wiki/Amdahl's_law">Amdahl's Law</a>
+into account, though.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org884307c" class="outline-4">
+<h4 id="org884307c"><span class="section-number-4">2.2.4</span> Performance</h4>
+<div class="outline-text-4" id="text-2-2-4">
+<p>
+Decades of work have gone into GHC, the main Haskell compiler, and it can produce
+highly optimized machine code.
+Thanks to this, to <a href="https://hackage.haskell.org/package/massiv">Massiv</a>, to some rewrites of mine, and to a lot of benchmarking, I've achieved
+speeds that are competitive-or-better than existing libraries in the field.
+<a href="https://docs.google.com/spreadsheets/d/1XubgdBGYEMnUNfaNvEYmp8KCfyra77_n1sx0Ej5hgU8/edit#gid=0">Documenting the entire process</a> helped greatly to prove which (and how) changes
+were useful.
+</p>
+
+<p>
+Haskell also has an <a href="https://llvm.org/">LLVM</a> backend, which can be accessed with the <code>-fllvm</code> compiler flag.
+Not all operations benefit from it, but the ones that do gain about a 2x speed-up.
+</p>
+
+<p>
+Performance comparisons between the libraries is available below in the <i>Benchmarks</i>
+section.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd9a4a92" class="outline-4">
+<h4 id="orgd9a4a92"><span class="section-number-4">2.2.5</span> Small Library, Clear Documentation</h4>
+<div class="outline-text-4" id="text-2-2-5">
+<p>
+I worked the entire library down to only 600 lines or so, while providing <a href="https://hackage.haskell.org/package/mapalgebra-0.1.0/docs/Geography-MapAlgebra.html">ample documentation and examples</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org743fe49" class="outline-4">
+<h4 id="org743fe49"><span class="section-number-4">2.2.6</span> Low-effort Deployment</h4>
+<div class="outline-text-4" id="text-2-2-6">
+<p>
+<a href="https://www.fosskers.ca/blog/deploying-haskell-en.html">As I've written in the past</a>, Haskell programs can be very simple to deploy (<code>git push</code>!).
+Haskell programs compile to a runnable binary, which thanks to <code>stack</code>, can always
+be built reliably (i.e. no dependency hell).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5e2375a" class="outline-3">
+<h3 id="org5e2375a"><span class="section-number-3">2.3</span> Short-comings</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<code>mapalgebra</code> is just that - a library for Map Algebra. It will not cook you
+dinner nor do your taxes. If you need a more fully featured GIS
+suite, please consider GeoTrellis.
+</p>
+
+<p>
+There are benefits to having a focus, of course. Even so, here are some reasons
+why you might want to avoid <code>mapalgebra</code> until future versions.
+</p>
+</div>
+
+<div id="outline-container-orgd2092b9" class="outline-4">
+<h4 id="orgd2092b9"><span class="section-number-4">2.3.1</span> Projections aren't read at IO time</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+With <code>v0.1</code>, projection information isn't yet read out of imagery
+and enforced statically like size is. This means that using the <code>p</code> parameter
+is a "best practice". If you mark an image as being <code>WebMercator</code> and it's
+actually <code>LatLng</code>&#x2026; well, best of luck.
+</p>
+
+<p>
+<b>How could this be fixed?</b> Tiff metadata reading is a planned feature for
+Massiv, the library upon which <code>mapalgebra</code> is built. Once that is complete,
+then Projection can be enforced like size.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org24c250e" class="outline-4">
+<h4 id="org24c250e"><span class="section-number-4">2.3.2</span> Imagery size must be known ahead of time</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+This is by design, but I could see there being claims that it's inconvenient
+for live systems.
+</p>
+
+<p>
+<b>How could this be fixed?</b> There are two paths I can see:
+</p>
+
+<ol class="org-ol">
+<li>Double down. Make a judgement that imagery size is a data sanitation problem,
+and that all imagery of differing size should be transformed before being
+fed through <code>mapalgebra</code>.</li>
+
+<li>Provide a function like:</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">conformingRead</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">FilePath</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">S</span> p r c a<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+which, when annotated with the projection and dimensions you want will automatically
+reproject and up/downsample if necessary when imagery is read. That way, the
+"data sanitation gate" is held at the IO boundary, and all of your Map Algebra will be rigourous.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbad1df9" class="outline-4">
+<h4 id="orgbad1df9"><span class="section-number-4">2.3.3</span> Incomplete NoData handling</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<p>
+Say you have this image:
+</p>
+
+
+<div class="figure">
+<p><img src="./blog/nodata.jpg" alt="nodata.jpg" />
+</p>
+</div>
+
+<p>
+Lots of NoData here, which is pretty common for Landsat imagery. What happens if we naively
+run a Focal Operation over it? Currently, Focal Ops only support a 3x3 square neighbourhood,
+so not much would go wrong: our data/nodata border pixels might accrue artifacts.
+This would be especially pronounced with an <code>Int</code> cell type and <code>-2^63</code> as the NoData value.
+</p>
+
+<p>
+One way to handle the NoData in a typesafe way is via <code>Maybe</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Data.Monoid</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Sum</span><span style="color: #6c3163;">(</span><span style="color: #715ab1;">..</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #da8b55;">-- | `Maybe` has a `Monoid` instance, which by default ignores any `Nothing`</span>
+<span style="color: #da8b55;">-- that are added to it. `fmonoid` is used to smash the neighbourhood together.</span>
+<span style="color: #6c3163; font-weight: bold;">nodatafsum</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">S</span> p r c <span style="color: #ba2f59; font-weight: bold;">Word8</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">DW</span> p r c <span style="color: #4e3163;">512</span> <span style="color: #ba2f59; font-weight: bold;">Word8</span>
+<span style="color: #6c3163; font-weight: bold;">nodatafsum</span> <span style="color: #715ab1;">=</span> fmap <span style="color: #3a81c3;">(</span>maybe <span style="color: #4e3163;">0</span> getSum<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">.</span> fmonoid <span style="color: #715ab1;">.</span> strict <span style="color: #ba2f59; font-weight: bold;">B</span> <span style="color: #715ab1;">.</span> fmap check <span style="color: #715ab1;">.</span> lazy
+  <span style="color: #3a81c3; font-weight: bold;">where</span> check <span style="color: #4e3163;">0</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Nothing</span>
+        check n <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Just</span> <span style="color: #715ab1;">$</span> <span style="color: #ba2f59; font-weight: bold;">Sum</span> n
+</pre>
+</div>
+
+<p>
+The problem is that due to the <code>strict B</code>, a boxed vector is allocated which slows
+this operation down quite a bit. So, which'll it be? Correctness or speed?
+</p>
+
+<p>
+<b>How could this be fixed?</b> We have a few options:
+</p>
+
+<ol class="org-ol">
+<li>Give up and say "that's the cost of type safety".</li>
+<li>Declare that NoData is also a data sanitization problem and that all imagery
+should have its NoData interpolated or removed before being ran through
+<code>mapalgebra</code>.</li>
+<li>Give <code>Maybe</code> an instance of <code>Storable</code> somehow, so that <code>strict S</code> can be used
+instead.</li>
+<li>Investigate <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#unboxed-sums">Unboxed Sums</a> more deeply.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org76cc0c7" class="outline-4">
+<h4 id="org76cc0c7"><span class="section-number-4">2.3.4</span> Limited Histogram support</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<p>
+As of <code>v0.1.1</code>, Histograms (summaries of value counts in a Raster) can only
+be calculated for Rasters that contain <code>Word8</code> values. The function that does
+this - <code>histogram</code> - is extremely fast, but to be stuck with <code>Word8</code> is too
+limiting for real imagery.
+</p>
+
+<p>
+<b>How could this be fixed?</b> Histograms can be manipulated to give better spreads
+over the colours, but the most valuable way to do that is context dependent.
+I need to do more research before implementing the general case for bigger
+<code>Int</code> types, floating types, and ADTs.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc2b3143" class="outline-4">
+<h4 id="orgc2b3143"><span class="section-number-4">2.3.5</span> No reprojection support</h4>
+<div class="outline-text-4" id="text-2-3-5">
+<p>
+There is a <code>Projection</code> typeclass, but instances have not been written for the
+various types.
+</p>
+
+<p>
+<b>How could this be fixed?</b> Do some research and write them, lazy bones.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7a4e00d" class="outline-4">
+<h4 id="org7a4e00d"><span class="section-number-4">2.3.6</span> Slow <code>faspect</code> and <code>fgradient</code></h4>
+<div class="outline-text-4" id="text-2-3-6">
+<p>
+<code>fvolume</code>, <code>fupstream</code>, and <code>fdownstream</code> are quite fast due to some math tricks.
+Their angle-oriented siblings, however, had no such shortcuts that I knew of.
+I call out to another library, <code>hmatrix</code>, to handle the linear algebra ops
+described <a href="https://hackage.haskell.org/package/mapalgebra-0.1.0/docs/Geography-MapAlgebra.html#g:15">in the module documentation</a>, and something about this undoes the
+usual efficiency of windowed Rasters.
+</p>
+
+<p>
+<b>How could this be fixed?</b> Are their better approaches to <code>faspect</code> and <code>fgradient</code>?
+Maybe I should be using a <a href="https://hackage.haskell.org/package/linear">different Linear Algebra library</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfee0937" class="outline-4">
+<h4 id="orgfee0937"><span class="section-number-4">2.3.7</span> No extended neighbourhood for Focal Ops</h4>
+<div class="outline-text-4" id="text-2-3-7">
+<p>
+This is a non-trivial thing to leave out, but honestly I didn't have the
+resources to include this in an initial version of the library.
+</p>
+
+<p>
+If you need extended or non-square neighbourhoods, please consider GeoTrellis
+<a href="https://geotrellis.github.io/scaladocs/latest/#geotrellis.raster.mapalgebra.focal.Neighborhood">which has a variety</a>.
+</p>
+
+<p>
+<b>How could this be fixed?</b> Perhaps for each focal op, say <code>fmean</code>, I could
+provide a variant <code>fmeanWith</code> that takes an arbitrary stencil. I'd also have
+to provide some stencil making functions, so that it would be easy to, for instance,
+generate a 10x10 square on a whim.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6daabb6" class="outline-4">
+<h4 id="org6daabb6"><span class="section-number-4">2.3.8</span> No true Multiband support</h4>
+<div class="outline-text-4" id="text-2-3-8">
+<p>
+<code>mapalgebra</code> and Massiv rely on <a href="http://hackage.haskell.org/package/JuicyPixels">JuicyPixels</a> for image IO. At present, it can only
+read TIFFs in RGBA mode (or simpler). True multibanded imagery, like that from Landsat,
+just can't be read.
+</p>
+
+<p>
+<b>How could this be fixed?</b> We already have the <code>RGBARaster</code> wrapper type, but that's not
+enough. I need to either:
+</p>
+
+<ol class="org-ol">
+<li>Tell JuicyPixels about my needs (or submit a patch).</li>
+<li>Write my own library for specifically reading multiband geotiffs.</li>
+</ol>
+
+<p>
+Either way, <code>mapalgebra</code> takes the stance that multiband imagery, as a special data type,
+doesn't exist. A multiband image is just a collection of singleband images, which are
+each just a <code>Raster</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7d13d81" class="outline-4">
+<h4 id="org7d13d81"><span class="section-number-4">2.3.9</span> Potentially long compile times</h4>
+<div class="outline-text-4" id="text-2-3-9">
+<p>
+In order to be performant, <code>mapalgebra</code> relies on <code>-O2</code> and a lot of inlining.
+Depending on the amount of calls to its functions, this can really slow down
+compilation of your code.
+</p>
+
+<p>
+<b>How could this be fixed?</b> That's life, I'm afraid. When testing, make sure
+to compile with <code>stack build --fast</code> so that all optimizations are skipped.
+It really makes a difference.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdc7f29c" class="outline-4">
+<h4 id="orgdc7f29c"><span class="section-number-4">2.3.10</span> Why not GPU?</h4>
+<div class="outline-text-4" id="text-2-3-10">
+<p>
+If going single-machine, why not do it "right" and use a giant GPU instead?
+I can't find a rebuttle for that, other than that CPUs seem more readily available.
+This is somewhat of an existential issue for <code>mapalgebra</code> - for it to have value
+we'd need to agree that CPU-based Raster processing is useful. Is it?
+I hope so.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc9e41a0" class="outline-2">
+<h2 id="orgc9e41a0"><span class="section-number-2">3</span> What about Rasterio (Python)?</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="https://github.com/mapbox/rasterio">Rasterio</a> is a Python library for reading and writing GeoTIFFs, and performing
+basic Local Operations. It aims for improvement in usability over the Python
+binding provided by <a href="http://www.gdal.org/">GDAL</a>.
+</p>
+</div>
+
+<div id="outline-container-orgf6fb4dd" class="outline-3">
+<h3 id="orgf6fb4dd"><span class="section-number-3">3.1</span> Philosophy and Strengths</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Rasterio's solution to the Raster processing problem? <i>Use C to go fast.</i>
+</p>
+</div>
+
+<div id="outline-container-orgf6e21f5" class="outline-4">
+<h4 id="orgf6e21f5"><span class="section-number-4">3.1.1</span> GDAL and Numpy</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+Rasterio uses GDAL, a well-known C library, for its IO. After an image has been read,
+users are given <a href="http://www.numpy.org/">NumPy</a> arrays to work with. Rasterio thus directly benefits from
+the speed of NumPy's operations, which are all written in C at the lowest level.
+</p>
+
+<p>
+Both GDAL and NumPy are well-established projects with many developers behind them.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org611f380" class="outline-4">
+<h4 id="org611f380"><span class="section-number-4">3.1.2</span> Mindshare</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+Python is huge. It's installed by default on many modern systems and has a low learning
+curve. This, and the advent of NumPy/SciPy, have made it a darling of the Data Science world.
+</p>
+
+<p>
+This is good from an employability standpoint - what dev doesn't know / can't learn
+Python?
+</p>
+
+<p>
+This is also good from a research standpoint - a supervisor can feel confident in
+assigning "Learn Python" to a student as a preliminary research task.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org99168d2" class="outline-4">
+<h4 id="org99168d2"><span class="section-number-4">3.1.3</span> Low-effort Deployment</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<p>
+Since all Python programs are just scripts, making sure GDAL is properly
+installed on the host system is about the only problem you might have.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd243949" class="outline-3">
+<h3 id="orgd243949"><span class="section-number-3">3.2</span> Short-comings</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-orgcde7f62" class="outline-4">
+<h4 id="orgcde7f62"><span class="section-number-4">3.2.1</span> Dynamic Language</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+Python has neither explicit types nor a compiler. This might be fine for
+prototyping, but for large or long-running projects, this approach can
+accrue technical debt. Beyond a certain code size, proposed changes become paralyzing:
+"What will the effect of me changing these function arguments be?"
+<a href="https://twitter.com/agoX/status/991799972155871233">You won't know until run-time</a>.
+</p>
+
+<p>
+Given the nature of Data Science, one would expect a little more rigour. To compare
+briefly to <code>mapalgebra</code>, Rasterio will not shield you from mismatches in Projection,
+Raster size, or pixel data type. Python also brings with it all the pitfalls of being able to
+freely mix effectful (i.e. <code>IO</code>) and non-effectful code.
+</p>
+
+<p>
+<b>How could this be fixed?</b> You may want to consider <a href="http://coconut-lang.org/">Coconut</a>, a dialect of Python
+with first-class support for Functional Programming and Static Types. It compiles
+to regular Python, so you shouldn't lose anything.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcbed684" class="outline-4">
+<h4 id="orgcbed684"><span class="section-number-4">3.2.2</span> No Focal Operations</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p>
+As far as I could find, Focal Operations (or Zonal, for that matter)
+are not provided by default by
+either Rasterio or NumPy. You may be able to replicate Focal Mean with
+some Convolution, but something more involved like Focal Gradient won't
+come prepackaged.
+</p>
+
+<p>
+<b>How could this be fixed?</b> If you need Focal Operations, you will have to
+write them yourself or look elsewhere.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1dc1bcb" class="outline-2">
+<h2 id="org1dc1bcb"><span class="section-number-2">4</span> What about GeoTrellis (Scala)?</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="https://geotrellis.io/">GeoTrellis</a> is a feature-rich GIS library suite for Scala (<a href="http://geotrellis.readthedocs.io/en/latest/">docs</a>). It can process raster,
+vector (geometric), vector tile, and point-cloud data, and has integration with
+<a href="http://geotrellis.readthedocs.io/en/latest/guide/tile-backends.html">many popular storage systems</a>, like S3 and Cassandra.
+</p>
+
+<p>
+<b>Disclaimer:</b> I used to work for the team that created and maintains GeoTrellis.
+Were it not for their wisdom and support, I would not be where I am today. I thank
+them and all of my former coworkers for everything they taught me.
+</p>
+
+<p>
+Any written here is done so with the utmost respect for my former colleagues and
+their continuing effort.
+</p>
+</div>
+
+<div id="outline-container-org4e036d6" class="outline-3">
+<h3 id="org4e036d6"><span class="section-number-3">4.1</span> Philosophy and Strengths</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+GeoTrellis' answer to the Raster processing problem? <i>Distribution.</i>
+</p>
+</div>
+
+<div id="outline-container-org771fbea" class="outline-4">
+<h4 id="org771fbea"><span class="section-number-4">4.1.1</span> Scalability</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<blockquote>
+<p>
+My data is big&#x2026; and I mean <i>big</i>.
+</p>
+</blockquote>
+
+<p>
+Gigabytes? Terabytes? No problem. GeoTrellis is built on <a href="http://spark.apache.org/">Apache Spark</a>, and
+regularly combines large imagery into colour-corrected tile layers in jobs
+that span scores of machines. The imagery it can handle and the
+processing network can both be arbitrarily big.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org393f388" class="outline-4">
+<h4 id="org393f388"><span class="section-number-4">4.1.2</span> IO Flexibility</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<p>
+GeoTrellis can read GeoTIFFs from anywhere in any band count, and provides
+data structures for further processing.
+</p>
+
+<p>
+With the <code>geotrellis-spark</code> package, it's common to create <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load">ETL</a> pipelines
+that process imagery, pyramid resulting tiles, and output a range of zoom levels
+for later use in a Tile Server.
+</p>
+
+<p>
+With the upcoming <code>2.0.0</code> release, GeoTrellis also provides an implementation
+of Cloud-Optimized GeoTiff Layers. These offer a significant performance
+improvement for IO, are better suited for storage on HDFS/S3 than the old format,
+and allow GeoTrellis Layers to be viewable in QGIS.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4a2d0da" class="outline-4">
+<h4 id="org4a2d0da"><span class="section-number-4">4.1.3</span> Feature Richness</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<p>
+GeoTrellis is a suite of libraries, but the <code>geotrellis-raster</code> package alone
+boasts a number of ready-to-use GIS operations, including:
+</p>
+
+<ul class="org-ul">
+<li>Cost Distance</li>
+<li>Hydrology ops</li>
+<li>Colour + ASCII rendering</li>
+<li>Map Algebra</li>
+<li>Rasterization (i.e. Vector -&gt; Raster conversion)</li>
+<li>Reprojection + Resampling</li>
+<li>Raster Stitching</li>
+<li>Viewshed</li>
+</ul>
+
+<p>
+For Geometric data, GeoTrellis has integrations for the well-known <a href="https://github.com/locationtech/jts">Java Topology Suite</a>,
+<a href="http://www.geomesa.org/">GeoMesa</a>, and <a href="https://github.com/locationtech/geowave">GeoWave.</a> (Everyone loves the Geo puns, don't they?)
+</p>
+
+<p>
+The point is, if you've got data, GeoTrellis knows how to read it and process it.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2d1a6a7" class="outline-3">
+<h3 id="org2d1a6a7"><span class="section-number-3">4.2</span> Short-comings</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+When you want to go fast on the JVM, it makes certain demands of you. These
+demands, along with the sheer size and scope of GeoTrellis, have created
+some issues over the years.
+</p>
+</div>
+
+<div id="outline-container-org5a7966b" class="outline-4">
+<h4 id="org5a7966b"><span class="section-number-4">4.2.1</span> Opaque <code>Tile</code> Types</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+Unlike the <code>Raster u p r c a</code> type from <code>mapalgebra</code>, most GeoTrellis
+Raster operations yield a non-generic <code>Tile</code> type. In order to handle
+different underlying types, <code>Tile</code> forms a <a href="http://geotrellis.readthedocs.io/en/latest/_images/tile-hierarchy1.png">very large OO inheritance hierarchy</a>
+with a lot of duplicated code.
+</p>
+
+<p>
+Speed is the motivation. If you want to go fast on the JVM, you need
+Arrays, Ints, and Doubles. One consequence of this is the <code>foo</code> / <code>fooDouble</code>
+pattern, seen here with <code>ArrayTile.map</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala">  <span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">map</span><span style="color: #3a81c3;">(</span>f<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #3a81c3; font-weight: bold;">=&gt;</span> <span style="color: #4e3163;">Int</span><span style="color: #3a81c3;">)</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">output</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">ArrayTile</span>.alloc<span style="color: #6c3163;">(</span>cellType, cols, rows<span style="color: #6c3163;">)</span>
+    <span style="color: #3a81c3; font-weight: bold;">var</span> <span style="color: #dc752f; background-color: #fbf8ef;">i</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">0</span>
+    <span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">len</span> <span style="color: #3a81c3; font-weight: bold;">=</span> size
+    <span style="color: #3a81c3; font-weight: bold;">while</span> <span style="color: #6c3163;">(</span>i &lt; len<span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+      output<span style="color: #2d9574;">(</span>i<span style="color: #2d9574;">)</span> <span style="color: #3a81c3; font-weight: bold;">=</span> f<span style="color: #2d9574;">(</span>apply<span style="color: #67b11d;">(</span>i<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+      i += <span style="color: #4e3163;">1</span>
+    <span style="color: #6c3163;">}</span>
+    output
+  <span style="color: #3a81c3;">}</span>
+
+  <span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">mapDouble</span><span style="color: #3a81c3;">(</span>f<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Double</span> <span style="color: #3a81c3; font-weight: bold;">=&gt;</span> <span style="color: #4e3163;">Double</span><span style="color: #3a81c3;">)</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">len</span> <span style="color: #3a81c3; font-weight: bold;">=</span> size
+    <span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">ArrayTile</span>.alloc<span style="color: #6c3163;">(</span>cellType, cols, rows<span style="color: #6c3163;">)</span>
+    <span style="color: #3a81c3; font-weight: bold;">var</span> <span style="color: #dc752f; background-color: #fbf8ef;">i</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">0</span>
+    <span style="color: #3a81c3; font-weight: bold;">while</span> <span style="color: #6c3163;">(</span>i &lt; len<span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+      tile.updateDouble<span style="color: #2d9574;">(</span>i, f<span style="color: #67b11d;">(</span>applyDouble<span style="color: #b1951d;">(</span>i<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+      i += <span style="color: #4e3163;">1</span>
+    <span style="color: #6c3163;">}</span>
+    tile
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+Another is that all potential underlying types (say, <code>ushort</code>) need to be simulated
+with <code>Int</code> and <code>Double</code>. This creates a lot of code duplication and a large surface area for bugs.
+</p>
+
+<p>
+<b>How could this be fixed?</b> A generic <code>Tile[A]</code> has <a href="https://github.com/locationtech/geotrellis/issues/39">long been sought</a>. Since the JVM
+aggressively boxes primitives if you aren't careful, naive <code>case class</code> based
+solutions don't work. <a href="https://github.com/locationtech/geotrellis/pull/2520">Generic Map Algebra seems possible</a> with typeclasses and raw
+<code>Array</code>, but
+the latest news on the wind is that GeoTrellis will look into <a href="https://nd4j.org/">ND4J</a> Arrays instead
+to underpin <code>Tile</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5bc6620" class="outline-4">
+<h4 id="org5bc6620"><span class="section-number-4">4.2.2</span> Mixed Projections and Raster Sizes</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+A common problem:
+</p>
+
+<blockquote>
+<p>
+A: Something's not right with my results&#x2026; I've poured over my code but
+   can't figure it out.
+</p>
+
+<p>
+B: Are all your projections matching?
+</p>
+
+<p>
+A: &#x2026;crap.
+</p>
+</blockquote>
+
+<p>
+It's frustrating when a one-line oversight like this wastes hours of ingest time.
+Since <code>Tile</code> is opaque, the compiler can't protect us from errors like this.
+The result is a need to keep a lot of tiny details in your head while coding.
+</p>
+
+<p>
+<b>How could this be fixed?</b> Either:
+</p>
+
+<ol class="org-ol">
+<li>A generic <code>Tile</code> type that exposes a <code>CRS</code> in the type signature, or;</li>
+<li>Run-time checks whenever operations between two Rasters are performed, to make
+sure the operation is legal. This would mean a <i>lot</i> of boilerplate and opportunity
+for bugs.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org6755b14" class="outline-4">
+<h4 id="org6755b14"><span class="section-number-4">4.2.3</span> Lack of Op Fusion</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+Binary Local Operations like <code>tile1 + tile2</code> allocate a new <code>Array</code>. Further,
+for each <code>Array</code> index in either <code>Tile</code>, a NoData comparison is made.
+</p>
+
+<p>
+Let's consider EVI again:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Enhanced Vegetation Index */</span>
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">evi</span><span style="color: #3a81c3;">(</span>nir<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span>, red<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span>, blue<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span><span style="color: #3a81c3;">)</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span>
+  <span style="color: #3a81c3;">(</span><span style="color: #6c3163;">(</span>nir - red<span style="color: #6c3163;">)</span> / <span style="color: #6c3163;">(</span>nir + <span style="color: #2d9574;">(</span>red * <span style="color: #4e3163;">6</span><span style="color: #2d9574;">)</span> - <span style="color: #2d9574;">(</span>blue * <span style="color: #4e3163;">7</span>.<span style="color: #4e3163;">5</span><span style="color: #2d9574;">)</span> + <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> * <span style="color: #4e3163;">2</span>.<span style="color: #4e3163;">5</span>
+</pre>
+</div>
+
+<p>
+There are 8 operators here, which means many repeated iterations over the Arrays
+and many redundant NoData checks. This does bring a performance cost.
+</p>
+
+<p>
+<b>How could this be fixed?</b> Either by implementing a kind of <code>LazyTile</code> type
+which has been discussed in the past, or by improving the performance of
+current operations to the point where redundant allocations don't matter
+as much.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org76da79e" class="outline-4">
+<h4 id="org76da79e"><span class="section-number-4">4.2.4</span> API Discoverability</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<p>
+GeoTrellis utilizes around 20 actual data types (<code>Tile</code>, <code>Polygon</code>, etc.).
+Despite this, <a href="https://geotrellis.github.io/scaladocs/latest/#geotrellis.package">its scaladocs</a> present users with 2,223 top-level symbols.
+Around 500 of these are method-injection boilerplate classes which permit calls
+like the following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #3a81c3; font-weight: bold;">import</span> geotrellis.raster.mapalgebra.focal.<span style="color: #3a81c3; font-weight: bold;">_</span>
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;">// </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Given...</span>
+<span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">tile</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> ???
+<span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">n</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Neighbourhood</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">Square</span><span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;">// </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Instead of this, which looks like class instantiation...</span>
+<span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">averaged1</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">Mean</span><span style="color: #3a81c3;">(</span>tile, n<span style="color: #3a81c3;">)</span>
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;">// </span><span style="color: #2aa1ae; background-color: #ecf3ec;">...we can do this. Much more idiomatic!</span>
+<span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">averaged2</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> tile.focalMean<span style="color: #3a81c3;">(</span>n<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+For modularity reasons <code>.focalMean</code> isn't defined directly within the <code>Tile</code>
+class. This is good because it keeps the <code>Tile</code> class clean. What isn't good
+is the resulting boilerplate: the 500 extra top-level symbols which a user doesn't
+need to see but is shown anyway.
+</p>
+
+<p>
+Another downside is that <code>.focalMean</code> doesn't appear in Tile's scaladocs entry.
+The question "what can I do to a <code>Tile</code>?" is not easy to answer. This situation
+comes up often too:
+</p>
+
+<blockquote>
+<p>
+I want to turn a <code>Tile</code> into a <code>Foo</code>. What do I need to import and what
+injected method do I need to call for that?
+</p>
+</blockquote>
+
+<p>
+<a href="http://geotrellis.readthedocs.io/en/latest/guide/faq.html#how-do-i-import-geotrellis-methods">The pursuit of that answer</a> has burnt a lot of user time over the years. The
+worst case scenario is when they need to ask us directly for help manipulating
+core data structures. Something is wrong when a library's basic functionality
+is not self-explanitory.
+</p>
+
+<p>
+<b>How could this be fixed?</b> A few things would reduce top-level symbol count
+and make GeoTrellis easier to learn:
+</p>
+
+<ul class="org-ul">
+<li>Aggressive use of <code>private</code> to hide details which aren't important for users to see.</li>
+<li><code>geotrellis.foo.bar.internal</code> modules which hide non-user-facing types and machinery.</li>
+<li>Removal of "Verb Classes".</li>
+<li>Using <a href="https://github.com/mpilquist/simulacrum">simulacrum-based typeclasses</a> instead of ad-hoc method injection.</li>
+<li>Building Scaladocs without symbols from docs / code samples / test suites included.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgde66228" class="outline-4">
+<h4 id="orgde66228"><span class="section-number-4">4.2.5</span> Heavy Call Indirection and Method Overloading</h4>
+<div class="outline-text-4" id="text-4-2-5">
+<p>
+Assume we had started with:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">t1</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">IntArrayTile</span>.empty<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">512</span>, <span style="color: #4e3163;">512</span><span style="color: #3a81c3;">)</span>.map <span style="color: #3a81c3;">{</span> <span style="color: #6c3163;">(</span>c, r, <span style="color: #3a81c3; font-weight: bold;">_</span><span style="color: #6c3163;">)</span> <span style="color: #3a81c3; font-weight: bold;">=&gt;</span> c * r <span style="color: #3a81c3;">}</span>
+<span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">t2</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">IntArrayTile</span>.empty<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">512</span>, <span style="color: #4e3163;">512</span><span style="color: #3a81c3;">)</span>.map <span style="color: #3a81c3;">{</span> <span style="color: #6c3163;">(</span>c, r, <span style="color: #3a81c3; font-weight: bold;">_</span><span style="color: #6c3163;">)</span> <span style="color: #3a81c3; font-weight: bold;">=&gt;</span> c * r + <span style="color: #4e3163;">1</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+what does it take to perform a Local Sum?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">The simplest interaction between two Tiles */</span>
+<span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">result</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> t1 + t2
+</pre>
+</div>
+
+<p>
+More than you might think. <code>Tile</code> does not have <code>+</code> directly defined on it. Instead:
+</p>
+
+<ul class="org-ul">
+<li><code>Tile</code> is implicitely wrapped with <code>class withTileMethods</code>. (<a href="https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/package.scala#L54">geotrellis/raster/package.scala</a>)</li>
+<li>Along with 25 other traits, <code>withTileMethods</code> extends <code>LocalMethods</code>.</li>
+<li>Along with 19 other traits, <code>LocalMethods</code> extends <code>AddMethods</code>. (<a href="https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/mapalgebra/local/LocalMethods.scala#L23">geotrellis/raster/mapalgebra/local/LocalMethods.scala</a>)</li>
+<li>Injected method <code>+</code> redirects to <code>localAdd</code>. (<a href="https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/mapalgebra/local/Add.scala#L57">geotrellis/raster/mapalgebra/local/Add.scala#L57</a>)</li>
+<li><code>localAdd</code> looks like it's instantiating an instance of an <code>Add</code> class:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">localAdd</span><span style="color: #3a81c3;">(</span>r<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span><span style="color: #3a81c3;">)</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">Add</span><span style="color: #3a81c3;">(</span>self, r<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+But it's not - this is implicitely a call to <code>Add.apply</code>. Does <code>Add</code> have an
+<code>.apply</code> method?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #3a81c3; font-weight: bold;">object</span> <span style="color: #4e3163;">Add</span> <span style="color: #3a81c3; font-weight: bold;">extends</span> <span style="color: #ba2f59; font-weight: bold;">LocalTileBinaryOp</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">combine</span><span style="color: #6c3163;">(</span>z1<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Int</span>, z2<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Int</span><span style="color: #6c3163;">)</span> <span style="color: #3a81c3; font-weight: bold;">=</span> ...
+
+  <span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">combine</span><span style="color: #6c3163;">(</span>z1<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Double</span>, z2<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Double</span><span style="color: #6c3163;">)</span> <span style="color: #3a81c3; font-weight: bold;">=</span> ...
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>No, <code>.apply</code> is actually defined in <code>LocalTileBinaryOp</code>, of which there are 6 overloads. (<a href="https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/mapalgebra/local/LocalTileBinaryOp.scala#L55">geotrellis/raster/mapalgebra/local/LocalTileBinaryOp.scala#L55</a>)</li>
+<li>This <code>.apply</code> calls <code>Tile.dualCombine</code>.</li>
+<li>We have <code>Int</code> tiles, so this redirects to <code>combine</code>. (<a href="https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/Tile.scala#L100">geotrellis/raster/Tile.scala#L100</a>)</li>
+<li><code>combine</code> is abstract, so we check which subclass it's implemented in.</li>
+<li>We started with <code>IntArrayTile</code>, but <code>combine</code> isn't defined there. Maybe <code>MutableArrayTile</code>, its parent?</li>
+<li>Not there either. Maybe <i>its</i> parent, <code>ArrayTile</code>?</li>
+<li>Found it. <code>combine</code> is overloaded though, and redirects to another variation. (<a href="https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/ArrayTile.scala#L224">geotrellis/raster/ArrayTile.scala#L224</a>)</li>
+<li>A new <code>Array</code> is allocated, and the given <code>f</code> is applied to each index. (<a href="https://github.com/locationtech/geotrellis/blob/master/raster/src/main/scala/geotrellis/raster/ArrayTile.scala#L201">geotrellis/raster/ArrayTile.scala#210</a>)</li>
+<li>Which <code>f</code> is that? It's what was given to <code>dualCombine</code>, namely <code>LocalTileBinaryOp.combine</code>.</li>
+<li>This <code>combine</code> is abstract. The actual code is back in <code>Add.scala</code> (shown above), and performs <code>Int</code>
+addition with some NoData checking.</li>
+<li>Finally, a new <code>ArrayTile</code> masked as <code>Tile</code> is returned.</li>
+</ul>
+
+<p>
+This level of indirection is frequent throughout the library. It:
+</p>
+
+<ul class="org-ul">
+<li>worsens performance</li>
+<li>increases development costs by making it hard to find where anything is actually defined</li>
+<li>makes the true source of bugs difficult to locate</li>
+<li>gives users choice paralysis (e.g. "which method is the right one?")</li>
+</ul>
+
+<p>
+<b>How can this be fixed?</b> A generic <code>Tile</code> type and more use of typeclasses would
+decrease boilerplate and indirection. A removal of
+"Verb Classes" like <code>Add</code> and a reduced reliance on OO-style
+hierarchies-for-the-sake-of-hierarchies would also help.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf2a2604" class="outline-4">
+<h4 id="orgf2a2604"><span class="section-number-4">4.2.6</span> Verbosity, Complexity, and Maintenance Cost</h4>
+<div class="outline-text-4" id="text-4-2-6">
+<p>
+It has been my experience that Haskell code is usually much shorter than Scala
+for equivalent functionality. <code>mapalgebra</code> has around 600 lines of code (not counting
+comments). The total line count of all modules from GeoTrellis that implement the "same"
+functionality is around 6,000.
+</p>
+
+<p>
+Scala has a certain aspect to it that makes it easy to accidentally write verbose code.
+As demonstrated in the <i>Indirection</i> section above, it's also easy to write
+oneself into complexity.
+If GeoTrellis would be your / your company's first foray into Scala, consider
+that development and maintenance of your project may take more people than necessary.
+</p>
+
+<p>
+<b>How could this be fixed?</b> I don't know that it can be. Scala would have to be a
+different language altogether.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf8dfad7" class="outline-4">
+<h4 id="orgf8dfad7"><span class="section-number-4">4.2.7</span> High-effort Deployment</h4>
+<div class="outline-text-4" id="text-4-2-7">
+<p>
+GeoTrellis assumes the use of Spark for many of its features.
+However, there are a number of things one has to keep in mind when deploying a
+Spark-based GeoTrellis program.
+</p>
+
+<p>
+<b>Level: Critical</b>. Omitting one of these will almost certainly cause the Spark job to fail.
+</p>
+
+<ul class="org-ul">
+<li>Is the JVM instance in production assigned enough RAM?</li>
+<li>If running in a Docker container, do the container's memory settings conflict with
+the JVM's?</li>
+<li>Have I configured executor memory settings to the exact value that will prevent them
+from either dying at runtime or under-utilizing resources?</li>
+<li>Did I request enough executor machines to be able to store the collective memory of
+the job?</li>
+<li>Is the version of Spark I'm testing with the same as the version available on AWS?</li>
+<li>Is AWS running the same version of Java that I need?</li>
+<li>Are my AWS credentials fed through correctly to access S3?</li>
+<li>Are the exact Spark, Hadoop, and GeoTrellis dependencies marked as <code>... % "provided"</code>
+in <code>build.sbt</code> so that there aren't conflicts with AWS at runtime?</li>
+<li>Did I remember to upload the most recent version of my assembled code to S3 for Spark?</li>
+<li>Did I ensure I didn't assemble "stale" code? (i.e. "Don't trust <code>sbt clean</code>.")</li>
+<li>Am I using too few <code>RDD</code> partitions?</li>
+</ul>
+
+<p>
+<b>Level: Annoying</b>. Omitting these will increase your AWS bill.
+</p>
+
+<ul class="org-ul">
+<li>Have I configured things correctly such that Exception logs are available when I
+need to find them?</li>
+<li>Am I using AWS "spot instances" so that my Spark job doesn't cost too much?</li>
+<li>Am I using <code>RDD</code> caching in the exact places that will prevent redundant work?</li>
+<li>Have I made sure not to force <code>RDD</code> execution before I should be (with <code>.count</code>, etc.)?</li>
+<li>Am I using too many <code>RDD</code> partitions?</li>
+</ul>
+
+<p>
+If you'd rather avoid keeping track of these details, then perhaps you should seek
+an alternative to Spark. Are you sure you need it?
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0afe101" class="outline-4">
+<h4 id="org0afe101"><span class="section-number-4">4.2.8</span> Potential Overkill</h4>
+<div class="outline-text-4" id="text-4-2-8">
+<p>
+Spark is popular, and everyone wants to be doing "big data". Chances are, though,
+that your data isn't really that big. In which case, the Spark integration for
+GeoTrellis is not necessary for you - you may be fine with single-machine
+raster processing. If single-machine, navigating basic use of GeoTrellis
+and the effort of deploying a Spark program may not be worth it. Consider also
+that both Rasterio and <code>mapalgebra</code> have better single-machine performance.
+</p>
+
+<p>
+If you just want to do some simple Map Algebra on reasonably sized images,
+GeoTrellis is probably overkill. You might be interested instead in <a href="https://www.rasterfoundry.com/">Raster Foundry</a>,
+a web app for working with imagery visually.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orge4e632b" class="outline-2">
+<h2 id="orge4e632b"><span class="section-number-2">5</span> Comparisons</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orga88dab7" class="outline-3">
+<h3 id="orga88dab7"><span class="section-number-3">5.1</span> Code Samples</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+These are by no means comprehensive, but do give a feel for each library.
+</p>
+</div>
+
+<div id="outline-container-org8430f46" class="outline-4">
+<h4 id="org8430f46"><span class="section-number-4">5.1.1</span> Read an Image</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<p>
+Reading a 512x512 singleband image.
+</p>
+
+<p>
+<code>mapalgebra</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Geography.MapAlgebra</span>
+
+<span style="color: #6c3163; font-weight: bold;">singleband</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Either</span> <span style="color: #ba2f59; font-weight: bold;">String</span> <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">S</span> p <span style="color: #4e3163;">512</span> <span style="color: #4e3163;">512</span> <span style="color: #ba2f59; font-weight: bold;">Word8</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">singleband</span> <span style="color: #715ab1;">=</span> fromGray <span style="color: #2d9574;">"path/to/image.tif"</span>
+</pre>
+</div>
+
+<p>
+Rasterio:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #3a81c3; font-weight: bold;">import</span> rasterio
+
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">work</span><span style="color: #3a81c3;">()</span>:
+    <span style="color: #3a81c3; font-weight: bold;">with</span> rasterio.<span style="color: #3a81c3;">open</span><span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"path/to/image.tif"</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3; font-weight: bold;">as</span> dst:
+        <span style="color: #715ab1;">singleband</span> = dst.read<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+        <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Do some work on my_raster.</span>
+        <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">File is automatically closed afterward.</span>
+</pre>
+</div>
+
+<p>
+GeoTrellis:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #3a81c3; font-weight: bold;">import</span> geotrellis.raster.<span style="color: #4e3163;">Tile</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> geotrellis.raster.io.geotiff.<span style="color: #4e3163;">SinglebandGeoTiff</span>
+
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">singleband</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span>
+  <span style="color: #4e3163;">SinglebandGeoTiff</span><span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"path/to/image.tif"</span><span style="color: #3a81c3;">)</span>.tile
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8604fd4" class="outline-4">
+<h4 id="org8604fd4"><span class="section-number-4">5.1.2</span> Write an Image</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+Write some given 512x512 Raster.
+</p>
+
+<p>
+<code>mapalgebra</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Geography.MapAlgebra</span>
+
+<span style="color: #da8b55;">-- | PRO: Works on Rasters of any projection, size, and pixel value.</span>
+<span style="color: #da8b55;">--   CON: Drops GeoTIFF metadata (none was read to begin with).</span>
+<span style="color: #6c3163; font-weight: bold;">writeItGray</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Elevator</span> a <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c a <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">writeItGray</span> <span style="color: #715ab1;">=</span> writeImageAuto <span style="color: #2d9574;">"output/path/img.tif"</span> <span style="color: #715ab1;">.</span> _array <span style="color: #715ab1;">.</span> strict <span style="color: #ba2f59; font-weight: bold;">S</span> <span style="color: #715ab1;">.</span> grayscale
+</pre>
+</div>
+
+<p>
+Rasterio:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #3a81c3; font-weight: bold;">import</span> rasterio
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">PRO: Mimics the usual Python syntax for writing files.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">CON: Fairly verbose. Why can't most of the info passed to `open` be</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#      </span><span style="color: #2aa1ae; background-color: #ecf3ec;">determined automatically from the `tile` passed to `write`?</span>
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">writeItGray</span><span style="color: #3a81c3;">(</span>tile<span style="color: #3a81c3;">)</span>:
+    <span style="color: #3a81c3; font-weight: bold;">with</span> rasterio.<span style="color: #3a81c3;">open</span><span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"output/path/image.tif"</span>, <span style="color: #2d9574;">"w"</span>,
+                       driver=<span style="color: #2d9574;">"GTiff"</span>,
+                       height=tile.shape<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span>, width=tile.shape<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span>,
+                       count=<span style="color: #4e3163;">1</span>, dtype=tile.dtype<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3; font-weight: bold;">as</span> dst:
+        dst.write<span style="color: #3a81c3;">(</span>tile, <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+GeoTrellis:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #3a81c3; font-weight: bold;">import</span> geotrellis.raster.io.geotiff.<span style="color: #4e3163;">SinglebandGeoTiff</span>
+
+<span style="color: #da8b55;">/** PROs:</span>
+<span style="color: #da8b55;">  *   - Simple, one method call.</span>
+<span style="color: #da8b55;">  *   - Maintains `Extent` and `CRS` information in GeoTIFF metadata.</span>
+<span style="color: #da8b55;">  * CONs:</span>
+<span style="color: #da8b55;">  *   - Pixel type isn't transparent. Is this writing bytes? Ints? Doubles?</span>
+<span style="color: #da8b55;">  *   - Returns `Unit` instead of safer `IO[Unit]`.</span>
+<span style="color: #da8b55;">  */</span>
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">writeItGray</span><span style="color: #3a81c3;">(</span>tile<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">SinglebandGeoTiff</span><span style="color: #3a81c3;">)</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Unit</span> <span style="color: #3a81c3; font-weight: bold;">=</span>
+  tile.write<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"output/path/image.tif"</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8fdae1f" class="outline-4">
+<h4 id="org8fdae1f"><span class="section-number-4">5.1.3</span> Colour an Image</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<p>
+<code>mapalgebra</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Geography.MapAlgebra</span>
+
+<span style="color: #da8b55;">-- | Colouring is just Local Classification.</span>
+<span style="color: #6c3163; font-weight: bold;">colourIt</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">S</span> p r c <span style="color: #ba2f59; font-weight: bold;">Word8</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">S</span> p r c <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Pixel</span> <span style="color: #ba2f59; font-weight: bold;">RGBA</span> <span style="color: #ba2f59; font-weight: bold;">Word8</span><span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">colourIt</span> r <span style="color: #715ab1;">=</span> strict <span style="color: #ba2f59; font-weight: bold;">S</span> <span style="color: #715ab1;">.</span> classify invisible cm <span style="color: #715ab1;">$</span> lazy r
+  <span style="color: #3a81c3; font-weight: bold;">where</span> cm <span style="color: #715ab1;">=</span> spectrum <span style="color: #715ab1;">.</span> breaks <span style="color: #715ab1;">$</span> histogram r
+</pre>
+</div>
+
+<p>
+Rasterio:
+</p>
+
+<p>
+<a href="http://rasterio.readthedocs.io/en/latest/topics/color.html#writing-colormaps">Official example here.</a>
+</p>
+
+<p>
+GeoTrellis:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #3a81c3; font-weight: bold;">import</span> geotrellis.raster.<span style="color: #4e3163;">Tile</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> geotrellis.raster.render.<span style="color: #3a81c3;">{</span><span style="color: #4e3163;">ColorMap</span>, <span style="color: #4e3163;">ColorRamp</span>, <span style="color: #4e3163;">ColorRamps</span>, <span style="color: #4e3163;">Png</span><span style="color: #3a81c3;">}</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> geotrellis.raster.histogram.<span style="color: #3a81c3;">{</span><span style="color: #4e3163;">Histogram</span>, <span style="color: #4e3163;">StreamingHistogram</span><span style="color: #3a81c3;">}</span>
+
+<span style="color: #da8b55;">/** Renders straight to an encoded `Png` - there is no "coloured Raster" stage.</span>
+<span style="color: #da8b55;">  * It was a bit tricky to discover the precise things that need to be called</span>
+<span style="color: #da8b55;">  * in order to create a `ColorMap`.</span>
+<span style="color: #da8b55;">  */</span>
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">colourIt</span><span style="color: #3a81c3;">(</span>tile<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span><span style="color: #3a81c3;">)</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Png</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">cr</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">ColorRamp</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">ColorRamps</span>.<span style="color: #4e3163;">Viridis</span>
+  <span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">ht</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Histogram</span><span style="color: #6c3163;">[</span><span style="color: #4e3163;">Double</span><span style="color: #6c3163;">]</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">StreamingHistogram</span>.fromTile<span style="color: #6c3163;">(</span>tile<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">val</span> <span style="color: #715ab1;">cm</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">ColorMap</span> <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">ColorMap</span>.fromQuantileBreaks<span style="color: #6c3163;">(</span>ht, cr<span style="color: #6c3163;">)</span>
+
+  tile.renderPng<span style="color: #6c3163;">(</span>cm<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc802447" class="outline-4">
+<h4 id="orgc802447"><span class="section-number-4">5.1.4</span> Enhanced Vegetation Index (EVI)</h4>
+<div class="outline-text-4" id="text-5-1-4">
+<p>
+<code>mapalgebra</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Geography.MapAlgebra</span>
+
+<span style="color: #6c3163; font-weight: bold;">evi</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Raster</span> <span style="color: #ba2f59; font-weight: bold;">D</span> p r c <span style="color: #ba2f59; font-weight: bold;">Double</span>
+<span style="color: #6c3163; font-weight: bold;">evi</span> nir red blue <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">2.5</span> <span style="color: #715ab1;">*</span> <span style="color: #3a81c3;">(</span>numer <span style="color: #715ab1;">/</span> denom<span style="color: #3a81c3;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">where</span> numer <span style="color: #715ab1;">=</span> nir <span style="color: #715ab1;">-</span> red
+        denom <span style="color: #715ab1;">=</span> nir <span style="color: #715ab1;">+</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">6</span> <span style="color: #715ab1;">*</span> red<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">-</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">7.5</span> <span style="color: #715ab1;">*</span> blue<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">1</span>
+</pre>
+</div>
+
+<p>
+Rasterio:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">evi</span><span style="color: #3a81c3;">(</span>nir, red, blue<span style="color: #3a81c3;">)</span>:
+    <span style="color: #3a81c3; font-weight: bold;">return</span> <span style="color: #4e3163;">2</span>.<span style="color: #4e3163;">5</span> * <span style="color: #3a81c3;">(</span><span style="color: #6c3163;">(</span>nir - red<span style="color: #6c3163;">)</span> / <span style="color: #6c3163;">(</span>nir + <span style="color: #2d9574;">(</span><span style="color: #4e3163;">6</span> * red<span style="color: #2d9574;">)</span> - <span style="color: #2d9574;">(</span><span style="color: #4e3163;">7</span>.<span style="color: #4e3163;">5</span> * blue<span style="color: #2d9574;">)</span> + <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+GeoTrellis:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala"><span style="color: #3a81c3; font-weight: bold;">import</span> geotrellis.raster.<span style="color: #3a81c3; font-weight: bold;">_</span>
+
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">evi</span><span style="color: #3a81c3;">(</span>nir<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span>, red<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span>, blue<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span><span style="color: #3a81c3;">)</span><span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #ba2f59; font-weight: bold;">Tile</span> <span style="color: #3a81c3; font-weight: bold;">=</span>
+  <span style="color: #3a81c3;">(</span><span style="color: #6c3163;">(</span>nir - red<span style="color: #6c3163;">)</span> / <span style="color: #6c3163;">(</span>nir + <span style="color: #2d9574;">(</span>red * <span style="color: #4e3163;">6</span><span style="color: #2d9574;">)</span> - <span style="color: #2d9574;">(</span>blue * <span style="color: #4e3163;">7</span>.<span style="color: #4e3163;">5</span><span style="color: #2d9574;">)</span> + <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> * <span style="color: #4e3163;">2</span>.<span style="color: #4e3163;">5</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a56ce9" class="outline-3">
+<h3 id="org6a56ce9"><span class="section-number-3">5.2</span> Benchmarks</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+These benchmarks were performed on a 2016 Lenovo X1 Carbon with 4 CPUs.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Language</th>
+<th scope="col" class="org-left">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Haskell</td>
+<td class="org-left">GHC 8.4.1 w/ LLVM 5.0</td>
+</tr>
+
+<tr>
+<td class="org-left">Scala</td>
+<td class="org-left">2.11.12 (JVM)</td>
+</tr>
+
+<tr>
+<td class="org-left">Python</td>
+<td class="org-left">CPython 3.6.5</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+All times are in milliseconds, shorter bars are better. Unless otherwise
+stated, all operations are over a 512x512 image.
+</p>
+</div>
+
+<div id="outline-container-org36932e4" class="outline-4">
+<h4 id="org36932e4"><span class="section-number-4">5.2.1</span> Local Operations</h4>
+<div class="outline-text-4" id="text-5-2-1">
+
+<div class="figure">
+<p><img src="./blog/simple-local-ops.png" alt="simple-local-ops.png" />
+</p>
+</div>
+
+<p>
+These are four local ops which could be written for Python. Much more
+and NumPy has no way to approach them (say, Local Variance).
+<code>mapalgebra</code> and GeoTrellis both host a greater variety of operations.
+</p>
+
+<p>
+<i>Local Sum</i> for Rasterio looks very fast - I suspect some serious optimizations
+are occuring under the hood. By comparison, <code>mapalgebra</code> looks quite slow. Let's
+keep in mind however that this is a one-off measurement which doesn't demonstrate
+op fusion. Further, the cost of allocating new memory is about
+1ms here, a cost which only needs to be paid once per fused op chain.
+</p>
+
+<p>
+EVI demonstrates this better (watch the yellow bar):
+</p>
+
+
+<div class="figure">
+<p><img src="./blog/evi.png" alt="evi.png" />
+</p>
+</div>
+
+<p>
+Recall that EVI has 8 chained numerical operations. As CPU count and Raster size
+increase, <code>mapalgebra</code> pulls ahead even of the C code that powers NumPy. We can
+expect this to improve further as <a href="https://summer.haskell.org/news/2018-04-23-accepted-projects.html#improving-the-ghc-code-generator">GHC develops SIMD support</a>.
+</p>
+
+<p>
+Op fusion pays off again as we perform EVI, colour a Raster, and encode it as
+a <code>.png</code>:
+</p>
+
+
+<div class="figure">
+<p><img src="./blog/evi-to-png.png" alt="evi-to-png.png" />
+</p>
+</div>
+
+<p>
+Rasterio was left out here, as it has no support for encoding PNGs outside
+of the IO process.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org087715c" class="outline-4">
+<h4 id="org087715c"><span class="section-number-4">5.2.2</span> Focal Operations</h4>
+<div class="outline-text-4" id="text-5-2-2">
+<p>
+<code>mapalgebra</code> <a href="https://github.com/fosskers/mapalgebra/pull/3">defines more Focal Ops</a> than GeoTrellis, but we measure the common ones
+here. Rasterio is left out completely, as it has no support for these.
+</p>
+
+
+<div class="figure">
+<p><img src="./blog/simple-focal-ops.png" alt="simple-focal-ops.png" />
+</p>
+</div>
+
+<p>
+This is the strength of Windowed Rasters, parallelism, and LLVM optimizations.
+That said, remember those slow Surficial ops I mentioned?
+</p>
+
+
+<div class="figure">
+<p><img src="./blog/surficial-focal-ops.png" alt="surficial-focal-ops.png" />
+</p>
+</div>
+
+<p>
+Yikes. I really need to figure out what's killing the optimizations.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga27ece3" class="outline-3">
+<h3 id="orga27ece3"><span class="section-number-3">5.3</span> Final Thoughts</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+If you have an existing Python code base or want to integrate with other Python
+libraries, use Rasterio. It has consistently good performance, for an albeit
+small set of possible operations.
+</p>
+
+<p>
+If you need a fully-featured GIS suite, or your Raster processing work would
+provably benefit from distributed computing, use GeoTrellis.
+</p>
+
+<p>
+If you're a Haskeller interested in GIS, a GISer interested in Haskell, or
+just want fast and safe single-machine Raster processing code, use <code>mapalgebra</code>.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-04-28</p>
+<p class="author">Author: Colin</p>
+<p class="date">Created: 2018-05-10 Thu 07:01</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
