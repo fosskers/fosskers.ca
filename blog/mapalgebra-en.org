@@ -40,7 +40,7 @@ These words mean specific things:
   about enforcing typing rules
 - *Lazy:* Unneeded calculations are not performed
 - *Purely:* Functions cannot mutate shared inputs nor affect global program state
-- *Functional:* The fundamental unit of program composition is the function, and
+- *Functional:* The fundamental units of program composition are /functions/, and
   these can be passed to or returned from other functions
 
 To further differentiate Haskell from Object-Oriented languages (like Java) or
@@ -177,7 +177,7 @@ section.
 
 *** Small Library, Clear Documentation
 
-I worked the entire library down to only 600 lines or so, while providing [[https://hackage.haskell.org/package/mapalgebra-0.1.0/docs/Geography-MapAlgebra.html][ample documentation and examples]].
+I worked the entire library down to only 600 lines or so, while providing [[https://hackage.haskell.org/package/mapalgebra-0.1.1/docs/Geography-MapAlgebra.html][ample documentation and examples]].
 
 *** Low-effort Deployment
 

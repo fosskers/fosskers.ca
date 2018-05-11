@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-05-10 Thu 07:01 -->
+<!-- 2018-05-11 Fri 09:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Realistic Single-Server Raster Processing</title>
@@ -235,39 +235,39 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga095753">1. Preface</a></li>
-<li><a href="#org2efeb4f">2. New Library: <code>mapalgebra</code></a>
+<li><a href="#org9e7955d">1. Preface</a></li>
+<li><a href="#orgb1abfea">2. New Library: <code>mapalgebra</code></a>
 <ul>
-<li><a href="#org34c9555">2.1. An Aside: The Haskell Language</a></li>
-<li><a href="#orgc8b74ca">2.2. Features and Strengths</a></li>
-<li><a href="#org5e2375a">2.3. Short-comings</a></li>
+<li><a href="#orgaf0ba8d">2.1. An Aside: The Haskell Language</a></li>
+<li><a href="#orge07f917">2.2. Features and Strengths</a></li>
+<li><a href="#org331a010">2.3. Short-comings</a></li>
 </ul>
 </li>
-<li><a href="#orgc9e41a0">3. What about Rasterio (Python)?</a>
+<li><a href="#org37a311c">3. What about Rasterio (Python)?</a>
 <ul>
-<li><a href="#orgf6fb4dd">3.1. Philosophy and Strengths</a></li>
-<li><a href="#orgd243949">3.2. Short-comings</a></li>
+<li><a href="#orgf5fa7e2">3.1. Philosophy and Strengths</a></li>
+<li><a href="#org9cf8b4e">3.2. Short-comings</a></li>
 </ul>
 </li>
-<li><a href="#org1dc1bcb">4. What about GeoTrellis (Scala)?</a>
+<li><a href="#orgb5427bb">4. What about GeoTrellis (Scala)?</a>
 <ul>
-<li><a href="#org4e036d6">4.1. Philosophy and Strengths</a></li>
-<li><a href="#org2d1a6a7">4.2. Short-comings</a></li>
+<li><a href="#orgca25086">4.1. Philosophy and Strengths</a></li>
+<li><a href="#org3e8b0e5">4.2. Short-comings</a></li>
 </ul>
 </li>
-<li><a href="#orge4e632b">5. Comparisons</a>
+<li><a href="#org9dcae27">5. Comparisons</a>
 <ul>
-<li><a href="#orga88dab7">5.1. Code Samples</a></li>
-<li><a href="#org6a56ce9">5.2. Benchmarks</a></li>
-<li><a href="#orga27ece3">5.3. Final Thoughts</a></li>
+<li><a href="#orga795b8a">5.1. Code Samples</a></li>
+<li><a href="#orgf0318ee">5.2. Benchmarks</a></li>
+<li><a href="#orgfee24e6">5.3. Final Thoughts</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga095753" class="outline-2">
-<h2 id="orga095753"><span class="section-number-2">1</span> Preface</h2>
+<div id="outline-container-org9e7955d" class="outline-2">
+<h2 id="org9e7955d"><span class="section-number-2">1</span> Preface</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Some problems that have historically plagued raster processing systems are:
@@ -290,8 +290,8 @@ Haskell is an excellent language for GIS work, and offer a
 </div>
 </div>
 
-<div id="outline-container-org2efeb4f" class="outline-2">
-<h2 id="org2efeb4f"><span class="section-number-2">2</span> New Library: <code>mapalgebra</code></h2>
+<div id="outline-container-orgb1abfea" class="outline-2">
+<h2 id="orgb1abfea"><span class="section-number-2">2</span> New Library: <code>mapalgebra</code></h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <a href="https://hackage.haskell.org/package/mapalgebra-0.1.0">mapalgebra</a> is an implementation of <i>Map Algebra</i> as defined by C. Dana Tomlin in
@@ -308,8 +308,8 @@ GIS work outside of Map Algebra are not provided.
 </p>
 </div>
 
-<div id="outline-container-org34c9555" class="outline-3">
-<h3 id="org34c9555"><span class="section-number-3">2.1</span> An Aside: The Haskell Language</h3>
+<div id="outline-container-orgaf0ba8d" class="outline-3">
+<h3 id="orgaf0ba8d"><span class="section-number-3">2.1</span> An Aside: The Haskell Language</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <a href="https://www.haskell.org/">Haskell</a> was first released in 1990, and is a strongly-typed, lazy, purely functional language.
@@ -321,7 +321,7 @@ These words mean specific things:
 about enforcing typing rules</li>
 <li><b>Lazy:</b> Unneeded calculations are not performed</li>
 <li><b>Purely:</b> Functions cannot mutate shared inputs nor affect global program state</li>
-<li><b>Functional:</b> The fundamental unit of program composition is the function, and
+<li><b>Functional:</b> The fundamental units of program composition are <i>functions</i>, and
 these can be passed to or returned from other functions</li>
 </ul>
 
@@ -345,16 +345,16 @@ To try or develop Haskell, the book (and I) recommend <a href="https://docs.hask
 </div>
 </div>
 
-<div id="outline-container-orgc8b74ca" class="outline-3">
-<h3 id="orgc8b74ca"><span class="section-number-3">2.2</span> Features and Strengths</h3>
+<div id="outline-container-orge07f917" class="outline-3">
+<h3 id="orge07f917"><span class="section-number-3">2.2</span> Features and Strengths</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>mapalgebra</code>'s answer to the Raster processing problem? <i>Be lazy™ and parallelize everything.</i>
 </p>
 </div>
 
-<div id="outline-container-orgba9300e" class="outline-4">
-<h4 id="orgba9300e"><span class="section-number-4">2.2.1</span> Type Safety</h4>
+<div id="outline-container-orgab0d6e4" class="outline-4">
+<h4 id="orgab0d6e4"><span class="section-number-4">2.2.1</span> Type Safety</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 The fundamental type provided by <code>mapalgebra</code> is the <code>Raster</code>. Its full
@@ -430,8 +430,8 @@ which lets us promote values into types for the purposes of type checking.
 </div>
 </div>
 
-<div id="outline-container-org3233d95" class="outline-4">
-<h4 id="org3233d95"><span class="section-number-4">2.2.2</span> Lazy Rasters</h4>
+<div id="outline-container-org3f4f924" class="outline-4">
+<h4 id="org3f4f924"><span class="section-number-4">2.2.2</span> Lazy Rasters</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
 I mentioned <code>Raster S</code> above as being backed by real memory. In contrast,
@@ -476,8 +476,8 @@ Primitive types only) or <code>B</code> (Boxed, for custom data types).
 </div>
 </div>
 
-<div id="outline-container-org0503e7b" class="outline-4">
-<h4 id="org0503e7b"><span class="section-number-4">2.2.3</span> Free Parallelism</h4>
+<div id="outline-container-org6718f59" class="outline-4">
+<h4 id="org6718f59"><span class="section-number-4">2.2.3</span> Free Parallelism</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 Good news: so long as you compile with <code>-with-rtsopts=-N</code>, code that uses
@@ -493,8 +493,8 @@ into account, though.
 </div>
 </div>
 
-<div id="outline-container-org884307c" class="outline-4">
-<h4 id="org884307c"><span class="section-number-4">2.2.4</span> Performance</h4>
+<div id="outline-container-org9453ab3" class="outline-4">
+<h4 id="org9453ab3"><span class="section-number-4">2.2.4</span> Performance</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <p>
 Decades of work have gone into GHC, the main Haskell compiler, and it can produce
@@ -517,17 +517,17 @@ section.
 </div>
 </div>
 
-<div id="outline-container-orgd9a4a92" class="outline-4">
-<h4 id="orgd9a4a92"><span class="section-number-4">2.2.5</span> Small Library, Clear Documentation</h4>
+<div id="outline-container-org3a19927" class="outline-4">
+<h4 id="org3a19927"><span class="section-number-4">2.2.5</span> Small Library, Clear Documentation</h4>
 <div class="outline-text-4" id="text-2-2-5">
 <p>
-I worked the entire library down to only 600 lines or so, while providing <a href="https://hackage.haskell.org/package/mapalgebra-0.1.0/docs/Geography-MapAlgebra.html">ample documentation and examples</a>.
+I worked the entire library down to only 600 lines or so, while providing <a href="https://hackage.haskell.org/package/mapalgebra-0.1.1/docs/Geography-MapAlgebra.html">ample documentation and examples</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org743fe49" class="outline-4">
-<h4 id="org743fe49"><span class="section-number-4">2.2.6</span> Low-effort Deployment</h4>
+<div id="outline-container-org94a6a1d" class="outline-4">
+<h4 id="org94a6a1d"><span class="section-number-4">2.2.6</span> Low-effort Deployment</h4>
 <div class="outline-text-4" id="text-2-2-6">
 <p>
 <a href="https://www.fosskers.ca/blog/deploying-haskell-en.html">As I've written in the past</a>, Haskell programs can be very simple to deploy (<code>git push</code>!).
@@ -538,8 +538,8 @@ be built reliably (i.e. no dependency hell).
 </div>
 </div>
 
-<div id="outline-container-org5e2375a" class="outline-3">
-<h3 id="org5e2375a"><span class="section-number-3">2.3</span> Short-comings</h3>
+<div id="outline-container-org331a010" class="outline-3">
+<h3 id="org331a010"><span class="section-number-3">2.3</span> Short-comings</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <code>mapalgebra</code> is just that - a library for Map Algebra. It will not cook you
@@ -553,8 +553,8 @@ why you might want to avoid <code>mapalgebra</code> until future versions.
 </p>
 </div>
 
-<div id="outline-container-orgd2092b9" class="outline-4">
-<h4 id="orgd2092b9"><span class="section-number-4">2.3.1</span> Projections aren't read at IO time</h4>
+<div id="outline-container-org0b1a8c5" class="outline-4">
+<h4 id="org0b1a8c5"><span class="section-number-4">2.3.1</span> Projections aren't read at IO time</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <p>
 With <code>v0.1</code>, projection information isn't yet read out of imagery
@@ -571,8 +571,8 @@ then Projection can be enforced like size.
 </div>
 </div>
 
-<div id="outline-container-org24c250e" class="outline-4">
-<h4 id="org24c250e"><span class="section-number-4">2.3.2</span> Imagery size must be known ahead of time</h4>
+<div id="outline-container-orge7d0542" class="outline-4">
+<h4 id="orge7d0542"><span class="section-number-4">2.3.2</span> Imagery size must be known ahead of time</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 This is by design, but I could see there being claims that it's inconvenient
@@ -604,8 +604,8 @@ reproject and up/downsample if necessary when imagery is read. That way, the
 </div>
 </div>
 
-<div id="outline-container-orgbad1df9" class="outline-4">
-<h4 id="orgbad1df9"><span class="section-number-4">2.3.3</span> Incomplete NoData handling</h4>
+<div id="outline-container-org14a6cb4" class="outline-4">
+<h4 id="org14a6cb4"><span class="section-number-4">2.3.3</span> Incomplete NoData handling</h4>
 <div class="outline-text-4" id="text-2-3-3">
 <p>
 Say you have this image:
@@ -661,8 +661,8 @@ instead.</li>
 </div>
 </div>
 
-<div id="outline-container-org76cc0c7" class="outline-4">
-<h4 id="org76cc0c7"><span class="section-number-4">2.3.4</span> Limited Histogram support</h4>
+<div id="outline-container-org5d91a64" class="outline-4">
+<h4 id="org5d91a64"><span class="section-number-4">2.3.4</span> Limited Histogram support</h4>
 <div class="outline-text-4" id="text-2-3-4">
 <p>
 As of <code>v0.1.1</code>, Histograms (summaries of value counts in a Raster) can only
@@ -680,8 +680,8 @@ I need to do more research before implementing the general case for bigger
 </div>
 </div>
 
-<div id="outline-container-orgc2b3143" class="outline-4">
-<h4 id="orgc2b3143"><span class="section-number-4">2.3.5</span> No reprojection support</h4>
+<div id="outline-container-orgabd3131" class="outline-4">
+<h4 id="orgabd3131"><span class="section-number-4">2.3.5</span> No reprojection support</h4>
 <div class="outline-text-4" id="text-2-3-5">
 <p>
 There is a <code>Projection</code> typeclass, but instances have not been written for the
@@ -694,8 +694,8 @@ various types.
 </div>
 </div>
 
-<div id="outline-container-org7a4e00d" class="outline-4">
-<h4 id="org7a4e00d"><span class="section-number-4">2.3.6</span> Slow <code>faspect</code> and <code>fgradient</code></h4>
+<div id="outline-container-orge2be0bb" class="outline-4">
+<h4 id="orge2be0bb"><span class="section-number-4">2.3.6</span> Slow <code>faspect</code> and <code>fgradient</code></h4>
 <div class="outline-text-4" id="text-2-3-6">
 <p>
 <code>fvolume</code>, <code>fupstream</code>, and <code>fdownstream</code> are quite fast due to some math tricks.
@@ -712,8 +712,8 @@ Maybe I should be using a <a href="https://hackage.haskell.org/package/linear">d
 </div>
 </div>
 
-<div id="outline-container-orgfee0937" class="outline-4">
-<h4 id="orgfee0937"><span class="section-number-4">2.3.7</span> No extended neighbourhood for Focal Ops</h4>
+<div id="outline-container-orga7a992b" class="outline-4">
+<h4 id="orga7a992b"><span class="section-number-4">2.3.7</span> No extended neighbourhood for Focal Ops</h4>
 <div class="outline-text-4" id="text-2-3-7">
 <p>
 This is a non-trivial thing to leave out, but honestly I didn't have the
@@ -734,8 +734,8 @@ generate a 10x10 square on a whim.
 </div>
 </div>
 
-<div id="outline-container-org6daabb6" class="outline-4">
-<h4 id="org6daabb6"><span class="section-number-4">2.3.8</span> No true Multiband support</h4>
+<div id="outline-container-org2dcf327" class="outline-4">
+<h4 id="org2dcf327"><span class="section-number-4">2.3.8</span> No true Multiband support</h4>
 <div class="outline-text-4" id="text-2-3-8">
 <p>
 <code>mapalgebra</code> and Massiv rely on <a href="http://hackage.haskell.org/package/JuicyPixels">JuicyPixels</a> for image IO. At present, it can only
@@ -761,8 +761,8 @@ each just a <code>Raster</code>.
 </div>
 </div>
 
-<div id="outline-container-org7d13d81" class="outline-4">
-<h4 id="org7d13d81"><span class="section-number-4">2.3.9</span> Potentially long compile times</h4>
+<div id="outline-container-orgdc50a9c" class="outline-4">
+<h4 id="orgdc50a9c"><span class="section-number-4">2.3.9</span> Potentially long compile times</h4>
 <div class="outline-text-4" id="text-2-3-9">
 <p>
 In order to be performant, <code>mapalgebra</code> relies on <code>-O2</code> and a lot of inlining.
@@ -778,8 +778,8 @@ It really makes a difference.
 </div>
 </div>
 
-<div id="outline-container-orgdc7f29c" class="outline-4">
-<h4 id="orgdc7f29c"><span class="section-number-4">2.3.10</span> Why not GPU?</h4>
+<div id="outline-container-org1bbf684" class="outline-4">
+<h4 id="org1bbf684"><span class="section-number-4">2.3.10</span> Why not GPU?</h4>
 <div class="outline-text-4" id="text-2-3-10">
 <p>
 If going single-machine, why not do it "right" and use a giant GPU instead?
@@ -793,8 +793,8 @@ I hope so.
 </div>
 </div>
 
-<div id="outline-container-orgc9e41a0" class="outline-2">
-<h2 id="orgc9e41a0"><span class="section-number-2">3</span> What about Rasterio (Python)?</h2>
+<div id="outline-container-org37a311c" class="outline-2">
+<h2 id="org37a311c"><span class="section-number-2">3</span> What about Rasterio (Python)?</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <a href="https://github.com/mapbox/rasterio">Rasterio</a> is a Python library for reading and writing GeoTIFFs, and performing
@@ -803,16 +803,16 @@ binding provided by <a href="http://www.gdal.org/">GDAL</a>.
 </p>
 </div>
 
-<div id="outline-container-orgf6fb4dd" class="outline-3">
-<h3 id="orgf6fb4dd"><span class="section-number-3">3.1</span> Philosophy and Strengths</h3>
+<div id="outline-container-orgf5fa7e2" class="outline-3">
+<h3 id="orgf5fa7e2"><span class="section-number-3">3.1</span> Philosophy and Strengths</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Rasterio's solution to the Raster processing problem? <i>Use C to go fast.</i>
 </p>
 </div>
 
-<div id="outline-container-orgf6e21f5" class="outline-4">
-<h4 id="orgf6e21f5"><span class="section-number-4">3.1.1</span> GDAL and Numpy</h4>
+<div id="outline-container-org39db566" class="outline-4">
+<h4 id="org39db566"><span class="section-number-4">3.1.1</span> GDAL and Numpy</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 Rasterio uses GDAL, a well-known C library, for its IO. After an image has been read,
@@ -826,8 +826,8 @@ Both GDAL and NumPy are well-established projects with many developers behind th
 </div>
 </div>
 
-<div id="outline-container-org611f380" class="outline-4">
-<h4 id="org611f380"><span class="section-number-4">3.1.2</span> Mindshare</h4>
+<div id="outline-container-orgaaf5102" class="outline-4">
+<h4 id="orgaaf5102"><span class="section-number-4">3.1.2</span> Mindshare</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 Python is huge. It's installed by default on many modern systems and has a low learning
@@ -846,8 +846,8 @@ assigning "Learn Python" to a student as a preliminary research task.
 </div>
 </div>
 
-<div id="outline-container-org99168d2" class="outline-4">
-<h4 id="org99168d2"><span class="section-number-4">3.1.3</span> Low-effort Deployment</h4>
+<div id="outline-container-org10c5b78" class="outline-4">
+<h4 id="org10c5b78"><span class="section-number-4">3.1.3</span> Low-effort Deployment</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <p>
 Since all Python programs are just scripts, making sure GDAL is properly
@@ -857,12 +857,12 @@ installed on the host system is about the only problem you might have.
 </div>
 </div>
 
-<div id="outline-container-orgd243949" class="outline-3">
-<h3 id="orgd243949"><span class="section-number-3">3.2</span> Short-comings</h3>
+<div id="outline-container-org9cf8b4e" class="outline-3">
+<h3 id="org9cf8b4e"><span class="section-number-3">3.2</span> Short-comings</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-orgcde7f62" class="outline-4">
-<h4 id="orgcde7f62"><span class="section-number-4">3.2.1</span> Dynamic Language</h4>
+<div id="outline-container-org432bc69" class="outline-4">
+<h4 id="org432bc69"><span class="section-number-4">3.2.1</span> Dynamic Language</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 Python has neither explicit types nor a compiler. This might be fine for
@@ -887,8 +887,8 @@ to regular Python, so you shouldn't lose anything.
 </div>
 </div>
 
-<div id="outline-container-orgcbed684" class="outline-4">
-<h4 id="orgcbed684"><span class="section-number-4">3.2.2</span> No Focal Operations</h4>
+<div id="outline-container-orgb4c074e" class="outline-4">
+<h4 id="orgb4c074e"><span class="section-number-4">3.2.2</span> No Focal Operations</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 As far as I could find, Focal Operations (or Zonal, for that matter)
@@ -907,8 +907,8 @@ write them yourself or look elsewhere.
 </div>
 </div>
 
-<div id="outline-container-org1dc1bcb" class="outline-2">
-<h2 id="org1dc1bcb"><span class="section-number-2">4</span> What about GeoTrellis (Scala)?</h2>
+<div id="outline-container-orgb5427bb" class="outline-2">
+<h2 id="orgb5427bb"><span class="section-number-2">4</span> What about GeoTrellis (Scala)?</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <a href="https://geotrellis.io/">GeoTrellis</a> is a feature-rich GIS library suite for Scala (<a href="http://geotrellis.readthedocs.io/en/latest/">docs</a>). It can process raster,
@@ -928,16 +928,16 @@ their continuing effort.
 </p>
 </div>
 
-<div id="outline-container-org4e036d6" class="outline-3">
-<h3 id="org4e036d6"><span class="section-number-3">4.1</span> Philosophy and Strengths</h3>
+<div id="outline-container-orgca25086" class="outline-3">
+<h3 id="orgca25086"><span class="section-number-3">4.1</span> Philosophy and Strengths</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 GeoTrellis' answer to the Raster processing problem? <i>Distribution.</i>
 </p>
 </div>
 
-<div id="outline-container-org771fbea" class="outline-4">
-<h4 id="org771fbea"><span class="section-number-4">4.1.1</span> Scalability</h4>
+<div id="outline-container-org886344e" class="outline-4">
+<h4 id="org886344e"><span class="section-number-4">4.1.1</span> Scalability</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <blockquote>
 <p>
@@ -954,8 +954,8 @@ processing network can both be arbitrarily big.
 </div>
 </div>
 
-<div id="outline-container-org393f388" class="outline-4">
-<h4 id="org393f388"><span class="section-number-4">4.1.2</span> IO Flexibility</h4>
+<div id="outline-container-org64a2a1a" class="outline-4">
+<h4 id="org64a2a1a"><span class="section-number-4">4.1.2</span> IO Flexibility</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <p>
 GeoTrellis can read GeoTIFFs from anywhere in any band count, and provides
@@ -977,8 +977,8 @@ and allow GeoTrellis Layers to be viewable in QGIS.
 </div>
 </div>
 
-<div id="outline-container-org4a2d0da" class="outline-4">
-<h4 id="org4a2d0da"><span class="section-number-4">4.1.3</span> Feature Richness</h4>
+<div id="outline-container-org6cac4fa" class="outline-4">
+<h4 id="org6cac4fa"><span class="section-number-4">4.1.3</span> Feature Richness</h4>
 <div class="outline-text-4" id="text-4-1-3">
 <p>
 GeoTrellis is a suite of libraries, but the <code>geotrellis-raster</code> package alone
@@ -1008,8 +1008,8 @@ The point is, if you've got data, GeoTrellis knows how to read it and process it
 </div>
 </div>
 
-<div id="outline-container-org2d1a6a7" class="outline-3">
-<h3 id="org2d1a6a7"><span class="section-number-3">4.2</span> Short-comings</h3>
+<div id="outline-container-org3e8b0e5" class="outline-3">
+<h3 id="org3e8b0e5"><span class="section-number-3">4.2</span> Short-comings</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 When you want to go fast on the JVM, it makes certain demands of you. These
@@ -1018,8 +1018,8 @@ some issues over the years.
 </p>
 </div>
 
-<div id="outline-container-org5a7966b" class="outline-4">
-<h4 id="org5a7966b"><span class="section-number-4">4.2.1</span> Opaque <code>Tile</code> Types</h4>
+<div id="outline-container-org4f5c34f" class="outline-4">
+<h4 id="org4f5c34f"><span class="section-number-4">4.2.1</span> Opaque <code>Tile</code> Types</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 Unlike the <code>Raster u p r c a</code> type from <code>mapalgebra</code>, most GeoTrellis
@@ -1075,8 +1075,8 @@ to underpin <code>Tile</code>.
 </div>
 </div>
 
-<div id="outline-container-org5bc6620" class="outline-4">
-<h4 id="org5bc6620"><span class="section-number-4">4.2.2</span> Mixed Projections and Raster Sizes</h4>
+<div id="outline-container-org89950f5" class="outline-4">
+<h4 id="org89950f5"><span class="section-number-4">4.2.2</span> Mixed Projections and Raster Sizes</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <p>
 A common problem:
@@ -1116,8 +1116,8 @@ for bugs.</li>
 </div>
 </div>
 
-<div id="outline-container-org6755b14" class="outline-4">
-<h4 id="org6755b14"><span class="section-number-4">4.2.3</span> Lack of Op Fusion</h4>
+<div id="outline-container-org6ae25b6" class="outline-4">
+<h4 id="org6ae25b6"><span class="section-number-4">4.2.3</span> Lack of Op Fusion</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
 Binary Local Operations like <code>tile1 + tile2</code> allocate a new <code>Array</code>. Further,
@@ -1149,8 +1149,8 @@ as much.
 </div>
 </div>
 
-<div id="outline-container-org76da79e" class="outline-4">
-<h4 id="org76da79e"><span class="section-number-4">4.2.4</span> API Discoverability</h4>
+<div id="outline-container-orgecf09a8" class="outline-4">
+<h4 id="orgecf09a8"><span class="section-number-4">4.2.4</span> API Discoverability</h4>
 <div class="outline-text-4" id="text-4-2-4">
 <p>
 GeoTrellis utilizes around 20 actual data types (<code>Tile</code>, <code>Polygon</code>, etc.).
@@ -1216,8 +1216,8 @@ and make GeoTrellis easier to learn:
 </div>
 </div>
 
-<div id="outline-container-orgde66228" class="outline-4">
-<h4 id="orgde66228"><span class="section-number-4">4.2.5</span> Heavy Call Indirection and Method Overloading</h4>
+<div id="outline-container-org10b74f5" class="outline-4">
+<h4 id="org10b74f5"><span class="section-number-4">4.2.5</span> Heavy Call Indirection and Method Overloading</h4>
 <div class="outline-text-4" id="text-4-2-5">
 <p>
 Assume we had started with:
@@ -1305,8 +1305,8 @@ hierarchies-for-the-sake-of-hierarchies would also help.
 </div>
 </div>
 
-<div id="outline-container-orgf2a2604" class="outline-4">
-<h4 id="orgf2a2604"><span class="section-number-4">4.2.6</span> Verbosity, Complexity, and Maintenance Cost</h4>
+<div id="outline-container-orga03ba66" class="outline-4">
+<h4 id="orga03ba66"><span class="section-number-4">4.2.6</span> Verbosity, Complexity, and Maintenance Cost</h4>
 <div class="outline-text-4" id="text-4-2-6">
 <p>
 It has been my experience that Haskell code is usually much shorter than Scala
@@ -1330,8 +1330,8 @@ different language altogether.
 </div>
 </div>
 
-<div id="outline-container-orgf8dfad7" class="outline-4">
-<h4 id="orgf8dfad7"><span class="section-number-4">4.2.7</span> High-effort Deployment</h4>
+<div id="outline-container-org0650c94" class="outline-4">
+<h4 id="org0650c94"><span class="section-number-4">4.2.7</span> High-effort Deployment</h4>
 <div class="outline-text-4" id="text-4-2-7">
 <p>
 GeoTrellis assumes the use of Spark for many of its features.
@@ -1381,8 +1381,8 @@ an alternative to Spark. Are you sure you need it?
 </div>
 </div>
 
-<div id="outline-container-org0afe101" class="outline-4">
-<h4 id="org0afe101"><span class="section-number-4">4.2.8</span> Potential Overkill</h4>
+<div id="outline-container-org5711add" class="outline-4">
+<h4 id="org5711add"><span class="section-number-4">4.2.8</span> Potential Overkill</h4>
 <div class="outline-text-4" id="text-4-2-8">
 <p>
 Spark is popular, and everyone wants to be doing "big data". Chances are, though,
@@ -1404,20 +1404,20 @@ a web app for working with imagery visually.
 </div>
 
 
-<div id="outline-container-orge4e632b" class="outline-2">
-<h2 id="orge4e632b"><span class="section-number-2">5</span> Comparisons</h2>
+<div id="outline-container-org9dcae27" class="outline-2">
+<h2 id="org9dcae27"><span class="section-number-2">5</span> Comparisons</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-orga88dab7" class="outline-3">
-<h3 id="orga88dab7"><span class="section-number-3">5.1</span> Code Samples</h3>
+<div id="outline-container-orga795b8a" class="outline-3">
+<h3 id="orga795b8a"><span class="section-number-3">5.1</span> Code Samples</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 These are by no means comprehensive, but do give a feel for each library.
 </p>
 </div>
 
-<div id="outline-container-org8430f46" class="outline-4">
-<h4 id="org8430f46"><span class="section-number-4">5.1.1</span> Read an Image</h4>
+<div id="outline-container-org760116b" class="outline-4">
+<h4 id="org760116b"><span class="section-number-4">5.1.1</span> Read an Image</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <p>
 Reading a 512x512 singleband image.
@@ -1465,8 +1465,8 @@ GeoTrellis:
 </div>
 </div>
 
-<div id="outline-container-org8604fd4" class="outline-4">
-<h4 id="org8604fd4"><span class="section-number-4">5.1.2</span> Write an Image</h4>
+<div id="outline-container-org5b19ab1" class="outline-4">
+<h4 id="org5b19ab1"><span class="section-number-4">5.1.2</span> Write an Image</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <p>
 Write some given 512x512 Raster.
@@ -1526,8 +1526,8 @@ GeoTrellis:
 </div>
 </div>
 
-<div id="outline-container-org8fdae1f" class="outline-4">
-<h4 id="org8fdae1f"><span class="section-number-4">5.1.3</span> Colour an Image</h4>
+<div id="outline-container-org275a53a" class="outline-4">
+<h4 id="org275a53a"><span class="section-number-4">5.1.3</span> Colour an Image</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <p>
 <code>mapalgebra</code>:
@@ -1576,8 +1576,8 @@ GeoTrellis:
 </div>
 </div>
 
-<div id="outline-container-orgc802447" class="outline-4">
-<h4 id="orgc802447"><span class="section-number-4">5.1.4</span> Enhanced Vegetation Index (EVI)</h4>
+<div id="outline-container-org5ee20f7" class="outline-4">
+<h4 id="org5ee20f7"><span class="section-number-4">5.1.4</span> Enhanced Vegetation Index (EVI)</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <p>
 <code>mapalgebra</code>:
@@ -1618,8 +1618,8 @@ GeoTrellis:
 </div>
 </div>
 
-<div id="outline-container-org6a56ce9" class="outline-3">
-<h3 id="org6a56ce9"><span class="section-number-3">5.2</span> Benchmarks</h3>
+<div id="outline-container-orgf0318ee" class="outline-3">
+<h3 id="orgf0318ee"><span class="section-number-3">5.2</span> Benchmarks</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 These benchmarks were performed on a 2016 Lenovo X1 Carbon with 4 CPUs.
@@ -1663,8 +1663,8 @@ stated, all operations are over a 512x512 image.
 </p>
 </div>
 
-<div id="outline-container-org36932e4" class="outline-4">
-<h4 id="org36932e4"><span class="section-number-4">5.2.1</span> Local Operations</h4>
+<div id="outline-container-org16e24ec" class="outline-4">
+<h4 id="org16e24ec"><span class="section-number-4">5.2.1</span> Local Operations</h4>
 <div class="outline-text-4" id="text-5-2-1">
 
 <div class="figure">
@@ -1720,8 +1720,8 @@ of the IO process.
 </div>
 </div>
 
-<div id="outline-container-org087715c" class="outline-4">
-<h4 id="org087715c"><span class="section-number-4">5.2.2</span> Focal Operations</h4>
+<div id="outline-container-org4e474bf" class="outline-4">
+<h4 id="org4e474bf"><span class="section-number-4">5.2.2</span> Focal Operations</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 <code>mapalgebra</code> <a href="https://github.com/fosskers/mapalgebra/pull/3">defines more Focal Ops</a> than GeoTrellis, but we measure the common ones
@@ -1752,8 +1752,8 @@ Yikes. I really need to figure out what's killing the optimizations.
 </div>
 </div>
 
-<div id="outline-container-orga27ece3" class="outline-3">
-<h3 id="orga27ece3"><span class="section-number-3">5.3</span> Final Thoughts</h3>
+<div id="outline-container-orgfee24e6" class="outline-3">
+<h3 id="orgfee24e6"><span class="section-number-3">5.3</span> Final Thoughts</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 If you have an existing Python code base or want to integrate with other Python
@@ -1777,7 +1777,7 @@ just want fast and safe single-machine Raster processing code, use <code>mapalge
 <div id="postamble" class="status">
 <p class="date">Date: 2018-04-28</p>
 <p class="author">Author: Colin</p>
-<p class="date">Created: 2018-05-10 Thu 07:01</p>
+<p class="date">Created: 2018-05-11 Fri 09:36</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
