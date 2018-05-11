@@ -414,7 +414,7 @@ vector (geometric), vector tile, and point-cloud data, and has integration with
 Were it not for their wisdom and support, I would not be where I am today. I thank
 them and all of my former coworkers for everything they taught me.
 
-Any written here is done so with the utmost respect for my former colleagues and
+Anything written here is done so with the utmost respect for my former colleagues and
 their continuing effort.
 
 ** Philosophy and Strengths
