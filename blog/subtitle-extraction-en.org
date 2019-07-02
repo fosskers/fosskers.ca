@@ -1,0 +1,47 @@
+#+TITLE: Extracting Subtitles from MP4 Files
+#+DATE: 2019-07-01
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+Let's say you've got a video file on hand with baked-in subtitles. No matter
+what you try, your casting software just can't convince ChromeCast to utilize
+those subs. What's a man to do?
+
+Below is a quick guide to solve this.
+
+* Extraction via ~MP4Box~
+
+~MP4Box~ can extract subtitles reliably. On Arch Linux, it's a binary included
+in the ~gpac~ package. Before we can extract subtitles, let's analyse our file:
+
+#+begin_src bash
+  MP4Box -info video.mp4
+#+end_src
+
+This will highlight all the video, audio, and subtitles "tracks" within the
+file. If our target subtitle track were "Track 4", then to extract it:
+
+#+begin_src bash
+  MP4Box -raw 4 video.mp4
+#+end_src
+
+* Conversion to ~.srt~
+
+Your subtitles may have been extracted as a pair of files: a ~.sub~ and a
+~.idx~. ~.srt~ is a more friendly, plain-text format that casting software can
+handle easier. To convert, [[https://subtitletools.com/convert-sub-idx-to-srt-online][use this website]].
+
+* Casting via ~catt~
+
+VLC has decent casting support, but often trips over subtitles. On the other
+hand, [[https://github.com/skorokithakis/catt][Catt]] supports these well. With your original ~.mp4~ file and newly
+converted ~.srt~ in hand, we can begin casting with:
+
+#+begin_src bash
+  catt cast -s ./subtitles.srt ./video.mp4
+#+end_src
+
+* References
+
+- [[https://superuser.com/a/393771/287097][StackOverflow: How to extract subtitles?]]
+- [[https://subtitletools.com/convert-sub-idx-to-srt-online][Online Subtitle File Converter]]
