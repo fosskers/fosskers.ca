@@ -26,6 +26,7 @@ pre.src-js:before { content: 'Javascript'; }
 pre.src-python:before { content: 'Python'; }
 pre.src-scala:before { content: 'Scala'; }
 pre.src-makefile:before { content: 'Makefile'; }
+pre.src-terraform:before { content: 'Terraform'; }
 table{margin:auto;border-top:2px solid;border-collapse:collapse}
 table,thead{border-bottom:2px solid}
 table td+td,table th+th{border-left:1px solid gray}
