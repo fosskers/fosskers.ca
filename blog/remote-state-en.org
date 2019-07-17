@@ -1,0 +1,89 @@
+#+TITLE: Terraform Remote State on S3
+#+DATE: 2019-07-17
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+The [[https://www.terraform.io/docs/backends/types/s3.html][official S3 backend documentation]] for Terraform gives the impression that
+Remote State is more involved than it actually needs to be. In this post, I give
+an example of the most concise possible Terraform configuration that enables
+Remote State on S3.
+
+Note that I don't explain how to implement "State Locking", although the blog
+post that I referenced (linked below) does demonstrate this.
+
+* S3 Bucket Creation
+
+We do this with Terraform as well. In a directory /separate/ from the project
+you wish to enable Remote State for, produce the following:
+
+#+begin_src terraform
+  # The variables here should live in a `variables.tf` file as usual, with their
+  # true values defined in some uncommitted `terraform.tfvars` file.
+  provider "aws" {
+    access_key = "${var.access_key}"
+    secret_key = "${var.secret_key}"
+    region     = "us-east-2" # This can be whatever you want.
+    version    = "~> 2.2"
+  }
+
+  resource "aws_s3_bucket" "tf-state-storage" {
+    # Must be globally unique.
+    bucket = "your-bucket-name"
+
+    # This allows you to roll back in the case of errors.
+    versioning {
+      enabled = true
+    }
+
+    lifecycle {
+      prevent_destroy = true
+    }
+  }
+#+end_src
+
+Then ~terraform init~ and ~terraform apply~ as usual. /This/ state will be local
+to your machine, but since it's just one resource, that's fine.
+
+* Use the S3 Backend
+
+Within the main ~.tf~ file of your real project, prepend the following:
+
+#+begin_src terraform
+  # This cannot contain variable expansions.
+  terraform {
+    backend "s3" {
+      encrypt = true
+
+      # Same as the bucket we just created.
+      bucket = "your-bucket-name"
+
+      # The name of the state file that will appear in S3.
+      key = "foobar.tfstate"
+
+      # The region of the S3 bucket, NOT the region of the other resources in this
+      # module!
+      region = "us-east-2"
+    }
+  }
+#+end_src
+
+This is a "partial configuration", because we haven't supplied the ~access_key~
+and ~secret_key~ that were used to create the bucket (and set its access
+controls). You thus also need some file, named say ~conf.conf~ which contains
+these fileds in the form:
+
+#+begin_src conf
+  access_key = "YOUR-AWS-ACCESS-KEY"
+  secret_key = "YOUR-AWS-SECRET-KEY"
+#+end_src
+
+Now, ~terraform init --backend-config=conf.conf~ will reconfigure your project
+to save its state to the S3 bucket. If you already had some local state, it will
+be uploaded now.
+
+Further applications of ~terraform apply~, ~terraform destroy~, etc., will
+push/pull results from S3 as desired. Mission accomplished!
+
+* References
+
+- Medium: [[https://medium.com/swlh/https-medium-com-sahityamaruvada-setting-up-terraform-remote-state-azure-aws-e936a48f672b][Setting up Terraform Remote State]]
