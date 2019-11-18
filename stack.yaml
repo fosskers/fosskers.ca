@@ -1,5 +1,7 @@
 resolver: lts-14.4
 
+ghc-options: {"$locals": -ddump-to-file -ddump-hi}
+
 extra-deps:
   - servant-purescript-0.9.0.4
   - servant-subscriber-0.6.0.3

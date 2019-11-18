@@ -68,9 +68,7 @@ executable server
   main-is: Server.hs
   build-depends:
       fosskers
-    , lens >=4.15 && <4.18
     , lucid >=2.9 && <2.10
-    , natural-transformation >=0.4 && <0.5
     , optparse-generic >=1.2 && <1.4
     , servant-server >=0.11 && <0.17
     , shelly >=1.7 && <1.9
