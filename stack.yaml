@@ -1,4 +1,4 @@
-resolver: lts-11.1
+resolver: lts-14.4
 
 packages:
   - lib
@@ -6,10 +6,5 @@ packages:
   - bridge
 
 extra-deps:
-  - html-entities-1.1.4.2
-  - purescript-bridge-0.12.0.0
-  - servant-xml-1.0.1.1
-  - xmlbf-0.3
-  - xmlbf-xeno-0.1.1
-  - git: https://github.com/fosskers/kanji
-    commit: b6408149ac83a6135e32c946f089eac212fc8d8d
+  - servant-purescript-0.9.0.4
+  - servant-subscriber-0.6.0.3

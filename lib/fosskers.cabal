@@ -1,0 +1,54 @@
+cabal-version: 2.2
+
+name:           fosskers
+version:        1.0.0
+synopsis:       My personal site.
+description:    My personal site.
+category:       Web
+author:         Colin Woodbury
+maintainer:     colin@fosskers.ca
+license:        BSD-3-Clause
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: git://github.com/fosskers/fosskers.ca.git
+
+common commons
+  default-language: Haskell2010
+  default-extensions: NoImplicitPrelude OverloadedStrings
+  ghc-options: -fwarn-unused-imports -fwarn-unused-binds -fwarn-name-shadowing -fwarn-unused-matches -fwarn-incomplete-patterns -fwarn-incomplete-uni-patterns -funclutter-valid-hole-fits
+  build-depends:
+      aeson >=1.2 && <1.5
+    , base >=4.8 && <4.13
+    , bytestring
+    , containers
+    , classy-prelude >=1.3 && <1.6
+    , hourglass >=0.2 && <0.3
+    , kanji >=3.4 && <3.5
+    , lucid >=2.9 && <2.10
+    , megaparsec >= 7.0 && < 8
+    , servant >=0.11 && <0.17
+    , servant-lucid >=0.7 && <0.10
+    , servant-xml >=1.0 && <1.1
+    , text >=1.2 && <1.3
+    , unordered-containers
+    , xmlbf >=0.3 && <0.7
+
+library
+  import: commons
+  hs-source-dirs: ./.
+  exposed-modules:
+      Fosskers.Common
+      Fosskers.Kanji
+      Fosskers.Org
+
+test-suite fosskers-test
+  import: commons
+  type: exitcode-stdio-1.0
+  main-is: Test.hs
+  hs-source-dirs: test
+  build-depends:
+      fosskers
+    , tasty ^>= 1.2
+    , tasty-hunit >=0.9 && <0.11
