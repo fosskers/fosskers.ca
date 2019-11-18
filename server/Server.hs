@@ -1,10 +1,13 @@
-{-# LANGUAGE DataKinds, TypeOperators, Rank2Types #-}
-{-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
-{-# LANGUAGE TupleSections #-}
+{-# LANGUAGE DataKinds      #-}
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveGeneric  #-}
+{-# LANGUAGE Rank2Types     #-}
+{-# LANGUAGE TupleSections  #-}
+{-# LANGUAGE TypeOperators  #-}
 
 module Main ( main ) where
 
-import           ClassyPrelude hiding (FilePath, index, Handler)
+import           ClassyPrelude hiding (FilePath, Handler, index)
 import           Control.Arrow ((&&&))
 import           Control.Concurrent (getNumCapabilities)
 import           Data.Char (isAlpha)
@@ -22,7 +25,7 @@ import           Network.Wai.Middleware.Gzip
 import           Options.Generic
 import           Servant.API
 import           Servant.Server
-import           Servant.Utils.StaticFiles (serveDirectoryFileServer)
+import           Servant.Server.StaticFiles (serveDirectoryFileServer)
 import           Shelly hiding (path)
 import           System.Environment (lookupEnv)
 
