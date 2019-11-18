@@ -1,17 +1,17 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Main ( main ) where
 
 import BasePrelude
-import Data.Kanji.Types
-import Data.Proxy (Proxy(..))
-import Fosskers.Common
-import Fosskers.Kanji
+import Data.Kanji.Types (CharCat, Kanji, Level)
+import Fosskers.Common (Blog, JsonAPI, Language, Path, Title)
+import Fosskers.Kanji (Analysis)
 import Language.PureScript.Bridge hiding (Language)
 import Language.PureScript.Bridge.PSTypes
 import Servant.PureScript
-import Time.Types
+import Time.Types (Date)
 
 ---
 
@@ -38,15 +38,15 @@ psChar = TypeInfo { _typePackage    = "purescript-prim"
 
 -- | Generic representations of the Haskell types I want to convert to Purescript.
 types :: [SumType 'Haskell]
-types = [ mkSumType (Proxy :: Proxy Blog)
-        , mkSumType (Proxy :: Proxy Title)
-        , mkSumType (Proxy :: Proxy Date)
-        , mkSumType (Proxy :: Proxy Path)
-        , mkSumType (Proxy :: Proxy Analysis)
-        , mkSumType (Proxy :: Proxy Kanji)
-        , let p = (Proxy :: Proxy Level) in order p $ mkSumType p
-        , let p = (Proxy :: Proxy CharCat) in order p $ mkSumType p
-        , let p = (Proxy :: Proxy Language) in order p $ mkSumType p
+types = [ mkSumType (Proxy @Blog)
+        , mkSumType (Proxy @Title)
+        , mkSumType (Proxy @Date)
+        , mkSumType (Proxy @Path)
+        , mkSumType (Proxy @Analysis)
+        , mkSumType (Proxy @Kanji)
+        , let p = (Proxy @Level) in order p $ mkSumType p
+        , let p = (Proxy @CharCat) in order p $ mkSumType p
+        , let p = (Proxy @Language) in order p $ mkSumType p
         ]
 
 main :: IO ()

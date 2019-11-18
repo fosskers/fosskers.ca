@@ -19,7 +19,6 @@ import           Lucid (Html)
 import           Servant.API
 import           Servant.HTML.Lucid
 import           Servant.XML
-import           Text.Printf (printf)
 import           Time.Types (Date(..), Month(..))
 import           Xmlbf (Node, ToXml(..), element, text)
 

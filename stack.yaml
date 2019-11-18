@@ -1,7 +1,16 @@
-resolver: lts-14.4
+resolver: nightly-2019-11-11
 
 ghc-options: {"$locals": -ddump-to-file -ddump-hi}
 
 extra-deps:
   - servant-purescript-0.9.0.4
   - servant-subscriber-0.6.0.3
+  - servant-xml-1.0.1.4
+  - shelly-1.9.0
+  - warp-3.3.4
+  # Until https://gitlab.com/k0001/xmlbf/merge_requests/15/commits is merged.
+  - git: https://gitlab.com/fosskers/xmlbf
+    commit: e8b9cd7a822a535c1eab719212eba6f1809762d6
+    subdirs:
+      - xmlbf
+      - xmlbf-xeno

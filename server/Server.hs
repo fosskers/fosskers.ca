@@ -8,14 +8,10 @@
 module Main ( main ) where
 
 import           BasePrelude hiding (FilePath, Handler, app, index)
-import           Control.Arrow ((&&&))
-import           Control.Concurrent (getNumCapabilities)
-import           Data.Char (isAlpha)
 import qualified Data.Map.Strict as M
 import qualified Data.Set as S
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
-import           Filesystem.Path (basename)
 import           Fosskers.Common
 import           Fosskers.Kanji (Analysis, analysis)
 import           Fosskers.Org (parseOrg)
@@ -27,7 +23,7 @@ import           Servant.API
 import           Servant.Server
 import           Servant.Server.StaticFiles (serveDirectoryFileServer)
 import           Shelly hiding (path)
-import           System.Environment (lookupEnv)
+import           System.FilePath.Posix (takeBaseName)
 
 ---
 
@@ -105,11 +101,11 @@ orgs = do
   pure $ partitionEithers vs
   where g :: Text -> Sh (Either Text Blog)
         g f = do
-          let path = fromText f
+          let path = T.unpack f
           content <- eread path
           pure $ do
             c <- content
-            let base = toTextIgnore $ basename path
+            let base = T.pack $ takeBaseName path
             (t, d) <- parseOrg f c
             pure $ Blog t d (Path base) (freq c)
 
