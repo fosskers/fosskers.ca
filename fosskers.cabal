@@ -23,8 +23,8 @@ common commons
   build-depends:
     , aeson                 >=1.2  && <1.5
     , base                  >=4.8  && <4.13
+    , base-prelude          ^>=1.3
     , bytestring
-    , classy-prelude        >=1.3  && <1.6
     , containers
     , hourglass             ^>=0.2
     , kanji                 ^>=3.4

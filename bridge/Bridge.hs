@@ -1,9 +1,9 @@
-{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE FlexibleContexts #-}
 
 module Main ( main ) where
 
-import ClassyPrelude
+import BasePrelude
 import Data.Kanji.Types
 import Data.Proxy (Proxy(..))
 import Fosskers.Common

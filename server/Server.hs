@@ -7,14 +7,14 @@
 
 module Main ( main ) where
 
-import           ClassyPrelude hiding (FilePath, Handler, index)
+import           BasePrelude hiding (FilePath, Handler, app, index)
 import           Control.Arrow ((&&&))
 import           Control.Concurrent (getNumCapabilities)
 import           Data.Char (isAlpha)
 import qualified Data.Map.Strict as M
-import           Data.Proxy
 import qualified Data.Set as S
 import qualified Data.Text as T
+import qualified Data.Text.IO as T
 import           Filesystem.Path (basename)
 import           Fosskers.Common
 import           Fosskers.Kanji (Analysis, analysis)
@@ -79,14 +79,17 @@ index j = html_ $ head_ h *> body_ (script_ [src_ $ "assets/" <> j] ("" :: Text)
 
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
-freq = map ((maybe "死毒殺悪厄魔" head . fromNullable) &&& length) . group . sort . filter g . map T.toLower . T.words . T.map f
+freq = map (h &&& length) . group . sort . filter g . map T.toLower . T.words . T.map f
   where f c = bool ' ' c $ isAlpha c
         g w = let l = T.length w in l > 2 && l < 13 && not (S.member w functionWords)
+        h []    = "死毒殺悪厄魔"
+        h (c:_) = c
 
 functionWords :: S.Set Text
-functionWords = S.fromList [ "and", "but", "for", "our", "the", "that", "this", "these", "those", "then", "than"
-                           , "what", "when", "where", "will", "your", "you", "are", "can", "has", "have"
-                           , "here", "there", "how", "who", "its", "just", "not", "now", "only", "they" ]
+functionWords = S.fromList
+  [ "and", "but", "for", "our", "the", "that", "this", "these", "those", "then", "than"
+  , "what", "when", "where", "will", "your", "you", "are", "can", "has", "have"
+  , "here", "there", "how", "who", "its", "just", "not", "now", "only", "they" ]
 
 -- | Render all ORG files to HTML, also yielding word frequencies for each file.
 --
@@ -127,11 +130,11 @@ main :: IO ()
 main = do
   Args (Helpful p) (Helpful j) <- getRecord "Backend server for fosskers.ca"
   (errs, ps) <- shelly orgs
-  traverse_ say errs
+  traverse_ T.putStrLn errs
   afs <- analysisFiles
-  herokuPort <- (>>= readMay) <$> lookupEnv "PORT"
+  herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
   let prt = fromMaybe 8081 $ p <|> herokuPort
   cores <- getNumCapabilities
-  say $ "Analysis files read: " <> tshow (length afs)
-  say $ "Listening on port " <> tshow prt <> " with " <> tshow cores <> " cores"
+  putStrLn $ "Analysis files read: " <> show (length afs)
+  putStrLn $ "Listening on port " <> show prt <> " with " <> show cores <> " cores"
   W.run prt . app $ Env ps j (analysis <$> afs)

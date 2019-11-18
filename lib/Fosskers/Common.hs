@@ -4,13 +4,16 @@
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TypeOperators      #-}
 
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+
 module Fosskers.Common where
 
-import           ClassyPrelude
+import           BasePrelude
 import           Data.Aeson (ToJSON)
 import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
 import qualified Data.Text as T
+import qualified Data.Text.Lazy as TL
 import           Fosskers.Kanji (Analysis)
 import           Lucid (Html)
 import           Servant.API
@@ -23,8 +26,8 @@ import           Xmlbf (Node, ToXml(..), element, text)
 ---
 
 type JsonAPI = "posts" :> Get '[JSON] [Blog]
-  :<|> "kanji" :> ReqBody '[JSON] Text :> Post '[JSON] Analysis
-  :<|> "kanji" :> Capture "text" Text :> Get '[JSON] (Maybe Analysis)
+  :<|> "kanji" :> ReqBody '[JSON] T.Text :> Post '[JSON] Analysis
+  :<|> "kanji" :> Capture "text" T.Text :> Get '[JSON] (Maybe Analysis)
 
 type API = JsonAPI
   :<|> "blog" :> Raw
@@ -34,7 +37,7 @@ type API = JsonAPI
   :<|> "webfonts" :> Raw
   :<|> Get '[HTML] (Html ())
 
-newtype Title = Title Text deriving (Eq, Show, Generic, ToJSON)
+newtype Title = Title T.Text deriving (Eq, Show, Generic, ToJSON)
 
 -- Evil evil orphan instances.
 deriving instance Generic Date
@@ -44,7 +47,7 @@ deriving instance ToJSON Month
 
 data Language = English | Japanese deriving (Eq, Ord, Show, Generic)
 
-newtype Path = Path Text deriving (Generic, ToJSON)
+newtype Path = Path T.Text deriving (Generic, ToJSON)
 
 pathLang :: Path -> Maybe Language
 pathLang (Path p) = case T.takeEnd 3 p of
@@ -55,15 +58,15 @@ pathLang (Path p) = case T.takeEnd 3 p of
 data Blog = Blog { title    :: Title
                  , date     :: Date
                  , filename :: Path
-                 , freqs    :: [(Text, Int)] } deriving (Generic, ToJSON)
+                 , freqs    :: [(T.Text, Int)] } deriving (Generic, ToJSON)
 
 instance ToXml Blog where
   toXml (Blog (Title t) d (Path p) _) = b
     where b = element "item" mempty
-            $  element "title" mempty (text $ fromStrict t)
-            <> element "link" mempty (text . fromStrict $ "https://fosskers.ca/blog/" <> p <> ".html")
-            <> element "pubDate" mempty (text . pack $ dtt d)
-            <> element "description" mempty (text $ fromStrict t)
+            $  element "title" mempty (text $ TL.fromStrict t)
+            <> element "link" mempty (text . TL.fromStrict $ "https://fosskers.ca/blog/" <> p <> ".html")
+            <> element "pubDate" mempty (text . TL.pack $ dtt d)
+            <> element "description" mempty (text $ TL.fromStrict t)
 
 -- | Format a `Date` in a way acceptable to RSS feeds.
 dtt :: Date -> [Char]

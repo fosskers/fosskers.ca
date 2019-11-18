@@ -1,6 +1,6 @@
 module Main where
 
-import           ClassyPrelude
+import           BasePrelude
 import qualified Data.Text as T
 import           Fosskers.Common (Title(Title))
 import           Fosskers.Org (org)
@@ -21,7 +21,7 @@ suite = testGroup ".org parsing"
       Right r -> r @?= (Title "Cool Article", Date 2018 January 5)
   ]
 
-orgT :: Text
+orgT :: T.Text
 orgT = T.unlines
   [ "#+TITLE: Cool Article"
   , "#+DATE: 2018-01-05"
