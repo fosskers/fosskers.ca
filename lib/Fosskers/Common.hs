@@ -1,5 +1,8 @@
-{-# LANGUAGE DataKinds, TypeOperators #-}
-{-# LANGUAGE DeriveGeneric, DeriveAnyClass, StandaloneDeriving #-}
+{-# LANGUAGE DataKinds          #-}
+{-# LANGUAGE DeriveAnyClass     #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TypeOperators      #-}
 
 module Fosskers.Common where
 
@@ -55,12 +58,12 @@ data Blog = Blog { title    :: Title
                  , freqs    :: [(Text, Int)] } deriving (Generic, ToJSON)
 
 instance ToXml Blog where
-  toXml (Blog (Title t) d (Path p) _) = [b]
-    where b = element' "item" mempty
-              [ element' "title" mempty [ text t ]
-              , element' "link" mempty [ text $ "https://fosskers.ca/blog/" <> p <> ".html" ]
-              , element' "pubDate" mempty [ text . pack $ dtt d ]
-              , element' "description" mempty [ text t ]]
+  toXml (Blog (Title t) d (Path p) _) = b
+    where b = element "item" mempty
+            $  element "title" mempty (text $ fromStrict t)
+            <> element "link" mempty (text . fromStrict $ "https://fosskers.ca/blog/" <> p <> ".html")
+            <> element "pubDate" mempty (text . pack $ dtt d)
+            <> element "description" mempty (text $ fromStrict t)
 
 -- | Format a `Date` in a way acceptable to RSS feeds.
 dtt :: Date -> [Char]
@@ -73,9 +76,11 @@ dtt d@(Date ye mo da) = printf "%s, %d %s %d 00:00:00 GMT" wd da mo' ye
 newtype Blogs = Blogs [Blog]
 
 instance ToXml Blogs where
-  toXml (Blogs bs) = [ element' "rss" (HM.singleton "version" "2.0")
-                       [ element' "channel" mempty (info <> (bs >>= toXml)) ]]
-    where info = [ element' "title" mempty [ text "Fosskers.ca Blog" ]
-                 , element' "link" mempty [ text "https://fosskers.ca" ]
-                 , element' "description" mempty [ text "Articles on Haskell, Functional Programming, and Japanese" ]
-                 ]
+  toXml (Blogs bs) = element "rss" (HM.singleton "version" "2.0")
+                     $ element "channel" mempty (info <> foldMap toXml bs)
+    where
+      info :: [Node]
+      info = element "title" mempty (text "Fosskers.ca Blog")
+             <> element "link" mempty (text "https://fosskers.ca")
+             <> element "description" mempty
+             (text "Articles on Haskell, Functional Programming, and Japanese")
