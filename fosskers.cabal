@@ -37,7 +37,7 @@ common commons
 
 library
   import: commons
-  hs-source-dirs: ./.
+  hs-source-dirs: lib
   exposed-modules:
       Fosskers.Common
       Fosskers.Kanji
@@ -46,9 +46,34 @@ library
 test-suite fosskers-test
   import: commons
   type: exitcode-stdio-1.0
-  main-is: Test.hs
   hs-source-dirs: test
+  main-is: Test.hs
   build-depends:
       fosskers
     , tasty ^>= 1.2
     , tasty-hunit >=0.9 && <0.11
+
+executable bridge
+  import: commons
+  hs-source-dirs: bridge
+  main-is: Bridge.hs
+  build-depends:
+      fosskers
+    , purescript-bridge >=0.12 && <0.14
+    , servant-purescript >=0.9 && <0.10
+
+executable server
+  import: commons
+  hs-source-dirs: server
+  main-is: Server.hs
+  build-depends:
+      fosskers
+    , lens >=4.15 && <4.18
+    , lucid >=2.9 && <2.10
+    , natural-transformation >=0.4 && <0.5
+    , optparse-generic >=1.2 && <1.4
+    , servant-server >=0.11 && <0.17
+    , shelly >=1.7 && <1.9
+    , system-filepath
+    , wai-extra >=3.0 && <3.1
+    , warp >=3.2 && <3.3
