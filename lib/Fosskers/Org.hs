@@ -17,7 +17,7 @@ org :: Parser (Title, Date)
 org = (,) <$> title <*> date <* takeRest
 
 title :: Parser Title
-title = Title . pack <$> (string "#+TITLE: " *> someTill anyChar newline)
+title = Title . pack <$> (string "#+TITLE: " *> someTill anySingle newline)
 
 date :: Parser Date
 date = do
@@ -28,4 +28,4 @@ date = do
   pure $ Date year month day
 
 parseOrg :: Text -> Text -> Either Text (Title, Date)
-parseOrg fp t = first (pack . parseErrorPretty) $ parse org (unpack fp) t
+parseOrg fp t = first (pack . errorBundlePretty) $ parse org (unpack fp) t

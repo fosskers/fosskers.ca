@@ -11,14 +11,14 @@ import           Data.Aeson (ToJSON)
 import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
 import qualified Data.Text as T
-import           Fosskers.Kanji
-import           Lucid
+import           Fosskers.Kanji (Analysis)
+import           Lucid (Html)
 import           Servant.API
 import           Servant.HTML.Lucid
 import           Servant.XML
-import           Text.Printf
-import           Time.Types
-import           Xmlbf
+import           Text.Printf (printf)
+import           Time.Types (Date(..), Month(..))
+import           Xmlbf (Node, ToXml(..), element, text)
 
 ---
 

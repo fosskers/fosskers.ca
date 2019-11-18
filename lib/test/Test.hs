@@ -3,12 +3,11 @@ module Main where
 import           ClassyPrelude
 import qualified Data.Text as T
 import           Fosskers.Common (Title(Title))
-import           Fosskers.Org
+import           Fosskers.Org (org)
 import           Test.Tasty
 import           Test.Tasty.HUnit
-import           Text.Megaparsec (parse)
-import           Text.Megaparsec.Error (parseErrorPretty)
-import           Time.Types
+import           Text.Megaparsec (errorBundlePretty, parse)
+import           Time.Types (Date(..), Month(..))
 
 ---
 
@@ -18,7 +17,7 @@ main = defaultMain suite
 suite :: TestTree
 suite = testGroup ".org parsing"
   [ testCase "English" $ case parse org "test org" orgT of
-      Left e  -> assertFailure $ parseErrorPretty e
+      Left e  -> assertFailure $ errorBundlePretty e
       Right r -> r @?= (Title "Cool Article", Date 2018 January 5)
   ]
 
