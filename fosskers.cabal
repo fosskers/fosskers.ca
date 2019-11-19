@@ -55,15 +55,6 @@ test-suite fosskers-test
     , tasty        ^>=1.2
     , tasty-hunit  >=0.9 && <0.11
 
-executable bridge
-  import:         commons
-  hs-source-dirs: bridge
-  main-is:        Bridge.hs
-  build-depends:
-    , fosskers
-    , purescript-bridge   >=0.12 && <0.14
-    , servant-purescript  ^>=0.9
-
 executable server
   import:         commons
   hs-source-dirs: server
