@@ -60,6 +60,7 @@ executable server
   import:         commons
   hs-source-dirs: server
   main-is:        Server.hs
+  ghc-options:    -threaded -with-rtsopts=-N
   build-depends:
     , filepath          ^>=1.4
     , fosskers
