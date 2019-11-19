@@ -2,7 +2,6 @@
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE Rank2Types         #-}
 {-# LANGUAGE TupleSections      #-}
 {-# LANGUAGE TypeOperators      #-}
 
@@ -63,30 +62,38 @@ app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . ser
 
 index :: Text -> Html ()
 index j = html_ $ head_ h *> body_ (script_ [src_ $ "assets/" <> j] ("" :: Text))
-  where h = do
-          title_ "fosskers.ca"
-          meta_ [ charset_ "utf-8" ]
-          meta_ [ name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no" ]
-          script_ [ src_ "assets/jquery.slim.min.js" ] ("" :: Text)
-          script_ [ src_ "assets/bootstrap.min.js" ] ("" :: Text)
-          link_ [ rel_ "stylesheet"
-                , href_ "assets/bootstrap.min.css" ]
-          link_ [ rel_ "stylesheet"
-                , href_ "assets/fontawesome.min.css" ]
-          link_ [ rel_ "stylesheet"
-                , href_ "assets/fa-brands.min.css" ]
-          link_ [ rel_ "stylesheet"
-                , href_ "assets/fa-solid.min.css" ]
-          link_ [ rel_ "stylesheet"
-                , href_ "assets/fosskers.css" ]
+  where
+    h :: Html ()
+    h = do
+      title_ "fosskers.ca"
+      meta_ [ charset_ "utf-8" ]
+      meta_ [ name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no" ]
+      script_ [ src_ "assets/jquery.slim.min.js" ] ("" :: Text)
+      script_ [ src_ "assets/bootstrap.min.js" ] ("" :: Text)
+      link_ [ rel_ "stylesheet"
+            , href_ "assets/bootstrap.min.css" ]
+      link_ [ rel_ "stylesheet"
+            , href_ "assets/fontawesome.min.css" ]
+      link_ [ rel_ "stylesheet"
+            , href_ "assets/fa-brands.min.css" ]
+      link_ [ rel_ "stylesheet"
+            , href_ "assets/fa-solid.min.css" ]
+      link_ [ rel_ "stylesheet"
+            , href_ "assets/fosskers.css" ]
 
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
 freq = map (h &&& length) . group . sort . filter g . map T.toLower . T.words . T.map f
-  where f c = bool ' ' c $ isAlpha c
-        g w = let l = T.length w in l > 2 && l < 13 && not (S.member w functionWords)
-        h []    = "死毒殺悪厄魔"
-        h (c:_) = c
+  where
+    f :: Char -> Char
+    f c = bool ' ' c $ isAlpha c
+
+    g :: Text -> Bool
+    g w = let l = T.length w in l > 2 && l < 13 && not (S.member w functionWords)
+
+    h :: [Text] -> Text
+    h []    = "死毒殺悪厄魔"
+    h (c:_) = c
 
 functionWords :: S.Set Text
 functionWords = S.fromList
@@ -106,15 +113,16 @@ orgs = do
   files <- filter (T.isSuffixOf ".org") <$> lsT "."
   vs <- traverse g files
   pure $ partitionEithers vs
-  where g :: Text -> Sh (Either Text Blog)
-        g f = do
-          let path = T.unpack f
-          content <- eread path
-          pure $ do
-            c <- content
-            let base = T.pack $ takeBaseName path
-            (t, d) <- parseOrg f c
-            pure $ Blog t d (Path base) (freq c)
+  where
+    g :: Text -> Sh (Either Text Blog)
+    g f = do
+      let path = T.unpack f
+      content <- eread path
+      pure $ do
+        c <- content
+        let base = T.pack $ takeBaseName path
+        (t, d) <- parseOrg f c
+        pure $ Blog t d (Path base) (freq c)
 
 -- TODO I don't like the way this feels/looks
 eread :: FilePath -> Sh (Either Text Text)
@@ -126,8 +134,10 @@ eread path = do
 
 analysisFiles :: IO (M.Map Text Text)
 analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
-  where f fp = fmap ((fp,) <$>) . eread $ fromText ("server/" <> fp <> ".txt")
-        files = [ "doraemon", "rashomon", "iamacat", "sumo" ]
+  where
+    f :: Text -> Sh (Either Text (Text, Text))
+    f fp = fmap ((fp,) <$>) . eread $ fromText ("server/" <> fp <> ".txt")
+    files = [ "doraemon", "rashomon", "iamacat", "sumo" ]
 
 main :: IO ()
 main = do

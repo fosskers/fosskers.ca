@@ -2,7 +2,7 @@
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DerivingStrategies #-}
 
-module Fosskers.Kanji where
+module Fosskers.Kanji ( Analysis, analysis ) where
 
 import           BasePrelude
 import           Data.Aeson (ToJSON)
@@ -30,9 +30,11 @@ data Analysis = Analysis
     deriving anyclass (ToJSON)
 
 analysis :: T.Text -> Analysis
-analysis t | T.null t = Analysis [] 0 0 0 [] []
-           | otherwise = Analysis uniq (elementaryDen dist) (middleDen dist) (highDen dist) den (M.toList dist)
-  where ks   = mapMaybe kanji $ T.unpack t
-        uniq = fromMaybe [] . M.lookup Unknown . fmap S.toList $ uniques ks
-        dist = levelDist ks
-        den  = M.toList $ densities t
+analysis t
+  | T.null t = Analysis [] 0 0 0 [] []
+  | otherwise = Analysis uniq (elementaryDen dist) (middleDen dist) (highDen dist) den (M.toList dist)
+  where
+    ks   = mapMaybe kanji $ T.unpack t
+    uniq = fromMaybe [] . M.lookup Unknown . fmap S.toList $ uniques ks
+    dist = levelDist ks
+    den  = M.toList $ densities t

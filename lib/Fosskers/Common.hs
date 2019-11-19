@@ -7,7 +7,18 @@
 
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module Fosskers.Common where
+module Fosskers.Common
+  ( -- * APIs
+    API
+  , JsonAPI
+    -- * Blog Posts
+  , Blog(..)
+  , Blogs(..)
+  , Title(..)
+  , Language(..)
+  , Path(..)
+  , pathLang
+  ) where
 
 import           BasePrelude
 import           Data.Aeson (ToJSON)

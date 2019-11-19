@@ -1,4 +1,4 @@
-module Fosskers.Org where
+module Fosskers.Org ( parseOrg ) where
 
 import           BasePrelude
 import qualified Data.Text as T
