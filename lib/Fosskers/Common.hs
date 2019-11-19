@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds          #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TypeOperators      #-}
 
@@ -36,17 +37,22 @@ type API = JsonAPI
   :<|> "webfonts" :> Raw
   :<|> Get '[HTML] (Html ())
 
-newtype Title = Title T.Text deriving (Eq, Show, Generic, ToJSON)
+newtype Title = Title T.Text
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (ToJSON)
 
+-- TODO Use better time types. What does Aeson have support for?
 -- Evil evil orphan instances.
-deriving instance Generic Date
-deriving instance ToJSON Date
-deriving instance Generic Month
-deriving instance ToJSON Month
+deriving stock instance Generic Date
+deriving stock instance Generic Month
+deriving anyclass instance ToJSON Date
+deriving anyclass instance ToJSON Month
 
-data Language = English | Japanese deriving (Eq, Ord, Show, Generic)
+data Language = English | Japanese deriving stock (Eq, Ord, Show, Generic)
 
-newtype Path = Path T.Text deriving (Generic, ToJSON)
+newtype Path = Path T.Text
+  deriving stock (Generic)
+  deriving anyclass (ToJSON)
 
 pathLang :: Path -> Maybe Language
 pathLang (Path p) = case T.takeEnd 3 p of
@@ -54,10 +60,13 @@ pathLang (Path p) = case T.takeEnd 3 p of
   "-jp" -> Just Japanese
   _     -> Nothing
 
-data Blog = Blog { title    :: Title
-                 , date     :: Date
-                 , filename :: Path
-                 , freqs    :: [(T.Text, Int)] } deriving (Generic, ToJSON)
+data Blog = Blog
+  { title    :: !Title
+  , date     :: !Date
+  , filename :: !Path
+  , freqs    :: ![(T.Text, Int)] }
+  deriving stock (Generic)
+  deriving anyclass (ToJSON)
 
 instance ToXml Blog where
   toXml (Blog (Title t) d (Path p) _) = b

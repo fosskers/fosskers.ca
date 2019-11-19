@@ -1,9 +1,10 @@
-{-# LANGUAGE DataKinds      #-}
-{-# LANGUAGE DeriveAnyClass #-}
-{-# LANGUAGE DeriveGeneric  #-}
-{-# LANGUAGE Rank2Types     #-}
-{-# LANGUAGE TupleSections  #-}
-{-# LANGUAGE TypeOperators  #-}
+{-# LANGUAGE DataKinds          #-}
+{-# LANGUAGE DeriveAnyClass     #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE Rank2Types         #-}
+{-# LANGUAGE TupleSections      #-}
+{-# LANGUAGE TypeOperators      #-}
 
 module Main ( main ) where
 
@@ -27,19 +28,25 @@ import           System.FilePath.Posix (takeBaseName)
 
 ---
 
-data Args = Args { port :: Maybe Int <?> "Port to listen for requests on, otherwise $PORT"
-                 , js   :: Text      <?> "Javascript bundle to serve" }
-  deriving (Generic, ParseRecord)
+-- TODO Remove `js` arg once we no longer serve Purescript.
+data Args = Args
+  { port :: Maybe Int <?> "Port to listen for requests on, otherwise $PORT"
+  , js   :: Text      <?> "Javascript bundle to serve" }
+  deriving stock (Generic)
+  deriving anyclass (ParseRecord)
 
-data Env = Env { stats :: [Blog], bundle :: Text, texts :: M.Map Text Analysis }
+data Env = Env
+  { stats  :: ![Blog]
+  , bundle :: !Text
+  , texts  :: !(M.Map Text Analysis) }
 
 server :: Env -> Server API
 server env = jsonServer env
-  :<|> serveDirectoryFileServer "blog"
+  :<|> serveDirectoryFileServer "blog" -- TODO Won't need to serve it Raw like this.
   :<|> pure (rss (stats env) English)
   :<|> pure (rss (stats env) Japanese)
   :<|> serveDirectoryFileServer "assets"
-  :<|> serveDirectoryFileServer "assets/webfonts"
+  :<|> serveDirectoryFileServer "assets/webfonts"  -- TODO Need better fonts.
   :<|> pure (index $ bundle env)
 
 -- | Split off from `server` to avoid type issues.

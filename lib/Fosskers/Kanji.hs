@@ -1,10 +1,11 @@
-{-# LANGUAGE DeriveAnyClass #-}
-{-# LANGUAGE DeriveGeneric  #-}
+{-# LANGUAGE DeriveAnyClass     #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Fosskers.Kanji where
 
 import           BasePrelude
-import           Data.Aeson
+import           Data.Aeson (ToJSON)
 import           Data.Kanji
 import qualified Data.Map.Strict as M
 import qualified Data.Set as S
@@ -13,19 +14,20 @@ import qualified Data.Text as T
 ---
 
 data Analysis = Analysis
-  { unknowns      :: [Kanji]
+  { unknowns      :: ![Kanji]
     -- ^ `Kanji` whose `Level` couldn't be determined.
-  , elementary    :: Float
+  , elementary    :: !Float
     -- ^ Percent (<= 1.0) of `Kanji` learned in Elementary school.
-  , middle        :: Float
+  , middle        :: !Float
     -- ^ Percent (<= 1.0) of `Kanji` learned by the end of Middle School.
-  , high          :: Float
+  , high          :: !Float
     -- ^ Percent (<= 1.0) of `Kanji` learned by the end of High School.
-  , density       :: [(CharCat, Float)]
+  , density       :: ![(CharCat, Float)]
     -- ^ Density of each character category in the text.
-  , distributions :: [(Level, Float)]
+  , distributions :: ![(Level, Float)]
     -- ^ Fractions of input `Kanji` that belong to each `Level`.
-  } deriving (Generic, ToJSON)
+  } deriving stock (Generic)
+    deriving anyclass (ToJSON)
 
 analysis :: T.Text -> Analysis
 analysis t | T.null t = Analysis [] 0 0 0 [] []
