@@ -49,7 +49,7 @@ jsonServer env = pure (stats env)
   :<|> (\t -> pure . M.lookup t $ texts env)
 
 rss :: [Blog] -> Language -> Blogs
-rss bs l = Blogs . reverse . sortOn date $ filter (\b -> pathLang (filename b) == Just l) bs
+rss bs l = Blogs . sortOn (Down . date) $ filter (\b -> pathLang (filename b) == Just l) bs
 
 app :: Env -> Application
 app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server

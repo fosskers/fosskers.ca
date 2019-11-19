@@ -61,19 +61,20 @@ data Blog = Blog { title    :: Title
 
 instance ToXml Blog where
   toXml (Blog (Title t) d (Path p) _) = b
-    where b = element "item" mempty
-            $  element "title" mempty (text $ TL.fromStrict t)
-            <> element "link" mempty (text . TL.fromStrict $ "https://fosskers.ca/blog/" <> p <> ".html")
-            <> element "pubDate" mempty (text . TL.pack $ dtt d)
-            <> element "description" mempty (text $ TL.fromStrict t)
+    where
+      b :: [Node]
+      b = element "item" mempty
+          $  element "title" mempty (text $ TL.fromStrict t)
+          <> element "link" mempty (text . TL.fromStrict $ "https://fosskers.ca/blog/" <> p <> ".html")
+          <> element "pubDate" mempty (text . TL.pack $ dtt d)
+          <> element "description" mempty (text $ TL.fromStrict t)
 
 -- | Format a `Date` in a way acceptable to RSS feeds.
-dtt :: Date -> [Char]
+dtt :: Date -> String
 dtt d@(Date ye mo da) = printf "%s, %d %s %d 00:00:00 GMT" wd da mo' ye
-  where wd :: [Char]
-        wd = take 3 . show $ getWeekDay d
-        mo' :: [Char]
-        mo' = take 3 $ show mo
+  where
+    wd = take 3 . show $ getWeekDay d
+    mo' = take 3 $ show mo
 
 newtype Blogs = Blogs [Blog]
 

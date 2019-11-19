@@ -45,15 +45,15 @@ library
     Fosskers.Kanji
     Fosskers.Org
 
-test-suite fosskers-test
-  import:         commons
-  type:           exitcode-stdio-1.0
-  hs-source-dirs: test
-  main-is:        Test.hs
-  build-depends:
-    , fosskers
-    , tasty        ^>=1.2
-    , tasty-hunit  >=0.9 && <0.11
+-- test-suite fosskers-test
+--   import:         commons
+--   type:           exitcode-stdio-1.0
+--   hs-source-dirs: test
+--   main-is:        Test.hs
+--   build-depends:
+--     , fosskers
+--     , tasty        ^>=1.2
+--     , tasty-hunit  >=0.9 && <0.11
 
 executable server
   import:         commons
