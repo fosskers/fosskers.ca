@@ -15,7 +15,7 @@ import qualified Data.Text.IO as T
 import           Fosskers.Common
 import           Fosskers.Kanji (Analysis, analysis)
 import           Fosskers.Org (parseOrg)
-import           Lucid
+import           Fosskers.Site (index)
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Generic
@@ -27,17 +27,14 @@ import           System.FilePath.Posix (takeBaseName)
 
 ---
 
--- TODO Remove `js` arg once we no longer serve Purescript.
-data Args = Args
-  { port :: Maybe Int <?> "Port to listen for requests on, otherwise $PORT"
-  , js   :: Text      <?> "Javascript bundle to serve" }
+newtype Args = Args
+  { port :: Maybe Int <?> "Port to listen for requests on, otherwise $PORT" }
   deriving stock (Generic)
   deriving anyclass (ParseRecord)
 
 data Env = Env
-  { stats  :: ![Blog]
-  , bundle :: !Text
-  , texts  :: !(M.Map Text Analysis) }
+  { stats :: ![Blog]
+  , texts :: !(M.Map Text Analysis) }
 
 server :: Env -> Server API
 server env = jsonServer env
@@ -46,8 +43,9 @@ server env = jsonServer env
   :<|> pure (rss (stats env) Japanese)
   :<|> serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"  -- TODO Need better fonts.
-  :<|> pure (index $ bundle env)
+  :<|> pure index
 
+-- TODO What type issues?
 -- | Split off from `server` to avoid type issues.
 jsonServer :: Env -> Server JsonAPI
 jsonServer env = pure (stats env)
@@ -59,27 +57,6 @@ rss bs l = Blogs . sortOn (Down . date) $ filter (\b -> pathLang (filename b) ==
 
 app :: Env -> Application
 app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server
-
-index :: Text -> Html ()
-index j = html_ $ head_ h *> body_ (script_ [src_ $ "assets/" <> j] ("" :: Text))
-  where
-    h :: Html ()
-    h = do
-      title_ "fosskers.ca"
-      meta_ [ charset_ "utf-8" ]
-      meta_ [ name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no" ]
-      script_ [ src_ "assets/jquery.slim.min.js" ] ("" :: Text)
-      script_ [ src_ "assets/bootstrap.min.js" ] ("" :: Text)
-      link_ [ rel_ "stylesheet"
-            , href_ "assets/bootstrap.min.css" ]
-      link_ [ rel_ "stylesheet"
-            , href_ "assets/fontawesome.min.css" ]
-      link_ [ rel_ "stylesheet"
-            , href_ "assets/fa-brands.min.css" ]
-      link_ [ rel_ "stylesheet"
-            , href_ "assets/fa-solid.min.css" ]
-      link_ [ rel_ "stylesheet"
-            , href_ "assets/fosskers.css" ]
 
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
@@ -141,7 +118,7 @@ analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
 
 main :: IO ()
 main = do
-  Args (Helpful p) (Helpful j) <- getRecord "Backend server for fosskers.ca"
+  Args (Helpful p) <- getRecord "Backend server for fosskers.ca"
   (errs, ps) <- shelly orgs
   traverse_ T.putStrLn errs
   afs <- analysisFiles
@@ -150,4 +127,4 @@ main = do
   cores <- getNumCapabilities
   putStrLn $ "Analysis files read: " <> show (length afs)
   putStrLn $ "Listening on port " <> show prt <> " with " <> show cores <> " cores"
-  W.run prt . app $ Env ps j (analysis <$> afs)
+  W.run prt . app $ Env ps (analysis <$> afs)

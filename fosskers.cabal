@@ -61,6 +61,7 @@ executable server
   hs-source-dirs: server
   main-is:        Server.hs
   ghc-options:    -threaded -with-rtsopts=-N
+  other-modules:  Fosskers.Site
   build-depends:
     , filepath          ^>=1.4
     , fosskers
