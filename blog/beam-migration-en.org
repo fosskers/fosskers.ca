@@ -1,0 +1,85 @@
+#+TITLE: Beam: Database Initialization
+#+DATE: 2020-01-17
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+[[http://hackage.haskell.org/package/beam-core][Beam]] is a database library for Haskell. [[https://tathougies.github.io/beam/][The guide]] has a good beginner tutorial,
+but has us initialize the database tables ourselves by opening ~sqlite3~ on the
+command line. It goes on to say that ~beam-migrate~ can be used to do this
+automatically, but then doesn't elaborate. This blog post provides a minimal
+working example of such automatic table generation.
+
+* Types
+
+Following the Beam guide, we'd have something like:
+
+#+begin_src haskell
+  -- | A database table.
+  data UserT f = User
+    { userEmail     :: C f Text
+    , userFirstName :: C f Text
+    , userLastName  :: C f Text
+    , userPassword  :: C f Text }
+    deriving stock (Generic)
+    deriving anyclass (Beamable)
+
+  -- | Boilerplate to define the type of our table's Primary Key.
+  instance Table UserT where
+    data PrimaryKey UserT f = UserId (C f Text)
+      deriving stock (Generic)
+      deriving anyclass (Beamable)
+
+    primaryKey = UserId . userEmail
+
+  -- | A generic `be` parameter allows this db definition to be used by any backend.
+  data ShoppingCartDb f = ShoppingCartDb
+    { shoppingCartUsers :: f (TableEntity UserT) }
+    deriving stock (Generic)
+    deriving anyclass (Database be)
+#+end_src
+
+* Database Initialization
+
+~beam-migrate~ provides the function ~createSchema~ which uses your Haskell
+types to create tables. Before we can use it, we need some extra plumbing.
+
+Normally we define our database "pointer" like so:
+
+#+begin_src haskell
+  database :: DatabaseSettings be ShoppingCartDb
+  database = defaultDbSettings
+#+end_src
+
+Notice that we've been completely generic about the backend (the ~be~) until
+now. To write the true initialization code, we'll need to commit to one.
+
+#+begin_src haskell
+  import Database.Beam.Migrate
+  import Database.Beam.Sqlite
+
+  database :: CheckedDatabaseSettings Sqlite ShoppingCartDb
+  database = defaultMigratableDbSettings
+#+end_src
+
+Now we can write some ~IO~ code to run ~createSchema~:
+
+#+begin_src haskell
+  import Database.Beam.Migrate.Simple (createSchema)
+  import Database.Beam.Sqlite.Migrate (migrationBackend)
+
+  createTables :: IO ()
+  createTables = bracket (open "yourdata.db") close $ \conn ->
+    runBeamSqlite conn $ createSchema migrationBackend d8abase
+#+end_src
+
+Here is the SQL transaction this runs to generate the table (fields removed for
+clarity):
+
+#+begin_src sql
+  BEGIN TRANSACTION;
+  CREATE TABLE IF NOT EXISTS "shopping_cart_users" ( ... )
+  COMMIT;
+#+end_src
+
+So we can see that running ~createTables~ at the beginning of our application
+would be safe, since the tables would only be created once.
