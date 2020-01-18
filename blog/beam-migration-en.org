@@ -67,13 +67,15 @@ Now we can write some ~IO~ code to run ~createSchema~:
   import Database.Beam.Migrate.Simple (createSchema)
   import Database.Beam.Sqlite.Migrate (migrationBackend)
 
+  -- | `migrationBackend` is a function that is expected to be provided by each
+  -- backend. You just drop it in - no need to construct its type yourself.
   createTables :: IO ()
   createTables = bracket (open "yourdata.db") close $ \conn ->
-    runBeamSqlite conn $ createSchema migrationBackend d8abase
+    runBeamSqlite conn $ createSchema migrationBackend database
 #+end_src
 
-Here is the SQL transaction this runs to generate the table (fields removed for
-clarity):
+Here is the SQL transaction that this runs to generate the table (fields removed
+for clarity):
 
 #+begin_src sql
   BEGIN TRANSACTION;
