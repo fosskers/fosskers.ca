@@ -74,14 +74,18 @@ Now we can write some ~IO~ code to run ~createSchema~:
     runBeamSqlite conn $ createSchema migrationBackend database
 #+end_src
 
-Here is the SQL transaction that this runs to generate the table (fields removed
-for clarity):
+This assumes your table doesn't exist, and will create it if it doesn't. But
+what if it does?
 
-#+begin_src sql
-  BEGIN TRANSACTION;
-  CREATE TABLE IF NOT EXISTS "shopping_cart_users" ( ... )
-  COMMIT;
+#+begin_src haskell
+  -- | Create the DB tables if necessary.
+  initializeTables :: IO ()
+  initializeTables = bracket (open "yourdata.db") close $ \conn ->
+    runBeamSqlite conn $ verifySchema migrationBackend database >>= \case
+      VerificationFailed _  -> createSchema migrationBackend database
+      VerificationSucceeded -> pure ()
 #+end_src
 
-So we can see that running ~createTables~ at the beginning of our application
-would be safe, since the tables would only be created once.
+We could use this variant instead of ~createTables~. This avoids the table
+creation if Beam could find it already. Yes, this is what ~IF NOT EXISTS~ is
+for, but for some reason ~createSchema~ doesn't do that automatically.
