@@ -72,8 +72,7 @@ english = [ HH.p_
             [ HH.text $ "Before pursuing programming professionally, I taught English in Japan for several years."
             <> " I'm fluent in both English and Japanese, speak German at an intermediate level,"
             <> " and Italian at a beginner level. Apart from learning languages, I also do Bouldering"
-            <> " and Lead Climbing in my spare time. I live with my girlfriend Carmen and our two cats, "
-            <> " Jack and Qtip." ]
+            <> " and Lead Climbing in my spare time." ]
           ]
 
 japanese :: forall c q. Array (HH.HTML c q)
@@ -117,6 +116,5 @@ japanese = [ HH.p_
            , HH.p_
              [ HH.text $ "開発者になる前、数年間長崎県の小中学校で英語教師として務めていました。英語・日本語を対等に、"
                <> "ドイツ語を中級で"
-               <> "イタリア語を初級で会話ができます。言語学習の他、自由時間でボルダリングをよくやっています。"
-               <> "彼女とうちの猫二匹と暮らしています。"]
+               <> "イタリア語を初級で会話ができます。言語学習の他、自由時間でボルダリングをよくやっています。"]
            ]
