@@ -4,6 +4,8 @@
 
 * Myself
 
+[[./colin.jpg]]
+
 - Colin Woodbury
 - colin@fosskers.ca
 - https://www.fosskers.ca
