@@ -12,9 +12,9 @@
 - https://github.com/fosskers
 - https://gitlab.com/fosskers
 
-I am a full-stack developer and avid contributor to Open Source. As a former
-teacher, I am skilled at public speaking and give conference presentations in
-both English and Japanese.
+I am a full-stack developer and avid contributor to Open Source since 2012. I am
+the author of [[https://github.com/fosskers/aura][Aura]]. As a former teacher, I am skilled at public speaking and
+give conference presentations in both English and Japanese.
 
 * Skills
 
@@ -224,13 +224,20 @@ minoring in Computer Science. Achieved the Dean's Honour Roll.
 I prefer Lead Climbing, but also do Top Rope and Bouldering both outdoors and
 indoors.
 
+*** Competition Record
+
+| Year | Sport      | Competition               |
+|------+------------+---------------------------|
+| 2018 | Bouldering | BC Bouldering Provincials |
+
 ** Language Learning
 
 I specialize in Japanese, but have also studied German, Italian, and Esperanto.
 
 ** Brazilian Jiu Jitsu
 
-I am a member of a local Gracie Jiu Jitsu school and practice every weekday.
+I am a member of a local Gracie Jiu Jitsu school and practice several times a
+week.
 
 ** Reading
 
