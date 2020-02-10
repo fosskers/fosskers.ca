@@ -16,6 +16,7 @@ import           Fosskers.Common
 import           Fosskers.Kanji (Analysis, analysis)
 import           Fosskers.Org (parseOrg)
 import           Fosskers.Site (index, site)
+import           Fosskers.Site.About (about)
 import           Fosskers.Site.Blog (blog, newest)
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
@@ -43,6 +44,7 @@ server env =
   :<|> pure (rss (stats env) English)
   :<|> pure (rss (stats env) Japanese)
   -- :<|> serveDirectoryFileServer "assets/webfonts"  -- TODO Need better fonts.
+  :<|> (\l -> pure . site l $ about l)
   :<|> (\l -> pure . site l $ newest l)
   :<|> (\l t -> pure . site l $ blog l t)
   :<|> pure . index

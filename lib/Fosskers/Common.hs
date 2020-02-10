@@ -45,6 +45,7 @@ type API =
   "assets" :> Raw
   :<|> "rss-en" :> Get '[XML] Blogs
   :<|> "rss-jp" :> Get '[XML] Blogs
+  :<|> Capture "language" Language :> "about" :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Capture "title" Text :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> Get '[HTML] (Html ())

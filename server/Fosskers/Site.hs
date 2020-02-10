@@ -72,7 +72,7 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
 
     pub :: Html ()
     pub = do
-      item "About" "#"
+      item "About" "/en/about"
       item "Blog" "/en/blog"
       dropdown "Projects" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
       dropdown "Tools" [("Kanji Analysis", "#")]
@@ -80,7 +80,7 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
 
     izakaya :: Html ()
     izakaya = do
-      item "自己紹介" "#"
+      item "自己紹介" "/jp/about"
       item "ブログ" "/jp/blog"
       dropdown "プロジェクト" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
       dropdown "ツール" [("漢字分析", "#")]
