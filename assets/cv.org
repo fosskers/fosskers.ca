@@ -50,7 +50,7 @@ give conference presentations in both English and Japanese.
 
 ** Software Development
 
-*** Kadena - Blockchain Software Development (Haskell)
+*** [[https://www.kadena.io/][Kadena]] - Blockchain Software Development (Haskell)
 
 /2018 August - Present/
 
@@ -74,7 +74,7 @@ Core developer of the [[https://github.com/kadena-io/chainweb-node][Kadena Publi
 - Instructed users on configuring our software and helped them debug.
 - Represented the company as a speaker at conferences in Japan, the USA, and Canada.
 
-*** Azavea - Open Source Software Developer (Scala)
+*** [[https://www.azavea.com/][Azavea]] - Open Source Software Developer (Scala)
 
 /2016 May - 2017 December/
 
@@ -84,7 +84,7 @@ Open-source developer on the [[https://github.com/locationtech/geotrellis][GeoTr
 
 - Researched, designed, and implemented GIS algorithms.
 - Performed extensive integration tests with Apache Spark.
-- Implemented Mapbox VectorTile codecs in Haskell and Scala.
+- Implemented [[https://docs.mapbox.com/vector-tiles/reference/][Mapbox VectorTile]] codecs in [[http://hackage.haskell.org/package/vectortiles][Haskell]] and [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]].
 
 **** System Administration
 
@@ -94,9 +94,9 @@ Open-source developer on the [[https://github.com/locationtech/geotrellis][GeoTr
 
 - Overhauled the [[https://geotrellis.readthedocs.io/en/latest/][official documentation]] for GeoTrellis.
 - [[https://github.com/fosskers/scalaz-and-cats][General advocate]] for Pure Functional Programming in Scala.
-- Mentor for "Haskell from First Principles" weekly reading group.
+- Mentor for [[https://haskellbook.com/][Haskell from First Principles]] weekly reading group.
 
-*** Adenda Media - Lead Software Developer (Scala)
+*** [[https://www.adendamedia.com/][Adenda Media]] - Lead Software Developer (Scala)
 
 /2014 May - 2016 April/
 
@@ -210,15 +210,6 @@ minoring in Computer Science. Achieved the Dean's Honour Roll.
 
 * Hobbies
 
-** Music
-
-| Group                         | Date                    | Position  |
-|-------------------------------+-------------------------+-----------|
-| SFU Choir                     | 2019 Fall               | Voice     |
-| SFU Choir                     | 2013 Fall - 2016 Spring | Voice     |
-| Haiki PTA Chorus              | 2010 - 2013             | Voice     |
-| Westwood Collegiate Jazz Band | 2002 Fall - 2006 Spring | Tenor Sax |
-
 ** Climbing
 
 I prefer Lead Climbing, but also do Top Rope and Bouldering both outdoors and
@@ -230,15 +221,20 @@ indoors.
 |------+------------+---------------------------|
 | 2018 | Bouldering | BC Bouldering Provincials |
 
-** Language Learning
-
-I specialize in Japanese, but have also studied German, Italian, and Esperanto.
-
 ** Brazilian Jiu Jitsu
 
 I am a member of a local Gracie Jiu Jitsu school and practice several times a
 week.
 
-** Reading
+** Language Learning
 
-I read daily, both fiction and non-fiction.
+I specialize in Japanese, but have also studied German, Italian, and Esperanto.
+
+** Music
+
+| Group                         | Date                    | Position  |
+|-------------------------------+-------------------------+-----------|
+| SFU Choir                     | 2019 Fall               | Voice     |
+| SFU Choir                     | 2013 Fall - 2016 Spring | Voice     |
+| Haiki PTA Chorus              | 2010 - 2013             | Voice     |
+| Westwood Collegiate Jazz Band | 2002 Fall - 2006 Spring | Tenor Sax |
