@@ -19,7 +19,6 @@ common commons
   ghc-options:
     -Wall -Wpartial-fields -Wincomplete-record-updates
     -Wincomplete-uni-patterns -Widentities -funclutter-valid-hole-fits
-    -Wmissing-deriving-strategies
 
   build-depends:
     , aeson                 >=1.2  && <1.5
