@@ -42,23 +42,11 @@ topbar = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark
   navButton
   div_ [ classes_ [ "collapse", "navbar-collapse" ], id_ navId ] $
     ul_ [ class_ "navbar-nav" ] $ do
-      item "About"
-      item "Blog"
-      li_ [ classes_ [ "nav-item", "dropdown" ] ] $ do
-        a_ [ classes_ [ "nav-link", "dropdown-toggle" ]
-           , href_ "#"
-           , id_ "navbarDropdown"
-           , role_ "button"
-           , makeAttribute "data-toggle" "dropdown"
-           , makeAttribute "aria-haspopup" "true"
-           , makeAttribute "aria-expanded" "false" ] "Projects"
-        div_ [ class_ "dropdown-menu"
-             , makeAttribute "aria-labelledby" "navbarDropdown" ] $ do
-          a_ [ class_ "dropdown-item", href_ "#" ] "Aura"
-          a_ [ class_ "dropdown-item", href_ "#" ] "Bag of Holding"
-          a_ [ class_ "dropdown-item", href_ "#" ] "Foobar"
-      item "Tools"
-      item "CV"
+      item "About" "#"
+      item "Blog" "#"
+      dropdown "Projects" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
+      dropdown "Tools" [("Kanji Analysis", "#")]
+      item "CV" "/assets/cv.html"
   where
     navId :: Text
     navId = "navbarLinks"
@@ -74,6 +62,27 @@ topbar = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark
       , makeAttribute "aria-label" "Toggle navigation" ]
       $ span_ [ class_ "navbar-toggler-icon" ] ""
 
-    item :: Html () -> Html ()
-    item l = li_ [ class_ "nav-item" ] $
-      a_ [ class_ "nav-link", href_ "#" ] l
+    item :: Text -> Text -> Html ()
+    item label url = li_ [ class_ "nav-item" ] $
+      a_ [ class_ "nav-link", href_ url ] $ toHtml label
+
+-- | Construct a Bootstrap navbar dropdown.
+dropdown :: Text -> [(Text, Text)] -> Html ()
+dropdown label links =
+  li_ [ classes_ [ "nav-item", "dropdown" ] ] $ do
+    a_ [ classes_ [ "nav-link", "dropdown-toggle" ]
+       , href_ "#"
+       , id_ did
+       , role_ "button"
+       , makeAttribute "data-toggle" "dropdown"
+       , makeAttribute "aria-haspopup" "true"
+       , makeAttribute "aria-expanded" "false" ] $ toHtml label
+    div_ [ class_ "dropdown-menu"
+         , makeAttribute "aria-labelledby" did ]
+      $ traverse_ link links
+  where
+    did :: Text
+    did = "navbarDropdown" <> label
+
+    link :: (Text, Text) -> Html ()
+    link (l, url) = a_ [ class_ "dropdown-item", href_ url ] $ toHtml l
