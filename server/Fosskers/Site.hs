@@ -38,7 +38,8 @@ index = html_ $ head_ h *> body_ (topbar *> div_ "Real content here.")
 
 topbar :: Html ()
 topbar = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ] ] $ do
-  a_ [ class_ "navbar-brand", href_ "#" ] "Fosskers"
+  a_ [ class_ "navbar-brand", href_ "#" ] $
+    img_ [ src_ "/assets/fosskers-icon.png", width_ "30", height_ "30" ]
   navButton
   div_ [ classes_ [ "collapse", "navbar-collapse" ], id_ navId ] $
     ul_ [ class_ "navbar-nav" ] $ do
