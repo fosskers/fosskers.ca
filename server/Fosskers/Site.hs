@@ -2,6 +2,7 @@ module Fosskers.Site ( index ) where
 
 import BasePrelude hiding (index)
 import Data.Text (Text)
+import Fosskers.Common (Language(..))
 import Lucid
 import Lucid.Base (makeAttribute)
 
@@ -15,8 +16,8 @@ Don't bother with Tools for now.
 
 -}
 
-index :: Html ()
-index = html_ $ head_ h *> body_ (topbar *> div_ "Real content here.")
+index :: Language -> Html ()
+index lang = html_ $ head_ h *> body_ (topbar lang *> div_ "Real content here.")
   where
     h :: Html ()
     h = do
@@ -36,18 +37,14 @@ index = html_ $ head_ h *> body_ (topbar *> div_ "Real content here.")
       -- link_ [ rel_ "stylesheet"
       --       , href_ "assets/fosskers.css" ]
 
-topbar :: Html ()
-topbar = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ] ] $ do
+topbar :: Language -> Html ()
+topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ] ] $ do
   a_ [ class_ "navbar-brand", href_ "#" ] $
     img_ [ src_ "/assets/fosskers-icon.png", width_ "30", height_ "30" ]
   navButton
   div_ [ classes_ [ "collapse", "navbar-collapse" ], id_ navId ] $
-    ul_ [ class_ "navbar-nav" ] $ do
-      item "About" "#"
-      item "Blog" "#"
-      dropdown "Projects" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
-      dropdown "Tools" [("Kanji Analysis", "#")]
-      item "CV" "/assets/cv.html"
+    ul_ [ class_ "navbar-nav" ] $ theBar lang
+  langButtons
   where
     navId :: Text
     navId = "navbarLinks"
@@ -63,9 +60,47 @@ topbar = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark
       , makeAttribute "aria-label" "Toggle navigation" ]
       $ span_ [ class_ "navbar-toggler-icon" ] ""
 
+    theBar :: Language -> Html ()
+    theBar English  = pub
+    theBar Japanese = izakaya
+
+    pub :: Html ()
+    pub = do
+      item "About" "#"
+      item "Blog" "#"
+      dropdown "Projects" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
+      dropdown "Tools" [("Kanji Analysis", "#")]
+      item "CV" "/assets/cv.html"
+
+    izakaya :: Html ()
+    izakaya = do
+      item "自己紹介" "#"
+      item "ブログ" "#"
+      dropdown "プロジェクト" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
+      dropdown "ツール" [("漢字分析", "#")]
+      item "履歴書" "/assets/cv-jp.html"
+
     item :: Text -> Text -> Html ()
     item label url = li_ [ class_ "nav-item" ] $
       a_ [ class_ "nav-link", href_ url ] $ toHtml label
+
+    langButtons :: Html ()
+    langButtons = div_
+      [ class_ "btn-group"
+      , role_ "group"
+      , makeAttribute "aria-label" "Language" ] $ do
+        a_ [ classes_ [ "btn", eBtn ], role_ "button", href_ "/en" ] "English"
+        a_ [ classes_ [ "btn", jBtn ], role_ "button", href_ "/jp" ] "日本語"
+
+    eBtn :: Text
+    eBtn = case lang of
+      English  -> "btn-info"
+      Japanese -> "btn-outline-info"
+
+    jBtn :: Text
+    jBtn = case lang of
+      English  -> "btn-outline-info"
+      Japanese -> "btn-info"
 
 -- | Construct a Bootstrap navbar dropdown.
 dropdown :: Text -> [(Text, Text)] -> Html ()

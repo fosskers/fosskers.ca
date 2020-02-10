@@ -37,20 +37,20 @@ data Env = Env
   , texts :: !(M.Map Text Analysis) }
 
 server :: Env -> Server API
-server env = jsonServer env
-  :<|> serveDirectoryFileServer "blog" -- TODO Won't need to serve it Raw like this.
+server env =
+  serveDirectoryFileServer "assets"
   :<|> pure (rss (stats env) English)
   :<|> pure (rss (stats env) Japanese)
-  :<|> serveDirectoryFileServer "assets"
-  :<|> serveDirectoryFileServer "assets/webfonts"  -- TODO Need better fonts.
-  :<|> pure index
+  -- :<|> serveDirectoryFileServer "assets/webfonts"  -- TODO Need better fonts.
+  :<|> pure . index
+  :<|> pure (index English)
 
 -- TODO What type issues?
 -- | Split off from `server` to avoid type issues.
-jsonServer :: Env -> Server JsonAPI
-jsonServer env = pure (stats env)
-  :<|> pure . analysis
-  :<|> (\t -> pure . M.lookup t $ texts env)
+-- jsonServer :: Env -> Server JsonAPI
+-- jsonServer env = pure (stats env)
+--   :<|> pure . analysis
+--   :<|> (\t -> pure . M.lookup t $ texts env)
 
 rss :: [Blog] -> Language -> Blogs
 rss bs l = Blogs . sortOn (Down . date) $ filter (\b -> pathLang (filename b) == Just l) bs

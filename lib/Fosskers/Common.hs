@@ -40,12 +40,11 @@ type JsonAPI = "posts" :> Get '[JSON] [Blog]
   :<|> "kanji" :> ReqBody '[JSON] T.Text :> Post '[JSON] Analysis
   :<|> "kanji" :> Capture "text" T.Text :> Get '[JSON] (Maybe Analysis)
 
-type API = JsonAPI
-  :<|> "blog" :> Raw
+type API =
+  "assets" :> Raw
   :<|> "rss-en" :> Get '[XML] Blogs
   :<|> "rss-jp" :> Get '[XML] Blogs
-  :<|> "assets" :> Raw
-  :<|> "webfonts" :> Raw
+  :<|> Capture "language" Language :> Get '[HTML] (Html ())
   :<|> Get '[HTML] (Html ())
 
 newtype Title = Title T.Text
@@ -59,7 +58,13 @@ deriving stock instance Generic Month
 deriving anyclass instance ToJSON Date
 deriving anyclass instance ToJSON Month
 
-data Language = English | Japanese deriving stock (Eq, Ord, Show, Generic)
+data Language = English | Japanese
+  deriving stock (Eq, Ord, Show, Generic)
+
+instance FromHttpApiData Language where
+  parseUrlPiece "en" = Right English
+  parseUrlPiece "jp" = Right Japanese
+  parseUrlPiece l    = Left $ "Invalid language: " <> l
 
 newtype Path = Path T.Text
   deriving stock (Generic)
