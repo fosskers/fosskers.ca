@@ -1,0 +1,314 @@
+#+TITLE: Measuring Haskell Container Sizes
+#+DATE: 2019-09-24
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+I was recently surprised to discover a big-O time complexity difference in
+measuring the size of ~Map~ vs ~HashMap~ through their respective ~size~
+functions. This sent me on a journey to double-check the other container types
+we commonly use in Haskell, to be sure that I haven't been punishing myself
+unawares.
+
+The crux is this: some containers expose a custom ~length~ (or ~size~) function,
+while some present ~Foldable.length~ as the canonical measurement tool. In both
+camps, some override ~Foldable.length~ with a better implementation, and some
+rely on the default. That default is implemented as follows:
+
+#+begin_src haskell
+  -- Hurray, foldl'!
+  length :: t a -> Int
+  length = foldl' (\c _ -> c+1) 0
+
+  -- Wait...
+  foldl' :: (b -> a -> b) -> b -> t a -> b
+  foldl' f z0 xs = foldr f' id xs z0
+    where f' x k z = k $! f z x
+#+end_src
+
+For some structures, ~foldr~ is naughty. For others, it isn't. We seek then
+definitive answers to these questions:
+
+- What's the best way to measure the size of each container in Haskell?
+- In general, can we trust ~Foldable.length~?
+
+* Overview
+
+Legend:
+
+- ~length = size~: Is ~Foldable.length~ defined in terms of a custom ~size~
+  function?
+
+| Container  | Custom ~length~  | ~Foldable.length~ | ~length = size~ ? | Notes                         |
+|------------+------------------+-------------------+-------------------+-------------------------------|
+| ~[]~       | ~O(n)~           | ~O(n)~            | Yes               | Rewrite rules for performance |
+| ~NonEmpty~ | ~O(n)~           | ~O(n)~            | *No*              |                               |
+| ~Map~      | ~O(1)~           | ~O(1)~            | Yes               | Embedded ~Size~ field         |
+| ~IntMap~   | ~O(n)~           | ~O(n)~            | Yes               |                               |
+| ~Set~      | ~O(1)~           | ~O(1)~            | Yes               | Embedded ~Size~ field         |
+| ~IntSet~   | ~O(n)~           | N/A               | N/A               | No ~Foldable~ instance        |
+| ~Seq~      | ~O(1)~           | ~O(1)~            | Yes               | Embedded ~Int~ field          |
+| ~Tree~     | N/A              | ~O(n)~            | N/A               | Default ~Foldable~ instance   |
+| ~Array~    | ~O(1)~           | ~O(1)~            | Yes               | Embedded ~Int~ field          |
+|------------+------------------+-------------------+-------------------+-------------------------------|
+| ~HashMap~  | ~O(n)~           | Worse ~O(n)~      | *No*              | Default ~Foldable~ instance   |
+| ~HashSet~  | ~O(n)~           | Worse ~O(n)~      | *No*              | Default ~Foldable~ instance   |
+|------------+------------------+-------------------+-------------------+-------------------------------|
+| ~Vector~   | Amortized ~O(1)~ | Amortized ~O(1)~  | Yes               |                               |
+|------------+------------------+-------------------+-------------------+-------------------------------|
+
+** ~[]~
+
+Perhaps surprisingly, list length is calculated in the way we were all told to
+implement it when first learning Haskell:
+
+#+begin_src haskell
+  length :: [a] -> Int
+  length xs = lenAcc xs 0
+
+  lenAcc :: [a] -> Int -> Int
+  lenAcc []     n = n
+  lenAcc (_:ys) n = lenAcc ys (n+1)
+#+end_src
+
+Although why is there no ~!~ on the ~n~? Futhermore, there are some rewrite
+rules that claim to be for performance:
+
+#+begin_src haskell
+  {-# RULES
+  "length" [~1] forall xs . length xs = foldr lengthFB idLength xs 0
+  "lengthList" [1] foldr lengthFB idLength = lenAcc
+   #-}
+
+  -- The lambda form turns out to be necessary to make this inline
+  -- when we need it to and give good performance.
+  {-# INLINE [0] lengthFB #-}
+  lengthFB :: x -> (Int -> Int) -> Int -> Int
+  lengthFB _ r = \ !a -> r (a + 1)
+#+end_src
+
+** ~NonEmpty~
+
+Not a surprise:
+
+#+begin_src haskell
+  length :: NonEmpty a -> Int
+  length (_ :| xs) = 1 + Prelude.length xs
+#+end_src
+
+But note that its ~Foldable~ instance does not override ~length~! Its default
+calls ~foldl'~, which calls ~foldr~, which is overridden as:
+
+#+begin_src haskell
+  foldr f z ~(a :| as) = f a (List.foldr f z as)
+#+end_src
+
+** ~Map~
+
+~Map~ is defined like this (altered slightly for clarity):
+
+#+begin_src haskell
+  data Map k a = Bin Size k a (Map k a) (Map k a) | Tip
+
+  type Size = Int
+#+end_src
+
+Calls like ~insert~ alter the ~Size~ field at the same time that they write the
+new element. Fetching that ~Size~ couldn't get more ~O(1)~:
+
+#+begin_src haskell
+  size :: Map k a -> Int
+  size Tip              = 0
+  size (Bin sz _ _ _ _) = sz
+#+end_src
+
+** ~Set~
+
+~Set~ is not defined in terms of ~Map~ as one might have thought, but it follows
+the same idea:
+
+#+begin_src haskell
+  data Set a = Bin Size a (Set a) (Set a) | Tip
+
+  type Size = Int
+#+end_src
+
+** ~Seq~
+
+~Seq~ is defined as:
+
+#+begin_src haskell
+  newtype Seq a = Seq (FingerTree (Elem a))
+
+  data FingerTree a
+    = EmptyT
+    | Single a
+    | Deep Int (Digit a) (FingerTree (Node a)) (Digit a)
+
+  length :: Seq a -> Int
+  length (Seq xs) = size xs
+
+  class Sized a where
+    size :: a -> Int
+
+  instance Sized a => Sized (FingerTree a) where
+      size EmptyT         = 0
+      size (Single x)     = size x
+      size (Deep v _ _ _) = v
+#+end_src
+
+The ~Int~ field of ~Deep~ is the size, which is updated upon every insert /
+removal.
+
+** ~Tree~
+
+We don't get much:
+
+#+begin_src haskell
+  data Tree a = Node a [Tree a]
+
+  instance Foldable Tree where
+    foldMap f (Node x ts) = f x `mappend` foldMap (foldMap f) ts
+#+end_src
+
+So this is as "default" as ~Foldable.length~ can get. Recall ~length -> foldl'
+-> foldr~, where:
+
+#+begin_src haskell
+  foldr :: (a -> b -> b) -> b -> t a -> b
+  foldr f z t = appEndo (foldMap (Endo #. f) t) z
+#+end_src
+
+** ~Array~
+
+#+begin_src haskell
+  data Array i e = Array i i Int (Array# e)
+
+  numElements :: Array i e -> Int
+  numElements (Array _ _ n _) = n
+  {-# INLINE numElements #-}
+#+end_src
+
+Where the ~Int~ is explained to be:
+
+#+begin_example
+  A cache of (rangeSize (l,u)) used to make sure an index is really in range.
+#+end_example
+
+** ~HashMap~
+
+This type has an interesting story.
+
+#+begin_src haskell
+  data HashMap k v
+      = Empty
+      | BitmapIndexed Bitmap (A.Array (HashMap k v))
+      | Leaf Hash (Leaf k v)
+      | Full (A.Array (HashMap k v))
+      | Collision Hash (A.Array (Leaf k v))
+#+end_src
+
+This ~A.Array~ type is defined internally to ~unordered-containers~, but is
+based off of ~GHC.Exts.SmallArray#~:
+
+#+begin_src haskell
+  data SmallArray# a :: TYPE 'UnliftedRep
+#+end_src
+
+With the appearance of GHC magic, I shall tread no deeper. ~SmallArray#~ doesn't
+have an embedded size field like the usual ~Data.Array.Array~ does, hence ~O(n)~
+for ~HashMap~:
+
+#+begin_src haskell
+  size :: HashMap k v -> Int
+  size t = go t 0
+    where
+      go Empty                !n = n
+      go (Leaf _ _)            n = n + 1
+      go (BitmapIndexed _ ary) n = A.foldl' (flip go) n ary
+      go (Full ary)            n = A.foldl' (flip go) n ary
+      go (Collision _ ary)     n = n + A.length ary
+
+  --- In `Data.HashMap.Array` ---
+
+  length :: Array a -> Int
+  length ary = I# (sizeofArray# (unArray ary))
+
+  sizeofArray# :: SmallArray# a -> Int#
+  sizeofArray# = sizeofSmallArray#
+
+  --- In `GHC.Exts` --
+
+  sizeofSmallArray# :: SmallArray# a -> Int#
+#+end_src
+
+And what's this? A near-default ~Foldable~ instance?
+
+#+begin_src haskell
+  instance Foldable.Foldable (HashMap k) where
+    foldr f = foldrWithKey (const f)
+
+  foldrWithKey :: (k -> v -> a -> a) -> a -> HashMap k v -> a
+  foldrWithKey f = go
+    where
+      go z Empty                 = z
+      go z (Leaf _ (L k v))      = f k v z
+      go z (BitmapIndexed _ ary) = A.foldr (flip go) z ary
+      go z (Full ary)            = A.foldr (flip go) z ary
+      go z (Collision _ ary)     = A.foldr (\ (L k v) z' -> f k v z') z ary
+#+end_src
+
+Notice the strict ~foldl'~ versus ~foldr~.
+
+** ~HashSet~
+
+The smoking gun. This must be why I thought ~Set~ was defined in terms of ~Map~:
+
+#+begin_src haskell
+  newtype HashSet a = HashSet (HashMap a ())
+#+end_src
+
+I wonder if that redundantly allocates all the ~()~, or if a pointer is shared
+internally?
+
+#+begin_src haskell
+  instance Foldable.Foldable HashSet where
+    foldr = Data.HashSet.Base.foldr
+
+  foldr :: (b -> a -> a) -> a -> HashSet b -> a
+  foldr f z0 = foldrWithKey g z0 . asMap
+    where g k _ z = f k z
+#+end_src
+
+So, entirely based on the performance of ~HashMap~.
+
+** ~Vector~
+
+Crawl down the rabbit hole with me:
+
+#+begin_src haskell
+  length :: Vector a -> Int
+  length = G.length
+
+  length :: Vector v a => v a -> Int
+  length = Bundle.length . stream'
+
+  length :: Bundle v a -> Int
+  length = unId . M.length
+
+  length :: Monad m => Bundle m v a -> m Int
+  length Bundle{sSize = Exact n} = return n
+  length Bundle{sChunks = s}     = S.foldl' (\n (Chunk k _) -> n+k) 0 s
+
+  data Bundle m v a = Bundle
+    { sElems  :: Stream m a
+    , sChunks :: Stream m (Chunk v a)
+    , sVector :: Maybe (v a)
+    , sSize   :: Size }
+
+  data Size = Exact Int  -- ^ Exact size
+            | Max   Int  -- ^ Upper bound on the size
+            | Unknown    -- ^ Unknown size
+#+end_src
+
+So ~O(1)~ if dealing with an untouched ~Vector~, but potentially ~O(c)~ had you
+done some splitting and twisting which invoked Fusion.

@@ -65,7 +65,7 @@ render state = HH.nav [ HP.classes $ map H.ClassName [ "navbar", "navbar-expand-
             [ HH.text k ]
           ]
         ]
-      , HH.a [ HP.href "https://stackoverflow.com/cv/colinwoodbury"
+      , HH.a [ HP.href "/assets/cv.html"
              , HP.classes $ map H.ClassName [ "nav-item", "nav-link"]]
         [ HH.text c ]
       , icon "https://github.com/fosskers" [ "fab", "fa-github" ]
