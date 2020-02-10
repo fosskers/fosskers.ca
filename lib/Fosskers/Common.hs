@@ -24,6 +24,7 @@ import           BasePrelude
 import           Data.Aeson (ToJSON)
 import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
+import           Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.Lazy as TL
 import           Fosskers.Kanji (Analysis)
@@ -37,17 +38,19 @@ import           Xmlbf (Node, ToXml(..), element, text)
 ---
 
 type JsonAPI = "posts" :> Get '[JSON] [Blog]
-  :<|> "kanji" :> ReqBody '[JSON] T.Text :> Post '[JSON] Analysis
-  :<|> "kanji" :> Capture "text" T.Text :> Get '[JSON] (Maybe Analysis)
+  :<|> "kanji" :> ReqBody '[JSON] Text :> Post '[JSON] Analysis
+  :<|> "kanji" :> Capture "text" Text :> Get '[JSON] (Maybe Analysis)
 
 type API =
   "assets" :> Raw
   :<|> "rss-en" :> Get '[XML] Blogs
   :<|> "rss-jp" :> Get '[XML] Blogs
+  :<|> Capture "language" Language :> "blog" :> Get '[HTML] (Html ())
+  :<|> Capture "language" Language :> "blog" :> Capture "title" Text :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> Get '[HTML] (Html ())
   :<|> Get '[HTML] (Html ())
 
-newtype Title = Title T.Text
+newtype Title = Title Text
   deriving stock (Eq, Show, Generic)
   deriving anyclass (ToJSON)
 
@@ -66,7 +69,7 @@ instance FromHttpApiData Language where
   parseUrlPiece "jp" = Right Japanese
   parseUrlPiece l    = Left $ "Invalid language: " <> l
 
-newtype Path = Path T.Text
+newtype Path = Path Text
   deriving stock (Generic)
   deriving anyclass (ToJSON)
 
@@ -80,7 +83,7 @@ data Blog = Blog
   { title    :: !Title
   , date     :: !Date
   , filename :: !Path
-  , freqs    :: ![(T.Text, Int)] }
+  , freqs    :: ![(Text, Int)] }
   deriving stock (Generic)
   deriving anyclass (ToJSON)
 

@@ -1,4 +1,7 @@
-module Fosskers.Site ( index ) where
+module Fosskers.Site
+  ( site
+  , index
+  ) where
 
 import BasePrelude hiding (index)
 import Data.Text (Text)
@@ -17,17 +20,19 @@ Don't bother with Tools for now.
 -}
 
 index :: Language -> Html ()
-index lang = html_ $ head_ h *> body_ (topbar lang *> div_ "Real content here.")
+index lang = site lang "Real content here!"
+
+site :: Language -> Html () -> Html ()
+site lang component = html_ $ head_ h *> body_ (topbar lang *> component)
   where
     h :: Html ()
     h = do
-      title_ "fosskers.ca"
+      title_ "Colin Woodbury"
       meta_ [ charset_ "utf-8" ]
       meta_ [ name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no" ]
-      script_ [ src_ "assets/jquery.slim.min.js" ] ("" :: Text)
-      script_ [ src_ "assets/bootstrap.min.js" ] ("" :: Text)
-      link_ [ rel_ "stylesheet"
-            , href_ "assets/bootstrap.min.css" ]
+      script_ [ src_ "/assets/jquery.slim.min.js" ] ("" :: Text)
+      script_ [ src_ "/assets/bootstrap.min.js" ] ("" :: Text)
+      link_ [ rel_ "stylesheet", href_ "/assets/bootstrap.min.css" ]
       -- link_ [ rel_ "stylesheet"
       --       , href_ "assets/fontawesome.min.css" ]
       -- link_ [ rel_ "stylesheet"
@@ -39,11 +44,12 @@ index lang = html_ $ head_ h *> body_ (topbar lang *> div_ "Real content here.")
 
 topbar :: Language -> Html ()
 topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ] ] $ do
-  a_ [ class_ "navbar-brand", href_ "#" ] $
-    img_ [ src_ "/assets/fosskers-icon.png", width_ "30", height_ "30" ]
+  a_ [ class_ "navbar-brand", href_ "#" ]
+    $ img_ [ src_ "/assets/fosskers-icon.png", width_ "30", height_ "30" ]
   navButton
-  div_ [ classes_ [ "collapse", "navbar-collapse" ], id_ navId ] $
-    ul_ [ class_ "navbar-nav" ] $ theBar lang
+  div_ [ classes_ [ "collapse", "navbar-collapse" ], id_ navId ]
+    $ ul_ [ class_ "navbar-nav" ]
+    $ theBar lang
   langButtons
   where
     navId :: Text
@@ -67,7 +73,7 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
     pub :: Html ()
     pub = do
       item "About" "#"
-      item "Blog" "#"
+      item "Blog" "/en/blog"
       dropdown "Projects" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
       dropdown "Tools" [("Kanji Analysis", "#")]
       item "CV" "/assets/cv.html"
@@ -75,14 +81,15 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
     izakaya :: Html ()
     izakaya = do
       item "自己紹介" "#"
-      item "ブログ" "#"
+      item "ブログ" "/jp/blog"
       dropdown "プロジェクト" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
       dropdown "ツール" [("漢字分析", "#")]
       item "履歴書" "/assets/cv-jp.html"
 
     item :: Text -> Text -> Html ()
-    item label url = li_ [ class_ "nav-item" ] $
-      a_ [ class_ "nav-link", href_ url ] $ toHtml label
+    item label url = li_ [ class_ "nav-item" ]
+      $ a_ [ class_ "nav-link", href_ url ]
+      $ toHtml label
 
     langButtons :: Html ()
     langButtons = div_
@@ -113,8 +120,7 @@ dropdown label links =
        , makeAttribute "data-toggle" "dropdown"
        , makeAttribute "aria-haspopup" "true"
        , makeAttribute "aria-expanded" "false" ] $ toHtml label
-    div_ [ class_ "dropdown-menu"
-         , makeAttribute "aria-labelledby" did ]
+    div_ [ class_ "dropdown-menu", makeAttribute "aria-labelledby" did ]
       $ traverse_ link links
   where
     did :: Text
