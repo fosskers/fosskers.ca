@@ -1,5 +1,6 @@
 module Fosskers.Site
-  ( site
+  ( Page(..)
+  , site
   , index
   ) where
 
@@ -18,11 +19,13 @@ Don't bother with Tools for now.
 
 -}
 
-index :: Language -> Html ()
-index lang = site lang "Real content here!"
+data Page = About | Posts | Index deriving (Eq)
 
-site :: Language -> Html () -> Html ()
-site lang component = html_ $ head_ h *> body_ (topbar lang *> component)
+index :: Language -> Html ()
+index lang = site lang Index "Real content here!"
+
+site :: Language -> Page -> Html () -> Html ()
+site lang page component = html_ $ head_ h *> body_ (topbar lang page *> component)
   where
     h :: Html ()
     h = do
@@ -37,8 +40,8 @@ site lang component = html_ $ head_ h *> body_ (topbar lang *> component)
       link_ [ rel_ "stylesheet", href_ "/assets/fa-solid.min.css" ]
       -- link_ [ rel_ "stylesheet", href_ "assets/fosskers.css" ]
 
-topbar :: Language -> Html ()
-topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ] ] $ do
+topbar :: Language -> Page -> Html ()
+topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ] ] $ do
   a_ [ class_ "navbar-brand", href_ "#" ]
     $ img_ [ src_ "/assets/fosskers-icon.png", width_ "30", height_ "30" ]
   navButton
@@ -67,11 +70,11 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
 
     pub :: Html ()
     pub = do
-      item "About" "/en/about"
-      item "Blog" "/en/blog"
+      item "About" "/en/about" $ active About
+      item "Blog" "/en/blog" $ active Posts
       dropdown "Projects" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
       dropdown "Tools" [("Kanji Analysis", "#")]
-      item "CV" "/assets/cv.html"
+      item "CV" "/assets/cv.html" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
@@ -79,18 +82,22 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
 
     izakaya :: Html ()
     izakaya = do
-      item "自己紹介" "/jp/about"
-      item "ブログ" "/jp/blog"
+      item "自己紹介" "/jp/about" $ active About
+      item "ブログ" "/jp/blog" $ active Posts
       dropdown "プロジェクト" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
       dropdown "ツール" [("漢字分析", "#")]
-      item "履歴書" "/assets/cv-jp.html"
+      item "履歴書" "/assets/cv-jp.html" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
       icon "/jp/rss" [ "fas", "fa-rss" ]
 
-    item :: Html () -> Text -> Html ()
-    item label url = li_ [ class_ "nav-item" ]
+    -- | Highlight the navbar links according to the page we're currently on.
+    active :: Page -> [Text]
+    active p = bool [] ["active", "font-weight-bold"] $ p == page
+
+    item :: Html () -> Text -> [Text] -> Html ()
+    item label url cs = li_ [ classes_ $ "nav-item" : cs ]
       $ a_ [ class_ "nav-link", href_ url ] label
 
     icon :: Text -> [Text] -> Html ()

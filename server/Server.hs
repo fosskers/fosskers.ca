@@ -14,7 +14,7 @@ import           Data.Generics.Product.Fields (field)
 import           Fosskers.Common
 import           Fosskers.Kanji (Analysis, analysis)
 import           Fosskers.Org (parseOrg)
-import           Fosskers.Site (index, site)
+import           Fosskers.Site (Page(..), index, site)
 import           Fosskers.Site.About (about)
 import           Fosskers.Site.Blog (blog, newest)
 import qualified Network.Wai.Handler.Warp as W
@@ -53,9 +53,9 @@ server :: Env -> Server API
 server env =
   serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
-  :<|> (\l -> pure . site l $ about l)
-  :<|> (\l -> pure . site l $ newest l)
-  :<|> (\l t -> pure . site l $ blog l t)
+  :<|> (\l -> pure . site l About $ about l)
+  :<|> (\l -> pure . site l Posts $ newest l)
+  :<|> (\l t -> pure . site l Posts $ blog l t)
   :<|> pure . rss (stats env)
   :<|> pure . index
   :<|> pure (index English)
