@@ -3,9 +3,9 @@ module Fosskers.Site.Blog
   , newest
   ) where
 
-import Data.Text (Text)
 import Fosskers.Common (Language(..))
 import Lucid
+import RIO
 
 ---
 

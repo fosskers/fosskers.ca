@@ -7,11 +7,7 @@
 
 module Main ( main ) where
 
-import           BasePrelude hiding (FilePath, Handler, app, index)
-import qualified Data.Map.Strict as M
-import qualified Data.Set as S
-import qualified Data.Text as T
-import qualified Data.Text.IO as T
+import           Control.Concurrent (getNumCapabilities)
 import           Fosskers.Common
 import           Fosskers.Kanji (Analysis, analysis)
 import           Fosskers.Org (parseOrg)
@@ -21,10 +17,17 @@ import           Fosskers.Site.Blog (blog, newest)
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Generic
+import           RIO
+import           RIO.Char (isAlpha)
+import qualified RIO.List as L
+import qualified RIO.Map as M
+import qualified RIO.Set as S
+import qualified RIO.Text as T
 import           Servant.API
 import           Servant.Server
 import           Servant.Server.StaticFiles (serveDirectoryFileServer)
 import           Shelly hiding (path)
+import           System.Environment (lookupEnv)
 import           System.FilePath.Posix (takeBaseName)
 
 ---
@@ -36,7 +39,7 @@ newtype Args = Args
 
 data Env = Env
   { stats :: ![Blog]
-  , texts :: !(M.Map Text Analysis) }
+  , texts :: !(Map Text Analysis) }
 
 server :: Env -> Server API
 server env =
@@ -45,7 +48,7 @@ server env =
   :<|> (\l -> pure . site l $ about l)
   :<|> (\l -> pure . site l $ newest l)
   :<|> (\l t -> pure . site l $ blog l t)
-  :<|> (\l -> pure $ rss (stats env) l)
+  :<|> pure . rss (stats env)
   :<|> pure . index
   :<|> pure (index English)
 
@@ -57,14 +60,14 @@ server env =
 --   :<|> (\t -> pure . M.lookup t $ texts env)
 
 rss :: [Blog] -> Language -> Blogs
-rss bs l = Blogs . sortOn (Down . date) $ filter (\b -> pathLang (filename b) == Just l) bs
+rss bs l = Blogs . L.sortOn (Down . date) $ filter (\b -> pathLang (filename b) == Just l) bs
 
 app :: Env -> Application
 app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server
 
 -- | A mapping of word frequencies.
 freq :: Text -> [(Text, Int)]
-freq = map (h &&& length) . group . sort . filter g . map T.toLower . T.words . T.map f
+freq = map (h &&& length) . L.group . L.sort . filter g . map T.toLower . T.words . T.map f
   where
     f :: Char -> Char
     f c = bool ' ' c $ isAlpha c
@@ -76,7 +79,7 @@ freq = map (h &&& length) . group . sort . filter g . map T.toLower . T.words . 
     h []    = "死毒殺悪厄魔"
     h (c:_) = c
 
-functionWords :: S.Set Text
+functionWords :: Set Text
 functionWords = S.fromList
   [ "and", "but", "for", "our", "the", "that", "this", "these", "those", "then", "than"
   , "what", "when", "where", "will", "your", "you", "are", "can", "has", "have"
@@ -113,7 +116,7 @@ eread path = do
      then Right <$> readfile path
      else pure . Left $ toTextIgnore path <> " doesn't exist to be read"
 
-analysisFiles :: IO (M.Map Text Text)
+analysisFiles :: IO (Map Text Text)
 analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
   where
     f :: Text -> Sh (Either Text (Text, Text))
@@ -123,12 +126,12 @@ analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
 main :: IO ()
 main = do
   Args (Helpful p) <- getRecord "Backend server for fosskers.ca"
-  (errs, ps) <- shelly orgs
-  traverse_ T.putStrLn errs
+  (_, ps) <- shelly orgs
+  -- traverse_ T.putStrLn errs
   afs <- analysisFiles
   herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
   let prt = fromMaybe 8081 $ p <|> herokuPort
-  cores <- getNumCapabilities
-  putStrLn $ "Analysis files read: " <> show (length afs)
-  putStrLn $ "Listening on port " <> show prt <> " with " <> show cores <> " cores"
+  -- cores <- getNumCapabilities
+  -- putStrLn $ "Analysis files read: " <> show (length afs)
+  -- putStrLn $ "Listening on port " <> show prt <> " with " <> show cores <> " cores"
   W.run prt . app $ Env ps (analysis <$> afs)

@@ -21,7 +21,7 @@ suite = testGroup ".org parsing"
       Right r -> r @?= (Title "Cool Article", Date 2018 January 5)
   ]
 
-orgT :: T.Text
+orgT :: Text
 orgT = T.unlines
   [ "#+TITLE: Cool Article"
   , "#+DATE: 2018-01-05"

@@ -4,12 +4,12 @@
 
 module Fosskers.Kanji ( Analysis, analysis ) where
 
-import           BasePrelude
 import           Data.Aeson (ToJSON)
 import           Data.Kanji
-import qualified Data.Map.Strict as M
-import qualified Data.Set as S
-import qualified Data.Text as T
+import           RIO
+import qualified RIO.Map as M
+import qualified RIO.Set as S
+import qualified RIO.Text as T
 
 ---
 
@@ -29,7 +29,7 @@ data Analysis = Analysis
   } deriving stock (Generic)
     deriving anyclass (ToJSON)
 
-analysis :: T.Text -> Analysis
+analysis :: Text -> Analysis
 analysis t
   | T.null t = Analysis [] 0 0 0 [] []
   | otherwise = Analysis uniq (elementaryDen dist) (middleDen dist) (highDen dist) den (M.toList dist)

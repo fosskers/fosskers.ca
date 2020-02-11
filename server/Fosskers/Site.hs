@@ -3,11 +3,10 @@ module Fosskers.Site
   , index
   ) where
 
-import BasePrelude hiding (index)
-import Data.Text (Text)
 import Fosskers.Common (Language(..))
 import Lucid
 import Lucid.Base (makeAttribute)
+import RIO hiding (link)
 
 ---
 

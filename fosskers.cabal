@@ -23,18 +23,14 @@ common commons
   build-depends:
     , aeson                 >=1.2  && <1.5
     , base                  >=4.8  && <4.14
-    , base-prelude          ^>=1.3
-    , bytestring
-    , containers
     , hourglass             ^>=0.2
     , kanji                 ^>=3.4
     , lucid                 ^>=2.9
     , megaparsec            >=7.0  && <9
+    , rio                   ^>=0.1
     , servant               >=0.11 && <0.17
     , servant-lucid         >=0.7  && <0.10
     , servant-xml           ^>=1.0
-    , text                  ^>=1.2
-    , unordered-containers
     , xmlbf                 >=0.3  && <0.7
 
 library

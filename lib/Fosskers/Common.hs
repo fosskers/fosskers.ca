@@ -20,18 +20,18 @@ module Fosskers.Common
   , pathLang
   ) where
 
-import           BasePrelude
 import           Data.Aeson (ToJSON)
-import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
-import           Data.Text (Text)
-import qualified Data.Text as T
-import qualified Data.Text.Lazy as TL
 import           Fosskers.Kanji (Analysis)
 import           Lucid (Html)
+import           RIO
+import qualified RIO.HashMap as HM
+import qualified RIO.Text as T
+import qualified RIO.Text.Lazy as TL
 import           Servant.API
 import           Servant.HTML.Lucid
 import           Servant.XML
+import           Text.Printf (printf)
 import           Time.Types (Date(..), Month(..))
 import           Xmlbf (Node, ToXml(..), element, text)
 

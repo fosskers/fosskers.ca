@@ -1,8 +1,10 @@
 module Fosskers.Org ( parseOrg ) where
 
-import           BasePrelude
-import qualified Data.Text as T
+import           Data.Bifunctor (first)
 import           Fosskers.Common (Title(..))
+import           RIO hiding (first)
+import           RIO.Partial (pred, toEnum)
+import qualified RIO.Text as T
 import           Text.Megaparsec
 import           Text.Megaparsec.Char
 import qualified Text.Megaparsec.Char.Lexer as L
@@ -10,7 +12,7 @@ import           Time.Types
 
 ---
 
-type Parser = Parsec Void T.Text
+type Parser = Parsec Void Text
 
 org :: Parser (Title, Date)
 org = (,) <$> title <*> date <* takeRest
@@ -26,5 +28,5 @@ date = do
     <*> (fmap (toEnum . pred) L.decimal <* char '-')
     <*> L.decimal
 
-parseOrg :: T.Text -> T.Text -> Either T.Text (Title, Date)
+parseOrg :: Text -> Text -> Either Text (Title, Date)
 parseOrg fp t = first (T.pack . errorBundlePretty) $ parse org (T.unpack fp) t
