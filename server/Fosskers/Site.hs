@@ -77,8 +77,8 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark"
     pub = do
       item "About" "/en/about" $ active About
       item "Blog" "/en/blog" $ active Posts
-      dropdown "Projects" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
-      dropdown "Tools" [("Kanji Analysis", "#")]
+      dropdown "Projects" projects
+      dropdown "Tools" [Just ("Kanji Analysis", "#")]
       item "CV" "/assets/cv.html" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
@@ -89,13 +89,22 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark"
     izakaya = do
       item "自己紹介" "/jp/about" $ active About
       item "ブログ" "/jp/blog" $ active Posts
-      dropdown "プロジェクト" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
-      dropdown "ツール" [("漢字分析", "#")]
+      dropdown "プロジェクト" projects
+      dropdown "ツール" [Just ("漢字分析", "#")]
       item "履歴書" "/assets/cv-jp.html" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
       icon "/jp/rss" [ "fas", "fa-rss" ]
+
+    projects :: [Maybe (Html (), Text)]
+    projects =
+      [ Just ("Aura", "https://github.com/fosskers/aura")
+      , Just ("Bag of Holding", "https://github.com/kadena-community/bag-of-holding")
+      , Just ("MapAlgebra", "https://github.com/fosskers/mapalgebra")
+      , Nothing
+      , Just ("ScalaZ and Cats", "https://github.com/fosskers/scalaz-and-cats")
+      , Just ("Scala Benchmarks", "https://github.com/fosskers/scala-benchmarks") ]
 
     -- | Highlight the navbar links according to the page we're currently on.
     active :: Page -> [Text]
@@ -128,7 +137,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark"
       Japanese -> "btn-info"
 
 -- | Construct a Bootstrap navbar dropdown.
-dropdown :: Text -> [(Text, Text)] -> Html ()
+dropdown :: Text -> [Maybe (Html (), Text)] -> Html ()
 dropdown label links =
   li_ [ classes_ [ "nav-item", "dropdown" ] ] $ do
     a_ [ classes_ [ "nav-link", "dropdown-toggle" ]
@@ -144,5 +153,6 @@ dropdown label links =
     did :: Text
     did = "navbarDropdown" <> label
 
-    link :: (Text, Text) -> Html ()
-    link (l, url) = a_ [ class_ "dropdown-item", href_ url ] $ toHtml l
+    link :: Maybe (Html (), Text) -> Html ()
+    link Nothing         = div_ [class_ "dropdown-divider"] ""
+    link (Just (l, url)) = a_ [ class_ "dropdown-item", href_ url ] l

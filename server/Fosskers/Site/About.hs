@@ -42,7 +42,8 @@ about _ = do
           "Mapbox VectorTile codecs ("
           a_ [href_ "https://github.com/fosskers/vectortiles"] "Haskell"
           ", "
-          a_ [href_ "https://github.com/locationtech/geotrellis/tree/master/vectortile"] "Scala"
+          a_ [href_ "https://github.com/locationtech/geotrellis/tree/master/vectortile"]
+            "Scala"
           ")"
         li_ $ do
           a_ [href_ "https://geotrellis.github.io/vectorpipe/"] "VectorPipe"
@@ -52,8 +53,10 @@ about _ = do
           " (code contributor and "
           a_ [href_ "https://docs.geotrellis.io/en/latest/"] "docs author"
           ")"
-        li_ $ a_ [href_ "https://github.com/fosskers/scalaz-and-cats"] "ScalaZ and Cats Comparison"
-        li_ $ a_ [href_ "https://github.com/fosskers/scala-benchmarks"] "Scala Collections Benchmarks"
+        li_ $ a_ [href_ "https://github.com/fosskers/scalaz-and-cats"]
+          "ScalaZ and Cats Comparison"
+        li_ $ a_ [href_ "https://github.com/fosskers/scala-benchmarks"]
+          "Scala Collections Benchmarks"
       p_ $ do
         "Otherwise, I've written code in many languages including Scala, "
         "Purescript, Elm, C, Python, and Java, and deployed projects "
