@@ -43,6 +43,7 @@ type JsonAPI = "posts" :> Get '[JSON] [Blog]
 
 type API =
   "assets" :> Raw
+  :<|> "webfonts" :> Raw
   :<|> "rss-en" :> Get '[XML] Blogs
   :<|> "rss-jp" :> Get '[XML] Blogs
   :<|> Capture "language" Language :> "about" :> Get '[HTML] (Html ())

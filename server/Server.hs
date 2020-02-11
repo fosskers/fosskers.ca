@@ -41,6 +41,7 @@ data Env = Env
 server :: Env -> Server API
 server env =
   serveDirectoryFileServer "assets"
+  :<|> serveDirectoryFileServer "assets/webfonts"
   :<|> pure (rss (stats env) English)
   :<|> pure (rss (stats env) Japanese)
   -- :<|> serveDirectoryFileServer "assets/webfonts"  -- TODO Need better fonts.

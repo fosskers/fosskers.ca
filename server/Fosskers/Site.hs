@@ -33,14 +33,10 @@ site lang component = html_ $ head_ h *> body_ (topbar lang *> component)
       script_ [ src_ "/assets/jquery.slim.min.js" ] ("" :: Text)
       script_ [ src_ "/assets/bootstrap.min.js" ] ("" :: Text)
       link_ [ rel_ "stylesheet", href_ "/assets/bootstrap.min.css" ]
-      -- link_ [ rel_ "stylesheet"
-      --       , href_ "assets/fontawesome.min.css" ]
-      -- link_ [ rel_ "stylesheet"
-      --       , href_ "assets/fa-brands.min.css" ]
-      -- link_ [ rel_ "stylesheet"
-      --       , href_ "assets/fa-solid.min.css" ]
-      -- link_ [ rel_ "stylesheet"
-      --       , href_ "assets/fosskers.css" ]
+      link_ [ rel_ "stylesheet", href_ "/assets/fontawesome.min.css" ]
+      link_ [ rel_ "stylesheet", href_ "/assets/fa-brands.min.css" ]
+      link_ [ rel_ "stylesheet", href_ "/assets/fa-solid.min.css" ]
+      -- link_ [ rel_ "stylesheet", href_ "assets/fosskers.css" ]
 
 topbar :: Language -> Html ()
 topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ] ] $ do
@@ -77,6 +73,10 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
       dropdown "Projects" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
       dropdown "Tools" [("Kanji Analysis", "#")]
       item "CV" "/assets/cv.html"
+      icon "https://github.com/fosskers" [ "fab", "fa-github" ]
+      icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
+      icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
+      icon "/rss-en" [ "fas", "fa-rss" ]
 
     izakaya :: Html ()
     izakaya = do
@@ -85,11 +85,18 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
       dropdown "プロジェクト" [("Aura", "#"), ("Bag of Holding", "#"), ("MapAlgebra", "#")]
       dropdown "ツール" [("漢字分析", "#")]
       item "履歴書" "/assets/cv-jp.html"
+      icon "https://github.com/fosskers" [ "fab", "fa-github" ]
+      icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
+      icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
+      icon "/rss-jp" [ "fas", "fa-rss" ]
 
-    item :: Text -> Text -> Html ()
+    item :: Html () -> Text -> Html ()
     item label url = li_ [ class_ "nav-item" ]
-      $ a_ [ class_ "nav-link", href_ url ]
-      $ toHtml label
+      $ a_ [ class_ "nav-link", href_ url ] label
+
+    icon :: Text -> [Text] -> Html ()
+    icon url cs = li_ [ class_ "nav-item" ]
+      $ a_ [ href_ url, classes_ ("nav-link" : cs), style_ "font-size: 1.33333em" ] ""
 
     langButtons :: Html ()
     langButtons = div_
