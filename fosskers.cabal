@@ -60,6 +60,7 @@ executable server
     Fosskers.Site
     Fosskers.Site.About
     Fosskers.Site.Blog
+    Fosskers.Site.Bootstrap
 
   build-depends:
     , filepath          ^>=1.4

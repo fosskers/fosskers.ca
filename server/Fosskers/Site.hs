@@ -5,6 +5,7 @@ module Fosskers.Site
   ) where
 
 import Fosskers.Common (Language(..))
+import Fosskers.Site.Bootstrap
 import Lucid
 import Lucid.Base (makeAttribute)
 import RIO hiding (link)
@@ -25,7 +26,11 @@ index :: Language -> Html ()
 index lang = site lang Index "Real content here!"
 
 site :: Language -> Page -> Html () -> Html ()
-site lang page component = html_ $ head_ h *> body_ (topbar lang page *> component)
+site lang page component = html_ $ do
+  head_ h
+  body_ $ do
+    topbar lang page
+    fluid [] component
   where
     h :: Html ()
     h = do
