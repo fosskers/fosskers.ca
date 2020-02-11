@@ -46,7 +46,7 @@ site lang page component = html_ $ do
       -- link_ [ rel_ "stylesheet", href_ "assets/fosskers.css" ]
 
 topbar :: Language -> Page -> Html ()
-topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg-dark" ] ] $ do
+topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark", "bg-dark" ] ] $ do
   a_ [ class_ "navbar-brand", href_ "#" ]
     $ img_ [ src_ "/assets/fosskers-icon.png", width_ "30", height_ "30" ]
   navButton
@@ -80,10 +80,11 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark"
       dropdown "Projects" projects
       dropdown "Tools" [Just ("Kanji Analysis", "#")]
       item "CV" "/assets/cv.html" []
-      icon "https://github.com/fosskers" [ "fab", "fa-github" ]
-      icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
-      icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
-      icon "/en/rss" [ "fas", "fa-rss" ]
+      icon "https://github.com/fosskers" ["fab", "fa-github"]
+      icon "https://gitlab.com/fosskers" ["fab", "fa-gitlab"]
+      icon "https://twitter.com/fosskers" ["fab", "fa-twitter"]
+      icon "mailto:colin@fosskers.ca" ["fas", "fa-envelope"]
+      icon "/en/rss" ["fas", "fa-rss"]
 
     izakaya :: Html ()
     izakaya = do
@@ -93,6 +94,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark"
       dropdown "ツール" [Just ("漢字分析", "#")]
       item "履歴書" "/assets/cv-jp.html" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
+      icon "https://gitlab.com/fosskers" ["fab", "fa-gitlab"]
       icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
       icon "/jp/rss" [ "fas", "fa-rss" ]
@@ -102,6 +104,8 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark"
       [ Just ("Aura", "https://github.com/fosskers/aura")
       , Just ("Bag of Holding", "https://github.com/kadena-community/bag-of-holding")
       , Just ("MapAlgebra", "https://github.com/fosskers/mapalgebra")
+      , Nothing
+      , Just ("Haskell Libraries", "http://hackage.haskell.org/user/fosskers")
       , Nothing
       , Just ("ScalaZ and Cats", "https://github.com/fosskers/scalaz-and-cats")
       , Just ("Scala Benchmarks", "https://github.com/fosskers/scala-benchmarks") ]

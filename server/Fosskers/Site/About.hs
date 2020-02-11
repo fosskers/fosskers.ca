@@ -8,14 +8,19 @@ import RIO
 ---
 
 about :: Language -> Html ()
-about _ = do
+about lang = do
   row [style_ "padding-top: 1.0%"] $ div_ [classes_ ["col-6", "offset-md-3"]] content
   -- row_ $ div_ [ classes_ [ "col-xs-12", "col-md-5", "offset-md-2" ]] $ do
   --   row_ $ col_ $ img_ [ src_ "/assets/jack.jpg", class_ "img-fluid" ]
   --   row_ $ col_ $ i_ "Jack in a sunbeam."
   where
     content :: Html ()
-    content = do
+    content = case lang of
+      English  -> english
+      Japanese -> japanese
+
+    english :: Html ()
+    english = do
       p_ $ do
         "I'm Colin Woodbury, known as fosskers on the web. "
         "I am professional Haskell developer and am also active in Open Source, with a "
@@ -37,7 +42,7 @@ about _ = do
           a_ [href_ "https://github.com/fosskers/mapalgebra"] "MapAlgebra"
           " - An implementation of "
           i_ "GIS and Cartographic Modelling"
-          " by Data Tomlin"
+          " by Dana Tomlin"
         li_ $ do
           "Mapbox VectorTile codecs ("
           a_ [href_ "https://github.com/fosskers/vectortiles"] "Haskell"
@@ -48,11 +53,6 @@ about _ = do
         li_ $ do
           a_ [href_ "https://geotrellis.github.io/vectorpipe/"] "VectorPipe"
           " (author)"
-        li_ $ do
-          a_ [href_ "https://github.com/locationtech/geotrellis"] "GeoTrellis"
-          " (code contributor and "
-          a_ [href_ "https://docs.geotrellis.io/en/latest/"] "docs author"
-          ")"
         li_ $ a_ [href_ "https://github.com/fosskers/scalaz-and-cats"]
           "ScalaZ and Cats Comparison"
         li_ $ a_ [href_ "https://github.com/fosskers/scala-benchmarks"]
@@ -71,3 +71,53 @@ about _ = do
         "and have studied German, Italian, and Esperanto. "
         "Apart from learning languages, I also do Bouldering and Lead Climbing "
         "in my spare time."
+      p_ $ do
+        "This website is written in Haskell using the "
+        a_ [href_ "http://hackage.haskell.org/package/servant"] "Servant"
+        " and "
+        a_ [href_ "http://hackage.haskell.org/package/lucid"] "Lucid"
+        " libraries."
+
+    japanese :: Html ()
+    japanese = do
+      p_ $ do
+        "ウッドブリ・コリンと申します。ネット上では「fosskers」という通称で知られています。"
+        "ソフト開発者として務めていて、主にHaskellを通して"
+        a_ [href_ "http://hackage.haskell.org/user/fosskers"] "複数なライブラリやアプリ"
+        "を出しています。"
+        "私には関数型プログラミング (Functional Programming) はとても興味深く、"
+        "FPによって己の基本的開発美徳の三つが可能となります：　厳密・最小主義・芸術"
+      h3_ "主なプロジェクト"
+      ul_ $ do
+        li_ $ do
+          "Arch Linuxの"
+          a_ [href_ "https://github.com/fosskers/aura"] "Aura Package Manager"
+        li_ $ do
+          a_ [href_ "https://github.com/kadena-io/chainweb-node"] "Kadenaの公式ブロックチェーン"
+        li_ $ do
+          a_ [href_ "https://github.com/fosskers/mapalgebra"] "MapAlgebra"
+          "・Dana Tomlin作の「GIS and Cartographic Modelling」の実装"
+        li_ $ do
+          "Mapbox VectorTileコーデック ("
+          a_ [href_ "https://github.com/fosskers/vectortiles"] "Haskell"
+          ", "
+          a_ [href_ "https://github.com/locationtech/geotrellis/tree/master/vectortile"]
+            "Scala"
+          ")"
+        li_ $ do
+          a_ [href_ "https://geotrellis.github.io/vectorpipe/"] "VectorPipe"
+        li_ $ a_ [href_ "https://github.com/fosskers/scalaz-and-cats"]
+          "ScalaZ and Cats Comparison"
+        li_ $ a_ [href_ "https://github.com/fosskers/scala-benchmarks"]
+          "Scala Collections Benchmarks"
+      p_ $ do
+        "他にはPurescript・Elm・Racket・C・Pythonを含めて様々なプログラミング言語"
+        "で開発した経験もあります。AWS・Digital Ocean・Herokuなどにシステム管理した事も。"
+      p_ $ do
+        "職歴の"
+        a_ [href_ "/assets/cv-jp.html"] "詳細はこちら"
+        "。"
+      p_ $ do
+        "開発者になる前、数年間長崎県の小中学校で英語教師として働いていました。"
+        "英語と日本語は勿論、ドイツ語・イタリア語・エスペラント語も学習しています。"
+        "言語の勉強の他、自由時間でよくクライミングをやっています。"
