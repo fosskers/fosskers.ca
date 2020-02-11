@@ -76,7 +76,7 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
-      icon "/rss-en" [ "fas", "fa-rss" ]
+      icon "/en/rss" [ "fas", "fa-rss" ]
 
     izakaya :: Html ()
     izakaya = do
@@ -88,7 +88,7 @@ topbar lang = nav_ [ classes_ [ "navbar", "navbar-expand-lg", "navbar-dark", "bg
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
-      icon "/rss-jp" [ "fas", "fa-rss" ]
+      icon "/jp/rss" [ "fas", "fa-rss" ]
 
     item :: Html () -> Text -> Html ()
     item label url = li_ [ class_ "nav-item" ]

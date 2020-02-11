@@ -42,12 +42,10 @@ server :: Env -> Server API
 server env =
   serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
-  :<|> pure (rss (stats env) English)
-  :<|> pure (rss (stats env) Japanese)
-  -- :<|> serveDirectoryFileServer "assets/webfonts"  -- TODO Need better fonts.
   :<|> (\l -> pure . site l $ about l)
   :<|> (\l -> pure . site l $ newest l)
   :<|> (\l t -> pure . site l $ blog l t)
+  :<|> (\l -> pure $ rss (stats env) l)
   :<|> pure . index
   :<|> pure (index English)
 
