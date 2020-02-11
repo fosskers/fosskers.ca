@@ -1,13 +1,16 @@
+{-# LANGUAGE BangPatterns       #-}
 {-# LANGUAGE DataKinds          #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE TupleSections      #-}
+{-# LANGUAGE TypeApplications   #-}
 {-# LANGUAGE TypeOperators      #-}
 
 module Main ( main ) where
 
 import           Control.Concurrent (getNumCapabilities)
+import           Data.Generics.Product.Fields (field)
 import           Fosskers.Common
 import           Fosskers.Kanji (Analysis, analysis)
 import           Fosskers.Org (parseOrg)
@@ -39,7 +42,12 @@ newtype Args = Args
 
 data Env = Env
   { stats :: ![Blog]
-  , texts :: !(Map Text Analysis) }
+  , texts :: !(Map Text Analysis)
+  , logF  :: !LogFunc }
+  deriving stock (Generic)
+
+instance HasLogFunc Env where
+  logFuncL = field @"logF"
 
 server :: Env -> Server API
 server env =
@@ -126,12 +134,16 @@ analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
 main :: IO ()
 main = do
   Args (Helpful p) <- getRecord "Backend server for fosskers.ca"
-  (_, ps) <- shelly orgs
-  -- traverse_ T.putStrLn errs
-  afs <- analysisFiles
-  herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
-  let prt = fromMaybe 8081 $ p <|> herokuPort
-  -- cores <- getNumCapabilities
-  -- putStrLn $ "Analysis files read: " <> show (length afs)
-  -- putStrLn $ "Listening on port " <> show prt <> " with " <> show cores <> " cores"
-  W.run prt . app $ Env ps (analysis <$> afs)
+  lopts <- setLogMinLevel LevelInfo . setLogUseLoc False <$> logOptionsHandle stderr True
+  withLogFunc lopts $ \logFunc -> do
+    (errs, ps) <- shelly orgs
+    afs <- analysisFiles
+    herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
+    cores <- getNumCapabilities
+    let !prt = fromMaybe 8081 $ p <|> herokuPort
+        !env = Env ps (analysis <$> afs) logFunc
+    runRIO env $ do
+      traverse_ (logWarn . display) errs
+      logInfo $ "Analysis files read: " <> display (length afs)
+      logInfo $ "Listening on port " <> display prt <> " with " <> display cores <> " cores"
+      liftIO . W.run prt $ app env
