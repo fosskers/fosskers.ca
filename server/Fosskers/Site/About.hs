@@ -9,11 +9,16 @@ import RIO
 
 about :: Language -> Html ()
 about lang = do
-  row [style_ "padding-top: 1.0%"] $ div_ [classes_ ["col-6", "offset-md-3"]] content
-  -- row_ $ div_ [ classes_ [ "col-xs-12", "col-md-5", "offset-md-2" ]] $ do
-  --   row_ $ col_ $ img_ [ src_ "/assets/jack.jpg", class_ "img-fluid" ]
-  --   row_ $ col_ $ i_ "Jack in a sunbeam."
+  row [style_ "padding-top: 1.0%"] $ div_ [classes_ ["col-md-6", "offset-md-3"]] content
+  row_ $ col_ $ do -- [classes_ ["col-xs-12", "col-md-5", "offset-md-2"]] $ do
+    img_ [src_ "/assets/jack.jpg", classes_ ["rounded", "mx-auto", "d-block"]]
+    div_ [class_ "text-center"] $ i_ cat
   where
+    cat :: Html ()
+    cat = case lang of
+      English  -> "Jack in a sunbeam."
+      Japanese -> "日差しを浴びるジャック"
+
     content :: Html ()
     content = case lang of
       English  -> english
@@ -22,7 +27,7 @@ about lang = do
     english :: Html ()
     english = do
       p_ $ do
-        "I'm Colin Woodbury, known as fosskers on the web. "
+        "I'm Colin Woodbury, known as Fosskers on the web. "
         "I am professional Haskell developer and am also active in Open Source, with a "
         a_ [href_ "http://hackage.haskell.org/user/fosskers"]
           "number of published applications and libraries. "
@@ -53,10 +58,12 @@ about lang = do
         li_ $ do
           a_ [href_ "https://geotrellis.github.io/vectorpipe/"] "VectorPipe"
           " (author)"
-        li_ $ a_ [href_ "https://github.com/fosskers/scalaz-and-cats"]
-          "ScalaZ and Cats Comparison"
-        li_ $ a_ [href_ "https://github.com/fosskers/scala-benchmarks"]
-          "Scala Collections Benchmarks"
+        li_ $ do
+          a_ [href_ "https://github.com/fosskers/scalaz-and-cats"]
+            "ScalaZ and Cats Comparison"
+          " and the "
+          a_ [href_ "https://github.com/fosskers/scala-benchmarks"]
+            "Scala Collections Benchmarks"
       p_ $ do
         "Otherwise, I've written code in many languages including Scala, "
         "Purescript, Elm, C, Python, and Java, and deployed projects "
@@ -69,8 +76,7 @@ about lang = do
         "Before pursuing programming professionally, I taught English "
         "in Japan for several years. I'm fluent in both English and Japanese, "
         "and have studied German, Italian, and Esperanto. "
-        "Apart from learning languages, I also do Bouldering and Lead Climbing "
-        "in my spare time."
+        "Apart from learning languages, I often go rock climbing in my spare time."
       p_ $ do
         "This website is written in Haskell using the "
         a_ [href_ "http://hackage.haskell.org/package/servant"] "Servant"
