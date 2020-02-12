@@ -14,7 +14,7 @@ import           Data.Generics.Product.Fields (field)
 import           Fosskers.Common
 import           Fosskers.Kanji (Analysis, analysis)
 import           Fosskers.Org (parseOrg)
-import           Fosskers.Site (Page(..), index, site)
+import           Fosskers.Site (Page(..), site)
 import           Fosskers.Site.About (about)
 import           Fosskers.Site.Blog (blog, newest)
 import qualified Network.Wai.Handler.Warp as W
@@ -57,8 +57,8 @@ server env =
   :<|> (\l -> pure . site l Posts $ newest l)
   :<|> (\l t -> pure . site l Posts $ blog l t)
   :<|> pure . rss (stats env)
-  :<|> pure . index
-  :<|> pure (index English)
+  :<|> (\l -> pure . site l Posts $ newest l)
+  :<|> pure (site English Posts $ newest English)
 
 -- TODO What type issues?
 -- | Split off from `server` to avoid type issues.
