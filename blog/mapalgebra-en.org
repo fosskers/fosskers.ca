@@ -14,27 +14,27 @@ Some problems that have historically plagued raster processing systems are:
 - intermediate memory allocation between operations
 
 Long-running satellite imagery programs like [[https://landsat.usgs.gov/][Landsat]] and [[https://sentinel.esa.int/web/sentinel/home][Sentinel]] continue to
-produce large imagery, so these problems remain relevant to modern systems.
-In this article I announce my new Haskell library [[https://hackage.haskell.org/package/mapalgebra][mapalgebra]], propose why
-Haskell is an excellent language for GIS work, and offer a
-(hopefully) fair comparison with existing Open Source solutions.
+produce large imagery, so these problems remain relevant to modern systems. In
+this article I announce my new Haskell library [[https://hackage.haskell.org/package/mapalgebra][mapalgebra]], propose why Haskell
+is an excellent language for GIS work, and offer a (hopefully) fair comparison
+with existing Open Source solutions.
 
 * New Library: ~mapalgebra~
 
 [[https://hackage.haskell.org/package/mapalgebra-0.1.0][mapalgebra]] is an implementation of /Map Algebra/ as defined by C. Dana Tomlin in
-his classic text /GIS and Cartographic Modeling/. The library is built on the fantastic
-Parallel Array library [[https://hackage.haskell.org/package/massiv][massiv]] by Alexey Kuleshevich, and features op fusion
-(i.e. "lazy Rasters"), flexible Local Operations, extremely fast parallel
-Focal Operations, optional typesafe NoData handling, and the ability to
-process arbitrarily large Rasters on a single machine.
+his classic text /GIS and Cartographic Modeling/. The library is built on the
+fantastic Parallel Array library [[https://hackage.haskell.org/package/massiv][massiv]] by Alexey Kuleshevich, and features op
+fusion (i.e. "lazy Rasters"), flexible Local Operations, extremely fast parallel
+Focal Operations, optional typesafe NoData handling, and the ability to process
+arbitrarily large Rasters on a single machine.
 
 Zonal Operations are planned but not yet implemented in ~v0.1~. Other aspects of
 GIS work outside of Map Algebra are not provided.
 
 ** An Aside: The Haskell Language
 
-[[https://www.haskell.org/][Haskell]] was first released in 1990, and is a strongly-typed, lazy, purely functional language.
-These words mean specific things:
+[[https://www.haskell.org/][Haskell]] was first released in 1990, and is a strongly-typed, lazy, purely
+functional language. These words mean specific things:
 
 - *Strongly-typed:* All values have explicit types and the compiler is very strict
   about enforcing typing rules
@@ -44,14 +44,14 @@ These words mean specific things:
   these can be passed to or returned from other functions
 
 To further differentiate Haskell from Object-Oriented languages (like Java) or
-Imperative ones (like C or Go), Haskell has no classes, loops, or mutable variables.
-Despite that, we are still able to write anything we would want to write, and
-the process is enjoyable. Haskell also boats [[https://hackage.haskell.org/][a vast library ecosystem]] and
-[[https://docs.haskellstack.org/en/stable/README/][excellent build tooling]].
+Imperative ones (like C or Go), Haskell has no classes, loops, or mutable
+variables. Despite that, we are still able to write anything we would want to
+write, and the process is enjoyable. Haskell also boats [[https://hackage.haskell.org/][a vast library ecosystem]]
+and [[https://docs.haskellstack.org/en/stable/README/][excellent build tooling]].
 
-If you are unfamiliar with Haskell, [[https://www.youtube.com/watch?v=02_H3LjqMr8][this video by Derek Banas]] serves as a good introduction.
-To learn it in full, consider [[http://haskellbook.com/][The Haskell Book]] by Chris Allen and Julie Moronuki. It starts
-at the foundations and offers no shortcuts.
+If you are unfamiliar with Haskell, [[https://www.youtube.com/watch?v=02_H3LjqMr8][this video by Derek Banas]] serves as a good
+introduction. To learn it in full, consider [[http://haskellbook.com/][The Haskell Book]] by Chris Allen and
+Julie Moronuki. It starts at the foundations and offers no shortcuts.
 
 To try or develop Haskell, the book (and I) recommend [[https://docs.haskellstack.org/en/stable/README/][the Stack tool]].
 
@@ -111,8 +111,8 @@ Rasters of different size or projection are completely different types.
 #+END_QUOTE
 
 Unless your images have the same size and projection (or you've manipulated them
-so that they do), you can't perform Local Operations between them. This eliminates
-an entire class of bugs, and reduces complexity overall.
+so that they do), you can't perform Local Operations between them. This
+eliminates an entire class of bugs, and reduces complexity overall.
 
 The numbers in the signatures are thanks to Haskell's ~DataKinds~ extension,
 which lets us promote values into types for the purposes of type checking.
@@ -141,14 +141,14 @@ Or the [[https://en.wikipedia.org/wiki/Enhanced_vegetation_index][Enhanced Veget
           denom = nir + (6 * red) - (7.5 * blue) + 1
 #+END_SRC
 
-Here we see 8 binary operations being used, but none of them perform calculations or
-allocate new memory (yet). This saves /a lot/ of time that would otherwise be spent
-iterating multiple times through the Array.
+Here we see 8 binary operations being used, but none of them perform
+calculations or allocate new memory (yet). This saves /a lot/ of time that would
+otherwise be spent iterating multiple times through the Array.
 
-Only the application of the ~strict~ function on a
-~Raster D~ or ~Raster DW~ will actually run anything and allocate a new underlying Array.
-For the purposes of GIS, that Array could have type ~S~ (Storable, for imagery IO.
-Primitive types only) or ~B~ (Boxed, for custom data types).
+Only the application of the ~strict~ function on a ~Raster D~ or ~Raster DW~
+will actually run anything and allocate a new underlying Array. For the purposes
+of GIS, that Array could have type ~S~ (Storable, for imagery IO. Primitive
+types only) or ~B~ (Boxed, for custom data types).
 
 *** Free Parallelism
 
@@ -156,50 +156,51 @@ Good news: so long as you compile with ~-with-rtsopts=-N~, code that uses
 ~mapalgebra~ will automatically utilize all of your CPUs for its calculations.
 No other special configuration, custom code, or developer overhead is required.
 
-For production systems, this means informally that the more CPUs you throw
-at the problem, the faster it will get "for free". Please do take [[https://en.wikipedia.org/wiki/Amdahl%27s_law][Amdahl's Law]]
-into account, though.
+For production systems, this means informally that the more CPUs you throw at
+the problem, the faster it will get "for free". Please do take [[https://en.wikipedia.org/wiki/Amdahl%27s_law][Amdahl's Law]] into
+account, though.
 
 *** Performance
 
-Decades of work have gone into GHC, the main Haskell compiler, and it can produce
-highly optimized machine code.
-Thanks to this, to [[https://hackage.haskell.org/package/massiv][Massiv]], to some rewrites of mine, and to a lot of benchmarking, I've achieved
-speeds that are competitive-or-better than existing libraries in the field.
-[[https://docs.google.com/spreadsheets/d/1XubgdBGYEMnUNfaNvEYmp8KCfyra77_n1sx0Ej5hgU8/edit#gid=0][Documenting the entire process]] helped greatly to prove which (and how) changes
-were useful.
+Decades of work have gone into GHC, the main Haskell compiler, and it can
+produce highly optimized machine code. Thanks to this, to [[https://hackage.haskell.org/package/massiv][Massiv]], to some
+rewrites of mine, and to a lot of benchmarking, I've achieved speeds that are
+competitive-or-better than existing libraries in the field. [[https://docs.google.com/spreadsheets/d/1XubgdBGYEMnUNfaNvEYmp8KCfyra77_n1sx0Ej5hgU8/edit#gid=0][Documenting the
+entire process]] helped greatly to prove which (and how) changes were useful.
 
-Haskell also has an [[https://llvm.org/][LLVM]] backend, which can be accessed with the ~-fllvm~ compiler flag.
-Not all operations benefit from it, but the ones that do gain about a 2x speed-up.
+Haskell also has an [[https://llvm.org/][LLVM]] backend, which can be accessed with the ~-fllvm~
+compiler flag. Not all operations benefit from it, but the ones that do gain
+about a 2x speed-up.
 
-Performance comparisons between the libraries is available below in the /Benchmarks/
-section.
+Performance comparisons between the libraries is available below in the
+/Benchmarks/ section.
 
 *** Small Library, Clear Documentation
 
-I worked the entire library down to only 600 lines or so, while providing [[https://hackage.haskell.org/package/mapalgebra-0.1.1/docs/Geography-MapAlgebra.html][ample documentation and examples]].
+I worked the entire library down to only 600 lines or so, while providing [[https://hackage.haskell.org/package/mapalgebra-0.1.1/docs/Geography-MapAlgebra.html][ample
+documentation and examples]].
 
 *** Low-effort Deployment
 
-[[https://www.fosskers.ca/blog/deploying-haskell-en.html][As I've written in the past]], Haskell programs can be very simple to deploy (~git push~!).
-Haskell programs compile to a runnable binary, which thanks to ~stack~, can always
-be built reliably (i.e. no dependency hell).
+[[https://www.fosskers.ca/blog/deploying-haskell-en.html][As I've written in the past]], Haskell programs can be very simple to deploy (~git
+push~!). Haskell programs compile to a runnable binary, which thanks to ~stack~,
+can always be built reliably (i.e. no dependency hell).
 
 ** Short-comings
 
 ~mapalgebra~ is just that - a library for Map Algebra. It will not cook you
-dinner nor do your taxes. If you need a more fully featured GIS
-suite, please consider GeoTrellis.
+dinner nor do your taxes. If you need a more fully featured GIS suite, please
+consider GeoTrellis.
 
 There are benefits to having a focus, of course. Even so, here are some reasons
 why you might want to avoid ~mapalgebra~ until future versions.
 
 *** Projections aren't read at IO time
 
-With ~v0.1~, projection information isn't yet read out of imagery
-and enforced statically like size is. This means that using the ~p~ parameter
-is a "best practice". If you mark an image as being ~WebMercator~ and it's
-actually ~LatLng~... well, best of luck.
+With ~v0.1~, projection information isn't yet read out of imagery and enforced
+statically like size is. This means that using the ~p~ parameter is a "best
+practice". If you mark an image as being ~WebMercator~ and it's actually
+~LatLng~... well, best of luck.
 
 *How could this be fixed?* Tiff metadata reading is a planned feature for
 Massiv, the library upon which ~mapalgebra~ is built. Once that is complete,
@@ -222,9 +223,10 @@ for live systems.
   conformingRead :: FilePath -> IO (Raster S p r c a)
 #+END_SRC
 
-which, when annotated with the projection and dimensions you want will automatically
-reproject and up/downsample if necessary when imagery is read. That way, the
-"data sanitation gate" is held at the IO boundary, and all of your Map Algebra will be rigourous.
+which, when annotated with the projection and dimensions you want will
+automatically reproject and up/downsample if necessary when imagery is read.
+That way, the "data sanitation gate" is held at the IO boundary, and all of your
+Map Algebra will be rigourous.
 
 *** Incomplete NoData handling
 
@@ -232,10 +234,11 @@ Say you have this image:
 
 [[./blog/nodata.jpg]]
 
-Lots of NoData here, which is pretty common for Landsat imagery. What happens if we naively
-run a Focal Operation over it? Currently, Focal Ops only support a 3x3 square neighbourhood,
-so not much would go wrong: our data/nodata border pixels might accrue artifacts.
-This would be especially pronounced with an ~Int~ cell type and ~-2^63~ as the NoData value.
+Lots of NoData here, which is pretty common for Landsat imagery. What happens if
+we naively run a Focal Operation over it? Currently, Focal Ops only support a
+3x3 square neighbourhood, so not much would go wrong: our data/nodata border
+pixels might accrue artifacts. This would be especially pronounced with an ~Int~
+cell type and ~-2^63~ as the NoData value.
 
 One way to handle the NoData in a typesafe way is via ~Maybe~:
 
@@ -284,10 +287,10 @@ various types.
 
 *** Slow ~faspect~ and ~fgradient~
 
-~fvolume~, ~fupstream~, and ~fdownstream~ are quite fast due to some math tricks.
-Their angle-oriented siblings, however, had no such shortcuts that I knew of.
-I call out to another library, ~hmatrix~, to handle the linear algebra ops
-described [[https://hackage.haskell.org/package/mapalgebra-0.1.0/docs/Geography-MapAlgebra.html#g:15][in the module documentation]], and something about this undoes the
+~fvolume~, ~fupstream~, and ~fdownstream~ are quite fast due to some math
+tricks. Their angle-oriented siblings, however, had no such shortcuts that I
+knew of. I call out to another library, ~hmatrix~, to handle the linear algebra
+ops described [[https://hackage.haskell.org/package/mapalgebra-0.1.0/docs/Geography-MapAlgebra.html#g:15][in the module documentation]], and something about this undoes the
 usual efficiency of windowed Rasters.
 
 *How could this be fixed?* Are their better approaches to ~faspect~ and ~fgradient~?
@@ -302,25 +305,25 @@ If you need extended or non-square neighbourhoods, please consider GeoTrellis
 [[https://geotrellis.github.io/scaladocs/latest/#geotrellis.raster.mapalgebra.focal.Neighborhood][which has a variety]].
 
 *How could this be fixed?* Perhaps for each focal op, say ~fmean~, I could
-provide a variant ~fmeanWith~ that takes an arbitrary stencil. I'd also have
-to provide some stencil making functions, so that it would be easy to, for instance,
-generate a 10x10 square on a whim.
+provide a variant ~fmeanWith~ that takes an arbitrary stencil. I'd also have to
+provide some stencil making functions, so that it would be easy to, for
+instance, generate a 10x10 square on a whim.
 
 *** No true Multiband support
 
-~mapalgebra~ and Massiv rely on [[http://hackage.haskell.org/package/JuicyPixels][JuicyPixels]] for image IO. At present, it can only
-read TIFFs in RGBA mode (or simpler). True multibanded imagery, like that from Landsat,
-just can't be read.
+~mapalgebra~ and Massiv rely on [[http://hackage.haskell.org/package/JuicyPixels][JuicyPixels]] for image IO. At present, it can
+only read TIFFs in RGBA mode (or simpler). True multibanded imagery, like that
+from Landsat, just can't be read.
 
-*How could this be fixed?* We already have the ~RGBARaster~ wrapper type, but that's not
-enough. I need to either:
+*How could this be fixed?* We already have the ~RGBARaster~ wrapper type, but
+that's not enough. I need to either:
 
 1. Tell JuicyPixels about my needs (or submit a patch).
 2. Write my own library for specifically reading multiband geotiffs.
 
-Either way, ~mapalgebra~ takes the stance that multiband imagery, as a special data type,
-doesn't exist. A multiband image is just a collection of singleband images, which are
-each just a ~Raster~.
+Either way, ~mapalgebra~ takes the stance that multiband imagery, as a special
+data type, doesn't exist. A multiband image is just a collection of singleband
+images, which are each just a ~Raster~.
 
 *** Potentially long compile times
 
@@ -334,10 +337,10 @@ It really makes a difference.
 
 *** Why not GPU?
 
-If going single-machine, why not do it "right" and use a giant GPU instead?
-I can't find a rebuttle for that, other than that CPUs seem more readily available.
-This is somewhat of an existential issue for ~mapalgebra~ - for it to have value
-we'd need to agree that CPU-based Raster processing is useful. Is it?
+If going single-machine, why not do it "right" and use a giant GPU instead? I
+can't find a rebuttle for that, other than that CPUs seem more readily
+available. This is somewhat of an existential issue for ~mapalgebra~ - for it to
+have value we'd need to agree that CPU-based Raster processing is useful. Is it?
 I hope so.
 
 * What about Rasterio (Python)?
@@ -352,22 +355,24 @@ Rasterio's solution to the Raster processing problem? /Use C to go fast./
 
 *** GDAL and Numpy
 
-Rasterio uses GDAL, a well-known C library, for its IO. After an image has been read,
-users are given [[http://www.numpy.org/][NumPy]] arrays to work with. Rasterio thus directly benefits from
-the speed of NumPy's operations, which are all written in C at the lowest level.
+Rasterio uses GDAL, a well-known C library, for its IO. After an image has been
+read, users are given [[http://www.numpy.org/][NumPy]] arrays to work with. Rasterio thus directly benefits
+from the speed of NumPy's operations, which are all written in C at the lowest
+level.
 
 Both GDAL and NumPy are well-established projects with many developers behind them.
 
 *** Mindshare
 
-Python is huge. It's installed by default on many modern systems and has a low learning
-curve. This, and the advent of NumPy/SciPy, have made it a darling of the Data Science world.
+Python is huge. It's installed by default on many modern systems and has a low
+learning curve. This, and the advent of NumPy/SciPy, have made it a darling of
+the Data Science world.
 
-This is good from an employability standpoint - what dev doesn't know / can't learn
-Python?
+This is good from an employability standpoint - what dev doesn't know / can't
+learn Python?
 
-This is also good from a research standpoint - a supervisor can feel confident in
-assigning "Learn Python" to a student as a preliminary research task.
+This is also good from a research standpoint - a supervisor can feel confident
+in assigning "Learn Python" to a student as a preliminary research task.
 
 *** Low-effort Deployment
 
@@ -379,43 +384,43 @@ installed on the host system is about the only problem you might have.
 *** Dynamic Language
 
 Python has neither explicit types nor a compiler. This might be fine for
-prototyping, but for large or long-running projects, this approach can
-accrue technical debt. Beyond a certain code size, proposed changes become paralyzing:
-"What will the effect of me changing these function arguments be?"
-[[https://twitter.com/agoX/status/991799972155871233][You won't know until run-time]].
+prototyping, but for large or long-running projects, this approach can accrue
+technical debt. Beyond a certain code size, proposed changes become paralyzing:
+"What will the effect of me changing these function arguments be?" [[https://twitter.com/agoX/status/991799972155871233][You won't
+know until run-time]].
 
-Given the nature of Data Science, one would expect a little more rigour. To compare
-briefly to ~mapalgebra~, Rasterio will not shield you from mismatches in Projection,
-Raster size, or pixel data type. Python also brings with it all the pitfalls of being able to
-freely mix effectful (i.e. ~IO~) and non-effectful code.
+Given the nature of Data Science, one would expect a little more rigour. To
+compare briefly to ~mapalgebra~, Rasterio will not shield you from mismatches in
+Projection, Raster size, or pixel data type. Python also brings with it all the
+pitfalls of being able to freely mix effectful (i.e. ~IO~) and non-effectful
+code.
 
 *How could this be fixed?* You may want to consider [[http://coconut-lang.org/][Coconut]], a dialect of Python
-with first-class support for Functional Programming and Static Types. It compiles
-to regular Python, so you shouldn't lose anything.
+with first-class support for Functional Programming and Static Types. It
+compiles to regular Python, so you shouldn't lose anything.
 
 *** No Focal Operations
 
-As far as I could find, Focal Operations (or Zonal, for that matter)
-are not provided by default by
-either Rasterio or NumPy. You may be able to replicate Focal Mean with
-some Convolution, but something more involved like Focal Gradient won't
-come prepackaged.
+As far as I could find, Focal Operations (or Zonal, for that matter) are not
+provided by default by either Rasterio or NumPy. You may be able to replicate
+Focal Mean with some Convolution, but something more involved like Focal
+Gradient won't come prepackaged.
 
 *How could this be fixed?* If you need Focal Operations, you will have to
 write them yourself or look elsewhere.
 
 * What about GeoTrellis (Scala)?
 
-[[https://geotrellis.io/][GeoTrellis]] is a feature-rich GIS library suite for Scala ([[http://geotrellis.readthedocs.io/en/latest/][docs]]). It can process raster,
-vector (geometric), vector tile, and point-cloud data, and has integration with
-[[http://geotrellis.readthedocs.io/en/latest/guide/tile-backends.html][many popular storage systems]], like S3 and Cassandra.
+[[https://geotrellis.io/][GeoTrellis]] is a feature-rich GIS library suite for Scala ([[http://geotrellis.readthedocs.io/en/latest/][docs]]). It can process
+raster, vector (geometric), vector tile, and point-cloud data, and has
+integration with [[http://geotrellis.readthedocs.io/en/latest/guide/tile-backends.html][many popular storage systems]], like S3 and Cassandra.
 
 *Disclaimer:* I used to work for the team that created and maintains GeoTrellis.
-Were it not for their wisdom and support, I would not be where I am today. I thank
-them and all of my former coworkers for everything they taught me.
+Were it not for their wisdom and support, I would not be where I am today. I
+thank them and all of my former coworkers for everything they taught me.
 
-Anything written here is done so with the utmost respect for my former colleagues and
-their continuing effort.
+Anything written here is done so with the utmost respect for my former
+colleagues and their continuing effort.
 
 ** Philosophy and Strengths
 
@@ -428,23 +433,23 @@ My data is big... and I mean /big/.
 #+END_QUOTE
 
 Gigabytes? Terabytes? No problem. GeoTrellis is built on [[http://spark.apache.org/][Apache Spark]], and
-regularly combines large imagery into colour-corrected tile layers in jobs
-that span scores of machines. The imagery it can handle and the
-processing network can both be arbitrarily big.
+regularly combines large imagery into colour-corrected tile layers in jobs that
+span scores of machines. The imagery it can handle and the processing network
+can both be arbitrarily big.
 
 *** IO Flexibility
 
-GeoTrellis can read GeoTIFFs from anywhere in any band count, and provides
-data structures for further processing.
+GeoTrellis can read GeoTIFFs from anywhere in any band count, and provides data
+structures for further processing.
 
-With the ~geotrellis-spark~ package, it's common to create [[https://en.wikipedia.org/wiki/Extract,_transform,_load][ETL]] pipelines
-that process imagery, pyramid resulting tiles, and output a range of zoom levels
-for later use in a Tile Server.
+With the ~geotrellis-spark~ package, it's common to create [[https://en.wikipedia.org/wiki/Extract,_transform,_load][ETL]] pipelines that
+process imagery, pyramid resulting tiles, and output a range of zoom levels for
+later use in a Tile Server.
 
-With the upcoming ~2.0.0~ release, GeoTrellis also provides an implementation
-of Cloud-Optimized GeoTiff Layers. These offer a significant performance
-improvement for IO, are better suited for storage on HDFS/S3 than the old format,
-and allow GeoTrellis Layers to be viewable in QGIS.
+With the upcoming ~2.0.0~ release, GeoTrellis also provides an implementation of
+Cloud-Optimized GeoTiff Layers. These offer a significant performance
+improvement for IO, are better suited for storage on HDFS/S3 than the old
+format, and allow GeoTrellis Layers to be viewable in QGIS.
 
 *** Feature Richness
 
@@ -468,19 +473,19 @@ The point is, if you've got data, GeoTrellis knows how to read it and process it
 ** Short-comings
 
 When you want to go fast on the JVM, it makes certain demands of you. These
-demands, along with the sheer size and scope of GeoTrellis, have created
-some issues over the years.
+demands, along with the sheer size and scope of GeoTrellis, have created some
+issues over the years.
 
 *** Opaque ~Tile~ Types
 
-Unlike the ~Raster u p r c a~ type from ~mapalgebra~, most GeoTrellis
-Raster operations yield a non-generic ~Tile~ type. In order to handle
-different underlying types, ~Tile~ forms a [[http://geotrellis.readthedocs.io/en/latest/_images/tile-hierarchy1.png][very large OO inheritance hierarchy]]
-with a lot of duplicated code.
+Unlike the ~Raster u p r c a~ type from ~mapalgebra~, most GeoTrellis Raster
+operations yield a non-generic ~Tile~ type. In order to handle different
+underlying types, ~Tile~ forms a [[http://geotrellis.readthedocs.io/en/latest/_images/tile-hierarchy1.png][very large OO inheritance hierarchy]] with a lot
+of duplicated code.
 
-Speed is the motivation. If you want to go fast on the JVM, you need
-Arrays, Ints, and Doubles. One consequence of this is the ~foo~ / ~fooDouble~
-pattern, seen here with ~ArrayTile.map~:
+Speed is the motivation. If you want to go fast on the JVM, you need Arrays,
+Ints, and Doubles. One consequence of this is the ~foo~ / ~fooDouble~ pattern,
+seen here with ~ArrayTile.map~:
 
 #+BEGIN_SRC scala
     def map(f: Int => Int): Tile = {
@@ -506,15 +511,15 @@ pattern, seen here with ~ArrayTile.map~:
   }
 #+END_SRC
 
-Another is that all potential underlying types (say, ~ushort~) need to be simulated
-with ~Int~ and ~Double~. This creates a lot of code duplication and a large surface area for bugs.
+Another is that all potential underlying types (say, ~ushort~) need to be
+simulated with ~Int~ and ~Double~. This creates a lot of code duplication and a
+large surface area for bugs.
 
-*How could this be fixed?* A generic ~Tile[A]~ has [[https://github.com/locationtech/geotrellis/issues/39][long been sought]]. Since the JVM
-aggressively boxes primitives if you aren't careful, naive ~case class~ based
-solutions don't work. [[https://github.com/locationtech/geotrellis/pull/2520][Generic Map Algebra seems possible]] with typeclasses and raw
-~Array~, but
-the latest news on the wind is that GeoTrellis will look into [[https://nd4j.org/][ND4J]] Arrays instead
-to underpin ~Tile~.
+*How could this be fixed?* A generic ~Tile[A]~ has [[https://github.com/locationtech/geotrellis/issues/39][long been sought]]. Since the
+JVM aggressively boxes primitives if you aren't careful, naive ~case class~
+based solutions don't work. [[https://github.com/locationtech/geotrellis/pull/2520][Generic Map Algebra seems possible]] with typeclasses
+and raw ~Array~, but the latest news on the wind is that GeoTrellis will look
+into [[https://nd4j.org/][ND4J]] Arrays instead to underpin ~Tile~.
 
 *** Mixed Projections and Raster Sizes
 
@@ -529,9 +534,10 @@ B: Are all your projections matching?
 A: ...crap.
 #+END_QUOTE
 
-It's frustrating when a one-line oversight like this wastes hours of ingest time.
-Since ~Tile~ is opaque, the compiler can't protect us from errors like this.
-The result is a need to keep a lot of tiny details in your head while coding.
+It's frustrating when a one-line oversight like this wastes hours of ingest
+time. Since ~Tile~ is opaque, the compiler can't protect us from errors like
+this. The result is a need to keep a lot of tiny details in your head while
+coding.
 
 *How could this be fixed?* Either:
 
@@ -557,16 +563,15 @@ There are 8 operators here, which means many repeated iterations over the Arrays
 and many redundant NoData checks. This does bring a performance cost.
 
 *How could this be fixed?* Either by implementing a kind of ~LazyTile~ type
-which has been discussed in the past, or by improving the performance of
-current operations to the point where redundant allocations don't matter
-as much.
+which has been discussed in the past, or by improving the performance of current
+operations to the point where redundant allocations don't matter as much.
 
 *** API Discoverability
 
 GeoTrellis utilizes around 20 actual data types (~Tile~, ~Polygon~, etc.).
-Despite this, [[https://geotrellis.github.io/scaladocs/latest/#geotrellis.package][its scaladocs]] present users with 2,223 top-level symbols.
-Around 500 of these are method-injection boilerplate classes which permit calls
-like the following:
+Despite this, [[https://geotrellis.github.io/scaladocs/latest/#geotrellis.package][its scaladocs]] present users with 2,223 top-level symbols. Around
+500 of these are method-injection boilerplate classes which permit calls like
+the following:
 
 #+BEGIN_SRC scala
   import geotrellis.raster.mapalgebra.focal._
@@ -583,8 +588,8 @@ like the following:
 #+END_SRC
 
 For modularity reasons ~.focalMean~ isn't defined directly within the ~Tile~
-class. This is good because it keeps the ~Tile~ class clean. What isn't good
-is the resulting boilerplate: the 500 extra top-level symbols which a user doesn't
+class. This is good because it keeps the ~Tile~ class clean. What isn't good is
+the resulting boilerplate: the 500 extra top-level symbols which a user doesn't
 need to see but is shown anyway.
 
 Another downside is that ~.focalMean~ doesn't appear in Tile's scaladocs entry.
@@ -598,11 +603,11 @@ injected method do I need to call for that?
 
 [[http://geotrellis.readthedocs.io/en/latest/guide/faq.html#how-do-i-import-geotrellis-methods][The pursuit of that answer]] has burnt a lot of user time over the years. The
 worst case scenario is when they need to ask us directly for help manipulating
-core data structures. Something is wrong when a library's basic functionality
-is not self-explanitory.
+core data structures. Something is wrong when a library's basic functionality is
+not self-explanitory.
 
-*How could this be fixed?* A few things would reduce top-level symbol count
-and make GeoTrellis easier to learn:
+*How could this be fixed?* A few things would reduce top-level symbol count and
+make GeoTrellis easier to learn:
 
 - Aggressive use of ~private~ to hide details which aren't important for users to see.
 - ~geotrellis.foo.bar.internal~ modules which hide non-user-facing types and machinery.
@@ -670,33 +675,34 @@ This level of indirection is frequent throughout the library. It:
 - gives users choice paralysis (e.g. "which method is the right one?")
 
 *How can this be fixed?* A generic ~Tile~ type and more use of typeclasses would
-decrease boilerplate and indirection. A removal of
-"Verb Classes" like ~Add~ and a reduced reliance on OO-style
-hierarchies-for-the-sake-of-hierarchies would also help.
+decrease boilerplate and indirection. A removal of "Verb Classes" like ~Add~ and
+a reduced reliance on OO-style hierarchies-for-the-sake-of-hierarchies would
+also help.
 
 *** Verbosity, Complexity, and Maintenance Cost
 
 It has been my experience that Haskell code is usually much shorter than Scala
-for equivalent functionality. ~mapalgebra~ has around 600 lines of code (not counting
-comments). The total line count of all modules from GeoTrellis that implement the "same"
-functionality is around 6,000.
+for equivalent functionality. ~mapalgebra~ has around 600 lines of code (not
+counting comments). The total line count of all modules from GeoTrellis that
+implement the "same" functionality is around 6,000.
 
-Scala has a certain aspect to it that makes it easy to accidentally write verbose code.
-As demonstrated in the /Indirection/ section above, it's also easy to write
-oneself into complexity.
-If GeoTrellis would be your / your company's first foray into Scala, consider
-that development and maintenance of your project may take more people than necessary.
+Scala has a certain aspect to it that makes it easy to accidentally write
+verbose code. As demonstrated in the /Indirection/ section above, it's also easy
+to write oneself into complexity. If GeoTrellis would be your / your company's
+first foray into Scala, consider that development and maintenance of your
+project may take more people than necessary.
 
 *How could this be fixed?* I don't know that it can be. Scala would have to be a
 different language altogether.
 
 *** High-effort Deployment
 
-GeoTrellis assumes the use of Spark for many of its features.
-However, there are a number of things one has to keep in mind when deploying a
-Spark-based GeoTrellis program.
+GeoTrellis assumes the use of Spark for many of its features. However, there are
+a number of things one has to keep in mind when deploying a Spark-based
+GeoTrellis program.
 
-*Level: Critical*. Omitting one of these will almost certainly cause the Spark job to fail.
+*Level: Critical*. Omitting one of these will almost certainly cause the Spark
+job to fail.
 
 - Is the JVM instance in production assigned enough RAM?
 - If running in a Docker container, do the container's memory settings conflict with
@@ -723,21 +729,22 @@ Spark-based GeoTrellis program.
 - Have I made sure not to force ~RDD~ execution before I should be (with ~.count~, etc.)?
 - Am I using too many ~RDD~ partitions?
 
-If you'd rather avoid keeping track of these details, then perhaps you should seek
-an alternative to Spark. Are you sure you need it?
+If you'd rather avoid keeping track of these details, then perhaps you should
+seek an alternative to Spark. Are you sure you need it?
 
 *** Potential Overkill
 
-Spark is popular, and everyone wants to be doing "big data". Chances are, though,
-that your data isn't really that big. In which case, the Spark integration for
-GeoTrellis is not necessary for you - you may be fine with single-machine
-raster processing. If single-machine, navigating basic use of GeoTrellis
-and the effort of deploying a Spark program may not be worth it. Consider also
-that both Rasterio and ~mapalgebra~ have better single-machine performance.
+Spark is popular, and everyone wants to be doing "big data". Chances are,
+though, that your data isn't really that big. In which case, the Spark
+integration for GeoTrellis is not necessary for you - you may be fine with
+single-machine raster processing. If single-machine, navigating basic use of
+GeoTrellis and the effort of deploying a Spark program may not be worth it.
+Consider also that both Rasterio and ~mapalgebra~ have better single-machine
+performance.
 
 If you just want to do some simple Map Algebra on reasonably sized images,
-GeoTrellis is probably overkill. You might be interested instead in [[https://www.rasterfoundry.com/][Raster Foundry]],
-a web app for working with imagery visually.
+GeoTrellis is probably overkill. You might be interested instead in [[https://www.rasterfoundry.com/][Raster
+Foundry]], a web app for working with imagery visually.
 
 
 * Comparisons
@@ -911,15 +918,15 @@ stated, all operations are over a 512x512 image.
 
 [[./blog/simple-local-ops.png]]
 
-These are four local ops which could be written for Python. Much more
-and NumPy has no way to approach them (say, Local Variance).
-~mapalgebra~ and GeoTrellis both host a greater variety of operations.
+These are four local ops which could be written for Python. Much more and NumPy
+has no way to approach them (say, Local Variance). ~mapalgebra~ and GeoTrellis
+both host a greater variety of operations.
 
 /Local Sum/ for Rasterio looks very fast - I suspect some serious optimizations
 are occuring under the hood. By comparison, ~mapalgebra~ looks quite slow. Let's
-keep in mind however that this is a one-off measurement which doesn't demonstrate
-op fusion. Further, the cost of allocating new memory is about
-1ms here, a cost which only needs to be paid once per fused op chain.
+keep in mind however that this is a one-off measurement which doesn't
+demonstrate op fusion. Further, the cost of allocating new memory is about 1ms
+here, a cost which only needs to be paid once per fused op chain.
 
 EVI demonstrates this better (watch the yellow bar):
 
@@ -960,5 +967,5 @@ small set of possible operations.
 If you need a fully-featured GIS suite, or your Raster processing work would
 provably benefit from distributed computing, use GeoTrellis.
 
-If you're a Haskeller interested in GIS, a GISer interested in Haskell, or
-just want fast and safe single-machine Raster processing code, use ~mapalgebra~.
+If you're a Haskeller interested in GIS, a GISer interested in Haskell, or just
+want fast and safe single-machine Raster processing code, use ~mapalgebra~.
