@@ -1,0 +1,142 @@
+#+TITLE: Porting to Rio
+#+DATE: 2020-02-15
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+
+[[https://github.com/fosskers/aura][Aura]] has long been my den for mad science in Haskell. Whenever some new library
+or technique comes along, I give it a try to get a feel for its true usefulness.
+The discussion around Extensible Effects (and application monads in general) has
+been on my radar for a long time, and let me tell you, I've followed the whole
+story. The timeline for Aura's approach to effects is something like this:
+
+- 2012: I've never heard of Monad Transformers, and pass a runtime ~Env~
+  manually everywhere. Everything is ~IO~.
+- 2013: The ~Aura~ Monad is born (~ExceptT~ over ~ReaderT~ over ~IO~). Thank you
+  /Real World Haskell/!
+- 2015: The [[http://okmij.org/ftp/Haskell/extensible/exteff.pdf][Extensible Effects]] paper is released and we [[https://github.com/fosskers/aura/pull/379][attempt a first pass]] at using it.
+- 2016: I [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/229599314][give a talk]] on Extensible Effects to a local Haskell group.
+- 2018: Aura [[https://github.com/fosskers/aura/pull/479][moves to]] ~freer-simple~ instead. No more ~Aura~ monad.
+- 2019: Joe [[https://github.com/fosskers/aura/pull/524][ports Aura]] to ~fused-effects~ with much effort.
+- 2020: I realize we were trying too hard and [[https://github.com/fosskers/aura/pull/535][port Aura to use Rio]].
+
+Yes, [[http://hackage.haskell.org/package/rio][Rio]]! And I should say, the process was quite pleasant. I'm happy with the
+switch.
+
+* What is Rio?
+
+Rio is a "batteries included" alternate Prelude. I usually reach for
+~base-prelude~ for applications, since it stays out of the way and satisfies my
+main requirement:
+
+#+begin_quote
+Give me access to everything in base that I'm going to be importing anyway!
+#+end_quote
+
+I'm looking at you, ~traverse_~.
+
+Rio fills this requirement for me, but also goes a few steps further to make it
+an ideal choice for terminal-based Haskell applications, which is exactly what
+Aura is. It gives us:
+
+- A dead-simple logging system with sensible defaults.
+- Access to the major data types we use anyway (~Vector~, ~HashMap~, etc.)
+  without needing to depend on their libraries ourselves.
+- Access to the /symbols/ of those datatypes without adding imports. ~Text~,
+  etc., are freely available, so no more ~import Data.Text (Text)~ just to avoid
+  the ugly qualified ~T.Text~ everywhere.
+- An "opt-in" approach to non-total functions via modules like ~RIO.List.Partial~.
+- Sensible defaults for file IO and character encodings.
+- The ~RIO~ effect monad (~ReaderT IO~) with many convenience functions involving it.
+
+* The Porting Experience
+
+** The Prelude Swap
+
+A naive replacement of ~base-prelude~ for ~rio~ went well. Mostly a
+find-and-replace of import statements.
+
+When it came to ditching ~text~ and ~bytestring~ in favour of what ~rio~
+reexports, I had to reconcile some things which weren't at first intuitive. For
+instance: ~rio~ exposes no way to output ~Text~, say via ~T.putStrLn~. It
+recommends we go through ~ByteString~, or through its ~Display~ typeclass which
+is optimized for Rio's logging. At first this bothered me, but now I'm okay with
+it. If you just want simple trace statements for debugging, Rio supplies plenty
+of those.
+
+List is not given special treatment, so even functions like ~zip~ aren't exposed
+without importing ~RIO.List~. I personally like that List has been "knocked down
+a peg" in this way.
+
+A few reexports functions ~microlens~ were missing, so I needed to pull those
+myself. ~Data.Bifunctor~ is also not reexported, so ~first~ and ~second~ still
+come from ~Control.Arrow~.
+
+My ~aura.cabal~ got nicely reduced, since there's no need to depend on packages
+like ~containers~, ~bytestring~, etc. The overall line count of the code dropped
+by a nice amount too due to cleaner imports and type signatures. Speaking of
+which...
+
+** Extensible Effects
+
+I can't overstate how removing these in favour of ~RIO Env a~ simplified my
+life. Look at this diff:
+
+#+begin_src diff
+  - installPkgFiles :: (Carrier sig m, Member (Reader Env) sig, Member (Error Failure) sig, Member (Lift IO) sig) =>
+  -   NESet PackagePath -> m ()
+  + installPkgFiles :: NESet PackagePath -> RIO Env ()
+#+end_src
+
+This port PR was filled with lines like this, and each one gave me joy. Yes we
+lose the explicit ~Error~ effect, but this is Haskell, where ~IO~ can throw
+exceptions anyway. It's a wart I'm willing to accept in order to have access the
+other amazing things that Haskell gives me. Suffice to say I gave my ~Failure~
+type an ~Exception~ instance and now throw that as needed (which isn't often).
+
+Now, here's the conclusion I've come to regarding regarding Extensible Effects:
+somebody somewhere has a use case that benefits from Extensible Effects. That
+person is not you. Recognize when you're trying too hard just to do a novel
+thing for novelty's sake.
+
+** Logging
+
+Aura doesn't use Rio's logging system, but [[https://github.com/kadena-io/chainweb-miner][another project of mine]] does. Here is
+the simplest form I could reduce the setup boilerplate to:
+
+#+begin_src haskell
+  import Data.Generics.Produce.Fields (field)
+  import RIO
+
+  data Env = Env { envLog :: LogFunc, ... }
+    deriving stock (Generic)
+
+  -- | The only "glue" that ends up being necessary.
+  -- `field` is from generic-lens.
+  instance HasLogFunc Env where
+    logFuncL = field @"envLog"
+
+  main :: IO ()
+  main = do
+    lopts <- setLogUseLoc False <$> logOptionsHandle stderr True
+    withLogFunc lopts $ \logFunc -> do
+      let !env = Env logFunc ...
+      runRIO env work
+
+  work :: RIO Env ()
+  work = do
+    logInfo "It works!"
+#+end_src
+
+It just works.
+
+* Should you use it?
+
+If your Haskell program runs from the terminal and has a runtime environment
+type, then Rio would bring you a lot of value. If you need a logging system too,
+then Rio really simplifies your life. In general, it will clean up your imports
+and your type signatures, and it just keeps things simple.
+
+Otherwise, if you're just looking for an Alternate Prelude, then any other one
+will do. Rio shines when you use it for what it's meant for.
+
+Thanks to Michael and everyone behind ~rio~! Consider me a happy customer.
