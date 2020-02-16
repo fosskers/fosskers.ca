@@ -118,7 +118,7 @@ about lang = do
           "Scala Collections Benchmarks"
       p_ $ do
         "他にはPurescript・Elm・Racket・C・Pythonを含めて様々なプログラミング言語"
-        "で開発した経験もあります。AWS・Digital Ocean・Herokuなどにシステム管理した事も。"
+        "で開発した経験もあります。AWS・Digital Ocean・Herokuなどでシステム管理した事も。"
       p_ $ do
         "職歴の"
         a_ [href_ "/assets/cv-jp.html"] "詳細はこちら"
