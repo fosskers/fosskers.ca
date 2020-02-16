@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-15 Sat 22:19 -->
+<!-- 2020-02-16 Sun 08:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Porting to Rio</title>
@@ -248,15 +248,15 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge4130e1">1. What is Rio?</a></li>
-<li><a href="#org2e30db1">2. The Porting Experience</a>
+<li><a href="#orgaba73ae">1. What is Rio?</a></li>
+<li><a href="#orgadca71b">2. The Porting Experience</a>
 <ul>
-<li><a href="#org9875313">2.1. The Prelude Swap</a></li>
-<li><a href="#org20b80e0">2.2. Extensible Effects</a></li>
-<li><a href="#org801b350">2.3. Logging</a></li>
+<li><a href="#org16c16c9">2.1. The Prelude Swap</a></li>
+<li><a href="#org67bd6b0">2.2. Extensible Effects</a></li>
+<li><a href="#org081858d">2.3. Logging</a></li>
 </ul>
 </li>
-<li><a href="#org4e355ab">3. Should you use it?</a></li>
+<li><a href="#orga0530e7">3. Should you use it?</a></li>
 </ul>
 </div>
 </div>
@@ -285,8 +285,8 @@ Yes, <a href="http://hackage.haskell.org/package/rio">Rio</a>! And I should say,
 switch.
 </p>
 
-<div id="outline-container-orge4130e1" class="outline-2">
-<h2 id="orge4130e1"><span class="section-number-2">1</span> What is Rio?</h2>
+<div id="outline-container-orgaba73ae" class="outline-2">
+<h2 id="orgaba73ae"><span class="section-number-2">1</span> What is Rio?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Rio is a "batteries included" alternate Prelude. I usually reach for
@@ -320,16 +320,17 @@ the ugly qualified <code>T.Text</code> everywhere.</li>
 <li>An "opt-in" approach to non-total functions via modules like <code>RIO.List.Partial</code>.</li>
 <li>Sensible defaults for file IO and character encodings.</li>
 <li>The <code>RIO</code> effect monad (<code>ReaderT IO</code>) with many convenience functions involving it.</li>
+<li>A <a href="https://tech.fpcomplete.com/haskell/tutorial/exceptions">battle-tested approach</a> to handling exceptions.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2e30db1" class="outline-2">
-<h2 id="org2e30db1"><span class="section-number-2">2</span> The Porting Experience</h2>
+<div id="outline-container-orgadca71b" class="outline-2">
+<h2 id="orgadca71b"><span class="section-number-2">2</span> The Porting Experience</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org9875313" class="outline-3">
-<h3 id="org9875313"><span class="section-number-3">2.1</span> The Prelude Swap</h3>
+<div id="outline-container-org16c16c9" class="outline-3">
+<h3 id="org16c16c9"><span class="section-number-3">2.1</span> The Prelude Swap</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 A naive replacement of <code>base-prelude</code> for <code>rio</code> went well. Mostly a
@@ -367,8 +368,8 @@ which&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org20b80e0" class="outline-3">
-<h3 id="org20b80e0"><span class="section-number-3">2.2</span> Extensible Effects</h3>
+<div id="outline-container-org67bd6b0" class="outline-3">
+<h3 id="org67bd6b0"><span class="section-number-3">2.2</span> Extensible Effects</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 I can't overstate how removing these in favour of <code>RIO Env a</code> simplified my
@@ -399,8 +400,8 @@ thing for novelty's sake.
 </div>
 </div>
 
-<div id="outline-container-org801b350" class="outline-3">
-<h3 id="org801b350"><span class="section-number-3">2.3</span> Logging</h3>
+<div id="outline-container-org081858d" class="outline-3">
+<h3 id="org081858d"><span class="section-number-3">2.3</span> Logging</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Aura doesn't use Rio's logging system, but <a href="https://github.com/kadena-io/chainweb-miner">another project of mine</a> does. Here is
@@ -439,8 +440,8 @@ It just works.
 </div>
 </div>
 
-<div id="outline-container-org4e355ab" class="outline-2">
-<h2 id="org4e355ab"><span class="section-number-2">3</span> Should you use it?</h2>
+<div id="outline-container-orga0530e7" class="outline-2">
+<h2 id="orga0530e7"><span class="section-number-2">3</span> Should you use it?</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 If your Haskell program runs from the terminal and has a runtime environment
@@ -463,7 +464,7 @@ Thanks to Michael and everyone behind <code>rio</code>! Consider me a happy cust
 <div id="postamble" class="status">
 <p class="date">Date: 2020-02-15</p>
 <p class="author">Author: Colin</p>
-<p class="date">Created: 2020-02-15 Sat 22:19</p>
+<p class="date">Created: 2020-02-16 Sun 08:11</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

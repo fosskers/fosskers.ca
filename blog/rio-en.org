@@ -47,6 +47,7 @@ Aura is. It gives us:
 - An "opt-in" approach to non-total functions via modules like ~RIO.List.Partial~.
 - Sensible defaults for file IO and character encodings.
 - The ~RIO~ effect monad (~ReaderT IO~) with many convenience functions involving it.
+- A [[https://tech.fpcomplete.com/haskell/tutorial/exceptions][battle-tested approach]] to handling exceptions.
 
 * The Porting Experience
 
