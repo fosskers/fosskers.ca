@@ -68,9 +68,9 @@ List is not given special treatment, so even functions like ~zip~ aren't exposed
 without importing ~RIO.List~. I personally like that List has been "knocked down
 a peg" in this way.
 
-A few reexports functions ~microlens~ were missing, so I needed to pull those
-myself. ~Data.Bifunctor~ is also not reexported, so ~first~ and ~second~ still
-come from ~Control.Arrow~.
+A few function reexports from ~microlens~ were missing, so I needed to pull
+those myself. ~Data.Bifunctor~ is also not reexported, so ~first~ and ~second~
+still come from ~Control.Arrow~ and thus don't work with ~Either~.
 
 My ~aura.cabal~ got nicely reduced, since there's no need to depend on packages
 like ~containers~, ~bytestring~, etc. The overall line count of the code dropped
@@ -95,9 +95,9 @@ other amazing things that Haskell gives me. Suffice to say I gave my ~Failure~
 type an ~Exception~ instance and now throw that as needed (which isn't often).
 
 Now, here's the conclusion I've come to regarding regarding Extensible Effects:
-somebody somewhere has a use case that benefits from Extensible Effects. That
-person is not you. Recognize when you're trying too hard just to do a novel
-thing for novelty's sake.
+somebody somewhere has a use case that benefits from them. That person is not
+you. Recognize when you're trying too hard just to do a novel thing for
+novelty's sake.
 
 ** Logging
 

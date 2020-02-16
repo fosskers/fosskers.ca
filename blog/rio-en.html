@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-16 Sun 08:11 -->
+<!-- 2020-02-16 Sun 11:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Porting to Rio</title>
@@ -248,15 +248,15 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgaba73ae">1. What is Rio?</a></li>
-<li><a href="#orgadca71b">2. The Porting Experience</a>
+<li><a href="#org4b6b0dd">1. What is Rio?</a></li>
+<li><a href="#org24be71b">2. The Porting Experience</a>
 <ul>
-<li><a href="#org16c16c9">2.1. The Prelude Swap</a></li>
-<li><a href="#org67bd6b0">2.2. Extensible Effects</a></li>
-<li><a href="#org081858d">2.3. Logging</a></li>
+<li><a href="#orgd99dbcf">2.1. The Prelude Swap</a></li>
+<li><a href="#org5fb18e1">2.2. Extensible Effects</a></li>
+<li><a href="#org69a5d7e">2.3. Logging</a></li>
 </ul>
 </li>
-<li><a href="#orga0530e7">3. Should you use it?</a></li>
+<li><a href="#org1829fe2">3. Should you use it?</a></li>
 </ul>
 </div>
 </div>
@@ -285,8 +285,8 @@ Yes, <a href="http://hackage.haskell.org/package/rio">Rio</a>! And I should say,
 switch.
 </p>
 
-<div id="outline-container-orgaba73ae" class="outline-2">
-<h2 id="orgaba73ae"><span class="section-number-2">1</span> What is Rio?</h2>
+<div id="outline-container-org4b6b0dd" class="outline-2">
+<h2 id="org4b6b0dd"><span class="section-number-2">1</span> What is Rio?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Rio is a "batteries included" alternate Prelude. I usually reach for
@@ -325,12 +325,12 @@ the ugly qualified <code>T.Text</code> everywhere.</li>
 </div>
 </div>
 
-<div id="outline-container-orgadca71b" class="outline-2">
-<h2 id="orgadca71b"><span class="section-number-2">2</span> The Porting Experience</h2>
+<div id="outline-container-org24be71b" class="outline-2">
+<h2 id="org24be71b"><span class="section-number-2">2</span> The Porting Experience</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org16c16c9" class="outline-3">
-<h3 id="org16c16c9"><span class="section-number-3">2.1</span> The Prelude Swap</h3>
+<div id="outline-container-orgd99dbcf" class="outline-3">
+<h3 id="orgd99dbcf"><span class="section-number-3">2.1</span> The Prelude Swap</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 A naive replacement of <code>base-prelude</code> for <code>rio</code> went well. Mostly a
@@ -354,9 +354,9 @@ a peg" in this way.
 </p>
 
 <p>
-A few reexports functions <code>microlens</code> were missing, so I needed to pull those
-myself. <code>Data.Bifunctor</code> is also not reexported, so <code>first</code> and <code>second</code> still
-come from <code>Control.Arrow</code>.
+A few function reexports from <code>microlens</code> were missing, so I needed to pull
+those myself. <code>Data.Bifunctor</code> is also not reexported, so <code>first</code> and <code>second</code>
+still come from <code>Control.Arrow</code> and thus don't work with <code>Either</code>.
 </p>
 
 <p>
@@ -368,8 +368,8 @@ which&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org67bd6b0" class="outline-3">
-<h3 id="org67bd6b0"><span class="section-number-3">2.2</span> Extensible Effects</h3>
+<div id="outline-container-org5fb18e1" class="outline-3">
+<h3 id="org5fb18e1"><span class="section-number-3">2.2</span> Extensible Effects</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 I can't overstate how removing these in favour of <code>RIO Env a</code> simplified my
@@ -393,15 +393,15 @@ type an <code>Exception</code> instance and now throw that as needed (which isn'
 
 <p>
 Now, here's the conclusion I've come to regarding regarding Extensible Effects:
-somebody somewhere has a use case that benefits from Extensible Effects. That
-person is not you. Recognize when you're trying too hard just to do a novel
-thing for novelty's sake.
+somebody somewhere has a use case that benefits from them. That person is not
+you. Recognize when you're trying too hard just to do a novel thing for
+novelty's sake.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org081858d" class="outline-3">
-<h3 id="org081858d"><span class="section-number-3">2.3</span> Logging</h3>
+<div id="outline-container-org69a5d7e" class="outline-3">
+<h3 id="org69a5d7e"><span class="section-number-3">2.3</span> Logging</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Aura doesn't use Rio's logging system, but <a href="https://github.com/kadena-io/chainweb-miner">another project of mine</a> does. Here is
@@ -440,8 +440,8 @@ It just works.
 </div>
 </div>
 
-<div id="outline-container-orga0530e7" class="outline-2">
-<h2 id="orga0530e7"><span class="section-number-2">3</span> Should you use it?</h2>
+<div id="outline-container-org1829fe2" class="outline-2">
+<h2 id="org1829fe2"><span class="section-number-2">3</span> Should you use it?</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 If your Haskell program runs from the terminal and has a runtime environment
@@ -464,7 +464,7 @@ Thanks to Michael and everyone behind <code>rio</code>! Consider me a happy cust
 <div id="postamble" class="status">
 <p class="date">Date: 2020-02-15</p>
 <p class="author">Author: Colin</p>
-<p class="date">Created: 2020-02-16 Sun 08:11</p>
+<p class="date">Created: 2020-02-16 Sun 11:30</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
