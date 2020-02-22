@@ -180,6 +180,7 @@ minoring in Computer Science. Achieved the Dean's Honour Roll.
 |------+------------------+----------+------------+------------------------------------------|
 | 2015 | [[http://hackage.haskell.org/package/microlens-aeson][microlens-aeson]]  | Author   | Haskell    | Law-abiding lenses for Aeson             |
 |      | [[https://github.com/fosskers/opengl-linalg][opengl-linalg]]    | Author   | C          | OpenGL-friendly Linear Algebra           |
+|      | [[https://github.com/fosskers/tetris][Tetris]]           | Author   | C          | A 3D Tetris game using OpenGL            |
 |      | [[https://gitlab.com/fosskers/versions][versions]]         | Author   | Haskell    | Types and parsers for software versions  |
 |------+------------------+----------+------------+------------------------------------------|
 | 2013 | [[https://github.com/fosskers/hisp][Hisp]]             | Author   | Haskell    | A simple Lisp                            |
