@@ -6,16 +6,16 @@ module Fosskers.Site.Blog
 import           Fosskers.Common (Blog(..), Language(..))
 import           Lucid
 import           RIO
-import qualified RIO.NonEmpty as NEL
+import qualified RIO.Map as M
 
 ---
 
-newest :: NonEmpty Blog -> NonEmpty Blog -> Language -> Html ()
-newest ens jps l = case l of
-  English  -> blogHtml $ NEL.head ens
-  Japanese -> blogHtml $ NEL.head jps
+newest :: Blog -> Blog -> Language -> Html ()
+newest en jp l = case l of
+  English  -> blogHtml en
+  Japanese -> blogHtml jp
 
-blog :: NonEmpty Blog -> NonEmpty Blog -> Language -> Text -> Html ()
-blog ens jps l _ = case l of
-  English  -> blogHtml $ NEL.head ens
-  Japanese -> blogHtml $ NEL.head jps
+blog :: Map Text Blog -> Map Text Blog -> Language -> Text -> Html ()
+blog ens jps l t = case l of
+  English  -> fromMaybe "Not found!" (blogHtml <$> M.lookup t ens)
+  Japanese -> fromMaybe "Not found!" (blogHtml <$> M.lookup t jps)

@@ -17,9 +17,11 @@ module Fosskers.Common
   , Language(..)
   , Path(..)
   , pathLang
+  , pathSlug
   ) where
 
 import           Data.Aeson (ToJSON)
+import           System.FilePath.Posix (takeBaseName)
 -- import           Data.Hourglass (getWeekDay)
 import qualified Data.Org as O
 -- import           Fosskers.Kanji (Analysis)
@@ -72,6 +74,7 @@ instance FromHttpApiData Language where
 
 data Blog = Blog
   { blogLang :: !Language
+  , blogSlug :: !Text
   , blogRaw  :: !O.OrgFile
   , blogHtml :: !(Html ()) }
 
@@ -79,11 +82,14 @@ newtype Path = Path Text
   deriving stock (Generic)
   deriving anyclass (ToJSON)
 
-pathLang :: Text -> Maybe Language
-pathLang p = case T.take 3 $ T.takeEnd 7 p of
+pathLang :: FilePath -> Maybe Language
+pathLang p = case T.take 3 . T.takeEnd 7 $ T.pack p of
   "-en" -> Just English
   "-jp" -> Just Japanese
   _     -> Nothing
+
+pathSlug :: FilePath -> Text
+pathSlug = T.dropEnd 3 . T.pack . takeBaseName
 
 -- instance ToXml Blog where
 --   toXml (Blog (Title t) d (Path p) _) = b

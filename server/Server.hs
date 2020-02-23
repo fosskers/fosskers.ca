@@ -23,7 +23,7 @@ import           Network.Wai.Middleware.Gzip
 import           Options.Generic
 import           RIO hiding (first)
 import           System.Directory (doesFileExist)
--- import qualified RIO.Map as M
+import qualified RIO.Map as M
 import qualified RIO.List as L
 import qualified RIO.NonEmpty as NEL
 import qualified RIO.Text as T
@@ -42,8 +42,10 @@ newtype Args = Args
   deriving anyclass (ParseRecord)
 
 data Env = Env
-  { engPosts :: !(NonEmpty Blog)
-  , japPosts :: !(NonEmpty Blog)
+  { engRecent :: !Blog
+  , japRecent :: !Blog
+  , engPosts :: !(Map Text Blog)
+  , japPosts :: !(Map Text Blog)
   , logF     :: !LogFunc }
   deriving stock (Generic)
 
@@ -55,11 +57,11 @@ server env =
   serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
   :<|> (\l -> pure . site l About $ about l)
-  :<|> (\l -> pure . site l Posts $ newest ens jps l)
+  :<|> (\l -> pure . site l Posts $ newest (engRecent env) (engRecent env) l)
   :<|> (\l t -> pure . site l Posts $ blog ens jps l t)
   -- :<|> pure . rss (stats env)
-  :<|> (\l -> pure . site l Posts $ newest ens jps l)
-  :<|> pure (site English Posts $ newest ens jps English)
+  :<|> (\l -> pure . site l Posts $ newest (engRecent env) (engRecent env) l)
+  :<|> pure (site English Posts $ newest (engRecent env) (engRecent env) English)
   where
     ens = engPosts env
     jps = japPosts env
@@ -114,8 +116,8 @@ orgs = fmap partitionEithersNE . traverse g
       pure $ do
         c <- content
         ofile <- first (T.pack . errorBundlePretty) $ parse O.orgFile f c
-        lang <- note ("Invalid language given for file: " <> path) $ pathLang path
-        Right . Blog lang ofile $ O.body ofile
+        lang <- note ("Invalid language given for file: " <> path) $ pathLang f
+        Right . Blog lang (pathSlug f) ofile $ O.body ofile
 
 eread :: FilePath -> IO (Either Text Text)
 eread path = do
@@ -154,7 +156,9 @@ work (Args (Helpful p)) ens jps = do
     herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
     cores <- getNumCapabilities
     let !prt = fromMaybe 8081 $ p <|> herokuPort
-        !env = Env (sortByDate ens) (sortByDate jps) logFunc
+        !eng = mapify ens
+        !jap = mapify jps
+        !env = Env (NEL.head $ sortByDate ens) (NEL.head $ sortByDate jps) eng jap logFunc
     runRIO env $ do
       -- traverse_ (logWarn . display) errs
       -- logInfo $ "Analysis files read: " <> display (length afs)
@@ -163,4 +167,7 @@ work (Args (Helpful p)) ens jps = do
       liftIO . W.run prt $ app env
 
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
-sortByDate = NEL.sortWith (O.metaDate . O.orgMeta . blogRaw)
+sortByDate = NEL.reverse . NEL.sortWith (O.metaDate . O.orgMeta . blogRaw)
+
+mapify :: NonEmpty Blog -> Map Text Blog
+mapify = M.fromList . map (blogSlug &&& id) . NEL.toList
