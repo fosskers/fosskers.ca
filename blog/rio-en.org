@@ -105,16 +105,16 @@ Aura doesn't use Rio's logging system, but [[https://github.com/kadena-io/chainw
 the simplest form I could reduce the setup boilerplate to:
 
 #+begin_src haskell
-  import Data.Generics.Produce.Fields (field)
+  import Data.Generics.Product (typed)
   import RIO
 
   data Env = Env { envLog :: LogFunc, ... }
     deriving stock (Generic)
 
   -- | The only "glue" that ends up being necessary.
-  -- `field` is from generic-lens.
+  -- `typed` is from generic-lens.
   instance HasLogFunc Env where
-    logFuncL = field @"envLog"
+    logFuncL = typed @LogFunc
 
   main :: IO ()
   main = do

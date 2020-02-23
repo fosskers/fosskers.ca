@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-16 Sun 11:30 -->
+<!-- 2020-02-23 Sun 13:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Porting to Rio</title>
@@ -248,15 +248,15 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4b6b0dd">1. What is Rio?</a></li>
-<li><a href="#org24be71b">2. The Porting Experience</a>
+<li><a href="#orge696669">1. What is Rio?</a></li>
+<li><a href="#org0cf8f1d">2. The Porting Experience</a>
 <ul>
-<li><a href="#orgd99dbcf">2.1. The Prelude Swap</a></li>
-<li><a href="#org5fb18e1">2.2. Extensible Effects</a></li>
-<li><a href="#org69a5d7e">2.3. Logging</a></li>
+<li><a href="#org6734cd2">2.1. The Prelude Swap</a></li>
+<li><a href="#org7b4fd57">2.2. Extensible Effects</a></li>
+<li><a href="#org5158532">2.3. Logging</a></li>
 </ul>
 </li>
-<li><a href="#org1829fe2">3. Should you use it?</a></li>
+<li><a href="#org1f8eaa6">3. Should you use it?</a></li>
 </ul>
 </div>
 </div>
@@ -285,8 +285,8 @@ Yes, <a href="http://hackage.haskell.org/package/rio">Rio</a>! And I should say,
 switch.
 </p>
 
-<div id="outline-container-org4b6b0dd" class="outline-2">
-<h2 id="org4b6b0dd"><span class="section-number-2">1</span> What is Rio?</h2>
+<div id="outline-container-orge696669" class="outline-2">
+<h2 id="orge696669"><span class="section-number-2">1</span> What is Rio?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Rio is a "batteries included" alternate Prelude. I usually reach for
@@ -325,12 +325,12 @@ the ugly qualified <code>T.Text</code> everywhere.</li>
 </div>
 </div>
 
-<div id="outline-container-org24be71b" class="outline-2">
-<h2 id="org24be71b"><span class="section-number-2">2</span> The Porting Experience</h2>
+<div id="outline-container-org0cf8f1d" class="outline-2">
+<h2 id="org0cf8f1d"><span class="section-number-2">2</span> The Porting Experience</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgd99dbcf" class="outline-3">
-<h3 id="orgd99dbcf"><span class="section-number-3">2.1</span> The Prelude Swap</h3>
+<div id="outline-container-org6734cd2" class="outline-3">
+<h3 id="org6734cd2"><span class="section-number-3">2.1</span> The Prelude Swap</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 A naive replacement of <code>base-prelude</code> for <code>rio</code> went well. Mostly a
@@ -368,8 +368,8 @@ which&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org5fb18e1" class="outline-3">
-<h3 id="org5fb18e1"><span class="section-number-3">2.2</span> Extensible Effects</h3>
+<div id="outline-container-org7b4fd57" class="outline-3">
+<h3 id="org7b4fd57"><span class="section-number-3">2.2</span> Extensible Effects</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 I can't overstate how removing these in favour of <code>RIO Env a</code> simplified my
@@ -400,8 +400,8 @@ novelty's sake.
 </div>
 </div>
 
-<div id="outline-container-org69a5d7e" class="outline-3">
-<h3 id="org69a5d7e"><span class="section-number-3">2.3</span> Logging</h3>
+<div id="outline-container-org5158532" class="outline-3">
+<h3 id="org5158532"><span class="section-number-3">2.3</span> Logging</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Aura doesn't use Rio's logging system, but <a href="https://github.com/kadena-io/chainweb-miner">another project of mine</a> does. Here is
@@ -409,16 +409,16 @@ the simplest form I could reduce the setup boilerplate to:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.Generics.Produce.Fields</span> <span style="color: #4f97d7;">(</span>field<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.Generics.Product</span> <span style="color: #4f97d7;">(</span>typed<span style="color: #4f97d7;">)</span>
 <span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">RIO</span>
 
 <span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Env</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Env</span> <span style="color: #4f97d7;">{</span> envLog <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">LogFunc</span>, <span style="color: #7590db;">...</span> <span style="color: #4f97d7;">}</span>
   <span style="color: #4f97d7; font-weight: bold;">deriving</span> <span style="color: #4f97d7; font-weight: bold;">stock</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Generic</span><span style="color: #4f97d7;">)</span>
 
 <span style="color: #9f8766;">-- | The only "glue" that ends up being necessary.</span>
-<span style="color: #9f8766;">-- `field` is from generic-lens.</span>
+<span style="color: #9f8766;">-- `typed` is from generic-lens.</span>
 <span style="color: #4f97d7; font-weight: bold;">instance</span> <span style="color: #ce537a; font-weight: bold;">HasLogFunc</span> <span style="color: #ce537a; font-weight: bold;">Env</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
-  logFuncL <span style="color: #7590db;">=</span> field <span style="color: #7590db;">@</span><span style="color: #2d9574;">"envLog"</span>
+  logFuncL <span style="color: #7590db;">=</span> typed <span style="color: #7590db;">@</span><span style="color: #ce537a; font-weight: bold;">LogFunc</span>
 
 <span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">IO</span> <span style="color: #4f97d7; font-weight: bold;">()</span>
 <span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
@@ -440,8 +440,8 @@ It just works.
 </div>
 </div>
 
-<div id="outline-container-org1829fe2" class="outline-2">
-<h2 id="org1829fe2"><span class="section-number-2">3</span> Should you use it?</h2>
+<div id="outline-container-org1f8eaa6" class="outline-2">
+<h2 id="org1f8eaa6"><span class="section-number-2">3</span> Should you use it?</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 If your Haskell program runs from the terminal and has a runtime environment
@@ -464,7 +464,7 @@ Thanks to Michael and everyone behind <code>rio</code>! Consider me a happy cust
 <div id="postamble" class="status">
 <p class="date">Date: 2020-02-15</p>
 <p class="author">Author: Colin</p>
-<p class="date">Created: 2020-02-16 Sun 11:30</p>
+<p class="date">Created: 2020-02-23 Sun 13:46</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
