@@ -10,10 +10,9 @@
 module Fosskers.Common
   ( -- * APIs
     API
-  , JsonAPI
     -- * Blog Posts
   , Blog(..)
-  , Blogs(..)
+  -- , Blogs(..)
   , Title(..)
   , Language(..)
   , Path(..)
@@ -21,25 +20,26 @@ module Fosskers.Common
   ) where
 
 import           Data.Aeson (ToJSON)
-import           Data.Hourglass (getWeekDay)
-import           Fosskers.Kanji (Analysis)
+-- import           Data.Hourglass (getWeekDay)
+import qualified Data.Org as O
+-- import           Fosskers.Kanji (Analysis)
 import           Lucid (Html)
 import           RIO
-import qualified RIO.HashMap as HM
+-- import qualified RIO.HashMap as HM
 import qualified RIO.Text as T
-import qualified RIO.Text.Lazy as TL
+-- import qualified RIO.Text.Lazy as TL
 import           Servant.API
 import           Servant.HTML.Lucid
-import           Servant.XML
-import           Text.Printf (printf)
+-- import           Servant.XML
+-- import           Text.Printf (printf)
 import           Time.Types (Date(..), Month(..))
-import           Xmlbf (Node, ToXml(..), element, text)
+-- import           Xmlbf (Node, ToXml(..), element, text)
 
 ---
 
-type JsonAPI = "posts" :> Get '[JSON] [Blog]
-  :<|> "kanji" :> ReqBody '[JSON] Text :> Post '[JSON] Analysis
-  :<|> "kanji" :> Capture "text" Text :> Get '[JSON] (Maybe Analysis)
+-- type JsonAPI = "posts" :> Get '[JSON] [Blog]
+--   :<|> "kanji" :> ReqBody '[JSON] Text :> Post '[JSON] Analysis
+--   :<|> "kanji" :> Capture "text" Text :> Get '[JSON] (Maybe Analysis)
 
 type API =
   "assets" :> Raw
@@ -47,7 +47,7 @@ type API =
   :<|> Capture "language" Language :> "about" :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Capture "title" Text :> Get '[HTML] (Html ())
-  :<|> Capture "language" Language :> "rss" :> Get '[XML] Blogs
+  -- :<|> Capture "language" Language :> "rss" :> Get '[XML] Blogs
   :<|> Capture "language" Language :> Get '[HTML] (Html ())
   :<|> Get '[HTML] (Html ())
 
@@ -70,6 +70,10 @@ instance FromHttpApiData Language where
   parseUrlPiece "jp" = Right Japanese
   parseUrlPiece l    = Left $ "Invalid language: " <> l
 
+data Blog = Blog
+  { blogRaw  :: !O.OrgFile
+  , blogHtml :: !(Html ()) }
+
 newtype Path = Path Text
   deriving stock (Generic)
   deriving anyclass (ToJSON)
@@ -80,39 +84,31 @@ pathLang (Path p) = case T.takeEnd 3 p of
   "-jp" -> Just Japanese
   _     -> Nothing
 
-data Blog = Blog
-  { title    :: !Title
-  , date     :: !Date
-  , filename :: !Path
-  , freqs    :: ![(Text, Int)] }
-  deriving stock (Generic)
-  deriving anyclass (ToJSON)
+-- instance ToXml Blog where
+--   toXml (Blog (Title t) d (Path p) _) = b
+--     where
+--       b :: [Node]
+--       b = element "item" mempty
+--           $  element "title" mempty (text $ TL.fromStrict t)
+--           <> element "link" mempty (text . TL.fromStrict $ "https://fosskers.ca/blog/" <> p <> ".html")
+--           <> element "pubDate" mempty (text . TL.pack $ dtt d)
+--           <> element "description" mempty (text $ TL.fromStrict t)
 
-instance ToXml Blog where
-  toXml (Blog (Title t) d (Path p) _) = b
-    where
-      b :: [Node]
-      b = element "item" mempty
-          $  element "title" mempty (text $ TL.fromStrict t)
-          <> element "link" mempty (text . TL.fromStrict $ "https://fosskers.ca/blog/" <> p <> ".html")
-          <> element "pubDate" mempty (text . TL.pack $ dtt d)
-          <> element "description" mempty (text $ TL.fromStrict t)
+-- -- | Format a `Date` in a way acceptable to RSS feeds.
+-- dtt :: Date -> String
+-- dtt d@(Date ye mo da) = printf "%s, %d %s %d 00:00:00 GMT" wd da mo' ye
+--   where
+--     wd = take 3 . show $ getWeekDay d
+--     mo' = take 3 $ show mo
 
--- | Format a `Date` in a way acceptable to RSS feeds.
-dtt :: Date -> String
-dtt d@(Date ye mo da) = printf "%s, %d %s %d 00:00:00 GMT" wd da mo' ye
-  where
-    wd = take 3 . show $ getWeekDay d
-    mo' = take 3 $ show mo
+-- newtype Blogs = Blogs [Blog]
 
-newtype Blogs = Blogs [Blog]
-
-instance ToXml Blogs where
-  toXml (Blogs bs) = element "rss" (HM.singleton "version" "2.0")
-                     $ element "channel" mempty (info <> foldMap toXml bs)
-    where
-      info :: [Node]
-      info = element "title" mempty (text "Fosskers.ca Blog")
-             <> element "link" mempty (text "https://fosskers.ca")
-             <> element "description" mempty
-             (text "Articles on Haskell, Functional Programming, and Japanese")
+-- instance ToXml Blogs where
+--   toXml (Blogs bs) = element "rss" (HM.singleton "version" "2.0")
+--                      $ element "channel" mempty (info <> foldMap toXml bs)
+--     where
+--       info :: [Node]
+--       info = element "title" mempty (text "Fosskers.ca Blog")
+--              <> element "link" mempty (text "https://fosskers.ca")
+--              <> element "description" mempty
+--              (text "Articles on Haskell, Functional Programming, and Japanese")

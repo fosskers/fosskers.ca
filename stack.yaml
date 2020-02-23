@@ -1,7 +1,13 @@
-resolver: lts-14.25
+resolver: lts-14.27
 
 ghc-options: {"$locals": -ddump-to-file -ddump-hi}
 
 extra-deps:
   # --- Forced Upgrades --- #
   - shelly-1.9.0
+  # --- Raw --- #
+  - github: fosskers/org-mode
+    commit: 2d78552ce3b01653d46a96318d486c38f03aac0a
+    subdirs:
+      - org-mode
+      - org-mode-lucid
