@@ -1,19 +1,19 @@
-{-# LANGUAGE BangPatterns       #-}
 {-# LANGUAGE DataKinds          #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE TupleSections      #-}
-{-# LANGUAGE TypeApplications   #-}
 {-# LANGUAGE TypeOperators      #-}
 
 module Main ( main ) where
 
+import Data.Bitraversable (bitraverse)
 import           Control.Concurrent (getNumCapabilities)
+import           Control.Error.Util (note)
 import           Data.Bifunctor (first)
-import           Data.Generics.Product.Fields (field)
+import           Data.Generics.Product (typed)
 import qualified Data.Org as O
 import qualified Data.Org.Lucid as O
+import           Data.These (These(..), partitionEithersNE)
 import           Fosskers.Common
 import           Fosskers.Site (Page(..), site)
 import           Fosskers.Site.About (about)
@@ -22,7 +22,10 @@ import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Generic
 import           RIO hiding (first)
-import qualified RIO.Map as M
+import           System.Directory (doesFileExist)
+-- import qualified RIO.Map as M
+import qualified RIO.List as L
+import qualified RIO.NonEmpty as NEL
 import qualified RIO.Text as T
 import           Servant.API
 import           Servant.Server
@@ -39,12 +42,13 @@ newtype Args = Args
   deriving anyclass (ParseRecord)
 
 data Env = Env
-  { stats :: ![Blog]
-  , logF  :: !LogFunc }
+  { engPosts :: !(NonEmpty Blog)
+  , japPosts :: !(NonEmpty Blog)
+  , logF     :: !LogFunc }
   deriving stock (Generic)
 
 instance HasLogFunc Env where
-  logFuncL = field @"logF"
+  logFuncL = typed @LogFunc
 
 server :: Env -> Server API
 server env =
@@ -90,56 +94,67 @@ app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . ser
 --   , "what", "when", "where", "will", "your", "you", "are", "can", "has", "have"
 --   , "here", "there", "how", "who", "its", "just", "not", "now", "only", "they" ]
 
--- | Render all ORG files to HTML, also yielding word frequencies for each file.
---
--- Can assume:
---   - Every English article has a Japanese analogue
---   - The true title always appears on the first line of the file
---   - The original (ballpark) date of writing is on the second line of the "base" file
-orgs :: Sh ([Text], [Blog])
-orgs = do
+-- | Abosolute paths to all the @.org@ blog files.
+orgFiles :: Sh [FilePath]
+orgFiles = do
   cd "blog"
-  files <- filter (T.isSuffixOf ".org") <$> lsT "."
-  vs <- traverse g files
-  pure $ partitionEithers vs
+  filter (L.isSuffixOf ".org") <$> (ls "." >>= traverse absPath)
+
+-- | Render all ORG files to HTML.
+orgs :: NonEmpty FilePath -> IO (These (NonEmpty Text) (NonEmpty Blog))
+orgs = fmap partitionEithersNE . traverse g
   where
-    g :: Text -> Sh (Either Text Blog)
+    g :: FilePath -> IO (Either Text Blog)
     g f = do
-      let path = T.unpack f
-      content <- eread path
+      content <- eread f
+      let !path = T.pack f
       pure $ do
         c <- content
-        ofile <- first (T.pack . errorBundlePretty) $ parse O.orgFile path c
-        pure . Blog ofile $ O.body ofile
+        ofile <- first (T.pack . errorBundlePretty) $ parse O.orgFile f c
+        lang <- note ("Invalid language given for file: " <> path) $ pathLang path
+        Right . Blog lang ofile $ O.body ofile
 
--- TODO I don't like the way this feels/looks
-eread :: FilePath -> Sh (Either Text Text)
+eread :: FilePath -> IO (Either Text Text)
 eread path = do
-  exists <- test_f path
+  exists <- doesFileExist path
   if exists
-     then Right <$> readfile path
-     else pure . Left $ toTextIgnore path <> " doesn't exist to be read"
+     then Right <$> readFileUtf8 path
+     else pure . Left $ T.pack path <> " doesn't exist to be read."
 
-analysisFiles :: IO (Map Text Text)
-analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
-  where
-    f :: Text -> Sh (Either Text (Text, Text))
-    f fp = fmap ((fp,) <$>) . eread $ fromText ("server/" <> fp <> ".txt")
-    files = [ "doraemon", "rashomon", "iamacat", "sumo" ]
+-- analysisFiles :: IO (Map Text Text)
+-- analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
+--   where
+--     f :: Text -> Sh (Either Text (Text, Text))
+--     f fp = fmap ((fp,) <$>) . eread $ fromText ("server/" <> fp <> ".txt")
+--     files = [ "doraemon", "rashomon", "iamacat", "sumo" ]
 
 main :: IO ()
 main = do
-  Args (Helpful p) <- getRecord "Backend server for fosskers.ca"
-  lopts <- setLogMinLevel LevelInfo . setLogUseLoc False <$> logOptionsHandle stderr True
-  withLogFunc lopts $ \logFunc -> do
-    (errs, ps) <- shelly orgs
-    afs <- analysisFiles
+  args <- getRecord "Backend server for fosskers.ca"
+  fmap NEL.nonEmpty (shelly orgFiles) >>= \case
+    Nothing -> exitFailure
+    Just fs -> orgs fs >>= \case
+      This _ -> exitFailure
+      That bs -> maybe exitFailure (uncurry $ work args) $ splitLs bs
+      These _ bs -> do
+        -- traverse_ T.putStrLn errs
+        maybe exitFailure (uncurry $ work args) $ splitLs bs
+
+splitLs :: NonEmpty Blog -> Maybe (NonEmpty Blog, NonEmpty Blog)
+splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . NEL.partition (\b -> blogLang b == English)
+
+work :: Args -> NonEmpty Blog -> NonEmpty Blog -> IO ()
+work (Args (Helpful p)) ens jps = do
+  lopt <- setLogUseLoc False <$> logOptionsHandle stderr True
+  withLogFunc lopt $ \logFunc -> do
+    -- afs <- analysisFiles
     herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
     cores <- getNumCapabilities
     let !prt = fromMaybe 8081 $ p <|> herokuPort
-        !env = Env ps logFunc
+        !env = Env ens jps logFunc
     runRIO env $ do
-      traverse_ (logWarn . display) errs
-      logInfo $ "Analysis files read: " <> display (length afs)
+      -- traverse_ (logWarn . display) errs
+      -- logInfo $ "Analysis files read: " <> display (length afs)
+      logInfo $ "Blog posts read: " <> display (length ens + length jps)
       logInfo $ "Listening on port " <> display prt <> " with " <> display cores <> " cores"
       liftIO . W.run prt $ app env

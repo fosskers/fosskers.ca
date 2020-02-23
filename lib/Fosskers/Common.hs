@@ -71,15 +71,16 @@ instance FromHttpApiData Language where
   parseUrlPiece l    = Left $ "Invalid language: " <> l
 
 data Blog = Blog
-  { blogRaw  :: !O.OrgFile
+  { blogLang :: !Language
+  , blogRaw  :: !O.OrgFile
   , blogHtml :: !(Html ()) }
 
 newtype Path = Path Text
   deriving stock (Generic)
   deriving anyclass (ToJSON)
 
-pathLang :: Path -> Maybe Language
-pathLang (Path p) = case T.takeEnd 3 p of
+pathLang :: Text -> Maybe Language
+pathLang p = case T.take 3 $ T.takeEnd 7 p of
   "-en" -> Just English
   "-jp" -> Just Japanese
   _     -> Nothing

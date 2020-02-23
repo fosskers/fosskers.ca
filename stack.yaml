@@ -2,6 +2,13 @@ resolver: lts-14.27
 
 ghc-options: {"$locals": -ddump-to-file -ddump-hi}
 
+flags:
+  these:
+    aeson: false
+    assoc: false
+    semigroupoids: false
+    QuickCheck: false
+
 extra-deps:
   # --- Forced Upgrades --- #
   - shelly-1.9.0
