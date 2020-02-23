@@ -24,6 +24,7 @@ import           Options.Generic
 import           RIO hiding (first)
 import           System.Directory (doesFileExist)
 import qualified RIO.Map as M
+import qualified RIO.ByteString.Lazy as B
 import qualified RIO.List as L
 import qualified RIO.NonEmpty as NEL
 import qualified RIO.Text as T
@@ -57,11 +58,11 @@ server env =
   serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
   :<|> (\l -> pure . site l About $ about l)
-  :<|> (\l -> pure . site l Posts $ newest (engRecent env) (engRecent env) l)
+  :<|> (\l -> pure . site l Posts $ newest (engRecent env) (japRecent env) l)
   :<|> (\l t -> pure . site l Posts $ blog ens jps l t)
   -- :<|> pure . rss (stats env)
-  :<|> (\l -> pure . site l Posts $ newest (engRecent env) (engRecent env) l)
-  :<|> pure (site English Posts $ newest (engRecent env) (engRecent env) English)
+  :<|> (\l -> pure . site l Posts $ newest (engRecent env) (japRecent env) l)
+  :<|> pure (site English Posts $ newest (engRecent env) (japRecent env) English)
   where
     ens = engPosts env
     jps = japPosts env
@@ -117,6 +118,7 @@ orgs = fmap partitionEithersNE . traverse g
         c <- content
         ofile <- first (T.pack . errorBundlePretty) $ parse O.orgFile f c
         lang <- note ("Invalid language given for file: " <> path) $ pathLang f
+        void . note ("No date provided for: " <> path) . O.metaDate $ O.orgMeta ofile
         Right . Blog lang (pathSlug f) ofile $ O.body ofile
 
 eread :: FilePath -> IO (Either Text Text)
@@ -139,10 +141,10 @@ main = do
   fmap NEL.nonEmpty (shelly orgFiles) >>= \case
     Nothing -> exitFailure
     Just fs -> orgs fs >>= \case
-      This _ -> exitFailure
+      This _ -> B.putStrLn "No posts available." >> exitFailure
       That bs -> maybe exitFailure (uncurry $ work args) $ splitLs bs
-      These _ bs -> do
-        -- traverse_ T.putStrLn errs
+      These errs bs -> do
+        traverse_ (B.putStrLn . B.fromStrict . encodeUtf8) errs
         maybe exitFailure (uncurry $ work args) $ splitLs bs
 
 splitLs :: NonEmpty Blog -> Maybe (NonEmpty Blog, NonEmpty Blog)
