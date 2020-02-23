@@ -55,11 +55,14 @@ server env =
   serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
   :<|> (\l -> pure . site l About $ about l)
-  :<|> (\l -> pure . site l Posts $ newest l)
-  :<|> (\l t -> pure . site l Posts $ blog l t)
+  :<|> (\l -> pure . site l Posts $ newest ens jps l)
+  :<|> (\l t -> pure . site l Posts $ blog ens jps l t)
   -- :<|> pure . rss (stats env)
-  :<|> (\l -> pure . site l Posts $ newest l)
-  :<|> pure (site English Posts $ newest English)
+  :<|> (\l -> pure . site l Posts $ newest ens jps l)
+  :<|> pure (site English Posts $ newest ens jps English)
+  where
+    ens = engPosts env
+    jps = japPosts env
 
 -- TODO What type issues?
 -- | Split off from `server` to avoid type issues.
@@ -151,10 +154,13 @@ work (Args (Helpful p)) ens jps = do
     herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
     cores <- getNumCapabilities
     let !prt = fromMaybe 8081 $ p <|> herokuPort
-        !env = Env ens jps logFunc
+        !env = Env (sortByDate ens) (sortByDate jps) logFunc
     runRIO env $ do
       -- traverse_ (logWarn . display) errs
       -- logInfo $ "Analysis files read: " <> display (length afs)
       logInfo $ "Blog posts read: " <> display (length ens + length jps)
       logInfo $ "Listening on port " <> display prt <> " with " <> display cores <> " cores"
       liftIO . W.run prt $ app env
+
+sortByDate :: NonEmpty Blog -> NonEmpty Blog
+sortByDate = NEL.sortWith (O.metaDate . O.orgMeta . blogRaw)
