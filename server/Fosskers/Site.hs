@@ -43,7 +43,7 @@ site lang page component = html_ $ do
       link_ [ rel_ "stylesheet", href_ "/assets/fontawesome.min.css" ]
       link_ [ rel_ "stylesheet", href_ "/assets/fa-brands.min.css" ]
       link_ [ rel_ "stylesheet", href_ "/assets/fa-solid.min.css" ]
-      -- link_ [ rel_ "stylesheet", href_ "assets/fosskers.css" ]
+      link_ [ rel_ "stylesheet", href_ "/assets/fosskers.css" ]
 
 topbar :: Language -> Page -> Html ()
 topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark", "bg-dark" ] ] $ do
