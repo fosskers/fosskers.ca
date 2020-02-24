@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds          #-}
+{-# LANGUAGE RankNTypes          #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DerivingStrategies #-}
@@ -24,8 +25,7 @@ import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Generic
 import           RIO hiding (first)
-import           System.Directory (doesFileExist)
-import qualified RIO.ByteString.Lazy as B
+import           UnliftIO.Directory (doesFileExist)
 import qualified RIO.List as L
 import qualified RIO.NonEmpty as NEL
 import qualified RIO.Text as T
@@ -43,7 +43,7 @@ newtype Args = Args
   deriving stock (Generic)
   deriving anyclass (ParseRecord)
 
-newtype Env = Env { logF :: LogFunc }
+newtype Env = Env LogFunc
   deriving stock (Generic)
 
 instance HasLogFunc Env where
@@ -100,10 +100,10 @@ orgFiles = do
   filter (L.isSuffixOf ".org") <$> (ls "." >>= traverse absPath)
 
 -- | Render all ORG files to HTML.
-orgs :: NonEmpty FilePath -> IO (These (NonEmpty Text) (NonEmpty Blog))
+orgs :: MonadIO m => NonEmpty FilePath -> m (These (NonEmpty Text) (NonEmpty Blog))
 orgs = fmap partitionEithersNE . traverse g
   where
-    g :: FilePath -> IO (Either Text Blog)
+    -- g :: FilePath -> m (Either Text Blog)
     g f = do
       content <- eread f
       let !path = T.pack f
@@ -114,7 +114,7 @@ orgs = fmap partitionEithersNE . traverse g
         void . note ("No date provided for: " <> path) . O.metaDate $ O.orgMeta ofile
         Right . Blog lang (pathSlug f) ofile $ O.body ofile
 
-eread :: FilePath -> IO (Either Text Text)
+eread :: MonadIO m => FilePath -> m (Either Text Text)
 eread path = do
   exists <- doesFileExist path
   if exists
@@ -131,35 +131,38 @@ eread path = do
 main :: IO ()
 main = do
   args <- getRecord "Backend server for fosskers.ca"
+  lopt <- setLogUseLoc False <$> logOptionsHandle stderr True
+  withLogFunc lopt $ \logFunc -> runRIO (Env logFunc) (setup args)
+
+setup :: Args -> RIO Env ()
+setup args = do
   fmap NEL.nonEmpty (shelly orgFiles) >>= \case
-    Nothing -> exitFailure
+    Nothing -> logError "No .org files were found." >> exitFailure
     Just fs -> orgs fs >>= \case
-      This _ -> B.putStrLn "No posts available." >> exitFailure
-      That bs -> maybe exitFailure (uncurry $ work args) $ splitLs bs
+      This errs -> traverse_ (logWarn . display) errs >> exitFailure
+      That bs -> case splitLs bs of
+        Nothing -> logError "Missing posts from Japanese or English" >> exitFailure
+        Just r  -> uncurry (work args) r
       These errs bs -> do
-        traverse_ (B.putStrLn . B.fromStrict . encodeUtf8) errs
+        traverse_ (logWarn . display) errs
         maybe exitFailure (uncurry $ work args) $ splitLs bs
 
 splitLs :: NonEmpty Blog -> Maybe (NonEmpty Blog, NonEmpty Blog)
 splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . NEL.partition (\b -> blogLang b == English)
 
-work :: Args -> NonEmpty Blog -> NonEmpty Blog -> IO ()
+work :: Args -> NonEmpty Blog -> NonEmpty Blog -> RIO Env ()
 work (Args (Helpful p)) ens jps = do
-  lopt <- setLogUseLoc False <$> logOptionsHandle stderr True
-  withLogFunc lopt $ \logFunc -> do
-    -- afs <- analysisFiles
-    herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
-    cores <- getNumCapabilities
-    let !prt = fromMaybe 8081 $ p <|> herokuPort
-        !eng = mapify ens
-        !jap = mapify jps
-        !env = Blogs (sortByDate ens) (sortByDate jps) eng jap
-    runRIO (Env logFunc) $ do
-      -- traverse_ (logWarn . display) errs
-      -- logInfo $ "Analysis files read: " <> display (length afs)
-      logInfo $ "Blog posts read: " <> display (length ens + length jps)
-      logInfo $ "Listening on port " <> display prt <> " with " <> display cores <> " cores"
-      liftIO . W.run prt $ app env
+  -- afs <- analysisFiles
+  herokuPort <- (>>= readMaybe) <$> liftIO (lookupEnv "PORT")
+  cores <- liftIO getNumCapabilities
+  let !prt = fromMaybe 8081 $ p <|> herokuPort
+      !eng = mapify ens
+      !jap = mapify jps
+      !env = Blogs (sortByDate ens) (sortByDate jps) eng jap
+  -- logInfo $ "Analysis files read: " <> display (length afs)
+  logInfo $ "Blog posts read: " <> display (length ens + length jps)
+  logInfo $ "Listening on port " <> display prt <> " with " <> display cores <> " cores"
+  liftIO . W.run prt $ app env
 
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
 sortByDate = NEL.reverse . NEL.sortWith (O.metaDate . O.orgMeta . blogRaw)
