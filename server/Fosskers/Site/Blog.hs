@@ -6,9 +6,10 @@ module Fosskers.Site.Blog
 
 import qualified Data.Map.NonEmpty as NEM
 import qualified Data.Org as O
-import           Data.Time.Calendar (showGregorian)
+import           Data.Time.Calendar (toGregorian)
 import           Fosskers.Common
 import           Fosskers.Site.Bootstrap
+import           Lens.Micro ((^?), _1, _Just)
 import           Lucid
 import           RIO
 import qualified RIO.NonEmpty as NEL
@@ -27,18 +28,26 @@ choose bs l t = case l of
 
 blog :: Blogs -> Language -> Html () -> Html ()
 blog bs l content = row_ $ do
-  col [] $ sidebar l ps
-  col [] content
+  div_ [classes_ ["col-xs-12", "col-md-3"]] $ sidebar l ps
+  div_ [classes_ ["col-xs-12", "col-md-6"]] content
+  div_ [class_ "col-md-3"] ""
   where
     ps = case l of
       English  -> engSorted bs
       Japanese -> japSorted bs
 
 sidebar :: Language -> NonEmpty Blog -> Html ()
-sidebar l = traverse_ f
+sidebar l bs = traverse_ g $ NEL.groupWith1 year bs
   where
+    year :: Blog -> Maybe Integer
+    year b = b ^? to (O.metaDate . O.orgMeta . blogRaw) . _Just . to toGregorian . _1
+
+    g :: NonEmpty Blog -> Html ()
+    g b = do
+      h5_ . b_ . maybe "Unknown" (toHtml . show) . year $ NEL.head b
+      ul_ $ traverse_ (li_ . f) b
+
     f :: Blog -> Html ()
     f b = div_ $ do
       a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b]
-        $ maybe "Bug: No Title" toHtml $ O.metaTitle $ O.orgMeta $ blogRaw b
-      i_ $ maybe "Bug: No Date" (toHtml . showGregorian) $ O.metaDate $ O.orgMeta $ blogRaw b
+        $ maybe "Bug: No Title" (h6_ . toHtml) $ O.metaTitle $ O.orgMeta $ blogRaw b

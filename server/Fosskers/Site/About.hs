@@ -9,7 +9,7 @@ import RIO
 
 about :: Language -> Html ()
 about lang = do
-  row [style_ "padding-top: 1.0%"] $ div_ [classes_ ["col-md-6", "offset-md-3"]] content
+  row_ $ div_ [classes_ ["col-md-6", "offset-md-3"]] content
   row_ $ col_ $ do -- [classes_ ["col-xs-12", "col-md-5", "offset-md-2"]] $ do
     img_ [src_ "/assets/jack.jpg", classes_ ["rounded", "mx-auto", "d-block"]]
     div_ [class_ "text-center"] $ i_ cat
