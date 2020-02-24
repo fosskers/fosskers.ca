@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-02-23 Sun 13:46 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Porting to Rio</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Colin" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Porting to Rio</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge696669">1. What is Rio?</a></li>
+<li><a href="#org0cf8f1d">2. The Porting Experience</a>
+<ul>
+<li><a href="#org6734cd2">2.1. The Prelude Swap</a></li>
+<li><a href="#org7b4fd57">2.2. Extensible Effects</a></li>
+<li><a href="#org5158532">2.3. Logging</a></li>
+</ul>
+</li>
+<li><a href="#org1f8eaa6">3. Should you use it?</a></li>
+</ul>
+</div>
+</div>
+<p>
+<a href="https://github.com/fosskers/aura">Aura</a> has long been my den for mad science in Haskell. Whenever some new library
+or technique comes along, I give it a try to get a feel for its true usefulness.
+The discussion around Extensible Effects (and application monads in general) has
+been on my radar for a long time, and let me tell you, I've followed the whole
+story. The timeline for Aura's approach to effects is something like this:
+</p>
+
+<ul class="org-ul">
+<li>2012: I've never heard of Monad Transformers, and pass a runtime <code>Env</code>
+manually everywhere. Everything is <code>IO</code>.</li>
+<li>2013: The <code>Aura</code> Monad is born (<code>ExceptT</code> over <code>ReaderT</code> over <code>IO</code>). Thank you
+<i>Real World Haskell</i>!</li>
+<li>2015: The <a href="http://okmij.org/ftp/Haskell/extensible/exteff.pdf">Extensible Effects</a> paper is released and we <a href="https://github.com/fosskers/aura/pull/379">attempt a first pass</a> at using it.</li>
+<li>2016: I <a href="https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/229599314">give a talk</a> on Extensible Effects to a local Haskell group.</li>
+<li>2018: Aura <a href="https://github.com/fosskers/aura/pull/479">moves to</a> <code>freer-simple</code> instead. No more <code>Aura</code> monad.</li>
+<li>2019: Joe <a href="https://github.com/fosskers/aura/pull/524">ports Aura</a> to <code>fused-effects</code> with much effort.</li>
+<li>2020: I realize we were trying too hard and <a href="https://github.com/fosskers/aura/pull/535">port Aura to use Rio</a>.</li>
+</ul>
+
+<p>
+Yes, <a href="http://hackage.haskell.org/package/rio">Rio</a>! And I should say, the process was quite pleasant. I'm happy with the
+switch.
+</p>
+
+<div id="outline-container-orge696669" class="outline-2">
+<h2 id="orge696669"><span class="section-number-2">1</span> What is Rio?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Rio is a "batteries included" alternate Prelude. I usually reach for
+<code>base-prelude</code> for applications, since it stays out of the way and satisfies my
+main requirement:
+</p>
+
+<blockquote>
+<p>
+Give me access to everything in base that I'm going to be importing anyway!
+</p>
+</blockquote>
+
+<p>
+I'm looking at you, <code>traverse_</code>.
+</p>
+
+<p>
+Rio fills this requirement for me, but also goes a few steps further to make it
+an ideal choice for terminal-based Haskell applications, which is exactly what
+Aura is. It gives us:
+</p>
+
+<ul class="org-ul">
+<li>A dead-simple logging system with sensible defaults.</li>
+<li>Access to the major data types we use anyway (<code>Vector</code>, <code>HashMap</code>, etc.)
+without needing to depend on their libraries ourselves.</li>
+<li>Access to the <i>symbols</i> of those datatypes without adding imports. <code>Text</code>,
+etc., are freely available, so no more <code>import Data.Text (Text)</code> just to avoid
+the ugly qualified <code>T.Text</code> everywhere.</li>
+<li>An "opt-in" approach to non-total functions via modules like <code>RIO.List.Partial</code>.</li>
+<li>Sensible defaults for file IO and character encodings.</li>
+<li>The <code>RIO</code> effect monad (<code>ReaderT IO</code>) with many convenience functions involving it.</li>
+<li>A <a href="https://tech.fpcomplete.com/haskell/tutorial/exceptions">battle-tested approach</a> to handling exceptions.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0cf8f1d" class="outline-2">
+<h2 id="org0cf8f1d"><span class="section-number-2">2</span> The Porting Experience</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org6734cd2" class="outline-3">
+<h3 id="org6734cd2"><span class="section-number-3">2.1</span> The Prelude Swap</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+A naive replacement of <code>base-prelude</code> for <code>rio</code> went well. Mostly a
+find-and-replace of import statements.
+</p>
+
+<p>
+When it came to ditching <code>text</code> and <code>bytestring</code> in favour of what <code>rio</code>
+reexports, I had to reconcile some things which weren't at first intuitive. For
+instance: <code>rio</code> exposes no way to output <code>Text</code>, say via <code>T.putStrLn</code>. It
+recommends we go through <code>ByteString</code>, or through its <code>Display</code> typeclass which
+is optimized for Rio's logging. At first this bothered me, but now I'm okay with
+it. If you just want simple trace statements for debugging, Rio supplies plenty
+of those.
+</p>
+
+<p>
+List is not given special treatment, so even functions like <code>zip</code> aren't exposed
+without importing <code>RIO.List</code>. I personally like that List has been "knocked down
+a peg" in this way.
+</p>
+
+<p>
+A few function reexports from <code>microlens</code> were missing, so I needed to pull
+those myself. <code>Data.Bifunctor</code> is also not reexported, so <code>first</code> and <code>second</code>
+still come from <code>Control.Arrow</code> and thus don't work with <code>Either</code>.
+</p>
+
+<p>
+My <code>aura.cabal</code> got nicely reduced, since there's no need to depend on packages
+like <code>containers</code>, <code>bytestring</code>, etc. The overall line count of the code dropped
+by a nice amount too due to cleaner imports and type signatures. Speaking of
+which&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7b4fd57" class="outline-3">
+<h3 id="org7b4fd57"><span class="section-number-3">2.2</span> Extensible Effects</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+I can't overstate how removing these in favour of <code>RIO Env a</code> simplified my
+life. Look at this diff:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-diff"><span style="color: #f2241f;">-</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">installPkgFiles</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">::</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">(Carrier</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">sig</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">m,</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">Member</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">(Reader</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">Env)</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">sig,</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">Member</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">(Error</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">Failure)</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">sig,</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">Member</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">(Lift</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">IO)</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">sig)</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">=&gt;</span>
+<span style="color: #f2241f;">-</span><span style="color: #dc752f;">   </span><span style="color: #f2241f;">NESet</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">PackagePath</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">-&gt;</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">m</span><span style="color: #dc752f;"> </span><span style="color: #f2241f;">()</span>
++<span style="color: #dc752f;"> </span>installPkgFiles<span style="color: #dc752f;"> </span>::<span style="color: #dc752f;"> </span>NESet<span style="color: #dc752f;"> </span>PackagePath<span style="color: #dc752f;"> </span>-&gt;<span style="color: #dc752f;"> </span>RIO<span style="color: #dc752f;"> </span>Env<span style="color: #dc752f;"> </span>()
+</pre>
+</div>
+
+<p>
+This port PR was filled with lines like this, and each one gave me joy. Yes we
+lose the explicit <code>Error</code> effect, but this is Haskell, where <code>IO</code> can throw
+exceptions anyway. It's a wart I'm willing to accept in order to have access the
+other amazing things that Haskell gives me. Suffice to say I gave my <code>Failure</code>
+type an <code>Exception</code> instance and now throw that as needed (which isn't often).
+</p>
+
+<p>
+Now, here's the conclusion I've come to regarding regarding Extensible Effects:
+somebody somewhere has a use case that benefits from them. That person is not
+you. Recognize when you're trying too hard just to do a novel thing for
+novelty's sake.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5158532" class="outline-3">
+<h3 id="org5158532"><span class="section-number-3">2.3</span> Logging</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Aura doesn't use Rio's logging system, but <a href="https://github.com/kadena-io/chainweb-miner">another project of mine</a> does. Here is
+the simplest form I could reduce the setup boilerplate to:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.Generics.Product</span> <span style="color: #4f97d7;">(</span>typed<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">RIO</span>
+
+<span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Env</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Env</span> <span style="color: #4f97d7;">{</span> envLog <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">LogFunc</span>, <span style="color: #7590db;">...</span> <span style="color: #4f97d7;">}</span>
+  <span style="color: #4f97d7; font-weight: bold;">deriving</span> <span style="color: #4f97d7; font-weight: bold;">stock</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Generic</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #9f8766;">-- | The only "glue" that ends up being necessary.</span>
+<span style="color: #9f8766;">-- `typed` is from generic-lens.</span>
+<span style="color: #4f97d7; font-weight: bold;">instance</span> <span style="color: #ce537a; font-weight: bold;">HasLogFunc</span> <span style="color: #ce537a; font-weight: bold;">Env</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+  logFuncL <span style="color: #7590db;">=</span> typed <span style="color: #7590db;">@</span><span style="color: #ce537a; font-weight: bold;">LogFunc</span>
+
+<span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">IO</span> <span style="color: #4f97d7; font-weight: bold;">()</span>
+<span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+  lopts <span style="color: #7590db;">&lt;-</span> setLogUseLoc <span style="color: #ce537a; font-weight: bold;">False</span> <span style="color: #7590db;">&lt;$&gt;</span> logOptionsHandle stderr <span style="color: #ce537a; font-weight: bold;">True</span>
+  withLogFunc lopts <span style="color: #7590db;">$</span> <span style="color: #7590db;">\</span>logFunc <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+    <span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">!</span>env <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Env</span> logFunc <span style="color: #7590db;">...</span>
+    runRIO env work
+
+<span style="color: #bc6ec5; font-weight: bold;">work</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">RIO</span> <span style="color: #ce537a; font-weight: bold;">Env</span> <span style="color: #4f97d7; font-weight: bold;">()</span>
+<span style="color: #bc6ec5; font-weight: bold;">work</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+  logInfo <span style="color: #2d9574;">"It works!"</span>
+</pre>
+</div>
+
+<p>
+It just works.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1f8eaa6" class="outline-2">
+<h2 id="org1f8eaa6"><span class="section-number-2">3</span> Should you use it?</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+If your Haskell program runs from the terminal and has a runtime environment
+type, then Rio would bring you a lot of value. If you need a logging system too,
+then Rio really simplifies your life. In general, it will clean up your imports
+and your type signatures, and it just keeps things simple.
+</p>
+
+<p>
+Otherwise, if you're just looking for an Alternate Prelude, then any other one
+will do. Rio shines when you use it for what it's meant for.
+</p>
+
+<p>
+Thanks to Michael and everyone behind <code>rio</code>! Consider me a happy customer.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-02-15</p>
+<p class="author">Author: Colin</p>
+<p class="date">Created: 2020-02-23 Sun 13:46</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
