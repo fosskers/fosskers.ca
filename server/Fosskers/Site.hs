@@ -30,7 +30,7 @@ site lang page component = html_ $ do
   head_ h
   body_ $ do
     topbar lang page
-    fluid [style_ "padding-top: 1.0%"] component
+    fluid [style_ "padding-top: 1.0%;padding-bottom: 1.0%"] component
   where
     h :: Html ()
     h = do
