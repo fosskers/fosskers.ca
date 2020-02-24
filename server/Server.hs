@@ -7,23 +7,24 @@
 module Main ( main ) where
 
 import Data.Bitraversable (bitraverse)
+import           Data.Map.NonEmpty (NEMap)
 import           Control.Concurrent (getNumCapabilities)
 import           Control.Error.Util (note)
 import           Data.Bifunctor (first)
 import           Data.Generics.Product (typed)
 import qualified Data.Org as O
+import qualified Data.Map.NonEmpty as NEM
 import qualified Data.Org.Lucid as O
 import           Data.These (These(..), partitionEithersNE)
 import           Fosskers.Common
 import           Fosskers.Site (Page(..), site)
 import           Fosskers.Site.About (about)
-import           Fosskers.Site.Blog (blog, newest)
+import           Fosskers.Site.Blog (choose, newest, blog)
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Generic
 import           RIO hiding (first)
 import           System.Directory (doesFileExist)
-import qualified RIO.Map as M
 import qualified RIO.ByteString.Lazy as B
 import qualified RIO.List as L
 import qualified RIO.NonEmpty as NEL
@@ -42,30 +43,22 @@ newtype Args = Args
   deriving stock (Generic)
   deriving anyclass (ParseRecord)
 
-data Env = Env
-  { engRecent :: !Blog
-  , japRecent :: !Blog
-  , engPosts :: !(Map Text Blog)
-  , japPosts :: !(Map Text Blog)
-  , logF     :: !LogFunc }
+newtype Env = Env { logF :: LogFunc }
   deriving stock (Generic)
 
 instance HasLogFunc Env where
   logFuncL = typed @LogFunc
 
-server :: Env -> Server API
-server env =
+server :: Blogs -> Server API
+server bs =
   serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
   :<|> (\l -> pure . site l About $ about l)
-  :<|> (\l -> pure . site l Posts $ newest (engRecent env) (japRecent env) l)
-  :<|> (\l t -> pure . site l Posts $ blog ens jps l t)
+  :<|> (\l -> pure . site l Posts . blog bs l $ newest bs l)
+  :<|> (\l t -> pure . site l Posts . blog bs l $ choose bs l t)
   -- :<|> pure . rss (stats env)
-  :<|> (\l -> pure . site l Posts $ newest (engRecent env) (japRecent env) l)
-  :<|> pure (site English Posts $ newest (engRecent env) (japRecent env) English)
-  where
-    ens = engPosts env
-    jps = japPosts env
+  :<|> (\l -> pure . site l Posts . blog bs l $ newest bs l)
+  :<|> pure (site English Posts . blog bs English $ newest bs English)
 
 -- TODO What type issues?
 -- | Split off from `server` to avoid type issues.
@@ -77,7 +70,7 @@ server env =
 -- rss :: [Blog] -> Language -> Blogs
 -- rss bs l = Blogs . L.sortOn (Down . date) $ filter (\b -> pathLang (filename b) == Just l) bs
 
-app :: Env -> Application
+app :: Blogs -> Application
 app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server
 
 -- -- | A mapping of word frequencies.
@@ -160,8 +153,8 @@ work (Args (Helpful p)) ens jps = do
     let !prt = fromMaybe 8081 $ p <|> herokuPort
         !eng = mapify ens
         !jap = mapify jps
-        !env = Env (NEL.head $ sortByDate ens) (NEL.head $ sortByDate jps) eng jap logFunc
-    runRIO env $ do
+        !env = Blogs (sortByDate ens) (sortByDate jps) eng jap
+    runRIO (Env logFunc) $ do
       -- traverse_ (logWarn . display) errs
       -- logInfo $ "Analysis files read: " <> display (length afs)
       logInfo $ "Blog posts read: " <> display (length ens + length jps)
@@ -171,5 +164,5 @@ work (Args (Helpful p)) ens jps = do
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
 sortByDate = NEL.reverse . NEL.sortWith (O.metaDate . O.orgMeta . blogRaw)
 
-mapify :: NonEmpty Blog -> Map Text Blog
-mapify = M.fromList . map (blogSlug &&& id) . NEL.toList
+mapify :: NonEmpty Blog -> NEMap Text Blog
+mapify = NEM.fromList . NEL.map (blogSlug &&& id)

@@ -12,15 +12,18 @@ module Fosskers.Common
     API
     -- * Blog Posts
   , Blog(..)
+  , Blogs(..)
   -- , Blogs(..)
   , Title(..)
   , Language(..)
+  , langPath
   , Path(..)
   , pathLang
   , pathSlug
   ) where
 
 import           Data.Aeson (ToJSON)
+import           Data.Map.NonEmpty (NEMap)
 import           System.FilePath.Posix (takeBaseName)
 -- import           Data.Hourglass (getWeekDay)
 import qualified Data.Org as O
@@ -67,6 +70,10 @@ deriving anyclass instance ToJSON Month
 data Language = English | Japanese
   deriving stock (Eq, Ord, Show, Generic)
 
+langPath :: Language -> Text
+langPath English  = "en"
+langPath Japanese = "jp"
+
 instance FromHttpApiData Language where
   parseUrlPiece "en" = Right English
   parseUrlPiece "jp" = Right Japanese
@@ -77,6 +84,12 @@ data Blog = Blog
   , blogSlug :: !Text
   , blogRaw  :: !O.OrgFile
   , blogHtml :: !(Html ()) }
+
+data Blogs = Blogs
+  { engSorted :: !(NonEmpty Blog)
+  , japSorted :: !(NonEmpty Blog)
+  , engPosts  :: !(NEMap Text Blog)
+  , japPosts  :: !(NEMap Text Blog) }
 
 newtype Path = Path Text
   deriving stock (Generic)

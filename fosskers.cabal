@@ -26,19 +26,20 @@ common commons
     -fmax-relevant-binds=0
 
   build-depends:
-    , aeson           >=1.2  && <1.5
-    , base            >=4.8  && <4.14
-    , hourglass       ^>=0.2
-    , kanji           ^>=3.4
-    , lucid           ^>=2.9
-    , megaparsec      >=7.0  && <9
-    , org-mode        ^>=1.0
-    , org-mode-lucid  ^>=1.0
-    , rio             ^>=0.1
-    , servant         >=0.11 && <0.17
-    , servant-lucid   >=0.7  && <0.10
-    , servant-xml     ^>=1.0
-    , xmlbf           >=0.3  && <0.7
+    , aeson                >=1.2  && <1.5
+    , base                 >=4.8  && <4.14
+    , hourglass            ^>=0.2
+    , kanji                ^>=3.4
+    , lucid                ^>=2.9
+    , megaparsec           >=7.0  && <9
+    , nonempty-containers  ^>=0.3
+    , org-mode             ^>=1.0
+    , org-mode-lucid       ^>=1.0
+    , rio                  ^>=0.1
+    , servant              >=0.11 && <0.17
+    , servant-lucid        >=0.7  && <0.10
+    , servant-xml          ^>=1.0
+    , xmlbf                >=0.3  && <0.7
 
 library
   import:          commons
@@ -82,5 +83,6 @@ executable server
     , servant-server    >=0.11  && <0.17
     , shelly            >=1.7   && <1.10
     , these             ^>=1.0.1
+    , time
     , wai-extra         ^>=3.0
     , warp              >=3.2   && <3.4
