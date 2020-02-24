@@ -112,6 +112,7 @@ orgs = fmap partitionEithersNE . traverse g
         ofile <- first (T.pack . errorBundlePretty) $ parse O.orgFile f c
         lang <- note ("Invalid language given for file: " <> path) $ pathLang f
         void . note ("No date provided for: " <> path) . O.metaDate $ O.orgMeta ofile
+        void . note ("No title provided for: " <> path) . O.metaTitle $ O.orgMeta ofile
         Right . Blog lang (pathSlug f) ofile $ O.body ofile
 
 eread :: MonadIO m => FilePath -> m (Either Text Text)
