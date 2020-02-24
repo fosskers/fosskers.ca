@@ -101,8 +101,8 @@ novelty's sake.
 
 ** Logging
 
-Aura doesn't use Rio's logging system, but [[https://github.com/kadena-io/chainweb-miner][another project of mine]] does. Here is
-the simplest form I could reduce the setup boilerplate to:
+[[https://github.com/fosskers/aura/pull/568][Aura uses]] Rio's logging system too. Here is the simplest form I could reduce its
+setup boilerplate to:
 
 #+begin_src haskell
   import Data.Generics.Product (typed)
