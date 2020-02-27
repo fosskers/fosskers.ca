@@ -14,7 +14,7 @@ extra-deps:
   - shelly-1.9.0
   # --- Raw --- #
   - github: fosskers/org-mode
-    commit: 629197a990b052fa6070eb3f590b6417f1f39aba
+    commit: 5b5a19d81415ca3f8e26e2232e113a7f19fbf8a7
     subdirs:
       - org-mode
       - org-mode-lucid
