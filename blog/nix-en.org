@@ -157,7 +157,8 @@ There are a number of other ways to customize a Haskell build, which are [[https
 
 ** Profiling
 
-Nix makes this fairly easy. First, we add the following to a ~~/.config/nixpkgs/config.nix~:
+Nix makes this fairly easy. First, we add the following to a
+~/home/YOU/.config/nixpkgs/config.nix~:
 
 #+BEGIN_SRC nix
 {
