@@ -11,10 +11,12 @@ flags:
 
 extra-deps:
   # --- Forced Upgrades --- #
+  - megaparsec-8.0.0
+  - parser-combinators-1.2.1
   - shelly-1.9.0
   # --- Raw --- #
   - github: fosskers/org-mode
-    commit: 5b5a19d81415ca3f8e26e2232e113a7f19fbf8a7
+    commit: c32fbbb603bf862df43a7b10912c9af278fc9908
     subdirs:
       - org-mode
       - org-mode-lucid
