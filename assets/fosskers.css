@@ -21,6 +21,7 @@ pre.src-haskell:before { content: 'Haskell'; }
 pre.src-purescript:before { content: 'Purescript'; }
 pre.src-nix:before { content: 'Nix'; }
 pre.src-yaml:before { content: 'YAML'; }
+pre.src-conf:before { content: 'Conf'; }
 pre.src-fish:before { content: 'Fish'; }
 pre.src-js:before { content: 'Javascript'; }
 pre.src-python:before { content: 'Python'; }
@@ -28,19 +29,8 @@ pre.src-scala:before { content: 'Scala'; }
 pre.src-makefile:before { content: 'Makefile'; }
 pre.src-terraform:before { content: 'Terraform'; }
 pre.src-sql:before { content: 'SQL'; }
-table{margin:auto;border-top:2px solid;border-collapse:collapse}
-table,thead{border-bottom:2px solid}
-table td+td,table th+th{border-left:1px solid gray}
-table tr{border-top:1px solid #d3d3d3}
 caption.t-above { caption-side: top; }
 caption.t-bottom { caption-side: bottom; }
-td, th { vertical-align:top; }
-th.right { text-align: center; }
-th.left { text-align: center; }
-th.center { text-align: center; }
-td.right { text-align: right; }
-td.left { text-align: left; }
-td.center { text-align: center; }
 dt { font-weight: bold; }
 .footpara:nth-child(2) { display: inline; }
 .footpara { display: block; }
@@ -51,10 +41,9 @@ dt { font-weight: bold; }
 #org-div-home-and-up { text-align: right; font-size: 70%; white-space: nowrap; }
 textarea { overflow-x: auto; }
 .linenr { font-size: smaller }
-.code-highlighted { background-color: #ffff00; }
 .org-info-js_info-navigation { border-style: none; }
 #org-info-js_console-label { font-size: 10px; font-weight: bold; white-space: nowrap; }
 .org-info-js_search-highlight { background-color: #ffff00; color: #000000; font-weight: bold; }
-code{padding:2px 5px;margin:auto 1px;border:1px solid #ddd;border-radius:3px;background-clip:padding-box;color:#333;font-size:80%}
+code{padding:2px 5px;margin:auto 1px;border:1px solid #ddd;border-radius:3px;background-clip:padding-box;font-size:80%}
 blockquote{margin:1em 2em;padding-left:1em;border-left:3px solid #ccc}
 img { max-width: 100%; height: auto; }
