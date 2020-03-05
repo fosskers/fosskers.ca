@@ -10,13 +10,10 @@ flags:
     QuickCheck: false
 
 extra-deps:
+  # --- Missing from Stackage --- #
+  - org-mode-1.0.0
+  - org-mode-lucid-1.0.0
   # --- Forced Upgrades --- #
   - megaparsec-8.0.0
   - parser-combinators-1.2.1
   - shelly-1.9.0
-  # --- Raw --- #
-  - github: fosskers/org-mode
-    commit: 0d6e0e6e0ed13bf694d15c5fbcc0459ea7cd4559
-    subdirs:
-      - org-mode
-      - org-mode-lucid
