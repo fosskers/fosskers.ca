@@ -7,8 +7,7 @@ with historical versions of GHC (and therefore ~base~).
 
 As a library author, if you've [[https://matrix.hackage.haskell.org/#/package/microlens-aeson][ever]] [[https://matrix.hackage.haskell.org/#/package/snap-core][attempted]] [[https://matrix.hackage.haskell.org/#/package/lens][to]] [[https://matrix.hackage.haskell.org/#/package/sqlite-simple][support]] more than the most
 recent versions of GHC, then you've been tossed around the ocean of
-~Applicative~, ~Semigroup~, and ~MonadFail~, with CPP as your only ray of
-sunlight through the storm.
+~Applicative~, ~Semigroup~, and ~MonadFail~, with CPP as your only olive branch.
 
 This post is a reference for library authors to easily track how ~base~ evolves,
 and how to deal with its changes. This is so that we don't all have to repeat
