@@ -1,0 +1,23 @@
+ウッドブリ・コリンと申します。ネット上では「fosskers」という通称で知られています。
+ソフト開発者として務めていて、主にHaskellを通して [[http://hackage.haskell.org/user/fosskers][複数なライブラリやアプリ]] を出
+しています。私には関数型プログラミング (Functional Programming) はとても興味深く、
+FPによって己の基本的開発美徳の三つが可能となります：　厳密・最小主義・芸術
+
+* 主なプロジェクト
+
+- Arch Linuxの [[https://github.com/fosskers/aura][Aura Package Manager]]
+- [[https://github.com/kadena-io/chainweb-node][Kadenaの公式ブロックチェーン]]
+- [[https://github.com/fosskers/mapalgebra][MapAlgebra]] ・Dana Tomlin作の「GIS and Cartographic Modelling」の実装
+- Mapbox VectorTileコーデック ([[https://github.com/fosskers/vectortiles][Haskell]], [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]])
+- [[https://geotrellis.github.io/vectorpipe/][VectorPipe]]
+- [[https://github.com/fosskers/scalaz-and-cats][ScalaZ and Cats Comparison]]
+- [[https://github.com/fosskers/scala-benchmarks][Scala Collections Benchmarks]]
+
+他にはPurescript・Elm・Racket・C・Pythonを含めて様々なプログラミング言語
+で開発した経験もあります。AWS・Digital Ocean・Herokuなどでシステム管理した事も。
+
+職歴の [[/jp/cv][詳細はこちら]] 。
+
+開発者になる前、数年間長崎県の小中学校で英語教師として働いていました。英語と日本
+語は勿論、ドイツ語・イタリア語・エスペラント語も学習しています。言語の勉強の他、
+自由時間でよくクライミングをやっています。

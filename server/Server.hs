@@ -7,10 +7,12 @@
 
 module Main ( main ) where
 
+import Control.Monad.Trans.Maybe (MaybeT(..))
 import Data.Bitraversable (bitraverse)
+import Lucid
 import           Data.Map.NonEmpty (NEMap)
 import           Control.Concurrent (getNumCapabilities)
-import           Control.Error.Util (note)
+import           Control.Error.Util (note, hush)
 import           Data.Bifunctor (first)
 import           Data.Generics.Product (typed)
 import qualified Data.Org as O
@@ -49,11 +51,11 @@ newtype Env = Env LogFunc
 instance HasLogFunc Env where
   logFuncL = typed @LogFunc
 
-server :: Blogs -> Server API
-server bs =
+server :: Pages -> Blogs -> Server API
+server ps bs =
   serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
-  :<|> (\l -> pure . site l About $ about l)
+  :<|> (\l -> pure . site l About $ about ps l)
   :<|> (\l -> pure . site l Posts . blog bs l $ newest bs l)
   :<|> (\l t -> pure . site l Posts . blog bs l $ choose bs l t)
   -- :<|> pure . rss (stats env)
@@ -70,8 +72,10 @@ server bs =
 -- rss :: [Blog] -> Language -> Blogs
 -- rss bs l = Blogs . L.sortOn (Down . date) $ filter (\b -> pathLang (filename b) == Just l) bs
 
-app :: Blogs -> Application
-app = gzip (def { gzipFiles = GzipCompress }) . serve (Proxy :: Proxy API) . server
+app :: Pages -> Blogs -> Application
+app ps bs = gzip (def { gzipFiles = GzipCompress })
+  . serve (Proxy :: Proxy API)
+  $ server ps bs
 
 -- -- | A mapping of word frequencies.
 -- freq :: Text -> [(Text, Int)]
@@ -124,6 +128,16 @@ eread path = do
      then Right <$> readFileUtf8 path
      else pure . Left $ T.pack path <> " doesn't exist to be read."
 
+pages :: IO (Maybe Pages)
+pages = runMaybeT $ Pages
+  <$> MaybeT (f "org/about-en.org")
+  <*> MaybeT (f "org/about-jp.org")
+  where
+    style = O.OrgStyle False Nothing False
+
+    f :: FilePath -> IO (Maybe (Html ()))
+    f fp = (hush >=> O.org >=> pure . O.body style) <$> eread fp
+
 -- analysisFiles :: IO (Map Text Text)
 -- analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
 --   where
@@ -139,33 +153,36 @@ main = do
 
 setup :: Args -> RIO Env ()
 setup args = do
-  fmap NEL.nonEmpty (shelly orgFiles) >>= \case
-    Nothing -> logError "No .org files were found." >> exitFailure
-    Just fs -> orgs fs >>= \case
-      This errs -> traverse_ (logWarn . display) errs >> exitFailure
-      That bs -> case splitLs bs of
-        Nothing -> logError "Missing posts from Japanese or English" >> exitFailure
-        Just r  -> uncurry (work args) r
-      These errs bs -> do
-        traverse_ (logWarn . display) errs
-        maybe exitFailure (uncurry $ work args) $ splitLs bs
+  liftIO pages >>= \case
+    Nothing -> logError "Couldn't read static pages."
+    Just ps -> do
+      fmap NEL.nonEmpty (shelly orgFiles) >>= \case
+        Nothing -> logError "No .org files were found." >> exitFailure
+        Just fs -> orgs fs >>= \case
+          This errs -> traverse_ (logWarn . display) errs >> exitFailure
+          That bs -> case splitLs bs of
+            Nothing -> logError "Missing posts from Japanese or English" >> exitFailure
+            Just r  -> uncurry (work args ps) r
+          These errs bs -> do
+            traverse_ (logWarn . display) errs
+            maybe exitFailure (uncurry $ work args ps) $ splitLs bs
 
 splitLs :: NonEmpty Blog -> Maybe (NonEmpty Blog, NonEmpty Blog)
 splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . NEL.partition (\b -> blogLang b == English)
 
-work :: Args -> NonEmpty Blog -> NonEmpty Blog -> RIO Env ()
-work (Args (Helpful p)) ens jps = do
+work :: Args -> Pages -> NonEmpty Blog -> NonEmpty Blog -> RIO Env ()
+work (Args (Helpful p)) ps ens jps = do
   -- afs <- analysisFiles
   herokuPort <- (>>= readMaybe) <$> liftIO (lookupEnv "PORT")
   cores <- liftIO getNumCapabilities
   let !prt = fromMaybe 8081 $ p <|> herokuPort
       !eng = mapify ens
       !jap = mapify jps
-      !env = Blogs (sortByDate ens) (sortByDate jps) eng jap
+      !bls = Blogs (sortByDate ens) (sortByDate jps) eng jap
   -- logInfo $ "Analysis files read: " <> display (length afs)
   logInfo $ "Blog posts read: " <> display (length ens + length jps)
   logInfo $ "Listening on port " <> display prt <> " with " <> display cores <> " cores"
-  liftIO . W.run prt $ app env
+  liftIO . W.run prt $ app ps bls
 
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
 sortByDate = NEL.reverse . NEL.sortWith (O.metaDate . O.orgMeta . blogRaw)

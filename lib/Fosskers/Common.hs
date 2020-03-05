@@ -10,10 +10,11 @@
 module Fosskers.Common
   ( -- * APIs
     API
+    -- * Static Pages
+  , Pages(..)
     -- * Blog Posts
   , Blog(..)
   , Blogs(..)
-  -- , Blogs(..)
   , Title(..)
   , Language(..)
   , langPath
@@ -90,6 +91,10 @@ data Blogs = Blogs
   , japSorted :: !(NonEmpty Blog)
   , engPosts  :: !(NEMap Text Blog)
   , japPosts  :: !(NEMap Text Blog) }
+
+data Pages = Pages
+  { engAbout :: !(Html ())
+  , japAbout :: !(Html ()) }
 
 newtype Path = Path Text
   deriving stock (Generic)

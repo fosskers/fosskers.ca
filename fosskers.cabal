@@ -83,6 +83,7 @@ executable server
     , shelly            >=1.7   && <1.10
     , these             ^>=1.0.1
     , time
+    , transformers      ^>=0.5
     , unliftio          ^>=0.2
     , wai-extra         ^>=3.0
     , warp              >=3.2   && <3.4
