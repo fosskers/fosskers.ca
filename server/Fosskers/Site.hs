@@ -20,7 +20,7 @@ Don't bother with Tools for now.
 
 -}
 
-data Page = About | Posts | Index deriving (Eq)
+data Page = CV | About | Posts | Index deriving (Eq)
 
 index :: Language -> Html ()
 index lang = site lang Index "Real content here!"
@@ -79,7 +79,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "Blog" "/en/blog" $ active Posts
       dropdown "Projects" projects
       dropdown "Tools" [Just ("Kanji Analysis", "#")]
-      item "CV" "/assets/cv.html" []
+      item "CV" "/en/cv" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
       icon "https://gitlab.com/fosskers" ["fab", "fa-gitlab"]
       icon "https://twitter.com/fosskers" ["fab", "fa-twitter"]
@@ -92,7 +92,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "ブログ" "/jp/blog" $ active Posts
       dropdown "プロジェクト" projects
       dropdown "ツール" [Just ("漢字分析", "#")]
-      item "履歴書" "/assets/cv-jp.html" []
+      item "履歴書" "/jp/cv" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://gitlab.com/fosskers" ["fab", "fa-gitlab"]
       icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]

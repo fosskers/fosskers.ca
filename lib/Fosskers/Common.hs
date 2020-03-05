@@ -51,6 +51,7 @@ type API =
   "assets" :> Raw
   :<|> "webfonts" :> Raw
   :<|> Capture "language" Language :> "about" :> Get '[HTML] (Html ())
+  :<|> Capture "language" Language :> "cv"    :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Capture "title" Text :> Get '[HTML] (Html ())
   -- :<|> Capture "language" Language :> "rss" :> Get '[XML] Blogs
@@ -94,7 +95,9 @@ data Blogs = Blogs
 
 data Pages = Pages
   { engAbout :: !(Html ())
-  , japAbout :: !(Html ()) }
+  , japAbout :: !(Html ())
+  , engCV    :: !(Html ())
+  , japCV    :: !(Html ()) }
 
 newtype Path = Path Text
   deriving stock (Generic)

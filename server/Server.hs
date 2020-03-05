@@ -22,6 +22,7 @@ import           Data.These (These(..), partitionEithersNE)
 import           Fosskers.Common
 import           Fosskers.Site (Page(..), site)
 import           Fosskers.Site.About (about)
+import           Fosskers.Site.CV (cv)
 import           Fosskers.Site.Blog (choose, newest, blog)
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
@@ -56,6 +57,7 @@ server ps bs =
   serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
   :<|> (\l -> pure . site l About $ about ps l)
+  :<|> (\l -> pure . site l CV $ cv ps l)
   :<|> (\l -> pure . site l Posts . blog bs l $ newest bs l)
   :<|> (\l t -> pure . site l Posts . blog bs l $ choose bs l t)
   -- :<|> pure . rss (stats env)
@@ -130,13 +132,16 @@ eread path = do
 
 pages :: IO (Maybe Pages)
 pages = runMaybeT $ Pages
-  <$> MaybeT (f "org/about-en.org")
-  <*> MaybeT (f "org/about-jp.org")
+  <$> f astyle "org/about-en.org"
+  <*> f astyle "org/about-jp.org"
+  <*> f cstyle "org/cv-en.org"
+  <*> f cstyle "org/cv-jp.org"
   where
-    style = O.OrgStyle False Nothing False
+    astyle = O.OrgStyle False Nothing False
+    cstyle = O.OrgStyle False (Just $ O.TOC "Content" 2) True
 
-    f :: FilePath -> IO (Maybe (Html ()))
-    f fp = (hush >=> O.org >=> pure . O.body style) <$> eread fp
+    f :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
+    f s fp = MaybeT $ (hush >=> O.org >=> pure . O.body s) <$> eread fp
 
 -- analysisFiles :: IO (Map Text Text)
 -- analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files

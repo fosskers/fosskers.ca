@@ -1,0 +1,244 @@
+#+TITLE: ウッドブリ・コリン
+#+AUTHOR: Colin
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-theme.css"/>
+
+* 自己紹介
+
+[[./colin.jpg]]
+
+- ウッドブリ・コリン (Colin Woodbury)
+- colin@fosskers.ca
+- https://www.fosskers.ca
+- https://github.com/fosskers
+- https://gitlab.com/fosskers
+
+フルスタック開発者・2012年からオープンソースで活躍中・[[https://github.com/fosskers/aura][Aura]]の作者
+
+ウッドブリ・コリンと申します。カナダ生まれで、以前数年間九州に住んだ事があります。
+当時は教師として務めていて、今はその経験を活かしてコンファレンスで日本語でも英語
+でも発表をしています。主な趣味としてはよくクライミングをやっています。履歴や学歴
+などはこれ以降に述べてあります。ご覧下さい。
+
+* 能力
+
+** プログラミング言語
+
+- *Haskell* / Purescript / Elm
+- Scala / Java
+- Python
+- C / C++
+- Emacs Lisp
+
+** ウエブ技術
+
+- Terraform
+- Amazon Web Services / Digital Ocean
+- Elastic Search / Kibana
+- Docker
+- Let's Encrypt
+
+** その他の技術や分野
+
+- Linux
+- Git / Github / Gitlab
+- SQL (SQLite, MySQL, MariaDB, Postgres)
+- Apache Spark
+- Nix / NixOS
+- Emacs
+- LaTeX
+- Blockchain
+- Geographic Information Systems
+
+* 経歴
+
+** ソフトウェア開発
+
+*** [[https://www.kadena.io/][Kadena]] - ブロックチェーン開発 (Haskell)
+
+/２０１８年８月･･･現在/
+
+[[https://github.com/kadena-io/chainweb-node][Kadenaの公式ブロックチェーン]](Chainweb)の中心開発者の一人。
+
+**** 開発
+
+- Chainwebや[[https://pactlang.org/][Pact]]プロジェクトでバックエンドHaskell開発
+- Chainwebの採掘何度アルゴリズムを考案し実現
+- Chainwebの採掘クライエント[[https://github.com/kadena-io/chainweb-miner][chainweb-miner]]を作成
+- ncursesを用いて[[https://github.com/kadena-community/bag-of-holding][ウオレットアプリ]]を作成
+
+**** システム管理
+
+- Kadenaのサーバーの主な管理者として務めた
+- サーバーやノードをAWSとTerraformとNixOSで管理
+
+**** ドキュメンテーションやユーザー支援
+
+- Pactの[[https://pact-language.readthedocs.io/ja/stable/][ユーザードキュメンテーションを和訳]]
+- ユーザーのノード設定に手助けをしたり、[[https://github.com/kadena-community/node-setup][設定スクリプト]]を提供
+- 会社の代表として日本、アメリカ、カナダでコンファレンス発表
+
+*** [[https://www.azavea.com/][Azavea]] - オープンソースGIS開発 (Scala)
+
+/２０１６年５月･･･２０１７年１２月/
+
+[[https://github.com/locationtech/geotrellis][GeoTrellis]]のオープンソース開発者の一人。[[https://github.com/geotrellis/vectorpipe][VectorPipe]]の作者。
+
+**** 開発
+
+- 地理情報システム（GIS)アルゴリズムを研究、考案、実現
+- Apache Sparkを使用し、結合テストを実行
+- [[https://docs.mapbox.com/vector-tiles/reference/][MapboxのVectorTile]]のコーデックを[[http://hackage.haskell.org/package/vectortiles][Haskell]]と[[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]]で作成
+
+**** システム管理
+
+- DockerとTerraformを利用し、AWSでのサーバーを管理
+
+**** ドキュメンテーションやユーザー支援
+
+- Geotrellisの[[https://geotrellis.readthedocs.io/en/latest/][公式ドキュメンテーション]]を改造
+- Scalaでの関数型プログラミング法を[[https://github.com/fosskers/scalaz-and-cats][推薦]]
+- [[https://haskellbook.com/][Haskell from First Principles]]の会社内勉強会で指導
+
+*** [[https://www.adendamedia.com/][Adenda Media]] - 開発 (Scala)
+
+/2014 May - 2016 April/
+
+Full-stack Scala developer.
+
+**** 開発
+
+- Maintained and enhanced a Play + MySQL backend.
+- Extended a Twitter Bootstrap-based web application.
+- Implemented a content recommendation system using Apache Spark's MLlib.
+
+**** システム管理
+
+- Managed our primary web servers on Digital Ocean.
+
+**** ドキュメンテーション
+
+- Extensive documentation efforts in LaTeX.
+
+** 英語教育
+
+/2010 August - 2013 July/
+
+English Teacher (ALT) for the Sasebo Board of Education
+
+- Taught English to over a thousand Elementary and Middle School students.
+- Created lesson plans, supported Japanese colleagues, and helped grade tests.
+- Ran an English Club for students who wanted extra practice.
+- Coached students to participate in English speech contests.
+
+* 教育
+
+** サイモンフレーザー大学 - Post Bacc. Diploma, Computing Science
+
+/2013 September - 2016 April/
+
+An accelerated undergraduate Diploma program for university graduates. Served as
+Vice President (2014-2015) and as President (2015-2016) of the Computing Science
+Student Society. Achieved the Dean's Honour Roll two years in a row. Also served
+as the president of the SFU Choir for two years.
+
+** 佐賀大学 - SPACEプログラム短期留学
+
+/2008 September - 2009 August/
+
+Member of the one-year SPACE program for international students. Winner of the
+year-end Japanese speech contest for Best Speech and Most Humorous Speech.
+
+** マニトバ大学 - BA, アジア研究
+
+/2006 September - 2010 April/
+
+A four-year degree, majoring in Asian Studies (History and Languages) and
+minoring in Computer Science. Achieved the Dean's Honour Roll.
+
+* オープンソース
+
+| Year | Project          | Role     | Language   | Description                              |
+|------+------------------+----------+------------+------------------------------------------|
+| 2020 | [[https://github.com/kadena-io/chainweb-data][chainweb-data]]    | Core Dev | Haskell    | Data ingestion tool for Chainweb         |
+|------+------------------+----------+------------+------------------------------------------|
+| 2019 | [[https://github.com/kadena-io/chainweb-node][Chainweb]]         | Core Dev | Haskell    | Multi-chain Proof-of-Work Blockchain     |
+|      | [[https://github.com/kadena-community/bag-of-holding][bag-of-holding]]   | Author   | Haskell    | An ncurses terminal wallet for Chainweb  |
+|      | [[https://gitlab.com/fosskers/bounded-queue][bounded-queue]]    | Author   | Haskell    | Bounded queue data structure library     |
+|      | [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]]   | Author   | Haskell    | A mining client for Chainweb             |
+|      | [[https://github.com/kadena-io/streaming-events][streaming-events]] | Author   | Haskell    | Client-side consumption of EventStream   |
+|------+------------------+----------+------------+------------------------------------------|
+| 2018 | [[https://github.com/fosskers/mapalgebra][MapAlgebra]]       | Author   | Haskell    | Efficient, polymorphic Map Algebra       |
+|      | [[https://github.com/fosskers/fosskers.ca][fosskers.ca]]      | Author   | Purescript | My personal website                      |
+|      | [[https://github.com/fosskers/streaming-pcap][streaming-pcap]]   | Author   | Haskell    | Stream packets via libpcap               |
+|      | [[https://github.com/fosskers/servant-xml][servant-xml]]      | Author   | Haskell    | Servant support for XML Content-Type     |
+|------+------------------+----------+------------+------------------------------------------|
+| 2017 | [[https://github.com/geotrellis/vectorpipe][VectorPipe]]       | Author   | Scala      | VectorTile processing through GeoTrellis |
+|      | [[https://github.com/fosskers/streaming-osm][streaming-osm]]    | Author   | Haskell    | Stream OpenStreetMap protobuf data       |
+|      | [[https://github.com/fosskers/scalaz-and-cats][scalaz-and-cats]]  | Author   | Scala      | Benchmarks for Scalaz and Cats           |
+|      | [[https://github.com/fosskers/scala-benchmarks][scala-benchmarks]] | Author   | Scala      | Benchmarks for common Scala idioms       |
+|------+------------------+----------+------------+------------------------------------------|
+| 2016 | [[https://github.com/locationtech/geotrellis][GeoTrellis]]       | Core Dev | Scala      | Geographic data batch processing suite   |
+|      | [[https://github.com/fosskers/pipes-random][pipes-random]]     | Author   | Haskell    | Producers for handling randomness        |
+|      | [[https://github.com/fosskers/vectortiles/][vectortiles]]      | Author   | Haskell    | GIS Vector Tiles, as defined by Mapbox   |
+|------+------------------+----------+------------+------------------------------------------|
+| 2015 | [[http://hackage.haskell.org/package/microlens-aeson][microlens-aeson]]  | Author   | Haskell    | Law-abiding lenses for Aeson             |
+|      | [[https://github.com/fosskers/opengl-linalg][opengl-linalg]]    | Author   | C          | OpenGL-friendly Linear Algebra           |
+|      | [[https://github.com/fosskers/tetris][Tetris]]           | Author   | C          | A 3D Tetris game using OpenGL            |
+|      | [[https://gitlab.com/fosskers/versions][versions]]         | Author   | Haskell    | Types and parsers for software versions  |
+|------+------------------+----------+------------+------------------------------------------|
+| 2013 | [[https://github.com/fosskers/hisp][Hisp]]             | Author   | Haskell    | A simple Lisp                            |
+|------+------------------+----------+------------+------------------------------------------|
+| 2012 | [[https://github.com/aurapm/aura/][Aura]]             | Author   | Haskell    | Package Manager for Arch Linux           |
+|      | [[https://github.com/fosskers/kanji][kanji]]            | Author   | Haskell    | Analyse Japanese Kanji                   |
+|------+------------------+----------+------------+------------------------------------------|
+
+* 証明
+
+| Certification                                 | Level | Year |
+|-----------------------------------------------+-------+------|
+| Goethe-Zertifikat German Language Proficiency | B1    | 2015 |
+| Japanese Kanji Proficiency Test               | Pre-2 | 2013 |
+| Japanese Language Proficiency Test            | N1    | 2012 |
+
+* 発表
+
+| Topic                          | Date      | Venue                    | Location  | Language |
+|--------------------------------+-----------+--------------------------+-----------+----------|
+| Haskell in Production          | 2019 June | LambdaConf               | Boulder   | English  |
+| Beauty and Correctness in Code | 2019 May  | Polyglot Unconference    | Vancouver | English  |
+| Pact Basics                    | 2018 Nov  | NODE Tokyo               | Tokyo     | Japanese |
+| Introduction to Chainweb       | 2018 Nov  | Neutrino Meetup          | Tokyo     | Japanese |
+| [[https://www.youtube.com/watch?v=-UEOLfyDi74][How not to Write Slow Scala]]    | 2018 June | LambdaConf               | Boulder   | English  |
+| Tips on Scala Performance      | 2018 May  | Polyglot Unconference    | Vancouver | English  |
+| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/229599314/][Extensible Effects]]             | 2016 Apr  | Vancouver Haskell Meetup | Vancouver | English  |
+| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/170696382/][Applicative Functors]]           | 2014 Apr  | Vancouver Haskell Meetup | Vancouver | English  |
+| Thoughts on Japanese Education | 2012      | Arkas Sasebo             | Sasebo    | Japanese |
+
+* 趣味
+
+** クライミング
+
+主にリードを好みますが、トップロープもボルダリングも、外でも館内でもします。
+
+*** 大会出場
+
+|   年 | 競技         | 大会       |
+|------+--------------+------------|
+| 2018 | ボルダリング | BC州州大会 |
+
+** 柔術
+
+町の柔術道場に週に数回通っています。
+
+** 言語学習
+
+日本語専門ですが、ドイツ語、イタリア語、エスペラント語も学習した事があります。
+
+** 音楽演奏
+
+| 団体                | 時期                             | 役割     |
+|---------------------+----------------------------------+----------|
+| SFU大学コーラス     | ２０１９年秋                     | 声       |
+| SFU大学コーラス     | ２０１３年秋･･･２０１６年春 | 声・部長    |
+| 早岐地区PTAコーラス | ２０１０年･･･２０１３年     | 声       |
+| Westwood高校ジャズ  | ２００２年秋･･･２００６年春 | サックス |
