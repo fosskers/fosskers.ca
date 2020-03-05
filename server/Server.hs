@@ -135,10 +135,11 @@ pages = runMaybeT $ Pages
   <$> f astyle "org/about-en.org"
   <*> f astyle "org/about-jp.org"
   <*> f cstyle "org/cv-en.org"
-  <*> f cstyle "org/cv-jp.org"
+  <*> f jstyle "org/cv-jp.org"
   where
     astyle = O.OrgStyle False Nothing False
-    cstyle = O.OrgStyle False (Just $ O.TOC "Content" 2) True
+    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True
+    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True
 
     f :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
     f s fp = MaybeT $ (hush >=> O.org >=> pure . O.body s) <$> eread fp

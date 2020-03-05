@@ -4,13 +4,7 @@
 
 * Myself
 
-[[./colin.jpg]]
-
-- Colin Woodbury
-- colin@fosskers.ca
-- https://www.fosskers.ca
-- https://github.com/fosskers
-- https://gitlab.com/fosskers
+[[/assets/colin.jpg]]
 
 I am a full-stack developer and avid contributor to Open Source since 2012. I am
 the author of [[https://github.com/fosskers/aura][Aura]]. As a former teacher, I am skilled at public speaking and
@@ -20,27 +14,27 @@ give conference presentations in both English and Japanese.
 
 ** Programming Languages
 
-- *Haskell* / Purescript / Elm
-- Scala / Java
+- *Haskell*, Purescript, Elm
+- Scala, Java
 - Python
-- C / C++
+- C, C++
 - Emacs Lisp
 
 ** Web Technologies
 
 - Terraform
-- Amazon Web Services / Digital Ocean
-- Elastic Search / Kibana
+- Amazon Web Services, Digital Ocean
+- Elastic Search, Kibana
 - Docker
 - Let's Encrypt
 
 ** Other Technologies and Tools
 
 - Linux
-- Git / Github / Gitlab
+- Git, Github, Gitlab
 - SQL (SQLite, MySQL, MariaDB, Postgres)
 - Apache Spark
-- Nix / NixOS
+- Nix, NixOS
 - Emacs
 - LaTeX
 - Blockchain
@@ -156,7 +150,8 @@ minoring in Computer Science. Achieved the Dean's Honour Roll.
 
 | Year | Project          | Role     | Language   | Description                              |
 |------+------------------+----------+------------+------------------------------------------|
-| 2020 | [[https://github.com/kadena-io/chainweb-data][chainweb-data]]    | Core Dev | Haskell    | Data ingestion tool for Chainweb         |
+| 2020 | [[http://hackage.haskell.org/package/org-mode][org-mode]]         | Author   | Haskell    | Parser for Emacs Org Mode files          |
+|      | [[https://github.com/kadena-io/chainweb-data][chainweb-data]]    | Core Dev | Haskell    | Data ingestion tool for Chainweb         |
 |------+------------------+----------+------------+------------------------------------------|
 | 2019 | [[https://github.com/kadena-io/chainweb-node][Chainweb]]         | Core Dev | Haskell    | Multi-chain Proof-of-Work Blockchain     |
 |      | [[https://github.com/kadena-community/bag-of-holding][bag-of-holding]]   | Author   | Haskell    | An ncurses terminal wallet for Chainweb  |
@@ -220,9 +215,10 @@ indoors.
 
 *** Competition Record
 
-| Year | Sport      | Competition               |
-|------+------------+---------------------------|
-| 2018 | Bouldering | BC Bouldering Provincials |
+| Year | Sport      | Competition               | Venue          |
+|------+------------+---------------------------+----------------|
+| 2020 | Top Rope   | The Flash                 | Cliffhanger    |
+| 2018 | Bouldering | BC Bouldering Provincials | North Van Hive |
 
 ** Brazilian Jiu Jitsu
 

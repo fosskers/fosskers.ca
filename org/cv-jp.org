@@ -4,15 +4,9 @@
 
 * 自己紹介
 
-[[./colin.jpg]]
+[[/assets/colin.jpg]]
 
-- ウッドブリ・コリン (Colin Woodbury)
-- colin@fosskers.ca
-- https://www.fosskers.ca
-- https://github.com/fosskers
-- https://gitlab.com/fosskers
-
-フルスタック開発者・2012年からオープンソースで活躍中・[[https://github.com/fosskers/aura][Aura]]の作者
+フルスタック開発者・2012年からオープンソースで活躍中・ [[https://github.com/fosskers/aura][Aura]] の作者
 
 ウッドブリ・コリンと申します。カナダ生まれで、以前数年間九州に住んだ事があります。
 当時は教師として務めていて、今はその経験を活かしてコンファレンスで日本語でも英語
@@ -23,27 +17,27 @@
 
 ** プログラミング言語
 
-- *Haskell* / Purescript / Elm
-- Scala / Java
+- *Haskell*, Purescript, Elm
+- Scala, Java
 - Python
-- C / C++
+- C, C++
 - Emacs Lisp
 
 ** ウエブ技術
 
 - Terraform
-- Amazon Web Services / Digital Ocean
-- Elastic Search / Kibana
+- Amazon Web Services, Digital Ocean
+- Elastic Search, Kibana
 - Docker
 - Let's Encrypt
 
 ** その他の技術や分野
 
 - Linux
-- Git / Github / Gitlab
+- Git, Github, Gitlab
 - SQL (SQLite, MySQL, MariaDB, Postgres)
 - Apache Spark
-- Nix / NixOS
+- Nix, NixOS
 - Emacs
 - LaTeX
 - Blockchain
@@ -61,10 +55,10 @@
 
 **** 開発
 
-- Chainwebや[[https://pactlang.org/][Pact]]プロジェクトでバックエンドHaskell開発
+- Chainwebや [[https://pactlang.org/][Pact]] プロジェクトでバックエンドHaskell開発
 - Chainwebの採掘何度アルゴリズムを考案し実現
-- Chainwebの採掘クライエント[[https://github.com/kadena-io/chainweb-miner][chainweb-miner]]を作成
-- ncursesを用いて[[https://github.com/kadena-community/bag-of-holding][ウオレットアプリ]]を作成
+- Chainwebの採掘クライエント [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]] を作成
+- ncursesを用いて [[https://github.com/kadena-community/bag-of-holding][ウオレットアプリ]] を作成
 
 **** システム管理
 
@@ -73,21 +67,21 @@
 
 **** ドキュメンテーションやユーザー支援
 
-- Pactの[[https://pact-language.readthedocs.io/ja/stable/][ユーザードキュメンテーションを和訳]]
-- ユーザーのノード設定に手助けをしたり、[[https://github.com/kadena-community/node-setup][設定スクリプト]]を提供
+- Pactの [[https://pact-language.readthedocs.io/ja/stable/][ユーザードキュメンテーションを和訳]]
+- ユーザーのノード設定に手助けをしたり、 [[https://github.com/kadena-community/node-setup][設定スクリプト]] を提供
 - 会社の代表として日本、アメリカ、カナダでコンファレンス発表
 
 *** [[https://www.azavea.com/][Azavea]] - オープンソースGIS開発 (Scala)
 
 /２０１６年５月･･･２０１７年１２月/
 
-[[https://github.com/locationtech/geotrellis][GeoTrellis]]のオープンソース開発者の一人。[[https://github.com/geotrellis/vectorpipe][VectorPipe]]の作者。
+[[https://github.com/locationtech/geotrellis][GeoTrellis]]のオープンソース開発者の一人。 [[https://github.com/geotrellis/vectorpipe][VectorPipe]] の作者。
 
 **** 開発
 
 - 地理情報システム（GIS)アルゴリズムを研究、考案、実現
 - Apache Sparkを使用し、結合テストを実行
-- [[https://docs.mapbox.com/vector-tiles/reference/][MapboxのVectorTile]]のコーデックを[[http://hackage.haskell.org/package/vectortiles][Haskell]]と[[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]]で作成
+- [[https://docs.mapbox.com/vector-tiles/reference/][MapboxのVectorTile]]のコーデックを [[http://hackage.haskell.org/package/vectortiles][Haskell]] と [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]] で作成
 
 **** システム管理
 
@@ -95,8 +89,8 @@
 
 **** ドキュメンテーションやユーザー支援
 
-- Geotrellisの[[https://geotrellis.readthedocs.io/en/latest/][公式ドキュメンテーション]]を改造
-- Scalaでの関数型プログラミング法を[[https://github.com/fosskers/scalaz-and-cats][推薦]]
+- Geotrellisの [[https://geotrellis.readthedocs.io/en/latest/][公式ドキュメンテーション]] を改造
+- Scalaでの関数型プログラミング法を [[https://github.com/fosskers/scalaz-and-cats][推薦]]
 - [[https://haskellbook.com/][Haskell from First Principles]]の会社内勉強会で指導
 
 *** [[https://www.adendamedia.com/][Adenda Media]] - 開発 (Scala)
