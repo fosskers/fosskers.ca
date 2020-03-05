@@ -78,7 +78,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "About" "/en/about" $ active About
       item "Blog" "/en/blog" $ active Posts
       dropdown "Projects" projects
-      dropdown "Tools" [Just ("Kanji Analysis", "#")]
+      -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
       item "CV" "/en/cv" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
       icon "https://gitlab.com/fosskers" ["fab", "fa-gitlab"]
@@ -91,7 +91,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "自己紹介" "/jp/about" $ active About
       item "ブログ" "/jp/blog" $ active Posts
       dropdown "プロジェクト" projects
-      dropdown "ツール" [Just ("漢字分析", "#")]
+      -- dropdown "ツール" [Just ("漢字分析", "#")]
       item "履歴書" "/jp/cv" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://gitlab.com/fosskers" ["fab", "fa-gitlab"]
