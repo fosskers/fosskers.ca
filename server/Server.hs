@@ -103,6 +103,8 @@ orgFiles = do
 orgs :: MonadIO m => NonEmpty FilePath -> m (These (NonEmpty Text) (NonEmpty Blog))
 orgs = fmap partitionEithersNE . traverse g
   where
+    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True
+
     -- g :: FilePath -> m (Either Text Blog)
     g f = do
       content <- eread f
@@ -113,7 +115,7 @@ orgs = fmap partitionEithersNE . traverse g
         lang <- note ("Invalid language given for file: " <> path) $ pathLang f
         void . note ("No date provided for: " <> path) . O.metaDate $ O.orgMeta ofile
         void . note ("No title provided for: " <> path) . O.metaTitle $ O.orgMeta ofile
-        Right . Blog lang (pathSlug f) ofile $ O.body ofile
+        Right . Blog lang (pathSlug f) ofile $ O.body style ofile
 
 eread :: MonadIO m => FilePath -> m (Either Text Text)
 eread path = do
