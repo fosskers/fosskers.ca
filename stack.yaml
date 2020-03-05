@@ -1,4 +1,4 @@
-resolver: lts-14.27
+resolver: lts-15.2
 
 ghc-options: {"$locals": -ddump-to-file -ddump-hi}
 
@@ -13,7 +13,6 @@ extra-deps:
   # --- Missing from Stackage --- #
   - org-mode-1.0.0
   - org-mode-lucid-1.0.0
-  # --- Forced Upgrades --- #
-  - megaparsec-8.0.0
-  - parser-combinators-1.2.1
-  - shelly-1.9.0
+  - servant-xml-1.0.1.4
+  - xmlbf-0.6.1
+  - xmlbf-xeno-0.2
