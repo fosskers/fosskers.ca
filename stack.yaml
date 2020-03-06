@@ -12,7 +12,7 @@ flags:
 extra-deps:
   # --- Missing from Stackage --- #
   - org-mode-1.0.0
-  - org-mode-lucid-1.0.0
+  - org-mode-lucid-1.0.1
   - servant-xml-1.0.1.4
   - xmlbf-0.6.1
   - xmlbf-xeno-0.2

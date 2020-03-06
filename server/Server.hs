@@ -142,7 +142,10 @@ pages = runMaybeT $ Pages
     jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True
 
     f :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
-    f s fp = MaybeT $ (hush >=> O.org >=> pure . O.body s) <$> eread fp
+    f s fp = O.body s <$> MaybeT (orgd fp)
+
+orgd :: FilePath -> IO (Maybe O.OrgFile)
+orgd fp = (hush >=> O.org) <$> eread fp
 
 -- analysisFiles :: IO (Map Text Text)
 -- analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
