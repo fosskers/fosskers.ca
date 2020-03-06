@@ -1,7 +1,6 @@
 #+TITLE: Measuring Haskell Container Sizes
 #+DATE: 2019-09-24
 #+AUTHOR: Colin
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
 
 I was recently surprised to discover a big-O time complexity difference in
 measuring the size of ~Map~ vs ~HashMap~ through their respective ~size~

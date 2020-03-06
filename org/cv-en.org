@@ -1,6 +1,5 @@
 #+TITLE: Colin Woodbury
 #+AUTHOR: Colin
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-theme.css"/>
 
 * Myself
 

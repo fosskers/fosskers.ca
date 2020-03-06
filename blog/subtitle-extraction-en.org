@@ -1,7 +1,6 @@
 #+TITLE: Extracting Subtitles from MP4 Files
 #+DATE: 2019-07-01
 #+AUTHOR: Colin
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
 
 Let's say you've got a video file on hand with baked-in subtitles. No matter
 what you try, your casting software just can't convince ChromeCast to utilize

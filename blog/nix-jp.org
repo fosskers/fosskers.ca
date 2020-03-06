@@ -1,7 +1,6 @@
 #+TITLE: NixとDanteでHaskell開発
 #+DATE: 2018-01-10
 #+AUTHOR: こりん
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
 
 日頃のHaskell開発で使ってみるために（やっと）Nixを身につけた。下記は俺のNix設定と
 開発の流れの説明。

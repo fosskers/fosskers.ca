@@ -1,8 +1,6 @@
 #+TITLE: Realistic Single-Server Raster Processing
 #+DATE: 2018-05-11
 #+AUTHOR: Colin
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
-#+OPTIONS: toc:2
 
 * Preface
 

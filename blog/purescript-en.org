@@ -1,7 +1,6 @@
 #+TITLE: Websites with Servant and Purescript/Halogen
 #+DATE: 2018-02-21
 #+AUTHOR: Colin
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
 
 * Haskell
 
