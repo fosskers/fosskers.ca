@@ -1,5 +1,5 @@
 #+TITLE: Tracking Changes to Base
-#+DATE: 2020-02-25
+#+DATE: 2020-03-05
 #+AUTHOR: Colin
 
 The [[https://matrix.hackage.haskell.org/#/package/versions][Hackage Matrix Builder]] is a great way to track how compatible a library is
@@ -91,4 +91,4 @@ typeclass and functions are available with minimal dependencies via the
 
 ** TODOs
 
-- Cabal File: Conditional dependencies based on GHC version.
+- Cabal File: Examples of conditional dependencies based on GHC version.
