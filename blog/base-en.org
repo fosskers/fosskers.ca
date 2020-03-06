@@ -54,6 +54,10 @@ free to bookmark it or even [[https://github.com/fosskers/fosskers.ca][help upda
 #+begin_src haskell
   {-# LANGUAGE CPP #-}
 
+  #if !MIN_VERSION_base(4,11,0)
+  import Data.Semigroup
+  #endif
+
   instance Semigroup Foo where
     a <> b = ...
 
