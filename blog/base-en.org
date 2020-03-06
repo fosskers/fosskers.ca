@@ -49,7 +49,13 @@ free to bookmark it or even [[https://github.com/fosskers/fosskers.ca][help upda
   #endif
 #+end_src
 
+A construction like ~#if __GLASGOW_HASKELL__ < 841~ is also possible, but I find
+this less clear than comparing against ~base~.
+
 ** Backwards-compatible ~Monoid~ Instances
+
+This will allow your library to support GHC >= 8.0. Excluding this CPP will
+limit your compatibility to GHC >= 8.4.
 
 #+begin_src haskell
   {-# LANGUAGE CPP #-}
@@ -89,7 +95,7 @@ dependency graph is now "opt out", and the following can be added to a
 *** Minimal dependencies for ~witherable~
 
 ~wither :: Applicative f => (a -> f (Maybe b)) -> t a -> f (t b)~ is a
-convenient function from the ~witherable~ package. As of 2020 December, the core
+convenient function from the ~witherable~ package. As of 2019 December, the core
 typeclass and functions are available with minimal dependencies via the
 ~witherable-class~ library.
 
