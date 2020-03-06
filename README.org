@@ -1,1 +1,63 @@
-[[http://fosskers.ca][fosskers.ca]]
+#+TITLE: fosskers.ca
+
+https://github.com/fosskers/fosskers.ca/workflows/Build/badge.svg
+
+This is the repo for my personal website. It serves static HTML pages from a
+Haskell backend built with [[http://hackage.haskell.org/package/servant][servant]], [[http://hackage.haskell.org/package/lucid][lucid]], and [[http://hackage.haskell.org/package/org-mode][org-mode]].
+
+* Table of Contents                                       :TOC_4_gh:noexport:
+- [[#english][English]]
+  - [[#blog-posts][Blog Posts]]
+    - [[#how-do-they-work][How do they work?]]
+    - [[#how-can-i-edit-one][How can I edit one?]]
+  - [[#deployment][Deployment]]
+- [[#日本語][日本語]]
+  - [[#ブログ][ブログ]]
+    - [[#ブログの仕組みは][ブログの仕組みは？]]
+    - [[#編集の仕方は][編集の仕方は？]]
+  - [[#デプロイメント][デプロイメント]]
+
+* English
+
+** Blog Posts
+
+*** How do they work?
+
+ All the blog posts are written in the [[https://orgmode.org/][Emacs Org Mode]] format. Upon startup, the
+ server reads all ~.org~ files in the ~blog/~ directory and parsers them via my
+ [[http://hackage.haskell.org/package/org-mode][org-mode]] library. The parsed results are fed into [[http://hackage.haskell.org/package/org-mode-lucid][org-mode-lucid]] and stored in
+ the server's runtime environment. Whenever a request for a blog post is made,
+ one of these stored ~Html ()~ structures is injected into the template for the
+ rest of the page and then served.
+
+*** How can I edit one?
+
+ Simple edit one of the ~.org~ files in the ~blog/~ directory, and the next time
+ the site is deployed, your changes will be included.
+
+** Deployment
+
+ The website is hosted on Heroku, and is deployed automatically upon every merge
+ to this repository's ~master~ branch. [[https://www.fosskers.ca/en/blog/deploying-haskell][This blog post]] of mine explains the
+ details.
+
+* 日本語
+
+** ブログ
+
+*** ブログの仕組みは？
+
+そのサイトの全てのブログは [[https://orgmode.org/][EmacsのOrg Mode]]　フォーマットで書かれています。サーバー
+が起動する時、ブログファイルが全部読まれ、私の書いた [[http://hackage.haskell.org/package/org-mode][org-mode]] ライブラリによって
+パースされ、サーバーの実行環境で保存されます。サイトにブログのリクエストが入ると、
+パースされた内容がページに投入され普通のHTMLとしてユーザーに返却されます。
+
+*** 編集の仕方は？
+
+~blog/~ にある ~.org~ ファイルを編集し、サイトが次にデプロイされる際にブログの新
+しい内容や変更は自動的に含まれます。
+
+** デプロイメント
+
+このサイトは Heroku でホストされています。本レポジトリの ~master~ が更新される度
+にサイトが自動的にデプロイされます。詳しくは [[https://www.fosskers.ca/jp/blog/deploying-haskell][このブログ]] で説明されています。
