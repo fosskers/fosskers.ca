@@ -99,6 +99,22 @@ convenient function from the ~witherable~ package. As of 2019 December, the core
 typeclass and functions are available with minimal dependencies via the
 ~witherable-class~ library.
 
+*** Your library's version in your code
+
+This trick lets your library/program have programmatic access to the ~version:~
+value you specified in your ~.cabal~ file.
+
+#+begin_src haskell
+  {-# LANGUAGE CPP #-}
+
+  #ifndef CURRENT_PACKAGE_VERSION
+  #define CURRENT_PACKAGE_VERSION "UNKNOWN"
+  #endif
+
+  ver :: Text
+  ver = CURRENT_PACKAGE_VERSION
+#+end_src
+
 ** TODOs
 
 - Cabal File: Examples of conditional dependencies based on GHC version.
