@@ -47,7 +47,7 @@ Haskell backend built with [[http://hackage.haskell.org/package/servant][servant
 
 *** ブログの仕組みは？
 
-そのサイトの全てのブログは [[https://orgmode.org/][EmacsのOrg Mode]]　フォーマットで書かれています。サーバー
+そのサイトの全てのブログは [[https://orgmode.org/][EmacsのOrg Mode]] フォーマットで書かれています。サーバー
 が起動する時、ブログファイルが全部読まれ、私の書いた [[http://hackage.haskell.org/package/org-mode][org-mode]] ライブラリによって
 パースされ、サーバーの実行環境で保存されます。サイトにブログのリクエストが入ると、
 パースされた内容がページに投入され普通のHTMLとしてユーザーに返却されます。
