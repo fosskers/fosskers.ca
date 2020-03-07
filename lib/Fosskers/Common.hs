@@ -2,10 +2,7 @@
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TypeOperators      #-}
-
-{-# OPTIONS_GHC -fno-warn-orphans #-}
 
 module Fosskers.Common
   ( -- * APIs
@@ -21,31 +18,29 @@ module Fosskers.Common
   , Path(..)
   , pathLang
   , pathSlug
+  , ByLanguage(..)
   ) where
 
 import           Data.Aeson (ToJSON)
+import           Data.Hourglass (getWeekDay)
 import           Data.Map.NonEmpty (NEMap)
-import           System.FilePath.Posix (takeBaseName)
--- import           Data.Hourglass (getWeekDay)
 import qualified Data.Org as O
--- import           Fosskers.Kanji (Analysis)
+import           Data.Time.Calendar (Day(..), fromGregorian)
 import           Lucid (Html)
 import           RIO
--- import qualified RIO.HashMap as HM
+import qualified RIO.HashMap as HM
 import qualified RIO.Text as T
--- import qualified RIO.Text.Lazy as TL
+import qualified RIO.Text.Lazy as TL
 import           Servant.API
 import           Servant.HTML.Lucid
--- import           Servant.XML
--- import           Text.Printf (printf)
-import           Time.Types (Date(..), Month(..))
--- import           Xmlbf (Node, ToXml(..), element, text)
+import           Servant.XML
+import           System.FilePath.Posix (takeBaseName)
+import           Text.Printf (printf)
+import           Time.Compat (dateFromTAIEpoch)
+import           Time.Types (Date(..))
+import           Xmlbf (Node, ToXml(..), element, text)
 
 ---
-
--- type JsonAPI = "posts" :> Get '[JSON] [Blog]
---   :<|> "kanji" :> ReqBody '[JSON] Text :> Post '[JSON] Analysis
---   :<|> "kanji" :> Capture "text" Text :> Get '[JSON] (Maybe Analysis)
 
 type API =
   "assets" :> Raw
@@ -54,20 +49,13 @@ type API =
   :<|> Capture "language" Language :> "cv"    :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Capture "title" Text :> Get '[HTML] (Html ())
-  -- :<|> Capture "language" Language :> "rss" :> Get '[XML] Blogs
+  :<|> Capture "language" Language :> "rss" :> Get '[XML] ByLanguage
   :<|> Capture "language" Language :> Get '[HTML] (Html ())
   :<|> Get '[HTML] (Html ())
 
 newtype Title = Title Text
   deriving stock (Eq, Show, Generic)
   deriving anyclass (ToJSON)
-
--- TODO Use better time types. What does Aeson have support for?
--- Evil evil orphan instances.
-deriving stock instance Generic Date
-deriving stock instance Generic Month
-deriving anyclass instance ToJSON Date
-deriving anyclass instance ToJSON Month
 
 data Language = English | Japanese
   deriving stock (Eq, Ord, Show, Generic)
@@ -112,31 +100,39 @@ pathLang p = case T.take 3 . T.takeEnd 7 $ T.pack p of
 pathSlug :: FilePath -> Text
 pathSlug = T.dropEnd 3 . T.pack . takeBaseName
 
--- instance ToXml Blog where
---   toXml (Blog (Title t) d (Path p) _) = b
---     where
---       b :: [Node]
---       b = element "item" mempty
---           $  element "title" mempty (text $ TL.fromStrict t)
---           <> element "link" mempty (text . TL.fromStrict $ "https://fosskers.ca/blog/" <> p <> ".html")
---           <> element "pubDate" mempty (text . TL.pack $ dtt d)
---           <> element "description" mempty (text $ TL.fromStrict t)
+-- | For the RSS feed.
+newtype ByLanguage = ByLanguage (NonEmpty Blog)
 
--- -- | Format a `Date` in a way acceptable to RSS feeds.
--- dtt :: Date -> String
--- dtt d@(Date ye mo da) = printf "%s, %d %s %d 00:00:00 GMT" wd da mo' ye
---   where
---     wd = take 3 . show $ getWeekDay d
---     mo' = take 3 $ show mo
+instance ToXml Blog where
+  toXml (Blog l slug (O.OrgFile (O.Meta t d _ _ _) _) _) =
+    element "item" mempty
+    $  element "title" mempty (text . TL.fromStrict $ fromMaybe "Untitled" t)
+    <> element "link" mempty
+    (text . TL.fromStrict $ "https://www.fosskers.ca/" <> langPath l <> "/blog/" <> slug)
+    <> element "pubDate" mempty (text . TL.pack . dtt . dtd $ fromMaybe defDay d)
+    <> element "description" mempty (text . TL.fromStrict $ fromMaybe "No description" t)
+    where
+      defDay = fromGregorian 2017 1 1
 
--- newtype Blogs = Blogs [Blog]
+dtd :: Day -> Date
+dtd = dateFromTAIEpoch . toModifiedJulianDay
 
--- instance ToXml Blogs where
---   toXml (Blogs bs) = element "rss" (HM.singleton "version" "2.0")
---                      $ element "channel" mempty (info <> foldMap toXml bs)
---     where
---       info :: [Node]
---       info = element "title" mempty (text "Fosskers.ca Blog")
---              <> element "link" mempty (text "https://fosskers.ca")
---              <> element "description" mempty
---              (text "Articles on Haskell, Functional Programming, and Japanese")
+-- TODO Fri 06 Mar 2020 04:30:12 PM PST
+-- It would be nice to know /why/ this is the acceptable format.
+-- | Format a `Date` in a way acceptable to RSS feeds.
+dtt :: Date -> String
+dtt d@(Date ye mo da) = printf "%s, %d %s %d 00:00:00 GMT" wd da mo' ye
+  where
+    wd = take 3 . show $ getWeekDay d
+    mo' = take 3 $ show mo
+
+instance ToXml ByLanguage where
+  toXml (ByLanguage bs) =
+    element "rss" (HM.singleton "version" "2.0")
+    $ element "channel" mempty (info <> foldMap toXml bs)
+    where
+      info :: [Node]
+      info = element "title" mempty (text "Fosskers.ca Blog")
+             <> element "link" mempty (text "https://www.fosskers.ca")
+             <> element "description" mempty
+             (text "Articles on Haskell, Functional Programming, and Japanese")

@@ -60,44 +60,21 @@ server ps bs =
   :<|> (\l -> pure . site l CV $ cv ps l)
   :<|> (\l -> pure . site l Posts . blog bs l $ newest bs l)
   :<|> (\l t -> pure . site l Posts . blog bs l $ choose bs l t)
-  -- :<|> pure . rss (stats env)
+  :<|> pure . rss bs
   :<|> (\l -> pure . site l Posts . blog bs l $ newest bs l)
   :<|> pure (site English Posts . blog bs English $ newest bs English)
 
--- TODO What type issues?
--- | Split off from `server` to avoid type issues.
--- jsonServer :: Env -> Server JsonAPI
--- jsonServer env = pure (stats env)
---   :<|> pure . analysis
---   :<|> (\t -> pure . M.lookup t $ texts env)
-
--- rss :: [Blog] -> Language -> Blogs
--- rss bs l = Blogs . L.sortOn (Down . date) $ filter (\b -> pathLang (filename b) == Just l) bs
+rss :: Blogs -> Language -> ByLanguage
+rss bs l = ByLanguage $ NEL.sortWith (Down . O.metaDate . O.orgMeta . blogRaw) ps
+  where
+    ps = case l of
+      English -> engSorted bs
+      Japanese -> japSorted bs
 
 app :: Pages -> Blogs -> Application
 app ps bs = gzip (def { gzipFiles = GzipCompress })
   . serve (Proxy :: Proxy API)
   $ server ps bs
-
--- -- | A mapping of word frequencies.
--- freq :: Text -> [(Text, Int)]
--- freq = map (h &&& length) . L.group . L.sort . filter g . map T.toLower . T.words . T.map f
---   where
---     f :: Char -> Char
---     f c = bool ' ' c $ isAlpha c
-
---     g :: Text -> Bool
---     g w = let l = T.length w in l > 2 && l < 13 && not (S.member w functionWords)
-
---     h :: [Text] -> Text
---     h []    = "死毒殺悪厄魔"
---     h (c:_) = c
-
--- functionWords :: Set Text
--- functionWords = S.fromList
---   [ "and", "but", "for", "our", "the", "that", "this", "these", "those", "then", "than"
---   , "what", "when", "where", "will", "your", "you", "are", "can", "has", "have"
---   , "here", "there", "how", "who", "its", "just", "not", "now", "only", "they" ]
 
 -- | Abosolute paths to all the @.org@ blog files.
 orgFiles :: Sh [FilePath]
@@ -146,13 +123,6 @@ pages = runMaybeT $ Pages
 
 orgd :: FilePath -> IO (Maybe O.OrgFile)
 orgd fp = (hush >=> O.org) <$> eread fp
-
--- analysisFiles :: IO (Map Text Text)
--- analysisFiles = fmap (M.fromList . rights) . shelly $ traverse f files
---   where
---     f :: Text -> Sh (Either Text (Text, Text))
---     f fp = fmap ((fp,) <$>) . eread $ fromText ("server/" <> fp <> ".txt")
---     files = [ "doraemon", "rashomon", "iamacat", "sumo" ]
 
 main :: IO ()
 main = do
