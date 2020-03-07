@@ -17,7 +17,7 @@ extra-deps:
   - xmlbf-0.6.1
   - xmlbf-xeno-0.2
   - github: fosskers/org-mode
-    commit: b4baa42d6e81ba706cf78b1992721380c10785a0
+    commit: 8cc2b1bbf750cb7b9b95634c2e3050bc4f57a0c2
     subdirs:
       - org-mode-lucid
   - github: fosskers/skylighting-lucid

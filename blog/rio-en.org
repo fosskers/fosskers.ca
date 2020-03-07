@@ -82,9 +82,9 @@ I can't overstate how removing these in favour of ~RIO Env a~ simplified my
 life. Look at this diff:
 
 #+begin_src diff
-  - installPkgFiles :: (Carrier sig m, Member (Reader Env) sig, Member (Error Failure) sig, Member (Lift IO) sig) =>
+  - install :: (Carrier sig m, Member (Reader Env) sig, Member (Error Failure) sig, Member (Lift IO) sig) =>
   -   NESet PackagePath -> m ()
-  + installPkgFiles :: NESet PackagePath -> RIO Env ()
+  + install :: NESet PackagePath -> RIO Env ()
 #+end_src
 
 This port PR was filled with lines like this, and each one gave me joy. Yes we

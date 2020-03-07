@@ -29,6 +29,7 @@ pre.src-scala:before { content: 'Scala'; }
 pre.src-makefile:before { content: 'Makefile'; }
 pre.src-terraform:before { content: 'Terraform'; }
 pre.src-sql:before { content: 'SQL'; }
+pre.src-diff:before { content: 'Diff'; }
 caption.t-above { caption-side: top; }
 caption.t-bottom { caption-side: bottom; }
 dt { font-weight: bold; }
@@ -44,6 +45,6 @@ textarea { overflow-x: auto; }
 .org-info-js_info-navigation { border-style: none; }
 #org-info-js_console-label { font-size: 10px; font-weight: bold; white-space: nowrap; }
 .org-info-js_search-highlight { background-color: #ffff00; color: #000000; font-weight: bold; }
-/* code{padding:2px 5px;margin:auto 1px;border:1px solid #ddd;border-radius:3px;background-clip:padding-box;font-size:80%} */
+code.org-highlight {padding:2px 5px;margin:auto 1px;border:1px solid #ddd;border-radius:3px;background-clip:padding-box;font-size:80%}
 blockquote{margin:1em 2em;padding-left:1em;border-left:3px solid #ccc}
 img { max-width: 100%; height: auto; }
