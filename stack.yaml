@@ -20,3 +20,5 @@ extra-deps:
     commit: b4baa42d6e81ba706cf78b1992721380c10785a0
     subdirs:
       - org-mode-lucid
+  - github: fosskers/skylighting-lucid
+    commit: a440b1b98aeba219dba03ad7dad67772e6fef660

@@ -1,34 +1,36 @@
+{-# LANGUAGE BangPatterns       #-}
 {-# LANGUAGE DataKinds          #-}
-{-# LANGUAGE RankNTypes          #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE LambdaCase         #-}
+{-# LANGUAGE RankNTypes         #-}
+{-# LANGUAGE TypeApplications   #-}
 {-# LANGUAGE TypeOperators      #-}
 
 module Main ( main ) where
 
-import Control.Monad.Trans.Maybe (MaybeT(..))
-import Data.Bitraversable (bitraverse)
-import Lucid
-import           Data.Map.NonEmpty (NEMap)
 import           Control.Concurrent (getNumCapabilities)
-import           Control.Error.Util (note, hush)
+import           Control.Error.Util (hush, note)
+import           Control.Monad.Trans.Maybe (MaybeT(..))
 import           Data.Bifunctor (first)
+import           Data.Bitraversable (bitraverse)
 import           Data.Generics.Product (typed)
-import qualified Data.Org as O
+import           Data.Map.NonEmpty (NEMap)
 import qualified Data.Map.NonEmpty as NEM
+import qualified Data.Org as O
 import qualified Data.Org.Lucid as O
 import           Data.These (These(..), partitionEithersNE)
 import           Fosskers.Common
 import           Fosskers.Site (Page(..), site)
 import           Fosskers.Site.About (about)
+import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
-import           Fosskers.Site.Blog (choose, newest, blog)
+import           Lucid
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Generic
 import           RIO hiding (first)
-import           UnliftIO.Directory (doesFileExist)
 import qualified RIO.List as L
 import qualified RIO.NonEmpty as NEL
 import qualified RIO.Text as T
@@ -36,8 +38,11 @@ import           Servant.API
 import           Servant.Server
 import           Servant.Server.StaticFiles (serveDirectoryFileServer)
 import           Shelly hiding (path)
+import           Skylighting hiding (formatHtmlBlock)
+import           Skylighting.Format.HTML.Lucid (formatHtmlBlock)
 import           System.Environment (lookupEnv)
 import           Text.Megaparsec (errorBundlePretty, parse)
+import           UnliftIO.Directory (doesFileExist)
 
 ---
 
@@ -68,13 +73,24 @@ rss :: Blogs -> Language -> ByLanguage
 rss bs l = ByLanguage $ NEL.sortWith (Down . O.metaDate . O.orgMeta . blogRaw) ps
   where
     ps = case l of
-      English -> engSorted bs
+      English  -> engSorted bs
       Japanese -> japSorted bs
 
 app :: Pages -> Blogs -> Application
 app ps bs = gzip (def { gzipFiles = GzipCompress })
   . serve (Proxy :: Proxy API)
   $ server ps bs
+
+-- | Syntax highlighting "middleware" thanks to Skylighting and org-mode-lucid.
+skylighting :: O.Highlighting
+skylighting l t = maybe (O.codeHTML l t) (formatHtmlBlock fo) $ do
+  O.Language lang <- l <|> Just (O.Language "Default")
+  syn <- syntaxByName defaultSyntaxMap lang
+  hush $ tokenize tc syn t
+  where
+    tc = TokenizerConfig defaultSyntaxMap False
+    fo = defaultFormatOpts
+      { containerClasses = "src" : maybe [] (\(O.Language l') -> ["src-" <> l']) l }
 
 -- | Abosolute paths to all the @.org@ blog files.
 orgFiles :: Sh [FilePath]
@@ -86,7 +102,7 @@ orgFiles = do
 orgs :: MonadIO m => NonEmpty FilePath -> m (These (NonEmpty Text) (NonEmpty Blog))
 orgs = fmap partitionEithersNE . traverse g
   where
-    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True O.codeHTML
+    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True skylighting
 
     -- g :: FilePath -> m (Either Text Blog)
     g f = do
@@ -114,9 +130,9 @@ pages = runMaybeT $ Pages
   <*> f cstyle "org/cv-en.org"
   <*> f jstyle "org/cv-jp.org"
   where
-    astyle = O.OrgStyle False Nothing False O.codeHTML
-    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True O.codeHTML
-    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True O.codeHTML
+    astyle = O.OrgStyle False Nothing False skylighting
+    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True skylighting
+    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True skylighting
 
     f :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
     f s fp = O.body s <$> MaybeT (orgd fp)
