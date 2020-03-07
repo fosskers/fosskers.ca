@@ -86,7 +86,7 @@ orgFiles = do
 orgs :: MonadIO m => NonEmpty FilePath -> m (These (NonEmpty Text) (NonEmpty Blog))
 orgs = fmap partitionEithersNE . traverse g
   where
-    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True
+    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True O.codeHTML
 
     -- g :: FilePath -> m (Either Text Blog)
     g f = do
@@ -114,9 +114,9 @@ pages = runMaybeT $ Pages
   <*> f cstyle "org/cv-en.org"
   <*> f jstyle "org/cv-jp.org"
   where
-    astyle = O.OrgStyle False Nothing False
-    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True
-    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True
+    astyle = O.OrgStyle False Nothing False O.codeHTML
+    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True O.codeHTML
+    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True O.codeHTML
 
     f :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
     f s fp = O.body s <$> MaybeT (orgd fp)
