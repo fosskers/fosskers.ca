@@ -12,13 +12,8 @@ flags:
 extra-deps:
   # --- Missing from Stackage --- #
   - org-mode-1.0.0
-  # - org-mode-lucid-1.0.1
+  - org-mode-lucid-1.1.0
   - servant-xml-1.0.1.4
+  - skylighting-lucid-1.0.0
   - xmlbf-0.6.1
   - xmlbf-xeno-0.2
-  - github: fosskers/org-mode
-    commit: 8cc2b1bbf750cb7b9b95634c2e3050bc4f57a0c2
-    subdirs:
-      - org-mode-lucid
-  - github: fosskers/skylighting-lucid
-    commit: a440b1b98aeba219dba03ad7dad67772e6fef660

@@ -34,7 +34,7 @@ common commons
     , megaparsec           >=7.0  && <9
     , nonempty-containers  ^>=0.3
     , org-mode             ^>=1.0
-    , org-mode-lucid       ^>=1.0
+    , org-mode-lucid       ^>=1.1
     , rio                  ^>=0.1
     , servant              >=0.11 && <0.17
     , servant-lucid        >=0.7  && <0.10
