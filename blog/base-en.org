@@ -75,6 +75,37 @@ limit your compatibility to GHC >= 8.4.
   #endif
 #+end_src
 
+** Optional dependencies based on GHC version
+
+For instance, until GHC 8.0, the ~Semigroup~ typeclass was not in ~base~. The
+following will include the ~semigroups~ dependency, but only when it detects
+that you need it:
+
+#+begin_src cabal
+library
+  build-depends:
+    base >= 4.8 && < 5
+    ...
+
+  if !impl(ghc >= 8.0)
+    build-depends:
+      semigroups >= 0.8.4 && < 1
+#+end_src
+
+Multiple ~build-depends~ sections like this combine, they don't override one
+another.
+
+** ~*-compat~ packages
+
+There are a number of packages that smooth the transition between compiler
+versions by backporting newer functionality. The major ones are:
+
+- [[https://hackage.haskell.org/package/base-compat][base-compat]]
+- [[https://hackage.haskell.org/package/base-orphans][base-orphans]], its sister package
+- [[http://hackage.haskell.org/package/base-compat-batteries][base-compat-batteries]], similar to ~base-compat~ but with more dependencies
+
+To see all such libraries, [[https://hackage.haskell.org/packages/search?terms=compat][search for "compat" on Hackage]].
+
 ** Misc. Ecosystem Pearls
 
 *** Minimal dependencies for ~these~
@@ -115,6 +146,9 @@ value you specified in your ~.cabal~ file.
   ver = CURRENT_PACKAGE_VERSION
 #+end_src
 
-** TODOs
 
-- Cabal File: Examples of conditional dependencies based on GHC version.
+* Resources
+
+- [[http://hackage.haskell.org/package/base/changelog][CHANGELOG]] for ~base~
+- [[https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/][GHC User's Guide]]
+- [[https://github.com/haskell-infra/hackage-trustees/blob/master/cookbook.md][Hackage Trustee Cookbook]]
