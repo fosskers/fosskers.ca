@@ -8,7 +8,7 @@
 favourite of all the frameworks I've ever tried in any language. It has a
 healthly ecosystem, and in this case, integrates well with Purescript.
 
-This section assumes a ~stack~-based Haskell project and familiarity with
+This section assumes a stack-based Haskell project and familiarity with
 Servant.
 
 ** Project Structure
