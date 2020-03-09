@@ -36,6 +36,7 @@ free to bookmark it or even [[https://github.com/fosskers/fosskers.ca][help upda
 | 7.10 |            4.8 |            6 | ~Applicative~ is superclass of ~Monad~  |
 |      |                |              | ~Applicative~ exported by ~Prelude~     |
 |------+----------------+--------------+-----------------------------------------|
+|  7.8 |            4.7 |            2 |                                         |
 
 * Compatibility Pearls
 

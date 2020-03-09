@@ -1,0 +1,192 @@
+#+TITLE: Github CI for Stack Projects
+#+DATE: 2020-03-09
+#+AUTHOR: Colin
+
+* How Github CI Works
+
+Github CI is free to use and easy to set up. Being a native CI solution, it has
+great integration with the rest of the Github UI. Jobs run simultaneously, your
+dependencies can be cached, and your build artefacts can be processed.
+Haskellers will also appreciate that basic config with reasonable defaults for
+Haskell projects is /much/ simpler than the corresponding config for Travis.
+
+** Config Definition
+
+By virtue of commiting legal config to ~.github/workflows/~, all subsequent
+pushes will use Github's CI, even in the PR that first introduces it. I
+typically call this file ~ci.yaml~. This defines a *Pipeline* which can contain
+one or more *Jobs*. By writing another ~.yaml~ file to ~.github/workflows/~, you
+define another independent Pipeline. These will run simultaneously, as do the
+Jobs themselves.
+
+** Actions
+
+#+begin_src yaml
+  ...
+    jobs:
+      build:
+        name: CI
+        runs-on: ubuntu-latest
+        steps:
+          - name: Setup Stack
+            uses: mstksg/setup-stack@v1
+
+          - name: Clone project
+            uses: actions/checkout@v2
+  ...
+#+end_src
+
+Github *Actions* are like standalone ~IO~ functions that alter the Pipeline's
+environment. [[https://github.com/mstksg][Some cool guy]] already wrote an [[https://github.com/mstksg/setup-stack][Action to set up Stack]], so we use
+that here. Notice that Actions have a version, which we can track by subscribing
+to releases:
+
+[[/assets/watching.png]]
+
+** Caching
+
+You'll see config like this below:
+
+#+begin_src yaml
+  - name: Cache dependencies
+    uses: actions/cache@v1
+    with:
+      path: ~/.stack
+      key: ${{ runner.os }}-${{ hashFiles('stack.yaml') }}
+      restore-keys: |
+        ${{ runner.os }}-
+#+end_src
+
+This is about as simple as a cache definition can be. Here are some things to
+keep in mind about Github CI caching:
+
+- Every repo has a total limit of 5gb for all saved caches. If crossed, old
+  caches are deleted.
+- Unused caches are deleted after 7 days.
+- Caches saved on ~master~ can be used on PR branches, but not the other way around.
+- Saved caches have a key that you can match on in later runs. Usually it looks
+  for an exact match to the ~key:~ field, but failing that, it falls back to
+  patterns defined in ~restore-key:~.
+- Caches are immutable. If you had a partial match on a previous cache (and are
+  thus using it), but your run changes the contents of the directory to save, a
+  new cache will be saved with a new key.
+
+For Haskell projects, I find that relying on the *hash of the contents of stack.yaml*
+is an accurate way to logically separate caches.
+
+* Configurations
+
+** Minimalist
+
+If you have a stack-based project and just want simple CI, feel free to
+copy-and-paste the config below as-is.
+
+The following YAML configuration means:
+
+- Run CI upon every push to a PR.
+- Run CI upon every push to ~master~.
+- Identify a cache based on the contents of ~stack.yaml~. When your ~stack.yaml~
+  changes, the saved cache will naturally update and be available to subsequent
+  PRs.
+
+#+begin_src yaml
+  name: Tests
+  on:
+    pull_request:
+    push:
+      branches:
+        - master
+
+  jobs:
+    build:
+      name: CI
+      runs-on: ubuntu-latest
+      steps:
+        - name: Setup Stack
+          uses: mstksg/setup-stack@v1
+
+        - name: Clone project
+          uses: actions/checkout@v2
+
+        - name: Cache dependencies
+          uses: actions/cache@v1
+          with:
+            path: ~/.stack
+            key: ${{ runner.os }}-${{ hashFiles('stack.yaml') }}
+            restore-keys: |
+              ${{ runner.os }}-
+
+        - name: Build and run tests
+          run: "stack test --fast --no-terminal"
+#+end_src
+
+** Multiple LTS
+
+The following YAML configuration means the same as above with respect to how
+often it's ran, but also says:
+
+- Run three jobs simultaneously, overwriting the ~resolver~ field specified in
+  ~stack.yaml~.
+- Even if one job fails early, don't cancel the other ones.
+- Give each resolver its own cache. This lets them grow and stale independently.
+
+#+begin_src yaml
+  name: Tests
+  on:
+    pull_request:
+    push:
+      branches:
+        - master
+
+  jobs:
+    build:
+      name: CI
+      runs-on: ubuntu-latest
+      strategy:
+        fail-fast: false
+        matrix:
+          resolver: ['lts-15.3', 'lts-14.27', 'lts-12.26']
+      steps:
+        - name: Setup Stack
+          uses: mstksg/setup-stack@v1
+
+        - name: Clone project
+          uses: actions/checkout@v2
+
+        - name: Cache dependencies
+          uses: actions/cache@v1
+          with:
+            path: ~/.stack
+            key: ${{ runner.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml') }}
+            restore-keys: |
+              ${{ runner.os }}-${{ matrix.resolver }}-
+              ${{ runner.os }}-
+
+        - name: Build and run tests
+          run: 'stack test --fast --no-terminal --resolver=${{ matrix.resolver }}'
+#+end_src
+
+* README Badges
+
+Like you may be used to from other CI services, you can add a badge to your
+README to report recent build statuses. The token that appears after
+~/workflows/~ needs to be the same as the ~name:~ you put in your ~ci.yaml~.
+
+** Markdown
+
+#+begin_src markdown
+  ![](https://github.com/fosskers/aura/workflows/Tests/badge.svg)
+#+end_src
+
+** Org Mode
+
+#+begin_src org
+  [[https://github.com/fosskers/aura/workflows/Tests/badge.svg]]
+#+end_src
+
+* Resources
+
+- [[https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow][Configuring a Workflow]]
+- [[https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestbranchestags][Workflow Syntax]]
+- [[https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows][Github CI Caches]]
+- [[https://github.com/actions/cache][Github Action: cache]]
