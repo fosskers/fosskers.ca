@@ -101,9 +101,10 @@ another.
 There are a number of packages that smooth the transition between compiler
 versions by backporting newer functionality. The major ones are:
 
-- [[https://hackage.haskell.org/package/base-compat][base-compat]]
+- [[https://hackage.haskell.org/package/base-compat][base-compat]], which backports new functions to old GHCs
 - [[https://hackage.haskell.org/package/base-orphans][base-orphans]], its sister package
 - [[http://hackage.haskell.org/package/base-compat-batteries][base-compat-batteries]], similar to ~base-compat~ but with more dependencies
+- [[https://hackage.haskell.org/package/prelude-compat][prelude-compat]], which helps massage the import confusion surrounding SMP, AMP and FTP
 
 To see all such libraries, [[https://hackage.haskell.org/packages/search?terms=compat][search for "compat" on Hackage]].
 
