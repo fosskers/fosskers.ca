@@ -85,6 +85,7 @@ The following YAML configuration means:
 
 - Run CI upon every push to a PR.
 - Run CI upon every push to ~master~.
+- Fetch this specific GHC version instantly, and don't cache it.
 - Identify a cache based on the contents of ~stack.yaml~. When your ~stack.yaml~
   changes, the saved cache will naturally update and be available to subsequent
   PRs.
@@ -102,6 +103,11 @@ The following YAML configuration means:
       name: CI
       runs-on: ubuntu-latest
       steps:
+        - name: Setup GHC
+          uses: actions/setup-haskell@v1
+          with:
+            ghc-version: "8.8.2"
+
         - name: Setup Stack
           uses: mstksg/setup-stack@v1
 
@@ -117,8 +123,9 @@ The following YAML configuration means:
               ${{ runner.os }}-
 
         - name: Build and run tests
-          run: "stack test --fast --no-terminal"
+          run: "stack test --fast --no-terminal --system-ghc"
 #+end_src
+
 
 ** Multiple LTS
 
