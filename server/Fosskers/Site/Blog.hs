@@ -12,6 +12,7 @@ import           Fosskers.Site.Bootstrap
 import           Lens.Micro ((^?), _1, _Just)
 import           Lucid
 import           RIO
+import qualified RIO.Map as M
 import qualified RIO.NonEmpty as NEL
 
 ---
@@ -40,7 +41,7 @@ sidebar :: Language -> NonEmpty Blog -> Html ()
 sidebar l bs = traverse_ g $ NEL.groupWith1 year bs
   where
     year :: Blog -> Maybe Integer
-    year b = b ^? to (O.metaDate . O.orgMeta . blogRaw) . _Just . to toGregorian . _1
+    year b = b ^? to (orgDate . blogRaw) . _Just . to toGregorian . _1
 
     g :: NonEmpty Blog -> Html ()
     g b = do
@@ -50,4 +51,4 @@ sidebar l bs = traverse_ g $ NEL.groupWith1 year bs
     f :: Blog -> Html ()
     f b = div_ $ do
       a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b]
-        $ maybe "Bug: No Title" (h6_ . toHtml) $ O.metaTitle $ O.orgMeta $ blogRaw b
+        $ maybe "Bug: No Title" (h6_ . toHtml) $ M.lookup "TITLE" $ O.orgMeta $ blogRaw b

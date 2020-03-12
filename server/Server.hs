@@ -32,6 +32,7 @@ import           Network.Wai.Middleware.Gzip
 import           Options.Generic
 import           RIO hiding (first)
 import qualified RIO.List as L
+import qualified RIO.Map as M
 import qualified RIO.NonEmpty as NEL
 import qualified RIO.Text as T
 import           Servant.API
@@ -70,7 +71,7 @@ server ps bs =
   :<|> pure (site English Posts . blog bs English $ newest bs English)
 
 rss :: Blogs -> Language -> ByLanguage
-rss bs l = ByLanguage $ NEL.sortWith (Down . O.metaDate . O.orgMeta . blogRaw) ps
+rss bs l = ByLanguage $ NEL.sortWith (Down . orgDate . blogRaw) ps
   where
     ps = case l of
       English  -> engSorted bs
@@ -112,8 +113,8 @@ orgs = fmap partitionEithersNE . traverse g
         c <- content
         ofile <- first (T.pack . errorBundlePretty) $ parse O.orgFile f c
         lang <- note ("Invalid language given for file: " <> path) $ pathLang f
-        void . note ("No date provided for: " <> path) . O.metaDate $ O.orgMeta ofile
-        void . note ("No title provided for: " <> path) . O.metaTitle $ O.orgMeta ofile
+        void . note ("No date provided for: " <> path) $ orgDate ofile
+        void . note ("No title provided for: " <> path) . M.lookup "TITLE" $ O.orgMeta ofile
         Right . Blog lang (pathSlug f) ofile $ O.body style ofile
 
 eread :: MonadIO m => FilePath -> m (Either Text Text)
@@ -178,7 +179,7 @@ work (Args (Helpful p)) ps ens jps = do
   liftIO . W.run prt $ app ps bls
 
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
-sortByDate = NEL.reverse . NEL.sortWith (O.metaDate . O.orgMeta . blogRaw)
+sortByDate = NEL.reverse . NEL.sortWith (orgDate . blogRaw)
 
 mapify :: NonEmpty Blog -> NEMap Text Blog
 mapify = NEM.fromList . NEL.map (blogSlug &&& id)

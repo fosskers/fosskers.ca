@@ -19,6 +19,7 @@ module Fosskers.Common
   , pathLang
   , pathSlug
   , ByLanguage(..)
+  , orgDate
   ) where
 
 import           Data.Aeson (ToJSON)
@@ -26,9 +27,11 @@ import           Data.Hourglass (getWeekDay)
 import           Data.Map.NonEmpty (NEMap)
 import qualified Data.Org as O
 import           Data.Time.Calendar (Day(..), fromGregorian)
+import           Data.Time.Format
 import           Lucid (Html)
 import           RIO
 import qualified RIO.HashMap as HM
+import qualified RIO.Map as M
 import qualified RIO.Text as T
 import qualified RIO.Text.Lazy as TL
 import           Servant.API
@@ -104,15 +107,23 @@ pathSlug = T.dropEnd 3 . T.pack . takeBaseName
 newtype ByLanguage = ByLanguage (NonEmpty Blog)
 
 instance ToXml Blog where
-  toXml (Blog l slug (O.OrgFile (O.Meta t d _ _ _) _) _) =
+  toXml (Blog l slug o@(O.OrgFile m _) _) =
     element "item" mempty
-    $  element "title" mempty (text . TL.fromStrict $ fromMaybe "Untitled" t)
+    $  element "title" mempty (text . TL.fromStrict $ fromMaybe "Untitled" title)
     <> element "link" mempty
     (text . TL.fromStrict $ "https://www.fosskers.ca/" <> langPath l <> "/blog/" <> slug)
-    <> element "pubDate" mempty (text . TL.pack . dtt . dtd $ fromMaybe defDay d)
-    <> element "description" mempty (text . TL.fromStrict $ fromMaybe "No description" t)
+    <> element "pubDate" mempty (text . TL.pack . dtt . dtd $ fromMaybe defDay date)
+    <> element "description" mempty (text . TL.fromStrict $ fromMaybe "No description" title)
     where
+      title = M.lookup "TITLE" m
+      date = orgDate o
+
+      defDay :: Day
       defDay = fromGregorian 2017 1 1
+
+orgDate :: O.OrgFile -> Maybe Day
+orgDate =
+  M.lookup "DATE" . O.orgMeta >=> parseTimeM True defaultTimeLocale "%Y-%m-%d" . T.unpack
 
 dtd :: Day -> Date
 dtd = dateFromTAIEpoch . toModifiedJulianDay
