@@ -147,20 +147,18 @@ main = do
   withLogFunc lopt $ \logFunc -> runRIO (Env logFunc) (setup args)
 
 setup :: Args -> RIO Env ()
-setup args = do
-  liftIO pages >>= \case
-    Nothing -> logError "Couldn't read static pages."
-    Just ps -> do
-      fmap NEL.nonEmpty (shelly orgFiles) >>= \case
-        Nothing -> logError "No .org files were found." >> exitFailure
-        Just fs -> orgs fs >>= \case
-          This errs -> traverse_ (logWarn . display) errs >> exitFailure
-          That bs -> case splitLs bs of
-            Nothing -> logError "Missing posts from Japanese or English" >> exitFailure
-            Just r  -> uncurry (work args ps) r
-          These errs bs -> do
-            traverse_ (logWarn . display) errs
-            maybe exitFailure (uncurry $ work args ps) $ splitLs bs
+setup args = liftIO pages >>= \case
+  Nothing -> logError "Couldn't read static pages."
+  Just ps -> fmap NEL.nonEmpty (shelly orgFiles) >>= \case
+    Nothing -> logError "No .org files were found." >> exitFailure
+    Just fs -> orgs fs >>= \case
+      This errs -> traverse_ (logWarn . display) errs >> exitFailure
+      That bs -> case splitLs bs of
+        Nothing -> logError "Missing posts from Japanese or English" >> exitFailure
+        Just r  -> uncurry (work args ps) r
+      These errs bs -> do
+        traverse_ (logWarn . display) errs
+        maybe exitFailure (uncurry $ work args ps) $ splitLs bs
 
 splitLs :: NonEmpty Blog -> Maybe (NonEmpty Blog, NonEmpty Blog)
 splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . NEL.partition (\b -> blogLang b == English)
