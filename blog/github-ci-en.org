@@ -1,6 +1,7 @@
 #+TITLE: Github CI for Stack Projects
 #+DATE: 2020-03-09
 #+AUTHOR: Colin
+#+UPDATED: 2020-03-12
 
 * How Github CI Works
 

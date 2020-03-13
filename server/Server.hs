@@ -64,11 +64,11 @@ server ps bs =
   :<|> serveDirectoryFileServer "assets/webfonts"
   :<|> (\l -> pure . site l About $ about ps l)
   :<|> (\l -> pure . site l CV $ cv ps l)
-  :<|> (\l -> pure . site l Posts . blog bs l $ newest bs l)
+  :<|> (\l -> pure . site l Posts . blog bs l . Just $ newest bs l)
   :<|> (\l t -> pure . site l Posts . blog bs l $ choose bs l t)
   :<|> pure . rss bs
-  :<|> (\l -> pure . site l Posts . blog bs l $ newest bs l)
-  :<|> pure (site English Posts . blog bs English $ newest bs English)
+  :<|> (\l -> pure . site l Posts . blog bs l . Just $ newest bs l)
+  :<|> pure (site English Posts . blog bs English . Just $ newest bs English)
 
 rss :: Blogs -> Language -> ByLanguage
 rss bs l = ByLanguage $ NEL.sortWith (Down . orgDate . blogRaw) ps

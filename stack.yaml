@@ -18,7 +18,7 @@ extra-deps:
   - xmlbf-0.6.1
   - xmlbf-xeno-0.2
   - github: fosskers/org-mode
-    commit: d37c4b809337eb095ecdcc3011b503af71ae92ae
+    commit: 10e15aebdc2b9a8c074e4e2071da0cdae117c6b2
     subdirs:
       - org-mode
       - org-mode-lucid

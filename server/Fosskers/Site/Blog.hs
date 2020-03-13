@@ -17,25 +17,33 @@ import qualified RIO.NonEmpty as NEL
 
 ---
 
-newest :: Blogs -> Language -> Html ()
+newest :: Blogs -> Language -> Blog
 newest bs l = case l of
-  English  -> blogHtml . NEL.head $ engSorted bs
-  Japanese -> blogHtml . NEL.head $ japSorted bs
+  English  -> NEL.head $ engSorted bs
+  Japanese -> NEL.head $ japSorted bs
 
-choose :: Blogs -> Language -> Text -> Html ()
+choose :: Blogs -> Language -> Text -> Maybe Blog
 choose bs l t = case l of
-  English  -> fromMaybe "Not found!" $ blogHtml <$> NEM.lookup t (engPosts $ bs)
-  Japanese -> fromMaybe "Not found!" $ blogHtml <$> NEM.lookup t (japPosts $ bs)
+  English  -> NEM.lookup t (engPosts $ bs)
+  Japanese -> NEM.lookup t (japPosts $ bs)
 
-blog :: Blogs -> Language -> Html () -> Html ()
+blog :: Blogs -> Language -> Maybe Blog -> Html ()
 blog bs l content = row_ $ do
   div_ [classes_ ["col-xs-12", "col-md-3"]] $ sidebar l ps
-  div_ [classes_ ["col-xs-12", "col-md-6"]] content
+  div_ [classes_ ["col-xs-12", "col-md-6"]] $ do
+    case content of
+      Nothing -> nf
+      Just b  -> do
+        blogHtml b
+        hr_ []
+        traverse_ (p_ . toHtml . (at <>)) . M.lookup "AUTHOR" . O.orgMeta $ blogRaw b
+        traverse_ (p_ . toHtml . (pu <>)) . M.lookup "DATE" . O.orgMeta $ blogRaw b
+        traverse_ (p_ . toHtml . (up <>)) . M.lookup "UPDATED" . O.orgMeta $ blogRaw b
   div_ [class_ "col-md-3"] ""
   where
-    ps = case l of
-      English  -> engSorted bs
-      Japanese -> japSorted bs
+    (ps, nf, at, pu, up) = case l of
+      English  -> (engSorted bs, "Post not found!", "Author: ", "Published: ", "Updated: ")
+      Japanese -> (japSorted bs, "見つかりません！", "作者：", "投稿：", "更新：")
 
 sidebar :: Language -> NonEmpty Blog -> Html ()
 sidebar l bs = traverse_ g $ NEL.groupWith1 year bs
