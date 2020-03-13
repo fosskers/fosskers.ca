@@ -1,19 +1,20 @@
 #+TITLE: ServantとPurescript/Halogenでウェブ開発
 #+DATE: 2018-02-21
 #+AUTHOR: Colin
+#+UPDATED: 2020-03-13
 
 * Haskell
 
-ウェブ・サーバーを開発する時はやっぱり[[http://haskell-servant.readthedocs.io/en/stable/][Servant]]。俺の経験では、どの言語のどのフレームワークでも
-開発効率が一番高い。幸い、Purescriptとの統合も容易。
+ウェブ・サーバーを開発する時はやっぱり [[http://haskell-servant.readthedocs.io/en/stable/][Servant]]。俺の経験では、どの言語のどのフレー
+ムワークでも開発効率が一番高い。幸い、Purescriptとの統合も容易。
 
 このガイドを使うに前もって必要なのは「stack」と「Servant」の経験。
 
 ** プロジェクト設定
 
 後でPurescriptとのコードシェアがうまくいく様にbackendを三つに分けることを勧める。
-それぞれの部分にはちゃんと ~.cabal~ または ~package.yaml~ を与える。
-stack設定はこう：
+それぞれの部分にはちゃんと ~.cabal~ または ~package.yaml~ を与える。stack設定は
+こう：
 
 #+BEGIN_SRC yaml
   resolver: lts-10.6  # ２０１８年2月現在
@@ -36,8 +37,8 @@ stack設定はこう：
 - ~purescript-bridge~: 指摘したHaskellタイプと一致するPurescriptを生み出す。
 - ~servant-purescript~: BackendのJSON endpointsが問えるPurescriptを生み出す。
 
-どうやら ~servant-purescript~ はJSON endpointsでしか使えん様で、本サイトの ~Common~
-module にはこういうのがある：
+どうやら ~servant-purescript~ はJSON endpointsでしか使えん様で、本サイトの
+~Common~ module にはこういうのがある：
 
 #+BEGIN_SRC haskell
   type JsonAPI = "posts" :> Get '[JSON] [Blog]
@@ -102,7 +103,7 @@ Purescriptとシェアしたいのは ~JsonAPI~ だけ。で、 ~bridge~ のプ�
 
 *** 自動圧縮
 
-ちょっとコードを足すだけでサーバーから出されるAssetsの重さを数倍軽くしてくれる[[https://hackage.haskell.org/package/wai-extra][wai-extra]]：
+ちょっとコードを足すだけでサーバーから出されるAssetsの重さを数倍軽くしてくれる [[https://hackage.haskell.org/package/wai-extra][wai-extra]]：
 
 #+BEGIN_SRC haskell
   import Network.Wai.Middleware.Gzip
@@ -150,9 +151,9 @@ PurescriptがUIを管理するおかげでHTMLファイルをコミットする�
   npm init
 #+END_SRC
 
-次はツールをインストール。普段はディストロのpackage manager意外のを使うのは
-あまり気に入らんけど、この場合は心配ない。次のコマンドで必要のツールが全部
-プロジェクト・ディレクトリー（ ~node-modules/~ の中）だけにインストールされる：
+次はツールをインストール。普段はディストロのpackage manager意外のを使うのはあま
+り気に入らんけど、この場合は心配ない。次のコマンドで必要のツールが全部プロジェク
+ト・ディレクトリー（ ~node-modules/~ の中）だけにインストールされる：
 
 #+BEGIN_SRC bash
   npm install purescript pulp psc-package pscid purescript-psa uglify-js --save-dev
@@ -181,8 +182,8 @@ PurescriptがUIを管理するおかげでHTMLファイルをコミットする�
 
 *** Purescriptパッケージ
 
-上で開発に必要なツールだけがインストールされた。Purescriptのプロジェク設定やコードらしきファイルが
-まだない。出そう：
+上で開発に必要なツールだけがインストールされた。Purescriptのプロジェク設定やコー
+ドらしきファイルがまだない。出そう：
 
 #+BEGIN_SRC bash
   npm run pulp init
@@ -202,13 +203,13 @@ PurescriptがUIを管理するおかげでHTMLファイルをコミットする�
   npm run psc -- install halogen
 #+END_SRC
 
-ダウンロードされるバージョンは ~psc-package.json~ に設定される[[https://github.com/purescript/package-sets][psc・パッケージ・セット]]のバージョンによって違ってくる。
+ダウンロードされるバージョンは ~psc-package.json~ に設定される [[https://github.com/purescript/package-sets][psc・パッケージ・セット]]のバージョンによって違ってくる。
 ダウンロードが成功したら ~halogen~ の名前がdependencyとして ~psc-package.json~ に現れる。
 
 *** Spacemacsでの使用
 
-そのまま[[http://spacemacs.org/layers/+lang/purescript/README.html][PureScript Layer]]を使おう。 ~npm~ でインストールしたツールもちゃんと見つかる様に
-こう設定しよう：
+そのまま [[http://spacemacs.org/layers/+lang/purescript/README.html][PureScript Layer]]を使おう。 ~npm~ でインストールしたツールもちゃんと見つ
+かる様にこう設定しよう：
 
 #+BEGIN_SRC lisp
   (purescript :variables psc-ide-use-npm-bin t)
@@ -275,15 +276,15 @@ Librariesもプロジェクト・コードも全部コンパイル：
 
 ** Halogen
 
-本格的に開発を始める前にHalogenの[[https://github.com/slamdata/purescript-halogen/tree/master/docs][公式ガイド]]（英語）を全部読んだ。
-内容を理解したところで開発に必要な知識の9割ぐらい取って、残りは[[https://github.com/purescript/documentation/blob/master/language/Differences-from-Haskell.md][HaskellとPurescriptの区別]]を調べたり
-試行錯誤したりして解った。発見したことは下記で。
+本格的に開発を始める前にHalogenの [[https://github.com/slamdata/purescript-halogen/tree/master/docs][公式ガイド]]（英語）を全部読んだ。内容を理解した
+ところで開発に必要な知識の9割ぐらい取って、残りは [[https://github.com/purescript/documentation/blob/master/language/Differences-from-Haskell.md][HaskellとPurescriptの区別]]を調
+べたり試行錯誤したりして解った。発見したことは下記で。
 
 *** 無駄なレンダリングの回避
 
-~eval~ の関数の中で ~H.put~ と ~H.modify~ が使われる度にそのコンポーネントが
-再レンダリングされる。下のコードを使えばstateが本当に変わる時にだけ再レンダリング
-が行われる：
+~eval~ の関数の中で ~H.put~ と ~H.modify~ が使われる度にそのコンポーネントが再レ
+ンダリングされる。下のコードを使えばstateが本当に変わる時にだけ再レンダリングが
+行われる：
 
 #+BEGIN_SRC purescript
   -- | 変わった限りStateをアップデート。
@@ -301,7 +302,7 @@ Librariesもプロジェクト・コードも全部コンパイル：
     ...  -- more cases here
 #+END_SRC
 
-~prop~ の説明は[[https://pursuit.purescript.org/packages/purescript-profunctor-lenses/3.8.0/docs/Data.Lens.Record#v:prop][こちら]]。
+~prop~ の説明は [[https://pursuit.purescript.org/packages/purescript-profunctor-lenses/3.8.0/docs/Data.Lens.Record#v:prop][こちら]]。
 
 *** ~servant-purescript~ が出したタイプや関数の扱い
 
@@ -381,9 +382,9 @@ Librariesもプロジェクト・コードも全部コンパイル：
 
 *** HTMLの要求と注入
 
-訳あって本サイトのブログのHTMLはruntimeにしか存在しない。記事を選んでクリックしたら
-一つのXHRだけがされて返事のHTMLはそのままページに注入される。これを達成するには
-三つにlibraryが必要だった： ~affjax~ ・ ~domparser~ ・ ~dom-classy~
+訳あって本サイトのブログのHTMLはruntimeにしか存在しない。記事を選んでクリックし
+たら一つのXHRだけがされて返事のHTMLはそのままページに注入される。これを達成する
+には三つにlibraryが必要だった： ~affjax~ ・ ~domparser~ ・ ~dom-classy~
 
 下のコードでサーバーへのHTML要求ができる：
 
@@ -436,7 +437,7 @@ Librariesもプロジェクト・コードも全部コンパイル：
 #+END_SRC
 * Deployment
 
-基本的にHaskellのデプロイメントとなれば「Heroku」を勧める。[[https://fosskers.ca/blog/deploying-haskell-jp.html][別のポスト]]に一般の説明がある。
+基本的にHaskellのデプロイメントとなれば「Heroku」を勧める。 [[https://fosskers.ca/blog/deploying-haskell-jp.html][別のポスト]]に一般の説明がある。
 それを読んだ上で ~heroku-buildpack-stack~ の仕組みを利用して「Purescript」も含めれる。
 
 ** ~Makefile~ の定義
@@ -470,10 +471,11 @@ Librariesもプロジェクト・コードも全部コンパイル：
     stack build --copy-bins
 #+END_SRC
 
-最後の辺、 ~app.min.js~ がコピーされるのがある。理由はHerokuがデプロイを完成した時、dynoに
-残るファイルは元々あったファイル（即ちgitに入ってるファイル）と構築中に ~/app/.local/bin~
-に移動させられたファイルだけ（実行ファイルも。だから ~--copy-bins~ ）。サーバーに ~app.min.js~ が見つけられる
-様に ~assets/~ にソフトリンクをコミットすれば十分：
+最後の辺、 ~app.min.js~ がコピーされるのがある。理由はHerokuがデプロイを完成した
+時、dynoに残るファイルは元々あったファイル（即ちgitに入ってるファイル）と構築中
+に ~/app/.local/bin~ に移動させられたファイルだけ（実行ファイルも。だから
+~--copy-bins~ ）。サーバーに ~app.min.js~ が見つけられる様に ~assets/~ にソフト
+リンクをコミットすれば十分：
 
 #+BEGIN_SRC bash
   ln -s ../.local/bin/app.min.js app.min.js

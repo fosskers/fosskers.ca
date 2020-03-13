@@ -1,6 +1,7 @@
 #+TITLE: Haskellプログラムのデプロイメント
 #+DATE: 2018-02-28
 #+AUTHOR: こりん
+#+UPDATED: 2020-03-13
 
  大規模のシステムがあったりチームの人数が多かったりNixOSのサーバーを管理する能力（または余裕）
 があったりしたら「Nix」を選ぼう。
@@ -16,19 +17,21 @@
 ただ小規模のサーバーをどっか載せたい。
 #+END_QUOTE
 
-「Heroku」はこれにぴったり。 ~git push~ だけで自動デプロイメントができて、再デプロイが速くなる様に
-~stack~ でダウンロードされるdependenciesが全部キャッシュされる。
+「Heroku」はこれにぴったり。 ~git push~ だけで自動デプロイメントができて、再デプ
+ロイが速くなる様に~stack~ でダウンロードされるdependenciesが全部キャッシュされる。
 
-Herokuのサーバーは「dyno」といって、一番安いのは無料。30分経ってサーバーにリクエストが
-なければ眠ってしまうけど、また呼んだら数秒で再起動する。有料の「dyno」は眠ったりせん。
+Herokuのサーバーは「dyno」といって、一番安いのは無料。30分経ってサーバーにリクエ
+ストがなければ眠ってしまうけど、また呼んだら数秒で再起動する。有料の「dyno」は眠っ
+たりせん。
 
-プロジェクト管理に ~heroku~ のCLIツールがあるらしいけどこの簡単な場合には必要ない。
-下にも「Namecheap」との接続方法の説明も含めてる。
+プロジェクト管理に ~heroku~ のCLIツールがあるらしいけどこの簡単な場合には必要な
+い。下にも「Namecheap」との接続方法の説明も含めてる。
 
 ** ~$PORT~ からリクエスト
 
-Herokuに載せるサーバーはいつもの80・8080・443とかじゃなくて ~$PORT~ からリクエストを取らないといけない。
-まだ開発中だとこれが少し厄介かもしれんけど、下のコードを使えば問題にならない：
+Herokuに載せるサーバーはいつもの80・8080・443とかじゃなくて ~$PORT~ からリクエス
+トを取らないといけない。まだ開発中だとこれが少し厄介かもしれんけど、下のコードを
+使えば問題にならない：
 
 #+BEGIN_SRC haskell
   {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
@@ -63,8 +66,8 @@ Herokuに載せるサーバーはいつもの80・8080・443とかじゃなく�
 
 *** Repoでの ~Procfile~
 
-コミットしなければならないのは ~Procfile~ というファイルだけ。Herokuがプロジェクトを構築した後
-~Procfile~ にあるコマンドを実行する。例：
+コミットしなければならないのは ~Procfile~ というファイルだけ。Herokuがプロジェク
+トを構築した後~Procfile~ にあるコマンドを実行する。例：
 
 #+BEGIN_EXAMPLE
 web: server
@@ -81,16 +84,17 @@ web: server --js app.min.js
 
 他の設定は全部直接Herokuのサイトでできる。勿論登録しないといかん。
 
-「Dashboard」に入ったらまずは新しい「Heroku・アプリ」を作る（右上で「New」から「Create New App」）。
-できたら「Deploy」のタブが見えてくるはず：
+「Dashboard」に入ったらまずは新しい「Heroku・アプリ」を作る（右上で「New」から
+「Create New App」）。できたら「Deploy」のタブが見えてくるはず：
 
-[[./blog/heroku00.jpg]]
+[[/assets/heroku00.jpg]]
 
-ページの後半に見える「CLI」指示を無視してデプロイ方法を「Github」と選んで繋げたいrepoを入れるだけ。
+ページの後半に見える「CLI」指示を無視してデプロイ方法を「Github」と選んで繋げた
+いrepoを入れるだけ。
 
 次は「Settings」のタブでの「Buildpacks」の所：
 
-[[./blog/heroku01.jpg]]
+[[/assets/heroku01.jpg]]
 
 「Buildpack」とはHeroku用語。言語そろぞれにあって、構築に必要な複数のスクリプトの意味。
 ~stack~ を使う「buildpack」を入れよう。「Add buildpack」をクリックしてこれを：
@@ -108,11 +112,11 @@ HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさ
 
 ** Namecheapとの接続
 
-具体的な指示は[[https://stackoverflow.com/a/31549804/643684][こちら]]。
+具体的な指示は [[https://stackoverflow.com/a/31549804/643684][こちら]]。
 
 *** HTTPS
 
-有料の「dyno」だったらHerokuは[[https://letsencrypt.org/][Let's Encrypt]]を通して自動的にHTTPSの管理をしてくれる。ちょっと
+有料の「dyno」だったらHerokuは [[https://letsencrypt.org/][Let's Encrypt]]を通して自動的にHTTPSの管理をしてくれる。ちょっと
 だけNamecheapの設定を変えればHTTPSは我が手に。
 
 Namecheapでは各ホストの ~Value~ を
@@ -155,7 +159,7 @@ yourdomain.com.herokudns.com
 #+END_SRC
 
 Dockerのイメージが構築される。できたらいつものコンテナ・デプロイメント・システムに混ぜれる。
-より細かい指示は ~stack~ の[[https://docs.haskellstack.org/en/stable/GUIDE/#docker][公式サイト]]へ（英語）。
+より細かい指示は ~stack~ の [[https://docs.haskellstack.org/en/stable/GUIDE/#docker][公式サイト]]へ（英語）。
 
 * 将来の道： Nix
 

@@ -1,6 +1,7 @@
 #+TITLE: NixとDanteでHaskell開発
 #+DATE: 2018-01-10
 #+AUTHOR: こりん
+#+UPDATED: 2020-03-13
 
 日頃のHaskell開発で使ってみるために（やっと）Nixを身につけた。下記は俺のNix設定と
 開発の流れの説明。
@@ -8,7 +9,7 @@
 * 最初の設定
 
 ディストロはArch Linuxやけん、最初はAURの ~nix~ パッケージをインストールしてみたけど、
-どうやらnix environmentがちゃんとできあがらんやった。[[https://nixos.org/nix/][nixos.org]]からの[[https://nixos.org/nix/manual/#chap-quick-start][公式方法]]は逆にほぼうまくいった：
+どうやらnix environmentがちゃんとできあがらんやった。 [[https://nixos.org/nix/][nixos.org]]からの [[https://nixos.org/nix/manual/#chap-quick-start][公式方法]]は逆にほぼうまくいった：
 
 #+BEGIN_SRC bash
 curl https://nixos.org/nix/install | sh
@@ -37,7 +38,7 @@ set -x NIX_SSL_CERT_FILE '/etc/ssl/certs/ca-certificates.crt'
 
 * Haskellの詳細
 
-Nixでのプロジェクト設定は一般的にどんな感じか解るには[[https://github.com/Gabriel439/haskell-nix][Gabriel GonzalesのNix初心者ガイド]](英語）はなかなか
+Nixでのプロジェクト設定は一般的にどんな感じか解るには [[https://github.com/Gabriel439/haskell-nix][Gabriel GonzalesのNix初心者ガイド]](英語）はなかなか
 いい資源。
 
 下記は簡単なプロジェクト向き：benchmarksとprofilingがしたい一つのlibraryかプログラム。
@@ -130,7 +131,7 @@ in
   }
 #+END_SRC
 
-もっと短いのもあるけど、設定を[[https://github.com/Gabriel439/haskell-nix/blob/master/project1/README.md#changing-versions][より細かく変えたい時]]にこの形が便利。
+もっと短いのもあるけど、設定を [[https://github.com/Gabriel439/haskell-nix/blob/master/project1/README.md#changing-versions][より細かく変えたい時]]にこの形が便利。
 
 プロジェクトを丸ごとコンパイル：
 
@@ -138,12 +139,12 @@ in
 nix-build release.nix
 #+END_SRC
 
-コンパイル方の細かい選択肢は[[https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/lib.nix][こちら]]。
+コンパイル方の細かい選択肢は [[https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/lib.nix][こちら]]。
 
 ** Profiling
 
 具体的にコードのどこが遅かったりすると知りたい時にprofilingやね。
-Nixでこれが結構楽。まず ~~/.config/nixpkgs/config.nix~ を新しく作って、この内容を入れる：
+Nixでこれが結構楽。まず ~/home/you/.config/nixpkgs/config.nix~ を新しく作って、この内容を入れる：
 
 #+BEGIN_SRC nix
 {
@@ -201,7 +202,7 @@ dependenciesが全部なくなる。
 
 ** ~Dante~ をインストール
 
-普通のEmacsやったら[[https://github.com/jyp/dante#installation][こちら]]。
+普通のEmacsやったら [[https://github.com/jyp/dante#installation][こちら]]。
 
 Spacemacs（の ~develop~ branch!）のユーザーだと、そのままDanteが使える。
 ~.spacemacs~ でHaskell Layerをこう設定しよう：
@@ -290,12 +291,12 @@ Emacsの「file-local variables」を使えばこの問題を避けれる。
 
 [[https://github.com/hercules-ci/hercules][Github repository]].
 
-NixのためだけのCIシステム。極新しくて、「1.0」が[[https://github.com/hercules-ci/hercules/issues/5][まだまだ遠いみたい]]。
+NixのためだけのCIシステム。極新しくて、「1.0」が [[https://github.com/hercules-ci/hercules/issues/5][まだまだ遠いみたい]]。
 
 ** CircleCI
 
-CircleCIではHaskellのCIは[[https://circleci.com/docs/1.0/language-haskell/][一応できる]]けどNixは優先されてないようだ。
-一人ぐらいは[[https://discuss.circleci.com/t/caching-root-directory-nix-not-working/10626][頑張ってるみたい]]やけど。
+CircleCIではHaskellのCIは [[https://circleci.com/docs/1.0/language-haskell/][一応できる]]けどNixは優先されてないようだ。
+一人ぐらいは [[https://discuss.circleci.com/t/caching-root-directory-nix-not-working/10626][頑張ってるみたい]]やけど。
 
 ** Hydraを自分で
 
@@ -343,4 +344,4 @@ Nixと言えば当たり前かもしれんけど、俺みたいな平凡開発�
 - [[https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure][NixのHaskellパッケージ公式ガイド]]
 - [[https://github.com/Gabriel439/haskell-nix][Gabriel GonzalesのNix初心者ガイド]]
 - [[http://vaibhavsagar.com/blog/2018/01/03/static-haskell-nix/][Building static Haskell binaries]]
-- Emacsの[[https://github.com/jyp/dante][dante-mode]]
+- Emacsの [[https://github.com/jyp/dante][dante-mode]]
