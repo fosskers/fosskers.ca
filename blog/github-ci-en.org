@@ -62,6 +62,8 @@ keep in mind about Github CI caching:
 
 - Every repo has a total limit of 5gb for all saved caches. If crossed, old
   caches are deleted.
+- Caches are compressed with ~tar~ before being saved. A 2.5gb ~.stack/~
+  compresses down to around 475mb.
 - Unused caches are deleted after 7 days.
 - Caches saved on ~master~ can be used on PR branches, but not the other way around.
 - Saved caches have a key that you can match on in later runs. Usually it looks
