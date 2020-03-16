@@ -47,8 +47,6 @@ library
   hs-source-dirs:  lib
   exposed-modules:
     Fosskers.Common
-    Fosskers.Kanji
-    Fosskers.Org
 
   build-depends:   filepath ^>=1.4
 

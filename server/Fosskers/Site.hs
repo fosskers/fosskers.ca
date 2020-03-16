@@ -1,7 +1,6 @@
 module Fosskers.Site
   ( Page(..)
   , site
-  , index
   ) where
 
 import Fosskers.Common (Language(..))
@@ -21,9 +20,6 @@ Don't bother with Tools for now.
 -}
 
 data Page = CV | About | Posts | Index deriving (Eq)
-
-index :: Language -> Html ()
-index lang = site lang Index "Real content here!"
 
 site :: Language -> Page -> Html () -> Html ()
 site lang page component = html_ $ do
