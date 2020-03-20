@@ -11,6 +11,7 @@ module Main ( main ) where
 import           BasePrelude hiding (app, option)
 import           Control.Monad.Trans.Maybe (MaybeT(..))
 import           Data.Bitraversable (bitraverse)
+import qualified Data.ByteString.Char8 as B
 import qualified Data.List as L
 import qualified Data.List.NonEmpty as NEL
 import           Data.Map.Strict (Map)
@@ -19,6 +20,8 @@ import qualified Data.Org as O
 import qualified Data.Org.Lucid as O
 import           Data.Text (Text)
 import qualified Data.Text as T
+import qualified Data.Text.Encoding as T
+import           Data.Text.Encoding.Error (lenientDecode)
 import qualified Data.Text.IO as T
 import           Data.These (These(..), partitionEithersNE)
 import           Fosskers.Common
@@ -110,7 +113,7 @@ eread :: FilePath -> IO (Either Text Text)
 eread path = do
   exists <- doesFileExist path
   if exists
-     then Right <$> T.readFile path
+     then Right . T.decodeUtf8With lenientDecode <$> B.readFile path
      else pure . Left $ T.pack path <> " doesn't exist to be read."
 
 pages :: IO (Maybe Pages)

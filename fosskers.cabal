@@ -73,6 +73,7 @@ executable server
     Fosskers.Site.CV
 
   build-depends:
+    , bytestring
     , directory             ^>=1.3
     , filepath              ^>=1.4
     , fosskers
