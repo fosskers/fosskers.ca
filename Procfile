@@ -1,1 +1,1 @@
-web: server +RTS -H128M -A32M
+web: server +RTS -H64M -A16M
