@@ -1,11 +1,9 @@
 {-# LANGUAGE BangPatterns       #-}
 {-# LANGUAGE DataKinds          #-}
-{-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase         #-}
 {-# LANGUAGE RankNTypes         #-}
-{-# LANGUAGE TypeApplications   #-}
 {-# LANGUAGE TypeOperators      #-}
 
 module Main ( main ) where
@@ -14,7 +12,6 @@ import           Control.Concurrent (getNumCapabilities)
 import           Control.Monad.Trans.Maybe (MaybeT(..))
 import           Data.Bifunctor (first)
 import           Data.Bitraversable (bitraverse)
-import           Data.Generics.Product (typed)
 import           Data.Map.NonEmpty (NEMap)
 import qualified Data.Map.NonEmpty as NEM
 import qualified Data.Org as O
@@ -56,7 +53,7 @@ newtype Env = Env LogFunc
   deriving stock (Generic)
 
 instance HasLogFunc Env where
-  logFuncL = typed @LogFunc
+  logFuncL f (Env lf) = Env <$> f lf
 
 server :: Pages -> Blogs -> Server API
 server ps bs =

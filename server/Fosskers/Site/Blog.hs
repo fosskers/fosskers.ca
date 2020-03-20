@@ -24,21 +24,20 @@ newest bs l = case l of
 
 choose :: Blogs -> Language -> Text -> Maybe Blog
 choose bs l t = case l of
-  English  -> NEM.lookup t (engPosts $ bs)
-  Japanese -> NEM.lookup t (japPosts $ bs)
+  English  -> NEM.lookup t (engPosts bs)
+  Japanese -> NEM.lookup t (japPosts bs)
 
 blog :: Blogs -> Language -> Maybe Blog -> Html ()
 blog bs l content = row_ $ do
   div_ [classes_ ["col-xs-12", "col-md-3"]] $ sidebar l ps
-  div_ [classes_ ["col-xs-12", "col-md-6"]] $ do
-    case content of
-      Nothing -> nf
-      Just b  -> do
-        blogHtml b
-        hr_ []
-        traverse_ (p_ . toHtml . (at <>)) . M.lookup "AUTHOR" . O.orgMeta $ blogRaw b
-        traverse_ (p_ . toHtml . (pu <>)) . M.lookup "DATE" . O.orgMeta $ blogRaw b
-        traverse_ (p_ . toHtml . (up <>)) . M.lookup "UPDATED" . O.orgMeta $ blogRaw b
+  div_ [classes_ ["col-xs-12", "col-md-6"]] $ case content of
+    Nothing -> nf
+    Just b  -> do
+      blogHtml b
+      hr_ []
+      traverse_ (p_ . toHtml . (at <>)) . M.lookup "AUTHOR" . O.orgMeta $ blogRaw b
+      traverse_ (p_ . toHtml . (pu <>)) . M.lookup "DATE" . O.orgMeta $ blogRaw b
+      traverse_ (p_ . toHtml . (up <>)) . M.lookup "UPDATED" . O.orgMeta $ blogRaw b
   div_ [class_ "col-md-3"] ""
   where
     (ps, nf, at, pu, up) = case l of
@@ -57,6 +56,6 @@ sidebar l bs = traverse_ g $ NEL.groupWith1 year bs
       ul_ $ traverse_ (li_ . f) b
 
     f :: Blog -> Html ()
-    f b = div_ $ do
-      a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b]
-        $ maybe "Bug: No Title" (h6_ . toHtml) $ M.lookup "TITLE" $ O.orgMeta $ blogRaw b
+    f b = div_
+      $ a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b]
+      $ maybe "Bug: No Title" (h6_ . toHtml) $ M.lookup "TITLE" $ O.orgMeta $ blogRaw b
