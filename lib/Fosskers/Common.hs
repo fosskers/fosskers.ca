@@ -20,6 +20,8 @@ module Fosskers.Common
   , pathSlug
   , ByLanguage(..)
   , orgDate
+    -- * Utils
+  , hush, note
   ) where
 
 import           Data.Aeson (ToJSON)
@@ -147,3 +149,12 @@ instance ToXml ByLanguage where
              <> element "link" mempty (text "https://www.fosskers.ca")
              <> element "description" mempty
              (text "Articles on Haskell, Functional Programming, and Japanese")
+
+--------------------------------------------------------------------------------
+-- Utils
+
+hush :: Either a b -> Maybe b
+hush = either (const Nothing) Just
+
+note :: a -> Maybe b -> Either a b
+note a = maybe (Left a) Right

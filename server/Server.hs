@@ -11,7 +11,6 @@
 module Main ( main ) where
 
 import           Control.Concurrent (getNumCapabilities)
-import           Control.Error.Util (hush, note)
 import           Control.Monad.Trans.Maybe (MaybeT(..))
 import           Data.Bifunctor (first)
 import           Data.Bitraversable (bitraverse)
@@ -29,7 +28,7 @@ import           Fosskers.Site.CV (cv)
 import           Lucid
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
-import           Options.Generic
+import           Options.Applicative hiding (style)
 import           RIO hiding (first)
 import qualified RIO.List as L
 import qualified RIO.Map as M
@@ -47,10 +46,11 @@ import           UnliftIO.Directory (doesFileExist)
 
 ---
 
-newtype Args = Args
-  { port :: Maybe Int <?> "Port to listen for requests on, otherwise $PORT" }
-  deriving stock (Generic)
-  deriving anyclass (ParseRecord)
+newtype Args = Args (Maybe Int)
+
+pArgs :: Parser Args
+pArgs = Args
+  <$> optional (option auto $ long "port" <> help "Port to listen on, otherwise $PORT")
 
 newtype Env = Env LogFunc
   deriving stock (Generic)
@@ -143,9 +143,11 @@ orgd fp = (hush >=> O.org) <$> eread fp
 
 main :: IO ()
 main = do
-  args <- getRecord "Backend server for fosskers.ca"
+  args <- execParser opts
   lopt <- setLogUseLoc False <$> logOptionsHandle stderr True
   withLogFunc lopt $ \logFunc -> runRIO (Env logFunc) (setup args)
+  where
+    opts = info (pArgs <**> helper) (fullDesc <> header "Server for fosskers.ca")
 
 setup :: Args -> RIO Env ()
 setup args = liftIO pages >>= \case
@@ -165,7 +167,7 @@ splitLs :: NonEmpty Blog -> Maybe (NonEmpty Blog, NonEmpty Blog)
 splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . NEL.partition (\b -> blogLang b == English)
 
 work :: Args -> Pages -> NonEmpty Blog -> NonEmpty Blog -> RIO Env ()
-work (Args (Helpful p)) ps ens jps = do
+work (Args p) ps ens jps = do
   -- afs <- analysisFiles
   herokuPort <- (>>= readMaybe) <$> liftIO (lookupEnv "PORT")
   cores <- liftIO getNumCapabilities
