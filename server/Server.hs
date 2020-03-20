@@ -100,12 +100,12 @@ orgFiles = do
   filter (L.isSuffixOf ".org") <$> (ls "." >>= traverse absPath)
 
 -- | Render all ORG files to HTML.
-orgs :: MonadIO m => NonEmpty FilePath -> m (These (NonEmpty Text) (NonEmpty Blog))
+orgs :: NonEmpty FilePath -> RIO e (These (NonEmpty Text) (NonEmpty Blog))
 orgs = fmap partitionEithersNE . traverse g
   where
-    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True skylighting
+    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True skylighting (Just ' ')
 
-    -- g :: FilePath -> m (Either Text Blog)
+    g :: FilePath -> RIO e (Either Text Blog)
     g f = do
       content <- eread f
       let !path = T.pack f
@@ -131,9 +131,9 @@ pages = runMaybeT $ Pages
   <*> f cstyle "org/cv-en.org"
   <*> f jstyle "org/cv-jp.org"
   where
-    astyle = O.OrgStyle False Nothing False skylighting
-    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True skylighting
-    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True skylighting
+    astyle = O.OrgStyle False Nothing False skylighting (Just ' ')
+    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True skylighting (Just ' ')
+    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True skylighting (Just ' ')
 
     f :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
     f s fp = O.body s <$> MaybeT (orgd fp)

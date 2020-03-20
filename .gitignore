@@ -5,3 +5,4 @@ site/node-v8.9.4-linux-x64/*
 site/jquery-3.2.1/*
 *.dump-hi
 *~
+*.hie
