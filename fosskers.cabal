@@ -32,7 +32,6 @@ common commons
     , kanji                ^>=3.4
     , lucid                ^>=2.9
     , megaparsec           >=7.0  && <9
-    , nonempty-containers  ^>=0.3
     , org-mode             ^>=1.1
     , org-mode-lucid       ^>=1.2
     , rio                  ^>=0.1

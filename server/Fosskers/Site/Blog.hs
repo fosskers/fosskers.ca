@@ -4,7 +4,6 @@ module Fosskers.Site.Blog
   , blog
   ) where
 
-import qualified Data.Map.NonEmpty as NEM
 import qualified Data.Org as O
 import           Data.Time.Calendar (toGregorian)
 import           Fosskers.Common
@@ -24,8 +23,8 @@ newest bs l = case l of
 
 choose :: Blogs -> Language -> Text -> Maybe Blog
 choose bs l t = case l of
-  English  -> NEM.lookup t (engPosts bs)
-  Japanese -> NEM.lookup t (japPosts bs)
+  English  -> M.lookup t (engPosts bs)
+  Japanese -> M.lookup t (japPosts bs)
 
 blog :: Blogs -> Language -> Maybe Blog -> Html ()
 blog bs l content = row_ $ do

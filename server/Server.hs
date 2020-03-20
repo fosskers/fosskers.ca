@@ -12,8 +12,6 @@ import           Control.Concurrent (getNumCapabilities)
 import           Control.Monad.Trans.Maybe (MaybeT(..))
 import           Data.Bifunctor (first)
 import           Data.Bitraversable (bitraverse)
-import           Data.Map.NonEmpty (NEMap)
-import qualified Data.Map.NonEmpty as NEM
 import qualified Data.Org as O
 import qualified Data.Org.Lucid as O
 import           Data.These (These(..), partitionEithersNE)
@@ -180,5 +178,5 @@ work (Args p) ps ens jps = do
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
 sortByDate = NEL.reverse . NEL.sortWith (orgDate . blogRaw)
 
-mapify :: NonEmpty Blog -> NEMap Text Blog
-mapify = NEM.fromList . NEL.map (blogSlug &&& id)
+mapify :: NonEmpty Blog -> Map Text Blog
+mapify = M.fromList . NEL.toList . NEL.map (blogSlug &&& id)

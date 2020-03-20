@@ -26,7 +26,6 @@ module Fosskers.Common
 
 import           Data.Aeson (ToJSON)
 import           Data.Hourglass (getWeekDay)
-import           Data.Map.NonEmpty (NEMap)
 import qualified Data.Org as O
 import           Data.Time.Calendar (Day(..), fromGregorian)
 import           Data.Time.Format
@@ -83,8 +82,8 @@ data Blog = Blog
 data Blogs = Blogs
   { engSorted :: !(NonEmpty Blog)
   , japSorted :: !(NonEmpty Blog)
-  , engPosts  :: !(NEMap Text Blog)
-  , japPosts  :: !(NEMap Text Blog) }
+  , engPosts  :: !(Map Text Blog)
+  , japPosts  :: !(Map Text Blog) }
 
 data Pages = Pages
   { engAbout :: !(Html ())
