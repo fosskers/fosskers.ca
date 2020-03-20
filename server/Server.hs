@@ -32,10 +32,11 @@ import qualified RIO.Text as T
 import           Servant.API
 import           Servant.Server
 import           Servant.Server.StaticFiles (serveDirectoryFileServer)
-import           Shelly hiding (path)
 import           Skylighting hiding (formatHtmlBlock)
 import           Skylighting.Format.HTML.Lucid (formatHtmlBlock)
+import           System.Directory (listDirectory, makeAbsolute)
 import           System.Environment (lookupEnv)
+import           System.FilePath ((</>))
 import           Text.Megaparsec (errorBundlePretty, parse)
 import           UnliftIO.Directory (doesFileExist)
 
@@ -89,10 +90,10 @@ skylighting l t = maybe (O.codeHTML l t) (formatHtmlBlock fo) $ do
       { containerClasses = "src" : maybe [] (\(O.Language l') -> ["src-" <> l']) l }
 
 -- | Abosolute paths to all the @.org@ blog files.
-orgFiles :: Sh [FilePath]
-orgFiles = do
-  cd "blog"
-  filter (L.isSuffixOf ".org") <$> (ls "." >>= traverse absPath)
+orgFiles :: IO [FilePath]
+orgFiles = filter (L.isSuffixOf ".org") <$> (listDirectory "blog" >>= traverse f)
+  where
+    f fp = makeAbsolute $ "blog" </> fp
 
 -- | Render all ORG files to HTML.
 orgs :: NonEmpty FilePath -> RIO e (These (NonEmpty Text) (NonEmpty Blog))
@@ -147,7 +148,7 @@ main = do
 setup :: Args -> RIO Env ()
 setup args = liftIO pages >>= \case
   Nothing -> logError "Couldn't read static pages."
-  Just ps -> fmap NEL.nonEmpty (shelly orgFiles) >>= \case
+  Just ps -> fmap NEL.nonEmpty (liftIO orgFiles) >>= \case
     Nothing -> logError "No .org files were found." >> exitFailure
     Just fs -> orgs fs >>= \case
       This errs -> traverse_ (logWarn . display) errs >> exitFailure
