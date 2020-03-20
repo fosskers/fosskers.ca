@@ -4,15 +4,16 @@ module Fosskers.Site.Blog
   , blog
   ) where
 
+import           BasePrelude
+import qualified Data.List.NonEmpty as NEL
+import qualified Data.Map.Strict as M
 import qualified Data.Org as O
+import           Data.Text (Text)
 import           Data.Time.Calendar (toGregorian)
 import           Fosskers.Common
 import           Fosskers.Site.Bootstrap
-import           Lens.Micro ((^?), _1, _Just)
+import           Lens.Micro (to, (^?), _1, _Just)
 import           Lucid
-import           RIO
-import qualified RIO.Map as M
-import qualified RIO.NonEmpty as NEL
 
 ---
 

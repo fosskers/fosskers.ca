@@ -1,9 +1,9 @@
 module Fosskers.Site.About ( about ) where
 
+import BasePrelude
 import Fosskers.Common (Language(..), Pages(..))
 import Fosskers.Site.Bootstrap
 import Lucid hiding (col_)
-import RIO
 
 ---
 

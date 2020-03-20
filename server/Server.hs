@@ -8,12 +8,18 @@
 
 module Main ( main ) where
 
-import           Control.Concurrent (getNumCapabilities)
+import           BasePrelude hiding (app, option)
 import           Control.Monad.Trans.Maybe (MaybeT(..))
-import           Data.Bifunctor (first)
 import           Data.Bitraversable (bitraverse)
+import qualified Data.List as L
+import qualified Data.List.NonEmpty as NEL
+import           Data.Map.Strict (Map)
+import qualified Data.Map.Strict as M
 import qualified Data.Org as O
 import qualified Data.Org.Lucid as O
+import           Data.Text (Text)
+import qualified Data.Text as T
+import qualified Data.Text.IO as T
 import           Data.These (These(..), partitionEithersNE)
 import           Fosskers.Common
 import           Fosskers.Site (Page(..), site)
@@ -24,21 +30,14 @@ import           Lucid
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Applicative hiding (style)
-import           RIO hiding (first)
-import qualified RIO.List as L
-import qualified RIO.Map as M
-import qualified RIO.NonEmpty as NEL
-import qualified RIO.Text as T
 import           Servant.API
 import           Servant.Server
 import           Servant.Server.StaticFiles (serveDirectoryFileServer)
 import           Skylighting hiding (formatHtmlBlock)
 import           Skylighting.Format.HTML.Lucid (formatHtmlBlock)
-import           System.Directory (listDirectory, makeAbsolute)
-import           System.Environment (lookupEnv)
+import           System.Directory (doesFileExist, listDirectory, makeAbsolute)
 import           System.FilePath ((</>))
 import           Text.Megaparsec (errorBundlePretty, parse)
-import           UnliftIO.Directory (doesFileExist)
 
 ---
 
@@ -47,12 +46,6 @@ newtype Args = Args (Maybe Int)
 pArgs :: Parser Args
 pArgs = Args
   <$> optional (option auto $ long "port" <> help "Port to listen on, otherwise $PORT")
-
-newtype Env = Env LogFunc
-  deriving stock (Generic)
-
-instance HasLogFunc Env where
-  logFuncL f (Env lf) = Env <$> f lf
 
 server :: Pages -> Blogs -> Server API
 server ps bs =
@@ -96,12 +89,12 @@ orgFiles = filter (L.isSuffixOf ".org") <$> (listDirectory "blog" >>= traverse f
     f fp = makeAbsolute $ "blog" </> fp
 
 -- | Render all ORG files to HTML.
-orgs :: NonEmpty FilePath -> RIO e (These (NonEmpty Text) (NonEmpty Blog))
+orgs :: NonEmpty FilePath -> IO (These (NonEmpty Text) (NonEmpty Blog))
 orgs = fmap partitionEithersNE . traverse g
   where
     style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True skylighting (Just ' ')
 
-    g :: FilePath -> RIO e (Either Text Blog)
+    g :: FilePath -> IO (Either Text Blog)
     g f = do
       content <- eread f
       let !path = T.pack f
@@ -113,11 +106,11 @@ orgs = fmap partitionEithersNE . traverse g
         void . note ("No title provided for: " <> path) . M.lookup "TITLE" $ O.orgMeta ofile
         Right . Blog lang (pathSlug f) ofile $ O.body style ofile
 
-eread :: MonadIO m => FilePath -> m (Either Text Text)
+eread :: FilePath -> IO (Either Text Text)
 eread path = do
   exists <- doesFileExist path
   if exists
-     then Right <$> readFileUtf8 path
+     then Right <$> T.readFile path
      else pure . Left $ T.pack path <> " doesn't exist to be read."
 
 pages :: IO (Maybe Pages)
@@ -140,44 +133,50 @@ orgd fp = (hush >=> O.org) <$> eread fp
 main :: IO ()
 main = do
   args <- execParser opts
-  lopt <- setLogUseLoc False <$> logOptionsHandle stderr True
-  withLogFunc lopt $ \logFunc -> runRIO (Env logFunc) (setup args)
+  setup args
   where
     opts = info (pArgs <**> helper) (fullDesc <> header "Server for fosskers.ca")
 
-setup :: Args -> RIO Env ()
-setup args = liftIO pages >>= \case
+setup :: Args -> IO ()
+setup args = pages >>= \case
   Nothing -> logError "Couldn't read static pages."
-  Just ps -> fmap NEL.nonEmpty (liftIO orgFiles) >>= \case
+  Just ps -> fmap NEL.nonEmpty orgFiles >>= \case
     Nothing -> logError "No .org files were found." >> exitFailure
     Just fs -> orgs fs >>= \case
-      This errs -> traverse_ (logWarn . display) errs >> exitFailure
+      This errs -> traverse_ logWarn errs >> exitFailure
       That bs -> case splitLs bs of
         Nothing -> logError "Missing posts from Japanese or English" >> exitFailure
         Just r  -> uncurry (work args ps) r
       These errs bs -> do
-        traverse_ (logWarn . display) errs
+        traverse_ logWarn errs
         maybe exitFailure (uncurry $ work args ps) $ splitLs bs
 
 splitLs :: NonEmpty Blog -> Maybe (NonEmpty Blog, NonEmpty Blog)
 splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . NEL.partition (\b -> blogLang b == English)
 
-work :: Args -> Pages -> NonEmpty Blog -> NonEmpty Blog -> RIO Env ()
+work :: Args -> Pages -> NonEmpty Blog -> NonEmpty Blog -> IO ()
 work (Args p) ps ens jps = do
-  -- afs <- analysisFiles
-  herokuPort <- (>>= readMaybe) <$> liftIO (lookupEnv "PORT")
-  cores <- liftIO getNumCapabilities
+  herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
+  cores <- getNumCapabilities
   let !prt = fromMaybe 8081 $ p <|> herokuPort
       !eng = mapify ens
       !jap = mapify jps
       !bls = Blogs (sortByDate ens) (sortByDate jps) eng jap
-  -- logInfo $ "Analysis files read: " <> display (length afs)
-  logInfo $ "Blog posts read: " <> display (length ens + length jps)
-  logInfo $ "Listening on port " <> display prt <> " with " <> display cores <> " cores"
-  liftIO . W.run prt $ app ps bls
+  logInfo . T.pack $ printf "Blog posts read: %d" (length ens + length jps)
+  logInfo . T.pack $ printf "Listening on port %d with %d cores" prt cores
+  W.run prt $ app ps bls
 
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
 sortByDate = NEL.reverse . NEL.sortWith (orgDate . blogRaw)
 
 mapify :: NonEmpty Blog -> Map Text Blog
 mapify = M.fromList . NEL.toList . NEL.map (blogSlug &&& id)
+
+logError :: Text -> IO ()
+logError t = T.putStrLn $ "[error] " <> t
+
+logWarn :: Text -> IO ()
+logWarn t = T.putStrLn $ "[warn] " <> t
+
+logInfo :: Text -> IO ()
+logInfo t = T.putStrLn $ "[info] " <> t

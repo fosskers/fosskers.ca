@@ -24,22 +24,23 @@ module Fosskers.Common
   , hush, note
   ) where
 
+import           BasePrelude
 import           Data.Aeson (ToJSON)
+import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
+import           Data.Map.Strict (Map)
+import qualified Data.Map.Strict as M
 import qualified Data.Org as O
+import           Data.Text (Text)
+import qualified Data.Text as T
+import qualified Data.Text.Lazy as TL
 import           Data.Time.Calendar (Day(..), fromGregorian)
 import           Data.Time.Format
 import           Lucid (Html)
-import           RIO
-import qualified RIO.HashMap as HM
-import qualified RIO.Map as M
-import qualified RIO.Text as T
-import qualified RIO.Text.Lazy as TL
 import           Servant.API
 import           Servant.HTML.Lucid
 import           Servant.XML
 import           System.FilePath.Posix (takeBaseName)
-import           Text.Printf (printf)
 import           Time.Compat (dateFromTAIEpoch)
 import           Time.Types (Date(..))
 import           Xmlbf (Node, ToXml(..), element, text)
