@@ -34,7 +34,6 @@ blog bs l content = row_ $ do
     Nothing -> nf
     Just b  -> do
       blogHtml b
-      hr_ []
       traverse_ (p_ . toHtml . (at <>)) . M.lookup "AUTHOR" . O.orgMeta $ blogRaw b
       traverse_ (p_ . toHtml . (pu <>)) . M.lookup "DATE" . O.orgMeta $ blogRaw b
       traverse_ (p_ . toHtml . (up <>)) . M.lookup "UPDATED" . O.orgMeta $ blogRaw b

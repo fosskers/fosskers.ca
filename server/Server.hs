@@ -95,7 +95,7 @@ orgFiles = filter (L.isSuffixOf ".org") <$> (listDirectory "blog" >>= traverse f
 orgs :: NonEmpty FilePath -> IO (These (NonEmpty Text) (NonEmpty Blog))
 orgs = fmap partitionEithersNE . traverse g
   where
-    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True skylighting (Just ' ')
+    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True skylighting (Just ' ') True
 
     g :: FilePath -> IO (Either Text Blog)
     g f = do
@@ -123,9 +123,9 @@ pages = runMaybeT $ Pages
   <*> f cstyle "org/cv-en.org"
   <*> f jstyle "org/cv-jp.org"
   where
-    astyle = O.OrgStyle False Nothing False skylighting (Just ' ')
-    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True skylighting (Just ' ')
-    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True skylighting (Just ' ')
+    astyle = O.OrgStyle False Nothing False skylighting (Just ' ') True
+    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True skylighting (Just ' ') True
+    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True skylighting (Just ' ') True
 
     f :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
     f s fp = O.body s <$> MaybeT (orgd fp)
