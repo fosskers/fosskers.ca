@@ -1,6 +1,7 @@
 #+TITLE: Tracking Changes to Base
 #+DATE: 2020-03-05
 #+AUTHOR: Colin
+#+UPDATED: 2020-03-24
 
 The [[https://matrix.hackage.haskell.org/#/package/versions][Hackage Matrix Builder]] is a great way to track how compatible a library is
 with historical versions of GHC (and therefore ~base~).
@@ -17,26 +18,28 @@ free to bookmark it or even [[https://github.com/fosskers/fosskers.ca][help upda
 
 * Compatibility Chart
 
-|  GHC | ~base~ version | Stackage LTS | Notable Changes                         |
-|------+----------------+--------------+-----------------------------------------|
-|  8.8 |           4.13 |           15 | ~MonadFail~ exported by ~Prelude~       |
-|      |                |              | ~fail~ removed from ~Monad~             |
-|------+----------------+--------------+-----------------------------------------|
-|  8.6 |           4.12 |           14 | ~-funclutter-valid-hole-fits~ available |
-|      |                |              | ~deriving via~ available                |
-|------+----------------+--------------+-----------------------------------------|
-|  8.4 |           4.11 |           12 | ~Semigroup~ is superclass of ~Monoid~   |
-|      |                |              | ~Semigroup~ exported by ~Prelude~       |
-|------+----------------+--------------+-----------------------------------------|
-|  8.2 |           4.10 |           11 | ~DerivingStrategies~ available          |
-|------+----------------+--------------+-----------------------------------------|
-|  8.0 |            4.9 |            9 | ~MonadFail~ enters ~base~               |
-|      |                |              | ~Semigroup~ enters ~base~               |
-|------+----------------+--------------+-----------------------------------------|
-| 7.10 |            4.8 |            6 | ~Applicative~ is superclass of ~Monad~  |
-|      |                |              | ~Applicative~ exported by ~Prelude~     |
-|------+----------------+--------------+-----------------------------------------|
-|  7.8 |            4.7 |            2 |                                         |
+|  GHC | ~base~ version | Stackage LTS | Notable Changes                          |
+|------+----------------+--------------+------------------------------------------|
+| 8.10 |           4.14 |              | ~+RTS -xn~ for non-moving, concurrent GC |
+|------+----------------+--------------+------------------------------------------|
+|  8.8 |           4.13 |           15 | ~MonadFail~ exported by ~Prelude~        |
+|      |                |              | ~fail~ removed from ~Monad~              |
+|------+----------------+--------------+------------------------------------------|
+|  8.6 |           4.12 |           14 | ~-funclutter-valid-hole-fits~ available  |
+|      |                |              | ~deriving via~ available                 |
+|------+----------------+--------------+------------------------------------------|
+|  8.4 |           4.11 |           12 | ~Semigroup~ is superclass of ~Monoid~    |
+|      |                |              | ~Semigroup~ exported by ~Prelude~        |
+|------+----------------+--------------+------------------------------------------|
+|  8.2 |           4.10 |           11 | ~DerivingStrategies~ available           |
+|------+----------------+--------------+------------------------------------------|
+|  8.0 |            4.9 |            9 | ~MonadFail~ enters ~base~                |
+|      |                |              | ~Semigroup~ enters ~base~                |
+|------+----------------+--------------+------------------------------------------|
+| 7.10 |            4.8 |            6 | ~Applicative~ is superclass of ~Monad~   |
+|      |                |              | ~Applicative~ exported by ~Prelude~      |
+|------+----------------+--------------+------------------------------------------|
+|  7.8 |            4.7 |            2 |                                          |
 
 * Compatibility Pearls
 
