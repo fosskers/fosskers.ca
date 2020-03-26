@@ -9,6 +9,7 @@
 module Main ( main ) where
 
 import           BasePrelude hiding (app, option)
+import           Control.Monad.Error.Class (throwError)
 import           Control.Monad.Trans.Maybe (MaybeT(..))
 import           Data.Bitraversable (bitraverse)
 import qualified Data.ByteString.Char8 as B
@@ -61,6 +62,7 @@ server ps bs =
   :<|> pure . rss bs
   :<|> (\l -> pure . site l Posts . blog bs l . Just $ newest bs l)
   :<|> pure (site English Posts . blog bs English . Just $ newest bs English)
+  :<|> (\_ -> throwError $ err301 { errHeaders = [("Location","/")]})
 
 rss :: Blogs -> Language -> ByLanguage
 rss bs l = ByLanguage $ NEL.sortWith (Down . orgDate . blogRaw) ps

@@ -56,7 +56,10 @@ type API =
   :<|> Capture "language" Language :> "blog" :> Capture "title" Text :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "rss" :> Get '[XML] ByLanguage
   :<|> Capture "language" Language :> Get '[HTML] (Html ())
+  -- The index at /.
   :<|> Get '[HTML] (Html ())
+  -- Capture any illegal URL and redirect to /.
+  :<|> CaptureAll "rest" Text :> Get '[JSON] ()
 
 newtype Title = Title Text
   deriving stock (Eq, Show, Generic)
