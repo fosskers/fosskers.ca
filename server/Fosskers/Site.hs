@@ -5,7 +5,7 @@ module Fosskers.Site
 
 import BasePrelude
 import Data.Text (Text)
-import Fosskers.Common (Language(..))
+import Fosskers.Common
 import Fosskers.Site.Bootstrap
 import Lucid
 import Lucid.Base (makeAttribute)
@@ -45,7 +45,7 @@ site lang page component = html_ $ do
 
 topbar :: Language -> Page -> Html ()
 topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark", "bg-dark" ] ] $ do
-  a_ [ class_ "navbar-brand", href_ "#" ]
+  a_ [ class_ "navbar-brand", href_ $ "/" <> langPath lang ]
     $ img_ [ src_ "/assets/fosskers-icon.png", width_ "30", height_ "30" ]
   navButton
   div_ [ classes_ [ "collapse", "navbar-collapse" ], id_ navId ]
