@@ -50,16 +50,18 @@ import           Xmlbf (Node, ToXml(..), element, text)
 type API =
   "assets" :> Raw
   :<|> "webfonts" :> Raw
+  :<|> "favicon.ico" :> Raw
   :<|> Capture "language" Language :> "about" :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "cv"    :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "blog" :> Capture "title" Text :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "rss" :> Get '[XML] ByLanguage
   :<|> Capture "language" Language :> Get '[HTML] (Html ())
+  -- Maintain the language selection, even if the rest of the URL is bad.
   :<|> Capture "language" Language :> CaptureAll "rest" Text :> Get '[JSON] ()
   -- The index at /.
   :<|> Get '[HTML] (Html ())
-  -- Capture any illegal URL and redirect to /.
+  -- Capture any other illegal URL and redirect to /.
   :<|> CaptureAll "rest" Text :> Get '[JSON] ()
 
 newtype Title = Title Text

@@ -55,6 +55,7 @@ server :: Pages -> Blogs -> Server API
 server ps bs =
   serveDirectoryFileServer "assets"
   :<|> serveDirectoryFileServer "assets/webfonts"
+  :<|> serveDirectoryFileServer "assets/favicon"
   :<|> (\l -> pure . site l About $ about ps l)
   :<|> (\l -> pure . site l CV $ cv ps l)
   :<|> (\l -> pure . site l Posts . blog bs l . Just $ newest bs l)

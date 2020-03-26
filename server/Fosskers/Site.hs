@@ -42,6 +42,8 @@ site lang page component = html_ $ do
       link_ [rel_ "stylesheet", href_ "/assets/fa-solid.min.css"]
       link_ [rel_ "stylesheet", href_ "/assets/fosskers.css"]
       link_ [rel_ "stylesheet", href_ "/assets/kate.css"]
+      link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/favicon-16x16.png"]
+      link_ [rel_ "icon", type_ "image/png", sizes_ "32x32", href_ "/assets/favicon-32x32.png"]
 
 topbar :: Language -> Page -> Html ()
 topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark", "bg-dark" ] ] $ do
