@@ -61,6 +61,7 @@ server ps bs =
   :<|> (\l t -> pure . site l Posts . blog bs l $ choose bs l t)
   :<|> pure . rss bs
   :<|> (\l -> pure . site l Posts . blog bs l . Just $ newest bs l)
+  :<|> (\l _ -> throwError $ err301 { errHeaders = [("Location", T.encodeUtf8 $ "/" <> langPath l)]})
   :<|> pure (site English Posts . blog bs English . Just $ newest bs English)
   :<|> (\_ -> throwError $ err301 { errHeaders = [("Location","/")]})
 

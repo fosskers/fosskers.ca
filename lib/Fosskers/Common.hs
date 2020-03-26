@@ -56,6 +56,7 @@ type API =
   :<|> Capture "language" Language :> "blog" :> Capture "title" Text :> Get '[HTML] (Html ())
   :<|> Capture "language" Language :> "rss" :> Get '[XML] ByLanguage
   :<|> Capture "language" Language :> Get '[HTML] (Html ())
+  :<|> Capture "language" Language :> CaptureAll "rest" Text :> Get '[JSON] ()
   -- The index at /.
   :<|> Get '[HTML] (Html ())
   -- Capture any illegal URL and redirect to /.
