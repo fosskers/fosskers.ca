@@ -1,0 +1,236 @@
+#+TITLE: Wide Haskell: Reducing your Dependencies
+#+DATE: 2020-04-03
+#+AUTHOR: Colin
+
+This post describes my recent experiments in actively reducing the number of
+depedencies in my Haskell projects to achieve a "wide" (not deep) dependency
+graph. Overall it was less effort than I though it would be, and the results
+were surprising. [[https://github.com/fosskers/aura][Aura]], one of my larger projects, saw the following benefits:
+
+| Criterion          | Before | After  | Change |
+|--------------------+--------+--------+--------|
+| Dependencies       | 140    | 98     |    30% |
+| Binary Size (~-O~) | 30.9mb | 26.2mb |    15% |
+| Compile Time       | 31s    | 19s    |    39% |
+
+This was, for the most part, without sacrificing any functionality or
+convenience.
+
+* Why reduce dependencies?
+
+Here are reasons in order of increasing importance, measured by how much of
+humanity's time can be affected:
+
+- Smaller binaries.
+- Performance improvements from reduced complexity / novelty.
+- Faster compile times.
+- Less surface area for bugs you didn't write.
+- *You are less bound to the lifecycles of other projects.*
+
+Dependencies can empower your code, but they are also a liability. Bitrot is
+real. Taking on a dependency is a marriage of sorts: you must treat that code as
+if it's your own. Its concerns are your concerns. Likewise, the author of that
+library is now your partner. Their concerns are your concerns and *vice versa*.
+If they are not interested in maintaining their half of the relationship, then
+their library should be avoided.
+
+** A Definition of Bitrot
+
+Bitrot is a universal concern, as it relentlessly consumes all code over time.
+But what is it? Say, code that worked last year no longer does. We open it up,
+and see that nothing has changed. The characters are all identical. We're not
+facing a logical bug. What happened?
+
+#+begin_quote
+Bitrot is the World leaving your code behind.
+#+end_quote
+
+Code is just a spell in a book. To become real, it must move through the World.
+Yet the World is ever-changing.
+
+An example: a government agency invests a large sum to implement a system on
+Windows 95 that becomes the heart of their Department. Everyone uses it, and
+soon the Department can't function without it. They intend this arrangement to
+be permanent. Eventually, Microsoft drops support for Windows 95, and with
+immense effort the Department gets their software ported to Windows XP. Later,
+support for XP is dropped and they must upgrade again. However, by this point
+the software is built with such aged technologies that the port is no longer
+possible without a significant overhaul. Furthermore, *the firm that wrote the
+software in the first place no longer exists.* What is the government agency to
+do in this situation?
+
+** Combating Bitrot in Haskell
+
+When it comes to Haskell, the only set of libraries that are guaranteed to never
+bitrot are those in the GHC Platform, like ~base~, ~bytestring~, ~containers~,
+etc. GHC devs might beg to differ, but I'm speaking from the perspective of a
+downstream user who only consumes official releases.
+
+So, by definition, the more a library relies on ~base~ and the other core
+libraries, and less on third-party libraries, the less likely the World will
+break your code over time.
+
+The danger is greater in the Haskell world than say in Java, since in Haskell,
+*anything that is not the most recent version is implicitely deprecated.* "Old =
+Stable" is not a safe assumption in Haskell. Bug fixes are typically not
+back-ported to older major versions (with the occasional exception of GHC
+itself). When reporting a bug, the first question the library author asks you is:
+
+#+begin_quote
+Are you on the latest version?
+#+end_quote
+
+If you're not /and you can't be/, then the author can't help you. So, while
+Stackage Snapshots and Cabal Freeze Files let us choose whatever stable package
+set we want, staying back on old versions of GHC or old libraries is not
+inherently safer. If you do, you lock yourself off from all upstream
+improvements, and eventually the [[/en/blog/base][base library will eat you]].
+
+* Dependencies of Note
+
+Here I highlight a few libraries that I removed, how the removal went, and what
+the effect was. *This is not a condemnation of these libraries.* In fact, I love
+them and highly recommend all three! However, in the spirit of simplicity, I
+decided that I could afford to lose them.
+
+** ~servant-client~
+
+Servant shines when you are sharing your API code, when you are writing both the
+server and the client that consumes the API of that server. If you're just
+writing a few client-side calls, direct usage of ~http-client~ is sufficient.
+[[https://github.com/fosskers/aura/pull/581/commits/e3c42e45c353054a0cc1ebc43f2a74fce31bff5b#diff-4ec496d9d27b0637e8e5d512bf35d264R150][Here is the commit]] where I did the replacement.
+
+Here is the dependency graph of ~http-client~:
+
+[[/assets/http-client.jpg]]
+
+And here is that of ~servant-client~:
+
+[[/assets/servant-client.jpg]]
+
+Notice in particular that this pulls ~QuickCheck~, ~http-api-data~ (and its
+tree), and ~kan-extensions~ (and the transitive kmettoverse) into your code.
+
+Removal of ~servant-client~ freed 22 dependencies and reduced binary size by
+about 9%.
+
+** ~nonempty-containers~
+
+I highly recommend being aware of emptiness at the type level.
+~nonempty-containers~ helps with this, and I used ~NESet~ a lot in Aura.
+However, the original type, ~NonEmpty~, is present in ~base~. Could I relax
+the uniqueness constraint and keep to ~base~? [[https://github.com/fosskers/aura/pull/581/commits/5a05ebf01ae80a56ab82041fbe1e78b4a615a69c][Yes I could]].
+
+This freed 4 dependencies and reduced binary size by ~1%.
+
+[[/assets/nonempty-containers.jpg]]
+
+This tree looks scary, but can be simplied via passing [[/en/blog/base#org9e1a8a][the right flags for the
+these library]]:
+
+[[/assets/nonempty-containers2.jpg]]
+
+Still, ~semigroupoids~ pulls in some of the kmettoverse.
+
+** ~generic-lens~
+
+This library is very cool, and offered [[https://github.com/fosskers/aura/pull/581/commits/30fdcab118c317bfb83c0442526ef1a785f48e2e#diff-a5c5c0ac735268cfa5dd0b16623bd413][an immense convenience]] in the
+~Aura.Security~ module. Elsewhere, however, I was using it in combination with
+~DuplicateRecordFields~ as a solution to the "Record Problem":
+
+#+begin_src haskell
+  logDebug $ "Building: " <> display (p ^. field @"name" . field @"name")
+#+end_src
+
+It was especially silly where vanilla Haskell would suffice:
+
+#+begin_src diff
+  -pure . filter isntMostRecent . zip aurInfos $ aurPkgs ^.. each . field @"version"
+  +pure . filter isntMostRecent . zip aurInfos $ map spVersion aurPkgs
+#+end_src
+
+A coworker and I recently had a debate about naming, and he convinced me that
+there is no Record Problem in Haskell given well-crafted, greppable function
+names. Following that idea, I made all my record fields unique again, and
+removed ~generic-lens~. This freed 7 more dependencies and reduced binary size
+by another 2%.
+
+[[/assets/generic-lens.jpg]]
+
+I see you, ~profunctors~.
+
+* Responsiblities as a Library Author
+
+*Software bloats over time unless proactively minimized.* I believe that we
+library authors can help with this from our end using the following
+rules-of-hand:
+
+** Avoid including ~QuickCheck~ instances in your library
+
+If orphan instances are ever okay, it would be here. Please keep the ~Arbitrary~
+instances out of your library, so that downstream library authors are not
+affected by the release schedulde of ~QuickCheck~.
+
+** Avoid depending on ~lens~
+
+~lens~ is great for applications, if you can prove that you need it. ~microlens~
+is sufficient for most uses. If you want to provide Lenses for the data types in
+your library, please handwrite them. If your library /needs/ ~lens~ in order to
+provide certain functionality, then consider a ~foo-lens~ child library so that
+users can consume your types without buying a ~lens~ dependency they might not have
+asked for.
+
+** Avoid adding a dependency just for one function
+
+This is Open Source: we're allowed to copy code. It's just as easy to inline the
+utility function you're looking for in some internal ~Utils~ module of yours.
+
+#+begin_quote
+But what about bug fixes!
+#+end_quote
+
+Yes, you have a point, so use your best judgement.
+
+** Avoid "opt-out" features
+
+Features should be "opt-in".
+
+If your library provides "bonus" features that incur a hefty extra branch of
+dependencies, then consider hiding that feature behind a Cabal Flag set to
+~False~ by default:
+
+#+begin_example
+  flag remote-configs
+      Description: enable loading of configuration files from HTTP URLs
+      Default: False
+      Manual: True
+
+  library
+    ...
+    if flag(remote-configs)
+        exposed-modules:
+            Configuration.Utils.Internal.HttpsCertPolicy
+        build-depends:
+          , connection > 0.2
+          , ...
+#+end_example
+
+Or better yet, put that feature in a child library. This way, the user has
+complete choice and awareness of what they're attaching to when they depend on
+your library.
+
+* Conclusion
+
+The dependency graph of Aura now looks like this:
+
+[[/assets/aura-deps.jpg]]
+
+A significant improvement from before, trust me. ~http-client-tls~ still brings
+in its own little universe, but that may be unavoidable. I am happy overall that
+the "depth" of Aura's graph has decreased. With fewer dependencies, Aura is less
+likely to break as the ecosystem evolves. I'll end with this take-away:
+
+#+begin_quote
+The greater the width-to-depth ratio of your project's dependency graph, the
+less bound to the World it will be.
+#+end_quote
