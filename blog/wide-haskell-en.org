@@ -4,7 +4,7 @@
 
 This post describes my recent experiments in actively reducing the number of
 depedencies in my Haskell projects to achieve a "wide" (not deep) dependency
-graph. Overall it was less effort than I though it would be, and the results
+graph. Overall it was less effort than I thought it would be, and the results
 were surprising. [[https://github.com/fosskers/aura][Aura]], one of my larger projects, saw the following benefits:
 
 | Criterion          | Before | After  | Change |
