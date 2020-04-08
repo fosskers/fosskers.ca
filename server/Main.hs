@@ -1,16 +1,11 @@
-{-# LANGUAGE BangPatterns       #-}
-{-# LANGUAGE DataKinds          #-}
-{-# LANGUAGE DeriveGeneric      #-}
-{-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE LambdaCase         #-}
-{-# LANGUAGE RankNTypes         #-}
-{-# LANGUAGE TypeOperators      #-}
+{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE LambdaCase   #-}
 
 module Main ( main ) where
 
 import           BasePrelude hiding (app, option)
-import           Control.Monad.Error.Class (throwError)
 import           Control.Monad.Trans.Maybe (MaybeT(..))
+import           Data.Binary.Builder (toLazyByteString)
 import           Data.Bitraversable (bitraverse)
 import qualified Data.ByteString.Char8 as B
 import qualified Data.List as L
@@ -31,17 +26,18 @@ import           Fosskers.Site.About (about)
 import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
 import           Lucid
+import           Network.HTTP.Types
+import           Network.Wai
+import           Network.Wai.Application.Static
 import qualified Network.Wai.Handler.Warp as W
 import           Network.Wai.Middleware.Gzip
 import           Options.Applicative hiding (style)
-import           Servant.API
-import           Servant.Server
-import           Servant.Server.StaticFiles (serveDirectoryFileServer)
 import           Skylighting hiding (formatHtmlBlock)
 import           Skylighting.Format.HTML.Lucid (formatHtmlBlock)
 import           System.Directory (doesFileExist, listDirectory, makeAbsolute)
 import           System.FilePath ((</>))
 import           Text.Megaparsec (errorBundlePretty, parse)
+import           Xmlbf (ToXml(..), encode)
 
 ---
 
@@ -51,20 +47,13 @@ pArgs :: Parser Args
 pArgs = Args
   <$> optional (option auto $ long "port" <> help "Port to listen on, otherwise $PORT")
 
-server :: Pages -> Blogs -> Server API
-server ps bs =
-  serveDirectoryFileServer "assets"
-  :<|> serveDirectoryFileServer "assets/webfonts"
-  :<|> serveDirectoryFileServer "assets/favicon"
-  :<|> (\l -> pure . site l About $ about ps l)
-  :<|> (\l -> pure . site l CV $ cv ps l)
-  :<|> (\l -> pure . site l Posts . blog bs l . Just $ newest bs l)
-  :<|> (\l t -> pure . site l Posts . blog bs l $ choose bs l t)
-  :<|> pure . rss bs
-  :<|> (\l -> pure . site l Posts . blog bs l . Just $ newest bs l)
-  :<|> (\l _ -> throwError $ err301 { errHeaders = [("Location", T.encodeUtf8 $ "/" <> langPath l)]})
-  :<|> pure (site English Posts . blog bs English . Just $ newest bs English)
-  :<|> (\_ -> throwError $ err301 { errHeaders = [("Location","/")]})
+html :: Html () -> Response
+html = responseLBS status200 [("Content-Type", "text/html")] . renderBS
+
+xml :: ToXml a => a -> Response
+xml = responseLBS status200 headers . toLazyByteString . encode . toXml
+  where
+    headers = [("Content-Type", "application/xml")]
 
 rss :: Blogs -> Language -> ByLanguage
 rss bs l = ByLanguage $ NEL.sortWith (Down . orgDate . blogRaw) ps
@@ -73,10 +62,48 @@ rss bs l = ByLanguage $ NEL.sortWith (Down . orgDate . blogRaw) ps
       English  -> engSorted bs
       Japanese -> japSorted bs
 
+-- | Compress all responses (especially assets!) coming out of the server.
+compress :: Application -> Application
+compress = gzip (def { gzipFiles = GzipCompress })
+
 app :: Pages -> Blogs -> Application
-app ps bs = gzip (def { gzipFiles = GzipCompress })
-  . serve (Proxy :: Proxy API)
-  $ server ps bs
+app ps bs = compress routes
+  where
+    routes :: Application
+    routes req resp = case pathInfo req of
+      -- Assets --
+      "assets" : rest -> assets (req { pathInfo = rest }) resp
+      "webfonts" : rest -> assets (req { pathInfo = rest }) resp
+      [ "favicon.ico" ] -> assets req resp
+      -- Static pages --
+      [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l About $ about ps l)
+      [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l CV $ cv ps l)
+      -- All blog posts --
+      [ lang, "blog" ] ->
+        resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
+      [ lang, "blog", slug ] ->
+        resp $ withLang lang (\l -> html . site l Posts . blog bs l $ choose bs l slug)
+      -- RSS feed --
+      [ lang, "rss" ] -> resp $ withLang lang (\l -> xml $ rss bs l)
+      -- Redirect for old links floating around the net --
+      [ "blog" ] -> resp $ responseLBS status301 [("Location", "/")] ""
+      -- The language button --
+      [ lang ] ->
+        resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
+      -- Index page yields most recent English blog post --
+      [] -> resp . html . site English Posts . blog bs English . Just $ newest bs English
+      _ -> resp err404
+
+    err404 :: Response
+    err404 = responseLBS status404 [("Content-Type", "text/plain")] "404 - Not found"
+
+    assets :: Application
+    assets = staticApp (defaultFileServerSettings "assets")
+
+    withLang :: Text -> (Language -> Response) -> Response
+    withLang "en" f = f English
+    withLang "jp" f = f Japanese
+    withLang _ _    = err404
 
 -- | Syntax highlighting "middleware" thanks to Skylighting and org-mode-lucid.
 skylighting :: O.Highlighting

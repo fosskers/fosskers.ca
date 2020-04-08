@@ -1,14 +1,10 @@
-{-# LANGUAGE DataKinds          #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE TypeOperators      #-}
 
 module Fosskers.Common
-  ( -- * APIs
-    API
-    -- * Static Pages
-  , Pages(..)
+  ( -- * Static Pages
+    Pages(..)
     -- * Blog Posts
   , Blog(..)
   , Blogs(..)
@@ -37,32 +33,12 @@ import qualified Data.Text.Lazy as TL
 import           Data.Time.Calendar (Day(..), fromGregorian)
 import           Data.Time.Format
 import           Lucid (Html)
-import           Servant.API
-import           Servant.HTML.Lucid
-import           Servant.XML
 import           System.FilePath.Posix (takeBaseName)
 import           Time.Compat (dateFromTAIEpoch)
 import           Time.Types (Date(..))
 import           Xmlbf (Node, ToXml(..), element, text)
 
 ---
-
-type API =
-  "assets" :> Raw
-  :<|> "webfonts" :> Raw
-  :<|> "favicon.ico" :> Raw
-  :<|> Capture "language" Language :> "about" :> Get '[HTML] (Html ())
-  :<|> Capture "language" Language :> "cv"    :> Get '[HTML] (Html ())
-  :<|> Capture "language" Language :> "blog" :> Get '[HTML] (Html ())
-  :<|> Capture "language" Language :> "blog" :> Capture "title" Text :> Get '[HTML] (Html ())
-  :<|> Capture "language" Language :> "rss" :> Get '[XML] ByLanguage
-  :<|> Capture "language" Language :> Get '[HTML] (Html ())
-  -- Maintain the language selection, even if the rest of the URL is bad.
-  :<|> Capture "language" Language :> CaptureAll "rest" Text :> Get '[JSON] ()
-  -- The index at /.
-  :<|> Get '[HTML] (Html ())
-  -- Capture any other illegal URL and redirect to /.
-  :<|> CaptureAll "rest" Text :> Get '[JSON] ()
 
 newtype Title = Title Text
   deriving stock (Eq, Show, Generic)
@@ -74,11 +50,6 @@ data Language = English | Japanese
 langPath :: Language -> Text
 langPath English  = "en"
 langPath Japanese = "jp"
-
-instance FromHttpApiData Language where
-  parseUrlPiece "en" = Right English
-  parseUrlPiece "jp" = Right Japanese
-  parseUrlPiece l    = Left $ "Invalid language: " <> l
 
 data Blog = Blog
   { blogLang :: !Language

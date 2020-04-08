@@ -13,7 +13,6 @@ extra-deps:
   # --- Missing from Stackage --- #
   - org-mode-1.1.0
   - org-mode-lucid-1.3.0
-  - servant-xml-1.0.1.4
   - skylighting-lucid-1.0.0
   - xmlbf-0.6.1
   - xmlbf-xeno-0.2
