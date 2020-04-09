@@ -23,7 +23,7 @@ This website (also a Haskell project), improved as well:
 | Compile Time | 6.9s   | 5.9s   |    15% |
 
 These changes were possible, for the most part, without sacrificing any
-functionality or convenience. If they weren't needed, why keep them?
+functionality or convenience. If the dependencies weren't needed, why keep them?
 
 * Why reduce dependencies?
 
