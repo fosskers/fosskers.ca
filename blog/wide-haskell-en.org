@@ -1,20 +1,29 @@
 #+TITLE: Wide Haskell: Reducing your Dependencies
 #+DATE: 2020-04-03
 #+AUTHOR: Colin
+#+UPDATED: 2020-04-09
 
 This post describes my recent experiments in actively reducing the number of
 depedencies in my Haskell projects to achieve a "wide" (not deep) dependency
 graph. Overall it was less effort than I thought it would be, and the results
 were surprising. [[https://github.com/fosskers/aura][Aura]], one of my larger projects, saw the following benefits:
 
-| Criterion          | Before | After  | Change |
-|--------------------+--------+--------+--------|
-| Dependencies       | 140    | 98     |    30% |
-| Binary Size (~-O~) | 30.9mb | 26.2mb |    15% |
-| Compile Time       | 31s    | 19s    |    39% |
+| Criterion           | Before | After  | Change |
+|---------------------+--------+--------+--------|
+| Dependencies        | 140    | 98     |    30% |
+| Binary Size (~-O0~) | 30.9mb | 26.2mb |    15% |
+| Compile Time        | 31s    | 19s    |    39% |
 
-This was, for the most part, without sacrificing any functionality or
-convenience.
+This website (also a Haskell project), improved as well:
+
+| Criterion    | Before | After  | Change |
+|--------------+--------+--------+--------|
+| Dependencies | 169    | 121    |    28% |
+| Binary Size  | 44.3mb | 34.9mb |    21% |
+| Compile Time | 6.9s   | 5.9s   |    15% |
+
+These changes were possible, for the most part, without sacrificing any
+functionality or convenience. If they weren't needed, why keep them?
 
 * Why reduce dependencies?
 
@@ -23,6 +32,7 @@ humanity's time can be affected:
 
 - Smaller binaries.
 - Performance improvements from reduced complexity / novelty.
+- Faster CI + deployment pipelines.
 - Faster compile times.
 - Less surface area for bugs you didn't write.
 - *You are less bound to the lifecycles of other projects.*
