@@ -33,6 +33,7 @@ humanity's time can be affected:
 - Smaller binaries.
 - Performance improvements from reduced complexity / novelty.
 - Faster CI + deployment pipelines.
+- Faster website loads (for GHCjs projects).
 - Faster compile times.
 - Less surface area for bugs you didn't write.
 - *You are less bound to the lifecycles of other projects.*
