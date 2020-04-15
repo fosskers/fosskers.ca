@@ -2,13 +2,6 @@ resolver: lts-15.4
 
 ghc-options: {"$locals": -fwrite-ide-info}
 
-flags:
-  these:
-    aeson: false
-    assoc: false
-    semigroupoids: false
-    QuickCheck: false
-
 extra-deps:
   # --- Missing from Stackage --- #
   - org-mode-1.1.0

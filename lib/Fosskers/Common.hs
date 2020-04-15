@@ -17,10 +17,12 @@ module Fosskers.Common
   , ByLanguage(..)
   , orgDate
     -- * Utils
-  , hush, note
+  , hush, note, noteT, (??)
   ) where
 
 import           BasePrelude
+import           Control.Monad.Trans.Except
+import           Control.Monad.Trans.Maybe (MaybeT(..))
 import           Data.Aeson (ToJSON)
 import qualified Data.HashMap.Strict as HM
 import           Data.Hourglass (getWeekDay)
@@ -135,3 +137,9 @@ hush = either (const Nothing) Just
 
 note :: a -> Maybe b -> Either a b
 note a = maybe (Left a) Right
+
+noteT :: (Monad m) => a -> MaybeT m b -> ExceptT a m b
+noteT a = ExceptT . liftM (note a) . runMaybeT
+
+(??) :: Applicative m => Maybe a -> e -> ExceptT e m a
+(??) a e = ExceptT (pure $ note e a)

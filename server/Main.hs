@@ -4,6 +4,7 @@
 module Main ( main ) where
 
 import           BasePrelude hiding (app, option)
+import           Control.Monad.Trans.Except (runExceptT)
 import           Control.Monad.Trans.Maybe (MaybeT(..))
 import           Data.Binary.Builder (toLazyByteString)
 import           Data.Bitraversable (bitraverse)
@@ -19,7 +20,6 @@ import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import           Data.Text.Encoding.Error (lenientDecode)
 import qualified Data.Text.IO as T
-import           Data.These (These(..), partitionEithersNE)
 import           Fosskers.Common
 import           Fosskers.Site (Page(..), site)
 import           Fosskers.Site.About (about)
@@ -123,8 +123,8 @@ orgFiles = filter (L.isSuffixOf ".org") <$> (listDirectory "blog" >>= traverse f
     f fp = makeAbsolute $ "blog" </> fp
 
 -- | Render all ORG files to HTML.
-orgs :: NonEmpty FilePath -> IO (These (NonEmpty Text) (NonEmpty Blog))
-orgs = fmap partitionEithersNE . traverse g
+orgs :: NonEmpty FilePath -> IO ([Text], [Blog])
+orgs = fmap partitionEithers . traverse g . NEL.toList
   where
     style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True skylighting (Just ' ') True
 
@@ -172,21 +172,21 @@ main = do
     opts = info (pArgs <**> helper) (fullDesc <> header "Server for fosskers.ca")
 
 setup :: Args -> IO ()
-setup args = pages >>= \case
-  Nothing -> logError "Couldn't read static pages."
-  Just ps -> fmap NEL.nonEmpty orgFiles >>= \case
-    Nothing -> logError "No .org files were found." >> exitFailure
-    Just fs -> orgs fs >>= \case
-      This errs -> traverse_ logWarn errs >> exitFailure
-      That bs -> case splitLs bs of
-        Nothing -> logError "Missing posts from Japanese or English" >> exitFailure
-        Just r  -> uncurry (work args ps) r
-      These errs bs -> do
-        traverse_ logWarn errs
-        maybe exitFailure (uncurry $ work args ps) $ splitLs bs
+setup args = f >>= \case
+  Left err -> logError err >> exitFailure
+  Right (ps, ens, jps) -> work args ps ens jps
+  where
+    f :: IO (Either Text (Pages, NonEmpty Blog, NonEmpty Blog))
+    f = runExceptT $ do
+      ps <- noteT "Couldn't read static pages." $ MaybeT pages
+      fs <- noteT "No .org files were found." . MaybeT $ fmap NEL.nonEmpty orgFiles
+      (bads, goods) <- liftIO $ orgs fs
+      liftIO $ traverse_ logWarn bads
+      (ens, jps) <- splitLs goods ?? "Missing posts from Japanese or English."
+      pure (ps, ens, jps)
 
-splitLs :: NonEmpty Blog -> Maybe (NonEmpty Blog, NonEmpty Blog)
-splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . NEL.partition (\b -> blogLang b == English)
+splitLs :: [Blog] -> Maybe (NonEmpty Blog, NonEmpty Blog)
+splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . partition (\b -> blogLang b == English)
 
 work :: Args -> Pages -> NonEmpty Blog -> NonEmpty Blog -> IO ()
 work (Args p) ps ens jps = do
