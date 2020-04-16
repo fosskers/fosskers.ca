@@ -21,7 +21,7 @@ import qualified Data.Text.Encoding as T
 import           Data.Text.Encoding.Error (lenientDecode)
 import qualified Data.Text.IO as T
 import           Fosskers.Common
-import           Fosskers.Site (Page(..), site)
+import           Fosskers.Site
 import           Fosskers.Site.About (about)
 import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
@@ -85,8 +85,6 @@ app ps bs = compress routes
         resp $ withLang lang (\l -> html . site l Posts . blog bs l $ choose bs l slug)
       -- RSS feed --
       [ lang, "rss" ] -> resp $ withLang lang (\l -> xml $ rss bs l)
-      -- Redirect for old links floating around the net --
-      [ "blog" ] -> resp $ responseLBS status301 [("Location", "/")] ""
       -- The language button --
       [ lang ] ->
         resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
@@ -95,7 +93,8 @@ app ps bs = compress routes
       _ -> resp err404
 
     err404 :: Response
-    err404 = responseLBS status404 [("Content-Type", "text/plain")] "404 - Not found"
+    err404 = responseLBS status404 [("Content-Type", "text/html")]
+      . renderBS $ site English Nowhere nowhere
 
     assets :: Application
     assets = staticApp (defaultFileServerSettings "assets")
