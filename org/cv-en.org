@@ -196,7 +196,7 @@ minoring in Computer Science. Achieved the Dean's Honour Roll.
 
 | Topic                          | Date      | Venue                    | Location  | Language |
 |--------------------------------+-----------+--------------------------+-----------+----------|
-| Haskell in Production          | 2019 June | LambdaConf               | Boulder   | English  |
+| [[https://www.youtube.com/watch?v=CmMzkOspHTU][Haskell in Production]]          | 2019 June | LambdaConf               | Boulder   | English  |
 | Beauty and Correctness in Code | 2019 May  | Polyglot Unconference    | Vancouver | English  |
 | Pact Basics                    | 2018 Nov  | NODE Tokyo               | Tokyo     | Japanese |
 | Introduction to Chainweb       | 2018 Nov  | Neutrino Meetup          | Tokyo     | Japanese |

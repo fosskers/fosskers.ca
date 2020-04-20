@@ -20,8 +20,7 @@ For more specifics, please see [[/en/cv][my full CV]].
 Before pursuing programming professionally, I taught English in Japan for
 several years. I speak both English and Japanese, and have studied German,
 Italian, and Esperanto. Apart from learning languages, I often go rock climbing
-in my spare time. You can donate to my Open Source efforts through [[https://github.com/sponsors/fosskers][Github
-Sponsors]].
+in my spare time. You can donate to my Open Source efforts through
+[[https://github.com/sponsors/fosskers][Github Sponsors]].
 
-This website is written in Haskell using the [[http://hackage.haskell.org/package/servant][servant]], [[http://hackage.haskell.org/package/lucid][lucid]], and [[http://hackage.haskell.org/package/org-mode][org-mode]]
-libraries.
+This website is written in Haskell using the [[http://hackage.haskell.org/package/wai][wai]], [[http://hackage.haskell.org/package/lucid][lucid]], and [[http://hackage.haskell.org/package/org-mode][org-mode]] libraries.
