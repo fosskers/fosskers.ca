@@ -6,7 +6,6 @@ FPによって己の基本的開発美徳の三つが可能となります：　
 * 主なプロジェクト
 
 - Arch Linuxの [[https://github.com/fosskers/aura][Aura Package Manager]]
-- [[https://github.com/kadena-io/chainweb-node][Kadenaの公式ブロックチェーン]]
 - [[https://github.com/fosskers/mapalgebra][MapAlgebra]] ・Dana Tomlin作の「GIS and Cartographic Modelling」の実装
 - Mapbox VectorTileコーデック ([[https://github.com/fosskers/vectortiles][Haskell]], [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]])
 - [[https://geotrellis.github.io/vectorpipe/][VectorPipe]]

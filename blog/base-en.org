@@ -1,7 +1,7 @@
 #+TITLE: Tracking Changes to Base
 #+DATE: 2020-03-05
 #+AUTHOR: Colin
-#+UPDATED: 2020-04-01
+#+UPDATED: 2020-05-05
 
 The [[https://matrix.hackage.haskell.org/#/package/versions][Hackage Matrix Builder]] is a great way to track how compatible a library is
 with historical versions of GHC (and therefore ~base~).
@@ -156,3 +156,4 @@ value you specified in your ~.cabal~ file.
 - [[http://hackage.haskell.org/package/base/changelog][CHANGELOG]] for ~base~
 - [[https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/][GHC User's Guide]]
 - [[https://github.com/haskell-infra/hackage-trustees/blob/master/cookbook.md][Hackage Trustee Cookbook]]
+- [[https://typeclasses.com/timeline][History of Haskell Development]]

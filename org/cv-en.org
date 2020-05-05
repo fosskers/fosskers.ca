@@ -45,7 +45,7 @@ give conference presentations in both English and Japanese.
 
 *** [[https://www.kadena.io/][Kadena]] - Blockchain Software Development (Haskell)
 
-/2018 August - Present/
+/2018 August - 2020 May/
 
 Core developer of the [[https://github.com/kadena-io/chainweb-node][Kadena Public Blockchain]] (Chainweb).
 

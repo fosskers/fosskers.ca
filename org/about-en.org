@@ -6,7 +6,6 @@ allows me to realize my core programming values: Rigour, Minimalism, and Beauty.
 * Public Projects of Note
 
 - The [[https://github.com/fosskers/aura][Aura Package Manager]] for Arch Linux
-- The [[https://github.com/kadena-io/chainweb-node][Kadena Public Blockchain]] (core developer)
 - [[https://github.com/fosskers/mapalgebra][MapAlgebra]]  - An implementation of /GIS and Cartographic Modelling/ by Dana Tomlin
 - Mapbox VectorTile codecs ([[https://github.com/fosskers/vectortiles][Haskell]], [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]])
 - [[https://github.com/fosskers/scalaz-and-cats][ScalaZ and Cats Comparison]] and the [[https://github.com/fosskers/scala-benchmarks][Scala Collections Benchmarks]]

@@ -49,7 +49,7 @@
 
 *** [[https://www.kadena.io/][Kadena]] - ブロックチェーン開発 (Haskell)
 
-/２０１８年８月･･･現在/
+/２０１８年８月･･･２０２０年５月/
 
 [[https://github.com/kadena-io/chainweb-node][Kadenaの公式ブロックチェーン]](Chainweb)の中心開発者の一人。
 
