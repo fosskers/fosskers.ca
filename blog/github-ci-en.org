@@ -1,7 +1,7 @@
 #+TITLE: Github CI for Stack Projects
 #+DATE: 2020-03-09
 #+AUTHOR: Colin
-#+UPDATED: 2020-04-01
+#+UPDATED: 2020-05-15
 
 * How Github CI Works
 
@@ -29,8 +29,11 @@ Jobs themselves.
         name: CI
         runs-on: ubuntu-latest
         steps:
-          - name: Setup Stack
-            uses: mstksg/setup-stack@v1
+          - name: Setup GHC
+            uses: actions/setup-haskell@v1.1
+            with:
+              ghc-version: "8.8.3"
+              enable-stack: true
 
           - name: Clone project
             uses: actions/checkout@v2
@@ -38,9 +41,10 @@ Jobs themselves.
 #+end_src
 
 Github *Actions* are like standalone ~IO~ functions that alter the Pipeline's
-environment. [[https://github.com/mstksg][Some cool guy]] already wrote an [[https://github.com/mstksg/setup-stack][Action to set up Stack]], so we use
-that here. Notice that Actions have a version, which we can track by subscribing
-to releases:
+environment. We can see that the official ~setup-haskell~ Action has ~stack~
+support built in, so we activate that and set our preferred GHC version with
+~with~. Notice that Actions have a version, which we can track by subscribing to
+releases:
 
 [[/assets/watching.png]]
 
@@ -107,12 +111,10 @@ The following YAML configuration means:
       runs-on: ubuntu-latest
       steps:
         - name: Setup GHC
-          uses: actions/setup-haskell@v1
+          uses: actions/setup-haskell@v1.1
           with:
-            ghc-version: "8.8.2"
-
-        - name: Setup Stack
-          uses: mstksg/setup-stack@v1
+            ghc-version: "8.8.3"
+            enable-stack: true
 
         - name: Clone project
           uses: actions/checkout@v2
@@ -167,12 +169,10 @@ often it's ran, but also says:
 
       steps:
         - name: Setup GHC
-          uses: actions/setup-haskell@v1
+          uses: actions/setup-haskell@v1.1
           with:
             ghc-version: ${{ matrix.ghc }}
-
-        - name: Setup Stack
-          uses: mstksg/setup-stack@v1
+            enable-stack: true
 
         - name: Clone project
           uses: actions/checkout@v2
