@@ -6,3 +6,8 @@ site/jquery-3.2.1/*
 *.dump-hi
 *~
 *.hie
+blog/drafts/
+dist-newstyle/
+stack.yaml.lock
+weeder.dhall
+deps.jpg
