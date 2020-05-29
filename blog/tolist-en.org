@@ -46,6 +46,19 @@ assume that fusion occurs. Otherwise, we'll assume it doesn't. Unless the code
 comments claim otherwise. *If this assumption is incorrect, please let me
 know.*
 
+/Emily Pillmore points out:/
+
+#+begin_example
+This is an okay assumption to make. It may be correct in some cases, but wrong
+in others. It's implementation dependent. It also depends on the caller - if one
+uses:
+
+V.fromList $! M.toList m
+
+then you may break the fusion rules so even in the case of "yes this fuses", you
+have to assume you're lazily composing.
+#+end_example
+
 * Chart of Results
 
 - "Same?" means "Is ~Foldable.toList~ defined in terms of the custom ~toList~?
