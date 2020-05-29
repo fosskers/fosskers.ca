@@ -1,0 +1,272 @@
+#+TITLE: Trusting toList
+#+DATE: 2020-05-29
+#+AUTHOR: Colin
+
+We often move to and from the ~[]~ type in Haskell, for example in the
+transformation ~Map k v -> Vector v~. Luckily, GHC is good at "fusing away"
+these intermediate lists. One function that's easy to reach for during this
+process is ~Foldable.toList~, since it is always imported by the ~Prelude~. But
+we also see that every major container type exports its own variant, like
+~Map.toList~, ~Vector.toList~, etc. Similar to my post on [[/en/blog/container-sizes][Measuring Haskell
+Containers Sizes]], this made me wonder if ~Foldable.toList~ is "safe"
+(performance wise) in all cases, or if we should trust the variants exported by
+each module. Let's find out.
+
+* Analysing ~Foldable.toList~
+
+The default implementation of ~Foldable.toList~ looks like this:
+
+#+begin_src haskell
+  toList :: t a -> [a]
+  toList t = build (\c n -> foldr c n t)
+#+end_src
+
+~build~? This is where the magic comes from:
+
+#+begin_src haskell
+  -- | A list producer that can be fused with 'foldr'.
+  -- This function is merely
+  --
+  -- >    build g = g (:) []
+  --
+  -- but GHC's simplifier will transform an expression of the form
+  -- @'foldr' k z ('build' g)@, which may arise after inlining, to @g k z@,
+  -- which avoids producing an intermediate list.
+  build   :: forall a. (forall b. (a -> b -> b) -> b -> b) -> [a]
+  {-# INLINE [1] build #-}
+          -- The INLINE is important, even though build is tiny,
+          -- because it prevents [] getting inlined in the version that
+          -- appears in the interface file.  If [] *is* inlined, it
+          -- won't match with [] appearing in rules in an importing module.
+  build g = g (:) []
+#+end_src
+
+For the purpose of this analysis, if we see ~build~ in an implementation, we'll
+assume that fusion occurs. Otherwise, we'll assume it doesn't. Unless the code
+comments claim otherwise. *If this assumption is incorrect, please let me
+know.*
+
+* Chart of Results
+
+- "Same?" means "Is ~Foldable.toList~ defined in terms of the custom ~toList~?
+- "Fusion?" means that the ~build~ function was used in a ~toList~ implementation.
+
+| Container  | Custom ~toList~ | ~Foldable.toList~ | Same? | Fusion? | Notes                            |
+|------------+-----------------+-------------------+-------+---------+----------------------------------|
+| ~NonEmpty~ | ~O(1)~          | ~O(1)~            | No    | N/A     |                                  |
+| ~Map~      | ~O(n)~          | ~O(n)~            | No    | Yes?    | Implementations nearly identical |
+| ~Set~      | ~O(n)~          | ~O(n)~            | Yes   | Yes?    |                                  |
+| ~Seq~      | N/A             | ~O(n)~            | N/A   | No?     |                                  |
+| ~Tree~     | ~O(n)~          | ~O(n)~            | Yes   | Yes     | Custom called ~flatten~          |
+| ~Array~    | ~O(n)~          | ~O(n)~            | Yes   | ?       | Custom called ~elems~            |
+|------------+-----------------+-------------------+-------+---------+----------------------------------|
+| ~HashMap~  | ~O(n)~          | ~O(n)~            | No    | Yes     | Custom called ~elems~            |
+| ~HashSet~  | ~O(n)~          | ~O(n)~            | No    | Yes     |                                  |
+|------------+-----------------+-------------------+-------+---------+----------------------------------|
+| ~Vector~   | ~O(n)~          | ~O(n)~            | Yes   | Yes     |                                  |
+|------------+-----------------+-------------------+-------+---------+----------------------------------|
+
+* Types
+
+** ~NonEmpty~
+
+What we'd expect:
+
+#+begin_src haskell
+  toList :: NonEmpty a -> [a]
+  toList ~(a :| as) = a : as
+#+end_src
+
+** ~Map~
+
+#+begin_src haskell
+  -- | /O(n)/. Convert the map to a list of key\/value pairs. Subject to list fusion.
+  toList :: Map k a -> [(k,a)]
+  toList = toAscList
+
+  toAscList :: Map k a -> [(k,a)]
+  toAscList = foldrWithKey (\k x xs -> (k,x):xs) []
+
+  foldrWithKey :: (k -> a -> b -> b) -> b -> Map k a -> b
+  foldrWithKey f z = go z
+    where
+      go z' Tip              = z'
+      go z' (Bin _ kx x l r) = go (f kx x (go z' r)) l
+#+end_src
+
+But the ~Foldable~ instance advertises proactively that its ~toList~ isn't the same.
+
+#+begin_src haskell
+  instance Foldable (Map k) where
+    toList = elems -- NB: Foldable.toList /= Map.toList
+
+  elems :: Map k a -> [a]
+  elems = foldr (:) []
+
+  -- | /O(n)/. Fold the values in the map using the given right-associative
+  -- binary operator, such that @'foldr' f z == 'Prelude.foldr' f z . 'elems'@.
+  foldr :: (a -> b -> b) -> b -> Map k a -> b
+  foldr f z = go z
+    where
+      go z' Tip             = z'
+      go z' (Bin _ _ x l r) = go (f x (go z' r)) l
+#+end_src
+
+Notice that this ~foldr~ does not claim that it is subject to list fusion,
+although as far as I can tell by comparing to ~foldrWithKey~, the
+implementations appear identical. Further, I don't see any call to ~build~.
+
+** ~Set~
+
+Although ~Set~ and ~Map~ have a similar internal structure, it seems that ~Set~
+/does/ use its custom ~toList~ as its ~Foldable.toList~.
+
+** ~Seq~
+
+~Seq~ has no custom ~toList~, nor does its ~Foldable~ instance provide a custom
+implementation. This means its ~toList~ is based on its ~foldr~:
+
+#+begin_src haskell
+  instance Foldable Seq where
+    foldr f z = foldr (f .# getElem) z .# getSeq
+
+  getSeq :: Seq a -> FingerTree (Elem a)
+  getSeq (Seq xs) = xs
+#+end_src
+
+The ~Foldable~ instance of ~FingerTree~ has a large custom ~foldr~, and thus no
+call to ~build~. This is ~O(n)~, but it's not clear to me that it fuses.
+
+** ~Tree~
+
+Tree doesn't have a function named ~toList~, but it does have ~flatten :: Tree a
+-> [a]~ which returns its elements in pre-order.
+
+#+begin_src haskell
+  flatten :: Tree a -> [a]
+  flatten t = squish t []
+    where squish (Node x ts) xs = x:Prelude.foldr squish xs ts
+#+end_src
+
+And look!
+
+#+begin_src haskell
+  instance Foldable Tree where
+  #if MIN_VERSION_base(4,8,0)
+      toList = flatten
+  #endif
+#+end_src
+
+So, ~toList = flatten~ if you're using any recent GHC. ~base-4.8.0~ was bundled
+with GHC 7.10. Since ~Prelude.foldr~ is ~Foldable.foldr~, let's assume this
+fuses.
+
+** ~Array~
+
+~Array~ has ~elems~ for fetching all its elements as a list:
+
+#+begin_src haskell
+  elems :: Array i e -> [e]
+  elems arr@(Array _ _ n _) = [e | i <- [0 .. n - 1], e <- unsafeAtA arr i]
+
+  instance Foldable (Array i) where
+    toList = elems
+#+end_src
+
+*Question:* Are raw list comprehensions subject to fusion? I'd assume so, since
+they should be a lazy structure. The code comments otherwise don't claim
+anything about fusion.
+
+** ~HashMap~
+
+Recall that ~HashMap~ [[/en/blog/containers-sizes][had an interesting story]] when we were doing the analysis
+for ~Foldable.length~. Let's see what happens for ~toList~:
+
+#+begin_src haskell
+  -- | /O(n)/ Return a list of this map's values.  The list is produced
+  -- lazily.
+  elems :: HashMap k v -> [v]
+  elems = L.map snd . toList
+
+  toList :: HashMap k v -> [(k, v)]
+  toList t = build (\ c z -> foldrWithKey (curry c) z t)
+
+  foldrWithKey :: (k -> v -> a -> a) -> a -> HashMap k v -> a
+  foldrWithKey f = go
+    where
+      go z Empty                 = z
+      go z (Leaf _ (L k v))      = f k v z
+      go z (BitmapIndexed _ ary) = A.foldr (flip go) z ary
+      go z (Full ary)            = A.foldr (flip go) z ary
+      go z (Collision _ ary)     = A.foldr (\ (L k v) z' -> f k v z') z ary
+#+end_src
+
+So, a function named ~toList~ exists but it gives us the pairs. As with ~Array~,
+~elems~ is the "real" version. And look, ~build~ is back.
+
+And ~Foldable~?
+
+#+begin_src haskell
+  instance Foldable.Foldable (HashMap k) where
+      foldr f = foldrWithKey (const f)
+#+end_src
+
+Right, nearly empty. But since the default ~toList~ is defined in terms of
+~foldr~, both variants go through ~foldrWithKey~ and use ~build~, so we
+basically end up with the same thing.
+
+** ~HashSet~
+
+Different from ~HashMap~:
+
+#+begin_src haskell
+  toList :: HashSet a -> [a]
+  toList t = build (\ c z -> foldrWithKey ((const .) c) z (asMap t))
+#+end_src
+
+And ~foldrWithKey~ comes from ~HashMap~. So as with ~length~, this is the same.
+
+** ~Vector~
+
+#+begin_src haskell
+  -- | /O(n)/ Convert a vector to a list
+  toList :: Vector a -> [a]
+  toList = G.toList
+
+  toList :: Vector v a => v a -> [a]
+  toList = Bundle.toList . stream
+
+  toList :: Bundle v a -> [a]
+  -- toList s = unId (M.toList s)
+  toList s = build (\c n -> toListFB c n s)
+
+  -- This supports foldr/build list fusion that GHC implements
+  toListFB :: (a -> b -> b) -> b -> Bundle v a -> b
+  toListFB c n M.Bundle{M.sElems = Stream step t} = go t
+    where
+      go s = case unId (step s) of
+               Yield x s' -> x `c` go s'
+               Skip    s' -> go s'
+               Done       -> n
+#+end_src
+
+~Bundle.toList~ has a strange commented-out previous implementation, but
+otherwise this looks good. This also claims directly that it supports the list
+fusion we're looking for.
+
+And for ~Foldable~:
+
+#+begin_src haskell
+  instance Foldable.Foldable Vector where
+  #if MIN_VERSION_base(4,8,0)
+    toList = toList
+  #endif
+#+end_src
+
+So, it uses the custom implementation so long as you're on any recent GHC.
+
+* Conclusions
+
+Most of these structures convert to ~[]~ in ~O(n)~, but most also (have evidence
+to suggest that they) fuse. Overall, I think we've shown that it's *safe to use
+Foldable.toList*!
