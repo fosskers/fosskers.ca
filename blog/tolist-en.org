@@ -186,9 +186,9 @@ fuses.
     toList = elems
 #+end_src
 
-*Question:* Are raw list comprehensions subject to fusion? I'd assume so, since
-they should be a lazy structure. The code comments otherwise don't claim
-anything about fusion.
+[[https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.130.2170&rep=rep1&type=pdf][This paper]] (see section 3.2) suggests that raw list comprehensions are subject
+to fusion, so we can trust this, even though the docstring for ~elems~ makes no
+claim about fusion.
 
 ** ~HashMap~
 
