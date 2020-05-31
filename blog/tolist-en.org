@@ -283,3 +283,7 @@ So, it uses the custom implementation so long as you're on any recent GHC.
 Most of these structures convert to ~[]~ in ~O(n)~, but most also (have evidence
 to suggest that they) fuse. Overall, I think we've shown that it's *safe to use
 Foldable.toList*!
+
+* Acknowledgements
+
+Thanks to Emily Pillmore for elaborating on a number of points.
