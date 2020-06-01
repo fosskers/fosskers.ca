@@ -71,7 +71,7 @@ have to assume you're lazily composing.
 | ~Set~      | ~O(n)~          | ~O(n)~            | Yes   | Yes?    |                                  |
 | ~Seq~      | N/A             | ~O(n)~            | N/A   | No?     |                                  |
 | ~Tree~     | ~O(n)~          | ~O(n)~            | Yes   | Yes     | Custom called ~flatten~          |
-| ~Array~    | ~O(n)~          | ~O(n)~            | Yes   | ?       | Custom called ~elems~            |
+| ~Array~    | ~O(n)~          | ~O(n)~            | Yes   | Yes     | Custom called ~elems~            |
 |------------+-----------------+-------------------+-------+---------+----------------------------------|
 | ~HashMap~  | ~O(n)~          | ~O(n)~            | No    | Yes     | Custom called ~elems~            |
 | ~HashSet~  | ~O(n)~          | ~O(n)~            | No    | Yes     |                                  |
