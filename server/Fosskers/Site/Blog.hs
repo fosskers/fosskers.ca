@@ -41,15 +41,14 @@ blog bs l content = row_ $ do
       div_ [class_ "title"] . maybe "" (i_ . toHtml @String) $ do
         author <- M.lookup "AUTHOR" m
         date <- M.lookup "DATE" m
-        Just $ printf "By %s on %s" author date
-      for_ (M.lookup "UPDATED" m) $ \updated ->
-        div_ [class_ "title"] . i_ . toHtml $ "Updated " <> updated
+        let updated = M.lookup "UPDATED" m
+        Just $ printf pat author date <> maybe "" (printf upat) updated
       blogHtml b
   div_ [class_ "col-md-3"] ""
   where
-    (ps, nf) = case l of
-      English  -> (engSorted bs, "Post not found!")
-      Japanese -> (japSorted bs, "見つかりません！")
+    (ps, nf, pat, upat) = case l of
+      English  -> (engSorted bs, "Post not found!", "By %s on %s", ", updated %s")
+      Japanese -> (japSorted bs, "見つかりません！", "%s・%s初出版", "・%s更新")
 
 sidebar :: Language -> NonEmpty Blog -> Html ()
 sidebar l bs = traverse_ g $ NEL.groupWith1 year bs
