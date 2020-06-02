@@ -1,6 +1,7 @@
 #+TITLE: Porting to Rio
 #+DATE: 2020-02-15
 #+AUTHOR: Colin
+#+CATEGORY: haskell
 
 [[https://github.com/fosskers/aura][Aura]] has long been my den for mad science in Haskell. Whenever some new library
 or technique comes along, I give it a try to get a feel for its true usefulness.

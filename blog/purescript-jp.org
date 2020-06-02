@@ -2,6 +2,7 @@
 #+DATE: 2018-02-21
 #+AUTHOR: Colin
 #+UPDATED: 2020-03-13
+#+CATEGORY: haskell
 
 * Haskell
 

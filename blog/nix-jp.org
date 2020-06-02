@@ -2,6 +2,7 @@
 #+DATE: 2018-01-10
 #+AUTHOR: こりん
 #+UPDATED: 2020-03-13
+#+CATEGORY: haskell
 
 日頃のHaskell開発で使ってみるために（やっと）Nixを身につけた。下記は俺のNix設定と
 開発の流れの説明。

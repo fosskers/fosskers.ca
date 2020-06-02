@@ -1,6 +1,7 @@
 #+TITLE: Haskell Development with Nix and Dante
 #+DATE: 2018-01-10
 #+AUTHOR: Colin
+#+CATEGORY: haskell
 
 I recently learned enough about Nix to try it for my everyday Haskell development.
 Below describes my entire setup and workflow.

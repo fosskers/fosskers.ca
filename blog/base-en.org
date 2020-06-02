@@ -2,6 +2,7 @@
 #+DATE: 2020-03-05
 #+AUTHOR: Colin
 #+UPDATED: 2020-05-05
+#+CATEGORY: haskell
 
 The [[https://matrix.hackage.haskell.org/#/package/versions][Hackage Matrix Builder]] is a great way to track how compatible a library is
 with historical versions of GHC (and therefore ~base~).

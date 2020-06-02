@@ -1,7 +1,7 @@
 #+TITLE: Deploying Haskell Programs
 #+DATE: 2018-02-28
 #+AUTHOR: Colin
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+#+CATEGORY: haskell
 
 You should use Nix if you have large production Haskell systems to deploy,
 a large team to coordinate with, and the ability to manage NixOS servers.

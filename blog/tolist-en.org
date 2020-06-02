@@ -1,6 +1,7 @@
 #+TITLE: Trusting toList
 #+DATE: 2020-05-29
 #+AUTHOR: Colin
+#+CATEGORY: haskell
 
 We often move to and from the ~[]~ type in Haskell, for example in the
 transformation ~Map k v -> Vector v~. Luckily, GHC is good at "fusing away"

@@ -2,6 +2,7 @@
 #+DATE: 2020-04-03
 #+AUTHOR: Colin
 #+UPDATED: 2020-04-09
+#+CATEGORY: haskell
 
 This post describes my recent experiments in actively reducing the number of
 depedencies in my Haskell projects to achieve a "wide" (not deep) dependency

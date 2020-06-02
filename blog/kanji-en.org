@@ -1,6 +1,7 @@
 #+TITLE: Japanese Kanji Analysis with Haskell
 #+DATE: 2018-03-21
 #+AUTHOR: Colin
+#+CATEGORY: language
 
 My first real Haskell program was called /NanQ/, a pun of the Japanese word
 何級 ("nan-kyuu") meaning "which level". Given some Japanese text on the command

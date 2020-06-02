@@ -1,6 +1,7 @@
 #+TITLE: Terraform Remote State on S3
 #+DATE: 2019-07-17
 #+AUTHOR: Colin
+#+CATEGORY: tech
 
 The [[https://www.terraform.io/docs/backends/types/s3.html][official S3 backend documentation]] for Terraform gives the impression that
 Remote State is more involved than it actually needs to be. In this post, I give

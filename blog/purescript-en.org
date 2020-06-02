@@ -1,6 +1,7 @@
 #+TITLE: Websites with Servant and Purescript/Halogen
 #+DATE: 2018-02-21
 #+AUTHOR: Colin
+#+CATEGORY: haskell
 
 * Haskell
 

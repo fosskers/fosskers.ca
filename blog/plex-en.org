@@ -1,6 +1,7 @@
 #+TITLE: From DVD, to Pi, to Plex
 #+DATE: 2020-04-11
 #+AUTHOR: Colin
+#+CATEGORY: tech
 
 This post describes my home media setup. Namely, how I rip and encode DVDs that
 I own using *Handbrake*, store them on a *Raspberry Pi* running *Plex*, and play

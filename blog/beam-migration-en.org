@@ -1,7 +1,7 @@
 #+TITLE: Beam: Database Initialization
 #+DATE: 2020-01-17
 #+AUTHOR: Colin
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../assets/org-theme.css"/>
+#+CATEGORY: haskell
 
 [[http://hackage.haskell.org/package/beam-core][Beam]] is a database library for Haskell. [[https://tathougies.github.io/beam/][The guide]] has a good beginner tutorial,
 but has us initialize the database tables ourselves by opening ~sqlite3~ on the

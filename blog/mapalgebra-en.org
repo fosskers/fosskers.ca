@@ -1,6 +1,7 @@
 #+TITLE: Realistic Single-Server Raster Processing
 #+DATE: 2018-05-11
 #+AUTHOR: Colin
+#+CATEGORY: haskell
 
 * Preface
 
