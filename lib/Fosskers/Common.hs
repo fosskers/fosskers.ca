@@ -7,6 +7,7 @@ module Fosskers.Common
     Pages(..)
     -- * Blog Posts
   , Blog(..)
+  , BlogCategory(..)
   , Blogs(..)
   , Title(..)
   , Language(..)
@@ -59,9 +60,15 @@ data Blog = Blog
   , blogRaw  :: !O.OrgFile
   , blogHtml :: !(Html ()) }
 
+data BlogCategory = BlogCategory
+  { bcCat   :: Text
+  , bcBlogs :: NonEmpty Blog }
+
 data Blogs = Blogs
-  { engSorted :: !(NonEmpty Blog)
-  , japSorted :: !(NonEmpty Blog)
+  { engByCat  :: !(NonEmpty BlogCategory)
+  , japByCat  :: !(NonEmpty BlogCategory)
+  , engNewest :: !Blog
+  , japNewest :: !Blog
   , engPosts  :: !(Map Text Blog)
   , japPosts  :: !(Map Text Blog) }
 

@@ -59,8 +59,8 @@ rss :: Blogs -> Language -> ByLanguage
 rss bs l = ByLanguage $ NEL.sortWith (Down . orgDate . blogRaw) ps
   where
     ps = case l of
-      English  -> engSorted bs
-      Japanese -> japSorted bs
+      English  -> engByCat bs >>= bcBlogs
+      Japanese -> japByCat bs >>= bcBlogs
 
 -- | Compress all responses (especially assets!) coming out of the server.
 compress :: Application -> Application
@@ -195,13 +195,24 @@ work (Args p) ps ens jps = do
   let !prt = fromMaybe 8081 $ p <|> herokuPort
       !eng = mapify ens
       !jap = mapify jps
-      !bls = Blogs (sortByDate ens) (sortByDate jps) eng jap
+      !newEs = sortByDate ens
+      !newJs = sortByDate jps
+      !bls = Blogs (byCats newEs) (byCats newJs) (NEL.head newEs) (NEL.head newJs) eng jap
   logInfo . T.pack $ printf "Blog posts read: %d" (length ens + length jps)
   logInfo . T.pack $ printf "Listening on port %d with %d cores" prt cores
   W.run prt $ app ps bls
 
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
 sortByDate = NEL.reverse . NEL.sortWith (orgDate . blogRaw)
+
+byCats :: NonEmpty Blog -> NonEmpty BlogCategory
+byCats = NEL.map toCat . NEL.groupWith1 fst . NEL.sortWith fst . NEL.map (cat &&& id)
+  where
+    cat :: Blog -> Text
+    cat = maybe "Misc." T.toTitle . M.lookup "CATEGORY" . O.orgMeta . blogRaw
+
+    toCat :: NonEmpty (Text, Blog) -> BlogCategory
+    toCat a@((c, _) :| _) = BlogCategory c $ NEL.map snd a
 
 mapify :: NonEmpty Blog -> Map Text Blog
 mapify = M.fromList . NEL.toList . NEL.map (blogSlug &&& id)
