@@ -139,7 +139,7 @@ note :: a -> Maybe b -> Either a b
 note a = maybe (Left a) Right
 
 noteT :: (Monad m) => a -> MaybeT m b -> ExceptT a m b
-noteT a = ExceptT . liftM (note a) . runMaybeT
+noteT a = ExceptT . fmap (note a) . runMaybeT
 
 (??) :: Applicative m => Maybe a -> e -> ExceptT e m a
 (??) a e = ExceptT (pure $ note e a)

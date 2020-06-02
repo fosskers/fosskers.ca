@@ -84,7 +84,7 @@ app ps bs = compress routes
       [ lang, "blog", slug ] ->
         resp $ withLang lang (\l -> html . site l Posts . blog bs l $ choose bs l slug)
       -- RSS feed --
-      [ lang, "rss" ] -> resp $ withLang lang (\l -> xml $ rss bs l)
+      [ lang, "rss" ] -> resp $ withLang lang (xml . rss bs)
       -- The language button --
       [ lang ] ->
         resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
@@ -125,7 +125,8 @@ orgFiles = filter (L.isSuffixOf ".org") <$> (listDirectory "blog" >>= traverse f
 orgs :: NonEmpty FilePath -> IO ([Text], [Blog])
 orgs = fmap partitionEithers . traverse g . NEL.toList
   where
-    style = O.OrgStyle True (Just $ O.TOC "Contents" 2) True skylighting (Just ' ') True
+    style :: O.OrgStyle
+    style = O.OrgStyle False (Just $ O.TOC "Contents" 2) True skylighting (Just ' ') True
 
     g :: FilePath -> IO (Either Text Blog)
     g f = do

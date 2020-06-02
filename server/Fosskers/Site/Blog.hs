@@ -1,3 +1,6 @@
+{-# LANGUAGE BangPatterns     #-}
+{-# LANGUAGE TypeApplications #-}
+
 module Fosskers.Site.Blog
   ( choose
   , newest
@@ -13,7 +16,7 @@ import           Data.Time.Calendar (toGregorian)
 import           Fosskers.Common
 import           Fosskers.Site.Bootstrap
 import           Lens.Micro (to, (^?), _1, _Just)
-import           Lucid
+import           Lucid hiding (for_)
 
 ---
 
@@ -33,15 +36,20 @@ blog bs l content = row_ $ do
   div_ [classes_ ["col-xs-12", "col-md-6"]] $ case content of
     Nothing -> nf
     Just b  -> do
+      let !m = O.orgMeta $ blogRaw b
+      h1_ [class_ "title"] . maybe "Title Missing" toHtml $ M.lookup "TITLE" m
+      div_ [class_ "title"] . maybe "" (i_ . toHtml @String) $ do
+        author <- M.lookup "AUTHOR" m
+        date <- M.lookup "DATE" m
+        Just $ printf "By %s on %s" author date
+      for_ (M.lookup "UPDATED" m) $ \updated ->
+        div_ [class_ "title"] . i_ . toHtml $ "Updated " <> updated
       blogHtml b
-      traverse_ (p_ . toHtml . (at <>)) . M.lookup "AUTHOR" . O.orgMeta $ blogRaw b
-      traverse_ (p_ . toHtml . (pu <>)) . M.lookup "DATE" . O.orgMeta $ blogRaw b
-      traverse_ (p_ . toHtml . (up <>)) . M.lookup "UPDATED" . O.orgMeta $ blogRaw b
   div_ [class_ "col-md-3"] ""
   where
-    (ps, nf, at, pu, up) = case l of
-      English  -> (engSorted bs, "Post not found!", "Author: ", "Published: ", "Updated: ")
-      Japanese -> (japSorted bs, "見つかりません！", "作者：", "投稿：", "更新：")
+    (ps, nf) = case l of
+      English  -> (engSorted bs, "Post not found!")
+      Japanese -> (japSorted bs, "見つかりません！")
 
 sidebar :: Language -> NonEmpty Blog -> Html ()
 sidebar l bs = traverse_ g $ NEL.groupWith1 year bs
