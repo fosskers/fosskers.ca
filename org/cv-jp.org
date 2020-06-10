@@ -153,7 +153,8 @@ minoring in Computer Science. Achieved the Dean's Honour Roll.
 
 | Year | Project           | Role     | Language   | Description                                |
 |------+-------------------+----------+------------+--------------------------------------------|
-| 2020 | [[https://github.com/fosskers/rs-kanji][kanji]]             | Author   | Rust       | Rust port and update of my ~kanji~ library |
+| 2020 | [[https://crates.io/crates/versions][versions]]          | Author   | Rust       | Rust port of my ~versions~ library         |
+|      | [[https://github.com/fosskers/rs-kanji][kanji]]             | Author   | Rust       | Rust port and update of my ~kanji~ library |
 |      | [[https://github.com/fosskers/active][active]]            | Author   | Go         | Tool to keep Github CI Actions up-to-date  |
 |      | [[https://hackage.haskell.org/package/skylighting-lucid][skylighting-lucid]] | Author   | Haskell    | Lucid support for [[https://hackage.haskell.org/package/skylighting][skylighting]]              |
 |      | [[http://hackage.haskell.org/package/org-mode][org-mode]]          | Author   | Haskell    | Parser for Emacs Org Mode files            |
