@@ -151,45 +151,46 @@ minoring in Computer Science. Achieved the Dean's Honour Roll.
 
 * オープンソース
 
-| Year | Project           | Role     | Language   | Description                                |
-|------+-------------------+----------+------------+--------------------------------------------|
-| 2020 | [[https://crates.io/crates/versions][versions]]          | Author   | Rust       | Rust port of my ~versions~ library         |
-|      | [[https://github.com/fosskers/rs-kanji][kanji]]             | Author   | Rust       | Rust port and update of my ~kanji~ library |
-|      | [[https://github.com/fosskers/active][active]]            | Author   | Go         | Tool to keep Github CI Actions up-to-date  |
-|      | [[https://hackage.haskell.org/package/skylighting-lucid][skylighting-lucid]] | Author   | Haskell    | Lucid support for [[https://hackage.haskell.org/package/skylighting][skylighting]]              |
-|      | [[http://hackage.haskell.org/package/org-mode][org-mode]]          | Author   | Haskell    | Parser for Emacs Org Mode files            |
-|      | [[https://github.com/kadena-io/chainweb-data][chainweb-data]]     | Core Dev | Haskell    | Data ingestion tool for Chainweb           |
-|------+-------------------+----------+------------+--------------------------------------------|
-| 2019 | [[https://github.com/kadena-io/chainweb-node][Chainweb]]          | Core Dev | Haskell    | Multi-chain Proof-of-Work Blockchain       |
-|      | [[https://github.com/kadena-community/bag-of-holding][bag-of-holding]]    | Author   | Haskell    | An ncurses terminal wallet for Chainweb    |
-|      | [[https://gitlab.com/fosskers/bounded-queue][bounded-queue]]     | Author   | Haskell    | Bounded queue data structure library       |
-|      | [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]]    | Author   | Haskell    | A mining client for Chainweb               |
-|      | [[https://github.com/kadena-io/streaming-events][streaming-events]]  | Author   | Haskell    | Client-side consumption of EventStream     |
-|------+-------------------+----------+------------+--------------------------------------------|
-| 2018 | [[https://github.com/fosskers/mapalgebra][MapAlgebra]]        | Author   | Haskell    | Efficient, polymorphic Map Algebra         |
-|      | [[https://github.com/fosskers/fosskers.ca][fosskers.ca]]       | Author   | Purescript | My personal website                        |
-|      | [[https://github.com/fosskers/streaming-pcap][streaming-pcap]]    | Author   | Haskell    | Stream packets via libpcap                 |
-|      | [[https://github.com/fosskers/servant-xml][servant-xml]]       | Author   | Haskell    | Servant support for XML Content-Type       |
-|------+-------------------+----------+------------+--------------------------------------------|
-| 2017 | [[https://github.com/geotrellis/vectorpipe][VectorPipe]]        | Author   | Scala      | VectorTile processing through GeoTrellis   |
-|      | [[https://github.com/fosskers/streaming-osm][streaming-osm]]     | Author   | Haskell    | Stream OpenStreetMap protobuf data         |
-|      | [[https://github.com/fosskers/scalaz-and-cats][scalaz-and-cats]]   | Author   | Scala      | Benchmarks for Scalaz and Cats             |
-|      | [[https://github.com/fosskers/scala-benchmarks][scala-benchmarks]]  | Author   | Scala      | Benchmarks for common Scala idioms         |
-|------+-------------------+----------+------------+--------------------------------------------|
-| 2016 | [[https://github.com/locationtech/geotrellis][GeoTrellis]]        | Core Dev | Scala      | Geographic data batch processing suite     |
-|      | [[https://github.com/fosskers/pipes-random][pipes-random]]      | Author   | Haskell    | Producers for handling randomness          |
-|      | [[https://github.com/fosskers/vectortiles/][vectortiles]]       | Author   | Haskell    | GIS Vector Tiles, as defined by Mapbox     |
-|------+-------------------+----------+------------+--------------------------------------------|
-| 2015 | [[http://hackage.haskell.org/package/microlens-aeson][microlens-aeson]]   | Author   | Haskell    | Law-abiding lenses for Aeson               |
-|      | [[https://github.com/fosskers/opengl-linalg][opengl-linalg]]     | Author   | C          | OpenGL-friendly Linear Algebra             |
-|      | [[https://github.com/fosskers/tetris][Tetris]]            | Author   | C          | A 3D Tetris game using OpenGL              |
-|      | [[https://gitlab.com/fosskers/versions][versions]]          | Author   | Haskell    | Types and parsers for software versions    |
-|------+-------------------+----------+------------+--------------------------------------------|
-| 2013 | [[https://github.com/fosskers/hisp][Hisp]]              | Author   | Haskell    | A simple Lisp                              |
-|------+-------------------+----------+------------+--------------------------------------------|
-| 2012 | [[https://github.com/aurapm/aura/][Aura]]              | Author   | Haskell    | Package Manager for Arch Linux             |
-|      | [[https://github.com/fosskers/kanji][kanji]]             | Author   | Haskell    | Analyse Japanese Kanji                     |
-|------+-------------------+----------+------------+--------------------------------------------|
+| Year | Project           | Role     | Language   | Description                                 |
+|------+-------------------+----------+------------+---------------------------------------------|
+| 2020 | [[https://crates.io/crates/cargo-aur][cargo-aur]]         | Author   | Rust       | Tool to release Rust projects on Arch Linux |
+|      | [[https://crates.io/crates/versions][versions]]          | Author   | Rust       | Rust port of my ~versions~ library          |
+|      | [[https://github.com/fosskers/rs-kanji][kanji]]             | Author   | Rust       | Rust port and update of my ~kanji~ library  |
+|      | [[https://github.com/fosskers/active][active]]            | Author   | Go         | Tool to keep Github CI Actions up-to-date   |
+|      | [[https://hackage.haskell.org/package/skylighting-lucid][skylighting-lucid]] | Author   | Haskell    | Lucid support for [[https://hackage.haskell.org/package/skylighting][skylighting]]               |
+|      | [[http://hackage.haskell.org/package/org-mode][org-mode]]          | Author   | Haskell    | Parser for Emacs Org Mode files             |
+|      | [[https://github.com/kadena-io/chainweb-data][chainweb-data]]     | Core Dev | Haskell    | Data ingestion tool for Chainweb            |
+|------+-------------------+----------+------------+---------------------------------------------|
+| 2019 | [[https://github.com/kadena-io/chainweb-node][Chainweb]]          | Core Dev | Haskell    | Multi-chain Proof-of-Work Blockchain        |
+|      | [[https://github.com/kadena-community/bag-of-holding][bag-of-holding]]    | Author   | Haskell    | An ncurses terminal wallet for Chainweb     |
+|      | [[https://gitlab.com/fosskers/bounded-queue][bounded-queue]]     | Author   | Haskell    | Bounded queue data structure library        |
+|      | [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]]    | Author   | Haskell    | A mining client for Chainweb                |
+|      | [[https://github.com/kadena-io/streaming-events][streaming-events]]  | Author   | Haskell    | Client-side consumption of EventStream      |
+|------+-------------------+----------+------------+---------------------------------------------|
+| 2018 | [[https://github.com/fosskers/mapalgebra][MapAlgebra]]        | Author   | Haskell    | Efficient, polymorphic Map Algebra          |
+|      | [[https://github.com/fosskers/fosskers.ca][fosskers.ca]]       | Author   | Purescript | My personal website                         |
+|      | [[https://github.com/fosskers/streaming-pcap][streaming-pcap]]    | Author   | Haskell    | Stream packets via libpcap                  |
+|      | [[https://github.com/fosskers/servant-xml][servant-xml]]       | Author   | Haskell    | Servant support for XML Content-Type        |
+|------+-------------------+----------+------------+---------------------------------------------|
+| 2017 | [[https://github.com/geotrellis/vectorpipe][VectorPipe]]        | Author   | Scala      | VectorTile processing through GeoTrellis    |
+|      | [[https://github.com/fosskers/streaming-osm][streaming-osm]]     | Author   | Haskell    | Stream OpenStreetMap protobuf data          |
+|      | [[https://github.com/fosskers/scalaz-and-cats][scalaz-and-cats]]   | Author   | Scala      | Benchmarks for Scalaz and Cats              |
+|      | [[https://github.com/fosskers/scala-benchmarks][scala-benchmarks]]  | Author   | Scala      | Benchmarks for common Scala idioms          |
+|------+-------------------+----------+------------+---------------------------------------------|
+| 2016 | [[https://github.com/locationtech/geotrellis][GeoTrellis]]        | Core Dev | Scala      | Geographic data batch processing suite      |
+|      | [[https://github.com/fosskers/pipes-random][pipes-random]]      | Author   | Haskell    | Producers for handling randomness           |
+|      | [[https://github.com/fosskers/vectortiles/][vectortiles]]       | Author   | Haskell    | GIS Vector Tiles, as defined by Mapbox      |
+|------+-------------------+----------+------------+---------------------------------------------|
+| 2015 | [[http://hackage.haskell.org/package/microlens-aeson][microlens-aeson]]   | Author   | Haskell    | Law-abiding lenses for Aeson                |
+|      | [[https://github.com/fosskers/opengl-linalg][opengl-linalg]]     | Author   | C          | OpenGL-friendly Linear Algebra              |
+|      | [[https://github.com/fosskers/tetris][Tetris]]            | Author   | C          | A 3D Tetris game using OpenGL               |
+|      | [[https://gitlab.com/fosskers/versions][versions]]          | Author   | Haskell    | Types and parsers for software versions     |
+|------+-------------------+----------+------------+---------------------------------------------|
+| 2013 | [[https://github.com/fosskers/hisp][Hisp]]              | Author   | Haskell    | A simple Lisp                               |
+|------+-------------------+----------+------------+---------------------------------------------|
+| 2012 | [[https://github.com/aurapm/aura/][Aura]]              | Author   | Haskell    | Package Manager for Arch Linux              |
+|      | [[https://github.com/fosskers/kanji][kanji]]             | Author   | Haskell    | Analyse Japanese Kanji                      |
+|------+-------------------+----------+------------+---------------------------------------------|
 
 * 証明
 
