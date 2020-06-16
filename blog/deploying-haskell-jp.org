@@ -1,38 +1,38 @@
 #+TITLE: Haskellプログラムのデプロイメント
 #+DATE: 2018-02-28
 #+AUTHOR: こりん
-#+UPDATED: 2020-03-13
+#+UPDATED: 2020-06-16
 #+CATEGORY: haskell
 
- 大規模のシステムがあったりチームの人数が多かったりNixOSのサーバーを管理する能力（または余裕）
-があったりしたら「Nix」を選ぼう。
+「一体どうHaskellのプログラムをデプロイするのか」
 
-既にコンテナ・システムがあって混ぜたいHaskellはただ一部だけの場合は「Docker」
-を使ってよし。
+既にコンテナ・システムがあって混ぜたいHaskellはただ一部だけの場合は「Docker」を
+使っても問題ありません。
 
-他には「Heroku」が凡Haskeller（自分を含めて）にとって一番使いやすい。
+他には「Heroku」が凡Haskeller（自分を含めて）にとって一番使いやすいと思います。
 
 * 楽の道： Heroku
 
 #+BEGIN_QUOTE
-ただ小規模のサーバーをどっか載せたい。
+ただ小規模のサーバーをどこか載せたい。
 #+END_QUOTE
 
-「Heroku」はこれにぴったり。 ~git push~ だけで自動デプロイメントができて、再デプ
-ロイが速くなる様に~stack~ でダウンロードされるdependenciesが全部キャッシュされる。
+「Heroku」はこれにぴったりです。 ~git push~ だけで自動デプロイメントができ、再デ
+プロイが速くなる様に ~stack~ でダウンロードされるdependenciesが全部キャッシュ
+されます。
 
-Herokuのサーバーは「dyno」といって、一番安いのは無料。30分経ってサーバーにリクエ
-ストがなければ眠ってしまうけど、また呼んだら数秒で再起動する。有料の「dyno」は眠っ
-たりせん。
+Herokuのサーバーは「dyno」といって、一番安いのは無料です。30分経ってサーバーにリ
+クエストがなければ眠ってしまいますが、また呼んだら数秒で再起動します。有料の
+「dyno」は眠ったりしません。
 
-プロジェクト管理に ~heroku~ のCLIツールがあるらしいけどこの簡単な場合には必要な
-い。下にも「Namecheap」との接続方法の説明も含めてる。
+プロジェクト管理に ~heroku~ のCLIツールもありますが、この簡単な場合には特に必要
+ありません。下にも「Namecheap」との接続方法の説明も含めています。
 
 ** ~$PORT~ からリクエスト
 
-Herokuに載せるサーバーはいつもの80・8080・443とかじゃなくて ~$PORT~ からリクエス
-トを取らないといけない。まだ開発中だとこれが少し厄介かもしれんけど、下のコードを
-使えば問題にならない：
+Herokuに載せるサーバーは普段の80・8080・443等ではなく、 ~$PORT~ からリクエストを
+取ります。まだ開発の最中ではこれは少し厄介な部分がありますが、下のコードを使えば
+問題ありません：
 
 #+BEGIN_SRC haskell
   {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
@@ -57,7 +57,7 @@ Herokuに載せるサーバーはいつもの80・8080・443とかじゃなく�
     W.run prt app
 #+END_SRC
 
-開発中、サーバーの機動はこうなる：
+開発中、サーバーの機動はこうなります：
 
 #+BEGIN_SRC bash
   stack exec -- server --port 8080
@@ -67,15 +67,15 @@ Herokuに載せるサーバーはいつもの80・8080・443とかじゃなく�
 
 *** Repoでの ~Procfile~
 
-コミットしなければならないのは ~Procfile~ というファイルだけ。Herokuがプロジェク
-トを構築した後~Procfile~ にあるコマンドを実行する。例：
+コミットしなければならないのは ~Procfile~ というファイルだけです。Herokuが
+プロジェクトを構築した後 ~Procfile~ にあるコマンドを実行します。例：
 
 #+BEGIN_EXAMPLE
 web: server
 #+END_EXAMPLE
 
-~server~ とは ~.cabal~ に決めたexecutableの名前。プログラム引数もあったら
-こんな感じ：
+~server~ とは ~.cabal~ に決めたexecutableの名前です。プログラム引数もあったら
+この様に：
 
 #+BEGIN_EXAMPLE
 web: server --js app.min.js
@@ -83,33 +83,34 @@ web: server --js app.min.js
 
 *** Heroku.comで
 
-他の設定は全部直接Herokuのサイトでできる。勿論登録しないといかん。
+他の設定は全部直接Herokuのサイトでできます。勿論登録が必要です。
 
-「Dashboard」に入ったらまずは新しい「Heroku・アプリ」を作る（右上で「New」から
-「Create New App」）。できたら「Deploy」のタブが見えてくるはず：
+「Dashboard」に入るとまずは新しい「Heroku・アプリ」を作りましょう（右上で「New」
+から「Create New App」）。できたら「Deploy」のタブが見えてくるはずです：
 
 [[/assets/heroku00.jpg]]
 
-ページの後半に見える「CLI」指示を無視してデプロイ方法を「Github」と選んで繋げた
-いrepoを入れるだけ。
+ページの後半に見える「CLI」指示を無視してデプロイ方法を「Github」と選んで
+繋げたいrepoを入力しましょう。
 
 次は「Settings」のタブでの「Buildpacks」の所：
 
 [[/assets/heroku01.jpg]]
 
-「Buildpack」とはHeroku用語。言語そろぞれにあって、構築に必要な複数のスクリプトの意味。
-~stack~ を使う「buildpack」を入れよう。「Add buildpack」をクリックしてこれを：
+「Buildpack」とはHeroku用語です。言語そろぞれにあり、構築に必要な複数のスクリプ
+トの意味を表します。 ~stack~ を使う「buildpack」を入れましょう。「Add buildpack」
+をクリックしてこれを：
 
 #+BEGIN_EXAMPLE
 https://github.com/mfine/heroku-buildpack-stack
 #+END_EXAMPLE
 
-~stack~ を使うプロジェクトはこれで構築してdependenciesがキャッシュされる。
-HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさん達に感謝。
+~stack~ を使うプロジェクトはこれで構築してdependenciesがキャッシュされます。
+HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさん達に感謝しましょう。
 
 ** デプロイメント
 
-~git push origin master~ だけ！
+~git push origin master~ だけでプロジェクトがデプロイされます！
 
 ** Namecheapとの接続
 
@@ -117,8 +118,8 @@ HaskellをHerokuで使えるように頑張ったMark FineさんとJoe Nelsonさ
 
 *** HTTPS
 
-有料の「dyno」だったらHerokuは [[https://letsencrypt.org/][Let's Encrypt]]を通して自動的にHTTPSの管理をしてくれる。ちょっと
-だけNamecheapの設定を変えればHTTPSは我が手に。
+有料の「dyno」であればHerokuは [[https://letsencrypt.org/][Let's Encrypt]]を通して自動的にHTTPSの管理をしてく
+れます。すこしだけNamecheapの設定を変えればHTTPSは我が手に。
 
 Namecheapでは各ホストの ~Value~ を
 
@@ -126,23 +127,23 @@ Namecheapでは各ホストの ~Value~ を
 yourappname.herokuapp.com
 #+END_EXAMPLE
 
-からこれに変える：
+からこれに変えます：
 
 #+BEGIN_EXAMPLE
 yourdomain.com.herokudns.com
 #+END_EXAMPLE
 
-このサイトの場合、 ~fosskers.herokuapp.com~ が ~fosskers.ca.herokudns.com~ になった。
-ネットの隅まで設定変換が広がるのは少し時間かかるけど、できたらそのまま ~https://yourdomain.com~
-が使えるはず。
+本サイトの場合、 ~fosskers.herokuapp.com~ が ~fosskers.ca.herokudns.com~ になり
+ました。ネットの隅まで設定変換が広がるのは少し時間かかりますが、できたらそのまま
+~https://yourdomain.com~ が使えるはずです。
 
 * コンテナの道： ~stack~ とDocker
 
-個人的に言うと、HaskellだけのシステムだったらDockerは必要ない。まあ開発者としてこういう
-判断はよく上がするもんだから、仕方なくコンテナを使わざるを得ないのであれば ~stack~ がまた
-助けてくれる。
+個人的に言うと、HaskellだけのシステムならDockerは必要ありません。開発者としてこ
+ういう判断はよく上がするものなので、仕方なくコンテナを使わざるを得ないのであれば
+~stack~ がまた助けてくれます。
 
-~stack.yaml~ にこんなの入れれば：
+~stack.yaml~ にこの様な設定を入力すれば：
 
 #+BEGIN_SRC yaml
   image:
@@ -153,20 +154,11 @@ yourdomain.com.herokudns.com
           - foobar-server-exe
 #+END_SRC
 
-そしてこのコマンドをやって：
+そしてこのコマンドを実行すると：
 
 #+BEGIN_SRC bash
   stack image container
 #+END_SRC
 
-Dockerのイメージが構築される。できたらいつものコンテナ・デプロイメント・システムに混ぜれる。
-より細かい指示は ~stack~ の [[https://docs.haskellstack.org/en/stable/GUIDE/#docker][公式サイト]]へ（英語）。
-
-* 将来の道： Nix
-
-Nixは確かに強い。ただ、全面的に使わないと本当の利益が出ないと思う。「全面」とは開発とデプロイメント両面。
-開発だけに利用すると ~stack~ と役割も便利さもほぼ変わらない。
-
-・・・と言ってもまだNixが未来だと感じる。本当に勧めたい。残念ながら俺は
-デプロイメントには使ったことがないからこれ以上は何も言えないけど、もしこれを呼んでいる人にそんな
-経験があれば、是非Githubでこの部分を足してください。
+Dockerのイメージが構築されます。できたらいつものコンテナ・デプロイメント・システ
+ムに混ぜる事ができます。より細かい指示は ~stack~ の [[https://docs.haskellstack.org/en/stable/GUIDE/#docker][公式サイト]]へ（英語）。

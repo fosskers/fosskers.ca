@@ -3,14 +3,13 @@
 #+AUTHOR: Colin
 #+CATEGORY: haskell
 
-You should use Nix if you have large production Haskell systems to deploy,
-a large team to coordinate with, and the ability to manage NixOS servers.
+How to deploy a Haskell program?
 
 You should use Docker only if you have a pre-existing container collection
 to integrate into.
 
-Otherwise, for the lay-Haskeller (myself included), I recommend Heroku for deploying
-projects.
+Otherwise, for the lay-Haskeller (myself included), I recommend Heroku for
+deploying projects.
 
 * The Simple Way: Heroku
 
@@ -165,30 +164,3 @@ and running:
 
 our Docker image will build. We can then fit it in to our deployment system as necessary.
 See [[https://docs.haskellstack.org/en/stable/GUIDE/#docker][the official Stack docs]] for detailed information.
-
-* The Power Way: Nix
-
-This statement shouldn't surprise a Haskeller:
-
-#+BEGIN_QUOTE
-There are sets of conditions which, only when taken together, produce paradigm shifts.
-#+END_QUOTE
-
-Haskell gains its strength from taking laziness, immutability, and referential
-transparency as its grounding philosophies. Faithfully used together, you
-"pop out on the other side" of some funnel between paradigms. Many other
-human systems are probably like this, including Nix. Taken half-way, you
-stay stuck in the funnel and don't see the benefits.
-
-I spent some time learning Nix for Haskell development, and came to these conclusions:
-
-- Nix supercedes Docker
-- Nix is the future (once its UX is improved)
-- Currently, you only gain the full benefit of Nix by going "all in"
-
-All-in means using Nix for both development and deployment. For development
-alone, I found it to fill essentially the same role as ~stack~ (i.e. "manage my deps")
-but with a slightly worse UX.
-
-Unfortunately for this article, I've never deployed anything using Nix and so I can't
-comment further. If you have, please consider extending this section through Github.
