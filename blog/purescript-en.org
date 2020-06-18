@@ -3,6 +3,9 @@
 #+AUTHOR: Colin
 #+CATEGORY: haskell
 
+*Warning:* The content of this article is out-of-date. While perhaps useful as a
+reference, you shouldn't base a project on the advice/examples given here.
+
 * Haskell
 
 [[http://haskell-servant.readthedocs.io/en/stable/][Servant]] is /fantastic/ for writing web servers. The brevity alone makes it my
