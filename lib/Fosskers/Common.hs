@@ -61,8 +61,8 @@ data Blog = Blog
   , blogHtml :: !(Html ()) }
 
 data BlogCategory = BlogCategory
-  { bcCat   :: Text
-  , bcBlogs :: NonEmpty Blog }
+  { bcCat   :: !Text
+  , bcBlogs :: !(NonEmpty Blog) }
 
 data Blogs = Blogs
   { engByCat  :: !(NonEmpty BlogCategory)
@@ -148,5 +148,6 @@ note a = maybe (Left a) Right
 noteT :: (Monad m) => a -> MaybeT m b -> ExceptT a m b
 noteT a = ExceptT . fmap (note a) . runMaybeT
 
+infixl 9 ??
 (??) :: Applicative m => Maybe a -> e -> ExceptT e m a
 (??) a e = ExceptT (pure $ note e a)
