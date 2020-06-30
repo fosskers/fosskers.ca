@@ -3,6 +3,12 @@
 #+AUTHOR: Colin
 #+CATEGORY: haskell
 
+*Warning:* I no longer recommend Nix for Haskell development. It is too
+complicated and not worth the cost to others. The article below remains as it
+was written in 2018.
+
+---
+
 I recently learned enough about Nix to try it for my everyday Haskell development.
 Below describes my entire setup and workflow.
 

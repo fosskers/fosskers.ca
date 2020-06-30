@@ -1,22 +1,28 @@
 #+TITLE: NixとDanteでHaskell開発
 #+DATE: 2018-01-10
 #+AUTHOR: こりん
-#+UPDATED: 2020-03-13
+#+UPDATED: 2020-06-30
 #+CATEGORY: haskell
 
-日頃のHaskell開発で使ってみるために（やっと）Nixを身につけた。下記は俺のNix設定と
-開発の流れの説明。
+*注意：* ２０２０現在、Haskell開発にはNixがあまりに複雑でもはや勧めません。
+下記は元々２０１８年に書いたままです。
+
+---
+
+日頃のHaskell開発で使ってみるために（やっと）Nixを身につけました。下記は私のNix
+設定と開発の流れの説明です。
 
 * 最初の設定
 
-ディストロはArch Linuxやけん、最初はAURの ~nix~ パッケージをインストールしてみたけど、
-どうやらnix environmentがちゃんとできあがらんやった。 [[https://nixos.org/nix/][nixos.org]]からの [[https://nixos.org/nix/manual/#chap-quick-start][公式方法]]は逆にほぼうまくいった：
+ディストロはArch Linuxなので、最初はAURの ~nix~ パッケージをインストールしてみま
+したが、どうやらnix環境がちゃんとできあがりませんでした。 [[https://nixos.org/nix/][nixos.org]]からの [[https://nixos.org/nix/manual/#chap-quick-start][公式方
+法]]は逆にほぼうまく行きました：
 
 #+BEGIN_SRC bash
 curl https://nixos.org/nix/install | sh
 #+END_SRC
 
-作られた ~/nix~ directoryのwrite許可を自分で正す必要もあるかしれんけん要注意。
+作られた ~/nix~ directoryのwrite許可を自分で正す必要もあるので注意して下さい。
 
 Environment variablesを設定するscriptを確認するには：
 
@@ -24,8 +30,8 @@ Environment variablesを設定するscriptを確認するには：
 less /home/colin/.nix-profile/etc/profile.d/nix.sh
 #+END_SRC
 
-このscriptはbashしか存在しないと思い込んでて俺はfishのユーザーで、少し自分で設定
-を書く必要があった。 ~/home/colin/.config/fish/config.fish~ に：
+このscriptはbashしか存在しないと思い込んでいて私はfishのユーザーで、少し自分で設
+定を書く必要がありました。 ~/home/colin/.config/fish/config.fish~ に：
 
 #+BEGIN_SRC fish
 set -x PATH ... '/home/colin/.nix-profile/bin'
@@ -35,34 +41,34 @@ set -x NIX_PATH 'nixpkgs=/home/colin/.nix-defexpr/channels/nixpkgs'
 set -x NIX_SSL_CERT_FILE '/etc/ssl/certs/ca-certificates.crt'
 #+END_SRC
 
-最後の行はディストロによって違うけん、上で言った ~nix.sh~ の中身で確認しとってね。
+最後の行はディストロによって異なるので、上で説明した ~nix.sh~ の中身で確認しておいて下さい。
 
 * Haskellの詳細
 
 Nixでのプロジェクト設定は一般的にどんな感じか解るには [[https://github.com/Gabriel439/haskell-nix][Gabriel GonzalesのNix初心者ガイド]](英語）はなかなか
-いい資源。
+いい資源だと思います。
 
-下記は簡単なプロジェクト向き：benchmarksとprofilingがしたい一つのlibraryかプログラム。
-TravisCIとの統合、Emacsでの使い方の説明も含めてる。
+下記は簡単なプロジェクト向き：benchmarksとprofilingがしたい一つのlibraryかプログ
+ラムの場合です。TravisCIとの統合、Emacsでの使い方の説明も含めています。
 
 ** Nix設定の自動生成
 
-プロジェクトの中で ~cabal2nix~ を使って、「nix expressions」を ~.cabal~ から作り出せる。
+プロジェクトの中で ~cabal2nix~ を使って、「nix expressions」を ~.cabal~ から作り出せます。
 インストールするには：
 
 #+BEGIN_SRC bash
 nix-env -i cabal2nix
 #+END_SRC
 
-で、Nix設定を作り出そう：
+で、Nix設定を作り出しましょう：
 
 #+BEGIN_SRC bash
 cabal2nix . > default.nix
 #+END_SRC
 
-~.cabal~ が変わる度にせんといかんさね。
+~.cabal~ が変わる度にこれを繰り返す必要があります。
 
-むしろ ~hpack~ が好みやったら：
+むしろ ~hpack~ が好みであれば：
 
 #+BEGIN_SRC bash
 nix-env --install --attr nixpkgs.haskellPackages.hpack
@@ -82,18 +88,19 @@ hpack; cabal2nix . > default.nix
 
 ** Nix Shellでの開発
 
-Nixでのプロジェクトは三つのファイルで完成する：
+Nixでのプロジェクトは三つのファイルで完成します：
 
 - ~default.nix~
 - ~shell.nix~
 - ~release.nix~
 
-が、普通の開発で最初の二つだけが必要になってくる。
-~nix-shell~ を使えばプロジェクトだけのdependenciesが入ってくる
-秘密森みたいな環境ができあがる。中にはいつも通り ~cabal test~ と ~cabal bench~
-が使えて、他のプロジェクトのdependenciesなどが邪魔して来ない。
+が、普通の開発で最初の二つだけが必要になってきます。~nix-shell~ を使えばプロジェ
+クトだけのdependenciesが入ってくる秘密森みたいな環境ができあがります。中にはいつ
+も通り ~cabal test~ と ~cabal bench~が使えて、他のプロジェクトのdependenciesなど
+が邪魔して来ません。
 
-プロジェクトに下記の内容の ~shell.nix~ ファイルを作れば ~nix-shell~ が利用できるようになる：
+プロジェクトに下記の内容の ~shell.nix~ ファイルを作れば ~nix-shell~ が利用できる
+ようになります：
 
 #+BEGIN_SRC nix
 let nixpkgs = import <nixpkgs> {};
@@ -102,15 +109,14 @@ in (nixpkgs.pkgs.haskell.lib.doBenchmark orig).env
 #+END_SRC
 
 よく見ると、本プロジェクトに関係するファイルの名前などが一切参考されていない・・・
-ということは、これと全く同じ内容のファイルをどのプロジェクトでも使える。
+ということは、これと全く同じ内容のファイルをどのプロジェクトでも使える訳です。
 
-注意： ~doBenchmark~ の部分がないと、benchmarkのdependenciesがshellに入って
-来ない。
+注意： ~doBenchmark~ の部分がなければ、benchmarkのdependenciesがshellに含まれません。
 
 ** ~release.nix~ の定義
 
 Travisの時と正式にパッケージをあるNix Storeにインストールしたい時に
-必要になってくる。例えばパッケージが「vectortiles」というと：
+必要です。例えばパッケージが「vectortiles」というと：
 
 #+BEGIN_SRC nix
 let
@@ -132,7 +138,7 @@ in
   }
 #+END_SRC
 
-もっと短いのもあるけど、設定を [[https://github.com/Gabriel439/haskell-nix/blob/master/project1/README.md#changing-versions][より細かく変えたい時]]にこの形が便利。
+もっと短いのもありますが、設定を [[https://github.com/Gabriel439/haskell-nix/blob/master/project1/README.md#changing-versions][より細かく変えたい時]]にこの形が便利です。
 
 プロジェクトを丸ごとコンパイル：
 
@@ -144,8 +150,9 @@ nix-build release.nix
 
 ** Profiling
 
-具体的にコードのどこが遅かったりすると知りたい時にprofilingやね。
-Nixでこれが結構楽。まず ~/home/you/.config/nixpkgs/config.nix~ を新しく作って、この内容を入れる：
+具体的にコードのどこが遅かったりすると知りたい時にprofilingですね。
+Nixでこれが結構楽な経験です。
+まず ~/home/you/.config/nixpkgs/config.nix~ を新しく作り、この内容を入れましょう：
 
 #+BEGIN_SRC nix
 {
@@ -170,18 +177,19 @@ let nixpkgs = import <nixpkgs> {};
 in (nixpkgs.pkgs.haskell.lib.doBenchmark orig).env
 #+END_SRC
 
-普通の ~shell.nix~ と殆ど一緒。ただ今回はさっき書いた ~profiledHaskellPackages~ の部分
-も含めてる。 ~nix-shell profiling-shell.nix~ をしてみると、profiling用のdependenciesが
-全てコンパイルし直される。一回目じゃかなり時間かかる。
+普通の ~shell.nix~ と殆ど一緒ですね。ただ今回は先程書いた
+~profiledHaskellPackages~ の部分も含めています。 ~nix-shell profiling-shell.nix~
+をしてみると、profiling用のdependenciesが全てコンパイルし直されます。一回目では
+かなり時間がかかります。
 
-俺が調べた限り、普通のNix Storeにあったdependenciesがまだ健在。いつも通り ~nix-shell~ を
-使うとprofiling用のdependenciesは使われない。
+私が調べた限り、普通のNix Storeにあったdependenciesがまだ健在です。いつも通り
+~nix-shell~ を使うとprofiling用のdependenciesは使われません。
 
 注意： ~nix-collect-garbage -d~ をしない事！すると時間をかけてコンパイルしたprofiling用の
-dependenciesが全部なくなる。
+dependenciesが全部なくなってしまいます。
 
-よし何かprofileしよう・・・　作りよるのはlibraryやったらbenchmarksのexecutableでよかろうか？
-方法：
+では何かをprofileしましょう・・・　作っているのはlibraryならbenchmarksの
+executableで良いでしょう。その方法：
 
 - ~-prof~ と ~-fprof-auto~ をbenchmarkのGHC optionsに追加
 - ~default.nix~ を生成し直す
@@ -191,22 +199,22 @@ dependenciesが全部なくなる。
 - ~dist/build/projname/projname-bench +RTS -p~
 - できた ~projname-bench.prof~ の中身を見る
 
-(上でprojnameは勿論、あなたが作りよるプロジェクトの名前）
+(上でprojnameは勿論、あなたが作っているプロジェクトの名前）
 
-結果によるとコードを訂正したり、普通の ~nix-shell~ で開発を進めれる。
+結果によるとコードを訂正したり、普通の ~nix-shell~ で開発を進められます。
 
 * Emacsでの使用
 
-~dante-mode~ は色々と助けてくれる。
-プロジェクトに ~shell.nix~ と ~default.nix~ が確認されると自動的にDanteが発動する。
-ま、まずインストールせんと。
+~dante-mode~ は色々と助けてくれます。
+プロジェクトに ~shell.nix~ と ~default.nix~ が確認されると自動的にDanteが発動します。
+まずインストールしましょう。
 
 ** ~Dante~ をインストール
 
-普通のEmacsやったら [[https://github.com/jyp/dante#installation][こちら]]。
+普通のEmacsなら [[https://github.com/jyp/dante#installation][こちら]]。
 
-Spacemacs（の ~develop~ branch!）のユーザーだと、そのままDanteが使える。
-~.spacemacs~ でHaskell Layerをこう設定しよう：
+Spacemacs（の ~develop~ branch!）のユーザーだと、そのままDanteが使えます。
+~.spacemacs~ でHaskell Layerをこう設定しましょう：
 
 #+BEGIN_SRC lisp
   (haskell :variables haskell-completion-backend 'dante)
@@ -218,9 +226,9 @@ Spacemacs（の ~develop~ branch!）のユーザーだと、そのままDanteが
   (add-hook 'dante-mode-hook 'flycheck-mode)
 #+END_SRC
 
-これがないとDanteの機嫌が悪くなる。
+これがないとDanteの機嫌が悪くなります。
 
-DanteにREPLがない。いつもの ~SPC m s b~ も何もせん。ある関数を試すには：
+DanteにREPLがありません。いつもの ~SPC m s b~ も何もしません。ある関数を試すには：
 
 #+BEGIN_SRC haskell
   -- >>> foo 5
@@ -228,7 +236,7 @@ DanteにREPLがない。いつもの ~SPC m s b~ も何もせん。ある関数�
   foo = show
 #+END_SRC
 
-コメントの所に ~SPC m s e~ したら、コードはこう変わる：
+コメントの所に ~SPC m s e~ したら、コードはこう変わります：
 
 #+BEGIN_SRC haskell
   -- >>> foo 5
@@ -237,23 +245,23 @@ DanteにREPLがない。いつもの ~SPC m s b~ も何もせん。ある関数�
   foo = show
 #+END_SRC
 
-これさえできればDanteの論理によるとREPLが要らないそうだ。
+これさえできればDanteの論理によるとREPLが要らないそうです。
 
 ** Danteとtestsとbenchmarks
 
-上の設定だけでDanteはtestのbenchmarkのファイルでちゃんと発動しない。
-Emacsの「file-local variables」を使えばこの問題を避けれる。
+上の設定だけでDanteはtestのbenchmarkのファイルでちゃんと発動しません。
+Emacsの「file-local variables」を使えばこの問題を避けられます。
 
-~vectortiles~ というプロジェクトで ~Test.hs~ というファイルがあるとして、まず開いてみる。
-~add-file-local-variable-prop-line~ というEmacs関数を使うと選択肢が出る。
+~vectortiles~ というプロジェクトで ~Test.hs~ というファイルがあるとして、まず開いてみます。
+~add-file-local-variable-prop-line~ というEmacs関数を使うと選択肢が出ます。
 ~dante-target~ を選んでこれを ~vectortiles-test~ (~.cabal~ の中との同じ名前)に設定すると、
-ファイルの最初の行にこのコメントが現れる：
+ファイルの最初の行にこのコメントが現れます：
 
 #+BEGIN_SRC haskell
   -- -*- dante-target: "vectortiles-test"; -*-
 #+END_SRC
 
-この後 ~Test.hs~ を開く度にDanteがちゃんと発動する。
+この後 ~Test.hs~ を開く度にDanteがちゃんと発動します。
 
 * 継続的インテグレーション
 
@@ -263,7 +271,7 @@ Emacsの「file-local variables」を使えばこの問題を避けれる。
 
 [[https://docs.travis-ci.com/user/languages/nix/][公式の指示]]
 
-結構簡単。パッケージが ~vectortiles~ というと、この ~.travis.yml~ で十分：
+結構簡単ですね。パッケージが ~vectortiles~ というと、この ~.travis.yml~ で十分：
 
 #+BEGIN_SRC yaml
   sudo: true  # 「Docker抜き」。こうやった方がかなり速い。
@@ -271,8 +279,8 @@ Emacsの「file-local variables」を使えばこの問題を避けれる。
   script: nix-build --attr vectortiles release.nix
 #+END_SRC
 
-期待通り、testが失敗するとCIも失敗する。Dependenciesが毎回ダウンロードされる割に
-数分で終始するはず。
+期待通り、testが失敗するとCIも失敗します。Dependenciesが毎回ダウンロードされる割に
+数分で終始するはずです。
 
 ~hpack~ も混ぜたかったらどうぞ：
 
@@ -292,23 +300,23 @@ Emacsの「file-local variables」を使えばこの問題を避けれる。
 
 [[https://github.com/hercules-ci/hercules][Github repository]].
 
-NixのためだけのCIシステム。極新しくて、「1.0」が [[https://github.com/hercules-ci/hercules/issues/5][まだまだ遠いみたい]]。
+NixのためだけのCIシステム。かなり最新の物で、「1.0」が [[https://github.com/hercules-ci/hercules/issues/5][まだまだ遠いみたいらしいです]]。
 
 ** CircleCI
 
-CircleCIではHaskellのCIは [[https://circleci.com/docs/1.0/language-haskell/][一応できる]]けどNixは優先されてないようだ。
-一人ぐらいは [[https://discuss.circleci.com/t/caching-root-directory-nix-not-working/10626][頑張ってるみたい]]やけど。
+CircleCIではHaskellのCIは [[https://circleci.com/docs/1.0/language-haskell/][一応できます]]がNixは優先されていないようです。
+一人ぐらいは [[https://discuss.circleci.com/t/caching-root-directory-nix-not-working/10626][頑張っているみたい]]ですが。
 
 ** Hydraを自分で
 
 [[https://nixos.org/hydra/][公式サイト]]
 
-Nixと言えば当たり前かもしれんけど、俺みたいな平凡開発者には複雑すぎる。
+Nixと言えば当たり前かもしれませんが、私みたいな平凡開発者には複雑すぎます。
 
 * Stackとの比べ
 
-「慣れとるのと違う、諦めよう」とかせずに、しばらくはNixとDanteで頑張ってみたかった。
-あるプロジェクトを丸ごとstackからNixに移してから、次のNix/Danteの長所が見えてきた：
+「慣れているのと違う、諦めよう」などせずに、しばらくはNixとDanteで頑張ってみたかったです。
+あるプロジェクトを丸ごとstackからNixに移してから、次のNix/Danteの長所が見えてきました：
 
 - 普通開発の時も、CIの時も、Herokuなどに展開する時も、dependencyダウンロードの速さ
 - Travis設定の簡単さ
@@ -324,8 +332,8 @@ Nixと言えば当たり前かもしれんけど、俺みたいな平凡開発�
   inc n = n + 1
 #+END_SRC
 
-このシンタックスも ~doctest~ に理解されて、関数の正当性の証明にもなる。
-~inc~ が変わって証明が崩れると、何かの間違いにすぐ気づかされる。
+このシンタックスも ~doctest~ に理解されて、関数の正当性の証明にもなります。
+~inc~ が変わって証明が崩れると、何かの間違いにすぐ気づかされます。
 
 そしてStack/Interoの長所：
 
