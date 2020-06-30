@@ -17,15 +17,15 @@
 
 ** プログラミング言語
 
-- *Haskell*, Purescript, Elm
+- Rust, Go, C
+- Haskell, Purescript, Elm
 - Scala, Java
 - Python
-- C, C++
-- Emacs Lisp
 
 ** ウエブ技術
 
 - Terraform
+- GraphQL
 - Amazon Web Services, Digital Ocean
 - Elastic Search, Kibana
 - Docker
@@ -40,7 +40,6 @@
 - Nix, NixOS
 - Emacs
 - LaTeX
-- Blockchain
 - Geographic Information Systems
 
 * 経歴
@@ -153,7 +152,8 @@ minoring in Computer Science. Achieved the Dean's Honour Roll.
 
 | Year | Project           | Role     | Language   | Description                                 |
 |------+-------------------+----------+------------+---------------------------------------------|
-| 2020 | [[https://crates.io/crates/cargo-aur][cargo-aur]]         | Author   | Rust       | Tool to release Rust projects on Arch Linux |
+| 2020 | [[https://github.com/fosskers/credit][credit]]            | Author   | Rust       | Tools for measuring Github contributions    |
+|      | [[https://crates.io/crates/cargo-aur][cargo-aur]]         | Author   | Rust       | Tool to release Rust projects on Arch Linux |
 |      | [[https://crates.io/crates/versions][versions]]          | Author   | Rust       | Rust port of my ~versions~ library          |
 |      | [[https://github.com/fosskers/rs-kanji][kanji]]             | Author   | Rust       | Rust port and update of my ~kanji~ library  |
 |      | [[https://github.com/fosskers/active][active]]            | Author   | Go         | Tool to keep Github CI Actions up-to-date   |
