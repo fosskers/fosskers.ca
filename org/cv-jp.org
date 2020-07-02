@@ -96,13 +96,13 @@
 
 /2014 May - 2016 April/
 
-Full-stack Scala developer.
+Scala開発者。
 
 **** 開発
 
-- Maintained and enhanced a Play + MySQL backend.
-- Extended a Twitter Bootstrap-based web application.
-- Implemented a content recommendation system using Apache Spark's MLlib.
+- Playに基づいたバックエンドを維持
+- Twitter Bootstrapのウェッブアプリを作成
+- Apache Sparkを通して推薦システムを開発
 
 **** システム管理
 
@@ -222,13 +222,10 @@ minoring in Computer Science. Achieved the Dean's Honour Roll.
 
 *** 大会出場
 
-|   年 | 競技         | 大会       |
-|------+--------------+------------|
-| 2018 | ボルダリング | BC州州大会 |
-
-** 柔術
-
-町の柔術道場に週に数回通っています。
+|   年 | 競技         | 大会       | 会場           |
+|------+--------------+------------+----------------|
+| 2020 | トップロープ | The Flash  | Cliffhanger    |
+| 2018 | ボルダリング | BC州州大会 | North Van Hive |
 
 ** 言語学習
 

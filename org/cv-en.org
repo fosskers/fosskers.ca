@@ -1,7 +1,7 @@
 #+TITLE: Colin Woodbury
 #+AUTHOR: Colin
 
-* Myself
+* Self Introduction
 
 [[/assets/colin.jpg]]
 
@@ -14,7 +14,7 @@ give conference presentations in both English and Japanese.
 ** Programming Languages
 
 - Rust, Go, C
-- Haskell, Purescript, Elm
+- Haskell, Purescript
 - Scala, Java
 - Python
 
@@ -46,7 +46,7 @@ give conference presentations in both English and Japanese.
 
 /2018 August - 2020 May/
 
-Core developer of the [[https://github.com/kadena-io/chainweb-node][Kadena Public Blockchain]] (Chainweb).
+Core developer of the [[https://github.com/kadena-io/chainweb-node][Kadena Public Blockchain]].
 
 **** General
 
@@ -117,7 +117,7 @@ English Teacher (ALT) for the Sasebo Board of Education
 - Taught English to over a thousand Elementary and Middle School students.
 - Created lesson plans, supported Japanese colleagues, and helped grade tests.
 - Ran an English Club for students who wanted extra practice.
-- Coached students to participate in English speech contests.
+- Coached students who went on to win a city-wide speech contest two years in a row.
 
 * Education
 
@@ -125,24 +125,31 @@ English Teacher (ALT) for the Sasebo Board of Education
 
 /2013 September - 2016 April/
 
-An accelerated undergraduate Diploma program for university graduates. Served as
-Vice President (2014-2015) and as President (2015-2016) of the Computing Science
-Student Society. Achieved the Dean's Honour Roll two years in a row. Also served
-as the president of the SFU Choir for two years.
+An accelerated undergraduate Diploma program for university graduates.
+
+- Served as Vice President (2014-2015) and as President (2015-2016) of the
+  Computing Science Student Society.
+- Oversaw the creation of the [[https://sfucsss.org/][CSSS website]].
+- Served as the president of the SFU Choir for two years.
+- Achieved the Dean's Honour Roll two years in a row.
 
 ** Saga University, Japan - SPACE Program
 
 /2008 September - 2009 August/
 
-Member of the one-year SPACE program for international students. Winner of the
-year-end Japanese speech contest for Best Speech and Most Humorous Speech.
+A [[http://www.irdc.saga-u.ac.jp/en/interest/space.html][one-year exchange program]] for international students.
+
+- Winner of the year-end Japanese speech contest for Best Speech and Most
+  Humorous Speech.
 
 ** University of Manitoba - BA, Asian Studies
 
 /2006 September - 2010 April/
 
-A four-year degree, majoring in Asian Studies (History and Languages) and
-minoring in Computer Science. Achieved the Dean's Honour Roll.
+A four-year degree, majoring in Asian History and Languages.
+
+- Minored in Computer Science.
+- Achieved the Dean's Honour Roll.
 
 * Open Source Projects
 
@@ -223,11 +230,6 @@ indoors.
 |------+------------+---------------------------+----------------|
 | 2020 | Top Rope   | The Flash                 | Cliffhanger    |
 | 2018 | Bouldering | BC Bouldering Provincials | North Van Hive |
-
-** Brazilian Jiu Jitsu
-
-I am a member of a local Gracie Jiu Jitsu school and practice several times a
-week.
 
 ** Language Learning
 
