@@ -155,7 +155,7 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project           | Role     | Language   | Description                                 |
 |------+-------------------+----------+------------+---------------------------------------------|
-| 2020 | [[https://github.com/fosskers/credit][credit]]            | Author   | Rust       | Tools for measuring Github contributions    |
+| 2020 | [[https://github.com/fosskers/credit][credit]]            | Author   | Rust       | Tool for measuring Github contributions     |
 |      | [[https://crates.io/crates/cargo-aur][cargo-aur]]         | Author   | Rust       | Tool to release Rust projects on Arch Linux |
 |      | [[https://crates.io/crates/versions][versions]]          | Author   | Rust       | Rust port of my ~versions~ library          |
 |      | [[https://github.com/fosskers/rs-kanji][kanji]]             | Author   | Rust       | Rust port and update of my ~kanji~ library  |
