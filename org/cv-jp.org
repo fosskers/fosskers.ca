@@ -94,7 +94,7 @@
 
 *** [[https://www.adendamedia.com/][Adenda Media]] - 開発 (Scala)
 
-/2014 May - 2016 April/
+/２０１４年５月･･･２０１６年４月/
 
 Scala開発者。
 
@@ -106,47 +106,55 @@ Scala開発者。
 
 **** システム管理
 
-- Managed our primary web servers on Digital Ocean.
+- Digital Oceanにてサーバーを管理
 
 **** ドキュメンテーション
 
-- Extensive documentation efforts in LaTeX.
+- LaTeXを使用してサーバーのシステムを説明
 
 ** 英語教育
 
-/2010 August - 2013 July/
+/２０１０年８月･･･２０１３年７月/
 
-English Teacher (ALT) for the Sasebo Board of Education
+佐世保市教育委員会の英語準教師（ALT)。
 
-- Taught English to over a thousand Elementary and Middle School students.
-- Created lesson plans, supported Japanese colleagues, and helped grade tests.
-- Ran an English Club for students who wanted extra practice.
-- Coached students to participate in English speech contests.
+- 千人以上の小中学生に英語を教授
+- 授業計画を作り、同僚を支援、テストや宿題を訂正
+- 中学の英会話部を担当
+- 市スピーチコンテストに参加する生徒を指導
 
 * 教育
 
-** サイモンフレーザー大学 - Post Bacc. Diploma, Computing Science
+** サイモンフレーザー大学・学士号
 
-/2013 September - 2016 April/
+/２０１３年９月･･･２０１６年４月/
 
-An accelerated undergraduate Diploma program for university graduates. Served as
-Vice President (2014-2015) and as President (2015-2016) of the Computing Science
-Student Society. Achieved the Dean's Honour Roll two years in a row. Also served
-as the president of the SFU Choir for two years.
+卒業者向きの促進学士号。
 
-** 佐賀大学 - SPACEプログラム短期留学
+- Computing Scienceを専門
+- ２０１４年・２０１５年：CSSS（Computing Science学部生徒会）の副会長
+- ２０１５年・２０１６年：CSSSの会長
+- [[https://sfucsss.org/][CSSSの公式サイト]]の作成を担当
+- コーラス部の会長を二年間務めた
+- 二年間連続で優等生名簿に挙げられた
 
-/2008 September - 2009 August/
+** 佐賀大学・SPACEプログラム短期留学
 
-Member of the one-year SPACE program for international students. Winner of the
-year-end Japanese speech contest for Best Speech and Most Humorous Speech.
+/２００８年９月･･･２００９年８月/
 
-** マニトバ大学 - BA, アジア研究
+一年間の短期留学。
 
-/2006 September - 2010 April/
+- 年末のスピーチコンテスト優勝
 
-A four-year degree, majoring in Asian Studies (History and Languages) and
-minoring in Computer Science. Achieved the Dean's Honour Roll.
+** マニトバ大学・学士号
+
+/２００６年９月･･･２０１０年４月/
+
+四年間の学士号。
+
+- アジア史と言語を専門
+- Computer Scienceを副専門
+- 優等生名簿に挙げられた
 
 * オープンソース
 
