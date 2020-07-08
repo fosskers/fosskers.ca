@@ -4,7 +4,7 @@
 
 * 自己紹介
 
-[[/assets/colin.jpg]]
+[[/assets/colin-profile.jpg]]
 
 フルスタック開発者・2012年からオープンソースで活躍中・ [[https://github.com/fosskers/aura][Aura]] の作者
 
