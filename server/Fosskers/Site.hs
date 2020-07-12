@@ -108,10 +108,11 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
     projects :: [Maybe (Html (), Text)]
     projects =
       [ Just ("Aura", "https://github.com/fosskers/aura")
-      , Just ("Bag of Holding", "https://github.com/kadena-community/bag-of-holding")
+      , Just ("Credit", "https://github.com/fosskers/credit")
       , Just ("MapAlgebra", "https://github.com/fosskers/mapalgebra")
       , Nothing
       , Just ("Haskell Libraries", "http://hackage.haskell.org/user/fosskers")
+      , Just ("Rust Crates", "https://crates.io/users/fosskers")
       , Nothing
       , Just ("ScalaZ and Cats", "https://github.com/fosskers/scalaz-and-cats")
       , Just ("Scala Benchmarks", "https://github.com/fosskers/scala-benchmarks") ]
