@@ -115,6 +115,11 @@ skylighting l t = maybe (O.codeHTML l t) (formatHtmlBlock fo) $ do
     fo = defaultFormatOpts
       { containerClasses = "src" : maybe [] (\(O.Language l') -> ["src-" <> l']) l }
 
+sectioning :: O.SectionStyling
+sectioning _ h s = do
+  h
+  div_ [style_ "padding-bottom: 1.0%;padding-left: 2.0%"] s
+
 -- | Abosolute paths to all the @.org@ blog files.
 orgFiles :: IO [FilePath]
 orgFiles = filter (L.isSuffixOf ".org") <$> (listDirectory "blog" >>= traverse f)
@@ -126,7 +131,7 @@ orgs :: NonEmpty FilePath -> IO ([Text], [Blog])
 orgs = fmap partitionEithers . traverse g . NEL.toList
   where
     style :: O.OrgStyle
-    style = O.OrgStyle False (Just $ O.TOC "Contents" 2) True skylighting (Just ' ') True
+    style = O.OrgStyle False (Just $ O.TOC "Contents" 2) True skylighting sectioning (Just ' ')
 
     g :: FilePath -> IO (Either Text Blog)
     g f = do
@@ -154,9 +159,9 @@ pages = runMaybeT $ Pages
   <*> f cstyle "org/cv-en.org"
   <*> f jstyle "org/cv-jp.org"
   where
-    astyle = O.OrgStyle False Nothing False skylighting (Just ' ') True
-    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True skylighting (Just ' ') True
-    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True skylighting (Just ' ') True
+    astyle = O.OrgStyle False Nothing False skylighting sectioning (Just ' ')
+    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True skylighting sectioning (Just ' ')
+    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True skylighting sectioning (Just ' ')
 
     f :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
     f s fp = O.body s <$> MaybeT (orgd fp)
