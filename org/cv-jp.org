@@ -9,9 +9,9 @@
 フルスタック開発者・2012年からオープンソースで活躍中・ [[https://github.com/fosskers/aura][Aura]] の作者
 
 ウッドブリ・コリンと申します。カナダ生まれで、以前数年間九州に住んだ事があります。
-当時は教師として務めていて、今はその経験を活かしてコンファレンスで日本語でも英語
-でも発表をしています。主な趣味としてはよくクライミングをやっています。履歴や学歴
-などはこれ以降に述べてあります。ご覧下さい。
+当時は教師として務めており、今はその経験を活かしてカンファレンスで日本語でも英語
+でも発表をしています。主な趣味としてはよくクライミングをやっています。経歴及び
+学歴などはこれ以降に述べております。ご覧下さい。
 
 * 能力
 
@@ -22,7 +22,7 @@
 - Scala, Java
 - Python
 
-** ウエブ技術
+** ウェブ技術
 
 - Terraform
 - GraphQL
@@ -55,9 +55,9 @@
 **** 開発
 
 - Chainwebや [[https://pactlang.org/][Pact]] プロジェクトでバックエンドHaskell開発
-- Chainwebの採掘何度アルゴリズムを考案し実現
-- Chainwebの採掘クライエント [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]] を作成
-- ncursesを用いて [[https://github.com/kadena-community/bag-of-holding][ウオレットアプリ]] を作成
+- Chainwebの採掘難度アルゴリズムを考案し実現
+- Chainwebの採掘クライアント [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]] を作成
+- ncursesを用いて [[https://github.com/kadena-community/bag-of-holding][ウォレットアプリ]] を作成
 
 **** システム管理
 
@@ -68,7 +68,7 @@
 
 - Pactの [[https://pact-language.readthedocs.io/ja/stable/][ユーザードキュメンテーションを和訳]]
 - ユーザーのノード設定に手助けをしたり、 [[https://github.com/kadena-community/node-setup][設定スクリプト]] を提供
-- 会社の代表として日本、アメリカ、カナダでコンファレンス発表
+- 会社の代表として日本、アメリカ、カナダでカンファレンス発表
 
 *** [[https://www.azavea.com/][Azavea]] - オープンソースGIS開発 (Scala)
 
@@ -101,7 +101,7 @@ Scala開発者。
 **** 開発
 
 - Playに基づいたバックエンドを維持
-- Twitter Bootstrapのウェッブアプリを作成
+- Twitter Bootstrapのウェブアプリを作成
 - Apache Sparkを通して推薦システムを開発
 
 **** システム管理
@@ -123,13 +123,13 @@ Scala開発者。
 - 中学の英会話部を担当
 - 市スピーチコンテストに参加する生徒を指導
 
-* 教育
+* 学歴
 
 ** サイモンフレーザー大学・学士号
 
 /２０１３年９月･･･２０１６年４月/
 
-卒業者向きの促進学士号。
+卒業者向けの促進学士号。
 
 - Computing Scienceを専門
 - ２０１４年・２０１５年：CSSS（Computing Science学部生徒会）の副会長
@@ -170,10 +170,10 @@ Scala開発者。
 |      | [[https://github.com/kadena-io/chainweb-data][chainweb-data]]     | Core Dev | Haskell    | Chainweb情報を一括処理するツール                   |
 |------+-------------------+----------+------------+----------------------------------------------------|
 | 2019 | [[https://github.com/kadena-io/chainweb-node][Chainweb]]          | Core Dev | Haskell    | Proof-of-Workのブロックチェーン                    |
-|      | [[https://github.com/kadena-community/bag-of-holding][bag-of-holding]]    | Author   | Haskell    | Chainwebのウオレット                               |
+|      | [[https://github.com/kadena-community/bag-of-holding][bag-of-holding]]    | Author   | Haskell    | Chainwebのウォレット                               |
 |      | [[https://gitlab.com/fosskers/bounded-queue][bounded-queue]]     | Author   | Haskell    | キューのライブラリ                                 |
-|      | [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]]    | Author   | Haskell    | Chainwebの採掘クライエント                         |
-|      | [[https://github.com/kadena-io/streaming-events][streaming-events]]  | Author   | Haskell    | EventStreamをクライエント側で処理するライブラリ    |
+|      | [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]]    | Author   | Haskell    | Chainwebの採掘クライアント                         |
+|      | [[https://github.com/kadena-io/streaming-events][streaming-events]]  | Author   | Haskell    | EventStreamをクライアント側で処理するライブラリ    |
 |------+-------------------+----------+------------+----------------------------------------------------|
 | 2018 | [[https://github.com/fosskers/mapalgebra][MapAlgebra]]        | Author   | Haskell    | [[https://en.wikipedia.org/wiki/Map_algebra][Map Algebra]]ライブラリ                              |
 |      | [[https://github.com/fosskers/fosskers.ca][fosskers.ca]]       | Author   | Purescript | 自分のサイト                                       |
@@ -200,7 +200,7 @@ Scala開発者。
 |      | [[https://github.com/fosskers/kanji][kanji]]             | Author   | Haskell    | 日本漢字の分析                                     |
 |------+-------------------+----------+------------+----------------------------------------------------|
 
-* 証明
+* 資格・免許
 
 | 証明                               | 級     |   年 |
 |------------------------------------+--------+------|
@@ -226,7 +226,7 @@ Scala開発者。
 
 ** クライミング
 
-主にリードを好みますが、トップロープもボルダリングも、外でも館内でもします。
+主にリードを好みますが、トップロープもボルダリングも、外でも室内でもします。
 
 *** 大会出場
 
