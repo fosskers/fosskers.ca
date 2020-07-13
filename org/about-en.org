@@ -10,9 +10,10 @@ allows me to realize my core programming values: Rigour, Minimalism, and Beauty.
 - Mapbox VectorTile codecs ([[https://github.com/fosskers/vectortiles][Haskell]], [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]])
 - [[https://github.com/fosskers/scalaz-and-cats][ScalaZ and Cats Comparison]] and the [[https://github.com/fosskers/scala-benchmarks][Scala Collections Benchmarks]]
 
-Otherwise, I've written code in many languages including Scala, Purescript, Elm,
-C, Python, and Java, and deployed projects to production on AWS, Digital Ocean,
-and Heroku using a variety of industry-standard tools and frameworks.
+Otherwise, I've written code in many languages including Rust, Go, Scala,
+Purescript, Elm, C, Python, and Java, and deployed projects to production on
+AWS, Digital Ocean, and Heroku using a variety of industry-standard tools and
+frameworks.
 
 For more specifics, please see [[/en/cv][my full CV]].
 
