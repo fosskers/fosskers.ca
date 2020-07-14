@@ -127,11 +127,18 @@ fn draw_grid(universe: &Universe, context: &CanvasRenderingContext2d) {
     context.set_stroke_style(&GRID_COLOUR.into()); // TODO Avoid allocation.
 
     let y_end = ((CELL_SIZE + 1) * universe.height + 1) as f64;
+    let x_end = ((CELL_SIZE + 1) * universe.width + 1) as f64;
 
-    for i in 0..universe.width {
+    for i in 0..universe.width + 1 {
         let start = (i * (CELL_SIZE + 1) + 1) as f64;
         context.move_to(start, 0.0);
         context.line_to(start, y_end);
+    }
+
+    for j in 0..universe.height + 1 {
+        let start = (j * (CELL_SIZE + 1) + 1) as f64;
+        context.move_to(0.0, start);
+        context.line_to(x_end, start);
     }
 
     context.stroke();
