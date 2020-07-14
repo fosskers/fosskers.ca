@@ -1,11 +1,11 @@
 use fixedbitset::FixedBitSet;
 use js_sys::Math;
+use std::cell::RefCell;
+use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
-use web_sys::console;
-use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
+use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, Window};
 
-const PI: f64 = 3.1415683859;
 const CELL_SIZE: u32 = 5;
 const GRID_COLOUR: &str = "#CCCCCC";
 const DEAD_COLOUR: &str = "#FFFFFF";
@@ -110,9 +110,8 @@ impl Universe {
     }
 }
 
-fn canvas() -> HtmlCanvasElement {
-    web_sys::window()
-        .unwrap()
+fn canvas(window: &Window) -> HtmlCanvasElement {
+    window
         .document()
         .unwrap()
         .get_element_by_id("game-of-life-canvas")
@@ -129,13 +128,13 @@ fn draw_grid(universe: &Universe, context: &CanvasRenderingContext2d) {
     let y_end = ((CELL_SIZE + 1) * universe.height + 1) as f64;
     let x_end = ((CELL_SIZE + 1) * universe.width + 1) as f64;
 
-    for i in 0..universe.width + 1 {
+    for i in 0..=universe.width {
         let start = (i * (CELL_SIZE + 1) + 1) as f64;
         context.move_to(start, 0.0);
         context.line_to(start, y_end);
     }
 
-    for j in 0..universe.height + 1 {
+    for j in 0..=universe.height {
         let start = (j * (CELL_SIZE + 1) + 1) as f64;
         context.move_to(0.0, start);
         context.line_to(x_end, start);
@@ -144,13 +143,58 @@ fn draw_grid(universe: &Universe, context: &CanvasRenderingContext2d) {
     context.stroke();
 }
 
+fn draw_cells(universe: &Universe, context: &CanvasRenderingContext2d) {
+    context.begin_path();
+
+    // Live cells.
+    context.set_fill_style(&ALIVE_COLOUR.into()); // TODO Avoid allocation.
+    for row in 0..universe.height {
+        for col in 0..universe.width {
+            let idx = universe.get_index(row, col);
+
+            if universe.cells[idx] {
+                context.fill_rect(
+                    (col * (CELL_SIZE + 1) + 1) as f64,
+                    (row * (CELL_SIZE + 1) + 1) as f64,
+                    CELL_SIZE as f64,
+                    CELL_SIZE as f64,
+                );
+            }
+        }
+    }
+
+    // Dead cells.
+    context.set_fill_style(&DEAD_COLOUR.into()); // TODO Avoid allocation.
+    for row in 0..universe.height {
+        for col in 0..universe.width {
+            let idx = universe.get_index(row, col);
+
+            if !universe.cells[idx] {
+                context.fill_rect(
+                    (col * (CELL_SIZE + 1) + 1) as f64,
+                    (row * (CELL_SIZE + 1) + 1) as f64,
+                    CELL_SIZE as f64,
+                    CELL_SIZE as f64,
+                );
+            }
+        }
+    }
+
+    context.stroke();
+}
+
+fn request_animation_frame(window: &Window, f: &Closure<dyn FnMut()>) {
+    window
+        .request_animation_frame(f.as_ref().unchecked_ref())
+        .unwrap();
+}
+
 #[wasm_bindgen(start)]
-pub fn main() -> Result<(), JsValue> {
-    console::log_1(&"Hello from Rust!".into());
+pub fn main() {
+    let mut universe = Universe::new();
 
-    let universe = Universe::new();
-
-    let canvas = canvas();
+    let window = web_sys::window().unwrap();
+    let canvas = canvas(&window);
     canvas.set_height((CELL_SIZE + 1) * universe.height + 1);
     canvas.set_width((CELL_SIZE + 1) * universe.width + 1);
 
@@ -161,7 +205,21 @@ pub fn main() -> Result<(), JsValue> {
         .dyn_into()
         .unwrap();
 
+    // Initial rendering here, since both these values are moved into the Closure.
     draw_grid(&universe, &context);
+    draw_cells(&universe, &context);
 
-    Ok(())
+    // Ref tricks to call `request_animation_frame` recursively.
+    let f = Rc::new(RefCell::new(None));
+    let g = f.clone();
+    *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
+        universe.tick();
+        draw_grid(&universe, &context);
+        draw_cells(&universe, &context);
+        request_animation_frame(&window, f.borrow().as_ref().unwrap());
+    }) as Box<dyn FnMut()>));
+
+    // Grab the window again, since the previous one was moved into the Closure.
+    let window = web_sys::window().unwrap();
+    request_animation_frame(&window, g.borrow().as_ref().unwrap());
 }
