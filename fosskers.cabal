@@ -64,6 +64,7 @@ executable server
     Fosskers.Site.Blog
     Fosskers.Site.Bootstrap
     Fosskers.Site.CV
+    Fosskers.Site.GameOfLife
 
   build-depends:
     , binary

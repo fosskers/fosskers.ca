@@ -1,0 +1,17 @@
+module Fosskers.Site.GameOfLife ( gol ) where
+
+import Fosskers.Common (Language(..))
+import Lucid
+import Lucid.Base (termRawWith)
+
+---
+
+-- This WASM loading magic is borrowed from:
+-- https://rustwasm.github.io/docs/wasm-bindgen/examples/without-a-bundler.html
+gol :: Language -> Html ()
+gol _ = termRawWith "script" [type_ "module"]
+  "import init from '/assets/wasm_tests.js';\n\
+  \async function run() {\n\
+  \  await init();\n\
+  \}\n\
+  \run();"

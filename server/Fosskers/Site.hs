@@ -21,7 +21,7 @@ Don't bother with Tools for now.
 
 -}
 
-data Page = CV | About | Posts | Nowhere deriving (Eq)
+data Page = CV | About | Posts | Demo | Nowhere deriving (Eq)
 
 nowhere :: Html ()
 nowhere = do
@@ -87,6 +87,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "Blog" "/en/blog" $ active Posts
       dropdown "Projects" projects
       -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
+      dropdown "Demos" [Just ("Game of Life", "/en/demo/game-of-life")]
       item "CV" "/en/cv" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
       icon "https://twitter.com/fosskers" ["fab", "fa-twitter"]
@@ -99,6 +100,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "ブログ" "/jp/blog" $ active Posts
       dropdown "プロジェクト" projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
+      dropdown "デモ" [Just ("Game of Life", "/jp/demo/game-of-life")]
       item "履歴書" "/jp/cv" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
