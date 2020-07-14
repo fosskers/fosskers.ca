@@ -5,11 +5,12 @@ authors = ["Colin Woodbury <colin@fosskers.ca>"]
 edition = "2018"
 
 [lib]
-crate-type = ["cdylib", "rlib"]
+crate-type = ["cdylib"]
 
 [dependencies]
+js-sys = "0.3"
 wasm-bindgen = "0.2"
-web-sys = { version = "0.3", features = ["console"] }
+web-sys = { version = "0.3", features = ["console", "Window", "Document", "Element", "HtmlCanvasElement", "CanvasRenderingContext2d"] }
 wee_alloc = "0.4.5"
 
 [profile.release]
