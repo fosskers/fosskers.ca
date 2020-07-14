@@ -10,7 +10,7 @@ import Lucid.Base (termRawWith)
 -- https://rustwasm.github.io/docs/wasm-bindgen/examples/without-a-bundler.html
 gol :: Language -> Html ()
 gol _ = termRawWith "script" [type_ "module"]
-  "import init from '/assets/wasm_tests.js';\n\
+  "import init from '/assets/game_of_life.js';\n\
   \async function run() {\n\
   \  await init();\n\
   \}\n\
