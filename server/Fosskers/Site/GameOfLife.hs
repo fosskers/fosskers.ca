@@ -10,7 +10,7 @@ import Lucid.Base (termRawWith)
 -- https://rustwasm.github.io/docs/wasm-bindgen/examples/without-a-bundler.html
 gol :: Language -> Html ()
 gol _ = do
-  canvas_ [id_ "smile-canvas"] ""
+  canvas_ [id_ "game-of-life-canvas"] ""
   wasm
 
 wasm :: Html ()

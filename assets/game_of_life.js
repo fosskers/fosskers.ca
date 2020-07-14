@@ -190,6 +190,8 @@ function handleError(f) {
     };
 }
 
+function notDefined(what) { return () => { throw new Error(`${what} is not defined`); }; }
+
 function isLikeNone(x) {
     return x === undefined || x === null;
 }
@@ -243,6 +245,7 @@ async function init(input) {
     imports.wbg.__wbg_log_d85e484a8ba03c98 = function(arg0) {
         console.log(getObject(arg0));
     };
+    imports.wbg.__wbg_random_3fe3216a972fe49a = typeof Math.random == 'function' ? Math.random : notDefined('Math.random');
     imports.wbg.__wbindgen_object_clone_ref = function(arg0) {
         var ret = getObject(arg0);
         return addHeapObject(ret);
@@ -263,6 +266,12 @@ async function init(input) {
         var ret = getObject(arg0) instanceof HTMLCanvasElement;
         return ret;
     };
+    imports.wbg.__wbg_setheight_c61e5a9990ad7131 = function(arg0, arg1) {
+        getObject(arg0).height = arg1 >>> 0;
+    };
+    imports.wbg.__wbg_setwidth_7a7150718cc3f0e6 = function(arg0, arg1) {
+        getObject(arg0).width = arg1 >>> 0;
+    };
     imports.wbg.__wbg_getContext_a8aab8274f84fca2 = handleError(function(arg0, arg1, arg2) {
         var ret = getObject(arg0).getContext(getStringFromWasm0(arg1, arg2));
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
@@ -274,9 +283,15 @@ async function init(input) {
     imports.wbg.__wbg_beginPath_3df6024a7bd75a4b = function(arg0) {
         getObject(arg0).beginPath();
     };
-    imports.wbg.__wbg_arc_dd85ddd42e5549de = handleError(function(arg0, arg1, arg2, arg3, arg4, arg5) {
-        getObject(arg0).arc(arg1, arg2, arg3, arg4, arg5);
-    });
+    imports.wbg.__wbg_setstrokeStyle_85466ccf97d1f753 = function(arg0, arg1) {
+        getObject(arg0).strokeStyle = getObject(arg1);
+    };
+    imports.wbg.__wbg_moveTo_46b9ca6ae533ed02 = function(arg0, arg1, arg2) {
+        getObject(arg0).moveTo(arg1, arg2);
+    };
+    imports.wbg.__wbg_lineTo_0b31c4f7ffcde044 = function(arg0, arg1, arg2) {
+        getObject(arg0).lineTo(arg1, arg2);
+    };
     imports.wbg.__wbg_stroke_5daa066a78bd6915 = function(arg0) {
         getObject(arg0).stroke();
     };
