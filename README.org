@@ -1,6 +1,6 @@
 #+TITLE: fosskers.ca
 
-[[https://github.com/fosskers/fosskers.ca/workflows/Build/badge.svg]]
+[[https://github.com/fosskers/fosskers.ca/workflows/Haskell/badge.svg]]
 
 This is the repo for my personal website. It serves static HTML pages from a
 Haskell backend built with [[http://hackage.haskell.org/package/servant][servant]], [[http://hackage.haskell.org/package/lucid][lucid]], and [[http://hackage.haskell.org/package/org-mode][org-mode]].

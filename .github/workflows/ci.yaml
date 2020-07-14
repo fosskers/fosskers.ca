@@ -1,4 +1,4 @@
-name: Build
+name: Haskell
 on:
   pull_request:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: CI
+    name: Web Server
     runs-on: ubuntu-latest
     steps:
       - name: Setup GHC
