@@ -120,10 +120,10 @@ fn canvas(window: &Window) -> HtmlCanvasElement {
         .unwrap()
 }
 
-fn draw_grid(universe: &Universe, context: &CanvasRenderingContext2d) {
+fn draw_grid(colour: &JsValue, universe: &Universe, context: &CanvasRenderingContext2d) {
     context.begin_path();
 
-    context.set_stroke_style(&GRID_COLOUR.into()); // TODO Avoid allocation.
+    context.set_stroke_style(colour);
 
     let y_end = ((CELL_SIZE + 1) * universe.height + 1) as f64;
     let x_end = ((CELL_SIZE + 1) * universe.width + 1) as f64;
@@ -143,11 +143,16 @@ fn draw_grid(universe: &Universe, context: &CanvasRenderingContext2d) {
     context.stroke();
 }
 
-fn draw_cells(universe: &Universe, context: &CanvasRenderingContext2d) {
+fn draw_cells(
+    alive: &JsValue,
+    dead: &JsValue,
+    universe: &Universe,
+    context: &CanvasRenderingContext2d,
+) {
     context.begin_path();
 
     // Live cells.
-    context.set_fill_style(&ALIVE_COLOUR.into()); // TODO Avoid allocation.
+    context.set_fill_style(alive);
     for row in 0..universe.height {
         for col in 0..universe.width {
             let idx = universe.get_index(row, col);
@@ -164,7 +169,7 @@ fn draw_cells(universe: &Universe, context: &CanvasRenderingContext2d) {
     }
 
     // Dead cells.
-    context.set_fill_style(&DEAD_COLOUR.into()); // TODO Avoid allocation.
+    context.set_fill_style(dead);
     for row in 0..universe.height {
         for col in 0..universe.width {
             let idx = universe.get_index(row, col);
@@ -193,6 +198,7 @@ fn request_animation_frame(window: &Window, f: &Closure<dyn FnMut()>) {
 pub fn main() {
     let mut universe = Universe::new();
 
+    // Configure the canvas.
     let window = web_sys::window().unwrap();
     let canvas = canvas(&window);
     canvas.set_height((CELL_SIZE + 1) * universe.height + 1);
@@ -205,17 +211,22 @@ pub fn main() {
         .dyn_into()
         .unwrap();
 
+    // Colours, converted to JS values once to avoid repeated conversions.
+    let grid = GRID_COLOUR.into();
+    let alive = ALIVE_COLOUR.into();
+    let dead = DEAD_COLOUR.into();
+
     // Initial rendering here, since both these values are moved into the Closure.
-    draw_grid(&universe, &context);
-    draw_cells(&universe, &context);
+    draw_grid(&grid, &universe, &context);
+    draw_cells(&alive, &dead, &universe, &context);
 
     // Ref tricks to call `request_animation_frame` recursively.
     let f = Rc::new(RefCell::new(None));
     let g = f.clone();
     *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
         universe.tick();
-        draw_grid(&universe, &context);
-        draw_cells(&universe, &context);
+        draw_grid(&grid, &universe, &context);
+        draw_cells(&alive, &dead, &universe, &context);
         request_animation_frame(&window, f.borrow().as_ref().unwrap());
     }) as Box<dyn FnMut()>));
 
