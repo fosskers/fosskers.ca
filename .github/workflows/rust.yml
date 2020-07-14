@@ -1,0 +1,23 @@
+name: Rust
+
+on:
+  pull_request:
+  push:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    name: Rust Demos
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Project
+        uses: actions/checkout@v2
+
+      - name: Game of Life
+        run: |
+          cd demos/game-of-life
+          cargo build
