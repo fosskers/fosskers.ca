@@ -23,8 +23,8 @@ struct Universe {
 
 impl Universe {
     fn new() -> Universe {
-        let width = 64;
-        let height = 64;
+        let width = 96;
+        let height = 96;
         let mut cells = FixedBitSet::with_capacity(width * height);
 
         for i in 0..width * height {
