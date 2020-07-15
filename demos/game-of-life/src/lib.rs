@@ -14,6 +14,7 @@ const ALIVE_COLOUR: &str = "#000000";
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+/// All cells represented as a linear collection of bits.
 struct Universe {
     width: u32,
     height: u32,
