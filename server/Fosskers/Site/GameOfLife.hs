@@ -15,7 +15,9 @@ gol lang = do
     English  -> english
     Japanese -> japanese
   div_ [class_ "title", style_ "padding-bottom: 1%"] $
-    button_ [classes_ ["btn", "btn-outline-dark"], id_ "pause-button"] "Reset"
+    div_ [class_ "btn-group", role_ "group"] $ do
+      button_ [type_ "button", classes_ ["btn", "btn-outline-warning"], id_ "pause-button"] "Pause"
+      button_ [type_ "button", classes_ ["btn", "btn-outline-dark"], id_ "reset-button"] "Reset"
   div_ [class_ "title"] $ do
     canvas_ [id_ "game-of-life-canvas"] ""
     wasm

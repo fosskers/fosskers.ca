@@ -5,7 +5,7 @@ use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
-use web_sys::{CanvasRenderingContext2d, HtmlButtonElement, HtmlCanvasElement, Window};
+use web_sys::{CanvasRenderingContext2d, Event, HtmlButtonElement, HtmlCanvasElement, Window};
 
 const CELL_SIZE: u32 = 5;
 const GRID_COLOUR: &str = "#CCCCCC";
@@ -122,6 +122,16 @@ fn canvas(window: &Window) -> HtmlCanvasElement {
         .unwrap()
 }
 
+fn reset_button(window: &Window) -> HtmlButtonElement {
+    window
+        .document()
+        .unwrap()
+        .get_element_by_id("reset-button")
+        .unwrap()
+        .dyn_into()
+        .unwrap()
+}
+
 fn pause_button(window: &Window) -> HtmlButtonElement {
     window
         .document()
@@ -200,10 +210,44 @@ fn draw_cells(
     context.stroke();
 }
 
-fn request_animation_frame(window: &Window, f: &Closure<dyn FnMut()>) {
+/// Make a request to the `Window` for the animation to advance.
+fn request_animation_frame(window: &Window, f: &Closure<dyn FnMut()>) -> i32 {
     window
         .request_animation_frame(f.as_ref().unchecked_ref())
-        .unwrap();
+        .unwrap()
+}
+
+/// Coordinate the playing of the animation.
+fn play(
+    window: &Window,
+    context: &CanvasRenderingContext2d,
+    universe: &Arc<Mutex<Universe>>,
+    animation_handler: &Arc<Mutex<Option<i32>>>,
+) {
+    // Clonings for shared access.
+    let w = window.clone();
+    let c = context.clone();
+    let shared_uni = universe.clone();
+    let shared_handler = animation_handler.clone();
+
+    // Reestablish the colours.
+    let grid_colour = GRID_COLOUR.into();
+    let alive_colour = ALIVE_COLOUR.into();
+    let dead_colour = DEAD_COLOUR.into();
+
+    let f = Rc::new(RefCell::new(None));
+    let g = f.clone();
+    *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
+        let mut handler = shared_handler.lock().unwrap();
+        let mut uni = shared_uni.lock().unwrap();
+        uni.tick();
+        draw_grid(&grid_colour, &uni, &c);
+        draw_cells(&alive_colour, &dead_colour, &uni, &c);
+        let new_handler = request_animation_frame(&w, f.borrow().as_ref().unwrap());
+        *handler = Some(new_handler);
+    }) as Box<dyn FnMut()>));
+
+    request_animation_frame(&window, g.borrow().as_ref().unwrap());
 }
 
 #[wasm_bindgen(start)]
@@ -212,6 +256,7 @@ pub fn main() {
 
     // Configure the canvas.
     let window = web_sys::window().unwrap();
+    let window_1 = window.clone();
     let canvas = canvas(&window);
     canvas.set_height((CELL_SIZE + 1) * universe.height + 1);
     canvas.set_width((CELL_SIZE + 1) * universe.width + 1);
@@ -222,42 +267,55 @@ pub fn main() {
         .unwrap()
         .dyn_into()
         .unwrap();
+    let context_1 = context.clone();
 
     // Colours, converted to JS values once to avoid repeated conversions.
-    let grid = GRID_COLOUR.into();
-    let alive = ALIVE_COLOUR.into();
-    let dead = DEAD_COLOUR.into();
+    let grid_colour = GRID_COLOUR.into();
+    let alive_colour = ALIVE_COLOUR.into();
+    let dead_colour = DEAD_COLOUR.into();
 
     // Initial rendering here, since the context is moved into the Closure.
-    draw_grid(&grid, &universe, &context);
-    draw_cells(&alive, &dead, &universe, &context);
+    draw_grid(&grid_colour, &universe, &context);
+    draw_cells(&alive_colour, &dead_colour, &universe, &context);
 
     // A shared reference will allow event handlers to manipulate the `Universe`.
-    let shared_0 = Arc::new(Mutex::new(universe));
-    let shared_1 = shared_0.clone();
+    let shared_uni_0 = Arc::new(Mutex::new(universe));
+    let shared_uni_1 = shared_uni_0.clone();
+    let shared_uni_2 = shared_uni_1.clone();
 
-    let pause_button = pause_button(&window);
-    let closure = Closure::wrap(Box::new(move |_: web_sys::Event| {
-        let mut uni = shared_1.lock().unwrap();
+    // Program the `Reset` button.
+    let reset_button = reset_button(&window);
+    let reset_closure = Closure::wrap(Box::new(move |_: Event| {
+        let mut uni = shared_uni_1.lock().unwrap();
         *uni = Universe::new();
     }) as Box<dyn FnMut(_)>);
-    pause_button
-        .add_event_listener_with_callback("click", closure.as_ref().unchecked_ref())
+    reset_button
+        .add_event_listener_with_callback("click", reset_closure.as_ref().unchecked_ref())
         .unwrap();
-    closure.forget();
+    reset_closure.forget();
 
-    // Ref tricks to call `request_animation_frame` recursively.
-    let f = Rc::new(RefCell::new(None));
-    let g = f.clone();
-    *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
-        let mut uni = shared_0.lock().unwrap();
-        uni.tick();
-        draw_grid(&grid, &uni, &context);
-        draw_cells(&alive, &dead, &uni, &context);
-        request_animation_frame(&window, f.borrow().as_ref().unwrap());
-    }) as Box<dyn FnMut()>));
+    // Program the `Pause` button.
+    let shared_handler_0 = Arc::new(Mutex::new(Some(0)));
+    let shared_handler_1 = shared_handler_0.clone();
+    let pause_button = pause_button(&window);
+    let pause_closure = Closure::wrap(Box::new(move |_: Event| {
+        let mut animation_handler = shared_handler_0.lock().unwrap();
+        match *animation_handler {
+            None => {
+                *animation_handler = Some(0);
+                play(&window, &context, &shared_uni_2, &shared_handler_0);
+            }
+            Some(h) => {
+                let _ = window.cancel_animation_frame(h);
+                *animation_handler = None;
+            }
+        }
+    }) as Box<dyn FnMut(_)>);
+    pause_button
+        .add_event_listener_with_callback("click", pause_closure.as_ref().unchecked_ref())
+        .unwrap();
+    pause_closure.forget();
 
-    // Grab the window again, since the previous one was moved into the Closure.
-    let window = web_sys::window().unwrap();
-    request_animation_frame(&window, g.borrow().as_ref().unwrap());
+    // Begin the animation.
+    play(&window_1, &context_1, &shared_uni_0, &shared_handler_1);
 }
