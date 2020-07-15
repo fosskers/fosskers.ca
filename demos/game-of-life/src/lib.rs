@@ -2,9 +2,10 @@ use fixedbitset::FixedBitSet;
 use js_sys::Math;
 use std::cell::RefCell;
 use std::rc::Rc;
+use std::sync::{Arc, Mutex};
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
-use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, Window};
+use web_sys::{CanvasRenderingContext2d, HtmlButtonElement, HtmlCanvasElement, Window};
 
 const CELL_SIZE: u32 = 5;
 const GRID_COLOUR: &str = "#CCCCCC";
@@ -121,6 +122,16 @@ fn canvas(window: &Window) -> HtmlCanvasElement {
         .unwrap()
 }
 
+fn pause_button(window: &Window) -> HtmlButtonElement {
+    window
+        .document()
+        .unwrap()
+        .get_element_by_id("pause-button")
+        .unwrap()
+        .dyn_into()
+        .unwrap()
+}
+
 fn draw_grid(colour: &JsValue, universe: &Universe, context: &CanvasRenderingContext2d) {
     context.begin_path();
 
@@ -197,7 +208,7 @@ fn request_animation_frame(window: &Window, f: &Closure<dyn FnMut()>) {
 
 #[wasm_bindgen(start)]
 pub fn main() {
-    let mut universe = Universe::new();
+    let universe = Universe::new();
 
     // Configure the canvas.
     let window = web_sys::window().unwrap();
@@ -217,17 +228,32 @@ pub fn main() {
     let alive = ALIVE_COLOUR.into();
     let dead = DEAD_COLOUR.into();
 
-    // Initial rendering here, since both these values are moved into the Closure.
+    // Initial rendering here, since the context is moved into the Closure.
     draw_grid(&grid, &universe, &context);
     draw_cells(&alive, &dead, &universe, &context);
+
+    // A shared reference will allow event handlers to manipulate the `Universe`.
+    let shared_0 = Arc::new(Mutex::new(universe));
+    let shared_1 = shared_0.clone();
+
+    let pause_button = pause_button(&window);
+    let closure = Closure::wrap(Box::new(move |_: web_sys::Event| {
+        let mut uni = shared_1.lock().unwrap();
+        *uni = Universe::new();
+    }) as Box<dyn FnMut(_)>);
+    pause_button
+        .add_event_listener_with_callback("click", closure.as_ref().unchecked_ref())
+        .unwrap();
+    closure.forget();
 
     // Ref tricks to call `request_animation_frame` recursively.
     let f = Rc::new(RefCell::new(None));
     let g = f.clone();
     *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
-        universe.tick();
-        draw_grid(&grid, &universe, &context);
-        draw_cells(&alive, &dead, &universe, &context);
+        let mut uni = shared_0.lock().unwrap();
+        uni.tick();
+        draw_grid(&grid, &uni, &context);
+        draw_cells(&alive, &dead, &uni, &context);
         request_animation_frame(&window, f.borrow().as_ref().unwrap());
     }) as Box<dyn FnMut()>));
 

@@ -11,7 +11,7 @@ crate-type = ["cdylib"]
 fixedbitset = "0.3"
 js-sys = "0.3"
 wasm-bindgen = "0.2"
-web-sys = { version = "0.3", features = ["console", "Window", "Document", "Element", "HtmlCanvasElement", "CanvasRenderingContext2d"] }
+web-sys = { version = "0.3", features = ["console", "Window", "Document", "Element", "HtmlCanvasElement", "CanvasRenderingContext2d", "EventTarget", "HtmlButtonElement", "Event"] }
 wee_alloc = "0.4.5"
 
 [profile.release]

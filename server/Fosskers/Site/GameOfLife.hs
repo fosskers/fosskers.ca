@@ -14,6 +14,8 @@ gol lang = do
   case lang of
     English  -> english
     Japanese -> japanese
+  div_ [class_ "title", style_ "padding-bottom: 1%"] $
+    button_ [classes_ ["btn", "btn-outline-dark"], id_ "pause-button"] "Reset"
   div_ [class_ "title"] $ do
     canvas_ [id_ "game-of-life-canvas"] ""
     wasm
@@ -41,7 +43,7 @@ gol lang = do
         a_ [href_ "https://www.rust-lang.org/"] "Rust"
         "とその"
         a_ [href_ "https://rustwasm.github.io/docs/book/"] "Web Assemblyバックエンド"
-        "で書かれています。"
+        "で作られています。"
       div_ [class_ "title", style_ "padding-bottom: 1%"] $ do
         "盤自体はRustから直接書き込むHTML5の"
         code_ "<canvas>"
