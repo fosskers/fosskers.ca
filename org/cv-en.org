@@ -17,6 +17,7 @@ give conference presentations in both English and Japanese.
 - Haskell, Purescript
 - Scala, Java
 - Python
+- HTML, CSS, Javascript, Web Assembly
 
 ** Web Technologies
 

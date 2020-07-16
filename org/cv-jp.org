@@ -21,6 +21,7 @@
 - Haskell, Purescript, Elm
 - Scala, Java
 - Python
+- HTML, CSS, Javascript, Web Assembly
 
 ** ウェブ技術
 
