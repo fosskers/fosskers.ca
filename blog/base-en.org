@@ -23,7 +23,7 @@ free to bookmark it or even [[https://github.com/fosskers/fosskers.ca][help upda
 |------+----------------+--------------+-------+------------------------------------------|
 | 8.10 |           4.14 |              |       | ~+RTS -xn~ for non-moving, concurrent GC |
 |------+----------------+--------------+-------+------------------------------------------|
-|  8.8 |           4.13 |           15 |   3.0 | ~MonadFail~ exported by ~Prelude~        |
+|  8.8 |           4.13 |           16 |   3.0 | ~MonadFail~ exported by ~Prelude~        |
 |      |                |              |       | ~fail~ removed from ~Monad~              |
 |------+----------------+--------------+-------+------------------------------------------|
 |  8.6 |           4.12 |           14 |   2.4 | ~-funclutter-valid-hole-fits~ available  |
