@@ -177,6 +177,7 @@ A four-year degree, majoring in Asian History and Languages.
 |      | [[https://github.com/fosskers/servant-xml][servant-xml]]       | Author   | Haskell    | Servant support for XML Content-Type        |
 |------+-------------------+----------+------------+---------------------------------------------|
 | 2017 | [[https://github.com/geotrellis/vectorpipe][VectorPipe]]        | Author   | Scala      | VectorTile processing through GeoTrellis    |
+|      | [[https://github.com/fosskers/draenor][draenor]]           | Author   | Haskell    | Convert OSM PBF files into ORC format       |
 |      | [[https://github.com/fosskers/streaming-osm][streaming-osm]]     | Author   | Haskell    | Stream OpenStreetMap protobuf data          |
 |      | [[https://github.com/fosskers/scalaz-and-cats][scalaz-and-cats]]   | Author   | Scala      | Benchmarks for Scalaz and Cats              |
 |      | [[https://github.com/fosskers/scala-benchmarks][scala-benchmarks]]  | Author   | Scala      | Benchmarks for common Scala idioms          |
@@ -189,6 +190,9 @@ A four-year degree, majoring in Asian History and Languages.
 |      | [[https://github.com/fosskers/opengl-linalg][opengl-linalg]]     | Author   | C          | OpenGL-friendly Linear Algebra              |
 |      | [[https://github.com/fosskers/tetris][Tetris]]            | Author   | C          | A 3D Tetris game using OpenGL               |
 |      | [[https://gitlab.com/fosskers/versions][versions]]          | Author   | Haskell    | Types and parsers for software versions     |
+|------+-------------------+----------+------------+---------------------------------------------|
+| 2014 | [[https://github.com/fosskers/elm-touch][elm-touch]]         | Author   | Elm        | Extended Touch library for Elm              |
+|      | [[https://github.com/fosskers/2048][2048 Game]]         | Author   | Elm        | The 2048 game in Elm ([[http://fosskers.github.io/2048/][play]])                 |
 |------+-------------------+----------+------------+---------------------------------------------|
 | 2013 | [[https://github.com/fosskers/hisp][Hisp]]              | Author   | Haskell    | A simple Lisp                               |
 |------+-------------------+----------+------------+---------------------------------------------|
