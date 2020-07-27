@@ -47,6 +47,7 @@ pre.src-sh:before { content: 'Bash'; }
 pre.src-sql:before { content: 'SQL'; }
 pre.src-terraform:before { content: 'Terraform'; }
 pre.src-yaml:before { content: 'YAML'; }
+pre.src-toml:before { content: 'TOML'; }
 pre.src-rust:before { content: 'Rust'; }
 pre.src:before{display:block;position:absolute;background-color:#ccccd0;top:0;right:0;padding:.25em .5em;border-bottom-left-radius:8px;border:0;color:#fff;font-size:80%}
 pre.src:hover:before { display: inline;}

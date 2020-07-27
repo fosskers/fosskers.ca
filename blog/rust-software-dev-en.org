@@ -143,25 +143,21 @@ maintain software*.
 
 ** Programming
 
-#+begin_quote
-How is the moment-by-moment programming experience?
-#+end_quote
+*** How is the moment-by-moment programming experience?
 
 No need to frequently recompile: ~cargo check~ (see also [[https://crates.io/crates/cargo-watch][cargo-watch]]) tells me
 immediately where and why my code is incorrect. Error messages are clear,
 well-formatted, and even provide Error Codes that you can query the compiler for
 to obtain elaborate explanations of the cause of the error.
 
-#+begin_quote
-What language idioms are available?
-#+end_quote
+*** What language idioms are available?
 
 Rust could be called a Post-OOP language (like Golang), in that we're returning
 to fundamentals. We have structs, enums, functions, loops, and variables.
 Mutability is available, but is always explicit and not the default. There are
 no Classes to be seen, but the concept of the Method was accepted and is quite
 useful for code organization. Exceptions were left out, as was the concept of
-~null~. Well wait, how to we model errors then?
+~null~. Well wait, how do we model errors then?
 
 Rust also paid attention to what the Functional Languages have been doing over
 the past decades. So enums can hold inner values (aka "Sums of Products" or
@@ -175,9 +171,7 @@ Iterators.
 Finally, Rust adds the new concepts of Ownership and Borrowing, which allow for
 its GC-less automatic memory management.
 
-#+begin_quote
-Is it verbose? Is it alright to look at?
-#+end_quote
+*** Is it verbose? Is it alright to look at?
 
 You tell me:
 
@@ -198,32 +192,24 @@ You tell me:
 
 ** Testing
 
-#+begin_quote
-How does the language protect me from myself?
-#+end_quote
+*** How does the language protect me from myself?
 
 Strong types and no ~null~. Thanks to Rust's Ownership system, the pitfalls of
 pointer and memory management in C are long gone. Yes there is technically ~IO~
 everywhere, but once again Ownership makes this hard to abuse. Special ~IO~ and
 ~STM~ Monads aren't necessary here.
 
-#+begin_quote
-How do I test internal functions that I don't want to expose to my public API?
-#+end_quote
+*** How do I test internal functions that aren't exposed to my public API?
 
 Tests go in the file of the functions they're testing. You can also add tests to
 your docstrings inside a markdown ~```~ block, and ~cargo~ will detect and run
 these. This way, your code samples can never drift out of date.
 
-#+begin_quote
-What if I only want to rerun a single troublesome test?
-#+end_quote
+*** What if I only want to rerun a single troublesome test?
 
 It's very easy to filter tests or mark them as "ignored".
 
-#+begin_quote
-What is the CI situation?
-#+end_quote
+*** What is the CI situation?
 
 Github's default Rust Action will have your project built and tested within a
 few minutes, even without a cache of dependencies. There's even an Action to
@@ -231,32 +217,101 @@ few minutes, even without a cache of dependencies. There's even an Action to
 
 ** Releasing
 
-- Rust has full Windows support, and all buildtool commands are the same.
-- Semver is enforced.
-- The concept of "dev dependencies".
-- Feature flags of dependencies are much easier to manage.
-- Docs:
-  - /Very/ pretty docs with ~cargo doc~.
-  - Docstrings are markdown, not a custom format.
-  - ~cargo doc~ is much faster than Haddock.
-  - It's haddock and hoogle at the same time.
-  - The docs for every ~trait~ show which types implement them :)
-  - ~cargo doc~ works on your lib even if neither it nor the binary compile!!!
-  - Docs include special notes for functions that are only available on the
-    nightly branch, as well as the Github issues that they're linked to.
-  - Boo: Linking to symbols is not automatic.
+*** Where and how are Rust projects published?
 
-| Program     | Haskell (stripped) | Rust (stripped) | Go (stripped) |
-|-------------+--------------------+-----------------+---------------|
-| Hello World | 2.7mb (695kb)      | 1.1mb (219kb)   | 2.0mb (1.4mb) |
+Rust projects are called "crates" and are uploaded to [[https://crates.io/][crates.io]]. Publishing one
+is as easy as running ~cargo publish~. Uploading a new version is the same
+command. Buggy versions can also be "yanked" off the registry to avoid
+accidental usage.
+
+*** How is software versioned?
+
+[[https://semver.org/][Semantic Versioning]] is enforced, and all Rust tooling assumes it. You can even
+publish prerelease versions which will appears on a Crate's page if you look,
+but they won't become the default for anyone doing casual dependency updates.
+
+*** How do I document a project?
+
+Rust docstrings are markdown and [[https://docs.rs/kanji/1.0.1/kanji/][render quite nicely]]. As mentioned above, code
+samples in a docstring found within a ~```~ block will be ran as a test, and
+there is no extra configuration necessary to enable this.
+
+*** How do I explore a dependency?
+
+All published libraries have docs [[https://docs.rs/nom/5.1.2/nom/][automatically generated for them]]. You can also
+open your project's documentation (with all dependencies too!) locally with
+~cargo doc --open~. From there, you can search for any type or function name.
+
+*** Can a single old dependency hold the whole ecosystem back?
+
+No, actually. If two of your dependencies require different versions of the same
+transitive dependency, both will be brought into your binary. In practice this isn't
+a real problem because:
+
+- Binaries optimize to a fairly small size anyway.
+- There are enough keeners in the community to detect these mismatches and
+  update them. [[https://github.com/kbknapp/cargo-outdated][Tooling is also available]] for detection.
+
+*** How do I produce an optimized release binary?
+
+~cargo build --release~. This will recompile all dependencies and activate
+optimizations. Add the following to your ~Cargo.toml~ to reduce binary size and
+further improve performance:
+
+#+begin_src toml
+  [profile.release]
+  lto = true
+#+end_src
+
+You can also run ~strip~ on the final binary to further reduce binary size. Here
+are the final binary sizes of the simplest possible "Hello, World!" compiled in
+Haskell, Rust, and Go:
+
+| Haskell (stripped) | Rust (stripped) | Go (stripped) |
+|--------------------+-----------------+---------------|
+| 2.7mb (695kb)      | 1.1mb (219kb)   | 2.0mb (1.4mb) |
+
+And since Rust has no runtime like Go or Haskell, there are no mysterious flags
+to pass to your executable to have it perform sanely.
+
+*** How do I develop and release Rust on Windows?
+
+Rust has full Windows support, and all buildtool commands are the same.
 
 ** Maintenance
 
-- Dead code analysis is stronger than Haskell's and is a first-class feature in
-  the compiler.
-- Because of good namespacing, all symbols and function names can be given
-  clear, logical names without the need for mangling to insure uniqueness.
-- [[https://doc.rust-lang.org/stable/book/appendix-07-nightly-rust.html][Very frequent release cycle]], and it's easy to switch to beta/nightly stream.
+*** How much of a threat is bitrot? Will the ecosystem leave me behind?
+
+Thanks to Semver, code that compiled once should always compile, since
+compatible versions of dependencies would always be fetched.
+
+*** How does code stay readable?
+
+Because of good namespacing, all symbols and function names can be given
+clear, logical names without the need for mangling to insure uniqueness.
+
+~rustfmt~ output is optimized for clean diffs! This helps the review process.
+
+*** How do I get rid of code I don't need?
+
+Dead code analysis is stronger than Haskell's and is a first-class feature in
+the compiler.
+
+*** How do I get access to experimental compiler versions?
+
+Rust has a [[https://doc.rust-lang.org/stable/book/appendix-07-nightly-rust.html][very frequent release cycle]], and it's easy to switch back and forth
+between the ~stable~ and ~nightly~ streams. You can even set this per-project so
+that ~cargo~ knows what to do automatically as you transition between projects.
+
+* Conclusion
+
+I try not to "fanboy" when it comes to languages. As someone who creates
+software, I have a set of needs. If those needs are met, I like the language. If
+I discover that another language meets them better, I move on.
+
+Rust is a serious tool for Software Development, and not because of its language
+features, its performance, or how it looks. It's the entire package, and I
+haven't yet found anything missing.
 
 * Appendix
 
