@@ -1,0 +1,271 @@
+#+TITLE: Rust and Software Development Languages
+#+DATE: 2020-07-26
+#+AUTHOR: Colin
+
+The past two months have been a pure joy of writing Rust full-time. This follows
+after two years of writing Haskell full-time, and this post describes the
+immediate feelings and discoveries I had upon switching.
+
+If you have been curious about trying Rust, I highly recommend it. Just think:
+
+- C-speeds.
+- No exceptions.
+- No ~null~.
+- Automatic memory management *without a garbage collector*.
+- A practical, balanced amount of FP semantics.
+
+As both a professional developer and a FOSS contributor, I consider Rust to be
+the highest quality Software Development Language I've ever used. Does that mean
+I think the /language itself/ is necessarily "the best"? Am I just a fanboy? It
+isn't so black-and-white, as we'll see, and I think the distinction is an
+important one.
+
+* Expanding the Concept of "Programming Language"
+
+What is a Software Development Language and how is that different from a
+"Programming Language"?
+
+When talking about a language, we could say that it's fast or slow, concise or
+verbose, mangled or pretty, beginner-friendly or plagued by a steep learning
+curve. We could comment about how Language A does ~for~ loops /this way/,
+Language B does them /that way/, and Language C doesn't have them at all. But
+from the perspective of real-world Software Development, these point are nearly
+irrelevant.
+
+Let's define a few terms to see why.
+
+** Definition: Programming
+
+#+begin_quote
+Programming is the manipulation of Ideas, followed by the encoding of that
+manipulation into a physical form (usually code) to be executed on a Computer.
+#+end_quote
+
+For some broad definition of /Idea/ and /Computer/. With this, the following are
+all programming:
+
+TODO Get links to real projects!
+
+- Writing a two-line Bash script to rename some files.
+- Writing a Python function to generate a plot for a Data Science class.
+- Editing some CSS to alter your website's layout.
+- Typing an SQL query into a database prompt.
+- Solving a [[https://projecteuler.net/][coding challenge]].
+- Refactoring a module to use newer idioms, reducing code by half.
+- Writing a patch in C for the Linux Kernel to support a USB device.
+- Writing an algorithm prototype with an associated academic paper.
+
+And so would these be:
+
+- Producing punch cards in the 1970s that solve a physics problem.
+- Writing pseudocode of a sorting algorithm on a final exam.
+- Linking visual logic blocks together to cause a fun game effect.
+- Establishing "forms" with associated validation rules on a Salesforce-based
+  data management system.
+- The main mechanic of the game [[http://www.zachtronics.com/spacechem/][SpaceChem]].
+- That loom thing from a long time ago.
+
+In this sense, the act of programming itself is available to everyone.
+
+** Definition: Software Development
+
+On the other hand, we have /Software Development/:
+
+#+begin_quote
+Software Development is the act of Programming followed by Testing, Releasing,
+and Maintenance.
+#+end_quote
+
+With this, the following are Software Development activities:
+
+- Accepting a bug ticket at work, finding the problem, and submitting a PR for the solution.
+- Creating and uploading a personal website.
+- Developing and launching a [[https://apps.apple.com/us/app/bubble-level-for-iphone/id465613917][phone app to help level]] a framed picture.
+- Producing a AAA sports game for a major gaming console.
+- Evaluating and merging patches to the Linux Kernel.
+- Patching and deploying the assembly code a 50 year old satellite that has left the solar system.
+
+All languages can be measured on a scale of how sharp a tool they are for the
+entire Four Pillared process of Software Development, not just programming.
+Particularly sharp languages have solid answers to these real concerns:
+
+- Programming:
+  - Do my ideas flow into the editor, or do the language idioms get in my way?
+  - Is my day-to-day experience a productive dialogue with the compiler?
+  - How many characters must I type to express my intent?
+  - Is the language [[https://www.destroyallsoftware.com/talks/wat][filled with GOTCHAs]]?
+  - How short are compilation / typecheck times?
+  - How beautiful is the syntax I look at every day?
+- Testing:
+  - How efficiently can I discover if my code is incorrect?
+  - Does the language itself provide correctness guarantees that avoid the need for test writing?
+  - Am I protected from future changes breaking old code?
+  - Can I generate test cases or is everything hand-written?
+  - Are benchmarking and profiling first-class activities?
+  - How long is CI turnaround?
+- Releasing:
+  - Is documentation "first class"? Are generated docs well-organized and easy to navigate?
+  - Is it obvious how to release a library, and where to discover other ones?
+  - Are dependencies a source of strength or liability?
+  - Is it straight-forward to produce an optimized release binary?
+  - Are strange runtime flags necessary for sane, this-should-be-the-default program behaviour?
+- Maintenance:
+  - Will code I write today be compilable in a year?
+  - How likely am I to understand my own code a year from now? What about others?
+  - Can I refactor with confidence?
+  - Should I expect frequent runtime crashes?
+  - If I don't update my dependencies and compiler often, how soon with the ecosystem "leave me behind"?
+
+Notice that raw executable performance and ease of learning didn't make the
+list. Now, /of course/ there are domains where performance is critical. And /of
+course/ a language should always provide resources for learning. It's my view in
+general, however, that placing these factors above all others is a confusion of
+priorities. How much time would you invest learning a new language ecosystem, in
+order to become 100% more efficient at the entire software development process?
+Especially at maintenance. Part of the ease of learning is familiarity, and one
+way to make your language easy to learn is to make it maximally similar to
+languages that people already know. Yet if every new thing we encounter is
+already familiar, are we really growing?
+
+With all this in mind, what sense is there really in debating the syntax of a
+~for~ loop? Or in writing the 1000th /FooLang vs BarLang/ article? Or ranking
+the Top 100 Languages?
+
+Give me a language that lets me create, share my creations, and keep my
+creations alive. Both Haskell and Rust do a pretty good job of that, and we can
+now move on to view Rust through the lens of a Software Development Language.
+
+* Rust for Software Development
+
+Rust is a fantastic language for Software Development. Not because it has or
+doesn't have Feature X, but because *it enables me to efficiently write and
+maintain software*.
+
+** Programming
+
+#+begin_quote
+How is the moment-by-moment programming experience?
+#+end_quote
+
+No need to frequently recompile: ~cargo check~ (see also [[https://crates.io/crates/cargo-watch][cargo-watch]]) tells me
+immediately where and why my code is incorrect. Error messages are clear,
+well-formatted, and even provide Error Codes that you can query the compiler for
+to obtain elaborate explanations of the cause of the error.
+
+#+begin_quote
+What language idioms are available?
+#+end_quote
+
+Rust could be called a Post-OOP language (like Golang), in that we're returning
+to fundamentals. We have structs, enums, functions, loops, and variables.
+Mutability is available, but is always explicit and not the default. There are
+no Classes to be seen, but the concept of the Method was accepted and is quite
+useful for code organization. Exceptions were left out, as was the concept of
+~null~. Well wait, how to we model errors then?
+
+Rust also paid attention to what the Functional Languages have been doing over
+the past decades. So enums can hold inner values (aka "Sums of Products" or
+"ADTs"), we have Pattern Matching, and we have Traits (which can be
+auto-derived!). Errors are handled explicitly with the ~Option~ and ~Result~
+types. Further, we can do a kind of "error threading" with the ~?~ operator,
+which I believe is a wonderful distillation of the Lesson of Monads. Rust is
+primarily strict, but accepts the Lesson of Laziness in the form of chainable
+Iterators.
+
+Finally, Rust adds the new concepts of Ownership and Borrowing, which allow for
+its GC-less automatic memory management.
+
+#+begin_quote
+Is it verbose? Is it alright to look at?
+#+end_quote
+
+You tell me:
+
+#+begin_src rust
+  /// Try to extract a position from the `Mess` as a nice integer, as if it
+  /// were a [`SemVer`](struct.SemVer.html).
+  pub fn nth(&self, x: usize) -> Option<u32> {
+      let i = self.chunk.get(x)?;
+      let (i, n) = parsers::unsigned(i).ok()?;
+      match i {
+          "" => Some(n),
+          _ => None,
+      }
+  }
+#+end_src
+
+~rustfmt~ makes all code layout standard, so say goodbye to style arguments.
+
+** Testing
+
+#+begin_quote
+How does the language protect me from myself?
+#+end_quote
+
+Strong types and no ~null~. Thanks to Rust's Ownership system, the pitfalls of
+pointer and memory management in C are long gone. Yes there is technically ~IO~
+everywhere, but once again Ownership makes this hard to abuse. Special ~IO~ and
+~STM~ Monads aren't necessary here.
+
+#+begin_quote
+How do I test internal functions that I don't want to expose to my public API?
+#+end_quote
+
+Tests go in the file of the functions they're testing. You can also add tests to
+your docstrings inside a markdown ~```~ block, and ~cargo~ will detect and run
+these. This way, your code samples can never drift out of date.
+
+#+begin_quote
+What if I only want to rerun a single troublesome test?
+#+end_quote
+
+It's very easy to filter tests or mark them as "ignored".
+
+#+begin_quote
+What is the CI situation?
+#+end_quote
+
+Github's default Rust Action will have your project built and tested within a
+few minutes, even without a cache of dependencies. There's even an Action to
+[[https://github.com/peaceiris/actions-mdbook][automatically publish Rust Books]].
+
+** Releasing
+
+- Rust has full Windows support, and all buildtool commands are the same.
+- Semver is enforced.
+- The concept of "dev dependencies".
+- Feature flags of dependencies are much easier to manage.
+- Docs:
+  - /Very/ pretty docs with ~cargo doc~.
+  - Docstrings are markdown, not a custom format.
+  - ~cargo doc~ is much faster than Haddock.
+  - It's haddock and hoogle at the same time.
+  - The docs for every ~trait~ show which types implement them :)
+  - ~cargo doc~ works on your lib even if neither it nor the binary compile!!!
+  - Docs include special notes for functions that are only available on the
+    nightly branch, as well as the Github issues that they're linked to.
+  - Boo: Linking to symbols is not automatic.
+
+| Program     | Haskell (stripped) | Rust (stripped) | Go (stripped) |
+|-------------+--------------------+-----------------+---------------|
+| Hello World | 2.7mb (695kb)      | 1.1mb (219kb)   | 2.0mb (1.4mb) |
+
+** Maintenance
+
+- Dead code analysis is stronger than Haskell's and is a first-class feature in
+  the compiler.
+- Because of good namespacing, all symbols and function names can be given
+  clear, logical names without the need for mangling to insure uniqueness.
+- [[https://doc.rust-lang.org/stable/book/appendix-07-nightly-rust.html][Very frequent release cycle]], and it's easy to switch to beta/nightly stream.
+
+* Appendix
+
+** Extra Notes for Haskellers
+
+- NumericUnderscores by default.
+- Unfortunately there's no ~GeneralizedNewtypeDeriving~.
+- Being able to pass ownership solves the problem that Haskell's Linear Types
+  were aiming at.
+- Impossible to write orphan instances.
+- Generics are monomorphized, meaning there's no runtime penalty for using them!
+- Rust knows how to pretty-print things be default.
