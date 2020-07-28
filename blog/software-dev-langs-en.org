@@ -1,0 +1,183 @@
+#+TITLE: Software Development Languages
+#+DATE: 2020-07-29
+#+AUTHOR: Colin
+#+CATEGORY: programming
+
+Over one's education and career, a software developer learns many languages and
+their ecosystems.
+
+I recently learned both [[https://golang.org/][Golang]] and [[https://www.rust-lang.org/][Rust]], and have spent the past three months
+writing them nearly full-time. Learning these modern languages and reflecting on
+ones I've used in the past has alerted me to the difference between a /Software
+Development Language/ and the usual term we use, /Programming Language/. This
+post is the first of a series that describes this difference and analyses a few
+languages through this lens.
+
+* Expanding the Concept of Programming Language
+
+What is a Software Development Language and how is that different from a
+"Programming Language"?
+
+When talking about a language, we could say that it's fast or slow, concise or
+verbose, mangled or pretty, beginner-friendly or plagued by a steep learning
+curve. We could comment about how Language A does ~for~ loops /this way/,
+Language B does them /that way/, and Language C doesn't have them at all. But
+from the perspective of real-world Software Development, these points are nearly
+irrelevant.
+
+Let's define a few terms to see why.
+
+** Definition: Programming
+
+#+begin_quote
+Programming is the manipulation of Ideas, followed by the encoding of that
+manipulation into a physical form (usually code) to be executed by a Computer.
+#+end_quote
+
+For some broad definition of /Idea/ and /Computer/. With this, the following are
+all programming:
+
+- Writing a two-line Bash script to rename some files.
+- Writing a Python function to generate a plot for a Data Science class.
+- Editing some CSS to alter your website's layout.
+- Typing an SQL query into a database prompt.
+- Solving a [[https://projecteuler.net/][coding challenge]].
+- Refactoring a module to use newer idioms, reducing code by half.
+- Writing a patch in C for the Linux Kernel to support a USB device.
+- Writing an algorithm prototype with an associated academic paper.
+
+And so would these be:
+
+- Writing pseudocode of a sorting algorithm on a final exam.
+- Linking [[https://scratch.mit.edu/][visual logic blocks]] together to cause a fun game effect.
+- Establishing "forms" with associated validation rules on a [[https://www.salesforce.com/][Salesforce]]-based
+  data management system.
+- The main mechanic of the game [[http://www.zachtronics.com/spacechem/][SpaceChem]].
+- Controlling the [[https://en.wikipedia.org/wiki/Jacquard_machine][operation of a loom]] via punchcards.
+- Taking a walk or a shower to solve coding problems in your mind.
+
+In this sense, the act of programming itself is available to everyone.
+
+** Definition: Software Development
+
+On the other hand, we have /Software Development/:
+
+#+begin_quote
+Software Development is the creation of software to be used over time. It is
+Programming followed by Testing, Releasing, and Maintenance.
+#+end_quote
+
+With this, the following are Software Development activities:
+
+- Accepting a bug ticket at work, finding the problem, and submitting a PR for the solution.
+- Creating and uploading a personal website.
+- Developing and launching a [[https://apps.apple.com/us/app/bubble-level-for-iphone/id465613917][phone app to help level]] a framed picture.
+- Producing a game for a major gaming console.
+- Evaluating and merging patches to the Linux Kernel.
+- Updating and deploying the assembly code a 50 year old satellite that has left the solar system.
+
+All languages can be measured on a scale of how sharp a tool they are for the
+entire Four Pillared process of Software Development, not just programming.
+Particularly sharp languages have solid answers to these real concerns:
+
+- Programming:
+  - Do my ideas flow into the editor, or do the language idioms get in my way?
+  - Is my day-to-day experience a productive dialogue with the compiler?
+  - How many characters must I type to express my intent?
+  - Is the language [[https://www.destroyallsoftware.com/talks/wat][filled with GOTCHAs]]?
+  - How short are compilation / typecheck times?
+  - How beautiful is the syntax I look at every day?
+- Testing:
+  - How efficiently can I discover if my code is incorrect?
+  - Am I protected from future changes breaking old code?
+  - Does the language itself provide correctness guarantees that avoid the need for test writing?
+  - Can I automatically generate test cases?
+  - Are benchmarking and profiling first-class activities?
+  - How easy does the language make it to write code that performs poorly?
+  - How long is CI turnaround?
+- Releasing:
+  - Is documentation "first class"? Are generated docs well-organized and easy to navigate?
+  - Is it obvious how to release a library, and where to discover other ones?
+  - Are dependencies a source of strength or liability?
+  - Is it straight-forward to produce an optimized release binary?
+  - Are strange runtime flags necessary for sane program behaviour?
+- Maintenance:
+  - Will code I write today be compilable in a year? In 10 years?
+  - How likely am I to understand my own code a year from now? What about others?
+  - Can I refactor with confidence?
+  - Should I expect frequent runtime crashes?
+  - If I don't update my dependencies and compiler often, how soon will the ecosystem "leave me behind"?
+  - Can the language interact with legacy code?
+
+Naturally this list could be longer, but working software developers would
+likely agree with much of it. To contrast, how many of these points are relevant
+to students, researchers, and working scientists? This brings us to our main point:
+
+#+begin_quote
+Some languages are better suited for Software Development than others.
+#+end_quote
+
+Should you write a multi-million line Operating System in Python?
+You could, but you shouldn't. Python has other strengths.
+
+The same is true for working in research and for learning how to program in the
+first place. Should you write complex, high-performance physics simulations in
+Java? You could, but you shouldn't. Java has other strengths. Should you teach
+someone C++ as their first exposure to programming? You could (and many have
+been), but you shouldn't. C++ has other strengths.
+
+They say that a good craftsman never blames his tools. This is true, but it's
+also important to recognize when you're trying to build a skyscraper with a
+hammer, or a bikeshed with a crane. Sometimes the tools are inappropriate for
+the task at hand. For Software Development, we should choose a sharp Software
+Development Language from our toolbox.
+
+* Language Learning
+
+What good is a tool if it's impossible to learn? Said otherwise, how easy should
+it be to learn a new programming language?
+
+What do we mean by "easy", exactly? Free of pain, fear, and confusion? If so, we
+would make our language as familiar as possible to other ones, and avoid
+anything identifiable as "new", "fancy", or "hard". Certainly there are
+languages that take this approach. If a new language is innovative and thus
+naturally unfamiliar, good learning resources and a connected community can help
+fill the gaps for newcomers.
+
+Some languages demand more of the learner than others. This is a good thing -
+challenge invokes growth. But it must be the /right/ amount of challenge: too
+much and you'll find your community filled with only those who were willing to
+survive the gauntlet. Maybe that's what you want, but for Software Development
+Languages, it probably isn't. If you give them no challenge at all, you will
+find your Power Users move on to greener pastures.
+
+In spreading itself, a language should aim for an optimal *Pain-to-Empowerment
+Ratio*. If there is no pain at all, you likely haven't given your learner much
+of a tool. If they instead go through hell and emerge still without the ability
+to write software, you've also misbalanced something.
+
+As a company, choosing a Software Development Language with an optimized Ratio
+means that you'll have a wide pool of capable developers available to you. More
+capable developers means the ecosystem will continue to improve and propagate,
+and *the code you commission will take longer to become legacy code*.
+
+As an individual developer, choosing a language with an optimized Ratio means
+efficient use of time as an investment into your future. You're likely to grow
+the most, and be best equipped to handle new opportunities, even if they don't
+involve that language itself. Your software will be maintainable, and moreover,
+you'll /want/ to maintain it.
+
+So accept the challenge. You will be rewarded.
+
+* Conclusion
+
+All Software Development Languages are Programming Languages, but the reverse is
+not true.
+
+With all this in mind, what sense is there really in debating the syntax of a
+~for~ loop? Or in writing the 1000th /FooLang vs BarLang/ article? Or ranking
+the Top 100 Languages?
+
+Give me a language that lets me create, share my creations, and keep my
+creations alive. Next week, we'll apply the above philosophy to Rust, and
+see how it measures as a Software Development Language.
