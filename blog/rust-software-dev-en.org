@@ -1,10 +1,11 @@
-#+TITLE: Rust and Software Development Languages
-#+DATE: 2020-07-26
+#+TITLE: Software Development Languages: Rust
+#+DATE: 2020-07-29
 #+AUTHOR: Colin
 
-The past two months have been a pure joy of writing Rust full-time. This follows
-after two years of writing Haskell full-time, and this post describes the
-immediate feelings and discoveries I had upon switching.
+Last week we blah blah blah defined SDL.
+
+With [[https://crates.io/users/fosskers][a few Rust projects]] now under my belt, I can say that Rust is a very
+strong Software Development Language.
 
 If you have been curious about trying Rust, I highly recommend it. Just think:
 
@@ -13,127 +14,6 @@ If you have been curious about trying Rust, I highly recommend it. Just think:
 - No ~null~.
 - Automatic memory management *without a garbage collector*.
 - A practical, balanced amount of FP semantics.
-
-As both a professional developer and a FOSS contributor, I consider Rust to be
-the highest quality Software Development Language I've ever used. Does that mean
-I think the /language itself/ is necessarily "the best"? Am I just a fanboy? It
-isn't so black-and-white, as we'll see, and I think the distinction is an
-important one.
-
-* Expanding the Concept of "Programming Language"
-
-What is a Software Development Language and how is that different from a
-"Programming Language"?
-
-When talking about a language, we could say that it's fast or slow, concise or
-verbose, mangled or pretty, beginner-friendly or plagued by a steep learning
-curve. We could comment about how Language A does ~for~ loops /this way/,
-Language B does them /that way/, and Language C doesn't have them at all. But
-from the perspective of real-world Software Development, these point are nearly
-irrelevant.
-
-Let's define a few terms to see why.
-
-** Definition: Programming
-
-#+begin_quote
-Programming is the manipulation of Ideas, followed by the encoding of that
-manipulation into a physical form (usually code) to be executed on a Computer.
-#+end_quote
-
-For some broad definition of /Idea/ and /Computer/. With this, the following are
-all programming:
-
-TODO Get links to real projects!
-
-- Writing a two-line Bash script to rename some files.
-- Writing a Python function to generate a plot for a Data Science class.
-- Editing some CSS to alter your website's layout.
-- Typing an SQL query into a database prompt.
-- Solving a [[https://projecteuler.net/][coding challenge]].
-- Refactoring a module to use newer idioms, reducing code by half.
-- Writing a patch in C for the Linux Kernel to support a USB device.
-- Writing an algorithm prototype with an associated academic paper.
-
-And so would these be:
-
-- Producing punch cards in the 1970s that solve a physics problem.
-- Writing pseudocode of a sorting algorithm on a final exam.
-- Linking visual logic blocks together to cause a fun game effect.
-- Establishing "forms" with associated validation rules on a Salesforce-based
-  data management system.
-- The main mechanic of the game [[http://www.zachtronics.com/spacechem/][SpaceChem]].
-- That loom thing from a long time ago.
-
-In this sense, the act of programming itself is available to everyone.
-
-** Definition: Software Development
-
-On the other hand, we have /Software Development/:
-
-#+begin_quote
-Software Development is the act of Programming followed by Testing, Releasing,
-and Maintenance.
-#+end_quote
-
-With this, the following are Software Development activities:
-
-- Accepting a bug ticket at work, finding the problem, and submitting a PR for the solution.
-- Creating and uploading a personal website.
-- Developing and launching a [[https://apps.apple.com/us/app/bubble-level-for-iphone/id465613917][phone app to help level]] a framed picture.
-- Producing a AAA sports game for a major gaming console.
-- Evaluating and merging patches to the Linux Kernel.
-- Patching and deploying the assembly code a 50 year old satellite that has left the solar system.
-
-All languages can be measured on a scale of how sharp a tool they are for the
-entire Four Pillared process of Software Development, not just programming.
-Particularly sharp languages have solid answers to these real concerns:
-
-- Programming:
-  - Do my ideas flow into the editor, or do the language idioms get in my way?
-  - Is my day-to-day experience a productive dialogue with the compiler?
-  - How many characters must I type to express my intent?
-  - Is the language [[https://www.destroyallsoftware.com/talks/wat][filled with GOTCHAs]]?
-  - How short are compilation / typecheck times?
-  - How beautiful is the syntax I look at every day?
-- Testing:
-  - How efficiently can I discover if my code is incorrect?
-  - Does the language itself provide correctness guarantees that avoid the need for test writing?
-  - Am I protected from future changes breaking old code?
-  - Can I generate test cases or is everything hand-written?
-  - Are benchmarking and profiling first-class activities?
-  - How long is CI turnaround?
-- Releasing:
-  - Is documentation "first class"? Are generated docs well-organized and easy to navigate?
-  - Is it obvious how to release a library, and where to discover other ones?
-  - Are dependencies a source of strength or liability?
-  - Is it straight-forward to produce an optimized release binary?
-  - Are strange runtime flags necessary for sane, this-should-be-the-default program behaviour?
-- Maintenance:
-  - Will code I write today be compilable in a year?
-  - How likely am I to understand my own code a year from now? What about others?
-  - Can I refactor with confidence?
-  - Should I expect frequent runtime crashes?
-  - If I don't update my dependencies and compiler often, how soon with the ecosystem "leave me behind"?
-
-Notice that raw executable performance and ease of learning didn't make the
-list. Now, /of course/ there are domains where performance is critical. And /of
-course/ a language should always provide resources for learning. It's my view in
-general, however, that placing these factors above all others is a confusion of
-priorities. How much time would you invest learning a new language ecosystem, in
-order to become 100% more efficient at the entire software development process?
-Especially at maintenance. Part of the ease of learning is familiarity, and one
-way to make your language easy to learn is to make it maximally similar to
-languages that people already know. Yet if every new thing we encounter is
-already familiar, are we really growing?
-
-With all this in mind, what sense is there really in debating the syntax of a
-~for~ loop? Or in writing the 1000th /FooLang vs BarLang/ article? Or ranking
-the Top 100 Languages?
-
-Give me a language that lets me create, share my creations, and keep my
-creations alive. Both Haskell and Rust do a pretty good job of that, and we can
-now move on to view Rust through the lens of a Software Development Language.
 
 * Rust for Software Development
 
