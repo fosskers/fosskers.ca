@@ -74,7 +74,7 @@ With this, the following are Software Development activities:
 - Developing and launching a [[https://apps.apple.com/us/app/bubble-level-for-iphone/id465613917][phone app to help level]] a framed picture.
 - Producing a game for a major gaming console.
 - Evaluating and merging patches to the Linux Kernel.
-- Updating and deploying the assembly code a 50 year old satellite that has left the solar system.
+- Updating and deploying the assembly code of a 50 year old satellite that has left the solar system.
 - Speaking to other developers at a conference.
 
 All languages can be measured on a scale of how sharp a tool they are for the
