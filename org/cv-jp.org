@@ -204,6 +204,9 @@ Scala開発者。
 | 2012 | [[https://github.com/aurapm/aura/][Aura]]              | 作者       | Haskell    | Arch Linuxのパッケージ管理ツール                   |
 |      | [[https://github.com/fosskers/kanji][kanji]]             | 作者       | Haskell    | 日本漢字の分析                                     |
 |------+-------------------+------------+------------+----------------------------------------------------|
+| 2011 | [[https://github.com/fosskers/sudoku][Sudoku]]            | 作者       | Python     | 数独を解くツール                                   |
+|      | [[https://github.com/fosskers/tgrep][tgrep]]             | 作者       | Python     | Redditのログファイルを検索するツール               |
+|------+-------------------+------------+------------+----------------------------------------------------|
 
 * 資格・免許
 

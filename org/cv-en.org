@@ -199,6 +199,9 @@ A four-year degree, majoring in Asian History and Languages.
 | 2012 | [[https://github.com/aurapm/aura/][Aura]]              | Author   | Haskell    | Package Manager for Arch Linux              |
 |      | [[https://github.com/fosskers/kanji][kanji]]             | Author   | Haskell    | Analyse Japanese Kanji                      |
 |------+-------------------+----------+------------+---------------------------------------------|
+| 2011 | [[https://github.com/fosskers/sudoku][Sudoku]]            | Author   | Python     | A sudoku solver                             |
+|      | [[https://github.com/fosskers/tgrep][tgrep]]             | Author   | Python     | A search tool for Reddit's log files        |
+|------+-------------------+----------+------------+---------------------------------------------|
 
 * Certification
 
