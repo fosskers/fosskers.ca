@@ -191,7 +191,8 @@ Scala開発者。
 |      | [[https://github.com/fosskers/pipes-random][pipes-random]]      | 作者       | Haskell    | ランダムの数字などをストリーム                     |
 |      | [[https://github.com/fosskers/vectortiles/][vectortiles]]       | 作者       | Haskell    | Mapboxが定義するGIS Vector Tilesの処理             |
 |------+-------------------+------------+------------+----------------------------------------------------|
-| 2015 | [[http://hackage.haskell.org/package/microlens-aeson][microlens-aeson]]   | 作者       | Haskell    | LensとAesonの統合                                  |
+| 2015 | [[https://github.com/fosskers/myshroom-api][MyShroom]]          | 中心開発者 | Scala      | キノコを画像から認識する人工知能システム           |
+|      | [[http://hackage.haskell.org/package/microlens-aeson][microlens-aeson]]   | 作者       | Haskell    | LensとAesonの統合                                  |
 |      | [[https://github.com/fosskers/opengl-linalg][opengl-linalg]]     | 作者       | C          | OpenGLで線形代数                                   |
 |      | [[https://github.com/fosskers/tetris][Tetris]]            | 作者       | C          | OpenGLを通して３次元テトリス                       |
 |      | [[https://gitlab.com/fosskers/versions][versions]]          | 作者       | Haskell    | バージョン数字のパーサ                             |

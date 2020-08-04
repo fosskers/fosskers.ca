@@ -186,7 +186,8 @@ A four-year degree, majoring in Asian History and Languages.
 |      | [[https://github.com/fosskers/pipes-random][pipes-random]]      | Author   | Haskell    | Producers for handling randomness           |
 |      | [[https://github.com/fosskers/vectortiles/][vectortiles]]       | Author   | Haskell    | GIS Vector Tiles, as defined by Mapbox      |
 |------+-------------------+----------+------------+---------------------------------------------|
-| 2015 | [[http://hackage.haskell.org/package/microlens-aeson][microlens-aeson]]   | Author   | Haskell    | Law-abiding lenses for Aeson                |
+| 2015 | [[https://github.com/fosskers/myshroom-api][MyShroom]]          | Core Dev | Scala      | AI-based image recognition of mushrooms     |
+|      | [[http://hackage.haskell.org/package/microlens-aeson][microlens-aeson]]   | Author   | Haskell    | Law-abiding lenses for Aeson                |
 |      | [[https://github.com/fosskers/opengl-linalg][opengl-linalg]]     | Author   | C          | OpenGL-friendly Linear Algebra              |
 |      | [[https://github.com/fosskers/tetris][Tetris]]            | Author   | C          | A 3D Tetris game using OpenGL               |
 |      | [[https://gitlab.com/fosskers/versions][versions]]          | Author   | Haskell    | Types and parsers for software versions     |
