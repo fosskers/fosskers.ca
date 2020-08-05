@@ -56,7 +56,7 @@
 **** 開発
 
 - Chainwebや [[https://pactlang.org/][Pact]] プロジェクトでバックエンドHaskell開発
-- Chainwebの採掘難度アルゴリズムを考案し実現
+- Chainwebの採掘難度アルゴリズムを考案し実装
 - Chainwebの採掘クライアント [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]] を実装
 - ncursesを用いて [[https://github.com/kadena-community/bag-of-holding][ウォレットアプリ]] を実装
 
@@ -79,7 +79,7 @@
 
 **** 開発
 
-- 地理情報システム（GIS)アルゴリズムを研究、考案、実現
+- 地理情報システム（GIS)アルゴリズムを研究、考案、実装
 - Apache Sparkを使用し、結合テストを実行
 - [[https://docs.mapbox.com/vector-tiles/reference/][MapboxのVectorTile]]のコーデックを [[http://hackage.haskell.org/package/vectortiles][Haskell]] と [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]] で実装
 
