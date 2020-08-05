@@ -101,7 +101,7 @@ Scala開発者。
 
 **** 開発
 
-- Playに基づいたバックエンドを維持
+- Playに基づいたバックエンドを保守
 - Twitter Bootstrapのウェブアプリを実装
 - Apache Sparkを通して推薦システムを開発
 
