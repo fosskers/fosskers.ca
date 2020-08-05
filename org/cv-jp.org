@@ -57,8 +57,8 @@
 
 - Chainwebや [[https://pactlang.org/][Pact]] プロジェクトでバックエンドHaskell開発
 - Chainwebの採掘難度アルゴリズムを考案し実現
-- Chainwebの採掘クライアント [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]] を作成
-- ncursesを用いて [[https://github.com/kadena-community/bag-of-holding][ウォレットアプリ]] を作成
+- Chainwebの採掘クライアント [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]] を実装
+- ncursesを用いて [[https://github.com/kadena-community/bag-of-holding][ウォレットアプリ]] を実装
 
 **** システム管理
 
@@ -81,7 +81,7 @@
 
 - 地理情報システム（GIS)アルゴリズムを研究、考案、実現
 - Apache Sparkを使用し、結合テストを実行
-- [[https://docs.mapbox.com/vector-tiles/reference/][MapboxのVectorTile]]のコーデックを [[http://hackage.haskell.org/package/vectortiles][Haskell]] と [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]] で作成
+- [[https://docs.mapbox.com/vector-tiles/reference/][MapboxのVectorTile]]のコーデックを [[http://hackage.haskell.org/package/vectortiles][Haskell]] と [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]] で実装
 
 **** システム管理
 
@@ -102,7 +102,7 @@ Scala開発者。
 **** 開発
 
 - Playに基づいたバックエンドを維持
-- Twitter Bootstrapのウェブアプリを作成
+- Twitter Bootstrapのウェブアプリを実装
 - Apache Sparkを通して推薦システムを開発
 
 **** システム管理
@@ -135,7 +135,7 @@ Scala開発者。
 - Computing Scienceを専門
 - ２０１４年・２０１５年：CSSS（Computing Science学部生徒会）の副会長
 - ２０１５年・２０１６年：CSSSの会長
-- [[https://sfucsss.org/][CSSSの公式サイト]]の作成を担当
+- [[https://sfucsss.org/][CSSSの公式サイト]]の実装を担当
 - コーラス部の会長を二年間務めた
 - 二年間連続で優等生名簿に挙げられた
 
