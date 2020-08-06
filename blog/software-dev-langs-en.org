@@ -1,6 +1,7 @@
 #+TITLE: Software Development Languages
 #+DATE: 2020-07-29
 #+AUTHOR: Colin
+#+UPDATED: 2020-08-05
 #+CATEGORY: programming
 
 Over one's education and career, a software developer learns many languages and
@@ -147,3 +148,5 @@ Or ranking the Top 100 Languages?
 For me, I'll take a language that lets me create, share my creations, and keep
 my creations alive. Next week, we'll apply the above philosophies to Rust, and
 see how it measures as a Software Development Language.
+
+- [[/en/blog/rust-software-dev][Part 2: Rust]]

@@ -1,0 +1,289 @@
+#+TITLE: Software Development Languages: Rust
+#+DATE: 2020-08-05
+#+AUTHOR: Colin
+#+CATEGORY: programming
+
+In [[/en/blog/software-dev-langs][the first part]] of this series we gave formal definitions for /Programming
+Language/ and /Software Development Language/, followed by a list of typical
+expectations that working software devs have of their tools. In this post, we'll
+explore to what degree the [[https://www.rust-lang.org/][Rust Language]] meets those expectations.
+
+With [[https://crates.io/users/fosskers][a few Rust projects]] now under my belt, I can say that Rust is a very
+strong Software Development Language.
+
+If you have been curious about trying Rust, I highly recommend it. Just think:
+
+- C-speeds.
+- No exceptions.
+- No ~null~.
+- Automatic memory management *without a garbage collector*.
+- A practical, balanced amount of FP semantics.
+- Modern project / dependency management.
+
+* Rust for Software Development
+
+Rust is a fantastic language for Software Development. Not because it has or
+doesn't have Feature X, but because *it enables me to efficiently write and
+maintain software*. Here are some specific needs that Rust meets in each of the
+Five Pillars of Software Development:
+
+** Programming
+
+*** How is the moment-by-moment programming experience?
+
+No need to frequently recompile: ~cargo check~ (see also [[https://crates.io/crates/cargo-watch][cargo-watch]]) tells me
+immediately where and why my code is incorrect /without fully compiling/. Error
+messages are clear, well-formatted, and even provide Error Codes that you can
+query the compiler for to obtain elaborate explanations of the cause of the
+error.
+
+*** What language idioms are available?
+
+Rust could be called a Post-OOP language (like Golang), in that we're returning
+to fundamentals. We have structs, enums, functions, loops, and variables.
+Mutability is available, but is always explicit and not the default. There are
+no Classes to be seen, but the concept of the Method was accepted and is quite
+useful for code organization. Exceptions were left out, as was the concept of
+~null~. Well wait, how do we model errors then?
+
+Rust also paid attention to what the Functional Languages have been doing over
+the past decades. So enums can hold inner values (aka "Sums of Products" or
+"ADTs"), we have Pattern Matching, and we have Traits (which can be
+auto-derived!). Errors are handled explicitly with the ~Option~ and ~Result~
+types. Further, we can do a kind of "error threading" with the ~?~ operator,
+which I believe is a wonderful distillation of the Lesson of Monads. Rust is
+primarily strict, but accepts the Lesson of Laziness in the form of chainable
+Iterator operations.
+
+Finally, Rust adds the new concepts of Ownership and Borrowing, which allow for
+its GC-less automatic memory management.
+
+*** Is it verbose? Is it alright to look at?
+
+I find Rust more verbose than Haskell, but less than Golang. As for its
+aesthetic, you tell me:
+
+#+begin_src rust
+  /// Try to extract a position from the `Mess` as a nice integer, as if it
+  /// were a [`SemVer`](struct.SemVer.html).
+  pub fn nth(&self, x: usize) -> Option<u32> {
+      let i = self.chunk.get(x)?;
+      let (i, n) = parsers::unsigned(i).ok()?;
+      match i {
+          "" => Some(n),
+          _ => None,
+      }
+  }
+#+end_src
+
+~rustfmt~ makes all code layout standard, so say goodbye to style arguments.
+
+** Testing
+
+*** How does the language protect me from myself?
+
+Strong types and no ~null~. Thanks to Rust's Ownership system, the pitfalls of
+pointer and memory management in C are long gone. Yes there is technically ~IO~
+everywhere, but once again Ownership makes this hard to abuse. Special ~IO~ and
+~STM~ Monads aren't necessary here.
+
+*** How are tests written, especially for unexported functions?
+
+Unit tests go in the file of the functions they're testing (even your
+~main.rs~!):
+
+#+begin_src rust
+  fn double(n: u32) -> u32 {
+      n * 2
+  }
+
+  #[test]
+  fn is_it_double() {
+      assert_eq!(4, double(2));
+  }
+#+end_src
+
+You can also add tests to your docstrings inside a markdown ~```~ block, and
+~cargo~ will detect and run these. This way, your code samples can never drift
+out of date.
+
+#+begin_src rust
+  /// ```
+  /// assert_eq!(6, double(3));
+  /// ```
+  fn double(n: u32) -> u32 {
+      n * 2
+  }
+#+end_src
+
+*** Is it easy to write slow code?
+
+A quick note on the wording of this section title: when it comes to the
+multi-staged-multi-person development of long-lived software, raw executable
+performance is often not a priority for the business. This is due to a number of
+factors:
+
+- Much online software is IO-bound, not CPU bound.
+- Developer time (compile cycles, CI cycles) is often more valuable than CPU time.
+- Refactors to improve performance have a cost.
+
+Of course there are fields where executable performance is critical. And at a
+point, sufficiently bad default performance can noticeably sour a user's
+experience. Hence the implication of the title: is it easy to write slow Rust?
+Some languages punish you for writing them idiomatically, but luckily Rust is
+not one of them.
+
+A major path to performance in any language is the avoidance of allocation. In
+Rust, mutability is readily available and hard to screw up:
+
+#+begin_src rust
+  fn mutability() {
+      let mut hm = HashMap::new();
+
+      hm.insert(1, 'a');
+      hm.insert(2, 'b');
+      hm.insert(3, 'c');
+
+      // The map is borrowed immutably by the next function, so can still be
+      // manipulated here. No memory is copied.
+      use_the_map(&hm);
+
+      // We still own the map, so we're free to continue mutating it.
+      hm.insert(4, 'd');
+
+      // Ownership has passed to the next function, the map can no longer be
+      // referenced here. It is deallocated automatically from `move_the_map`'s
+      // end when it returns.
+      move_the_map(hm);
+
+      // Won't compile.
+      // hm.insert(5, 'e');
+  }
+#+end_src
+
+We can also see how memory-conscious Rust is: heap memory is basically never
+copied without the programmer specifically marking so. Further, by default, Rust
+puts as much onto the stack as it can. Primitive types are unboxed, and we have
+fast, compact Array types. Chaining iterator operations is idiomatic and
+compiles to highly optimized code.
+
+The lesson: If you write idiomatic Rust and use good data structures, you will
+get good off-the-shelf performance.
+
+*** What is the CI situation?
+
+Github's default Rust Action will have your project built and tested within a
+few minutes, even without a cache of dependencies. There's even an Action to
+[[https://github.com/peaceiris/actions-mdbook][automatically publish Rust Books]].
+
+** Collaborating
+
+** Releasing
+
+*** Where and how are Rust projects published?
+
+Rust projects are called "crates" and are uploaded to [[https://crates.io/][crates.io]]. Publishing one
+is as easy as running ~cargo publish~. Uploading a new version is the same
+command. Buggy versions can also be "yanked" off the registry to avoid
+accidental usage.
+
+*** How is software versioned?
+
+[[https://semver.org/][Semantic Versioning]] is enforced, and all Rust tooling assumes it. You can even
+publish prerelease versions which will appears on a Crate's page if you look,
+but they won't become the default for anyone doing casual dependency updates.
+
+*** How do I document a project?
+
+Rust docstrings are markdown and [[https://docs.rs/kanji/1.0.1/kanji/][render quite nicely]]. As mentioned above, code
+samples in a docstring found within a ~```~ block will be ran as a test, and
+there is no extra configuration necessary to enable this.
+
+*** How do I explore a dependency?
+
+All published libraries have docs [[https://docs.rs/nom/5.1.2/nom/][automatically generated for them]]. You can also
+open your project's documentation (with all dependencies too!) locally with
+~cargo doc --open~. From there, you can search for any type or function name.
+
+*** Can a single old dependency hold the whole ecosystem back?
+
+No, actually. If two of your dependencies require different versions of the same
+transitive dependency, both will be brought into your binary. In practice this isn't
+a real problem because:
+
+- Binaries optimize to a fairly small size anyway.
+- There are enough keeners in the community to detect these mismatches and
+  update them. [[https://github.com/kbknapp/cargo-outdated][Tooling is also available]] for detection.
+
+*** How do I produce an optimized release binary?
+
+~cargo build --release~. This will recompile all dependencies and activate
+optimizations. Add the following to your ~Cargo.toml~ to reduce binary size and
+further improve performance:
+
+#+begin_src toml
+  [profile.release]
+  lto = true
+#+end_src
+
+You can also run ~strip~ on the final binary to further reduce binary size. Here
+are the final binary sizes of the simplest possible "Hello, World!" compiled in
+Haskell, Rust, and Go:
+
+| Haskell (stripped) | Rust (stripped) | Go (stripped) |
+|--------------------+-----------------+---------------|
+| 2.7mb (695kb)      | 1.1mb (219kb)   | 2.0mb (1.4mb) |
+
+And since Rust has no runtime like Go or Haskell, there are no mysterious flags
+to pass to your executable to have it perform sanely.
+
+*** How do I develop and release Rust on Windows?
+
+Rust has full Windows support, and all buildtool commands are the same.
+
+** Maintenance
+
+*** How much of a threat is bitrot? Will the ecosystem leave me behind?
+
+Thanks to Semver, code that compiled once should always compile, since
+compatible versions of dependencies would always be fetched.
+
+*** How does code stay readable?
+
+Because of good namespacing, all symbols and function names can be given
+clear, logical names without the need for mangling to insure uniqueness.
+
+~rustfmt~ output is optimized for clean diffs! This helps the review process.
+
+*** How do I get rid of code I don't need?
+
+Dead code analysis is stronger than Haskell's and is a first-class feature in
+the compiler.
+
+*** How do I get access to experimental compiler versions?
+
+Rust has a [[https://doc.rust-lang.org/stable/book/appendix-07-nightly-rust.html][very frequent release cycle]], and it's easy to switch back and forth
+between the ~stable~ and ~nightly~ streams. You can even set this per-project so
+that ~cargo~ knows what to do automatically as you transition between projects.
+
+* Conclusion
+
+I try not to "fanboy" when it comes to languages. As someone who creates
+software, I have a set of needs. If those needs are met, I like the language. If
+I discover that another language meets them better, I move on.
+
+Rust is a serious tool for Software Development, and not because of its language
+features, its performance, or how it looks. It's the entire package, and I
+haven't yet found anything missing.
+
+* Appendix
+
+** Extra Notes for Haskellers
+
+- NumericUnderscores by default.
+- Unfortunately there's no ~GeneralizedNewtypeDeriving~.
+- Being able to pass ownership solves the problem that Haskell's Linear Types
+  were aiming at.
+- Impossible to write orphan instances.
+- Generics are monomorphized, meaning there's no runtime penalty for using them!
+- Rust knows how to pretty-print things be default.
