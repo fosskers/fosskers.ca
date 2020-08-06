@@ -129,9 +129,9 @@ factors:
 
 Of course there are fields where executable performance is critical. And at a
 point, sufficiently bad default performance can noticeably sour a user's
-experience. Hence the implication of the title: is it easy to write slow Rust?
-Some languages punish you for writing them idiomatically, but luckily Rust is
-not one of them.
+experience. Hence the implication of the title: is it easy to accidentally write
+code that will perform poorly? Some languages punish you for writing them
+idiomatically, but luckily Rust is not one of them.
 
 A major path to performance in any language is the avoidance of allocation. In
 Rust, mutability is readily available and hard to screw up:
@@ -162,13 +162,13 @@ Rust, mutability is readily available and hard to screw up:
 #+end_src
 
 We can also see how memory-conscious Rust is: heap memory is basically never
-copied without the programmer specifically marking so. Further, by default, Rust
-puts as much onto the stack as it can. Primitive types are unboxed, and we have
-fast, compact Array types. Chaining iterator operations is idiomatic and
+copied without the programmer's consent. Further, by default, Rust puts as much
+onto the stack as it can. Primitive types are unboxed, and we have fast, compact
+Array types. Chaining iterator operations in a functional style is idiomatic and
 compiles to highly optimized code.
 
-The lesson: If you write idiomatic Rust and use good data structures, you will
-get good off-the-shelf performance.
+The lesson: If you write idiomatic Rust and use standard data structures, you
+will get good off-the-shelf performance.
 
 *** What is the CI situation?
 
@@ -177,6 +177,111 @@ few minutes, even without a cache of dependencies. There's even an Action to
 [[https://github.com/peaceiris/actions-mdbook][automatically publish Rust Books]].
 
 ** Collaborating
+
+*** Where do I find answers to my questions?
+
+Foremost, the [[https://users.rust-lang.org/][Rust User Forums]]. Each question I have asked there was answered in
+about 15 minutes and by more than one person.
+
+*** How do I track changes to Rust itself?
+
+Release announcements and other interesting articles are frequently posted on
+the [[https://blog.rust-lang.org/][official Rust blog]]. A weekly summary of community developments is also
+available with the [[https://this-week-in-rust.org/][This Week in Rust]] newsletter.
+
+*** Are there competing paradigms to write Rust?
+
+Haskell and Scala devs will know what I mean by this question. Rust is mostly
+Rust when it comes to idioms or "sublanguages" introduced by libraries. The
+exception is the recent addition of the ~async~ keyword and its associated
+functionality.
+
+Concurrency was always possible with Rust, and still is without ~async~. Want to
+fork two system threads and share data between them? Go ahead:
+
+#+begin_src rust
+  use std::sync::{Arc, Mutex};
+  use std::thread;
+
+  fn concurrency() -> thread::Result<u32> {
+      // `Arc` is "Atomic Reference Counter". It's an addition to `Mutex` that
+      // ensures we're sharing memory responsibly.
+      let mutex0 = Arc::new(Mutex::new(0));
+      let mutex1 = mutex0.clone();
+      let mutex2 = mutex0.clone();
+
+      // Spawn system threads and mutate shared memory.
+      let handle0 = thread::spawn(move || {
+          *mutex0.lock().unwrap() += 1;
+      });
+
+      let handle1 = thread::spawn(move || {
+          *mutex1.lock().unwrap() += 1;
+      });
+
+      // Wait for the threads to complete.
+      handle0.join()?;
+      handle1.join()?;
+
+      // 2
+      let result = *mutex2.lock().unwrap();
+
+      Ok(result)
+  }
+#+end_src
+
+Want to iterate over a collection in parallel? Go ahead:
+
+#+begin_src rust
+  use rayon::prelude::*;
+
+  fn parallel_iteration() {
+      let nums = vec![1, 2, 3, 4, 5]; // Could be any size.
+
+      // Maps, filters, and prints entirely in parallel with as many CPU cores as
+      // you have.
+      nums.par_iter()
+          .map(|n| n + 1)
+          .filter(|n| n % 2 == 0)
+          .for_each(|n| println!("{}", n));
+  }
+#+end_src
+
+Whereas ~async~ functions look like this:
+
+#+begin_src rust
+  async fn this_is_special() {
+      println!("Hello, ");
+  }
+
+  async fn use_it() {
+      this_is_special().await;
+
+      println!("World!");
+  }
+#+end_src
+
+Where ~await~ /pauses/ the current function (Task, actually), yields control
+back to the concurrent runtime for other Tasks to be ran, and resumes eventually
+once the runtime sees that ~this_is_special~ has completed. ~await~ can't be
+called in a function that isn't itself marked with ~async~, so the asyncness
+spreads, much like ~IO~ in Haskell.
+
+~async~ was added as a way to formalize the creation of highly concurrent
+applications. However, this was all done at the Trait-level: no runtime to
+manage Tasks / Green Threads was provided by Rust itself. [[https://tokio.rs/][Tokio]], the established
+concurrency framework, soon migrated to ~async~ and is now the leading runtime.
+It has a growing ecosystem and seems well-adopted: many networking libraries now
+require it as a transitive dependency. If another significant runtime should
+arise, however, we'd find ourselves with a burden of choice and a drain on total
+ecosystem resources.
+
+Libraries are now either "async-compatible" or not, but for libraries that are
+unconcerned with networking, this is an irrelevant distinction. For many uses of
+Rust, ~async~ can be entirely ignored. This also means that the binary weight of
+the concurrent runtime is entirely left out of such projects.
+
+*** How do I manage dependencies?
 
 ** Releasing
 
