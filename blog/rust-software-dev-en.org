@@ -29,13 +29,49 @@ Five Pillars of Software Development:
 
 ** Programming
 
+*** How are new projects created and compiled?
+
+Rust projects are managed with the [[https://github.com/rust-lang/cargo/][Cargo]] tool.
+
+#+begin_example
+cargo new <project-name>
+#+end_example
+
+This produces a ~Cargo.toml~ project config file, a ~src/main.rs~, and a
+~.gitignore~. It also creates an empty git repo. This new project is compilable
+as-is.
+
+To compile, we typically don't invoke the compiler directly. Instead we use
+~cargo~ here too. Building a project is just:
+
+#+begin_example
+cargo build
+#+end_example
+
+Similarly, ~cargo test~ will run your tests, and ~cargo run~ will run your
+exectuable.
+
 *** How is the moment-by-moment programming experience?
 
-No need to frequently recompile: ~cargo check~ (see also [[https://crates.io/crates/cargo-watch][cargo-watch]]) tells me
-immediately where and why my code is incorrect /without fully compiling/. Error
-messages are clear, well-formatted, and even provide Error Codes that you can
-query the compiler for to obtain elaborate explanations of the cause of the
-error.
+There is actually no need to frequently recompile: ~cargo check~ (see also
+[[https://crates.io/crates/cargo-watch][cargo-watch]]) tells me immediately where and why my code is incorrect /without
+fully compiling/. Error messages are clear, well-formatted, and even provide
+Error Codes that you can query the compiler for to obtain elaborate explanations
+of the cause of the error.
+
+#+begin_example
+error[E0728]: `await` is only allowed inside `async` functions and blocks
+   --> src/main.rs:250:5
+    |
+249 | fn use_it() {
+    |    ------ this is not `async`
+250 |     this_is_special().await;
+    |     ^^^^^^^^^^^^^^^^^^^^^^^ only allowed inside `async` functions and blocks
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0728`.
+#+end_example
 
 *** What language idioms are available?
 
@@ -51,19 +87,53 @@ the past decades. So enums can hold inner values (aka "Sums of Products" or
 "ADTs"), we have Pattern Matching, and we have Traits (which can be
 auto-derived!). Errors are handled explicitly with the ~Option~ and ~Result~
 types. Further, we can do a kind of "error threading" with the ~?~ operator,
-which I believe is a wonderful distillation of the Lesson of Monads. Rust is
-primarily strict, but accepts the Lesson of Laziness in the form of chainable
-Iterator operations.
+which I believe is a wonderful distillation of the Lesson of Monads:
+
+#+begin_src rust
+  fn work() -> anyhow::Result<()> {
+      let config = cargo_config()?;
+      release_build()?;
+      tarball(&config.package)?;
+      let sha256 = sha256sum(&config.package)?;
+      let pkgbuild = pkgbuild(&config.package, &sha256);
+      fs::write("PKGBUILD", pkgbuild)?;
+
+      Ok(())
+  }
+#+end_src
+
+Rust is primarily strict, but accepts the Lesson of Laziness in the form of
+chainable Iterator operations.
 
 Finally, Rust adds the new concepts of Ownership and Borrowing, which allow for
 its GC-less automatic memory management.
 
 *** Is it verbose? Is it alright to look at?
 
-I find Rust more verbose than Haskell, but less than Golang. As for its
-aesthetic, you tell me:
+I find Rust more verbose than Haskell, but less than Golang. Here is what a few
+common constructs look like:
 
 #+begin_src rust
+  // Importing
+  use std::collections::HashMap;
+
+  // A public struct with private fields. `derive` macro lets us auto-derive Trait
+  // implementations.
+  #[derive(Deserialize)]
+  pub struct User {
+      name: String,
+      age: u32,
+      tall: bool,
+  }
+
+  impl User {
+      // Public method that borrows the `self` mutably.
+      pub fn older(&mut self) {
+          self.age += 1
+      }
+  }
+
+  // A publically exposed function with a docstring hyperlinked to other types.
   /// Try to extract a position from the `Mess` as a nice integer, as if it
   /// were a [`SemVer`](struct.SemVer.html).
   pub fn nth(&self, x: usize) -> Option<u32> {
@@ -123,7 +193,7 @@ multi-staged-multi-person development of long-lived software, raw executable
 performance is often not a priority for the business. This is due to a number of
 factors:
 
-- Much online software is IO-bound, not CPU bound.
+- Much software is IO-bound, not CPU bound.
 - Developer time (compile cycles, CI cycles) is often more valuable than CPU time.
 - Refactors to improve performance have a cost.
 
@@ -281,30 +351,35 @@ unconcerned with networking, this is an irrelevant distinction. For many uses of
 Rust, ~async~ can be entirely ignored. This also means that the binary weight of
 the concurrent runtime is entirely left out of such projects.
 
-*** How do I manage dependencies?
+*** How do I depend on other libraries?
+
+Rust projects are called "crates" and are found on [[https://crates.io/][crates.io]]. ~cargo~ manages
+dependencies for us too, downloading them if missing. Depending on another
+library looks like:
+
+#+begin_src toml
+  [dependencies]
+  anyhow = "1.0"
+  chrono = { version = "0.4", features = ["serde"] }
+  counter = "0.5"
+#+end_src
+
+Many libraries have extra features that you can optionally activate. The version
+numbers follow [[https://semver.org/][Semantic Versioning]], and this is strictly enforced.
 
 ** Releasing
 
-*** Where and how are Rust projects published?
+*** How are Rust projects published?
 
-Rust projects are called "crates" and are uploaded to [[https://crates.io/][crates.io]]. Publishing one
-is as easy as running ~cargo publish~. Uploading a new version is the same
-command. Buggy versions can also be "yanked" off the registry to avoid
-accidental usage.
-
-*** How is software versioned?
-
-[[https://semver.org/][Semantic Versioning]] is enforced, and all Rust tooling assumes it. You can even
-publish prerelease versions which will appears on a Crate's page if you look,
-but they won't become the default for anyone doing casual dependency updates.
+Publishing a crate to crates.io is as easy as running ~cargo publish~. Uploading
+a new version is the same command. Buggy versions can also be "yanked" off the
+registry to avoid accidental usage.
 
 *** How do I document a project?
 
 Rust docstrings are markdown and [[https://docs.rs/kanji/1.0.1/kanji/][render quite nicely]]. As mentioned above, code
 samples in a docstring found within a ~```~ block will be ran as a test, and
 there is no extra configuration necessary to enable this.
-
-*** How do I explore a dependency?
 
 All published libraries have docs [[https://docs.rs/nom/5.1.2/nom/][automatically generated for them]]. You can also
 open your project's documentation (with all dependencies too!) locally with
@@ -331,16 +406,20 @@ further improve performance:
   lto = true
 #+end_src
 
-You can also run ~strip~ on the final binary to further reduce binary size. Here
-are the final binary sizes of the simplest possible "Hello, World!" compiled in
-Haskell, Rust, and Go:
+You can also run ~strip~ on the final binary to further reduce its size. Here
+are the stripped binary sizes of a few simple programs:
 
-| Haskell (stripped) | Rust (stripped) | Go (stripped) |
-|--------------------+-----------------+---------------|
-| 2.7mb (695kb)      | 1.1mb (219kb)   | 2.0mb (1.4mb) |
+| Program                  | Go    | Haskell | Rust  |
+|--------------------------+-------+---------+-------|
+| Hello World              | 1.4mb | 695kb   | 207kb |
+| [[https://github.com/fosskers/hello-webserver/tree/master/hello-world][Server]] with ~/~ endpoint | 5.2mb | 2.0mb   | 1.6mb |
+| [[https://github.com/fosskers/hello-webserver/tree/master/simple-json][Simple JSON Server]]       | 5.5mb | 2.5mb   | 1.7mb |
 
 And since Rust has no runtime like Go or Haskell, there are no mysterious flags
 to pass to your executable to have it perform sanely.
+
+For more information on how to reduce Rust binary sizes specifically, [[https://github.com/johnthagen/min-sized-rust][see this
+repo]].
 
 *** How do I develop and release Rust on Windows?
 
@@ -350,20 +429,118 @@ Rust has full Windows support, and all buildtool commands are the same.
 
 *** How much of a threat is bitrot? Will the ecosystem leave me behind?
 
+This is one of the most important aspects of development when considering
+software intended to last decades. As I described [[/en/blog/wide-haskell][in another article]], a
+language's ecosystem can "leave you behind" if you wait too long to upgrade your
+toolchain / dependencies.
+
+*The Compiler*
+
+Rust has [[https://doc.rust-lang.org/stable/book/appendix-07-nightly-rust.html][three release channels]] (nightly, beta, and stable) and has frequent
+releases. They call this their "train schedule". Further, every three years [[https://github.com/rust-lang/rfcs/pull/2966][a
+new "Edition"]] is released which, breaking or not, allows the Rust team to look
+back, summarize the changes, and segregate language idioms. Which edition of
+Rust you're using is specified in your project's ~Cargo.toml~, so this is never
+a surprise:
+
+#+begin_src toml
+  [package]
+  name = "foo"
+  version = "0.1.0"
+  edition = "2018"
+#+end_src
+
+New compiler/toolchain versions are also simple to upgrade to:
+
+#+begin_example
+rustup update stable
+#+end_example
+
+Updating your compiler will require that you recompile whatever projects you're
+currently working on. Since Rust follows SemVer, these releases are almost
+always of the non-breaking variety and therefore harmless. So, updating is easy
+and there's no reason not to.
+
+*Dependencies*
+
 Thanks to Semver, code that compiled once should always compile, since
-compatible versions of dependencies would always be fetched.
+compatible versions of dependencies will always be fetched. Even a "yanked"
+version of a crate can [[https://doc.rust-lang.org/stable/book/ch14-02-publishing-to-crates-io.html?highlight=yank#removing-versions-from-cratesio-with-cargo-yank][still be downloaded]] by projects that were already using
+it. Yanking only prevents /new/ projects from depending on the bad version.
+
+Note also that the compiler has a CI system that runs the test suites of /all/
+crates on crates.io to look for regressions. In theory, a change to the compiler
+that would fundamentally break your library should be seen a long way off.
+
+*System Libraries*
+
+Old executables can break from underneath you if system libraries that they
+dynamically link to change. Rust binaries are mostly statically linked, but our
+friend ~libc~ is always hanging around:
+
+#+begin_example
+  > ldd setwall
+  linux-vdso.so.1 (0x00007ffe253ea000)
+  libc.so.6 => /usr/lib/libc.so.6 (0x00007f77a6eaa000)
+  libpthread.so.0 => /usr/lib/libpthread.so.0 (0x00007f77a6e88000)
+  libdl.so.2 => /usr/lib/libdl.so.2 (0x00007f77a6e82000)
+  libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x00007f77a6e68000)
+  /lib64/ld-linux-x86-64.so.2 => /usr/lib64/ld-linux-x86-64.so.2 (0x00007f77a70fd000)
+#+end_example
+
+Fortunately, Rust projects can be [[https://doc.rust-lang.org/edition-guide/rust-2018/platform-and-target-support/musl-support-for-fully-static-binaries.html][compiled with MUSL]] to be fully statically
+linked:
+
+#+begin_example
+  > cargo build --release --target x86_64-unknown-linux-musl
+  > cd target/x86_64-unknown-linux-musl/release/
+  > ldd setwall
+    not a dynamic executable
+#+end_example
 
 *** How does code stay readable?
 
 Because of good namespacing, all symbols and function names can be given
-clear, logical names without the need for mangling to insure uniqueness.
+clear, logical names without the need for mangling to insure uniqueness:
 
-~rustfmt~ output is optimized for clean diffs! This helps the review process.
+#+begin_src rust
+  struct Foo {
+      a: u32,
+      b: bool,
+      c: String,
+  }
+
+  struct Bar {
+      a: bool,
+      b: String,
+      c: u32,
+  }
+
+  enum Colour {
+      Red,
+      Green,
+      Blue,
+  }
+
+  enum Light {
+      Red,
+      Green,
+      Blue,
+  }
+#+end_src
+
+These same-namings cause no compilation problems.
+
+Futher, ~rustfmt~ output is optimized for clean diffs. This sometimes makes code
+longer (top-to-bottom) than it other could be, but small diffs improve the
+experience of code reviewers.
 
 *** How do I get rid of code I don't need?
 
 Dead code analysis is stronger than Haskell's and is a first-class feature in
 the compiler.
+
+TODO Talk about removing dependencies!
 
 *** How do I get access to experimental compiler versions?
 
