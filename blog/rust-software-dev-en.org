@@ -1,6 +1,7 @@
 #+TITLE: Software Development Languages: Rust
 #+DATE: 2020-08-11
 #+AUTHOR: Colin
+#+UPDATED: 2020-08-12
 #+CATEGORY: programming
 
 In [[/en/blog/software-dev-langs][the first part]] of this series we gave formal definitions for /Programming
@@ -544,9 +545,10 @@ rustup update stable
 #+end_example
 
 Updating your compiler will require that you recompile whatever projects you're
-currently working on. Since Rust follows SemVer, these releases are almost
-always of the non-breaking variety and therefore harmless. So, updating is easy
-and there's no reason not to.
+currently working on. Rust follows SemVer, and for the time being there are no
+plans to bump the major version, so updates are harmless. Unless, of course,
+your code depends on unsoundness, in which case it should never have compiled,
+and you can't complain about it being fixed.
 
 **** Dependencies
 
@@ -628,12 +630,15 @@ experience of code reviewers.
 Rust has the strongest dead-code analysis that I've seen, and it is a
 first-class feature of the compiler.
 
-To discover and remove unused / bloated dependencies, we have a few tools:
+There are also many tools to analyse one's dependencies for deprecations, bloat, etc.:
 
 - cargo tree: Display a text-based tree of all transitive dependencies.
 - [[https://github.com/m-cat/cargo-deps][cargo deps]]: Generate an image-based graph of all transitive dependencies.
+- [[https://lib.rs/crates/cargo-outdated][cargo outdated]]: Display which of your transitive dependencies have updates available.
 - [[https://github.com/RazrFalcon/cargo-bloat][cargo bloat]]: Discover which dependencies have the heaviest code footprint in your binary.
+- [[https://github.com/dtolnay/cargo-llvm-lines/][cargo-llvm-lines]]: Discover which functions, when compiled to LLVM, have the biggest footprint.
 - [[https://github.com/EmbarkStudios/cargo-deny][cargo deny]]: Discover multiple versions of transitive dependencies lurking in your dep graph.
+- [[https://lib.rs/crates/cargo-geiger][cargo geiger]]: Detect usage of ~unsafe~ in transitive dependencies.
 
 * Conclusion
 
@@ -649,16 +654,21 @@ In the next addition to this series, we'll analyse Haskell in the same way.
 
 * Appendix
 
+** Acknowledgements
+
+Thanks to /ssokolow/ for mentioning a number of dependency tools.
+
 ** Extra Notes for Haskellers
 
-- Athough Rust has a ~LinkedList~ type, its use is not common. ~Vec~ is preferred.
+- Athough Rust has a ~LinkedList~ type, [[https://rust-unofficial.github.io/too-many-lists/#an-obligatory-public-service-announcement][its use is not common]]. ~Vec~ is preferred.
 - Missing pattern match branches are an error, not a warning.
 - Rust knows how to pretty-print types by default.
 - It is not possible to write orphan instances.
 - Generics are monomorphized, meaning there's no runtime penalty for using them!
 - Iterator streaming is first-class, so no need for a library-level ~streaming~, ~pipes~, ~conduit~, etc.
 - ~NumericUnderscores~ syntax is enabled by default.
-- Unfortunately there's no ~GeneralizedNewtypeDeriving~.
+- Unfortunately there's no first-class ~GeneralizedNewtypeDeriving~, although
+  the [[https://lib.rs/crates/derive_more][derive_more]] crate offers a solution at the library level.
 - Being able to pass ownership solves the problem that Haskell's Linear Types
   are aiming at.
 - Rust has [[https://rustwasm.github.io/docs/book/][official WASM support]], and the generated binaries are very small.
