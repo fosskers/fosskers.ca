@@ -133,7 +133,7 @@ orgs :: NonEmpty FilePath -> IO ([Text], [Blog])
 orgs = fmap partitionEithers . traverse g . NEL.toList
   where
     style :: O.OrgStyle
-    style = O.OrgStyle False (Just $ O.TOC "Contents" 2) True skylighting sectioning (Just ' ')
+    style = O.OrgStyle False (Just $ O.TOC "Contents" 3) True skylighting sectioning (Just ' ')
 
     g :: FilePath -> IO (Either Text Blog)
     g f = do
