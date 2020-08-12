@@ -1,5 +1,5 @@
 #+TITLE: Software Development Languages: Rust
-#+DATE: 2020-08-05
+#+DATE: 2020-08-11
 #+AUTHOR: Colin
 #+CATEGORY: programming
 
@@ -19,6 +19,9 @@ If you have been curious about trying Rust, I highly recommend it. Just think:
 - Automatic memory management *without a garbage collector*.
 - A practical, balanced amount of FP semantics.
 - Modern project / dependency management.
+
+The sections below don't need to be read in order. Feel free to jump around to
+what interests you via the Table of Contents above.
 
 * Rust for Software Development
 
@@ -73,6 +76,9 @@ error: aborting due to previous error
 For more information about this error, try `rustc --explain E0728`.
 #+end_example
 
+Otherwise, Rust provides [[https://github.com/rust-lang/rls][an official LSP]], so you can expect all the convenience
+that that offers.
+
 *** What language idioms are available?
 
 Rust could be called a Post-OOP language (like Golang), in that we're returning
@@ -90,6 +96,8 @@ types. Further, we can do a kind of "error threading" with the ~?~ operator,
 which I believe is a wonderful distillation of the Lesson of Monads:
 
 #+begin_src rust
+  // If a line with `?` fails, the entire function is short-circuited.
+  // The `?` and `let` together automatically unwrap the inner value.
   fn work() -> anyhow::Result<()> {
       let config = cargo_config()?;
       release_build()?;
@@ -281,6 +289,7 @@ fork two system threads and share data between them? Go ahead:
       let mutex2 = mutex0.clone();
 
       // Spawn system threads and mutate shared memory.
+      // No explicit unlock call is necessary.
       let handle0 = thread::spawn(move || {
           *mutex0.lock().unwrap() += 1;
       });
@@ -342,9 +351,7 @@ applications. However, this was all done at the Trait-level: no runtime to
 manage Tasks / Green Threads was provided by Rust itself. [[https://tokio.rs/][Tokio]], the established
 concurrency framework, soon migrated to ~async~ and is now the leading runtime.
 It has a growing ecosystem and seems well-adopted: many networking libraries now
-require it as a transitive dependency. If another significant runtime should
-arise, however, we'd find ourselves with a burden of choice and a drain on total
-ecosystem resources.
+require it as a transitive dependency.
 
 Libraries are now either "async-compatible" or not, but for libraries that are
 unconcerned with networking, this is an irrelevant distinction. For many uses of
@@ -371,9 +378,9 @@ numbers follow [[https://semver.org/][Semantic Versioning]], and this is strictl
 
 *** How are Rust projects published?
 
-Publishing a crate to crates.io is as easy as running ~cargo publish~. Uploading
-a new version is the same command. Buggy versions can also be "yanked" off the
-registry to avoid accidental usage.
+Publishing a crate to crates.io is as easy as running ~cargo publish~, and the
+result appears as [[https://crates.io/crates/versions][a page like this]]. Uploading a new version is the same command.
+Buggy versions can also be "yanked" off the registry to avoid accidental usage.
 
 *** How do I document a project?
 
@@ -387,13 +394,13 @@ open your project's documentation (with all dependencies too!) locally with
 
 *** Can a single old dependency hold the whole ecosystem back?
 
-No, actually. If two of your dependencies require different versions of the same
+Luckily, no. If two of your dependencies require different versions of the same
 transitive dependency, both will be brought into your binary. In practice this isn't
 a real problem because:
 
 - Binaries optimize to a fairly small size anyway.
 - There are enough keeners in the community to detect these mismatches and
-  update them. [[https://github.com/kbknapp/cargo-outdated][Tooling is also available]] for detection.
+  update them. [[https://github.com/EmbarkStudios/cargo-deny][Tooling is also available]] for detection.
 
 *** How do I produce an optimized release binary?
 
@@ -406,7 +413,7 @@ further improve performance:
   lto = true
 #+end_src
 
-You can also run ~strip~ on the final binary to further reduce its size. Here
+You can also run ~strip~ on the final binary to reduce its size even more. Here
 are the stripped binary sizes of a few simple programs:
 
 | Program                  | Go    | Haskell | Rust  |
@@ -421,11 +428,91 @@ to pass to your executable to have it perform sanely.
 For more information on how to reduce Rust binary sizes specifically, [[https://github.com/johnthagen/min-sized-rust][see this
 repo]].
 
-*** How do I develop and release Rust on Windows?
+*** How do I develop and release Rust on non-Linux systems?
 
-Rust has full Windows support, and all buildtool commands are the same.
+No matter the platform, all buildtool commands are the same. To discover what
+platforms are supported, do:
+
+#+begin_example
+rustup target list
+#+end_example
+
+As of this writing, Rust supports 84 different platforms. Among those we see:
+
+#+begin_example
+x86_64-apple-darwin
+x86_64-pc-windows-gnu
+x86_64-pc-windows-msvc
+#+end_example
+
+So Rust isn't Linux-only by any stretch of the imagination.
 
 ** Maintenance
+
+*** Does Rust code crash a lot?
+
+Rust was specifically designed not to crash for the usual reasons we encounter:
+
+- The machine/runtime ran out of memory.
+- An Exception was thrown from user code and wasn't caught.
+- C (etc.): Illegal memory access or other "use after free" scenarios.
+- Haskell: You hit a partial function's edge case. (e.g. ~head []~)
+
+All of these are to a varying degree due to programmer negligence, and every
+language takes a stance (or a non-stance) on how to address them.
+
+**** Out-of-Memory
+
+Garbage Collectors are convenient but can't save you from leaks or runaway
+processes that allocate more and more memory. Rust memory is freed as soon as it
+is no longer needed, the timing for which is known at compile time, not at
+runtime as with a GC.
+
+Rust has no runtime at all, so there is no worry of your process hitting an
+arbitrary memory cap as with, say, the JVM.
+
+**** Exceptions and Panics
+
+Like Golang, Rust doesn't have Exceptions. Also like Golang it /does/ have
+"panics", which are errors that should, morally, never be recovered from. It is
+a convention of documentation [[https://doc.rust-lang.org/std/sync/struct.Mutex.html#panics][to warn a user]] if a function can panic, but in
+general panics should only occur in truly exceptional situations. Otherwise, all
+errors are modelled with the ~Option~ and ~Result~ types, [[https://doc.rust-lang.org/std/fs/fn.read_to_string.html][even IO errors]] that
+other languages throw Exceptions for.
+
+**** Use-after-Free
+
+There are certain operations which Rust [[https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html][names as being unsafe]]. These are usually
+impossible to perform unless marked by the ~unsafe~ keyword. Sometimes you'll
+have a legitimate reason to do this, but most of the time you won't need to.
+
+Otherwise, the Ownership system is what makes it virtually impossible to misuse
+memory. Even higher-level constructs like file handles, mutexes, and database
+connections can't be reused after they've been relinquished. Code that attempts
+to do so won't even compile.
+
+**** Partial Functions
+
+Sums-of-products with named fields can't be directly referenced as they can in
+Haskell:
+
+#+begin_src rust
+  enum Colour {
+      Red { a: bool },
+      Blue { b: u32 },
+      Green { c: char },
+  }
+
+  fn bad(colour: Colour) -> u32 {
+      colour.b // Won't compile.
+  }
+#+end_src
+
+But types like ~Option~ and ~Result~ do still have an unsafe ~unwrap~ method
+that panics in the Error case. You're generally encouraged to use ~?~, pattern
+match on the type, or call ~unwrap_or~ instead. Likewise, types like ~Vec~ offer
+methods like ~get_unchecked~ for when you're very confident that you can avoid
+the ~Option~ wrapping.
 
 *** How much of a threat is bitrot? Will the ecosystem leave me behind?
 
@@ -434,7 +521,7 @@ software intended to last decades. As I described [[/en/blog/wide-haskell][in an
 language's ecosystem can "leave you behind" if you wait too long to upgrade your
 toolchain / dependencies.
 
-*The Compiler*
+**** The Compiler
 
 Rust has [[https://doc.rust-lang.org/stable/book/appendix-07-nightly-rust.html][three release channels]] (nightly, beta, and stable) and has frequent
 releases. They call this their "train schedule". Further, every three years [[https://github.com/rust-lang/rfcs/pull/2966][a
@@ -461,7 +548,7 @@ currently working on. Since Rust follows SemVer, these releases are almost
 always of the non-breaking variety and therefore harmless. So, updating is easy
 and there's no reason not to.
 
-*Dependencies*
+**** Dependencies
 
 Thanks to Semver, code that compiled once should always compile, since
 compatible versions of dependencies will always be fetched. Even a "yanked"
@@ -472,7 +559,7 @@ Note also that the compiler has a CI system that runs the test suites of /all/
 crates on crates.io to look for regressions. In theory, a change to the compiler
 that would fundamentally break your library should be seen a long way off.
 
-*System Libraries*
+**** System Libraries
 
 Old executables can break from underneath you if system libraries that they
 dynamically link to change. Rust binaries are mostly statically linked, but our
@@ -529,24 +616,24 @@ clear, logical names without the need for mangling to insure uniqueness:
   }
 #+end_src
 
-These same-namings cause no compilation problems.
+These same-namings cause no compilation problems. This is par-for-the-course for
+many languages, but Haskellers would appreciate this.
 
 Futher, ~rustfmt~ output is optimized for clean diffs. This sometimes makes code
-longer (top-to-bottom) than it other could be, but small diffs improve the
+longer (top-to-bottom) than it otherwise could be, but small diffs improve the
 experience of code reviewers.
 
 *** How do I get rid of code I don't need?
 
-Dead code analysis is stronger than Haskell's and is a first-class feature in
-the compiler.
+Rust has the strongest dead-code analysis that I've seen, and it is a
+first-class feature of the compiler.
 
-TODO Talk about removing dependencies!
+To discover and remove unused / bloated dependencies, we have a few tools:
 
-*** How do I get access to experimental compiler versions?
-
-Rust has a [[https://doc.rust-lang.org/stable/book/appendix-07-nightly-rust.html][very frequent release cycle]], and it's easy to switch back and forth
-between the ~stable~ and ~nightly~ streams. You can even set this per-project so
-that ~cargo~ knows what to do automatically as you transition between projects.
+- cargo tree: Display a text-based tree of all transitive dependencies.
+- [[https://github.com/m-cat/cargo-deps][cargo deps]]: Generate an image-based graph of all transitive dependencies.
+- [[https://github.com/RazrFalcon/cargo-bloat][cargo bloat]]: Discover which dependencies have the heaviest code footprint in your binary.
+- [[https://github.com/EmbarkStudios/cargo-deny][cargo deny]]: Discover multiple versions of transitive dependencies lurking in your dep graph.
 
 * Conclusion
 
@@ -555,17 +642,27 @@ software, I have a set of needs. If those needs are met, I like the language. If
 I discover that another language meets them better, I move on.
 
 Rust is a serious tool for Software Development, and not because of its language
-features, its performance, or how it looks. It's the entire package, and I
-haven't yet found anything missing.
+features, its performance, or how it looks. It's the entire package, and I see
+myself enjoying it for some time.
+
+In the next addition to this series, we'll analyse Haskell in the same way.
 
 * Appendix
 
 ** Extra Notes for Haskellers
 
-- NumericUnderscores by default.
+- Athough Rust has a ~LinkedList~ type, its use is not common. ~Vec~ is preferred.
+- Missing pattern match branches are an error, not a warning.
+- Rust knows how to pretty-print types by default.
+- It is not possible to write orphan instances.
+- Generics are monomorphized, meaning there's no runtime penalty for using them!
+- Iterator streaming is first-class, so no need for a library-level ~streaming~, ~pipes~, ~conduit~, etc.
+- ~NumericUnderscores~ syntax is enabled by default.
 - Unfortunately there's no ~GeneralizedNewtypeDeriving~.
 - Being able to pass ownership solves the problem that Haskell's Linear Types
-  were aiming at.
-- Impossible to write orphan instances.
-- Generics are monomorphized, meaning there's no runtime penalty for using them!
-- Rust knows how to pretty-print things be default.
+  are aiming at.
+- Rust has [[https://rustwasm.github.io/docs/book/][official WASM support]], and the generated binaries are very small.
+- There is no equivalent to Stackage, and while dependency bounds /can/ be
+  defined, I've never seen it done. Everyone relies on SemVer, pins to a
+  major version, and updates frequently.
+- Rust has no hole-fit suggestions, which might be the thing I miss the most.
