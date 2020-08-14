@@ -36,10 +36,10 @@ project building, although they differ in some aspects of UI.
 
 By default, Cabal sources dependencies directly from [[http://hackage.haskell.org/][Hackage]], the official
 repository for all published Haskell packages. On the other hand, Stack works
-with fixed package sets defined and drawn from [[https://www.stackage.org/][Stackage]]. The code of these sets
-is sourced from Hackage too of course, and they offer a stability guarantee that
-all packages in the set satisfy each other's version bounds, and they all
-compile and pass tests together.
+with fixed package defined on [[https://www.stackage.org/][Stackage]], the code of which sets is sourced from
+Hackage too of course. These sets offer a stability guarantee that all packages
+in the set satisfy each other's version bounds, and they all compile and pass
+tests together.
 
 Which should you choose? It depends on your requirements:
 
@@ -50,9 +50,13 @@ Which should you choose? It depends on your requirements:
 - *Addendum:* Are you on Arch Linux? Then use Stack installed via the
   [[https://aur.archlinux.org/packages/stack-static][stack-static]] package. Unfortunately the Arch maintainers made an error in
   judgement several years ago which can result in ~cabal~ usage conflicting with
-  system packages in ways that cause undefined breakage.
+  system packages in ways that cause undefined breakage. This is not Cabal's
+  fault per se, but everyone has long since moved to Stack to avoid the
+  headache.
 
-Otherwise, toss a coin! Both tools work fine and have active communities.
+Otherwise, toss a coin! Both tools work fine and have active communities. Usage
+examples for the rest of the guide (few as they are) will use ~stack~, although
+comparable commands exist for ~cabal~.
 
 To create a new project:
 
@@ -79,28 +83,19 @@ optimizations.
 
 *** How is the moment-by-moment programming experience?
 
-There is actually no need to frequently recompile: ~cargo check~ (see also
-[[https://crates.io/crates/cargo-watch][cargo-watch]]) tells me immediately where and why my code is incorrect /without
-fully compiling/. Error messages are clear, well-formatted, and even provide
-Error Codes that you can query the compiler for to obtain elaborate explanations
-of the cause of the error.
+There are two major LSP projects for Haskell that are currently JOINING FORCES.
+Until they officially release, the usage of [[https://github.com/ndmitchell/ghcid][ghcid]] is highly recommended. It
+listens for file changes, and immediately informs you of errors without fully
+compiling:
 
 #+begin_example
-error[E0728]: `await` is only allowed inside `async` functions and blocks
-   --> src/main.rs:250:5
-    |
-249 | fn use_it() {
-    |    ------ this is not `async`
-250 |     this_is_special().await;
-    |     ^^^^^^^^^^^^^^^^^^^^^^^ only allowed inside `async` functions and blocks
-
-error: aborting due to previous error
-
-For more information about this error, try `rustc --explain E0728`.
+/home/colin/code/haskell/fosskers.ca/server/Main.hs:(62,10)-(64,41): warning: [-Wincomplete-patterns]
+    Pattern match(es) are non-exhaustive
+    In a case alternative: Patterns not matched: English
+   |
+62 |     ps = case l of
+   |          ^^^^^^^^^...
 #+end_example
-
-Otherwise, Rust provides [[https://github.com/rust-lang/rls][an official LSP]], so you can expect all the convenience
-that that offers.
 
 *** What language idioms are available?
 
