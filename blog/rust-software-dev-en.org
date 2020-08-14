@@ -349,10 +349,9 @@ spreads, much like ~IO~ in Haskell.
 
 ~async~ was added as a way to formalize the creation of highly concurrent
 applications. However, this was all done at the Trait-level: no runtime to
-manage Tasks / Green Threads was provided by Rust itself. [[https://tokio.rs/][Tokio]], the established
-concurrency framework, soon migrated to ~async~ and is now the leading runtime.
-It has a growing ecosystem and seems well-adopted: many networking libraries now
-require it as a transitive dependency.
+manage Tasks / Green Threads was provided by Rust itself. There are currently
+two main runtimes: [[https://async.rs/][async-std]] and [[https://tokio.rs/][Tokio]]. Both have growing ecosystems and seem
+well-adopted.
 
 Libraries are now either "async-compatible" or not, but for libraries that are
 unconcerned with networking, this is an irrelevant distinction. For many uses of
