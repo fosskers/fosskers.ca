@@ -92,7 +92,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "ブログ" "/jp/blog" $ active Posts
       dropdown "プロジェクト" projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
-      dropdown "ツール" [Just ("アルベド翻訳", "/en/tools/al-bhed")]
+      dropdown "ツール" [Just ("アルベド翻訳", "/jp/tools/al-bhed")]
       dropdown "デモ" [Just ("Game of Life", "/jp/demo/game-of-life")]
       item "履歴書" "/jp/cv" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
