@@ -4,13 +4,47 @@ use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
-use web_sys::{CanvasRenderingContext2d, Event, HtmlButtonElement, HtmlCanvasElement, Window};
+use web_sys::*;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+fn english_text(window: &Window) -> HtmlTextAreaElement {
+    window
+        .document()
+        .unwrap()
+        .get_element_by_id("english-text")
+        .unwrap()
+        .dyn_into()
+        .unwrap()
+}
+
+fn al_bhed_text(window: &Window) -> HtmlTextAreaElement {
+    window
+        .document()
+        .unwrap()
+        .get_element_by_id("al-bhed-text")
+        .unwrap()
+        .dyn_into()
+        .unwrap()
+}
+
 #[wasm_bindgen(start)]
 pub fn main() {
+    // Configure the canvas.
+    let window = web_sys::window().unwrap();
+
+    let english = english_text(&window);
+    let al_bhed = al_bhed_text(&window);
+
+    english.set_inner_html("From Rust code!");
+    al_bhed.set_inner_html(
+        &"From Rust code!"
+            .chars()
+            .filter_map(albhed::to_al_bhed)
+            .collect::<String>(),
+    );
+
     // // Program the `Reset` button.
     // let reset_button = reset_button(&window);
     // let reset_closure = Closure::wrap(Box::new(move |_: Event| {
