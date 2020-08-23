@@ -23,6 +23,7 @@ import qualified Data.Text.IO as T
 import           Fosskers.Common
 import           Fosskers.Site
 import           Fosskers.Site.About (about)
+import           Fosskers.Site.AlBhed (alBhed)
 import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
 import           Fosskers.Site.GameOfLife (gol)
@@ -79,6 +80,7 @@ app ps bs = compress routes
       -- Static pages --
       [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l About $ about ps l)
       [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l CV $ cv ps l)
+      [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l Tool $ alBhed l)
       [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l Demo $ gol l)
       -- All blog posts --
       [ lang, "blog" ] ->

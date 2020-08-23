@@ -13,15 +13,7 @@ import Lucid.Base (makeAttribute)
 
 ---
 
-{- WHAT DO I WANT?
-
-Topbar with links.
-Landing page is blog.
-Don't bother with Tools for now.
-
--}
-
-data Page = CV | About | Posts | Demo | Nowhere deriving (Eq)
+data Page = CV | About | Posts | Demo | Tool | Nowhere deriving (Eq)
 
 nowhere :: Html ()
 nowhere = do
@@ -86,6 +78,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "Blog" "/en/blog" $ active Posts
       dropdown "Projects" projects
       -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
+      dropdown "Tools" [Just ("Al Bhed Translator", "/en/tools/al-bhed")]
       dropdown "Demos" [Just ("Game of Life", "/en/demo/game-of-life")]
       item "CV" "/en/cv" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
@@ -99,6 +92,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "ブログ" "/jp/blog" $ active Posts
       dropdown "プロジェクト" projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
+      dropdown "ツール" [Just ("アルベド翻訳", "/en/tools/al-bhed")]
       dropdown "デモ" [Just ("Game of Life", "/jp/demo/game-of-life")]
       item "履歴書" "/jp/cv" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
