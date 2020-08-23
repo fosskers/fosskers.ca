@@ -10,7 +10,7 @@ env:
 
 jobs:
   build:
-    name: Demos
+    name: Tools and Demos
     runs-on: ubuntu-latest
 
     steps:
@@ -20,4 +20,9 @@ jobs:
       - name: Game of Life
         run: |
           cd demos/game-of-life
+          cargo build
+
+      - name: Al Bhed
+        run: |
+          cd tools/al-bhed
           cargo build
