@@ -36,45 +36,30 @@ pub fn main() {
 
     let english = english_text(&window);
     let al_bhed = al_bhed_text(&window);
+    let en_copy0 = english.clone();
+    let en_copy1 = english.clone();
+    let al_copy0 = al_bhed.clone();
+    let al_copy1 = al_bhed.clone();
 
-    english.set_inner_html("From Rust code!");
-    al_bhed.set_inner_html(
-        &"From Rust code!"
+    let english_closure = Closure::wrap(Box::new(move |_: Event| {
+        let text = en_copy0.value();
+        let tran = text
             .chars()
-            .filter_map(albhed::to_al_bhed)
-            .collect::<String>(),
-    );
+            .map(|c| albhed::to_al_bhed(c).unwrap_or('?'))
+            .collect::<String>();
+        al_copy0.set_value(&tran);
+    }) as Box<dyn FnMut(_)>);
+    english.set_oninput(Some(english_closure.as_ref().unchecked_ref()));
+    english_closure.forget();
 
-    // // Program the `Reset` button.
-    // let reset_button = reset_button(&window);
-    // let reset_closure = Closure::wrap(Box::new(move |_: Event| {
-    //     let mut uni = shared_uni_1.lock().unwrap();
-    //     *uni = Universe::new();
-    // }) as Box<dyn FnMut(_)>);
-    // reset_button
-    //     .add_event_listener_with_callback("click", reset_closure.as_ref().unchecked_ref())
-    //     .unwrap();
-    // reset_closure.forget();
-
-    // // Program the `Pause` button.
-    // let shared_handler_0 = Arc::new(Mutex::new(Some(0)));
-    // let shared_handler_1 = shared_handler_0.clone();
-    // let pause_button = pause_button(&window);
-    // let pause_closure = Closure::wrap(Box::new(move |_: Event| {
-    //     let mut animation_handler = shared_handler_0.lock().unwrap();
-    //     match *animation_handler {
-    //         None => {
-    //             *animation_handler = Some(0);
-    //             play(&window, &context, &shared_uni_2, &shared_handler_0);
-    //         }
-    //         Some(h) => {
-    //             let _ = window.cancel_animation_frame(h);
-    //             *animation_handler = None;
-    //         }
-    //     }
-    // }) as Box<dyn FnMut(_)>);
-    // pause_button
-    //     .add_event_listener_with_callback("click", pause_closure.as_ref().unchecked_ref())
-    //     .unwrap();
-    // pause_closure.forget();
+    let al_bhed_closure = Closure::wrap(Box::new(move |_: Event| {
+        let text = al_copy1.value();
+        let tran = text
+            .chars()
+            .map(|c| albhed::from_al_bhed(c).unwrap_or('?'))
+            .collect::<String>();
+        en_copy1.set_value(&tran);
+    }) as Box<dyn FnMut(_)>);
+    al_bhed.set_oninput(Some(al_bhed_closure.as_ref().unchecked_ref()));
+    al_bhed_closure.forget();
 }
