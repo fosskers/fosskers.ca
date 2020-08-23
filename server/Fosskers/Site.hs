@@ -28,7 +28,6 @@ nowhere = do
   h1_ [class_ "title"] "404"
   div_ [class_ "title"] "Unfortunately, that page doesn't exist."
   div_ [class_ "title"] "残念ながらそのページは存在しません"
-  div_ [class_ "title"] "Bedaŭrinde, tiu retpaĝo ne ekzistas."
 
 site :: Language -> Page -> Html () -> Html ()
 site lang page component = html_ $ do
