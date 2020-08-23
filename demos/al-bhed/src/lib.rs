@@ -1,7 +1,3 @@
-use js_sys::Math;
-use std::cell::RefCell;
-use std::rc::Rc;
-use std::sync::{Arc, Mutex};
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::*;
@@ -31,9 +27,7 @@ fn al_bhed_text(window: &Window) -> HtmlTextAreaElement {
 
 #[wasm_bindgen(start)]
 pub fn main() {
-    // Configure the canvas.
     let window = web_sys::window().unwrap();
-
     let english = english_text(&window);
     let al_bhed = al_bhed_text(&window);
     let en_copy0 = english.clone();
