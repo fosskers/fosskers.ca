@@ -1,6 +1,7 @@
 module Fosskers.Site.AlBhed ( alBhed ) where
 
 import BasePrelude
+import Data.Text (Text)
 import Fosskers.Common (Language(..))
 import Fosskers.Site.Bootstrap
 import Lucid hiding (col_)
@@ -17,5 +18,19 @@ alBhed _ = do
   fluid [style_ "padding-top: 1.0%;padding-bottom: 1.0%"] $ row_ $ do
     div_ [classes_ ["col-md-3", "offset-md-3"]] $ do
       div_ [class_ "title"] $ h3_ "English"
+      form "english-text" "Enter English here"
     div_ [classes_ ["col-md-3"]] $ do
       div_ [class_ "title"] $ h3_ "Al Bhed"
+      form "al-bhed-text" "Enter Al Bhed here"
+  wasm
+  where
+    form :: Text -> Text -> Html ()
+    form label ph = textarea_ [class_ "form-control", id_ label, rows_ "5", placeholder_ ph] ""
+
+wasm :: Html ()
+wasm = termRawWith "script" [type_ "module"]
+  "import init from '/assets/al_bhed.js';\n\
+  \async function run() {\n\
+  \  await init();\n\
+  \}\n\
+  \run();"
