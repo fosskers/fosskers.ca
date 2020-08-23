@@ -115,6 +115,7 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       , Nothing
       , Just ("Haskell Libraries", "http://hackage.haskell.org/user/fosskers")
       , Just ("Rust Crates", "https://crates.io/users/fosskers")
+      , Just ("Go Libraries", "https://pkg.go.dev/search?q=fosskers")
       , Nothing
       , Just ("ScalaZ and Cats", "https://github.com/fosskers/scalaz-and-cats")
       , Just ("Scala Benchmarks", "https://github.com/fosskers/scala-benchmarks") ]
