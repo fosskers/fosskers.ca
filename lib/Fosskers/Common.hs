@@ -58,7 +58,8 @@ data Blog = Blog
   { blogLang :: !Language
   , blogSlug :: !Text
   , blogRaw  :: !O.OrgFile
-  , blogHtml :: !(Html ()) }
+  , blogBody :: !(Html ())
+  , blogTOC  :: !(Html ()) }
 
 data BlogCategory = BlogCategory
   { bcCat   :: !Text
@@ -95,7 +96,7 @@ pathSlug = T.dropEnd 3 . T.pack . takeBaseName
 newtype ByLanguage = ByLanguage (NonEmpty Blog)
 
 instance ToXml Blog where
-  toXml (Blog l slug o@(O.OrgFile m _) _) =
+  toXml (Blog l slug o@(O.OrgFile m _) _ _) =
     element "item" mempty
     $  element "title" mempty (text . TL.fromStrict $ fromMaybe "Untitled" title)
     <> element "link" mempty
