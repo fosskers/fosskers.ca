@@ -29,7 +29,7 @@ choose bs l t = case l of
 
 blog :: Blogs -> Language -> Maybe Blog -> Html ()
 blog bs l content = row_ $ do
-  div_ [classes_ ["col-xs-12", "col-md-3"]] $ sidebar l ps
+  div_ [classes_ ["col-xs-12", "col-md-3"]] $ articleBar l ps
   div_ [classes_ ["col-xs-12", "col-md-6"]] $ case content of
     Nothing -> nf
     Just b  -> do
@@ -41,14 +41,16 @@ blog bs l content = row_ $ do
         let updated = M.lookup "UPDATED" m
         Just $ printf pat author date <> maybe "" (printf upat) updated
       blogHtml b
-  div_ [class_ "col-md-3"] ""
+  div_ [classes_ ["col-xs-12", "col-md-3"]] $ indexBar l
   where
     (ps, nf, pat, upat) = case l of
       English  -> (engByCat bs, "Post not found!", "By %s on %s", ", updated %s")
       Japanese -> (japByCat bs, "見つかりません！", "%s・%s初出版", "・%s更新")
 
-sidebar :: Language -> NonEmpty BlogCategory -> Html ()
-sidebar l = traverse_ g
+articleBar :: Language -> NonEmpty BlogCategory -> Html ()
+articleBar l bcs = do
+  div_ [class_ "title"] $ h3_ "Archive"
+  traverse_ g bcs
   where
     g :: BlogCategory -> Html ()
     g bc = do
@@ -59,3 +61,7 @@ sidebar l = traverse_ g
     f b = div_
       $ a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b]
       $ maybe "Bug: No Title" (h6_ . toHtml) $ M.lookup "TITLE" $ O.orgMeta $ blogRaw b
+
+indexBar :: Language -> Html ()
+indexBar l = do
+  div_ [class_ "title"] $ h3_ "Contents"

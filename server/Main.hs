@@ -135,7 +135,7 @@ orgs :: NonEmpty FilePath -> IO ([Text], [Blog])
 orgs = fmap partitionEithers . traverse g . NEL.toList
   where
     style :: O.OrgStyle
-    style = O.OrgStyle False (Just $ O.TOC "Contents" 3) True skylighting sectioning (Just ' ')
+    style = O.OrgStyle False (O.TOC 3) True skylighting sectioning (Just ' ')
 
     g :: FilePath -> IO (Either Text Blog)
     g f = do
@@ -158,17 +158,26 @@ eread path = do
 
 pages :: IO (Maybe Pages)
 pages = runMaybeT $ Pages
-  <$> f astyle "org/about-en.org"
-  <*> f astyle "org/about-jp.org"
-  <*> f cstyle "org/cv-en.org"
-  <*> f jstyle "org/cv-jp.org"
+  <$> ab astyle "org/about-en.org"
+  <*> ab astyle "org/about-jp.org"
+  <*> re cstyle "org/cv-en.org" "Colin Woodbury"
+  <*> re jstyle "org/cv-jp.org" "ウッドブリ・コリン"
   where
-    astyle = O.OrgStyle False Nothing False skylighting sectioning (Just ' ')
-    cstyle = O.OrgStyle True (Just $ O.TOC "Index" 2) True skylighting sectioning (Just ' ')
-    jstyle = O.OrgStyle True (Just $ O.TOC "目次" 2) True skylighting sectioning (Just ' ')
+    astyle = O.OrgStyle False (O.TOC 2) False skylighting sectioning (Just ' ')
+    cstyle = O.OrgStyle False (O.TOC 2) True skylighting sectioning (Just ' ')
+    jstyle = O.OrgStyle False (O.TOC 2) True skylighting sectioning (Just ' ')
 
-    f :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
-    f s fp = O.body s <$> MaybeT (orgd fp)
+    ab :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
+    ab s fp = O.body s <$> MaybeT (orgd fp)
+
+    re :: O.OrgStyle -> FilePath -> Text -> MaybeT IO (Html ())
+    re s fp t = do
+      o <- MaybeT $ orgd fp
+      pure $ do
+        div_ [classes_ ["col-xs-12", "col-md-3"]] $ O.toc s o
+        div_ [classes_ ["col-xs-12", "col-md-6"]] $ do
+          div_ [class_ "title"] . h1_ $ toHtml t
+          O.body s o
 
 orgd :: FilePath -> IO (Maybe O.OrgFile)
 orgd fp = (hush >=> O.org) <$> eread fp
