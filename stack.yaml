@@ -7,11 +7,6 @@ ghc-options:
 extra-deps:
   # --- Missing from Stackage --- #
   - org-mode-1.1.0
-  # - org-mode-lucid-1.4.0
+  - org-mode-lucid-1.5.0
   - skylighting-lucid-1.0.0
   - xmlbf-0.6.1
-
-  - github: fosskers/org-mode
-    commit: 1fb66d5b1456cd87a9104e1f372a6cca063d937b
-    subdirs:
-      - org-mode-lucid

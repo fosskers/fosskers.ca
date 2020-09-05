@@ -30,7 +30,7 @@ common commons
     , lucid                 ^>=2.9
     , megaparsec            >=7.0 && <9
     , org-mode              ^>=1.1
-    , org-mode-lucid        ^>=1.4
+    , org-mode-lucid        ^>=1.5
     , text
     , time
     , transformers          ^>=0.5
