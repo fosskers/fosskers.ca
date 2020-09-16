@@ -29,7 +29,9 @@ choose bs l t = case l of
 
 blog :: Blogs -> Language -> Maybe Blog -> Html ()
 blog bs l content = row_ $ do
-  div_ [classes_ ["col-xs-12", "col-md-3"]] $ articleBar l ps
+  div_ [style_ "padding-top: 1.0%", classes_ ["col-xs-12", "col-md-3"]] $ case content of
+    Nothing -> ""
+    Just b  -> indexBar l b
   div_ [classes_ ["col-xs-12", "col-md-6"]] $ case content of
     Nothing -> nf
     Just b  -> do
@@ -41,9 +43,7 @@ blog bs l content = row_ $ do
         let updated = M.lookup "UPDATED" m
         Just $ printf pat author date <> maybe "" (printf upat) updated
       div_ [style_ "padding-top: 1.0%"] $ blogBody b
-  div_ [classes_ ["col-xs-12", "col-md-3"]] $ case content of
-    Nothing -> ""
-    Just b  -> indexBar l b
+  div_ [style_ "padding-top: 1.0%", classes_ ["col-xs-12", "col-md-3"]] $ articleBar l ps
   where
     (ps, nf, pat, upat) = case l of
       English  -> (engByCat bs, "Post not found!", "By %s on %s", ", updated %s")
@@ -65,7 +65,7 @@ articleBar l bcs = do
       $ maybe "Bug: No Title" (h6_ . toHtml) $ M.lookup "TITLE" $ O.orgMeta $ blogRaw b
 
     label = case l of
-      English  -> "Archive"
+      English  -> "Blog Archive"
       Japanese -> "ポスト一覧"
 
 indexBar :: Language -> Blog -> Html ()
@@ -74,5 +74,5 @@ indexBar l b = do
   blogTOC b
   where
     label = case l of
-      English  -> "Contents"
+      English  -> "Table of Contents"
       Japanese -> "目次"
