@@ -134,6 +134,8 @@ An accelerated undergraduate Diploma program for university graduates.
 - Served as the president of the SFU Choir for two years.
 - Achieved the Dean's Honour Roll two years in a row.
 
+/Requirements completed 2016 April. Diploma awarded 2020 May./
+
 ** Saga University, Japan - SPACE Program
 
 /2008 September - 2009 August/
@@ -227,7 +229,7 @@ A four-year degree, majoring in Asian History and Languages.
 | Tips on Scala Performance      | 2018 May  | Polyglot Unconference    | Vancouver | English  |
 | [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/229599314/][Extensible Effects]]             | 2016 Apr  | Vancouver Haskell Meetup | Vancouver | English  |
 | [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/170696382/][Applicative Functors]]           | 2014 Apr  | Vancouver Haskell Meetup | Vancouver | English  |
-| Thoughts on Japanese Education | 2012      | Arkas Sasebo             | Sasebo    | Japanese |
+| Thoughts on Japanese Education | 2012 Feb  | Arkas Sasebo             | Sasebo    | Japanese |
 
 * Hobbies
 

@@ -222,17 +222,17 @@ Scala開発者。
 
 * 発表
 
-| テーマ                      | 日付      | 会場                     | 場所         | 言語   |
-|-----------------------------+-----------+--------------------------+--------------+--------|
-| [[https://www.youtube.com/watch?v=CmMzkOspHTU][Haskell in Production]]       | 2019 June | LambdaConf               | ボルダー     | 英語   |
-| コードの美と正当性          | 2019 May  | Polyglot Unconference    | バンクーバー | 英語   |
-| Pactの基礎                  | 2018 Nov  | NODE東京                 | 東京         | 日本語 |
-| Chainweb入門                | 2018 Nov  | Neutrino Meetup          | 東京         | 日本語 |
-| [[https://www.youtube.com/watch?v=-UEOLfyDi74][How not to Write Slow Scala]] | 2018 June | LambdaConf               | ボルダー     | 英語   |
-| Tips on Scala Performance   | 2018 May  | Polyglot Unconference    | バンクーバー | 英語   |
-| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/229599314/][Extensible Effects]]          | 2016 Apr  | Vancouver Haskell Meetup | バンクーバー | 英語   |
-| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/170696382/][Applicative Functors]]        | 2014 Apr  | Vancouver Haskell Meetup | バンクーバー | 英語   |
-| 日本の教育                  | 2012      | アルカス佐世保           | 佐世保       | 日本語 |
+| テーマ                      | 日付         | 会場                     | 場所         | 言語   |
+|-----------------------------+--------------+--------------------------+--------------+--------|
+| [[https://www.youtube.com/watch?v=CmMzkOspHTU][Haskell in Production]]       | 2019年６月   | LambdaConf               | ボルダー     | 英語   |
+| コードの美と正当性          | 2019年５月   | Polyglot Unconference    | バンクーバー | 英語   |
+| Pactの基礎                  | 2018年１１月 | NODE東京                 | 東京         | 日本語 |
+| Chainweb入門                | 2018年１１月 | Neutrino Meetup          | 東京         | 日本語 |
+| [[https://www.youtube.com/watch?v=-UEOLfyDi74][How not to Write Slow Scala]] | 2018年６月   | LambdaConf               | ボルダー     | 英語   |
+| Tips on Scala Performance   | 2018年５月   | Polyglot Unconference    | バンクーバー | 英語   |
+| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/229599314/][Extensible Effects]]          | 2016年４月   | Vancouver Haskell Meetup | バンクーバー | 英語   |
+| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/170696382/][Applicative Functors]]        | 2014年４月   | Vancouver Haskell Meetup | バンクーバー | 英語   |
+| 日本の教育                  | 2012年２月   | アルカス佐世保           | 佐世保       | 日本語 |
 
 * 趣味
 
