@@ -159,7 +159,8 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project           | Role     | Language   | Description                                 |
 |------+-------------------+----------+------------+---------------------------------------------|
-| 2020 | [[https://github.com/fosskers/totp][totp]]              | Author   | Go         | Time-based One-Time Password library        |
+| 2020 | [[https://github.com/fosskers/linya][linya]]             | Author   | Rust       | Simple Concurrent Progress Bars             |
+|      | [[https://github.com/fosskers/totp][totp]]              | Author   | Go         | Time-based One-Time Password library        |
 |      | [[https://github.com/fosskers/totp-lite][totp-lite]]         | Author   | Rust       | Time-based One-Time Password library        |
 |      | [[https://github.com/fosskers/credit][credit]]            | Author   | Rust       | Tool for measuring Github contributions     |
 |      | [[https://crates.io/crates/cargo-aur][cargo-aur]]         | Author   | Rust       | Tool to release Rust projects on Arch Linux |
