@@ -130,7 +130,7 @@ An accelerated undergraduate Diploma program for university graduates.
 
 - Served as Vice President (2014-2015) and as President (2015-2016) of the
   Computing Science Student Society.
-- Oversaw the creation of the [[https://sfucsss.org/][CSSS website]].
+- Oversaw the creation of the [[https://github.com/CSSS/old-csss-site][CSSS Website]].
 - Served as the president of the SFU Choir for two years.
 - Achieved the Dean's Honour Roll two years in a row.
 
