@@ -43,6 +43,12 @@ give conference presentations in both English and Japanese.
 
 ** Software Development
 
+*** Freelance Software (Rust, Go)
+
+/2020 May - Present/
+
+Private contracting work in a variety of fields and technologies.
+
 *** [[https://www.kadena.io/][Kadena]] - Blockchain Software Development (Haskell)
 
 /2018 August - 2020 May/
