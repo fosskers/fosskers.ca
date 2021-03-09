@@ -1,0 +1,451 @@
+#+TITLE: Full Wayland Setup on Arch Linux
+#+DATE: 2021-02-27
+#+AUTHOR: Colin
+#+CATEGORY: tech
+
+This article is a guide for achieving a full-as-possible [[https://wayland.freedesktop.org/][Wayland]] setup on Arch
+Linux. If you follow the entire guide, by the end you will have:
+
+- [[https://swaywm.org/][Sway]], a tiling window manager.
+- [[https://github.com/Alexays/Waybar][Waybar]], a topbar very similar to [[https://github.com/polybar/polybar][Polybar]].
+- [[https://hg.sr.ht/~scoopta/wofi][Wofi]], a pure GTK (and thus Wayland) customizable application launcher.
+- [[https://github.com/alacritty/alacritty][Alacritty]], a modern terminal that "just works".
+- Firefox and/or Chromium in Wayland with working screen sharing.
+- Emacs running fully in Wayland via brand-new pure GTK internals.
+- /Most/ QT applications running in Wayland.
+- Steam games set up to consider Wayland, if they can.
+- (Optional) Japanese input via [[https://wiki.archlinux.org/index.php/Fcitx5][Fcitx5]].
+
+You will also learn how to confirm if an app is running in Wayland or not, and
+will become aware of ~XWayland~ and major programs that still need it to run
+properly. While this guide was written with Arch Linux in mind, it should be
+adaptable to any brand of Linux that you run. Enjoy, and good luck!
+
+*Note:* You may wish to open this guide on a phone or second computer before
+continuing, as we will need to restart your window manager several times
+throughout.
+
+* Foreword: Wayland? XWayland?
+
+Wayland is the next generation Display Protocol for Linux. You've probably heard
+of "X" (or "X11" or "XOrg"), but you may not have known of its issues: age,
+performance, security, and dev-friendliness. Even Adam Jackson, the long-time
+release manager of X [[https://ajaxnwnk.blogspot.com/2020/10/on-abandoning-x-server.html][calls for the adoption of Wayland]]. That said, X is
+well-established and the transition won't happen over night. Many core apps on a
+Linux system are bound tightly to its ecosystem:
+
+#+begin_example
+> pacman -Qg xorg | wc -l
+38
+#+end_example
+
+But you might be surprised to learn that you almost certainly have ~wayland~
+installed already.
+
+#+begin_example
+> pacman -Qi wayland
+Name            : wayland
+Version         : 1.19.0-1
+Description     : A computer display server protocol
+Architecture    : x86_64
+URL             : https://wayland.freedesktop.org/
+Licenses        : MIT
+# ... etc.
+#+end_example
+
+Fortunately for us, the Linux ecosystem's transition to Wayland has been
+[[https://arewewaylandyet.com/][marching steadily forward]] through the years. The major GUI frameworks like GTK
+and QT fully support it. [[https://www.omgubuntu.co.uk/2021/01/ubuntu-21-04-will-use-wayland-by-default][Ubuntu 21.04 will run with Wayland by default]]. But no
+need to wait for major distros to move: we can jump to Wayland today.
+
+You should know that there are some major applications that don't (or won't [[https://github.com/xmonad/xmonad/issues/38][or
+can't]]) support Wayland. Programs like this can still be run in a Wayland
+environment through an isolated X instance called *XWayland*. This means that
+the transition to Wayland can be gradual: you won't lose access to older
+programs that you still need.
+
+One last piece of good news before we move on: in Wayland, you don't need a
+compositor program like [[https://github.com/yshui/picom][picom]] or [[http://www.compiz.org/][compiz]] that's separate from your window
+manager. Translation? Fewer moving parts, less configuration to manage, and
+terminal transparency just works!
+
+* Prerequisites
+
+** Packages
+
+On Arch Linux, run the following command to install everything you'll need for
+the main section of the guide and general Wayland compatibility:
+
+#+begin_example
+sudo pacman -S sway alacritty waybar wofi xorg-xwayland xorg-xeyes qt5-wayland glfw-wayland
+#+end_example
+
+~qt5-wayland~ and ~glfw-wayland~ provide Wayland API compatibility for QT5 and
+[[https://www.glfw.org/][GLFW]] respectively. ~xeyes~ is explained below.
+
+** Detecting XWayland with ~xeyes~
+
+In Wayland, applications are jailed and cannot inspect the UI state (for
+instance, mouse position) of other windows. This is not true of X, and thus not
+true of XWayland. ~xeyes~ is a comical program that we can use to detect which
+windows are running in XWayland. Its eyes will follow your mouse, *but only when
+on an X window*.
+
+[[/assets/xeyes.png]]
+
+/Xeyes following my mouse over a Krita window./
+
+As far as X knows, your mouse is simply "gone" when not on an XWayland window.
+
+* Sway
+
+Sway is a tiling window manager and a drop-in replacement for [[https://i3wm.org/][i3]]. Like its
+inspiration it too is written in C, and thus is very fast and has little
+resource overhead. Although Sway can read i3 config as-is (i.e. your
+~/home/you/.config/i3/config~), I recommend starting with a blank slate and then
+copying over specific bindings as you need them.
+
+First, copy Sway's config template:
+
+#+begin_example
+cd ~/.config
+mkdir sway
+cd sway
+cp /etc/sway/config .
+#+end_example
+
+Now exit whatever desktop environment / window manager you're in, and drop down
+to your basic login terminal. From here, run ~sway~ and Sway should start.
+Congratulations, you're running Wayland!
+
+Well let's not celebrate too early. You might be used to having lines like ~exec
+i3~ in a ~.xinitrc~, then starting X with ~startx~. No longer! From here,
+everything happens in our Sway config. Speaking of which, here are some
+highlights below.
+
+** Sway Config and Extras
+
+[[https://github.com/fosskers/dotfiles/blob/master/.config/sway/config][Here is my full Sway configuration]]. Otherwise, Sway is primarily documented in
+its man pages. When in doubt, check them first. If that fails, you can also
+consult the [[https://github.com/swaywm/sway/wiki][Sway Wiki]].
+
+Here are some useful bindings that you'll need right away, but are free to
+change later:
+
+- Reload Sway: ~Super+Shift+c~ (won't close your running programs)
+- Exit Sway: ~Super+Shift+e~
+- Open a Terminal: ~Super+Return~
+- Open a Program: ~Super+d~
+
+*Monitor Setup*
+
+I have two monitors: my laptop to my left, and my proper monitor directly in
+front of me. Getting my mouse to move naturally across the monitor boundary requires
+the following:
+
+#+begin_example
+output eDP-1 mode 2560x1440 position 0,0 scale 2
+output HDMI-A-2 mode 1920x1080 position 1280,0
+#+end_example
+
+There is some math involved in determining the proper offset to use for the
+second monitor (the ~1280~ in the second line). See ~man sway-output~ for more
+information. You can use ~swaymsg -t get_outputs~ to view the official names and
+available resolutions of all your monitors.
+
+*Gaps*
+
+[[https://github.com/Airblader/i3][i3-gaps]] is a popular i3 variant that allows gaps between windows. Luckily this
+functionality is already included in Sway, and can be activated by adding the
+following somewhere in your Sway config:
+
+#+begin_example
+  # A 10-pixel border around every window.
+  gaps inner 10
+
+  # Removes the title bar of each window.
+  default_border pixel 3
+#+end_example
+
+You will need to *exit* Sway once and rerun it from your login terminal for the
+change to take effect.
+
+*Random Wallpapers*
+
+While not yet integrated in my own config, [[https://github.com/fosskers/rs-setwall][setwall]] can be used to set a random
+background image:
+
+#+begin_example
+  setwall random ~/Pictures/backgrounds/ -c sway
+#+end_example
+
+** Alacritty
+
+Alacritty is a great modern terminal emulator with sane defaults. It is also the
+default for Sway when opening a new terminal with ~Super+Return~. I used ~urxvt~
+for years, but upon switching to Alacritty recently a number of issues I had had
+just went away.
+
+The only thing I change about Alacritty's default config is the background
+opacity. Within ~/home/you/.config/alacritty/alacritty.yml~:
+
+#+begin_example
+  background_opacity: 0.8
+#+end_example
+
+Voilà, transparent terminals!
+
+** Waybar
+
+The default bar for Sway is pretty good, but Waybar unlocks a lot more
+customisability. It also "just works" on multiple monitors, unlike Polybar which
+requires custom scripting.
+
+To use Waybar instead of the default bar, comment out the ~bar~ section near the
+end of your Sway config, and in its place add this:
+
+#+begin_example
+  bar {
+      swaybar_command waybar
+  }
+#+end_example
+
+[[https://github.com/Alexays/Waybar/wiki/Examples][The Waybar Wiki]] has plenty of example configurations, and [[https://github.com/fosskers/dotfiles/blob/master/.config/waybar/config][here is my own]] along
+with [[https://github.com/fosskers/dotfiles/blob/master/.config/waybar/style.css][its custom CSS styling]]. The bar itself is transparent, with the top-right
+widgets and tray looking like this:
+
+[[/assets/waybar-top-right.png]]
+
+After tweaking your Waybar config, its enough to refresh Sway via
+~Super+Shift+c~ as usual to refresh your Waybars as well.
+
+** Wofi
+
+By default Sway uses ~dmenu~ for opening programs, but surprisingly its UI runs
+in XWayland. There are [[https://github.com/swaywm/sway/wiki/i3-Migration-Guide][a number of alternatives]] available, and I chose [[https://hg.sr.ht/~scoopta/wofi][Wofi]].
+
+[[/assets/wofi.jpg]]
+
+This is the [[https://github.com/fosskers/dotfiles/blob/master/.config/wofi/style.css][look I settled on]], but since it's all CSS you're [[https://cloudninja.pw/docs/wofi.html][free to experiment]]!
+Note that you'll need the following in your Sway config:
+
+#+begin_example
+  set $menu wofi --show=drun --lines=5 --prompt=""
+#+end_example
+
+There are a few different prompt modes. ~drun~ only matches and displays hits
+for programs that have "Desktop" entries somewhere on your machine, as opposed
+to everything on your PATH. In fact, not doing so can have performance problems
+and is [[https://todo.sr.ht/~scoopta/wofi/35][a known issue]].
+
+* Major Applications
+
+Most applications, if running on GTK or QT, have automatic Wayland support and
+require no further configuration. Some specific programs need tweaks, which
+we'll address below.
+
+A number of current resources claim you need GTK and QT-specific environment
+variables set in order for them to use Wayland, but *I found this not to be
+true*.
+
+** Firefox
+
+The ~about:support~ page in Firefox has a field titled /Window Protocol/ that
+tells us which protocol it is running through. If still on X11, this field will
+say ~x11~. If through Sway without the tweak below, you should see ~xwayland~. A
+quick test with ~xeyes~ should also reveal that Firefox isn't yet running
+natively through Wayland. Let's fix that.
+
+Set the ~MOZ_ENABLE_WAYLAND~ environment variable to ~1~. I place the following
+in my Fish config (users of other shells will need something similar):
+
+#+begin_example
+  set -x MOZ_ENABLE_WAYLAND 1
+#+end_example
+
+*Exit Sway and log out entirely once.* Once logged back in and with Sway
+reopened, this variable change should have propagated to everywhere that
+matters. Now if you open Firefox again through Wofi and check ~about:support~,
+you should find:
+
+[[/assets/firefox-wayland.png]]
+
+** Chromium
+
+Chromium's conversion is a bit simpler. In
+~/home/you/.config/chromium-flags.conf~, add the following lines:
+
+#+begin_example
+--enable-features=UseOzonePlatform
+--ozone-platform=wayland
+#+end_example
+
+Restart Chromium, and that should be it. You can confirm with ~xeyes~.
+
+** Emacs
+
+Yes, Emacs can be ran purely in Wayland. Some of you might be saying:
+
+#+begin_quote
+But Emacs isn't a true GTK app!
+#+end_quote
+
+And yes, that used to be true. [[https://lwn.net/Articles/843896/][As of early 2021]], Emacs can be built with "pure
+GTK" internals, making it entirely Wayland compatible. This feature will be
+available in Emacs 28 (yet unreleased as of this writing), but luckily [[https://aur.archlinux.org/packages/emacs-gcc-wayland-devel-bin/][there is
+an AUR package]] that tracks the Wayland development branch and ships a prebuilt
+binary. We can install it with a tool like [[https://github.com/fosskers/aura][Aura]]:
+
+#+begin_example
+  sudo aura -Axa emacs-gcc-wayland-devel-bin
+#+end_example
+
+Note that this package ~Provides: emacs~, so it will take the place of any other
+Emacs package you have installed.
+
+** Steam and Gaming
+
+[[https://www.protondb.com/][Proton games]] likes /Among Us/ work as-is, since they run in a highly tweaked
+Wine/dependency environment that is known to work for each game. /Among Us/
+reacts well to window resizing and relocation within Sway.
+
+For native games like Half-life (old), Trine 2 (graphics heavy), and Tabletop
+Simulator (modern toolchain) to work, I had to set the environment variable
+~SDL_VIDEODRIVER~ to ~x11~. Otherwise they fail to start properly. From the Arch
+Wiki:
+
+#+begin_quote
+Note: Many proprietary games come bundled with old versions of SDL, which do not
+support Wayland and might break entirely if you set SDL_VIDEODRIVER=wayland.
+#+end_quote
+
+Even Stellaris requires ~x11~ to work.
+
+If you don't want to force all SDL usage to X11, you don't have to. Steam allows
+us to set specific environment variables per game. To set this, right-click on a
+game, and visit its ~Properties~. In ~GENERAL > LAUNCH OPTIONS~, enter the
+following and your game should be runnable:
+
+[[/assets/steam-sdl-override.png]]
+
+So to reiterate, here is the environment variable I have set in Fish:
+
+#+begin_example
+  set -x SDL_VIDEODRIVER 'wayland'
+#+end_example
+
+And I override this to ~x11~ on a case-by-case basis within Steam.
+
+* Other Settings
+
+If the sections here aren't applicable to you, feel free to skip them.
+
+** Keyboard Layouts
+
+I use the Colemak layout when typing, so I have the following in my Sway config:
+
+#+begin_example
+  input * {
+      xkb_layout "us"
+      xkb_variant "colemak"
+  }
+#+end_example
+
+Unfortunately there seems to be [[https://github.com/swaywm/sway/issues/4664][a strange bug]] where the layout will suddenly
+switch back to qwerty in certain windows. I noticed the following symptom: when
+a terminal is opened, the left-most XWayland window will switch back to qwerty.
+I found two ways around this:
+
+- Use as many pure Wayland apps as possible, or;
+- Install an IME (Input Method Editor), for instance for typing non-ASCII languages (see below).
+
+** Japanese Input
+
+Sway is very close to having first-class support for switching Input Methods
+(see [[https://github.com/swaywm/sway/pull/4740#issuecomment-787578644][Sway#4740]], [[https://github.com/swaywm/sway/pull/5890][Sway#5890]], and [[https://github.com/swaywm/sway/pull/4932][Sway#4932]]). For now, here is a setup that works
+through dbus allowing us to change Methods and type Japanese in all Wayland and
+XWayland windows *except Alacritty*.
+
+First, install these packages:
+
+#+begin_example
+  sudo pacman -S fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-mozc fcitx5-qt
+#+end_example
+
+Then add the following to ~/etc/environment~:
+
+#+begin_example
+  GTK_IM_MODULE=fcitx
+  QT_IM_MODULE=fcitx
+  XMODIFIERS=@im=fcitx
+#+end_example
+
+And this to your Sway config:
+
+#+begin_example
+  exec_always fcitx5 -d --replace
+#+end_example
+
+*Now restart your computer.*
+
+Hopefully you now see a keyboard icon in your Waybar tray. To configure
+~fcitx5~, open ~fcitx5-configtool~. Here is my setup:
+
+[[/assets/fcitx5.png]]
+
+You'll see that I specifically set my English keyboard to Colemak, and added
+~Mozc~ from the list on the right. Check the ~Global Options~ tab to set your
+Method switching keybinding. After that, hit ~Apply~, and you should now be able
+to switch Input Methods and type Japanese. If the keybinding doesn't work, you
+can also switch Methods by clicking the icon in the Waybar tray.
+
+** Screen Sharing
+
+Screen sharing in Firefox and Chromium is possible through Pipewire and some
+helper packages, although at the moment we can only share entire screens and
+not individual windows. To proceed, first install the following packages:
+
+#+begin_example
+  sudo pacman -S xdg-desktop-portal-wlr libpipewire02
+#+end_example
+
+The latter is necessary only for Chromium. *Now restart your computer.*
+
+Let's test Firefox first using Mozilla's [[https://mozilla.github.io/webrtc-landing/gum_test.html][gum test page]]. When the browser prompts
+you for a window selection, choose /Use operating system settings/:
+
+[[/assets/firefox-screen-select.jpg]]
+
+And screen sharing should begin.
+
+For Chromium, we need to activate a feature flag to allow Chromium to talk to
+Pipewire. First visit ~chrome://flags~, then find and enable the ~WebRTC
+PipeWire support~ feature. That's it!
+
+If you're having issues with either of these browsers, check the [[https://github.com/emersion/xdg-desktop-portal-wlr/wiki/FAQ][XDPW FAQ]].
+
+* XWayland and Incompatibilities
+
+Know of any other incompatibilities? [[https://github.com/fosskers/fosskers.ca][Please let me know]].
+
+** Krita
+
+The digial art program [[https://krita.org/en/][Krita]] is a wonderful app that runs in QT5, but for
+reasons due to certain hardware support immaturity (for styli, etc.) it [[https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=955730][does not
+support Wayland]] and thus always runs in XWayland.
+
+** Electron Apps
+
+Electron apps (Discord, Slack, Signal, VSCode) always run in XWayland, but
+[[https://github.com/electron/electron/pull/26022][Wayland support has recently landed]] in version 12. Once the apps catch up to the
+newest Electron, we should get Wayland support "for free". Until then, screen
+sharing in apps like Discord will only work for other XWayland apps.
+
+* Resources
+
+- [[https://github.com/swaywm/sway/wiki/Running-programs-natively-under-wayland][Sway: Running GUI Programs under Wayland]]
+- [[https://github.com/swaywm/sway/wiki/i3-Migration-Guide][Sway: i3 Migration Guide]]
+- [[https://github.com/Alexays/Waybar][Sway: Waybar]]
+- [[https://hg.sr.ht/~scoopta/wofi][Sway: Wofi launcher]]
+- [[https://wiki.archlinux.org/index.php/Wayland][Arch Wiki: Wayland]]
+- [[https://arewewaylandyet.com/][Are We Wayland Yet?]]
