@@ -441,6 +441,21 @@ Electron apps (Discord, Slack, Signal, VSCode) always run in XWayland, but
 newest Electron, we should get Wayland support "for free". Until then, screen
 sharing in apps like Discord will only work for other XWayland apps.
 
+* Tips
+
+** KWin Users
+
+Thanks to *flying-sheep* for this tip:
+
+#+begin_quote
+For people using KWin: You can display a window helping you to identify XWayland
+windows using:
+#+end_quote
+
+#+begin_example
+qdbus org.kde.KWin /KWin org.kde.KWin.showDebugConsole
+#+end_example
+
 * Resources
 
 If you found this article helpful, please consider [[https://www.buymeacoffee.com/fosskers][buying me a coffee]].
