@@ -14,6 +14,7 @@ import           Data.Text (Text)
 import           Fosskers.Common
 import           Fosskers.Site.Bootstrap
 import           Lucid hiding (for_)
+import           Lucid.Base (makeAttribute)
 
 ---
 
@@ -53,6 +54,7 @@ articleBar :: Language -> NonEmpty BlogCategory -> Html ()
 articleBar l bcs = do
   div_ [class_ "title"] $ h3_ label
   traverse_ g bcs
+  div_ [class_ "title"] coffee
   where
     g :: BlogCategory -> Html ()
     g bc = do
@@ -67,6 +69,20 @@ articleBar l bcs = do
     label = case l of
       English  -> "Blog Archive"
       Japanese -> "ポスト一覧"
+
+    coffee :: Html ()
+    coffee = script_ [ type_ "text/javascript"
+                     , src_ "https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+                     , makeAttribute "data-name" "bmc-button"
+                     , makeAttribute "data-slug" "fosskers"
+                     , makeAttribute "data-color" "#FFDD00"
+                     , makeAttribute "data-emoji" ""
+                     , makeAttribute "data-font" "Cookie"
+                     , makeAttribute "data-text" "Buy me a coffee"
+                     , makeAttribute "data-outline-color" "#000000"
+                     , makeAttribute "data-font-color" "#000000"
+                     , makeAttribute "data-coffee-color" "#ffffff"
+                     ] ("" :: Text)
 
 indexBar :: Language -> Blog -> Html ()
 indexBar l b = do
