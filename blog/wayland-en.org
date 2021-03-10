@@ -443,6 +443,8 @@ sharing in apps like Discord will only work for other XWayland apps.
 
 * Resources
 
+If you found this article helpful, please consider [[https://www.buymeacoffee.com/fosskers][buying me a coffee]].
+
 - [[https://github.com/swaywm/sway/wiki/Running-programs-natively-under-wayland][Sway: Running GUI Programs under Wayland]]
 - [[https://github.com/swaywm/sway/wiki/i3-Migration-Guide][Sway: i3 Migration Guide]]
 - [[https://github.com/Alexays/Waybar][Sway: Waybar]]
