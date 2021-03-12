@@ -456,6 +456,25 @@ windows using:
 qdbus org.kde.KWin /KWin org.kde.KWin.showDebugConsole
 #+end_example
 
+** Polkit
+
+Thanks to Aaron Wiedemer for the following suggestion:
+
+#+begin_quote
+Some apps sometimes require priveleges, e.g. a software manager needs
+permissions to start an update, but just searching for packages requires no
+additional permissions. These apps then pop up a little box and ask for the
+password. This requires a daemon which is not started by sway, so we need to
+auto start one with our sway config.
+#+end_quote
+
+[[https://wiki.archlinux.org/index.php/Polkit][There are a number of options for Polkit clients.]] For instance, ~polkit-gnome~
+has no dependencies and can be started in ~sway~ via:
+
+#+begin_example
+exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#+end_example
+
 * Resources
 
 If you found this article helpful, please consider [[https://www.buymeacoffee.com/fosskers][buying me a coffee]].
