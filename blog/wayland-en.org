@@ -441,7 +441,7 @@ Electron apps (Discord, Slack, Signal, VSCode) always run in XWayland, but
 newest Electron, we should get Wayland support "for free". Until then, screen
 sharing in apps like Discord will only work for other XWayland apps.
 
-* Tips
+* Community Tips
 
 ** KWin Users
 
