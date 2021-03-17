@@ -3,6 +3,19 @@
 This is an information tracker for the game *Love Letter*, written in Rust and
 compiled to WASM.
 
+## Rules
+
+https://images.zmangames.com/filer_public/a7/3c/a73cbf7a-7692-445f-9832-087776e5bef6/loveletterrulebook_small_.pdf
+
+> Shuffle the 16 cards to form a face-down draw deck. Remove the top card of the
+> deck from the game without looking at it.
+
+> If you are playing a two-player game, take three more cards from the top of
+> the deck and place them to the side, face up. They will not be used during
+> this round.
+
+> A round ends if the deck is empty at the end of a turn.
+
 ## Spec
 
 Below, *user* refers to the person using the Tracker, *opponent* refers to any
