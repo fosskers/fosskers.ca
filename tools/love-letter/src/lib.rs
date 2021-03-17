@@ -89,21 +89,42 @@ impl Model {
             user_played: Vec::new(),
         }
     }
+
+    fn reset(&mut self) {
+        let new = Model::new();
+
+        self.tracker = new.tracker;
+        self.deck_size = new.deck_size;
+        self.opponents = new.opponents;
+        self.user_hand = new.user_hand;
+        self.user_played = new.user_played;
+    }
 }
 
 #[derive(Copy, Clone)]
 enum Msg {
-    Increment,
+    /// Set the tracker state to its initial... state.
+    Reset,
 }
 
 fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
     Model::new()
 }
 
-fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {}
+fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
+    match msg {
+        Msg::Reset => {
+            log!("Resetting the Tracker state.");
+            model.reset()
+        }
+    }
+}
 
-fn view(model: &Model) -> Node<Msg> {
-    div!["Love Letter"]
+fn view(model: &Model) -> Vec<Node<Msg>> {
+    vec![
+        div!["Love Letter"],
+        div![button!["Reset", ev(Ev::Click, |_| Msg::Reset)]],
+    ]
 }
 
 #[wasm_bindgen(start)]
