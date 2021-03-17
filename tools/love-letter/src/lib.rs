@@ -64,18 +64,25 @@ struct Hand {
     second: Option<Card>,
 }
 
+/// The user of the tracker.
+#[derive(Default)]
+struct User {
+    /// The `Hand` of the person using the tracker.
+    hand: Option<Hand>,
+    /// Cards that the user has played.
+    played: Vec<Card>,
+}
+
 /// The global state of the tracker.
 struct Model {
     /// Cards that haven't been seen.
     tracker: Vec<Card>,
     /// Raw count of the number of cards left in the draw deck.
     deck_size: usize,
+    /// The user of the tracker.
+    user: User,
     /// The other players.
     opponents: Vec<Opponent>,
-    /// The `Hand` of the person using the tracker.
-    user_hand: Option<Hand>,
-    /// Cards that the user has played.
-    user_played: Vec<Card>,
 }
 
 impl Model {
@@ -85,8 +92,7 @@ impl Model {
             deck_size: FULL_DECK,
             // TODO Generalize to a custom number of opponents.
             opponents: vec![Opponent::new(), Opponent::new(), Opponent::new()],
-            user_hand: None,
-            user_played: Vec::new(),
+            user: User::default(),
         }
     }
 
@@ -96,8 +102,7 @@ impl Model {
         self.tracker = new.tracker;
         self.deck_size = new.deck_size;
         self.opponents = new.opponents;
-        self.user_hand = new.user_hand;
-        self.user_played = new.user_played;
+        self.user = new.user;
     }
 }
 
