@@ -4,6 +4,7 @@ use std::collections::BTreeMap;
 const FULL_DECK: usize = 16;
 
 /// The available cards to play.
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum Card {
     Guard,
     Priest,
@@ -37,6 +38,20 @@ impl Card {
             Card::Princess,
         ]
     }
+
+    /// Get the image path for a given card.
+    fn image(&self) -> &'static str {
+        match self {
+            Card::Guard => "guard.jpg",
+            Card::Priest => "priest.jpg",
+            Card::Baron => "baron.jpg",
+            Card::Handmaid => "handmaid.jpg",
+            Card::Prince => "prince.jpg",
+            Card::King => "king.jpg",
+            Card::Countess => "countess.jpg",
+            Card::Princess => "princess.jpg",
+        }
+    }
 }
 
 struct Opponent {
@@ -55,6 +70,24 @@ impl Opponent {
             played: Vec::new(),
             possible_cards: Card::full_deck(),
         }
+    }
+
+    /// Analyses the cards that this player could have, and yields a map of
+    /// percentages.
+    fn card_probs(&self) -> BTreeMap<Card, usize> {
+        let mut map = BTreeMap::new();
+
+        for card in self.possible_cards.iter() {
+            let count = map.entry(card.clone()).or_insert(0);
+            *count += 1;
+        }
+
+        let remaining = self.possible_cards.len();
+        for count in map.values_mut() {
+            *count = 100 * (*count) / remaining;
+        }
+
+        map
     }
 }
 
@@ -126,9 +159,68 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
 }
 
 fn view(model: &Model) -> Vec<Node<Msg>> {
-    vec![
+    nodes![
         div!["Love Letter"],
         div![button!["Reset", ev(Ev::Click, |_| Msg::Reset)]],
+        view_player_grid(model),
+    ]
+}
+
+fn view_player_grid(model: &Model) -> Node<Msg> {
+    table![
+        tr![th!["Player"], th!["Cards Played"], th!["Hand"],],
+        view_user(&model.user),
+        model
+            .opponents
+            .iter()
+            .map(view_opponent)
+            .collect::<Vec<_>>(),
+    ]
+}
+
+/// Render a `User`.
+fn view_user(user: &User) -> Node<Msg> {
+    tr![
+        td!["You!"],
+        td![user
+            .played
+            .iter()
+            .map(|c| format!("{:?}", c))
+            .collect::<Vec<_>>()],
+        match &user.hand {
+            None => td!["Empty hand..."],
+            Some(h) => td![div![
+                C!["card-line"],
+                img![C!["card-image"], attrs! {At::Src => h.first.image()}],
+                h.second
+                    .as_ref()
+                    .map(|c| img![C!["card-image"], attrs! {At::Src => c.image()}])
+            ]],
+        }
+    ]
+}
+
+/// Render an `Opponent`.
+fn view_opponent(opponent: &Opponent) -> Node<Msg> {
+    let probs = opponent.card_probs();
+
+    tr![
+        td!["Opponent", opponent.alive.then(|| " (Alive)")],
+        td![opponent
+            .played
+            .iter()
+            .map(|c| format!("{:?}", c))
+            .collect::<Vec<_>>()],
+        td![div![
+            C!["card-line"],
+            probs
+                .into_iter()
+                .map(|(card, prob)| figure![
+                    img![C!["card-image"], attrs! {At::Src => card.image()}],
+                    figcaption![prob]
+                ])
+                .collect::<Vec<_>>()
+        ]]
     ]
 }
 

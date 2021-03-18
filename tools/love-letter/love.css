@@ -1,0 +1,11 @@
+.card-line {
+    display: flex;
+}
+
+.card-image {
+    width: 100%;
+}
+
+figcaption {
+    text-align: center;
+}
