@@ -2,9 +2,19 @@ use seed::{prelude::*, *};
 use std::collections::BTreeMap;
 
 const FULL_DECK: usize = 16;
+const ALL_CARDS: [Card; 8] = [
+    Card::Guard,
+    Card::Priest,
+    Card::Baron,
+    Card::Handmaid,
+    Card::Prince,
+    Card::King,
+    Card::Countess,
+    Card::Princess,
+];
 
 /// The available cards to play.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum Card {
     Guard,
     Priest,
@@ -51,6 +61,16 @@ impl Card {
             Card::Countess => "countess.jpg",
             Card::Princess => "princess.jpg",
         }
+    }
+
+    /// A stylised `<img>` element for this `Card`.
+    fn img(&self) -> Node<Msg> {
+        self.img_with("card-image")
+    }
+
+    /// Like [`img`], but you can customise the CSS class.
+    fn img_with(&self, class: &str) -> Node<Msg> {
+        img![C![class], attrs! {At::Src => self.image()}]
     }
 }
 
@@ -137,12 +157,26 @@ impl Model {
         self.opponents = new.opponents;
         self.user = new.user;
     }
+
+    /// A new concrete card has been seen, so update each `Opponent`'s
+    /// possibility list.
+    fn seen(&mut self, card: Card) {
+        for o in self.opponents.iter_mut() {
+            for (i, p) in o.possible_cards.iter().enumerate() {
+                if p == &card {
+                    o.possible_cards.remove(i);
+                    break;
+                }
+            }
+        }
+    }
 }
 
-#[derive(Copy, Clone)]
 enum Msg {
     /// Set the tracker state to its initial... state.
     Reset,
+    /// Add the given `Card` to the user's hand.
+    AddToHand(Card),
 }
 
 fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
@@ -155,6 +189,14 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
             log!("Resetting the Tracker state.");
             model.reset()
         }
+        Msg::AddToHand(card) => {
+            log!(format!("Adding {:?} to user's hand.", card));
+            model.user.hand = Some(Hand {
+                first: card,
+                second: None,
+            });
+            model.seen(card);
+        }
     }
 }
 
@@ -162,7 +204,18 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
     nodes![
         div!["Love Letter"],
         div![button!["Reset", ev(Ev::Click, |_| Msg::Reset)]],
+        view_card_choice(),
         view_player_grid(model),
+    ]
+}
+
+fn view_card_choice() -> Node<Msg> {
+    div![
+        C!["card-line"],
+        ALL_CARDS
+            .iter()
+            .map(|c| button![c.img(), ev(Ev::Click, move |_| Msg::AddToHand(*c))])
+            .collect::<Vec<_>>()
     ]
 }
 
@@ -182,19 +235,16 @@ fn view_player_grid(model: &Model) -> Node<Msg> {
 fn view_user(user: &User) -> Node<Msg> {
     tr![
         td!["You!"],
-        td![user
-            .played
-            .iter()
-            .map(|c| format!("{:?}", c))
-            .collect::<Vec<_>>()],
+        td![div![
+            C!["card-line"],
+            user.played.iter().map(|c| c.img()).collect::<Vec<_>>()
+        ]],
         match &user.hand {
             None => td!["Empty hand..."],
             Some(h) => td![div![
                 C!["card-line"],
-                img![C!["card-image"], attrs! {At::Src => h.first.image()}],
-                h.second
-                    .as_ref()
-                    .map(|c| img![C!["card-image"], attrs! {At::Src => c.image()}])
+                h.first.img_with("card-image-user"),
+                h.second.as_ref().map(|c| c.img_with("card-image-user"))
             ]],
         }
     ]
@@ -206,19 +256,15 @@ fn view_opponent(opponent: &Opponent) -> Node<Msg> {
 
     tr![
         td!["Opponent", opponent.alive.then(|| " (Alive)")],
-        td![opponent
-            .played
-            .iter()
-            .map(|c| format!("{:?}", c))
-            .collect::<Vec<_>>()],
+        td![div![
+            C!["card-line"],
+            opponent.played.iter().map(|c| c.img()).collect::<Vec<_>>()
+        ]],
         td![div![
             C!["card-line"],
             probs
                 .into_iter()
-                .map(|(card, prob)| figure![
-                    img![C!["card-image"], attrs! {At::Src => card.image()}],
-                    figcaption![prob]
-                ])
+                .map(|(card, prob)| figure![card.img(), figcaption![prob, "%"]])
                 .collect::<Vec<_>>()
         ]]
     ]

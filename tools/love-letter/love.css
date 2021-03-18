@@ -6,6 +6,10 @@
     width: 100%;
 }
 
+.card-image-user {
+    width: 10%;
+}
+
 figcaption {
     text-align: center;
 }
