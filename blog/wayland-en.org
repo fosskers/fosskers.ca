@@ -83,19 +83,16 @@ sudo pacman -S sway alacritty waybar wofi xorg-xwayland xorg-xeyes qt5-wayland g
 ~qt5-wayland~ and ~glfw-wayland~ provide Wayland API compatibility for QT5 and
 [[https://www.glfw.org/][GLFW]] respectively. ~xeyes~ is explained below.
 
-** Detecting XWayland with ~xeyes~
+** Detecting XWayland with ~xlsclients~
 
-In Wayland, applications are jailed and cannot inspect the UI state (for
-instance, mouse position) of other windows. This is not true of X, and thus not
-true of XWayland. ~xeyes~ is a comical program that we can use to detect which
-windows are running in XWayland. Its eyes will follow your mouse, *but only when
-on an X window*.
+To get a list of all XWayland windows use ~xlsclients~ which outputs a list of all windows using xwayland.
+Example output:
 
-[[/assets/xeyes.png]]
-
-/Xeyes following my mouse over a Krita window./
-
-As far as X knows, your mouse is simply "gone" when not on an XWayland window.
+#+begin_example
+archlinux  emacs
+archlinux  chromium
+archlinux  xterm
+#+end_example
 
 * Sway
 
