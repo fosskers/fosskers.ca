@@ -2,16 +2,6 @@ use seed::{prelude::*, *};
 use std::collections::BTreeMap;
 
 const FULL_DECK: usize = 16;
-const ALL_CARDS: [Card; 8] = [
-    Card::Guard,
-    Card::Priest,
-    Card::Baron,
-    Card::Handmaid,
-    Card::Prince,
-    Card::King,
-    Card::Countess,
-    Card::Princess,
-];
 
 /// The available cards to play.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -28,25 +18,17 @@ enum Card {
 
 impl Card {
     /// The full deck at the beginning of the game.
-    fn full_deck() -> Vec<Card> {
-        vec![
-            Card::Guard,
-            Card::Guard,
-            Card::Guard,
-            Card::Guard,
-            Card::Guard,
-            Card::Priest,
-            Card::Priest,
-            Card::Baron,
-            Card::Baron,
-            Card::Handmaid,
-            Card::Handmaid,
-            Card::Prince,
-            Card::Prince,
-            Card::King,
-            Card::Countess,
-            Card::Princess,
-        ]
+    fn full_deck() -> BTreeMap<Card, usize> {
+        let mut deck = BTreeMap::new();
+        deck.insert(Card::Guard, 5);
+        deck.insert(Card::Priest, 2);
+        deck.insert(Card::Baron, 2);
+        deck.insert(Card::Handmaid, 2);
+        deck.insert(Card::Prince, 2);
+        deck.insert(Card::King, 1);
+        deck.insert(Card::Countess, 1);
+        deck.insert(Card::Princess, 1);
+        deck
     }
 
     /// Get the image path for a given card.
@@ -80,7 +62,7 @@ struct Opponent {
     /// Cards that this opponent has played.
     played: Vec<Card>,
     /// Cards this opponent could be holding.
-    possible_cards: Vec<Card>,
+    possible_cards: BTreeMap<Card, usize>,
 }
 
 impl Opponent {
@@ -95,19 +77,12 @@ impl Opponent {
     /// Analyses the cards that this player could have, and yields a map of
     /// percentages.
     fn card_probs(&self) -> BTreeMap<Card, usize> {
-        let mut map = BTreeMap::new();
+        let remaining: usize = self.possible_cards.values().sum();
 
-        for card in self.possible_cards.iter() {
-            let count = map.entry(card.clone()).or_insert(0);
-            *count += 1;
-        }
-
-        let remaining = self.possible_cards.len();
-        for count in map.values_mut() {
-            *count = 100 * (*count) / remaining;
-        }
-
-        map
+        self.possible_cards
+            .iter()
+            .map(|(c, n)| (*c, 100 * n / remaining))
+            .collect()
     }
 }
 
@@ -130,6 +105,10 @@ struct User {
 struct Model {
     /// Cards that haven't been seen.
     tracker: Vec<Card>,
+    /// Cards that have been **played** by the players.
+    seen: Vec<Card>,
+    /// The possible cards remaining.
+    deck: BTreeMap<Card, usize>,
     /// Raw count of the number of cards left in the draw deck.
     deck_size: usize,
     /// The user of the tracker.
@@ -142,6 +121,8 @@ impl Model {
     fn new() -> Model {
         Model {
             tracker: Vec::new(),
+            seen: Vec::new(),
+            deck: Card::full_deck(),
             deck_size: FULL_DECK,
             // TODO Generalize to a custom number of opponents.
             opponents: vec![Opponent::new(), Opponent::new(), Opponent::new()],
@@ -149,24 +130,41 @@ impl Model {
         }
     }
 
+    // TODO Make this less fragile.
     fn reset(&mut self) {
         let new = Model::new();
 
         self.tracker = new.tracker;
+        self.seen = new.seen;
+        self.deck = new.deck;
         self.deck_size = new.deck_size;
         self.opponents = new.opponents;
         self.user = new.user;
     }
 
-    /// A new concrete card has been seen, so update each `Opponent`'s
-    /// possibility list.
+    /// A new concrete card has been seen, so add it to the master list of seen
+    /// cards, and update each `Opponent`'s possibility list.
     fn seen(&mut self, card: Card) {
+        self.seen.push(card);
+        match self.deck.get_mut(&card) {
+            Some(1) => {
+                self.deck.remove(&card);
+            }
+            Some(n) => {
+                *n -= 1;
+            }
+            None => {}
+        }
+
         for o in self.opponents.iter_mut() {
-            for (i, p) in o.possible_cards.iter().enumerate() {
-                if p == &card {
-                    o.possible_cards.remove(i);
-                    break;
+            match o.possible_cards.get_mut(&card) {
+                Some(1) => {
+                    o.possible_cards.remove(&card);
                 }
+                Some(n) => {
+                    *n -= 1;
+                }
+                None => {}
             }
         }
     }
@@ -175,8 +173,8 @@ impl Model {
 enum Msg {
     /// Set the tracker state to its initial... state.
     Reset,
-    /// Add the given `Card` to the user's hand.
-    AddToHand(Card),
+    /// A card was played.
+    Played(Card),
 }
 
 fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
@@ -189,12 +187,8 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
             log!("Resetting the Tracker state.");
             model.reset()
         }
-        Msg::AddToHand(card) => {
-            log!(format!("Adding {:?} to user's hand.", card));
-            model.user.hand = Some(Hand {
-                first: card,
-                second: None,
-            });
+        Msg::Played(card) => {
+            log!(format!("The {:?} card was played.", card));
             model.seen(card);
         }
     }
@@ -204,17 +198,30 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
     nodes![
         div!["Love Letter"],
         div![button!["Reset", ev(Ev::Click, |_| Msg::Reset)]],
-        view_card_choice(),
+        view_card_choice(model),
+        view_seen_cards(model),
         view_player_grid(model),
     ]
 }
 
-fn view_card_choice() -> Node<Msg> {
+fn view_seen_cards(model: &Model) -> Node<Msg> {
     div![
         C!["card-line"],
-        ALL_CARDS
-            .iter()
-            .map(|c| button![c.img(), ev(Ev::Click, move |_| Msg::AddToHand(*c))])
+        b!["Played Cards"],
+        model.seen.iter().map(|c| c.img()).collect::<Vec<_>>()
+    ]
+}
+
+fn view_card_choice(model: &Model) -> Node<Msg> {
+    div![
+        C!["card-line"],
+        model
+            .deck
+            .keys()
+            .map(|c| {
+                let card = c.clone();
+                button![c.img(), ev(Ev::Click, move |_| Msg::Played(card))]
+            })
             .collect::<Vec<_>>()
     ]
 }
