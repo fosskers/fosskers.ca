@@ -57,8 +57,6 @@ impl Card {
 }
 
 struct Opponent {
-    /// Is this opponent still playing, or have they been knocked out?
-    alive: bool,
     /// Cards that this opponent has played.
     played: Vec<Card>,
     /// Cards this opponent could be holding.
@@ -68,7 +66,6 @@ struct Opponent {
 impl Opponent {
     fn new() -> Opponent {
         Opponent {
-            alive: true,
             played: Vec::new(),
             possible_cards: Card::full_deck(),
         }
@@ -114,18 +111,23 @@ struct Model {
     /// The user of the tracker.
     user: User,
     /// The other players.
-    opponents: Vec<Opponent>,
+    opponents: BTreeMap<usize, Opponent>,
 }
 
 impl Model {
     fn new() -> Model {
+        // TODO Generalize to a custom number of opponents.
+        let mut opponents = BTreeMap::new();
+        opponents.insert(0, Opponent::new());
+        opponents.insert(1, Opponent::new());
+        opponents.insert(2, Opponent::new());
+
         Model {
             tracker: Vec::new(),
             seen: Vec::new(),
             deck: Card::full_deck(),
             deck_size: FULL_DECK,
-            // TODO Generalize to a custom number of opponents.
-            opponents: vec![Opponent::new(), Opponent::new(), Opponent::new()],
+            opponents,
             user: User::default(),
         }
     }
@@ -156,7 +158,7 @@ impl Model {
             None => {}
         }
 
-        for o in self.opponents.iter_mut() {
+        for o in self.opponents.values_mut() {
             match o.possible_cards.get_mut(&card) {
                 Some(1) => {
                     o.possible_cards.remove(&card);
@@ -175,6 +177,8 @@ enum Msg {
     Reset,
     /// A card was played.
     Played(Card),
+    /// Note that a player died. They should be removed from the tracker.
+    Kill(usize),
 }
 
 fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
@@ -190,6 +194,10 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         Msg::Played(card) => {
             log!(format!("The {:?} card was played.", card));
             model.seen(card);
+        }
+        Msg::Kill(oid) => {
+            log!(format!("Killing player {}.", oid));
+            model.opponents.remove(&oid);
         }
     }
 }
@@ -233,7 +241,7 @@ fn view_player_grid(model: &Model) -> Node<Msg> {
         model
             .opponents
             .iter()
-            .map(view_opponent)
+            .map(|(id, o)| view_opponent(*id, o))
             .collect::<Vec<_>>(),
     ]
 }
@@ -258,11 +266,14 @@ fn view_user(user: &User) -> Node<Msg> {
 }
 
 /// Render an `Opponent`.
-fn view_opponent(opponent: &Opponent) -> Node<Msg> {
+fn view_opponent(oid: usize, opponent: &Opponent) -> Node<Msg> {
     let probs = opponent.card_probs();
 
     tr![
-        td!["Opponent", opponent.alive.then(|| " (Alive)")],
+        td![
+            format!("Opponent #{}", oid),
+            button!["Kill", ev(Ev::Click, move |_| Msg::Kill(oid))]
+        ],
         td![div![
             C!["card-line"],
             opponent.played.iter().map(|c| c.img()).collect::<Vec<_>>()
