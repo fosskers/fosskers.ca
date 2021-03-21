@@ -83,21 +83,6 @@ impl Opponent {
     }
 }
 
-/// If you have a hand, you have at least one card.
-struct Hand {
-    first: Card,
-    second: Option<Card>,
-}
-
-/// The user of the tracker.
-#[derive(Default)]
-struct User {
-    /// The `Hand` of the person using the tracker.
-    hand: Option<Hand>,
-    /// Cards that the user has played.
-    played: Vec<Card>,
-}
-
 /// The global state of the tracker.
 struct Model {
     /// Cards that haven't been seen.
@@ -108,8 +93,6 @@ struct Model {
     deck: BTreeMap<Card, usize>,
     /// Raw count of the number of cards left in the draw deck.
     deck_size: usize,
-    /// The user of the tracker.
-    user: User,
     /// The other players.
     opponents: BTreeMap<usize, Opponent>,
 }
@@ -128,7 +111,6 @@ impl Model {
             deck: Card::full_deck(),
             deck_size: FULL_DECK,
             opponents,
-            user: User::default(),
         }
     }
 
@@ -141,7 +123,6 @@ impl Model {
         self.deck = new.deck;
         self.deck_size = new.deck_size;
         self.opponents = new.opponents;
-        self.user = new.user;
     }
 
     /// A new concrete card has been seen, so add it to the master list of seen
@@ -206,62 +187,52 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
     nodes![
         div!["Love Letter"],
         div![button!["Reset", ev(Ev::Click, |_| Msg::Reset)]],
+        hr![],
         view_card_choice(model),
+        hr![],
         view_seen_cards(model),
+        hr![],
         view_player_grid(model),
     ]
 }
 
 fn view_seen_cards(model: &Model) -> Node<Msg> {
     div![
-        C!["card-line"],
-        b!["Played Cards"],
-        model.seen.iter().map(|c| c.img()).collect::<Vec<_>>()
+        C!["seen-line"],
+        b!["Seen Cards"],
+        model
+            .seen
+            .iter()
+            .map(|c| c.img_with("card-image-user"))
+            .collect::<Vec<_>>()
     ]
 }
 
-fn view_card_choice(model: &Model) -> Node<Msg> {
-    div![
-        C!["card-line"],
-        model
-            .deck
-            .keys()
-            .map(|c| {
-                let card = c.clone();
-                button![c.img(), ev(Ev::Click, move |_| Msg::Played(card))]
-            })
-            .collect::<Vec<_>>()
+fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
+    vec![
+        div![b!["Remaining Unseen Cards"]],
+        div![
+            C!["card-line"],
+            model
+                .deck
+                .keys()
+                .map(|c| {
+                    let card = c.clone();
+                    button![c.img(), ev(Ev::Click, move |_| Msg::Played(card))]
+                })
+                .collect::<Vec<_>>()
+        ],
     ]
 }
 
 fn view_player_grid(model: &Model) -> Node<Msg> {
     table![
         tr![th!["Player"], th!["Cards Played"], th!["Hand"],],
-        view_user(&model.user),
         model
             .opponents
             .iter()
             .map(|(id, o)| view_opponent(*id, o))
             .collect::<Vec<_>>(),
-    ]
-}
-
-/// Render a `User`.
-fn view_user(user: &User) -> Node<Msg> {
-    tr![
-        td!["You!"],
-        td![div![
-            C!["card-line"],
-            user.played.iter().map(|c| c.img()).collect::<Vec<_>>()
-        ]],
-        match &user.hand {
-            None => td!["Empty hand..."],
-            Some(h) => td![div![
-                C!["card-line"],
-                h.first.img_with("card-image-user"),
-                h.second.as_ref().map(|c| c.img_with("card-image-user"))
-            ]],
-        }
     ]
 }
 

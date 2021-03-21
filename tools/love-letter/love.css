@@ -1,5 +1,13 @@
 .card-line {
     display: flex;
+    align-content: space-between;
+    align-items: center;
+}
+
+.seen-line {
+    display: flex;
+    align-content: space-between;
+    align-items: center;
 }
 
 .card-image {
