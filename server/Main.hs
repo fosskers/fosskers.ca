@@ -27,6 +27,7 @@ import           Fosskers.Site.AlBhed (alBhed)
 import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
 import           Fosskers.Site.GameOfLife (gol)
+import           Fosskers.Site.Love (love)
 import           Lucid
 import           Network.HTTP.Types
 import           Network.Wai
@@ -81,6 +82,7 @@ app ps bs = compress routes
       [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l About $ about ps l)
       [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l CV $ cv ps l)
       [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l Tool $ alBhed l)
+      [ _, "tools", "love-letter"] -> resp $ html love
       [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l Demo $ gol l)
       -- All blog posts --
       [ lang, "blog" ] ->
