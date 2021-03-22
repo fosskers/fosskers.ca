@@ -159,6 +159,8 @@ enum Msg {
     ForgetPlayer(usize),
     /// A card was played.
     Played(Card),
+    /// A player is known to have a particular card.
+    Has(usize, Card),
     /// Note that a player died. They should be removed from the tracker.
     Kill(usize),
 }
@@ -176,6 +178,14 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         Msg::Played(card) => {
             log!(format!("The {:?} card was played.", card));
             model.seen(card);
+        }
+        Msg::Has(oid, card) => {
+            if let Some(o) = model.opponents.get_mut(&oid) {
+                let mut poss = BTreeMap::new();
+                poss.insert(card, 1);
+
+                o.possible_cards = poss;
+            }
         }
         Msg::Kill(oid) => {
             log!(format!("Killing player {}.", oid));
@@ -269,7 +279,16 @@ fn view_opponent(oid: usize, opponent: &Opponent) -> Node<Msg> {
             C!["card-line"],
             probs
                 .into_iter()
-                .map(|(card, prob)| figure![card.img(), figcaption![prob, "%"]])
+                .map(|(card, prob)| figure![
+                    input![
+                        attrs! {
+                            At::Type => "image",
+                            At::Src => card.image()
+                        },
+                        ev(Ev::Click, move |_| Msg::Has(oid, card))
+                    ],
+                    figcaption![prob, "%"]
+                ])
                 .collect::<Vec<_>>()
         ]]
     ]
