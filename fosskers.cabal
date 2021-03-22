@@ -66,6 +66,7 @@ executable server
     Fosskers.Site.CV
     Fosskers.Site.GameOfLife
     Fosskers.Site.AlBhed
+    Fosskers.Site.Love
 
   build-depends:
     , binary

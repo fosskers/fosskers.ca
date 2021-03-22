@@ -1,0 +1,26 @@
+.card-line {
+    display: flex;
+    /* align-content: space-between; */
+    /* align-items: center; */
+}
+
+input {
+    border-radius: 25px;
+    width: 100%;
+    box-shadow: 3px 3px 3px;
+}
+
+.card-image {
+    border-radius: 25px;
+    width: 100%;
+    box-shadow: 3px 3px 3px;
+}
+
+figure {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+figcaption {
+    text-align: center;
+}
