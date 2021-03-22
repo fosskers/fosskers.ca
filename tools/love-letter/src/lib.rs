@@ -148,6 +148,11 @@ impl Model {
             }
         }
     }
+
+    /// Unsee a card that was perhaps added in error from a misclick.
+    fn unsee(&mut self, card: Card) {
+        //
+    }
 }
 
 enum Msg {
@@ -157,6 +162,8 @@ enum Msg {
     ForgetPlayer(usize),
     /// A card was played.
     Played(Card),
+    /// Mark a seen card as unseen, perhaps if a misclick was made.
+    Unplay(Card),
     /// A player is known to have a particular card.
     Has(usize, Card),
     /// Note that a player died. They should be removed from the tracker.
@@ -176,6 +183,9 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         Msg::Played(card) => {
             log!(format!("The {:?} card was played.", card));
             model.seen(card);
+        }
+        Msg::Unplay(card) => {
+            log!(format!("Unseeing {:?}.", card));
         }
         Msg::Has(oid, card) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
@@ -230,10 +240,7 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
                 .map(|c| {
                     let card = c.clone();
                     div![input![
-                        attrs! {
-                            At::Type => "image",
-                            At::Src => c.image()
-                        },
+                        attrs! {At::Type => "image", At::Src => c.image()},
                         ev(Ev::Click, move |_| Msg::Played(card))
                     ]]
                 })
@@ -247,7 +254,17 @@ fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
         div![b!["Seen Cards"]],
         div![
             C!["card-line"],
-            model.seen.iter().map(|c| div![c.img()]).collect::<Vec<_>>()
+            model
+                .seen
+                .iter()
+                .map(|c| {
+                    let card = c.clone();
+                    div![input![
+                        attrs! { At::Type => "image", At::Src => card.image()},
+                        ev(Ev::Click, move |_| Msg::Unplay(card))
+                    ]]
+                })
+                .collect::<Vec<_>>()
         ],
     ]
 }
