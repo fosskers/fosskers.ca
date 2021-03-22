@@ -3,7 +3,7 @@ name: Rust
 on:
   pull_request:
   push:
-    branches: [ master ]
+    branches: [master]
 
 env:
   CARGO_TERM_COLOR: always
@@ -25,4 +25,9 @@ jobs:
       - name: Al Bhed
         run: |
           cd tools/al-bhed
+          cargo build
+
+      - name: Love Letter
+        run: |
+          cd tools/love-letter
           cargo build
