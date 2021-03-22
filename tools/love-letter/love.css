@@ -10,6 +10,10 @@
     align-items: center;
 }
 
+input {
+    width: 10%;
+}
+
 .card-image {
     width: 100%;
 }

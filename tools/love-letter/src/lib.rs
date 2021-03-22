@@ -196,18 +196,6 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
     ]
 }
 
-fn view_seen_cards(model: &Model) -> Node<Msg> {
-    div![
-        C!["seen-line"],
-        b!["Seen Cards"],
-        model
-            .seen
-            .iter()
-            .map(|c| c.img_with("card-image-user"))
-            .collect::<Vec<_>>()
-    ]
-}
-
 fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
     vec![
         div![b!["Remaining Unseen Cards"]],
@@ -218,8 +206,28 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
                 .keys()
                 .map(|c| {
                     let card = c.clone();
-                    button![c.img(), ev(Ev::Click, move |_| Msg::Played(card))]
+                    input![
+                        attrs! {
+                            At::Type => "image",
+                            At::Src => c.image()
+                        },
+                        ev(Ev::Click, move |_| Msg::Played(card))
+                    ]
                 })
+                .collect::<Vec<_>>()
+        ],
+    ]
+}
+
+fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
+    vec![
+        div![b!["Seen Cards"]],
+        div![
+            C!["seen-line"],
+            model
+                .seen
+                .iter()
+                .map(|c| c.img_with("card-image-user"))
                 .collect::<Vec<_>>()
         ],
     ]
