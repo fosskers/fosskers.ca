@@ -239,12 +239,8 @@ fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
     vec![
         div![b!["Seen Cards"]],
         div![
-            C!["seen-line"],
-            model
-                .seen
-                .iter()
-                .map(|c| c.img_with("card-image-user"))
-                .collect::<Vec<_>>()
+            C!["card-line"],
+            model.seen.iter().map(|c| div![c.img()]).collect::<Vec<_>>()
         ],
     ]
 }

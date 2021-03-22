@@ -4,22 +4,14 @@
     /* align-items: center; */
 }
 
-.seen-line {
-    display: flex;
-    /* align-content: space-between; */
-    /* align-items: center; */
-}
-
 input {
+    border-radius: 25px;
     width: 100%;
 }
 
 .card-image {
+    border-radius: 25px;
     width: 100%;
-}
-
-.card-image-user {
-    width: 10%;
 }
 
 figure {
