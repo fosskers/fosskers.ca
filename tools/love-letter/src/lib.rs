@@ -126,25 +126,13 @@ impl Model {
     /// cards, and update each `Opponent`'s possibility list.
     fn seen(&mut self, card: Card) {
         self.seen.push(card);
-        match self.deck.get_mut(&card) {
-            Some(1) => {
-                self.deck.remove(&card);
-            }
-            Some(n) => {
-                *n -= 1;
-            }
-            None => {}
+        if let Some(n) = self.deck.get_mut(&card) {
+            *n -= 1;
         }
 
         for o in self.opponents.values_mut() {
-            match o.possible_cards.get_mut(&card) {
-                Some(1) => {
-                    o.possible_cards.remove(&card);
-                }
-                Some(n) => {
-                    *n -= 1;
-                }
-                None => {}
+            if let Some(n) = o.possible_cards.get_mut(&card) {
+                *n -= 1;
             }
         }
     }
@@ -295,6 +283,7 @@ fn view_opponent(oid: usize, opponent: &Opponent) -> Node<Msg> {
                 .into_iter()
                 .map(|(card, prob)| figure![
                     input![
+                        C![(prob == 0).then(|| "zero")],
                         attrs! {
                             At::Type => "image",
                             At::Src => card.image()
