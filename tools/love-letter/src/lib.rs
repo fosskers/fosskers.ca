@@ -57,8 +57,6 @@ impl Card {
 }
 
 struct Opponent {
-    /// Cards that this opponent has played.
-    played: Vec<Card>,
     /// Cards this opponent could be holding.
     possible_cards: BTreeMap<Card, usize>,
 }
@@ -66,7 +64,6 @@ struct Opponent {
 impl Opponent {
     fn new() -> Opponent {
         Opponent {
-            played: Vec::new(),
             possible_cards: Card::full_deck(),
         }
     }
@@ -206,13 +203,13 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
                 .keys()
                 .map(|c| {
                     let card = c.clone();
-                    input![
+                    div![input![
                         attrs! {
                             At::Type => "image",
                             At::Src => c.image()
                         },
                         ev(Ev::Click, move |_| Msg::Played(card))
-                    ]
+                    ]]
                 })
                 .collect::<Vec<_>>()
         ],
@@ -234,14 +231,11 @@ fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
 }
 
 fn view_player_grid(model: &Model) -> Node<Msg> {
-    table![
-        tr![th!["Player"], th!["Cards Played"], th!["Hand"],],
-        model
-            .opponents
-            .iter()
-            .map(|(id, o)| view_opponent(*id, o))
-            .collect::<Vec<_>>(),
-    ]
+    table![model
+        .opponents
+        .iter()
+        .map(|(id, o)| view_opponent(*id, o))
+        .collect::<Vec<_>>(),]
 }
 
 /// Render an `Opponent`.
@@ -253,10 +247,6 @@ fn view_opponent(oid: usize, opponent: &Opponent) -> Node<Msg> {
             format!("Opponent #{}", oid),
             button!["Kill", ev(Ev::Click, move |_| Msg::Kill(oid))]
         ],
-        td![div![
-            C!["card-line"],
-            opponent.played.iter().map(|c| c.img()).collect::<Vec<_>>()
-        ]],
         td![div![
             C!["card-line"],
             probs

@@ -1,17 +1,17 @@
 .card-line {
     display: flex;
-    align-content: space-between;
-    align-items: center;
+    /* align-content: space-between; */
+    /* align-items: center; */
 }
 
 .seen-line {
     display: flex;
-    align-content: space-between;
-    align-items: center;
+    /* align-content: space-between; */
+    /* align-items: center; */
 }
 
 input {
-    width: 10%;
+    width: 100%;
 }
 
 .card-image {
@@ -20,6 +20,11 @@ input {
 
 .card-image-user {
     width: 10%;
+}
+
+figure {
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 figcaption {
