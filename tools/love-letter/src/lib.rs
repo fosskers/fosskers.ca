@@ -153,8 +153,6 @@ impl Model {
 enum Msg {
     /// Set the tracker state to its initial... state.
     Reset,
-    /// Forget any special knowledge you had about the players.
-    Forget,
     /// Forget special knowledge for a particular player.
     ForgetPlayer(usize),
     /// A card was played.
@@ -191,12 +189,6 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
             log!(format!("Killing player {}.", oid));
             model.opponents.remove(&oid);
         }
-        Msg::Forget => {
-            log!("Forgetting all special knowledge.");
-            for o in model.opponents.values_mut() {
-                o.possible_cards = model.deck.clone();
-            }
-        }
         Msg::ForgetPlayer(oid) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 log!(format!("Forgetting knowledge about player {}.", oid));
@@ -209,10 +201,7 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
 fn view(model: &Model) -> Vec<Node<Msg>> {
     nodes![
         div!["Love Letter"],
-        div![
-            button!["Reset Game", ev(Ev::Click, |_| Msg::Reset)],
-            button!["Reset Knowledge", ev(Ev::Click, |_| Msg::Forget)],
-        ],
+        div![button!["Reset Game", ev(Ev::Click, |_| Msg::Reset)]],
         hr![],
         view_card_choice(model),
         hr![],
