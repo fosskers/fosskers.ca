@@ -32,3 +32,18 @@ description = "Build with wasm-pack in release mode"
 install_crate = { crate_name = "wasm-pack", binary = "wasm-pack", test_arg = "-V" }
 command = "wasm-pack"
 args = ["build", "--target", "web", "--out-name", "love"]
+
+[tasks.copy_wasm]
+description = "Copy release-mode WASM to the top-level assets folder."
+script = "cp pkg/love_bg.wasm ../../assets/"
+
+[tasks.copy_js]
+description = "Copy release-mode JS to the top-level assets folder."
+script = "cp pkg/love.js ../../assets/"
+
+[tasks.release]
+dependencies = [
+  "build_release",
+  "copy_wasm",
+  "copy_js"
+]
