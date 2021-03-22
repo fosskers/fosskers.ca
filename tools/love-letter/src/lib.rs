@@ -183,6 +183,14 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
                 poss.insert(card, 1);
 
                 o.possible_cards = poss;
+
+                model
+                    .opponents
+                    .iter_mut()
+                    .filter(|(i, _)| i != &&oid)
+                    .for_each(|(_, o)| {
+                        o.possible_cards.remove(&card);
+                    });
             }
         }
         Msg::Kill(oid) => {
