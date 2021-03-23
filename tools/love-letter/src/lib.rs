@@ -15,6 +15,9 @@ const ALL_CARDS: [Card; 8] = [
     Card::Princess,
 ];
 
+/// Placeholder opponent names.
+const DUMMY_NAMES: [&str; 3] = ["Sam", "Pippin", "Merry"];
+
 /// The available cards to play.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum Card {
@@ -58,14 +61,25 @@ impl Card {
     }
 }
 
+/// Specific knowledge about an `Opponent`.
+enum Knowledge {
+    /// They definitely have the given card.
+    Has(Card),
+    /// They definitely do not have the given card.
+    Not(Card),
+}
+
 struct Opponent {
+    /// The name of this Opponent.
+    name: String,
     /// Cards this opponent could be holding.
     possible_cards: BTreeMap<Card, usize>,
 }
 
 impl Opponent {
-    fn new() -> Opponent {
+    fn new(name: String) -> Opponent {
         Opponent {
+            name,
             possible_cards: Card::full_deck(),
         }
     }
@@ -110,6 +124,8 @@ impl Opponent {
 
 /// The global state of the tracker.
 struct Model {
+    // /// Opponent names.
+    // names: Vec<String>,
     /// Cards that haven't been seen.
     tracker: Vec<Card>,
     /// Cards that have been **played** by the players.
@@ -123,12 +139,12 @@ struct Model {
 }
 
 impl Model {
-    fn new() -> Model {
+    fn new(names: &[&str]) -> Model {
         // TODO Generalize to a custom number of opponents.
         let mut opponents = BTreeMap::new();
-        opponents.insert(0, Opponent::new());
-        opponents.insert(1, Opponent::new());
-        opponents.insert(2, Opponent::new());
+        for (i, n) in names.iter().enumerate() {
+            opponents.insert(i, Opponent::new(n.to_string()));
+        }
 
         Model {
             tracker: Vec::new(),
@@ -141,7 +157,7 @@ impl Model {
 
     // TODO Make this less fragile.
     fn reset(&mut self) {
-        let new = Model::new();
+        let new = Model::new(&DUMMY_NAMES);
 
         self.tracker = new.tracker;
         self.seen = new.seen;
@@ -211,7 +227,7 @@ enum Msg {
 }
 
 fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
-    Model::new()
+    Model::new(&DUMMY_NAMES)
 }
 
 fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
@@ -333,7 +349,7 @@ fn view_opponent(oid: usize, opponent: &Opponent) -> Node<Msg> {
 
     tr![
         td![
-            div![format!("Opponent #{}", oid)],
+            div![&opponent.name],
             div![
                 button!["Kill", ev(Ev::Click, move |_| Msg::Kill(oid))],
                 button!["Reset", ev(Ev::Click, move |_| Msg::ForgetPlayer(oid))]
