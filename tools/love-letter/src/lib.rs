@@ -1,6 +1,6 @@
+use itertools::Itertools;
 use seed::{prelude::*, *};
-use std::collections::BTreeMap;
-use std::ops::Not;
+use std::collections::{BTreeMap, HashMap, HashSet};
 
 const FULL_DECK: usize = 16;
 
@@ -19,7 +19,7 @@ const ALL_CARDS: [Card; 8] = [
 const DUMMY_NAMES: [&str; 3] = ["Sam", "Pippin", "Merry"];
 
 /// The available cards to play.
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 enum Card {
     Guard,
     Priest,
@@ -62,7 +62,8 @@ impl Card {
 }
 
 /// Specific knowledge about an `Opponent`.
-enum Knowledge {
+#[derive(PartialEq, Eq, PartialOrd, Ord, Hash)]
+enum Fact {
     /// They definitely have the given card.
     Has(Card),
     /// They definitely do not have the given card.
@@ -72,53 +73,41 @@ enum Knowledge {
 struct Opponent {
     /// The name of this Opponent.
     name: String,
-    /// Cards this opponent could be holding.
-    possible_cards: BTreeMap<Card, usize>,
+    /// Known facts about the opponent.
+    facts: HashSet<Fact>,
 }
 
 impl Opponent {
     fn new(name: String) -> Opponent {
         Opponent {
             name,
-            possible_cards: Card::full_deck(),
+            facts: HashSet::new(),
         }
-    }
-
-    /// Analyses the cards that this player could have, and yields a map of
-    /// percentages.
-    fn card_probs(&self) -> BTreeMap<Card, usize> {
-        let rem: usize = self.possible_cards.values().sum();
-
-        ALL_CARDS
-            .iter()
-            .map(|c| match self.possible_cards.get(c) {
-                Some(n) => (*c, 100 * n / rem),
-                None => (*c, 0),
-            })
-            .collect()
     }
 
     /// Mark that the `Opponent` has a specific card.
     fn only_has(&mut self, card: Card) {
-        let mut poss = BTreeMap::new();
-        poss.insert(card, 1);
-        self.possible_cards = poss;
+        self.facts.clear();
+        self.facts.insert(Fact::Has(card));
     }
 
-    /// Do we know what this `Opponent` has?
-    fn certain(&self) -> bool {
-        self.possible_cards.len() == 1
+    /// What does this `Opponent` have for certain, if anything?
+    fn what_has(&self) -> Option<Card> {
+        self.facts.iter().find_map(|f| match f {
+            Fact::Has(c) => Some(*c),
+            _ => None,
+        })
     }
 
     /// This `Opponent` survived a Baron, revealing the given card.
     fn baron(&mut self, card: Card) {
         // TODO Use `filter_drain` once its stable.
-        self.possible_cards = self
-            .possible_cards
-            .iter()
-            .filter(|(c, _)| c > &&card)
-            .map(|(c, n)| (*c, *n))
-            .collect();
+        // self.possible_cards = self
+        //     .possible_cards
+        //     .iter()
+        //     .filter(|(c, _)| c > &&card)
+        //     .map(|(c, n)| (*c, *n))
+        //     .collect();
     }
 }
 
@@ -167,7 +156,7 @@ impl Model {
     }
 
     /// A new concrete card has been seen, so add it to the master list of seen
-    /// cards, and update each `Opponent`'s possibility list.
+    /// cards.
     fn seen(&mut self, card: Card) {
         let id = self.seen.keys().max().map(|max| *max).unwrap_or(0);
         self.seen.insert(id + 1, card);
@@ -180,19 +169,6 @@ impl Model {
             }
             _ => {}
         }
-
-        for o in self.opponents.values_mut() {
-            let certain = o.certain();
-            match o.possible_cards.get_mut(&card) {
-                Some(1) if certain.not() => {
-                    o.possible_cards.remove(&card);
-                }
-                Some(n) if certain.not() => {
-                    *n -= 1;
-                }
-                _ => {}
-            }
-        }
     }
 
     /// Unsee a card that was perhaps added in error from a misclick.
@@ -201,10 +177,41 @@ impl Model {
 
         let entry = self.deck.entry(card).or_insert(0);
         *entry += 1;
+    }
 
-        for o in self.opponents.values_mut() {
-            let c = o.possible_cards.entry(card).or_insert(0);
-            *c += 1;
+    /// For a particular `Opponent`, what are the probabilities that they have
+    /// each card?
+    fn probs(&self, o: &Opponent) -> BTreeMap<Card, usize> {
+        match o.what_has() {
+            Some(card) => {
+                let mut map: BTreeMap<_, _> = ALL_CARDS.iter().map(|c| (*c, 0)).collect();
+                let c = map.entry(card).or_insert(100);
+                *c = 100;
+                map
+            }
+            None => {
+                let rem: usize = self.deck.values().sum();
+                let certains: HashMap<Card, usize> = self
+                    .opponents
+                    .values()
+                    .filter_map(|o| o.what_has())
+                    .map(|c| (c, 1))
+                    .into_grouping_map()
+                    .sum();
+
+                // BELIEVE THE DECK.
+                ALL_CARDS
+                    .iter()
+                    .map(|c| match self.deck.get(c) {
+                        None => (*c, 0),
+                        Some(0) => (*c, 0),
+                        Some(n) => {
+                            let m = certains.get(c).unwrap_or(&0);
+                            (*c, 100 * (n - m) / rem)
+                        }
+                    })
+                    .collect()
+            }
         }
     }
 }
@@ -245,21 +252,8 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
             model.unsee(cid, card);
         }
         Msg::Has(oid, card) => {
-            for (i, o) in model.opponents.iter_mut() {
-                if *i == oid {
-                    o.only_has(card);
-                } else {
-                    let certain = o.certain();
-                    match o.possible_cards.get_mut(&card) {
-                        Some(1) if certain.not() => {
-                            o.possible_cards.remove(&card);
-                        }
-                        Some(n) if certain.not() => {
-                            *n -= 1;
-                        }
-                        _ => {}
-                    }
-                }
+            if let Some(o) = model.opponents.get_mut(&oid) {
+                o.only_has(card);
             }
         }
         Msg::Baron(oid, card) => {
@@ -275,7 +269,7 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         Msg::ForgetPlayer(oid) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 log!(format!("Forgetting knowledge about player {}.", oid));
-                o.possible_cards = model.deck.clone();
+                o.facts.clear();
             }
         }
     }
@@ -339,13 +333,13 @@ fn view_player_grid(model: &Model) -> Node<Msg> {
     table![model
         .opponents
         .iter()
-        .map(|(id, o)| view_opponent(*id, o))
+        .map(|(id, o)| view_opponent(model, *id, o))
         .collect::<Vec<_>>(),]
 }
 
 /// Render an `Opponent`.
-fn view_opponent(oid: usize, opponent: &Opponent) -> Node<Msg> {
-    let probs = opponent.card_probs();
+fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
+    let probs = model.probs(opponent);
 
     tr![
         td![

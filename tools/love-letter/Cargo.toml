@@ -10,6 +10,7 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
+itertools = "0.10"
 seed = "0.8"
 
 [profile.release]
