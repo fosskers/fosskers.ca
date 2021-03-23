@@ -56,16 +56,6 @@ impl Card {
             Card::Princess => "/assets/princess.jpg",
         }
     }
-
-    /// A stylised `<img>` element for this `Card`.
-    fn img(&self) -> Node<Msg> {
-        self.img_with("card-image")
-    }
-
-    /// Like [`img`], but you can customise the CSS class.
-    fn img_with(&self, class: &str) -> Node<Msg> {
-        img![C![class], attrs! {At::Src => self.image()}]
-    }
 }
 
 struct Opponent {
