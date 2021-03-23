@@ -78,7 +78,8 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "Blog" "/en/blog" $ active Posts
       dropdown "Projects" projects
       -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
-      dropdown "Tools" [Just ("Al Bhed Translator", "/en/tools/al-bhed")]
+      dropdown "Tools" [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
+                       , Just ("Love Letter Tracker", "/en/tools/love-letter") ]
       dropdown "Demos" [Just ("Game of Life", "/en/demo/game-of-life")]
       item "CV" "/en/cv" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
@@ -92,7 +93,8 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       item "ブログ" "/jp/blog" $ active Posts
       dropdown "プロジェクト" projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
-      dropdown "ツール" [Just ("アルベド翻訳", "/jp/tools/al-bhed")]
+      dropdown "ツール" [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
+                       , Just ("Love Letter Tracker", "/jp/tools/love-letter") ]
       dropdown "デモ" [Just ("Game of Life", "/jp/demo/game-of-life")]
       item "履歴書" "/jp/cv" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
