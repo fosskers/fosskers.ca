@@ -112,7 +112,7 @@ struct Model {
     /// Cards that haven't been seen.
     tracker: Vec<Card>,
     /// Cards that have been **played** by the players.
-    seen: Vec<Card>,
+    seen: BTreeMap<usize, Card>,
     /// The possible cards remaining.
     deck: BTreeMap<Card, usize>,
     /// Raw count of the number of cards left in the draw deck.
@@ -131,7 +131,7 @@ impl Model {
 
         Model {
             tracker: Vec::new(),
-            seen: Vec::new(),
+            seen: BTreeMap::new(),
             deck: Card::full_deck(),
             deck_size: FULL_DECK,
             opponents,
@@ -152,7 +152,8 @@ impl Model {
     /// A new concrete card has been seen, so add it to the master list of seen
     /// cards, and update each `Opponent`'s possibility list.
     fn seen(&mut self, card: Card) {
-        self.seen.push(card);
+        let id = self.seen.keys().max().unwrap_or(&0);
+        self.seen.insert(id + 1, card);
         match self.deck.get_mut(&card) {
             Some(1) => {
                 self.deck.remove(&card);
@@ -178,8 +179,16 @@ impl Model {
     }
 
     /// Unsee a card that was perhaps added in error from a misclick.
-    fn unsee(&mut self, card: Card) {
-        //
+    fn unsee(&mut self, cid: usize, card: Card) {
+        self.seen.remove(&cid);
+
+        let entry = self.deck.entry(card).or_insert(0);
+        *entry += 1;
+
+        for o in self.opponents.values_mut() {
+            let c = o.possible_cards.entry(card).or_insert(0);
+            *c += 1;
+        }
     }
 }
 
@@ -191,7 +200,7 @@ enum Msg {
     /// A card was played.
     Played(Card),
     /// Mark a seen card as unseen, perhaps if a misclick was made.
-    Unplay(Card),
+    Unplay(usize, Card),
     /// A player is known to have a particular card.
     Has(usize, Card),
     /// Note that a player died. They should be removed from the tracker.
@@ -212,8 +221,9 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
             log!(format!("The {:?} card was played.", card));
             model.seen(card);
         }
-        Msg::Unplay(card) => {
+        Msg::Unplay(cid, card) => {
             log!(format!("Unseeing {:?}.", card));
+            model.unsee(cid, card);
         }
         Msg::Has(oid, card) => {
             for (i, o) in model.opponents.iter_mut() {
@@ -287,11 +297,12 @@ fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
             model
                 .seen
                 .iter()
-                .map(|c| {
+                .map(|(cid, c)| {
                     let card = c.clone();
+                    let id = cid.clone();
                     div![input![
                         attrs! { At::Type => "image", At::Src => card.image()},
-                        ev(Ev::Click, move |_| Msg::Unplay(card))
+                        ev(Ev::Click, move |_| Msg::Unplay(id, card))
                     ]]
                 })
                 .collect::<Vec<_>>()
