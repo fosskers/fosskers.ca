@@ -4,6 +4,17 @@ use std::ops::Not;
 
 const FULL_DECK: usize = 16;
 
+const ALL_CARDS: [Card; 8] = [
+    Card::Guard,
+    Card::Priest,
+    Card::Baron,
+    Card::Handmaid,
+    Card::Prince,
+    Card::King,
+    Card::Countess,
+    Card::Princess,
+];
+
 /// The available cards to play.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum Card {
@@ -60,40 +71,39 @@ impl Card {
 struct Opponent {
     /// Cards this opponent could be holding.
     possible_cards: BTreeMap<Card, usize>,
-    /// We know exactly what this character has.
-    certain: bool,
 }
 
 impl Opponent {
     fn new() -> Opponent {
         Opponent {
             possible_cards: Card::full_deck(),
-            certain: false,
         }
     }
 
     /// Analyses the cards that this player could have, and yields a map of
     /// percentages.
     fn card_probs(&self) -> BTreeMap<Card, usize> {
-        let remaining: usize = self.possible_cards.values().sum();
+        let rem: usize = self.possible_cards.values().sum();
 
-        self.possible_cards
+        ALL_CARDS
             .iter()
-            .map(|(c, n)| (*c, 100 * n / remaining))
+            .map(|c| match self.possible_cards.get(c) {
+                Some(n) => (*c, 100 * n / rem),
+                None => (*c, 0),
+            })
             .collect()
     }
 
     /// Mark that the `Opponent` has a specific card.
     fn only_has(&mut self, card: Card) {
-        for n in self.possible_cards.values_mut() {
-            *n = 0;
-        }
+        let mut poss = BTreeMap::new();
+        poss.insert(card, 1);
+        self.possible_cards = poss;
+    }
 
-        if let Some(n) = self.possible_cards.get_mut(&card) {
-            *n = 1;
-        }
-
-        self.certain = true;
+    /// Do we know what this `Opponent` has?
+    fn certain(&self) -> bool {
+        self.possible_cards.len() == 1
     }
 }
 
@@ -144,16 +154,23 @@ impl Model {
     fn seen(&mut self, card: Card) {
         self.seen.push(card);
         match self.deck.get_mut(&card) {
-            Some(n) if *n > 0 => {
-                *n = 0.max(*n - 1);
+            Some(1) => {
+                self.deck.remove(&card);
+            }
+            Some(n) => {
+                *n -= 1;
             }
             _ => {}
         }
 
         for o in self.opponents.values_mut() {
+            let certain = o.certain();
             match o.possible_cards.get_mut(&card) {
-                Some(n) if o.certain.not() && *n > 0 => {
-                    *n = 0.max(*n - 1);
+                Some(1) if certain.not() => {
+                    o.possible_cards.remove(&card);
+                }
+                Some(n) if certain.not() => {
+                    *n -= 1;
                 }
                 _ => {}
             }
@@ -203,9 +220,13 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
                 if *i == oid {
                     o.only_has(card);
                 } else {
+                    let certain = o.certain();
                     match o.possible_cards.get_mut(&card) {
-                        Some(n) if o.certain.not() && *n > 0 => {
-                            *n = 0.max(*n - 1);
+                        Some(1) if certain.not() => {
+                            o.possible_cards.remove(&card);
+                        }
+                        Some(n) if certain.not() => {
+                            *n -= 1;
                         }
                         _ => {}
                     }
@@ -220,7 +241,6 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 log!(format!("Forgetting knowledge about player {}.", oid));
                 o.possible_cards = model.deck.clone();
-                o.certain = false;
             }
         }
     }
