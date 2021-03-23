@@ -105,6 +105,17 @@ impl Opponent {
     fn certain(&self) -> bool {
         self.possible_cards.len() == 1
     }
+
+    /// This `Opponent` survived a Baron, revealing the given card.
+    fn baron(&mut self, card: Card) {
+        // TODO Use `filter_drain` once its stable.
+        self.possible_cards = self
+            .possible_cards
+            .iter()
+            .filter(|(c, _)| c > &&card)
+            .map(|(c, n)| (*c, *n))
+            .collect();
+    }
 }
 
 /// The global state of the tracker.
@@ -152,7 +163,7 @@ impl Model {
     /// A new concrete card has been seen, so add it to the master list of seen
     /// cards, and update each `Opponent`'s possibility list.
     fn seen(&mut self, card: Card) {
-        let id = self.seen.keys().max().unwrap_or(&0);
+        let id = self.seen.keys().max().map(|max| *max).unwrap_or(0);
         self.seen.insert(id + 1, card);
         match self.deck.get_mut(&card) {
             Some(1) => {
@@ -203,6 +214,8 @@ enum Msg {
     Unplay(usize, Card),
     /// A player is known to have a particular card.
     Has(usize, Card),
+    /// A Baron was played.
+    Baron(usize, Card),
     /// Note that a player died. They should be removed from the tracker.
     Kill(usize),
 }
@@ -241,6 +254,12 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
                         _ => {}
                     }
                 }
+            }
+        }
+        Msg::Baron(oid, card) => {
+            if let Some(o) = model.opponents.get_mut(&oid) {
+                log!(format!("Opp {} survived a Baron", oid,));
+                o.baron(card);
             }
         }
         Msg::Kill(oid) => {
@@ -343,7 +362,8 @@ fn view_opponent(oid: usize, opponent: &Opponent) -> Node<Msg> {
                         },
                         ev(Ev::Click, move |_| Msg::Has(oid, card))
                     ],
-                    figcaption![prob, "%"]
+                    figcaption![prob, "%"],
+                    button!["Baron'd", ev(Ev::Click, move |_| Msg::Baron(oid, card))]
                 ])
                 .collect::<Vec<_>>()
         ]]
