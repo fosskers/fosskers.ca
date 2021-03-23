@@ -1,5 +1,6 @@
 use seed::{prelude::*, *};
 use std::collections::BTreeMap;
+use std::ops::Not;
 
 const FULL_DECK: usize = 16;
 
@@ -59,12 +60,15 @@ impl Card {
 struct Opponent {
     /// Cards this opponent could be holding.
     possible_cards: BTreeMap<Card, usize>,
+    /// We know exactly what this character has.
+    certain: bool,
 }
 
 impl Opponent {
     fn new() -> Opponent {
         Opponent {
             possible_cards: Card::full_deck(),
+            certain: false,
         }
     }
 
@@ -77,6 +81,19 @@ impl Opponent {
             .iter()
             .map(|(c, n)| (*c, 100 * n / remaining))
             .collect()
+    }
+
+    /// Mark that the `Opponent` has a specific card.
+    fn only_has(&mut self, card: Card) {
+        for n in self.possible_cards.values_mut() {
+            *n = 0;
+        }
+
+        if let Some(n) = self.possible_cards.get_mut(&card) {
+            *n = 1;
+        }
+
+        self.certain = true;
     }
 }
 
@@ -126,13 +143,19 @@ impl Model {
     /// cards, and update each `Opponent`'s possibility list.
     fn seen(&mut self, card: Card) {
         self.seen.push(card);
-        if let Some(n) = self.deck.get_mut(&card) {
-            *n -= 1;
+        match self.deck.get_mut(&card) {
+            Some(n) if *n > 0 => {
+                *n = 0.max(*n - 1);
+            }
+            _ => {}
         }
 
         for o in self.opponents.values_mut() {
-            if let Some(n) = o.possible_cards.get_mut(&card) {
-                *n -= 1;
+            match o.possible_cards.get_mut(&card) {
+                Some(n) if o.certain.not() && *n > 0 => {
+                    *n = 0.max(*n - 1);
+                }
+                _ => {}
             }
         }
     }
@@ -176,19 +199,17 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
             log!(format!("Unseeing {:?}.", card));
         }
         Msg::Has(oid, card) => {
-            if let Some(o) = model.opponents.get_mut(&oid) {
-                let mut poss = BTreeMap::new();
-                poss.insert(card, 1);
-
-                o.possible_cards = poss;
-
-                model
-                    .opponents
-                    .iter_mut()
-                    .filter(|(i, _)| i != &&oid)
-                    .for_each(|(_, o)| {
-                        o.possible_cards.remove(&card);
-                    });
+            for (i, o) in model.opponents.iter_mut() {
+                if *i == oid {
+                    o.only_has(card);
+                } else {
+                    match o.possible_cards.get_mut(&card) {
+                        Some(n) if o.certain.not() && *n > 0 => {
+                            *n = 0.max(*n - 1);
+                        }
+                        _ => {}
+                    }
+                }
             }
         }
         Msg::Kill(oid) => {
@@ -199,6 +220,7 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 log!(format!("Forgetting knowledge about player {}.", oid));
                 o.possible_cards = model.deck.clone();
+                o.certain = false;
             }
         }
     }
