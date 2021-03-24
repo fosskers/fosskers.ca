@@ -3,6 +3,9 @@ use seed::{prelude::*, *};
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::ops::Not;
 
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
 const FULL_DECK: usize = 16;
 
 const ALL_CARDS: [Card; 8] = [
