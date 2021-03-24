@@ -167,16 +167,15 @@ impl Model {
 
     /// For a particular `Opponent`, what are the probabilities that they have
     /// each card?
-    fn probs(&self, o: &Opponent) -> BTreeMap<Card, usize> {
+    fn probs(&self, o: &Opponent) -> BTreeMap<Card, f32> {
         match o.has {
             Some(card) => {
-                let mut map: BTreeMap<_, _> = ALL_CARDS.iter().map(|c| (*c, 0)).collect();
-                let c = map.entry(card).or_insert(100);
-                *c = 100;
+                let mut map: BTreeMap<_, _> = ALL_CARDS.iter().map(|c| (*c, 0.0)).collect();
+                let c = map.entry(card).or_insert(100.0);
+                *c = 100.0;
                 map
             }
             None => {
-                let rem: usize = self.deck.values().sum();
                 let certains: HashMap<Card, usize> = self
                     .opponents
                     .values()
@@ -184,17 +183,21 @@ impl Model {
                     .map(|c| (c, 1))
                     .into_grouping_map()
                     .sum();
+                let notted: usize = o.nots.iter().filter_map(|c| self.deck.get(c)).sum();
+                let rem = (self.deck.values().sum::<usize>()
+                    - certains.values().sum::<usize>()
+                    - notted) as f32;
 
                 // BELIEVE THE DECK.
                 ALL_CARDS
                     .iter()
                     .map(|c| match self.deck.get(c) {
-                        _ if o.nots.contains(c) => (*c, 0),
-                        None => (*c, 0),
-                        Some(0) => (*c, 0),
+                        _ if o.nots.contains(c) => (*c, 0.0),
+                        // Avoids div-by-zero if the deck is empty.
+                        None | Some(0) => (*c, 0.0),
                         Some(n) => {
                             let m = certains.get(c).unwrap_or(&0);
-                            (*c, 100 * (n - m) / rem)
+                            (*c, 100.0 * ((n - m) as f32) / rem)
                         }
                     })
                     .collect()
@@ -214,6 +217,8 @@ enum Msg {
     Unplay(usize, Card),
     /// A player is known to have a particular card.
     Has(usize, Card),
+    /// A "Guard miss" occurred.
+    Guard(usize, Card),
     /// A Baron was played.
     Baron(usize, Card),
     /// Note that a player died. They should be removed from the tracker.
@@ -241,6 +246,12 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         Msg::Has(oid, card) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 o.only_has(card);
+            }
+        }
+        Msg::Guard(oid, card) => {
+            if let Some(o) = model.opponents.get_mut(&oid) {
+                log!("Guard miss!");
+                o.nots.insert(card);
             }
         }
         Msg::Baron(oid, card) => {
@@ -343,14 +354,16 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                 .into_iter()
                 .map(|(card, prob)| figure![
                     input![
-                        C![(prob == 0).then(|| "zero")],
+                        C![(prob == 0.0).then(|| "zero")],
                         attrs! {
                             At::Type => "image",
                             At::Src => card.image()
                         },
                         ev(Ev::Click, move |_| Msg::Has(oid, card))
                     ],
-                    figcaption![prob, "%"],
+                    figcaption![format!("{:.1}%", prob)],
+                    (card != Card::Guard)
+                        .then(|| button!["G.Miss", ev(Ev::Click, move |_| Msg::Guard(oid, card))]),
                     button!["Baron'd", ev(Ev::Click, move |_| Msg::Baron(oid, card))]
                 ])
                 .collect::<Vec<_>>()
