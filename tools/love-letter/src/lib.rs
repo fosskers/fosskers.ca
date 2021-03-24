@@ -61,42 +61,28 @@ impl Card {
     }
 }
 
-/// Specific knowledge about an `Opponent`.
-#[derive(PartialEq, Eq, PartialOrd, Ord, Hash)]
-enum Fact {
-    /// They definitely have the given card.
-    Has(Card),
-    /// They definitely do not have the given card.
-    Not(Card),
-}
-
 struct Opponent {
     /// The name of this Opponent.
     name: String,
-    /// Known facts about the opponent.
-    facts: HashSet<Fact>,
+    /// What card are they known to have?
+    has: Option<Card>,
+    /// What cards are they known not to have?
+    nots: HashSet<Card>,
 }
 
 impl Opponent {
     fn new(name: String) -> Opponent {
         Opponent {
             name,
-            facts: HashSet::new(),
+            has: None,
+            nots: HashSet::new(),
         }
     }
 
     /// Mark that the `Opponent` has a specific card.
     fn only_has(&mut self, card: Card) {
-        self.facts.clear();
-        self.facts.insert(Fact::Has(card));
-    }
-
-    /// What does this `Opponent` have for certain, if anything?
-    fn what_has(&self) -> Option<Card> {
-        self.facts.iter().find_map(|f| match f {
-            Fact::Has(c) => Some(*c),
-            _ => None,
-        })
+        self.has.replace(card);
+        self.nots.clear();
     }
 
     /// This `Opponent` survived a Baron, revealing the given card.
@@ -182,7 +168,7 @@ impl Model {
     /// For a particular `Opponent`, what are the probabilities that they have
     /// each card?
     fn probs(&self, o: &Opponent) -> BTreeMap<Card, usize> {
-        match o.what_has() {
+        match o.has {
             Some(card) => {
                 let mut map: BTreeMap<_, _> = ALL_CARDS.iter().map(|c| (*c, 0)).collect();
                 let c = map.entry(card).or_insert(100);
@@ -194,7 +180,7 @@ impl Model {
                 let certains: HashMap<Card, usize> = self
                     .opponents
                     .values()
-                    .filter_map(|o| o.what_has())
+                    .filter_map(|o| o.has)
                     .map(|c| (c, 1))
                     .into_grouping_map()
                     .sum();
@@ -203,6 +189,7 @@ impl Model {
                 ALL_CARDS
                     .iter()
                     .map(|c| match self.deck.get(c) {
+                        _ if o.nots.contains(c) => (*c, 0),
                         None => (*c, 0),
                         Some(0) => (*c, 0),
                         Some(n) => {
@@ -269,7 +256,8 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
         Msg::ForgetPlayer(oid) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 log!(format!("Forgetting knowledge about player {}.", oid));
-                o.facts.clear();
+                o.has.take();
+                o.nots.clear();
             }
         }
     }
