@@ -207,14 +207,16 @@ enum Msg {
     Reset,
     /// Forget special knowledge for a particular player.
     ForgetPlayer(usize),
-    /// A card was played.
-    Played(Card),
+    /// A card was seen.
+    Seen(Card),
     /// Mark a seen card as unseen, perhaps if a misclick was made.
-    Unplay(usize, Card),
-    /// A player is known to have a particular card.
-    Has(usize, Card),
+    Unsee(usize, Card),
+    /// A card was played by a specific player.
+    Played(usize, Card),
     /// A "Guard miss" occurred.
     Guard(usize, Card),
+    /// A Priest was played.
+    Priest(usize, Card),
     /// A Baron was played.
     Baron(usize, Card),
     /// Note that a player died. They should be removed from the tracker.
@@ -225,29 +227,34 @@ fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
     Model::new(&DUMMY_NAMES)
 }
 
-fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
+fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
         Msg::Reset => {
             log!("Resetting the Tracker state.");
             model.reset()
         }
-        Msg::Played(card) => {
+        Msg::Seen(card) => {
             log!(format!("The {:?} card was played.", card));
             model.seen(card);
         }
-        Msg::Unplay(cid, card) => {
+        Msg::Unsee(cid, card) => {
             log!(format!("Unseeing {:?}.", card));
             model.unsee(cid, card);
         }
-        Msg::Has(oid, card) => {
-            if let Some(o) = model.opponents.get_mut(&oid) {
-                o.only_has(card);
-            }
+        Msg::Played(oid, card) => {
+            // TODO Be smarter about carry-over knowledge!
+            update(Msg::ForgetPlayer(oid), model, orders);
+            update(Msg::Seen(card), model, orders);
         }
         Msg::Guard(oid, card) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 log!("Guard miss!");
                 o.nots.insert(card);
+            }
+        }
+        Msg::Priest(oid, card) => {
+            if let Some(o) = model.opponents.get_mut(&oid) {
+                o.only_has(card);
             }
         }
         Msg::Baron(oid, card) => {
@@ -295,7 +302,7 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
                     let card = c.clone();
                     div![input![
                         attrs! {At::Type => "image", At::Src => c.image()},
-                        ev(Ev::Click, move |_| Msg::Played(card))
+                        ev(Ev::Click, move |_| Msg::Seen(card))
                     ]]
                 })
                 .collect::<Vec<_>>()
@@ -316,7 +323,7 @@ fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
                     let id = cid.clone();
                     div![input![
                         attrs! { At::Type => "image", At::Src => card.image()},
-                        ev(Ev::Click, move |_| Msg::Unplay(id, card))
+                        ev(Ev::Click, move |_| Msg::Unsee(id, card))
                     ]]
                 })
                 .collect::<Vec<_>>()
@@ -355,12 +362,13 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                             At::Type => "image",
                             At::Src => card.image()
                         },
-                        ev(Ev::Click, move |_| Msg::Has(oid, card))
+                        ev(Ev::Click, move |_| Msg::Played(oid, card))
                     ],
                     figcaption![format!("{:.1}%", prob)],
                     (card != Card::Guard)
-                        .then(|| button!["G.Miss", ev(Ev::Click, move |_| Msg::Guard(oid, card))]),
-                    button!["Baron'd", ev(Ev::Click, move |_| Msg::Baron(oid, card))]
+                        .then(|| button!["G", ev(Ev::Click, move |_| Msg::Guard(oid, card))]),
+                    button!["P", ev(Ev::Click, move |_| Msg::Priest(oid, card))],
+                    button!["B", ev(Ev::Click, move |_| Msg::Baron(oid, card))]
                 ])
                 .collect::<Vec<_>>()
         ]]
