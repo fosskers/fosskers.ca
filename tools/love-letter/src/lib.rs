@@ -140,6 +140,10 @@ impl Opponent {
         }
 
         self.nots.remove(&Not::Baron(card));
+
+        if self.has == Some(card) {
+            self.has.take();
+        }
     }
 
     /// Do we know that this `Opponent` *doesn't* have the given card?
