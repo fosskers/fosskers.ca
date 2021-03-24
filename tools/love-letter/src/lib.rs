@@ -1,7 +1,7 @@
 use itertools::Itertools;
 use seed::{prelude::*, *};
 use std::collections::{BTreeMap, HashMap, HashSet};
-use std::ops::Not as OtherNot;
+use std::ops::Not;
 
 const FULL_DECK: usize = 16;
 
@@ -62,39 +62,13 @@ impl Card {
     }
 }
 
-/// Cards we know the `Opponent` doesn't have, differentiated by the source of
-/// that knowledge.
-#[derive(Clone, Copy, PartialEq, Eq, Hash)]
-enum Not {
-    Guard(Card),
-    Baron(Card),
-    PrKing(Card),
-}
-
-impl Not {
-    /// The raw `Card` we know is contained in this `Not`.
-    fn card(&self) -> Card {
-        match self {
-            Not::Guard(c) | Not::Baron(c) | Not::PrKing(c) => *c,
-        }
-    }
-
-    /// Is this a `Not::Guard`?
-    fn is_guard(&self) -> bool {
-        match self {
-            Not::Guard(_) => true,
-            _ => false,
-        }
-    }
-}
-
 struct Opponent {
     /// The name of this Opponent.
     name: String,
     /// What card are they known to have?
     has: Option<Card>,
     /// What cards are they known not to have?
-    nots: HashSet<Not>,
+    nots: HashSet<Card>,
 }
 
 impl Opponent {
@@ -115,44 +89,36 @@ impl Opponent {
     /// This `Opponent` survived a Baron, revealing the given card.
     fn baron(&mut self, card: Card) {
         ALL_CARDS.iter().filter(|c| c <= &&card).for_each(|c| {
-            self.nots.insert(Not::Baron(*c));
+            self.nots.insert(*c);
         })
     }
 
     /// An `Opponent` played a specific card and special circumstances must be
     /// considered when updating the knowledge we have on them.
     fn played(&mut self, card: Card) {
+        // If they played a card that we know they didn't have until this draw,
+        // then we knew that they just drew it. Thus, they still can't have any
+        // of those cards.
+        //
+        // Otherwise, all our "not" knowledge is stale.
+        if self.nots.contains(&card).not() {
+            self.nots.clear();
+        }
+
+        // Regardless of what other "not" knowledge became stale, if they just
+        // played a Prince or a King, we know they can't have a Countess.
         match card {
             Card::Prince | Card::King => {
-                self.nots.insert(Not::PrKing(Card::Countess));
+                self.nots.insert(Card::Countess);
             }
             _ => {}
         }
 
-        if self.nots.contains(&Not::Guard(card)).not() {
-            // TODO Use `filter_drain` once stable.
-            self.nots = self
-                .nots
-                .iter()
-                .filter(|n| n.is_guard().not())
-                .map(|n| *n)
-                .collect();
-        }
-
-        self.nots.remove(&Not::Baron(card));
-
+        // If they played a card that we 100% knew they had, then we can't know
+        // that they still have it (even if they just drew a second copy).
         if self.has == Some(card) {
             self.has.take();
         }
-    }
-
-    /// Do we know that this `Opponent` *doesn't* have the given card?
-    fn has_not(&self, card: &Card) -> bool {
-        self.nots.iter().any(|not| match not {
-            Not::Guard(c) => c == card,
-            Not::Baron(c) => c == card,
-            Not::PrKing(c) => c == card,
-        })
     }
 }
 
@@ -242,7 +208,7 @@ impl Model {
                     .map(|c| (c, 1))
                     .into_grouping_map()
                     .sum();
-                let notted: usize = o.nots.iter().filter_map(|c| self.deck.get(&c.card())).sum();
+                let notted: usize = o.nots.iter().filter_map(|c| self.deck.get(&c)).sum();
                 let rem = (self.deck.values().sum::<usize>()
                     - certains.values().sum::<usize>()
                     - notted) as f32;
@@ -251,7 +217,7 @@ impl Model {
                 ALL_CARDS
                     .iter()
                     .map(|c| match self.deck.get(c) {
-                        _ if o.has_not(c) => (*c, 0.0),
+                        _ if o.nots.contains(c) => (*c, 0.0),
                         // Avoids div-by-zero if the deck is empty.
                         None | Some(0) => (*c, 0.0),
                         Some(n) => {
@@ -302,7 +268,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::Guard(oid, card) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 log!("Guard miss!");
-                o.nots.insert(Not::Guard(card));
+                o.nots.insert(card);
             }
         }
         Msg::Priest(oid, card) => {
