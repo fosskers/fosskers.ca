@@ -120,6 +120,25 @@ impl Opponent {
             self.has.take();
         }
     }
+
+    /// If we know they don't have every other card but one, then we can add
+    /// that knowledge with confidence.
+    fn no_other_choice(&mut self, deck: &BTreeMap<Card, usize>) {
+        let mut poss = self.possibles(deck);
+
+        if poss.len() == 1 {
+            self.has = poss.drain().next();
+            self.nots.clear();
+        }
+    }
+
+    /// What cards could this `Opponent` potentially have?
+    fn possibles(&self, deck: &BTreeMap<Card, usize>) -> HashSet<Card> {
+        deck.keys()
+            .filter(|c| self.nots.contains(c).not())
+            .map(|c| *c)
+            .collect()
+    }
 }
 
 /// The global state of the tracker.
@@ -262,6 +281,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::Played(oid, card) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 o.played(card);
+                o.no_other_choice(&model.deck);
             }
             update(Msg::Seen(card), model, orders);
         }
@@ -269,6 +289,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 log!("Guard miss!");
                 o.nots.insert(card);
+                o.no_other_choice(&model.deck);
             }
         }
         Msg::Priest(oid, card) => {
@@ -280,6 +301,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 log!(format!("Opp {} survived a Baron", oid,));
                 o.baron(card);
+                o.no_other_choice(&model.deck);
             }
         }
         Msg::Kill(oid) => {
