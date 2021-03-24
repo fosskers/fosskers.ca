@@ -87,13 +87,9 @@ impl Opponent {
 
     /// This `Opponent` survived a Baron, revealing the given card.
     fn baron(&mut self, card: Card) {
-        // TODO Use `filter_drain` once its stable.
-        // self.possible_cards = self
-        //     .possible_cards
-        //     .iter()
-        //     .filter(|(c, _)| c > &&card)
-        //     .map(|(c, n)| (*c, *n))
-        //     .collect();
+        ALL_CARDS.iter().filter(|c| c <= &&card).for_each(|c| {
+            self.nots.insert(*c);
+        })
     }
 }
 
