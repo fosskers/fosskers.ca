@@ -256,6 +256,8 @@ impl Model {
 enum Msg {
     /// Set the tracker state to its initial... state.
     Reset,
+    /// Forget special knowledge for a particular player.
+    ResetPlayer(usize),
     /// A card was seen.
     Seen(Card),
     /// Mark a seen card as unseen, perhaps if a misclick was made.
@@ -309,6 +311,12 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         }
         Msg::Kill(oid) => {
             model.opponents.remove(&oid);
+        }
+        Msg::ResetPlayer(oid) => {
+            if let Some(o) = model.opponents.get_mut(&oid) {
+                o.has.take();
+                o.nots.clear();
+            }
         }
     }
 }
@@ -382,7 +390,13 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
     tr![
         td![
             div![&opponent.name],
-            div![button!["Kill", ev(Ev::Click, move |_| Msg::Kill(oid))]]
+            div![
+                button!["Kill", ev(Ev::Click, move |_| Msg::Kill(oid))],
+                button![
+                    "Reset Knowledge",
+                    ev(Ev::Click, move |_| Msg::ResetPlayer(oid))
+                ]
+            ]
         ],
         td![div![
             C!["card-line"],
