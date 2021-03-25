@@ -11,8 +11,13 @@ crate-type = ["cdylib"]
 
 [dependencies]
 itertools = "0.10"
-seed = "0.8"
+# seed = "0.8"
 wee_alloc = "0.4"
+
+[dependencies.seed]
+version = "0.8"
+git = "https://github.com/seed-rs/seed"
+commit = "4096a77a79e3a15fc12d2ea864e0e1d51a8f3638"
 
 [profile.release]
 lto = true
