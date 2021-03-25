@@ -270,6 +270,8 @@ enum Msg {
     Priest(usize, Card),
     /// A Baron was played.
     Baron(usize, Card),
+    /// A King swap occurred between two Opponents.
+    King(usize, usize),
     /// Note that a player died. They should be removed from the tracker.
     Kill(usize),
 }
@@ -307,6 +309,41 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
                 log!(format!("Opp {} survived a Baron", oid,));
                 o.baron(card);
                 o.no_other_choice(&model.deck);
+            }
+        }
+        Msg::King(oid1, oid2) => {
+            let m1 = {
+                model.opponents.get_mut(&oid1).map(|o| {
+                    let has = o.has.take();
+                    let not = o.nots.drain().collect::<HashSet<_>>();
+
+                    (has, not)
+                })
+            };
+
+            let m2 = {
+                model.opponents.get_mut(&oid2).map(|o| {
+                    let has = o.has.take();
+                    let not = o.nots.drain().collect::<HashSet<_>>();
+
+                    (has, not)
+                })
+            };
+
+            match (m1, m2) {
+                (Some((has1, not1)), Some((has2, not2))) => {
+                    if let Some(o2) = model.opponents.get_mut(&oid2) {
+                        o2.has = has1;
+                        o2.nots = not1;
+                    }
+
+                    if let Some(o1) = model.opponents.get_mut(&oid1) {
+                        o1.has = has2;
+                        o1.nots = not2;
+                    }
+                }
+                // TODO Edge cases. Give back the data.
+                _ => {}
             }
         }
         Msg::Kill(oid) => {
@@ -399,7 +436,17 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                     "Reset Knowledge",
                     ev(Ev::Click, move |_| Msg::ResetPlayer(oid))
                 ]
-            ]
+            ],
+            model
+                .opponents
+                .keys()
+                .filter(|o| **o != oid)
+                .map(|o| *o) // Avoids a borrowing issue.
+                .map(|o| button![
+                    format!("King {}-{}", oid, o),
+                    ev(Ev::Click, move |_| Msg::King(oid, o))
+                ])
+                .collect::<Vec<_>>()
         ],
         td![div![
             C!["card-line"],
