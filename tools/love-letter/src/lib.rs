@@ -341,13 +341,16 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
             C!["card-line"],
             model
                 .deck
-                .keys()
-                .map(|c| {
+                .iter()
+                .map(|(c, n)| {
                     let card = c.clone();
-                    div![input![
-                        attrs! {At::Type => "image", At::Src => c.image()},
-                        ev(Ev::Click, move |_| Msg::Seen(card))
-                    ]]
+                    figure![
+                        input![
+                            attrs! {At::Type => "image", At::Src => c.image()},
+                            ev(Ev::Click, move |_| Msg::Seen(card))
+                        ],
+                        (*n > 1).then(|| figcaption![n])
+                    ]
                 })
                 .collect::<Vec<_>>()
         ],
