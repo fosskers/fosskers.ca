@@ -18,6 +18,7 @@ love = html_ $ do
       title_ "Love Letter Tracker"
       meta_ [charset_ "utf-8"]
       meta_ [name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no"]
+      link_ [rel_ "stylesheet", type_ "text/css", href_ "/assets/bootstrap.min.css"]
       link_ [rel_ "stylesheet", type_ "text/css", href_ "/assets/love.css"]
 
 wasm :: Html ()

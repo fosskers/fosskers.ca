@@ -11,7 +11,7 @@ body {
 
 .love-letter-title {
     font-family: cursive;
-    color: Gold;
+    color: gold;
     text-shadow: 2px 2px black;
 }
 
@@ -21,6 +21,8 @@ body {
 }
 
 .llt-opponent-name {
+    font-weight: bold;
+    text-align: center;
     color: silver;
     text-shadow: 2px 2px black;
 }
@@ -39,6 +41,10 @@ input {
     box-shadow: 3px 3px 5px;
 }
 
+input:hover {
+    opacity: 0.8;
+}
+
 figure {
     margin-left: 16px;
     margin-right: 16px;
@@ -52,4 +58,14 @@ figcaption {
 
 .zero {
     opacity: 0.25;
+}
+
+.btn-group, .btn-group-vertical, .btn-secondary {
+    box-shadow: 3px 3px 5px black;
+}
+
+.section-text {
+    font-weight: bold;
+    color: silver;
+    text-shadow: 2px 2px black;
 }

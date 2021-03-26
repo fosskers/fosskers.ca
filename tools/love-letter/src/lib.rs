@@ -364,7 +364,11 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
             C!["top-bar"],
             div![C!["llt-version"], env!("CARGO_PKG_VERSION")],
             div![C!["love-letter-title"], h1!["Love Letter Tracker"],],
-            div![button!["Reset Game", ev(Ev::Click, |_| Msg::Reset)]],
+            div![
+                C!["btn", "btn-secondary"],
+                "Reset Game",
+                ev(Ev::Click, |_| Msg::Reset)
+            ],
         ],
         hr![],
         view_card_choice(model),
@@ -377,7 +381,7 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
 
 fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
     vec![
-        div![b!["Remaining Unseen Cards"]],
+        div![C!["section-text"], "Remaining Unseen Cards"],
         div![
             C!["card-line"],
             model
@@ -400,7 +404,7 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
 
 fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
     vec![
-        div![b!["Seen Cards"]],
+        div![C!["section-text"], "Seen Cards"],
         div![
             C!["card-line"],
             model
@@ -435,22 +439,29 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
         td![
             div![C!["llt-opponent-name"], &opponent.name],
             div![
-                button!["Kill", ev(Ev::Click, move |_| Msg::Kill(oid))],
-                button![
-                    "Reset Knowledge",
+                C!["btn-group-vertical"],
+                div![
+                    C!["kill-button", "btn", "btn-danger"],
+                    "Kill",
+                    ev(Ev::Click, move |_| Msg::Kill(oid))
+                ],
+                div![
+                    C!["btn", "btn-outline-secondary"],
+                    "Reset",
                     ev(Ev::Click, move |_| Msg::ResetPlayer(oid))
-                ]
-            ],
-            model
-                .opponents
-                .keys()
-                .filter(|o| **o != oid)
-                .map(|o| *o) // Avoids a borrowing issue.
-                .map(|o| button![
-                    format!("King {}-{}", oid, o),
-                    ev(Ev::Click, move |_| Msg::King(oid, o))
-                ])
-                .collect::<Vec<_>>()
+                ],
+                model
+                    .opponents
+                    .keys()
+                    .filter(|o| **o != oid)
+                    .map(|o| *o) // Avoids a borrowing issue.
+                    .map(|o| div![
+                        C!["btn", "btn-outline-success"],
+                        format!("K {}-{}", oid, o),
+                        ev(Ev::Click, move |_| Msg::King(oid, o))
+                    ])
+                    .collect::<Vec<_>>()
+            ]
         ],
         td![div![
             C!["card-line"],
@@ -466,10 +477,24 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                         ev(Ev::Click, move |_| Msg::Played(oid, card))
                     ],
                     figcaption![format!("{:.1}%", prob)],
-                    (card != Card::Guard)
-                        .then(|| button!["G", ev(Ev::Click, move |_| Msg::Guard(oid, card))]),
-                    button!["P", ev(Ev::Click, move |_| Msg::Priest(oid, card))],
-                    button!["B", ev(Ev::Click, move |_| Msg::Baron(oid, card))]
+                    div![
+                        C!["btn-group"],
+                        button![
+                            C!["btn", "btn-outline-warning"],
+                            "G",
+                            ev(Ev::Click, move |_| Msg::Guard(oid, card))
+                        ],
+                        button![
+                            C!["btn", "btn-outline-danger"],
+                            "P",
+                            ev(Ev::Click, move |_| Msg::Priest(oid, card))
+                        ],
+                        button![
+                            C!["btn", "btn-outline-info"],
+                            "B",
+                            ev(Ev::Click, move |_| Msg::Baron(oid, card))
+                        ]
+                    ]
                 ])
                 .collect::<Vec<_>>()
         ]]
