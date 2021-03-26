@@ -360,8 +360,12 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
 
 fn view(model: &Model) -> Vec<Node<Msg>> {
     nodes![
-        div!["Love Letter"],
-        div![button!["Reset Game", ev(Ev::Click, |_| Msg::Reset)]],
+        div![
+            C!["top-bar"],
+            div![C!["llt-version"], env!("CARGO_PKG_VERSION")],
+            div![C!["love-letter-title"], h1!["Love Letter Tracker"],],
+            div![button!["Reset Game", ev(Ev::Click, |_| Msg::Reset)]],
+        ],
         hr![],
         view_card_choice(model),
         hr![],
@@ -429,7 +433,7 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
 
     tr![
         td![
-            div![&opponent.name],
+            div![C!["llt-opponent-name"], &opponent.name],
             div![
                 button!["Kill", ev(Ev::Click, move |_| Msg::Kill(oid))],
                 button![

@@ -3,22 +3,40 @@ body {
     margin: 10px;
 }
 
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.love-letter-title {
+    font-family: cursive;
+    color: Gold;
+    text-shadow: 2px 2px black;
+}
+
+.llt-version {
+    color: silver;
+    text-shadow: 2px 2px black;
+}
+
+.llt-opponent-name {
+    color: silver;
+    text-shadow: 2px 2px black;
+}
+
+.love-letter-title h1 {
+    margin: 5px;
+}
+
 .card-line {
     display: flex;
-    /* align-content: space-between; */
-    /* align-items: center; */
 }
 
 input {
     border-radius: 25px;
     width: 100%;
-    box-shadow: 3px 3px 3px;
-}
-
-.card-image {
-    border-radius: 25px;
-    width: 100%;
-    box-shadow: 3px 3px 3px;
+    box-shadow: 3px 3px 5px;
 }
 
 figure {
@@ -28,6 +46,8 @@ figure {
 
 figcaption {
     text-align: center;
+    color: silver;
+    text-shadow: 2px 2px black;
 }
 
 .zero {
