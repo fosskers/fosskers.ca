@@ -358,24 +358,26 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     }
 }
 
-fn view(model: &Model) -> Vec<Node<Msg>> {
-    nodes![
+fn view(model: &Model) -> Node<Msg> {
+    div![
+        C!["grid-container"],
+        div![C!["grid-top-bar"], view_top_bar()],
+        div![C!["grid-unseen"], view_card_choice(model)],
+        div![C!["grid-seen"], view_seen_cards(model)],
+        div![C!["grid-opponents"], view_player_grid(model)]
+    ]
+}
+
+fn view_top_bar() -> Node<Msg> {
+    div![
+        C!["top-bar"],
+        div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
+        div![C!["love-letter-title"], h1!["Love Letter Tracker"],],
         div![
-            C!["top-bar"],
-            div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
-            div![C!["love-letter-title"], h1!["Love Letter Tracker"],],
-            div![
-                C!["btn", "btn-secondary"],
-                "Reset Game",
-                ev(Ev::Click, |_| Msg::Reset)
-            ],
+            C!["btn", "btn-secondary"],
+            "Reset Game",
+            ev(Ev::Click, |_| Msg::Reset)
         ],
-        hr![],
-        view_card_choice(model),
-        hr![],
-        view_seen_cards(model),
-        hr![],
-        view_player_grid(model),
     ]
 }
 
