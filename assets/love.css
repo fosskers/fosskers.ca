@@ -23,6 +23,7 @@ body {
 .opponent-row {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
 }
 
 .opponent-name {
@@ -47,6 +48,33 @@ input {
 }
 
 input:hover {
+    opacity: 0.8;
+}
+
+.text-overlay {
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    font-family: monospace;
+    -webkit-text-stroke: 1px black;
+}
+
+.text-overlay div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+img {
+    border-radius: 25px;
+    width: 100%;
+    box-shadow: 3px 3px 5px black;
+}
+
+img:hover {
     opacity: 0.8;
 }
 

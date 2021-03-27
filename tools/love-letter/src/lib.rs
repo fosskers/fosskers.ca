@@ -466,16 +466,18 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
         ],
         probs
             .into_iter()
-            .map(|(card, prob)| figure![
-                input![
-                    C![(prob == 0.0).then(|| "zero")],
-                    attrs! {
-                        At::Type => "image",
-                        At::Src => card.image()
-                    },
-                    ev(Ev::Click, move |_| Msg::Played(oid, card))
+            .map(|(card, prob)| div![
+                div![
+                    C!["text-overlay"],
+                    img![
+                        C![(prob == 0.0).then(|| "zero")],
+                        attrs! {
+                            At::Src => card.image()
+                        },
+                        ev(Ev::Click, move |_| Msg::Played(oid, card))
+                    ],
+                    div![format!("{:.1}%", prob)]
                 ],
-                figcaption![format!("{:.1}%", prob)],
                 div![
                     C!["btn-group"],
                     button![
