@@ -478,7 +478,7 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                         },
                         ev(Ev::Click, move |_| Msg::Played(oid, card))
                     ],
-                    div![format!("{:.1}%", prob)]
+                    (prob > 0.0).then(|| div![format!("{:.1}%", prob)])
                 ],
                 div![
                     C!["btn-group"],
