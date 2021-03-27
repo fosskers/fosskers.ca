@@ -165,7 +165,7 @@ impl Model {
         // TODO Generalize to a custom number of opponents.
         let mut opponents = BTreeMap::new();
         for (i, n) in names.iter().enumerate() {
-            opponents.insert(i, Opponent::new(n.to_string()));
+            opponents.insert(i + 1, Opponent::new(n.to_string()));
         }
 
         Model {
