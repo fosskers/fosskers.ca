@@ -24,6 +24,13 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    padding-bottom: 1%;
+}
+
+.opponent-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .opponent-name {
@@ -85,4 +92,16 @@ input:hover {
     font-weight: bold;
     color: silver;
     text-shadow: 2px 2px black;
+}
+
+/* Overrides */
+
+.btn-outline-info {
+    color: #d06ffc;
+    border-color: #d06ffc;
+}
+
+.btn-outline-info:hover {
+    background: #d06ffc;
+    border-color: #d06ffc;
 }

@@ -468,6 +468,7 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
         probs
             .into_iter()
             .map(|(card, prob)| div![
+                C!["opponent-card"],
                 div![
                     C!["text-overlay"],
                     input![
