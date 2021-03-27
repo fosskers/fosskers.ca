@@ -60,7 +60,7 @@ input:hover {
     position: relative;
     text-align: center;
     color: white;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
     font-family: monospace;
     -webkit-text-stroke: 1px black;
@@ -68,9 +68,9 @@ input:hover {
 
 .text-overlay div {
     position: absolute;
-    top: 50%;
+    top: 90%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -90%);
 }
 
 .zero {
