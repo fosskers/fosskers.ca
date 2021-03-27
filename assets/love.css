@@ -6,7 +6,7 @@ body {
 .top-bar {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
 }
 
 .love-letter-title {
@@ -15,12 +15,17 @@ body {
     text-shadow: 2px 2px black;
 }
 
-.llt-version {
+.tracker-version {
     color: silver;
     text-shadow: 2px 2px black;
 }
 
-.llt-opponent-name {
+.opponent-row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.opponent-name {
     font-weight: bold;
     text-align: center;
     color: silver;

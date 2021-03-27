@@ -362,7 +362,7 @@ fn view(model: &Model) -> Vec<Node<Msg>> {
     nodes![
         div![
             C!["top-bar"],
-            div![C!["llt-version"], env!("CARGO_PKG_VERSION")],
+            div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
             div![C!["love-letter-title"], h1!["Love Letter Tracker"],],
             div![
                 C!["btn", "btn-secondary"],
@@ -424,7 +424,7 @@ fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
 }
 
 fn view_player_grid(model: &Model) -> Node<Msg> {
-    table![model
+    div![model
         .opponents
         .iter()
         .map(|(id, o)| view_opponent(model, *id, o))
@@ -435,9 +435,10 @@ fn view_player_grid(model: &Model) -> Node<Msg> {
 fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
     let probs = model.probs(opponent);
 
-    tr![
-        td![
-            div![C!["llt-opponent-name"], &opponent.name],
+    div![
+        C!["opponent-row"],
+        div![
+            div![C!["opponent-name"], &opponent.name],
             div![
                 C!["btn-group-vertical"],
                 div![
@@ -463,41 +464,38 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                     .collect::<Vec<_>>()
             ]
         ],
-        td![div![
-            C!["card-line"],
-            probs
-                .into_iter()
-                .map(|(card, prob)| figure![
-                    input![
-                        C![(prob == 0.0).then(|| "zero")],
-                        attrs! {
-                            At::Type => "image",
-                            At::Src => card.image()
-                        },
-                        ev(Ev::Click, move |_| Msg::Played(oid, card))
+        probs
+            .into_iter()
+            .map(|(card, prob)| figure![
+                input![
+                    C![(prob == 0.0).then(|| "zero")],
+                    attrs! {
+                        At::Type => "image",
+                        At::Src => card.image()
+                    },
+                    ev(Ev::Click, move |_| Msg::Played(oid, card))
+                ],
+                figcaption![format!("{:.1}%", prob)],
+                div![
+                    C!["btn-group"],
+                    button![
+                        C!["btn", "btn-outline-warning"],
+                        "G",
+                        ev(Ev::Click, move |_| Msg::Guard(oid, card))
                     ],
-                    figcaption![format!("{:.1}%", prob)],
-                    div![
-                        C!["btn-group"],
-                        button![
-                            C!["btn", "btn-outline-warning"],
-                            "G",
-                            ev(Ev::Click, move |_| Msg::Guard(oid, card))
-                        ],
-                        button![
-                            C!["btn", "btn-outline-danger"],
-                            "P",
-                            ev(Ev::Click, move |_| Msg::Priest(oid, card))
-                        ],
-                        button![
-                            C!["btn", "btn-outline-info"],
-                            "B",
-                            ev(Ev::Click, move |_| Msg::Baron(oid, card))
-                        ]
+                    button![
+                        C!["btn", "btn-outline-danger"],
+                        "P",
+                        ev(Ev::Click, move |_| Msg::Priest(oid, card))
+                    ],
+                    button![
+                        C!["btn", "btn-outline-info"],
+                        "B",
+                        ev(Ev::Click, move |_| Msg::Baron(oid, card))
                     ]
-                ])
-                .collect::<Vec<_>>()
-        ]]
+                ]
+            ])
+            .collect::<Vec<_>>()
     ]
 }
 
