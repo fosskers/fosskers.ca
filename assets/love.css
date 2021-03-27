@@ -39,6 +39,11 @@ body {
 
 .card-line {
     display: flex;
+    align-items: flex-start;
+}
+
+.card-line div {
+    padding-right: 1%;
 }
 
 input {
@@ -66,27 +71,6 @@ input:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-img {
-    border-radius: 25px;
-    width: 100%;
-    box-shadow: 3px 3px 5px black;
-}
-
-img:hover {
-    opacity: 0.8;
-}
-
-figure {
-    margin-left: 16px;
-    margin-right: 16px;
-}
-
-figcaption {
-    text-align: center;
-    color: silver;
-    text-shadow: 2px 2px black;
 }
 
 .zero {

@@ -389,12 +389,13 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
                 .iter()
                 .map(|(c, n)| {
                     let card = c.clone();
-                    figure![
+                    div![
+                        C!["text-overlay"],
                         input![
                             attrs! {At::Type => "image", At::Src => c.image()},
                             ev(Ev::Click, move |_| Msg::Seen(card))
                         ],
-                        (*n > 1).then(|| figcaption![n])
+                        (*n > 1).then(|| div![n])
                     ]
                 })
                 .collect::<Vec<_>>()
@@ -469,9 +470,10 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
             .map(|(card, prob)| div![
                 div![
                     C!["text-overlay"],
-                    img![
+                    input![
                         C![(prob == 0.0).then(|| "zero")],
                         attrs! {
+                            At::Type => "image",
                             At::Src => card.image()
                         },
                         ev(Ev::Click, move |_| Msg::Played(oid, card))
