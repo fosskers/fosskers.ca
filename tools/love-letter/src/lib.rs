@@ -517,14 +517,16 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                 ],
                 model
                     .opponents
-                    .keys()
-                    .filter(|o| **o != oid)
-                    .map(|o| *o) // Avoids a borrowing issue.
-                    .map(|o| div![
-                        C!["btn", "btn-outline-success"],
-                        format!("K {}-{}", oid, o),
-                        ev(Ev::Click, move |_| Msg::King(oid, o))
-                    ])
+                    .iter()
+                    .filter(|(id, _)| **id != oid)
+                    .map(|(id, o)| {
+                        let id = *id;
+                        div![
+                            C!["btn", "btn-outline-success"],
+                            format!("K {}", o.name),
+                            ev(Ev::Click, move |_| Msg::King(oid, id))
+                        ]
+                    })
                     .collect::<Vec<_>>()
             ]
         ],
