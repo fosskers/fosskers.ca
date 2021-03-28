@@ -10,8 +10,21 @@ body {
 .grid-startup-container {
     min-height: 98vh;
     display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr auto;
+    gap: 0px 0px;
+    grid-template-areas:
+        "grid-startup-left grid-startup-main grid-startup-right"
+        "grid-startup-footer grid-startup-footer grid-startup-footer";
 }
+
+.grid-startup-left { grid-area: grid-startup-left; }
+
+.grid-startup-right { grid-area: grid-startup-right; }
+
+.grid-startup-main { grid-area: grid-startup-main; }
+
+.grid-startup-footer { grid-area: grid-startup-footer; }
 
 /* CSS Grid - Main Game */
 
@@ -83,13 +96,13 @@ body {
     margin: 5px;
 }
 
-input {
+input[type="image"] {
     border-radius: 25px;
     width: 75%;
     box-shadow: 3px 3px 5px;
 }
 
-input:hover {
+input[type="image"]:hover {
     opacity: 0.8;
 }
 
@@ -132,7 +145,7 @@ input:hover {
     opacity: 0.25;
 }
 
-.btn-group, .btn-group-vertical, .btn-secondary {
+.btn-group, .btn-group-vertical, .btn-secondary, .btn-success {
     box-shadow: 3px 3px 5px black;
 }
 

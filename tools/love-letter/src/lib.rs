@@ -363,43 +363,58 @@ fn view(model: &Model) -> Node<Msg> {
 fn view_startup(model: &Model) -> Node<Msg> {
     div![
         C!["grid-startup-container"],
+        div![C!["grid-startup-left"]],
+        div![C!["grid-startup-right"]],
         div![
-            C!["startup-main"],
-            div![C!["love-letter-title"], h1!["Love Letter Tracker"]],
+            C!["grid-startup-main"],
             div![
-                a![attrs! { At::Href => "TODO"}, "How to Use"],
-                "・",
-                a![
-                    attrs! { At::Href => "https://github.com/fosskers/fosskers.ca/issues"},
-                    "Report Bug"
+                C!["startup-main"],
+                div![C!["love-letter-title"], h1!["Love Letter Tracker"]],
+                div![
+                    a![attrs! { At::Href => "TODO"}, "How to Use"],
+                    "・",
+                    a![
+                        attrs! { At::Href => "https://github.com/fosskers/fosskers.ca/issues"},
+                        "Report Bug"
+                    ],
                 ],
-            ],
-            model
-                .names
-                .iter()
-                .map(|n| div![C!["bold-silver"], n])
-                .collect::<Vec<_>>(),
-            div![
-                C!["btn", "btn-success"],
-                "Start Game",
-                ev(Ev::Click, |_| Msg::Start)
+                div![
+                    C!["input-group"],
+                    input![
+                        attrs! {At::Type => "text", At::Class => "form-control", At::Placeholder => "Opponent Name"}
+                    ],
+                    div![
+                        C!["input-group-append"],
+                        button![C!["btn", "btn-secondary"], "Add"]
+                    ]
+                ],
+                model
+                    .names
+                    .iter()
+                    .map(|n| div![C!["bold-silver"], n])
+                    .collect::<Vec<_>>(),
+                div![
+                    C!["btn", "btn-success"],
+                    "Start Game",
+                    ev(Ev::Click, |_| Msg::Start)
+                ]
             ]
         ],
-        footer![
-            C!["top-bar"],
-            div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
-            div![
-                C!["bold-silver", "right-align"],
+        div![
+            C!["grid-startup-footer"],
+            footer![
+                C!["top-bar"],
+                div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
                 div![
-                    "Created by ",
-                    a![
-                        attrs! { At::Href => "https://github.com/fosskers"},
-                        "fosskers"
+                    C!["bold-silver", "right-align"],
+                    div![
+                        "Created by ",
+                        a![attrs! { At::Href => "https://github.com/fosskers"}, "Colin"],
+                        "."
                     ],
-                    "."
+                    div!["Thanks to John, Sebastian, and Dan for testing."]
                 ],
-                div!["Thanks to John, Sebastian, and Dan for testing."]
-            ],
+            ]
         ]
     ]
 }
