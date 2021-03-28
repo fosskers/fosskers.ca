@@ -444,11 +444,11 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
             div![C!["opponent-name"], &opponent.name],
             div![
                 C!["btn-group-vertical"],
-                div![
+                (model.opponents.len() > 1).then(|| div![
                     C!["kill-button", "btn", "btn-danger"],
                     "Kill",
                     ev(Ev::Click, move |_| Msg::Kill(oid))
-                ],
+                ]),
                 div![
                     C!["btn", "btn-outline-secondary"],
                     "Reset",
