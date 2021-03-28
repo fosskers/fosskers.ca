@@ -96,10 +96,9 @@ input:hover {
     position: relative;
     text-align: center;
     color: white;
-    font-size: 1.5em;
+    font-size: 1.25em;
     font-weight: bold;
     font-family: monospace;
-    -webkit-text-stroke: 1px black;
 }
 
 .text-overlay div {
@@ -107,6 +106,12 @@ input:hover {
     top: 90%;
     left: 50%;
     transform: translate(-50%, -90%);
+
+    background: gray;
+    border-style: solid;
+    border-width: thin;
+    border-color: black;
+    border-radius: 10px;
 }
 
 .zero {
