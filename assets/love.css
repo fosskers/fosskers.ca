@@ -96,14 +96,8 @@ body {
     margin: 5px;
 }
 
-input[type="image"] {
-    border-radius: 25px;
-    width: 75%;
+div .input-group {
     box-shadow: 3px 3px 5px;
-}
-
-input[type="image"]:hover {
-    opacity: 0.8;
 }
 
 .card-line {
@@ -159,6 +153,32 @@ input[type="image"]:hover {
     text-align: right;
 }
 
+/* Element Styling */
+
+a {
+    font-weight: bold;
+    color: #4a9bf7;
+    text-shadow: 2px 2px black;
+}
+
+a.gold {
+    color: gold;
+}
+
+a.gold:hover {
+    color: #bfa006;
+}
+
+input[type="image"] {
+    border-radius: 25px;
+    width: 75%;
+    box-shadow: 3px 3px 5px;
+}
+
+input[type="image"]:hover {
+    opacity: 0.8;
+}
+
 /* Overrides */
 
 .btn-outline-info {
@@ -169,10 +189,4 @@ input[type="image"]:hover {
 .btn-outline-info:hover {
     background: #d06ffc;
     border-color: #d06ffc;
-}
-
-a {
-    font-weight: bold;
-    color: #4a9bf7;
-    text-shadow: 2px 2px black;
 }

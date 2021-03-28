@@ -377,6 +377,17 @@ fn view_startup(model: &Model) -> Node<Msg> {
                         attrs! { At::Href => "https://github.com/fosskers/fosskers.ca/issues"},
                         "Report Bug"
                     ],
+                    "・",
+                    a![
+                        attrs! { At::Href => "https://www.buymeacoffee.com/fosskers"},
+                        "Donate"
+                    ],
+                    "・",
+                    a![
+                        C!["gold"],
+                        attrs! { At::Href => "https://www.asmodee-digital.com/en/love-letter/"},
+                        "Buy Love Letter"
+                    ],
                 ],
                 div![
                     C!["input-group"],
@@ -408,8 +419,20 @@ fn view_startup(model: &Model) -> Node<Msg> {
                 div![
                     C!["bold-silver", "right-align"],
                     div![
-                        "Created by ",
+                        "Love Letter by ",
+                        a![
+                            attrs! { At::Href => "http://kanaifactory.web.fc2.com/menu.html"},
+                            "Kanai Factory"
+                        ],
+                        "."
+                    ],
+                    div![
+                        "Tracker created by ",
                         a![attrs! { At::Href => "https://github.com/fosskers"}, "Colin"],
+                        " via ",
+                        a![attrs! { At::Href => "https://www.rust-lang.org/"}, "Rust"],
+                        " and ",
+                        a![attrs! { At::Href => "https://seed-rs.org/"}, "Seed"],
                         "."
                     ],
                     div!["Thanks to John, Sebastian, and Dan for testing."]
