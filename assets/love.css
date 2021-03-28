@@ -5,9 +5,17 @@ body {
     margin: 10px;
 }
 
-/* CSS Grid */
+/* CSS Grid - Startup */
 
-.grid-container {
+.grid-startup-container {
+    min-height: 98vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+/* CSS Grid - Main Game */
+
+.grid-game-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 0.2fr 0.3fr 2.5fr;
@@ -18,15 +26,21 @@ body {
         "grid-opponents grid-opponents";
 }
 
-.grid-top-bar { grid-area: grid-top-bar; }
+.grid-game-top-bar { grid-area: grid-top-bar; }
 
-.grid-unseen { grid-area: grid-unseen; }
+.grid-game-unseen { grid-area: grid-unseen; }
 
-.grid-seen { grid-area: grid-seen; }
+.grid-game-seen { grid-area: grid-seen; }
 
-.grid-opponents { grid-area: grid-opponents; }
+.grid-game-opponents { grid-area: grid-opponents; }
 
 /* Other Elements */
+
+.startup-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .top-bar {
     display: flex;
@@ -122,10 +136,14 @@ input:hover {
     box-shadow: 3px 3px 5px black;
 }
 
-.section-text {
+.bold-silver {
     font-weight: bold;
     color: silver;
     text-shadow: 2px 2px black;
+}
+
+.right-align {
+    text-align: right;
 }
 
 /* Overrides */
@@ -138,4 +156,10 @@ input:hover {
 .btn-outline-info:hover {
     background: #d06ffc;
     border-color: #d06ffc;
+}
+
+a {
+    font-weight: bold;
+    color: #4a9bf7;
+    text-shadow: 2px 2px black;
 }

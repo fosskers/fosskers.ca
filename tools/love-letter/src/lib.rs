@@ -17,9 +17,6 @@ const ALL_CARDS: [Card; 8] = [
     Card::Princess,
 ];
 
-/// Placeholder opponent names.
-const DUMMY_NAMES: [&str; 3] = ["Sam", "Pippin", "Merry"];
-
 /// The available cards to play.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 enum Card {
@@ -144,8 +141,8 @@ impl Opponent {
 
 /// The global state of the tracker.
 struct Model {
-    // /// Opponent names.
-    // names: Vec<String>,
+    /// Opponent names.
+    names: Vec<String>,
     /// Cards that haven't been seen.
     tracker: Vec<Card>,
     /// Cards that have been **played** by the players.
@@ -157,29 +154,26 @@ struct Model {
 }
 
 impl Model {
-    fn new(names: &[&str]) -> Model {
-        // TODO Generalize to a custom number of opponents.
-        let mut opponents = BTreeMap::new();
-        for (i, n) in names.iter().enumerate() {
-            opponents.insert(i + 1, Opponent::new(n.to_string()));
-        }
-
+    fn new() -> Model {
         Model {
+            names: vec!["Sam".to_string(), "Merry".to_string(), "Pippin".to_string()],
             tracker: Vec::new(),
             seen: BTreeMap::new(),
             deck: Card::full_deck(),
-            opponents,
+            opponents: BTreeMap::new(),
         }
     }
 
-    // TODO Make this less fragile.
     fn reset(&mut self) {
-        let new = Model::new(&DUMMY_NAMES);
+        let mut opponents = BTreeMap::new();
+        for (i, n) in self.names.iter().enumerate() {
+            opponents.insert(i + 1, Opponent::new(n.clone()));
+        }
 
-        self.tracker = new.tracker;
-        self.seen = new.seen;
-        self.deck = new.deck;
-        self.opponents = new.opponents;
+        self.tracker = Vec::new();
+        self.seen = BTreeMap::new();
+        self.deck = Card::full_deck();
+        self.opponents = opponents;
     }
 
     /// A new concrete card has been seen, so add it to the master list of seen
@@ -248,6 +242,8 @@ impl Model {
 }
 
 enum Msg {
+    /// Begin the game.
+    Start,
     /// Set the tracker state to its initial... state.
     Reset,
     /// Forget special knowledge for a particular player.
@@ -271,11 +267,16 @@ enum Msg {
 }
 
 fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
-    Model::new(&DUMMY_NAMES)
+    Model::new()
 }
 
 fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
+        Msg::Start => {
+            if model.names.is_empty().not() {
+                model.reset();
+            }
+        }
         Msg::Reset => model.reset(),
         Msg::Seen(card) => model.seen(card),
         Msg::Unsee(cid, card) => model.unsee(cid, card),
@@ -353,12 +354,63 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
 }
 
 fn view(model: &Model) -> Node<Msg> {
+    match model.opponents.len() {
+        0 => view_startup(model),
+        _ => view_game(model),
+    }
+}
+
+fn view_startup(model: &Model) -> Node<Msg> {
     div![
-        C!["grid-container"],
-        div![C!["grid-top-bar"], view_top_bar()],
-        div![C!["grid-unseen"], view_card_choice(model)],
-        div![C!["grid-seen"], view_seen_cards(model)],
-        div![C!["grid-opponents"], view_player_grid(model)]
+        C!["grid-startup-container"],
+        div![
+            C!["startup-main"],
+            div![C!["love-letter-title"], h1!["Love Letter Tracker"]],
+            div![
+                a![attrs! { At::Href => "TODO"}, "How to Use"],
+                "・",
+                a![
+                    attrs! { At::Href => "https://github.com/fosskers/fosskers.ca/issues"},
+                    "Report Bug"
+                ],
+            ],
+            model
+                .names
+                .iter()
+                .map(|n| div![C!["bold-silver"], n])
+                .collect::<Vec<_>>(),
+            div![
+                C!["btn", "btn-success"],
+                "Start Game",
+                ev(Ev::Click, |_| Msg::Start)
+            ]
+        ],
+        footer![
+            C!["top-bar"],
+            div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
+            div![
+                C!["bold-silver", "right-align"],
+                div![
+                    "Created by ",
+                    a![
+                        attrs! { At::Href => "https://github.com/fosskers"},
+                        "fosskers"
+                    ],
+                    "."
+                ],
+                div!["Thanks to John, Sebastian, and Dan for testing."]
+            ],
+        ]
+    ]
+}
+
+fn view_game(model: &Model) -> Node<Msg> {
+    div![
+        C!["grid-game-container"],
+        div![C!["grid-game-top-bar"], view_top_bar()],
+        div![C!["grid-game-unseen"], view_card_choice(model)],
+        div![C!["grid-game-seen"], view_seen_cards(model)],
+        div![C!["grid-game-opponents"], view_player_grid(model)]
     ]
 }
 
@@ -377,7 +429,7 @@ fn view_top_bar() -> Node<Msg> {
 
 fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
     vec![
-        div![C!["section-text"], "Remaining Unseen Cards"],
+        div![C!["bold-silver"], "Remaining Unseen Cards"],
         div![
             C!["card-line"],
             model
@@ -401,7 +453,7 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
 
 fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
     vec![
-        div![C!["section-text"], "Seen Cards"],
+        div![C!["bold-silver"], "Seen Cards"],
         div![
             C!["card-line"],
             model
