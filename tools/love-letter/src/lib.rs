@@ -6,8 +6,6 @@ use std::ops::Not;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-const FULL_DECK: usize = 16;
-
 const ALL_CARDS: [Card; 8] = [
     Card::Guard,
     Card::Priest,
@@ -154,8 +152,6 @@ struct Model {
     seen: BTreeMap<usize, Card>,
     /// The possible cards remaining.
     deck: BTreeMap<Card, usize>,
-    /// Raw count of the number of cards left in the draw deck.
-    deck_size: usize,
     /// The other players.
     opponents: BTreeMap<usize, Opponent>,
 }
@@ -172,7 +168,6 @@ impl Model {
             tracker: Vec::new(),
             seen: BTreeMap::new(),
             deck: Card::full_deck(),
-            deck_size: FULL_DECK,
             opponents,
         }
     }
@@ -184,7 +179,6 @@ impl Model {
         self.tracker = new.tracker;
         self.seen = new.seen;
         self.deck = new.deck;
-        self.deck_size = new.deck_size;
         self.opponents = new.opponents;
     }
 
