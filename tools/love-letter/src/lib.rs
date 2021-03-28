@@ -370,75 +370,94 @@ fn view_startup(model: &Model) -> Node<Msg> {
             div![
                 C!["startup-main"],
                 div![C!["love-letter-title"], h1!["Love Letter Tracker"]],
-                div![
-                    a![attrs! { At::Href => "TODO"}, "How to Use"],
-                    "・",
+                em![
+                    "Track card knowledge in a game of ",
                     a![
-                        attrs! { At::Href => "https://github.com/fosskers/fosskers.ca/issues"},
-                        "Report Bug"
+                        attrs! {At::Href => "https://www.zmangames.com/en/games/love-letter/"},
+                        "Love Letter"
                     ],
-                    "・",
-                    a![
-                        attrs! { At::Href => "https://www.buymeacoffee.com/fosskers"},
-                        "Donate"
-                    ],
-                    "・",
-                    a![
-                        C!["gold"],
-                        attrs! { At::Href => "https://www.asmodee-digital.com/en/love-letter/"},
-                        "Buy Love Letter"
-                    ],
+                    "."
                 ],
+                view_links(),
+                view_opponent_select(model),
                 div![
-                    C!["input-group"],
-                    input![
-                        attrs! {At::Type => "text", At::Class => "form-control", At::Placeholder => "Opponent Name"}
-                    ],
-                    div![
-                        C!["input-group-append"],
-                        button![C!["btn", "btn-secondary"], "Add"]
-                    ]
-                ],
-                model
-                    .names
-                    .iter()
-                    .map(|n| div![C!["bold-silver"], n])
-                    .collect::<Vec<_>>(),
-                div![
-                    C!["btn", "btn-success"],
+                    C!["btn", "btn-lg", "btn-success"],
                     "Start Game",
                     ev(Ev::Click, |_| Msg::Start)
                 ]
             ]
         ],
+        div![C!["grid-startup-footer"], view_credit_footer()]
+    ]
+}
+
+fn view_links() -> Node<Msg> {
+    div![
+        a![attrs! { At::Href => "TODO"}, "How to Use"],
+        "・",
+        a![
+            attrs! { At::Href => "https://github.com/fosskers/fosskers.ca/issues"},
+            "Report Bug"
+        ],
+        "・",
+        a![
+            attrs! { At::Href => "https://www.buymeacoffee.com/fosskers"},
+            "Donate"
+        ],
+        "・",
+        a![
+            C!["gold"],
+            attrs! { At::Href => "https://www.asmodee-digital.com/en/love-letter/"},
+            "Buy Love Letter"
+        ],
+    ]
+}
+
+fn view_opponent_select(model: &Model) -> Vec<Node<Msg>> {
+    nodes![
         div![
-            C!["grid-startup-footer"],
-            footer![
-                C!["top-bar"],
-                div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
-                div![
-                    C!["bold-silver", "right-align"],
-                    div![
-                        "Love Letter by ",
-                        a![
-                            attrs! { At::Href => "http://kanaifactory.web.fc2.com/menu.html"},
-                            "Kanai Factory"
-                        ],
-                        "."
-                    ],
-                    div![
-                        "Tracker created by ",
-                        a![attrs! { At::Href => "https://github.com/fosskers"}, "Colin"],
-                        " via ",
-                        a![attrs! { At::Href => "https://www.rust-lang.org/"}, "Rust"],
-                        " and ",
-                        a![attrs! { At::Href => "https://seed-rs.org/"}, "Seed"],
-                        "."
-                    ],
-                    div!["Thanks to John, Sebastian, and Dan for testing."]
-                ],
+            C!["input-group"],
+            input![
+                attrs! {At::Type => "text", At::Class => "form-control", At::Placeholder => "Opponent Name"}
+            ],
+            div![
+                C!["input-group-append"],
+                button![C!["btn", "btn-secondary"], "Add"]
             ]
-        ]
+        ],
+        model
+            .names
+            .iter()
+            .map(|n| div![C!["bold-silver"], n])
+            .collect::<Vec<_>>(),
+    ]
+}
+
+fn view_credit_footer() -> Node<Msg> {
+    footer![
+        C!["top-bar"],
+        div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
+        div![
+            C!["bold-silver", "right-align"],
+            div![
+                "Love Letter by ",
+                a![
+                    attrs! { At::Href => "http://kanaifactory.web.fc2.com/menu.html"},
+                    "Kanai Factory"
+                ],
+                "."
+            ],
+            div![
+                "Tracker created by ",
+                a![attrs! { At::Href => "https://github.com/fosskers"}, "Colin"],
+                " via ",
+                a![attrs! { At::Href => "https://www.rust-lang.org/"}, "Rust"],
+                " and ",
+                a![attrs! { At::Href => "https://seed-rs.org/"}, "Seed"],
+                "."
+            ],
+            div!["Thanks to John, Sebastian, and Dan for testing."]
+        ],
     ]
 }
 

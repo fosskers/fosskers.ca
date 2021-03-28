@@ -179,6 +179,11 @@ input[type="image"]:hover {
     opacity: 0.8;
 }
 
+em {
+    color: silver;
+    text-shadow: 2px 2px black;
+}
+
 /* Overrides */
 
 .btn-outline-info {
