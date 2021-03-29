@@ -30,22 +30,26 @@ body {
 
 .grid-game-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 0.2fr 0.3fr 2.5fr;
     gap: 10px 5px;
     grid-template-areas:
-        "grid-top-bar grid-top-bar"
-        "grid-unseen grid-seen"
-        "grid-opponents grid-opponents";
+        "grid-game-top-left grid-game-top-left grid-game-top-center grid-game-top-center grid-game-top-right grid-game-top-right"
+        "grid-game-unseen grid-game-unseen grid-game-unseen grid-game-seen grid-game-seen grid-game-seen"
+        "grid-game-opponents grid-game-opponents grid-game-opponents grid-game-opponents grid-game-opponents grid-game-opponents";
 }
 
-.grid-game-top-bar { grid-area: grid-top-bar; }
+.grid-game-top-left { grid-area: grid-game-top-left; }
 
-.grid-game-unseen { grid-area: grid-unseen; }
+.grid-game-top-center { grid-area: grid-game-top-center; }
 
-.grid-game-seen { grid-area: grid-seen; }
+.grid-game-top-right { grid-area: grid-game-top-right; }
 
-.grid-game-opponents { grid-area: grid-opponents; }
+.grid-game-unseen { grid-area: grid-game-unseen; }
+
+.grid-game-seen { grid-area: grid-game-seen; }
+
+.grid-game-opponents { grid-area: grid-game-opponents; }
 
 /* Other Elements */
 
@@ -58,7 +62,7 @@ body {
 
 .top-bar {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
 }
 
@@ -78,6 +82,12 @@ body {
 .tracker-version {
     color: silver;
     text-shadow: 2px 2px black;
+}
+
+.reset-btn {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
 }
 
 .opponent-row {

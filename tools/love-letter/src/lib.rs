@@ -506,7 +506,12 @@ fn view_credit_footer() -> Node<Msg> {
 fn view_game(model: &Model) -> Node<Msg> {
     div![
         C!["grid-game-container"],
-        div![C!["grid-game-top-bar"], view_top_bar()],
+        div![
+            C!["grid-game-top-left", "tracker-version"],
+            env!("CARGO_PKG_VERSION")
+        ],
+        div![C!["grid-game-top-center"], view_top_bar()],
+        div![C!["grid-game-top-right"], view_reset_button()],
         div![C!["grid-game-unseen"], view_card_choice(model)],
         div![C!["grid-game-seen"], view_seen_cards(model)],
         div![C!["grid-game-opponents"], view_player_grid(model)]
@@ -516,13 +521,18 @@ fn view_game(model: &Model) -> Node<Msg> {
 fn view_top_bar() -> Node<Msg> {
     div![
         C!["top-bar"],
-        div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
         span![C!["love-letter-title"], "Love Letter Tracker"],
+    ]
+}
+
+fn view_reset_button() -> Node<Msg> {
+    div![
+        C!["reset-btn"],
         div![
             C!["btn", "btn-secondary"],
             "Reset Game",
             ev(Ev::Click, |_| Msg::Reset)
-        ],
+        ]
     ]
 }
 
