@@ -477,7 +477,7 @@ fn view_opponent_select(model: &Model) -> Vec<Node<Msg>> {
 
 fn view_credit_footer() -> Node<Msg> {
     footer![
-        C!["top-bar"],
+        C!["footer"],
         div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
         div![
             C!["bold-silver", "right-align"],
