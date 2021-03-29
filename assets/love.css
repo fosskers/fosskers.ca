@@ -53,6 +53,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
 }
 
 .top-bar {
@@ -65,6 +66,7 @@ body {
     font-family: cursive;
     color: gold;
     text-shadow: 2px 2px black;
+    font-size: 3em;
 }
 
 .tracker-version {
@@ -90,10 +92,6 @@ body {
     text-align: center;
     color: silver;
     text-shadow: 2px 2px black;
-}
-
-.love-letter-title h1 {
-    margin: 5px;
 }
 
 div .input-group {

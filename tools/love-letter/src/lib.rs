@@ -387,37 +387,38 @@ fn view_startup(model: &Model) -> Node<Msg> {
         C!["grid-startup-container"],
         div![C!["grid-startup-left"]],
         div![C!["grid-startup-right"]],
-        div![
-            C!["grid-startup-main"],
-            div![
-                C!["startup-main"],
-                div![C!["love-letter-title"], h1!["Love Letter Tracker"]],
-                em![
-                    "Track card knowledge in a game of ",
-                    a![
-                        attrs! {At::Href => "https://www.zmangames.com/en/games/love-letter/"},
-                        "Love Letter"
-                    ],
-                    "."
-                ],
-                view_links(),
-                view_opponent_select(model),
-                div![
-                    C!["btn-group", "btn-group-lg", "w-75"],
-                    div![
-                        C!["btn", "btn-outline-secondary", "w-50"],
-                        "Clear All",
-                        ev(Ev::Click, |_| Msg::RemoveAll)
-                    ],
-                    div![
-                        C!["btn", "btn-success", "w-50"],
-                        "Start Game",
-                        ev(Ev::Click, |_| Msg::Start)
-                    ]
-                ]
-            ]
-        ],
+        div![C!["grid-startup-main"], view_startup_main(model)],
         div![C!["grid-startup-footer"], view_credit_footer()]
+    ]
+}
+
+fn view_startup_main(model: &Model) -> Node<Msg> {
+    div![
+        C!["startup-main"],
+        span![C!["love-letter-title"], "Love Letter Tracker"],
+        em![
+            "Track card knowledge in a game of ",
+            a![
+                attrs! {At::Href => "https://www.zmangames.com/en/games/love-letter/"},
+                "Love Letter"
+            ],
+            "."
+        ],
+        view_links(),
+        view_opponent_select(model),
+        div![
+            C!["btn-group", "btn-group-lg"],
+            div![
+                C!["btn", "btn-outline-secondary", "w-50"],
+                span!["Clear"],
+                ev(Ev::Click, |_| Msg::RemoveAll)
+            ],
+            div![
+                C!["btn", "btn-success", "w-50"],
+                span!["Start"],
+                ev(Ev::Click, |_| Msg::Start)
+            ]
+        ]
     ]
 }
 
@@ -523,7 +524,7 @@ fn view_top_bar() -> Node<Msg> {
     div![
         C!["top-bar"],
         div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
-        div![C!["love-letter-title"], h1!["Love Letter Tracker"],],
+        span![C!["love-letter-title"], "Love Letter Tracker"],
         div![
             C!["btn", "btn-secondary"],
             "Reset Game",
