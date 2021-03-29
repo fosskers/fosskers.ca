@@ -141,6 +141,8 @@ impl Opponent {
 
 /// The global state of the tracker.
 struct Model {
+    /// Current string in the "Opponent Name" input field.
+    name_input: Option<String>,
     /// Opponent names.
     names: Vec<String>,
     /// Cards that haven't been seen.
@@ -156,6 +158,7 @@ struct Model {
 impl Model {
     fn new() -> Model {
         Model {
+            name_input: None,
             names: vec!["Sam".to_string(), "Merry".to_string(), "Pippin".to_string()],
             tracker: Vec::new(),
             seen: BTreeMap::new(),
@@ -242,10 +245,14 @@ impl Model {
 }
 
 enum Msg {
-    /// Add a new player name.
-    Add(String),
-    /// Remove a player name
+    /// The user types something in the "Opponent Name" input box.
+    Input(String),
+    /// Commit a new player name.
+    Add,
+    /// Remove a player name.
     Remove(usize),
+    /// Remove all player names.
+    RemoveAll,
     /// Begin the game.
     Start,
     /// Set the tracker state to its initial... state.
@@ -276,15 +283,19 @@ fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
 
 fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
-        Msg::Add(s) => match s.as_str() {
-            "" => {}
-            _ => model.names.push(s),
+        Msg::Input(s) => {
+            model.name_input.replace(s);
+        }
+        Msg::Add => match model.name_input.take().map(|s| s.trim().to_owned()) {
+            Some(s) if s.is_empty().not() => model.names.push(s),
+            _ => {}
         },
         Msg::Remove(ix) => {
             if ix < model.names.len() {
                 model.names.remove(ix);
             }
         }
+        Msg::RemoveAll => model.names.clear(),
         Msg::Start => {
             if model.names.is_empty().not() {
                 model.reset();
@@ -392,9 +403,17 @@ fn view_startup(model: &Model) -> Node<Msg> {
                 view_links(),
                 view_opponent_select(model),
                 div![
-                    C!["btn", "btn-lg", "btn-success"],
-                    "Start Game",
-                    ev(Ev::Click, |_| Msg::Start)
+                    C!["btn-group", "btn-group-lg", "w-75"],
+                    div![
+                        C!["btn", "btn-outline-secondary", "w-50"],
+                        "Clear All",
+                        ev(Ev::Click, |_| Msg::RemoveAll)
+                    ],
+                    div![
+                        C!["btn", "btn-success", "w-50"],
+                        "Start Game",
+                        ev(Ev::Click, |_| Msg::Start)
+                    ]
                 ]
             ]
         ],
@@ -428,14 +447,21 @@ fn view_opponent_select(model: &Model) -> Vec<Node<Msg>> {
     vec![
         div![
             C!["input-group"],
-            input![attrs! {
-                At::Type => "text",
-                At::Class => "form-control",
-                At::Placeholder => "Opponent Name"
-            }],
+            input![
+                attrs! {
+                    At::Type => "text",
+                    At::Class => "form-control",
+                    At::Placeholder => "Opponent Name",
+                    At::Value => model.name_input.as_ref().map(|s| s.as_str()).unwrap_or(""),
+                },
+                input_ev(Ev::Input, Msg::Input),
+                keyboard_ev(Ev::KeyDown, |event| {
+                    (event.key() == "Enter").then(|| Msg::Add)
+                })
+            ],
             div![
                 C!["input-group-append"],
-                button![C!["btn", "btn-secondary"], "Add"]
+                button![C!["btn", "btn-success"], "Add", ev(Ev::Click, |_| Msg::Add)]
             ]
         ],
         div![
