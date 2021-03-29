@@ -242,6 +242,10 @@ impl Model {
 }
 
 enum Msg {
+    /// Add a new player name.
+    Add(String),
+    /// Remove a player name
+    Remove(usize),
     /// Begin the game.
     Start,
     /// Set the tracker state to its initial... state.
@@ -272,6 +276,15 @@ fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
 
 fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
+        Msg::Add(s) => match s.as_str() {
+            "" => {}
+            _ => model.names.push(s),
+        },
+        Msg::Remove(ix) => {
+            if ix < model.names.len() {
+                model.names.remove(ix);
+            }
+        }
         Msg::Start => {
             if model.names.is_empty().not() {
                 model.reset();
@@ -289,7 +302,6 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         }
         Msg::Guard(oid, card) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
-                log!("Guard miss!");
                 o.nots.insert(card);
                 o.no_other_choice(&model.deck);
             }
@@ -301,7 +313,6 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         }
         Msg::Baron(oid, card) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
-                log!(format!("Opp {} survived a Baron", oid,));
                 o.baron(card);
                 o.no_other_choice(&model.deck);
             }
@@ -414,22 +425,33 @@ fn view_links() -> Node<Msg> {
 }
 
 fn view_opponent_select(model: &Model) -> Vec<Node<Msg>> {
-    nodes![
+    vec![
         div![
             C!["input-group"],
-            input![
-                attrs! {At::Type => "text", At::Class => "form-control", At::Placeholder => "Opponent Name"}
-            ],
+            input![attrs! {
+                At::Type => "text",
+                At::Class => "form-control",
+                At::Placeholder => "Opponent Name"
+            }],
             div![
                 C!["input-group-append"],
                 button![C!["btn", "btn-secondary"], "Add"]
             ]
         ],
-        model
-            .names
-            .iter()
-            .map(|n| div![C!["bold-silver"], n])
-            .collect::<Vec<_>>(),
+        div![
+            C!["list-group"],
+            model
+                .names
+                .iter()
+                .enumerate()
+                .map(|(i, n)| a![
+                    C!["list-group-item", "list-group-item-action",],
+                    attrs! {At::Href => "#"},
+                    n,
+                    ev(Ev::Click, move |_| Msg::Remove(i))
+                ])
+                .collect::<Vec<_>>()
+        ],
     ]
 }
 
@@ -500,7 +522,7 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
                             attrs! {At::Type => "image", At::Src => c.image()},
                             ev(Ev::Click, move |_| Msg::Seen(card))
                         ],
-                        (*n > 1).then(|| div![n])
+                        (*n > 1).then(|| span![C!["badge", "badge-pill", "badge-dark"], "x", n])
                     ]
                 })
                 .collect::<Vec<_>>()
@@ -586,7 +608,10 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                         },
                         ev(Ev::Click, move |_| Msg::Played(oid, card))
                     ],
-                    (prob > 0.0).then(|| div![format!("{:.1}%", prob)])
+                    (prob > 0.0).then(|| span![
+                        C!["badge", "badge-pill", "badge-dark"],
+                        format!("{:.1}%", prob)
+                    ])
                 ],
                 div![
                     C!["btn-group"],
