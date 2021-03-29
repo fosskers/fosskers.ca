@@ -396,14 +396,7 @@ fn view_startup_main(model: &Model) -> Node<Msg> {
     div![
         C!["startup-main"],
         span![C!["love-letter-title"], "Love Letter Tracker"],
-        em![
-            "Track card knowledge in a game of ",
-            a![
-                attrs! {At::Href => "https://www.zmangames.com/en/games/love-letter/"},
-                "Love Letter"
-            ],
-            "."
-        ],
+        em!["Track card knowledge in a game of Love Letter."],
         view_links(),
         view_opponent_select(model),
         div![
@@ -474,7 +467,7 @@ fn view_opponent_select(model: &Model) -> Vec<Node<Msg>> {
                 .map(|(i, n)| a![
                     C!["list-group-item", "list-group-item-action",],
                     attrs! {At::Href => "#"},
-                    n,
+                    format!("Opponent {}: {}", i + 1, n),
                     ev(Ev::Click, move |_| Msg::Remove(i))
                 ])
                 .collect::<Vec<_>>()
