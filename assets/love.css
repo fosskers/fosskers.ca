@@ -26,6 +26,15 @@ body {
 
 .grid-startup-footer { grid-area: grid-startup-footer; }
 
+@media screen and (max-width: 850px) {
+    .grid-startup-container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "grid-startup-main"
+            "grid-startup-footer"
+    }
+}
+
 /* CSS Grid - Main Game */
 
 .grid-game-container {
@@ -50,6 +59,18 @@ body {
 .grid-game-seen { grid-area: grid-game-seen; }
 
 .grid-game-opponents { grid-area: grid-game-opponents; }
+
+@media screen and (max-width: 850px) {
+    .grid-game-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 0.2fr 0.3fr 0.3fr 2.2fr;
+        grid-template-areas:
+            "grid-game-top-center grid-game-top-right"
+            "grid-game-unseen grid-game-unseen"
+            "grid-game-seen grid-game-seen"
+            "grid-game-opponents grid-game-opponents"
+    }
+}
 
 /* Other Elements */
 
