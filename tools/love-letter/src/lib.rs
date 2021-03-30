@@ -148,7 +148,7 @@ struct Model {
     /// Cards that haven't been seen.
     tracker: Vec<Card>,
     /// Cards that have been **played** by the players.
-    seen: BTreeMap<usize, Card>,
+    seen: BTreeMap<Card, usize>,
     /// The possible cards remaining.
     deck: BTreeMap<Card, usize>,
     /// The other players.
@@ -182,13 +182,11 @@ impl Model {
     /// A new concrete card has been seen, so add it to the master list of seen
     /// cards.
     fn seen(&mut self, card: Card) {
-        let id = self.seen.keys().max().map(|max| *max).unwrap_or(0);
-        self.seen.insert(id + 1, card);
+        let entry = self.seen.entry(card).or_insert(0);
+        *entry += 1;
+
         match self.deck.get_mut(&card) {
-            Some(1) => {
-                self.deck.remove(&card);
-            }
-            Some(n) => {
+            Some(n) if *n > 0 => {
                 *n -= 1;
             }
             _ => {}
@@ -196,11 +194,16 @@ impl Model {
     }
 
     /// Unsee a card that was perhaps added in error from a misclick.
-    fn unsee(&mut self, cid: usize, card: Card) {
-        self.seen.remove(&cid);
-
+    fn unsee(&mut self, card: Card) {
         let entry = self.deck.entry(card).or_insert(0);
         *entry += 1;
+
+        match self.seen.get_mut(&card) {
+            Some(n) if *n > 0 => {
+                *n -= 1;
+            }
+            _ => {}
+        }
     }
 
     /// For a particular `Opponent`, what are the probabilities that they have
@@ -262,7 +265,7 @@ enum Msg {
     /// A card was seen.
     Seen(Card),
     /// Mark a seen card as unseen, perhaps if a misclick was made.
-    Unsee(usize, Card),
+    Unsee(Card),
     /// A card was played by a specific player.
     Played(usize, Card),
     /// A "Guard miss" occurred.
@@ -303,7 +306,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         }
         Msg::Reset => model.reset(),
         Msg::Seen(card) => model.seen(card),
-        Msg::Unsee(cid, card) => model.unsee(cid, card),
+        Msg::Unsee(card) => model.unsee(card),
         Msg::Played(oid, card) => {
             if let Some(o) = model.opponents.get_mut(&oid) {
                 o.played(card);
@@ -576,18 +579,25 @@ fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
         div![C!["bold-silver"], "Seen Cards"],
         div![
             C!["card-line"],
-            model
-                .seen
-                .iter()
-                .map(|(cid, c)| {
-                    let card = c.clone();
-                    let id = cid.clone();
-                    div![input![
-                        attrs! { At::Type => "image", At::Src => card.image()},
-                        ev(Ev::Click, move |_| Msg::Unsee(id, card))
+            ALL_CARDS.iter().map(|c| match model.seen.get(c) {
+                None | Some(0) => {
+                    div![img![
+                        C!["rounded-image", "zero"],
+                        attrs! {At::Src => c.image()}
                     ]]
-                })
-                .collect::<Vec<_>>()
+                }
+                Some(n) => {
+                    let card = c.clone();
+                    div![
+                        C!["text-overlay"],
+                        input![
+                            attrs! { At::Type => "image", At::Src => card.image()},
+                            ev(Ev::Click, move |_| Msg::Unsee(card))
+                        ],
+                        (*n > 1).then(|| span![C!["badge", "badge-pill", "badge-dark"], "x", n])
+                    ]
+                }
+            })
         ],
     ]
 }
