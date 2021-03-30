@@ -186,6 +186,21 @@ a.gold:hover {
     color: #bfa006;
 }
 
+.rounded-image {
+    border-radius: 25px;
+    width: 75%;
+    box-shadow: 3px 3px 5px;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* .rounded-image:hover { */
+/*     opacity: 0.8; */
+/* } */
+
+/* TODO Remove */
 input[type="image"] {
     border-radius: 25px;
     width: 75%;

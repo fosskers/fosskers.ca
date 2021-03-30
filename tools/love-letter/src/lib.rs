@@ -541,19 +541,30 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
         div![C!["bold-silver"], "Remaining Unseen Cards"],
         div![
             C!["card-line"],
-            model
-                .deck
+            ALL_CARDS
                 .iter()
-                .map(|(c, n)| {
-                    let card = c.clone();
-                    div![
-                        C!["text-overlay"],
-                        input![
-                            attrs! {At::Type => "image", At::Src => c.image()},
-                            ev(Ev::Click, move |_| Msg::Seen(card))
-                        ],
-                        (*n > 1).then(|| span![C!["badge", "badge-pill", "badge-dark"], "x", n])
-                    ]
+                .map(|c| match model.deck.get(c) {
+                    None | Some(0) => {
+                        div![img![
+                            C!["rounded-image", "zero"],
+                            attrs! {At::Src => c.image()}
+                        ]]
+                    }
+                    Some(n) => {
+                        let card = c.clone();
+                        div![
+                            C!["text-overlay"],
+                            input![
+                                attrs! {At::Type => "image", At::Src => c.image()},
+                                ev(Ev::Click, move |_| Msg::Seen(card))
+                            ],
+                            (*n > 1).then(|| span![
+                                C!["badge", "badge-pill", "badge-dark"],
+                                "x",
+                                n
+                            ])
+                        ]
+                    }
                 })
                 .collect::<Vec<_>>()
         ],
