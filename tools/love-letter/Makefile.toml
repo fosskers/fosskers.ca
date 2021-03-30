@@ -11,7 +11,7 @@ description = "Watch files and recompile the project on change"
 run_task = [
     { name = "build" },
 ]
-watch = true
+watch = { ignore_pattern = "love.scss" }
 
 [tasks.serve]
 description = "Start server"
@@ -20,6 +20,12 @@ command = "microserver"
 args = ["--port", "${PORT}"]
 
 # ---- BUILD ----
+
+[tasks.sass]
+description = "Compile SCSS to CSS."
+command = "grass"
+args = ["love.scss", "../../assets/love.css"]
+watch = { watch = ["love.scss"] }
 
 [tasks.build]
 description = "Build with wasm-pack"
