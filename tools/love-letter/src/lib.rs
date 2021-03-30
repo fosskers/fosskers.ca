@@ -657,7 +657,10 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                             At::Type => "image",
                             At::Src => card.image()
                         },
-                        ev(Ev::Click, move |_| Msg::Played(oid, card))
+                        match model.deck.get(&card) {
+                            None | Some(0) => None,
+                            _ => Some(ev(Ev::Click, move |_| Msg::Played(oid, card))),
+                        }
                     ],
                     (prob > 0.0).then(|| span![
                         C!["badge", "badge-pill", "badge-dark"],
