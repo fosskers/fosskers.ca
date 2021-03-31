@@ -37,8 +37,8 @@ site lang page component = html_ $ do
       script_ [src_ "/assets/bootstrap.min.js"] ("" :: Text)
       link_ [rel_ "stylesheet", href_ "/assets/bootstrap.min.css"]
       link_ [rel_ "stylesheet", href_ "/assets/fontawesome.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/fa-brands.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/fa-solid.min.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/brands.min.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/solid.min.css"]
       link_ [rel_ "stylesheet", href_ "/assets/fosskers.css"]
       link_ [rel_ "stylesheet", href_ "/assets/kate.css"]
       link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/favicon-16x16.png"]
