@@ -16,21 +16,24 @@ $baron-colour: #d06ffc;
 // Note: Bulma overrides must go above these import lines.
 
 @import "../../style/bulma/sass/utilities/_all.sass";
+@import "../../style/bulma/sass/base/_all.sass";
 @import "../../style/bulma/sass/elements/button.sass";
 @import "../../style/bulma/sass/elements/title.sass";
+@import "../../style/bulma/sass/form/shared.sass";
+@import "../../style/bulma/sass/form/tools.sass";
+@import "../../style/bulma/sass/form/input-textarea.sass";
 @import "../../style/bulma/sass/helpers/typography.sass";
 
 // --- Top-level Elements --- //
 
 body {
   background: 0 -100px repeat-x url(/assets/bg_gallery.png) #4f191a;
-  margin: 10px;
 }
 
 // --- CSS Grid - Startup --- //
 
 .grid-startup-container {
-  min-height: 98vh;
+  min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr auto;
@@ -56,7 +59,7 @@ body {
   grid-area: grid-startup-footer;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1024px) {
   .grid-startup-container {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -68,6 +71,7 @@ body {
 // --- CSS Grid - Main Game --- //
 
 .grid-game-container {
+  min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 0.2fr 0.3fr 2.5fr;
@@ -238,10 +242,14 @@ div .input-group {
 
 // --- Element Styling --- //
 
-a {
+.blue-link a {
   font-weight: bold;
   color: #4a9bf7;
   text-shadow: $text-shadow;
+}
+
+.blue-link a:hover {
+    color: #4a4a4a
 }
 
 a.list-group-item {

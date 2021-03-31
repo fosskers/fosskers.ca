@@ -429,6 +429,7 @@ fn view_startup_main(model: &Model) -> Node<Msg> {
 
 fn view_links() -> Node<Msg> {
     div![
+        C!["blue-link"],
         a![attrs! { At::Href => "TODO"}, "How to Use"],
         "・",
         a![
@@ -451,36 +452,46 @@ fn view_links() -> Node<Msg> {
 
 fn view_opponent_select(model: &Model) -> Vec<Node<Msg>> {
     vec![
+        div![C!["block", "bold-silver"], "Opponents"],
         div![
-            C!["input-group"],
-            input![
-                attrs! {
-                    At::Type => "text",
-                    At::Class => "form-control",
-                    At::Placeholder => "Opponent Name",
-                    At::Value => model.name_input.as_ref().map(|s| s.as_str()).unwrap_or(""),
-                },
-                input_ev(Ev::Input, Msg::Input),
-                keyboard_ev(Ev::KeyDown, |event| {
-                    (event.key() == "Enter").then(|| Msg::Add)
-                })
+            C!["field", "has-addons"],
+            div![
+                C!["control"],
+                input![
+                    C!["input"],
+                    attrs! {
+                        At::Type => "text",
+                        At::Placeholder => "Opponent Name",
+                        At::Value => model.name_input.as_ref().map(|s| s.as_str()).unwrap_or(""),
+                    },
+                    input_ev(Ev::Input, Msg::Input),
+                    keyboard_ev(Ev::KeyDown, |event| {
+                        (event.key() == "Enter").then(|| Msg::Add)
+                    })
+                ]
             ],
             div![
-                C!["input-group-append"],
-                button![C!["btn", "btn-success"], "Add", ev(Ev::Click, |_| Msg::Add)]
+                C!["control"],
+                a![
+                    C!["button", "is-success"],
+                    "Add",
+                    ev(Ev::Click, |_| Msg::Add)
+                ]
             ]
         ],
         div![
-            C!["list-group"],
+            C!["field", "is-grouped"],
             model
                 .names
                 .iter()
                 .enumerate()
-                .map(|(i, n)| a![
-                    C!["list-group-item", "list-group-item-action",],
-                    attrs! {At::Href => "#"},
-                    format!("Opponent {}: {}", i + 1, n),
-                    ev(Ev::Click, move |_| Msg::Remove(i))
+                .map(|(i, n)| p![
+                    C!["control"],
+                    a![
+                        C!["button", "is-link", "is-light"],
+                        n,
+                        ev(Ev::Click, move |_| Msg::Remove(i))
+                    ]
                 ])
                 .collect::<Vec<_>>()
         ],
@@ -492,7 +503,7 @@ fn view_credit_footer() -> Node<Msg> {
         C!["footer"],
         div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
         div![
-            C!["bold-silver", "right-align"],
+            C!["bold-silver", "right-align", "blue-link"],
             div![
                 "Love Letter by ",
                 a![
