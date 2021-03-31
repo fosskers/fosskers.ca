@@ -415,12 +415,14 @@ fn view_startup_main(model: &Model) -> Node<Msg> {
             C!["buttons", "are-large", "has-addons"],
             button![
                 C!["button", "is-light", "is-outlined"],
-                "Clear",
+                span!["Clear"],
+                span![C!["icon"], i![C!["fas", "fa-times"]]],
                 ev(Ev::Click, |_| Msg::RemoveAll)
             ],
             button![
                 C!["button", "is-success"],
-                "Start",
+                span!["Start"],
+                span![C!["icon"], i![C!["fas", "fa-crown"]]],
                 ev(Ev::Click, |_| Msg::Start)
             ]
         ]
@@ -474,7 +476,7 @@ fn view_opponent_select(model: &Model) -> Vec<Node<Msg>> {
                 C!["control"],
                 a![
                     C!["button", "is-success"],
-                    "Add",
+                    span![C!["icon"], i![C!["fas fa-user-plus"]]],
                     ev(Ev::Click, |_| Msg::Add)
                 ]
             ]
@@ -487,9 +489,10 @@ fn view_opponent_select(model: &Model) -> Vec<Node<Msg>> {
                 .enumerate()
                 .map(|(i, n)| p![
                     C!["control"],
-                    a![
+                    button![
                         C!["button", "is-link", "is-light"],
-                        n,
+                        span![n],
+                        span![C!["icon"], i![C!["fas", "fa-times"]]],
                         ev(Ev::Click, move |_| Msg::Remove(i))
                     ]
                 ])
