@@ -388,8 +388,6 @@ fn view(model: &Model) -> Node<Msg> {
 fn view_startup(model: &Model) -> Node<Msg> {
     div![
         C!["grid-startup-container"],
-        div![C!["grid-startup-left"]],
-        div![C!["grid-startup-right"]],
         div![C!["grid-startup-main"], view_startup_main(model)],
         div![C!["grid-startup-footer"], view_credit_footer()]
     ]
