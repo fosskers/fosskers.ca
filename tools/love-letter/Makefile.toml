@@ -23,7 +23,7 @@ args = ["--port", "${PORT}"]
 
 [tasks.sass]
 description = "Compile SCSS to CSS."
-command = "grass"
+command = "sassc"
 args = ["love.scss", "../../assets/love.css"]
 watch = { watch = ["love.scss"] }
 

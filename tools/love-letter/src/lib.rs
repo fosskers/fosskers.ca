@@ -398,20 +398,29 @@ fn view_startup(model: &Model) -> Node<Msg> {
 fn view_startup_main(model: &Model) -> Node<Msg> {
     div![
         C!["startup-main"],
-        span![C!["love-letter-title"], "Love Letter Tracker"],
-        em!["Track card knowledge in a game of Love Letter."],
+        div![
+            C!["has-text-centered"],
+            p![
+                C!["title", "is-1", "love-letter-title"],
+                "Love Letter Tracker"
+            ],
+            p![
+                C!["subtitle", "is-6"],
+                em!["Track card knowledge in a game of Love Letter."]
+            ]
+        ],
         view_links(),
         view_opponent_select(model),
         div![
-            C!["btn-group", "btn-group-lg"],
-            div![
-                C!["btn", "btn-outline-secondary", "w-50"],
-                span!["Clear"],
+            C!["buttons", "are-large", "has-addons"],
+            button![
+                C!["button", "is-light", "is-outlined"],
+                "Clear",
                 ev(Ev::Click, |_| Msg::RemoveAll)
             ],
-            div![
-                C!["btn", "btn-success", "w-50"],
-                span!["Start"],
+            button![
+                C!["button", "is-success"],
+                "Start",
                 ev(Ev::Click, |_| Msg::Start)
             ]
         ]

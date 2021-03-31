@@ -1,4 +1,6 @@
-/* Common Values */
+@charset "utf-8";
+
+// --- Common Values --- //
 
 $text-colour: silver;
 $text-shadow: 2px 2px black;
@@ -10,14 +12,22 @@ $baron-colour: #d06ffc;
   text-shadow: $text-shadow;
 }
 
-/* Top-level Elements */
+// --- Bulma Imports --- //
+// Note: Bulma overrides must go above these import lines.
+
+@import "../../style/bulma/sass/utilities/_all.sass";
+@import "../../style/bulma/sass/elements/button.sass";
+@import "../../style/bulma/sass/elements/title.sass";
+@import "../../style/bulma/sass/helpers/typography.sass";
+
+// --- Top-level Elements --- //
 
 body {
   background: 0 -100px repeat-x url(/assets/bg_gallery.png) #4f191a;
   margin: 10px;
 }
 
-/* CSS Grid - Startup */
+// --- CSS Grid - Startup --- //
 
 .grid-startup-container {
   min-height: 98vh;
@@ -55,7 +65,7 @@ body {
   }
 }
 
-/* CSS Grid - Main Game */
+// --- CSS Grid - Main Game --- //
 
 .grid-game-container {
   display: grid;
@@ -104,7 +114,7 @@ body {
   }
 }
 
-/* Other Elements */
+// --- Other Elements --- //
 
 .startup-main {
   display: flex;
@@ -125,11 +135,11 @@ body {
   align-items: flex-end;
 }
 
+// TODO Better font.
 .love-letter-title {
   font-family: cursive;
   color: gold;
   text-shadow: $text-shadow;
-  font-size: 3em;
 }
 
 .tracker-version {
@@ -170,11 +180,11 @@ div .input-group {
   align-items: flex-start;
 
   div {
-      padding-right: 1%;
+    padding-right: 1%;
 
-      input {
-          width: 75%;
-      }
+    input {
+      width: 75%;
+    }
   }
 }
 
@@ -217,16 +227,16 @@ div .input-group {
 }
 
 .rounded-image {
-    border-radius: 25px;
-    width: 75%;
-    box-shadow: $box-shadow;
+  border-radius: 25px;
+  width: 75%;
+  box-shadow: $box-shadow;
 
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Element Styling */
+// --- Element Styling --- //
 
 a {
   font-weight: bold;
@@ -248,7 +258,7 @@ a.gold:hover {
   color: #bfa006;
 }
 
-/* TODO Remove */
+// TODO Remove
 input[type="image"] {
   border-radius: 25px;
   width: 75%;
@@ -263,7 +273,7 @@ em {
   @include silver-text();
 }
 
-/* Overrides */
+// --- Overrides --- //
 
 .list-group {
   width: 100%;
