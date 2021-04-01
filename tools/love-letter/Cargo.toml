@@ -1,5 +1,5 @@
 [package]
-version = "0.1.0"
+version = "1.0.0"
 name = "love-letter"
 description = "An information tracker for Love Letter."
 repository = "https://github.com/fosskers/fosskers.ca"
