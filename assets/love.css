@@ -2053,7 +2053,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px; }
+  gap: 5px;
+  padding-left: 0.5%; }
 
 .opponent-card {
   display: flex;
@@ -2071,11 +2072,8 @@ div .input-group {
 
 .card-line {
   display: flex;
-  align-items: flex-start; }
-  .card-line div {
-    padding-right: 1%; }
-    .card-line div input {
-      width: 75%; }
+  align-items: center;
+  justify-content: space-between; }
 
 .text-overlay {
   position: relative;

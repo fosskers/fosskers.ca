@@ -545,7 +545,10 @@ fn view_game(model: &Model) -> Node<Msg> {
 fn view_top_bar() -> Node<Msg> {
     div![
         C!["top-bar"],
-        span![C!["title", "love-letter-title"], "Love Letter Tracker"],
+        span![
+            C!["title", "is-2", "love-letter-title"],
+            "Love Letter Tracker"
+        ],
     ]
 }
 
@@ -587,7 +590,11 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
                         ]
                     }
                 })
-                .collect::<Vec<_>>()
+                .collect::<Vec<_>>(),
+            button![
+                C!["button", "is-small", "is-warning"],
+                span![C!["icon"], i![C!["fas", "fa-crown"]]]
+            ]
         ],
     ]
 }
