@@ -709,20 +709,20 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                     ])
                 ],
                 div![
-                    C!["btn-group"],
+                    C!["buttons", "has-addons"],
                     button![
-                        C!["btn", "btn-outline-warning"],
-                        "G",
+                        C!["button", "is-warning"],
+                        span![C!["icon"], i![C!["fas", "fa-times"]]],
                         ev(Ev::Click, move |_| Msg::Guard(oid, card))
                     ],
                     button![
-                        C!["btn", "btn-outline-danger"],
-                        "P",
+                        C!["button", "is-danger"],
+                        span![C!["icon"], i![C!["fas", "fa-eye"]]],
                         ev(Ev::Click, move |_| Msg::Priest(oid, card))
                     ],
                     button![
-                        C!["btn", "btn-outline-info"],
-                        "B",
+                        C!["button", "is-link"],
+                        span![C!["icon"], i![C!["fas", "fa-fan"]]],
                         ev(Ev::Click, move |_| Msg::Baron(oid, card))
                     ]
                 ]

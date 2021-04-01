@@ -12,6 +12,10 @@ $baron-colour: #d06ffc;
   text-shadow: $text-shadow;
 }
 
+// --- Bulma Overrides --- //
+
+$link: $baron-colour;
+
 // --- Bulma Imports --- //
 // Note: Bulma overrides must go above these import lines.
 
