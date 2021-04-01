@@ -430,7 +430,7 @@ fn view_startup_main(model: &Model) -> Node<Msg> {
 fn view_links() -> Node<Msg> {
     div![
         C!["blue-link"],
-        a![attrs! { At::Href => "TODO"}, "How to Use"],
+        a![attrs! { At::Href => "#"}, "How to Use"],
         "・",
         a![
             attrs! { At::Href => "https://github.com/fosskers/fosskers.ca/issues"},
@@ -563,7 +563,7 @@ fn view_reset_button() -> Node<Msg> {
 
 fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
     vec![
-        div![C!["bold-silver"], "Remaining Unseen Cards"],
+        div![C!["bold-silver"], "Unexposed Cards"],
         div![
             C!["card-line"],
             ALL_CARDS
@@ -594,7 +594,7 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
 
 fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
     vec![
-        div![C!["bold-silver"], "Seen Cards"],
+        div![C!["bold-silver"], "Exposed Cards"],
         div![
             C!["card-line"],
             ALL_CARDS.iter().map(|c| match model.seen.get(c) {
@@ -634,53 +634,7 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
 
     div![
         C!["opponent-row"],
-        div![
-            div![C!["opponent-name"], &opponent.name],
-            div![
-                C!["buttons", "has-addons"],
-                button![
-                    C!["button", "is-danger"],
-                    (model.opponents.len() < 2).then(|| attrs! {At::Disabled => ""}),
-                    span!["Kill"],
-                    span![C!["icon"], i![C!["fas", "fa-skull"]]],
-                    ev(Ev::Click, move |_| Msg::Kill(oid))
-                ],
-                button![
-                    C!["button"],
-                    span!["Forget"],
-                    span![C!["icon"], i![C!["fas", "fa-redo-alt"]]],
-                    ev(Ev::Click, move |_| Msg::ResetPlayer(oid))
-                ],
-            ],
-            match model.opponents.len() {
-                0 | 1 => {
-                    div![]
-                }
-                _ => {
-                    div![
-                        C!["buttons", "has-addons"],
-                        button![
-                            C!["button", "is-success"],
-                            span![C!["icon"], i![C!["fas", "fa-crown"]]]
-                        ],
-                        model
-                            .opponents
-                            .iter()
-                            .filter(|(id, _)| **id != oid)
-                            .map(|(id, o)| {
-                                let id = *id;
-                                let name: String = o.name.chars().take(3).collect();
-                                button![
-                                    C!["button", "is-success", "is-outlined"],
-                                    format!("{}", name),
-                                    ev(Ev::Click, move |_| Msg::King(oid, id))
-                                ]
-                            })
-                            .collect::<Vec<_>>()
-                    ]
-                }
-            }
-        ],
+        view_opponent_controls(model, oid, opponent),
         probs
             .into_iter()
             .map(|(card, prob)| div![
@@ -722,6 +676,41 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                     ]
                 ]
             ])
+            .collect::<Vec<_>>()
+    ]
+}
+
+fn view_opponent_controls(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
+    div![
+        C!["opponent-controls"],
+        div![C!["opponent-name"], &opponent.name],
+        button![
+            C!["button", "is-small", "is-danger"],
+            (model.opponents.len() < 2).then(|| attrs! {At::Disabled => ""}),
+            span!["Kill"],
+            span![C!["icon"], i![C!["fas", "fa-skull"]]],
+            ev(Ev::Click, move |_| Msg::Kill(oid))
+        ],
+        button![
+            C!["button", "is-small"],
+            span!["Forget"],
+            span![C!["icon"], i![C!["fas", "fa-redo-alt"]]],
+            ev(Ev::Click, move |_| Msg::ResetPlayer(oid))
+        ],
+        model
+            .opponents
+            .iter()
+            .filter(|(id, _)| **id != oid)
+            .map(|(id, o)| {
+                let id = *id;
+                let name: String = o.name.chars().take(3).collect();
+                button![
+                    C!["button", "is-small", "is-success"],
+                    span![name],
+                    span![C!["icon"], i![C!["fas", "fa-crown"]]],
+                    ev(Ev::Click, move |_| Msg::King(oid, id))
+                ]
+            })
             .collect::<Vec<_>>()
     ]
 }
