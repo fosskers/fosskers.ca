@@ -660,17 +660,17 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                 div![
                     C!["buttons", "has-addons"],
                     button![
-                        C!["button", "is-warning"],
+                        C!["button", "is-small", "is-warning"],
                         span![C!["icon"], i![C!["fas", "fa-times"]]],
                         ev(Ev::Click, move |_| Msg::Guard(oid, card))
                     ],
                     button![
-                        C!["button", "is-danger"],
+                        C!["button", "is-small", "is-danger"],
                         span![C!["icon"], i![C!["fas", "fa-eye"]]],
                         ev(Ev::Click, move |_| Msg::Priest(oid, card))
                     ],
                     button![
-                        C!["button", "is-link"],
+                        C!["button", "is-small", "is-link"],
                         span![C!["icon"], i![C!["fas", "fa-fan"]]],
                         ev(Ev::Click, move |_| Msg::Baron(oid, card))
                     ]
@@ -685,14 +685,14 @@ fn view_opponent_controls(model: &Model, oid: usize, opponent: &Opponent) -> Nod
         C!["opponent-controls"],
         div![C!["opponent-name"], &opponent.name],
         button![
-            C!["button", "is-small", "is-danger"],
+            C!["button", "is-small", "is-fullwidth", "is-danger"],
             (model.opponents.len() < 2).then(|| attrs! {At::Disabled => ""}),
             span!["Kill"],
             span![C!["icon"], i![C!["fas", "fa-skull"]]],
             ev(Ev::Click, move |_| Msg::Kill(oid))
         ],
         button![
-            C!["button", "is-small"],
+            C!["button", "is-small", "is-fullwidth"],
             span!["Forget"],
             span![C!["icon"], i![C!["fas", "fa-redo-alt"]]],
             ev(Ev::Click, move |_| Msg::ResetPlayer(oid))
@@ -705,8 +705,8 @@ fn view_opponent_controls(model: &Model, oid: usize, opponent: &Opponent) -> Nod
                 let id = *id;
                 let name: String = o.name.chars().take(3).collect();
                 button![
-                    C!["button", "is-small", "is-success"],
-                    span![name],
+                    C!["button", "is-small", "is-fullwidth", "is-success"],
+                    span![&o.name],
                     span![C!["icon"], i![C!["fas", "fa-crown"]]],
                     ev(Ev::Click, move |_| Msg::King(oid, id))
                 ]
