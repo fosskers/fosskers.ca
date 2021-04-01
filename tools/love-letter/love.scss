@@ -22,6 +22,7 @@ $link: $baron-colour;
 @import "../../style/bulma/sass/utilities/_all.sass";
 @import "../../style/bulma/sass/base/_all.sass";
 @import "../../style/bulma/sass/elements/button.sass";
+@import "../../style/bulma/sass/elements/tag.sass";
 @import "../../style/bulma/sass/elements/title.sass";
 @import "../../style/bulma/sass/form/shared.sass";
 @import "../../style/bulma/sass/form/tools.sass";
@@ -140,10 +141,6 @@ body {
 
 .credits {
   margin: 1%;
-}
-
-.button {
-  box-shadow: $box-shadow;
 }
 
 .reset-button {
@@ -277,17 +274,10 @@ em {
 
 // --- Overrides --- //
 
-.list-group {
-  width: 100%;
-  box-shadow: $box-shadow;
+.tag {
+    font-weight: bold;
 }
 
-.btn-outline-info {
-  color: $baron-colour;
-  border-color: $baron-colour;
-}
-
-.btn-outline-info:hover {
-  background: $baron-colour;
-  border-color: $baron-colour;
+.button {
+    box-shadow: $box-shadow;
 }

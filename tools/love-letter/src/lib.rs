@@ -583,11 +583,7 @@ fn view_card_choice(model: &Model) -> Vec<Node<Msg>> {
                                 attrs! {At::Type => "image", At::Src => c.image()},
                                 ev(Ev::Click, move |_| Msg::Seen(card))
                             ],
-                            (*n > 1).then(|| span![
-                                C!["badge", "badge-pill", "badge-dark"],
-                                "x",
-                                n
-                            ])
+                            (*n > 1).then(|| span![C!["tag", "is-dark", "is-rounded"], "x", n])
                         ]
                     }
                 })
@@ -616,7 +612,7 @@ fn view_seen_cards(model: &Model) -> Vec<Node<Msg>> {
                             attrs! { At::Type => "image", At::Src => card.image()},
                             ev(Ev::Click, move |_| Msg::Unsee(card))
                         ],
-                        (*n > 1).then(|| span![C!["badge", "badge-pill", "badge-dark"], "x", n])
+                        (*n > 1).then(|| span![C!["tag", "is-dark", "is-rounded"], "x", n])
                     ]
                 }
             })
@@ -642,7 +638,6 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
             div![C!["opponent-name"], &opponent.name],
             div![
                 C!["buttons", "has-addons"],
-                // TODO Account for only 1 opponent.
                 button![
                     C!["button", "is-danger"],
                     (model.opponents.len() < 2).then(|| attrs! {At::Disabled => ""}),
@@ -704,7 +699,7 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                         }
                     ],
                     (prob > 0.0).then(|| span![
-                        C!["badge", "badge-pill", "badge-dark"],
+                        C!["tag", "is-dark", "is-rounded"],
                         format!("{:.1}%", prob)
                     ])
                 ],
