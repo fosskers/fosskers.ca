@@ -699,7 +699,7 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
                         }
                     ],
                     (prob > 0.0).then(|| span![
-                        C!["tag", "is-dark", "is-rounded"],
+                        C!["tag", "is-dark", "is-medium", "is-rounded"],
                         format!("{:.1}%", prob)
                     ])
                 ],

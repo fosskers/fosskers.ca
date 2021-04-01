@@ -274,10 +274,14 @@ em {
 
 // --- Overrides --- //
 
+input[type="text"] {
+  box-shadow: $box-shadow;
+}
+
 .tag {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .button {
-    box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
 }

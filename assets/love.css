@@ -2137,6 +2137,9 @@ em {
   color: silver;
   text-shadow: 2px 2px black; }
 
+input[type="text"] {
+  box-shadow: 3px 3px 5px black; }
+
 .tag {
   font-weight: bold; }
 
