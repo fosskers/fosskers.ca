@@ -1,5 +1,12 @@
 @charset "utf-8";
 
+// --- Fonts --- //
+
+@font-face {
+  font-family: Junitta;
+  src: url(/webfonts/Junitta.otf);
+}
+
 // --- Common Values --- //
 
 $text-colour: silver;
@@ -127,11 +134,11 @@ body {
   align-items: flex-end;
 }
 
-// TODO Better font.
 .love-letter-title {
-  font-family: cursive;
+  font-family: Junitta, cursive;
   color: gold;
   text-shadow: $text-shadow;
+  margin: 1%;
 }
 
 .tracker-version {

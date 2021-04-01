@@ -514,6 +514,14 @@ fn view_credit_footer() -> Node<Msg> {
                 "."
             ],
             div![
+                "Love Letter title font by ",
+                a![
+                    attrs! { At::Href => "https://www.fontspace.com/nissastudio"},
+                    "Nissa Studio"
+                ],
+                "."
+            ],
+            div![
                 "Tracker created by ",
                 a![attrs! { At::Href => "https://github.com/fosskers"}, "Colin"],
                 " via ",
@@ -546,7 +554,7 @@ fn view_top_bar() -> Node<Msg> {
     div![
         C!["top-bar"],
         span![
-            C!["title", "is-2", "love-letter-title"],
+            C!["title", "is-1", "love-letter-title"],
             "Love Letter Tracker"
         ],
     ]
@@ -710,7 +718,6 @@ fn view_opponent_controls(model: &Model, oid: usize, opponent: &Opponent) -> Nod
             .filter(|(id, _)| **id != oid)
             .map(|(id, o)| {
                 let id = *id;
-                let name: String = o.name.chars().take(3).collect();
                 button![
                     C!["button", "is-small", "is-fullwidth", "is-success"],
                     span![&o.name],

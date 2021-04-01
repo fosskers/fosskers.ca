@@ -1,3 +1,7 @@
+@font-face {
+  font-family: Junitta;
+  src: url(/webfonts/Junitta.otf); }
+
 /* Bulma Utilities */
 .textarea, .input, .button {
   -moz-appearance: none;
@@ -2024,9 +2028,10 @@ body {
   align-items: flex-end; }
 
 .love-letter-title {
-  font-family: cursive;
+  font-family: Junitta, cursive;
   color: gold;
-  text-shadow: 2px 2px black; }
+  text-shadow: 2px 2px black;
+  margin: 1%; }
 
 .tracker-version {
   color: silver;
