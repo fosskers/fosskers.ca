@@ -131,12 +131,25 @@ body {
 
 .tracker-version {
   @include silver-text();
+  margin: 1%;
 }
 
-.reset-btn {
+.credits {
+  margin: 1%;
+}
+
+.button {
+  box-shadow: $box-shadow;
+}
+
+.reset-button {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
+
+  button {
+    margin: 1%;
+  }
 }
 
 .opponent-row {
@@ -232,13 +245,7 @@ div .input-group {
 }
 
 .blue-link a:hover {
-    color: #4a4a4a
-}
-
-a.list-group-item {
-  font-weight: normal;
-  color: black;
-  text-shadow: none;
+  color: #4a4a4a;
 }
 
 a.gold {

@@ -504,7 +504,7 @@ fn view_credit_footer() -> Node<Msg> {
         C!["footer"],
         div![C!["tracker-version"], env!("CARGO_PKG_VERSION")],
         div![
-            C!["bold-silver", "right-align", "blue-link"],
+            C!["credits", "bold-silver", "right-align", "blue-link"],
             div![
                 "Love Letter by ",
                 a![
@@ -545,16 +545,17 @@ fn view_game(model: &Model) -> Node<Msg> {
 fn view_top_bar() -> Node<Msg> {
     div![
         C!["top-bar"],
-        span![C!["love-letter-title"], "Love Letter Tracker"],
+        span![C!["title", "love-letter-title"], "Love Letter Tracker"],
     ]
 }
 
 fn view_reset_button() -> Node<Msg> {
     div![
-        C!["reset-btn"],
-        div![
-            C!["btn", "btn-secondary"],
-            "Reset Game",
+        C!["reset-button"],
+        button![
+            C!["button", "is-warning"],
+            span!["Reset Game"],
+            span![C!["icon"], i![C!["fas", "fa-redo-alt"]]],
             ev(Ev::Click, |_| Msg::Reset)
         ]
     ]
@@ -640,31 +641,50 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
         div![
             div![C!["opponent-name"], &opponent.name],
             div![
-                C!["btn-group-vertical"],
-                (model.opponents.len() > 1).then(|| div![
-                    C!["kill-button", "btn", "btn-danger"],
-                    "Kill",
+                C!["buttons", "has-addons"],
+                // TODO Account for only 1 opponent.
+                button![
+                    C!["button", "is-danger"],
+                    (model.opponents.len() < 2).then(|| attrs! {At::Disabled => ""}),
+                    span!["Kill"],
+                    span![C!["icon"], i![C!["fas", "fa-skull"]]],
                     ev(Ev::Click, move |_| Msg::Kill(oid))
-                ]),
-                div![
-                    C!["btn", "btn-outline-secondary"],
-                    "Reset",
+                ],
+                button![
+                    C!["button"],
+                    span!["Forget"],
+                    span![C!["icon"], i![C!["fas", "fa-redo-alt"]]],
                     ev(Ev::Click, move |_| Msg::ResetPlayer(oid))
                 ],
-                model
-                    .opponents
-                    .iter()
-                    .filter(|(id, _)| **id != oid)
-                    .map(|(id, o)| {
-                        let id = *id;
-                        div![
-                            C!["btn", "btn-outline-success"],
-                            format!("K {}", o.name),
-                            ev(Ev::Click, move |_| Msg::King(oid, id))
-                        ]
-                    })
-                    .collect::<Vec<_>>()
-            ]
+            ],
+            match model.opponents.len() {
+                0 | 1 => {
+                    div![]
+                }
+                _ => {
+                    div![
+                        C!["buttons", "has-addons"],
+                        button![
+                            C!["button", "is-success"],
+                            span![C!["icon"], i![C!["fas", "fa-crown"]]]
+                        ],
+                        model
+                            .opponents
+                            .iter()
+                            .filter(|(id, _)| **id != oid)
+                            .map(|(id, o)| {
+                                let id = *id;
+                                let name: String = o.name.chars().take(3).collect();
+                                button![
+                                    C!["button", "is-success", "is-outlined"],
+                                    format!("{}", name),
+                                    ev(Ev::Click, move |_| Msg::King(oid, id))
+                                ]
+                            })
+                            .collect::<Vec<_>>()
+                    ]
+                }
+            }
         ],
         probs
             .into_iter()
