@@ -1,0 +1,100 @@
+#+TITLE: The Love Letter Tracker
+#+DATE: 2021-04-01
+#+AUTHOR: Colin
+#+CATEGORY: tech
+
+Are you in love with [[https://www.asmodee-digital.com/en/love-letter/][Love Letter]], but tired of keeping track of all those pesky
+details about who has what? Me too! Enter: [[/en/tools/love-letter][The Love Letter Tracker]].
+
+* Usage
+
+*Note:* The tracker is not /Love Letter/ itself. It is meant to enhance, not
+replace, the original game. It works best on a computer screen or tablet.
+
+Once you set the names of the Opponents you're playing with, hit ~Start~ and
+you're ready to play.
+
+The tracker displays the chance that each player has a particular card in their
+hand /at the end of a given turn/ after they have made a play. The numbers you
+see are the chance of their single remaining card being one of the 8
+possibilities.
+
+[[/assets/llt-opponent-sample.png]]
+
+/Handmade is more likely than King here. There is no chance this opponent has the Prince./
+
+This tracker is particularly useful due to its ability to /persist knowledge/
+across your opponents' turns. What they played this turn can affect what you
+learned about them last turn. This can result in some interesting deductions
+that are otherwise difficult for a human to notice!
+
+** Opponent Controls
+
+[[/assets/llt-opponent-controls.png]]
+
+This opponent, Sam, is playing against two others (and possibly also the user of
+the tracker).
+
+- *Kill:* When an opponent is knocked out, this button removes them from the
+  tracker until you hit ~Reset Game~.
+- *Forget:* Useful to undo misclicks, but also for clearing knowledge when
+  somebody gets hit with a Prince.
+- *Opponent + Crown:* This swaps what you know about two opponents, for when a
+  King is played between them (and *not* the tracker user! See below.).
+
+[[/assets/llt-opponent-knowledge.png]]
+
+This particular view means that this opponent has a 14.3% chance of having a
+Handmaid in their hand.
+
+- *X:* Mark that the opponent does not have this card. You would click this when
+  you or some other opponent has a "Guard Miss" on someone.
+- *Eye:* Mark that the opponent absolutely has a certain card. You would click this when:
+  - You saw with a Priest that they have a certain card.
+  - The user of the tracker is also playing, and a "Baron tie" occurred, since
+    you know that they must have the same card as you.
+  - The user of the tracker is also playing, and gets King'd by an opponent.
+- *Flower:* The "Baron button" (he's holding a rose, after all). Click this on
+  *the card that was revealed after a "Baron fight"* on the row of the opponent
+  who *survived*. Read that sentence again and nod to the computer screen that
+  you understand.
+
+** Flow of Play
+
+[[/assets/llt-unexposed.png]]
+
+An opponents' card chances are affected by your knowledge of them as well as the
+remaining "unexposed" cards in hands, the deck, and "the hole".
+
+A card should be considered *exposed* if:
+
+- an opponent has played (or discarded) a card.
+- the user of the tracker is also playing and has cards in their hand.
+
+To "expose" a card manually, click it in the /Unexposed Cards/ area. You will
+see it move to the other side. If you made a mistake, etc., you can reclick a
+card in the /Exposed/ area to move it back. You will need to expose cards this
+way when:
+
+- the tracker user gets new cards in their hand.
+- the first three cards are discarded during a two-player game.
+
+To "expose" a card played or discarded by an opponent, click that card directly
+in their row. *This has a direct effect on the "persisted knowledge" you have on
+them!* Not doing so may result in incorrect probabilities being reported.
+
+*Note:* Seeing a card with a Priest does *not* expose it. Don't click something
+out of the Unexposed area until it's truly played or in your hand. Further, if
+the tracker user gets King'd, they will have to manually re-expose the card that
+was taken by the opponent.
+
+* About
+
+The /Love Letter Tracker/ is written in [[https://www.rust-lang.org/][Rust]] and compiled into Web Assembly. It
+utilizes the [[https://seed-rs.org/][Seed Framework]] to manage user interaction and render the page.
+Overall layout is managed via CSS Grid and Flexbox, while general styling is
+provided by the [[https://bulma.io/][Bulma CSS Framework]].
+
+If you notice a bug with the tracker, [[https://github.com/fosskers/fosskers.ca/issues][please report it]].
+
+Thanks to John, Sebastian, and [[https://www.twitch.tv/choccy_soup][Dan]] for their suggestions and help in testing.
