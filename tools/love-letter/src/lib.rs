@@ -6,6 +6,7 @@ use std::ops::Not;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+/// Every possible card in their order of precendence.
 const ALL_CARDS: [Card; 8] = [
     Card::Guard,
     Card::Priest,
@@ -245,6 +246,56 @@ impl Model {
             }
         }
     }
+
+    /// A King card was played.
+    fn king(&mut self, oid1: usize, oid2: usize) {
+        let m1 = {
+            self.opponents.get_mut(&oid1).map(|o| {
+                let has = o.has.take();
+                let not = o.nots.drain().collect::<HashSet<_>>();
+
+                (has, not)
+            })
+        };
+
+        let m2 = {
+            self.opponents.get_mut(&oid2).map(|o| {
+                let has = o.has.take();
+                let not = o.nots.drain().collect::<HashSet<_>>();
+
+                (has, not)
+            })
+        };
+
+        match (m1, m2) {
+            (Some((has1, not1)), Some((has2, not2))) => {
+                if let Some(o2) = self.opponents.get_mut(&oid2) {
+                    o2.has = has1;
+                    o2.nots = not1;
+                }
+
+                if let Some(o1) = self.opponents.get_mut(&oid1) {
+                    o1.has = has2;
+                    o1.nots = not2;
+                }
+            }
+            // Give the data back.
+            (Some((has1, not1)), None) => {
+                if let Some(o1) = self.opponents.get_mut(&oid1) {
+                    o1.has = has1;
+                    o1.nots = not1;
+                }
+            }
+            // Give the data back.
+            (None, Some((has2, not2))) => {
+                if let Some(o2) = self.opponents.get_mut(&oid2) {
+                    o2.has = has2;
+                    o2.nots = not2;
+                }
+            }
+            (None, None) => {}
+        }
+    }
 }
 
 enum Msg {
@@ -331,41 +382,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
                 o.no_other_choice(&model.deck);
             }
         }
-        Msg::King(oid1, oid2) => {
-            let m1 = {
-                model.opponents.get_mut(&oid1).map(|o| {
-                    let has = o.has.take();
-                    let not = o.nots.drain().collect::<HashSet<_>>();
-
-                    (has, not)
-                })
-            };
-
-            let m2 = {
-                model.opponents.get_mut(&oid2).map(|o| {
-                    let has = o.has.take();
-                    let not = o.nots.drain().collect::<HashSet<_>>();
-
-                    (has, not)
-                })
-            };
-
-            match (m1, m2) {
-                (Some((has1, not1)), Some((has2, not2))) => {
-                    if let Some(o2) = model.opponents.get_mut(&oid2) {
-                        o2.has = has1;
-                        o2.nots = not1;
-                    }
-
-                    if let Some(o1) = model.opponents.get_mut(&oid1) {
-                        o1.has = has2;
-                        o1.nots = not2;
-                    }
-                }
-                // TODO Edge cases. Give back the data.
-                _ => {}
-            }
-        }
+        Msg::King(oid1, oid2) => model.king(oid1, oid2),
         Msg::Kill(oid) => {
             model.opponents.remove(&oid);
         }
@@ -430,7 +447,10 @@ fn view_startup_main(model: &Model) -> Node<Msg> {
 fn view_links() -> Node<Msg> {
     div![
         C!["blue-link"],
-        a![attrs! { At::Href => "#"}, "How to Use"],
+        a![
+            attrs! { At::Href => "https://www.fosskers.ca/en/blog/love-letter"},
+            "How to Use"
+        ],
         "・",
         a![
             attrs! { At::Href => "https://github.com/fosskers/fosskers.ca/issues"},
@@ -640,7 +660,7 @@ fn view_player_grid(model: &Model) -> Node<Msg> {
         .opponents
         .iter()
         .map(|(id, o)| view_opponent(model, *id, o))
-        .collect::<Vec<_>>(),]
+        .collect::<Vec<_>>()]
 }
 
 /// Render an `Opponent`.
@@ -652,46 +672,50 @@ fn view_opponent(model: &Model, oid: usize, opponent: &Opponent) -> Node<Msg> {
         view_opponent_controls(model, oid, opponent),
         probs
             .into_iter()
-            .map(|(card, prob)| div![
-                C!["opponent-card"],
-                div![
-                    C!["text-overlay"],
-                    input![
-                        C![(prob == 0.0).then(|| "zero")],
-                        attrs! {
-                            At::Type => "image",
-                            At::Src => card.image()
-                        },
-                        match model.deck.get(&card) {
-                            None | Some(0) => None,
-                            _ => Some(ev(Ev::Click, move |_| Msg::Played(oid, card))),
-                        }
-                    ],
-                    (prob > 0.0).then(|| span![
-                        C!["tag", "is-dark", "is-medium", "is-rounded"],
-                        format!("{:.1}%", prob)
-                    ])
-                ],
-                div![
-                    C!["buttons", "has-addons"],
-                    button![
-                        C!["button", "is-small", "is-warning"],
-                        span![C!["icon"], i![C!["fas", "fa-times"]]],
-                        ev(Ev::Click, move |_| Msg::Guard(oid, card))
-                    ],
-                    button![
-                        C!["button", "is-small", "is-danger"],
-                        span![C!["icon"], i![C!["fas", "fa-eye"]]],
-                        ev(Ev::Click, move |_| Msg::Priest(oid, card))
-                    ],
-                    button![
-                        C!["button", "is-small", "is-link"],
-                        span![C!["icon"], i![C!["fas", "fa-fan"]]],
-                        ev(Ev::Click, move |_| Msg::Baron(oid, card))
-                    ]
-                ]
-            ])
+            .map(|(card, prob)| view_opponent_card(model, oid, card, prob))
             .collect::<Vec<_>>()
+    ]
+}
+
+fn view_opponent_card(model: &Model, oid: usize, card: Card, prob: f32) -> Node<Msg> {
+    div![
+        C!["opponent-card"],
+        div![
+            C!["text-overlay"],
+            input![
+                C![(prob == 0.0).then(|| "zero")],
+                attrs! {
+                    At::Type => "image",
+                    At::Src => card.image()
+                },
+                match model.deck.get(&card) {
+                    None | Some(0) => None,
+                    _ => Some(ev(Ev::Click, move |_| Msg::Played(oid, card))),
+                }
+            ],
+            (prob > 0.0).then(|| span![
+                C!["tag", "is-dark", "is-medium", "is-rounded"],
+                format!("{:.1}%", prob)
+            ])
+        ],
+        div![
+            C!["buttons", "has-addons"],
+            button![
+                C!["button", "is-small", "is-warning"],
+                span![C!["icon"], i![C!["fas", "fa-times"]]],
+                ev(Ev::Click, move |_| Msg::Guard(oid, card))
+            ],
+            button![
+                C!["button", "is-small", "is-danger"],
+                span![C!["icon"], i![C!["fas", "fa-eye"]]],
+                ev(Ev::Click, move |_| Msg::Priest(oid, card))
+            ],
+            button![
+                C!["button", "is-small", "is-link"],
+                span![C!["icon"], i![C!["fas", "fa-fan"]]],
+                ev(Ev::Click, move |_| Msg::Baron(oid, card))
+            ]
+        ]
     ]
 }
 
