@@ -9,10 +9,11 @@ details about who has what? Me too! Enter: [[/en/tools/love-letter][The Love Let
 * Usage
 
 *Note:* The tracker is not /Love Letter/ itself. It is meant to enhance, not
-replace, the original game. It works best on a computer screen or tablet.
+replace, the original game. It works best on a computer screen or tablet. Also
+note that this tracker only targets the original 8-card version of /Love
+Letter/, which happens to be the version [[https://store.steampowered.com/app/926520/Love_Letter/][available digitally]].
 
-Once you set the names of the Opponents you're playing with, hit ~Start~ and
-you're ready to play.
+To begin, set the names of the Opponents you're playing with and hit ~Start~.
 
 The tracker displays the chance that each player has a particular card in their
 hand /at the end of a given turn/ after they have made a play. The numbers you
@@ -21,7 +22,7 @@ possibilities.
 
 [[/assets/llt-opponent-sample.png]]
 
-/Handmade is more likely than King here. There is no chance this opponent has the Prince./
+/Example: Handmaid is more likely than King here. There is no chance this opponent has the Prince./
 
 This tracker is particularly useful due to its ability to /persist knowledge/
 across your opponents' turns. What they played this turn can affect what you
@@ -77,7 +78,7 @@ card in the /Exposed/ area to move it back. You will need to expose cards this
 way when:
 
 - the tracker user gets new cards in their hand.
-- the first three cards are discarded during a two-player game.
+- the first three cards are discarded at the beginning of a two-player game.
 
 To "expose" a card played or discarded by an opponent, click that card directly
 in their row. *This has a direct effect on the "persisted knowledge" you have on
@@ -88,13 +89,19 @@ out of the Unexposed area until it's truly played or in your hand. Further, if
 the tracker user gets King'd, they will have to manually re-expose the card that
 was taken by the opponent.
 
+Otherwise, the tracker does not manage player turns. When you or an opponent
+plays a card, click the appropriate buttons as described above.
+
+Have fun!
+
 * About
 
 The /Love Letter Tracker/ is written in [[https://www.rust-lang.org/][Rust]] and compiled into Web Assembly. It
-utilizes the [[https://seed-rs.org/][Seed Framework]] to manage user interaction and render the page.
+utilizes the [[https://seed-rs.org/][Seed Framework]] to handle user interaction and render the page.
 Overall layout is managed via CSS Grid and Flexbox, while general styling is
 provided by the [[https://bulma.io/][Bulma CSS Framework]].
 
-If you notice a bug with the tracker, [[https://github.com/fosskers/fosskers.ca/issues][please report it]].
+If you notice a bug with the tracker, [[https://github.com/fosskers/fosskers.ca/issues][please report it]]. If you find the tracker
+useful, please [[https://www.buymeacoffee.com/fosskers][consider donating]].
 
 Thanks to John, Sebastian, and [[https://www.twitch.tv/choccy_soup][Dan]] for their suggestions and help in testing.
