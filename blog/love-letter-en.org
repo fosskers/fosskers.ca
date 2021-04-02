@@ -86,8 +86,8 @@ them!* Not doing so may result in incorrect probabilities being reported.
 
 *Note:* Seeing a card with a Priest does *not* expose it. Don't click something
 out of the Unexposed area until it's truly played or in your hand. Further, if
-the tracker user gets King'd, they will have to manually re-expose the card that
-was taken by the opponent.
+the tracker user gets King'd, they will have to manually return the stolen card
+the /Unexposed/ area to fix the probabilities.
 
 Otherwise, the tracker does not manage player turns. When you or an opponent
 plays a card, click the appropriate buttons as described above.
