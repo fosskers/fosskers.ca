@@ -187,10 +187,6 @@ body {
   text-align: center;
 }
 
-div .input-group {
-  box-shadow: 3px 3px 5px;
-}
-
 .card-line {
   display: flex;
   align-items: center;
@@ -213,17 +209,6 @@ div .input-group {
 
 .zero {
   opacity: 0.25;
-}
-
-.btn-group,
-.btn-group-vertical,
-.btn-secondary,
-.btn-success {
-  box-shadow: $box-shadow;
-}
-
-.input-group .btn-success {
-  box-shadow: none;
 }
 
 .bold-silver {
@@ -265,7 +250,6 @@ a.gold:hover {
   color: #bfa006;
 }
 
-// TODO Remove
 input[type="image"] {
   border-radius: 25px;
   width: 75%;

@@ -2072,9 +2072,6 @@ body {
   font-weight: bold;
   text-align: center; }
 
-div .input-group {
-  box-shadow: 3px 3px 5px; }
-
 .card-line {
   display: flex;
   align-items: center;
@@ -2094,15 +2091,6 @@ div .input-group {
 
 .zero {
   opacity: 0.25; }
-
-.btn-group,
-.btn-group-vertical,
-.btn-secondary,
-.btn-success {
-  box-shadow: 3px 3px 5px black; }
-
-.input-group .btn-success {
-  box-shadow: none; }
 
 .bold-silver {
   color: silver;
