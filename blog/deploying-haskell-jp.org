@@ -88,14 +88,15 @@ web: server --js app.min.js
 「Dashboard」に入るとまずは新しい「Heroku・アプリ」を作りましょう（右上で「New」
 から「Create New App」）。できたら「Deploy」のタブが見えてくるはずです：
 
-[[/assets/heroku00.jpg]]
+[[/
+assets/images/heroku00.jpg]]
 
 ページの後半に見える「CLI」指示を無視してデプロイ方法を「Github」と選んで
 繋げたいrepoを入力しましょう。
 
 次は「Settings」のタブでの「Buildpacks」の所：
 
-[[/assets/heroku01.jpg]]
+[[/assets/images/heroku01.jpg]]
 
 「Buildpack」とはHeroku用語です。言語そろぞれにあり、構築に必要な複数のスクリプ
 トの意味を表します。 ~stack~ を使う「buildpack」を入れましょう。「Add buildpack」
