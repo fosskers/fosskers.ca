@@ -35,9 +35,6 @@ site lang page component = do
       title_ "Colin Woodbury"
       meta_ [charset_ "utf-8"]
       meta_ [name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no"]
-      script_ [src_ "/assets/code/jquery.slim.min.js"] ("" :: Text)
-      script_ [src_ "/assets/code/bootstrap.min.js"] ("" :: Text)
-      link_ [rel_ "stylesheet", href_ "/assets/css/bootstrap.min.css"]
       link_ [rel_ "stylesheet", href_ "/assets/css/fontawesome.min.css"]
       link_ [rel_ "stylesheet", href_ "/assets/css/brands.min.css"]
       link_ [rel_ "stylesheet", href_ "/assets/css/solid.min.css"]
