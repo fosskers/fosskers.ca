@@ -24,7 +24,7 @@ Adults tend to go as far as Level 2, which asks for 2,136 Kanji, the [[https://e
 defined by the Ministry of Education.
 However, getting that far isn't simple. Here are the pass rates for the year 2012:
 
-[[/assets/pass-rates.png]]
+[[/assets/images/pass-rates.png]]
 
 Less than 25% of people who take Level 2 pass it.
 A friend of mine, a native teacher of Japanese herself, had to study considerably
@@ -60,7 +60,7 @@ under the /Tools/ tab.
 Here's a screenshot of the demo having been ran over the [[https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%A9%E3%81%88%E3%82%82%E3%82%93][Wikipedia article for Doraemon]],
 a popular children's manga and anime:
 
-[[/assets/doraemon.png]]
+[[/assets/images/doraemon.png]]
 
 Levels 10 to 5 correspond to Kanji learned in elementary school. In this particular
 text, we see these elementary Kanji take up a vast majority of all Kanji used.

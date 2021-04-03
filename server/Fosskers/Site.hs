@@ -35,21 +35,21 @@ site lang page component = do
       title_ "Colin Woodbury"
       meta_ [charset_ "utf-8"]
       meta_ [name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no"]
-      script_ [src_ "/assets/jquery.slim.min.js"] ("" :: Text)
-      script_ [src_ "/assets/bootstrap.min.js"] ("" :: Text)
-      link_ [rel_ "stylesheet", href_ "/assets/bootstrap.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/fontawesome.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/brands.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/solid.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/fosskers.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/kate.css"]
-      link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/favicon-16x16.png"]
-      link_ [rel_ "icon", type_ "image/png", sizes_ "32x32", href_ "/assets/favicon-32x32.png"]
+      script_ [src_ "/assets/code/jquery.slim.min.js"] ("" :: Text)
+      script_ [src_ "/assets/code/bootstrap.min.js"] ("" :: Text)
+      link_ [rel_ "stylesheet", href_ "/assets/css/bootstrap.min.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/fontawesome.min.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/brands.min.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/solid.min.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/fosskers.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/kate.css"]
+      link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/images/favicon-16x16.png"]
+      link_ [rel_ "icon", type_ "image/png", sizes_ "32x32", href_ "/assets/images/favicon-32x32.png"]
 
 topbar :: Language -> Page -> Html ()
 topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark", "bg-dark" ] ] $ do
   a_ [ class_ "navbar-brand", href_ $ "/" <> langPath lang ]
-    $ img_ [ src_ "/assets/fosskers-icon.png", width_ "30", height_ "30" ]
+    $ img_ [ src_ "/assets/images/fosskers-icon.png", width_ "30", height_ "30" ]
   navButton
   div_ [ classes_ [ "collapse", "navbar-collapse" ], id_ navId ]
     $ ul_ [ class_ "navbar-nav" ]

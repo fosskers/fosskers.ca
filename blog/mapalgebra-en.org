@@ -231,7 +231,7 @@ Map Algebra will be rigourous.
 
 Say you have this image:
 
-[[/assets/nodata.jpg]]
+[[/assets/images/nodata.jpg]]
 
 Lots of NoData here, which is pretty common for Landsat imagery. What happens if
 we naively run a Focal Operation over it? Currently, Focal Ops only support a
@@ -915,7 +915,7 @@ stated, all operations are over a 512x512 image.
 
 *** Local Operations
 
-[[/assets/simple-local-ops.png]]
+[[/assets/images/simple-local-ops.png]]
 
 These are four local ops which could be written for Python. Much more and NumPy
 has no way to approach them (say, Local Variance). ~mapalgebra~ and GeoTrellis
@@ -929,7 +929,7 @@ here, a cost which only needs to be paid once per fused op chain.
 
 EVI demonstrates this better (watch the yellow bar):
 
-[[/assets/evi.png]]
+[[/assets/images/evi.png]]
 
 Recall that EVI has 8 chained numerical operations. As CPU count and Raster size
 increase, ~mapalgebra~ pulls ahead even of the C code that powers NumPy. We can
@@ -938,7 +938,7 @@ expect this to improve further as [[https://summer.haskell.org/news/2018-04-23-a
 Op fusion pays off again as we perform EVI, colour a Raster, and encode it as
 a ~.png~:
 
-[[/assets/evi-to-png.png]]
+[[/assets/images/evi-to-png.png]]
 
 Rasterio was left out here, as it has no support for encoding PNGs outside
 of the IO process.
@@ -948,12 +948,12 @@ of the IO process.
 ~mapalgebra~ [[https://github.com/fosskers/mapalgebra/pull/3][defines more Focal Ops]] than GeoTrellis, but we measure the common ones
 here. Rasterio is left out completely, as it has no support for these.
 
-[[/assets/simple-focal-ops.png]]
+[[/assets/images/simple-focal-ops.png]]
 
 This is the strength of Windowed Rasters, parallelism, and LLVM optimizations.
 That said, remember those slow Surficial ops I mentioned?
 
-[[/assets/surficial-focal-ops.png]]
+[[/assets/images/surficial-focal-ops.png]]
 
 Yikes. I really need to figure out what's killing the optimizations.
 

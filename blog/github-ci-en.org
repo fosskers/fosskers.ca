@@ -47,7 +47,7 @@ support built in, so we activate that and set our preferred GHC version with
 ~with~. Notice that Actions have a version, which we can track by subscribing to
 releases:
 
-[[/assets/watching.png]]
+[[/assets/images/watching.png]]
 
 ** Caching
 

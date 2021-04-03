@@ -91,7 +91,7 @@ true of XWayland. ~xeyes~ is a comical program that we can use to detect which
 windows are running in XWayland. Its eyes will follow your mouse, *but only when
 on an X window*.
 
-[[/assets/xeyes.png]]
+[[/assets/images/xeyes.png]]
 
 /Xeyes following my mouse over a Krita window./
 
@@ -214,7 +214,7 @@ end of your Sway config, and in its place add this:
 with [[https://github.com/fosskers/dotfiles/blob/master/.config/waybar/style.css][its custom CSS styling]]. The bar itself is transparent, with the top-right
 widgets and tray looking like this:
 
-[[/assets/waybar-top-right.png]]
+[[/assets/images/waybar-top-right.png]]
 
 After tweaking your Waybar config, its enough to refresh Sway via
 ~Super+Shift+c~ as usual to refresh your Waybars as well.
@@ -224,7 +224,7 @@ After tweaking your Waybar config, its enough to refresh Sway via
 By default Sway uses ~dmenu~ for opening programs, but surprisingly its UI runs
 in XWayland. There are [[https://github.com/swaywm/sway/wiki/i3-Migration-Guide][a number of alternatives]] available, and I chose [[https://hg.sr.ht/~scoopta/wofi][Wofi]].
 
-[[/assets/wofi.jpg]]
+[[/assets/images/wofi.jpg]]
 
 This is the [[https://github.com/fosskers/dotfiles/blob/master/.config/wofi/style.css][look I settled on]], but since it's all CSS you're [[https://cloudninja.pw/docs/wofi.html][free to experiment]]!
 Note that you'll need the following in your Sway config:
@@ -268,7 +268,7 @@ reopened, this variable change should have propagated to everywhere that
 matters. Now if you open Firefox again through Wofi and check ~about:support~,
 you should find:
 
-[[/assets/firefox-wayland.png]]
+[[/assets/images/firefox-wayland.png]]
 
 ** Chromium
 
@@ -326,7 +326,7 @@ us to set specific environment variables per game. To set this, right-click on a
 game, and visit its ~Properties~. In ~GENERAL > LAUNCH OPTIONS~, enter the
 following and your game should be runnable:
 
-[[/assets/steam-sdl-override.png]]
+[[/assets/images/steam-sdl-override.png]]
 
 So to reiterate, here is the environment variable I have set in Fish:
 
@@ -391,7 +391,7 @@ And this to your Sway config:
 Hopefully you now see a keyboard icon in your Waybar tray. To configure
 ~fcitx5~, open ~fcitx5-configtool~. Here is my setup:
 
-[[/assets/fcitx5.png]]
+[[/assets/images/fcitx5.png]]
 
 You'll see that I specifically set my English keyboard to Colemak, and added
 ~Mozc~ from the list on the right. Check the ~Global Options~ tab to set your
@@ -414,7 +414,7 @@ The latter is necessary only for Chromium. *Now restart your computer.*
 Let's test Firefox first using Mozilla's [[https://mozilla.github.io/webrtc-landing/gum_test.html][gum test page]]. When the browser prompts
 you for a window selection, choose /Use operating system settings/:
 
-[[/assets/firefox-screen-select.jpg]]
+[[/assets/images/firefox-screen-select.jpg]]
 
 And screen sharing should begin.
 

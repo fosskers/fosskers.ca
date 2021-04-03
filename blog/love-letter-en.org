@@ -20,7 +20,7 @@ hand /at the end of a given turn/ after they have made a play. The numbers you
 see are the chance of their single remaining card being one of the 8
 possibilities.
 
-[[/assets/llt-opponent-sample.png]]
+[[/assets/images/llt-opponent-sample.png]]
 
 /Example: Handmaid is more likely than King here. There is no chance this opponent has the Prince./
 
@@ -31,7 +31,7 @@ that are otherwise difficult for a human to notice!
 
 ** Opponent Controls
 
-[[/assets/llt-opponent-controls.png]]
+[[/assets/images/llt-opponent-controls.png]]
 
 This opponent, Sam, is playing against two others (and possibly also the user of
 the tracker).
@@ -43,7 +43,7 @@ the tracker).
 - *Opponent + Crown:* This swaps what you know about two opponents, for when a
   King is played between them (and *not* the tracker user! See below.).
 
-[[/assets/llt-opponent-knowledge.png]]
+[[/assets/images/llt-opponent-knowledge.png]]
 
 This particular view means that this opponent has a 14.3% chance of having a
 Handmaid in their hand.
@@ -62,7 +62,7 @@ Handmaid in their hand.
 
 ** Flow of Play
 
-[[/assets/llt-unexposed.png]]
+[[/assets/images/llt-unexposed.png]]
 
 An opponents' card chances are affected by your knowledge of them as well as the
 remaining "unexposed" cards in hands, the deck, and "the hole".
