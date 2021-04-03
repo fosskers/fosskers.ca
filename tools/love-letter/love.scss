@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: Junitta;
-  src: url(/webfonts/Junitta.otf);
+  src: url(/assets/webfonts/Junitta.otf);
 }
 
 // --- Common Values --- //
@@ -39,7 +39,7 @@ $link: $baron-colour;
 // --- Top-level Elements --- //
 
 body {
-  background: 0 -100px repeat-x url(/assets/bg_gallery.png) #4f191a;
+  background: 0 -100px repeat-x url(/assets/images/bg_gallery.png) #4f191a;
 }
 
 // --- CSS Grid - Startup --- //

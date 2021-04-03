@@ -13,4 +13,4 @@ weeder.dhall
 deps.jpg
 Cargo.lock
 demos/game-of-life/target/*
-style/fontawesome/*
+style/*

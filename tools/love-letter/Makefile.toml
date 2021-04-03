@@ -11,7 +11,7 @@ description = "Watch files and recompile the project on change"
 run_task = [
     { name = "build" },
 ]
-watch = { ignore_pattern = "love.scss" }
+watch = true
 
 [tasks.serve]
 description = "Start server"
@@ -20,12 +20,6 @@ command = "microserver"
 args = ["--port", "${PORT}"]
 
 # ---- BUILD ----
-
-[tasks.sass]
-description = "Compile SCSS to CSS."
-command = "sassc"
-args = ["love.scss", "../../assets/love.css"]
-watch = { watch = ["love.scss"] }
 
 [tasks.build]
 description = "Build with wasm-pack"
@@ -41,11 +35,11 @@ args = ["build", "--target", "web", "--out-name", "love"]
 
 [tasks.copy_wasm]
 description = "Copy release-mode WASM to the top-level assets folder."
-script = "cp pkg/love_bg.wasm ../../assets/"
+script = "cp pkg/love_bg.wasm ../../assets/code/"
 
 [tasks.copy_js]
 description = "Copy release-mode JS to the top-level assets folder."
-script = "cp pkg/love.js ../../assets/"
+script = "cp pkg/love.js ../../assets/code/"
 
 [tasks.release]
 dependencies = [

@@ -44,7 +44,7 @@ alBhed lang = do
 
 wasm :: Html ()
 wasm = termRawWith "script" [type_ "module"]
-  "import init from '/assets/al_bhed.js';\n\
+  "import init from '/assets/code/al_bhed.js';\n\
   \async function run() {\n\
   \  await init();\n\
   \}\n\

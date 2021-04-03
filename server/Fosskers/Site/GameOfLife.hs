@@ -53,7 +53,7 @@ gol lang = do
 
 wasm :: Html ()
 wasm = termRawWith "script" [type_ "module"]
-  "import init from '/assets/game_of_life.js';\n\
+  "import init from '/assets/code/game_of_life.js';\n\
   \async function run() {\n\
   \  await init();\n\
   \}\n\

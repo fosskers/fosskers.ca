@@ -49,14 +49,14 @@ impl Card {
     /// Get the image path for a given card.
     fn image(&self) -> &'static str {
         match self {
-            Card::Guard => "/assets/guard.jpg",
-            Card::Priest => "/assets/priest.jpg",
-            Card::Baron => "/assets/baron.jpg",
-            Card::Handmaid => "/assets/handmaid.jpg",
-            Card::Prince => "/assets/prince.jpg",
-            Card::King => "/assets/king.jpg",
-            Card::Countess => "/assets/countess.jpg",
-            Card::Princess => "/assets/princess.jpg",
+            Card::Guard => "/assets/images/guard.jpg",
+            Card::Priest => "/assets/images/priest.jpg",
+            Card::Baron => "/assets/images/baron.jpg",
+            Card::Handmaid => "/assets/images/handmaid.jpg",
+            Card::Prince => "/assets/images/prince.jpg",
+            Card::King => "/assets/images/king.jpg",
+            Card::Countess => "/assets/images/countess.jpg",
+            Card::Princess => "/assets/images/princess.jpg",
         }
     }
 }

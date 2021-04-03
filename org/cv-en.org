@@ -3,7 +3,7 @@
 
 * Self Introduction
 
-[[/assets/colin-profile.jpg]]
+[[/assets/images/colin-profile.jpg]]
 
 I am a full-stack developer and avid contributor to Open Source since 2012. I am
 the author of [[https://github.com/fosskers/aura][Aura]]. As a former teacher, I am skilled at public speaking and
