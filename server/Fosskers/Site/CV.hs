@@ -1,13 +1,12 @@
 module Fosskers.Site.CV ( cv ) where
 
 import Fosskers.Common (Language(..), Pages(..))
-import Fosskers.Site.Bootstrap
 import Lucid hiding (col_)
 
 ---
 
 cv :: Pages -> Language -> Html ()
-cv ps lang = row_ content
+cv ps lang = content
   where
     content :: Html ()
     content = case lang of

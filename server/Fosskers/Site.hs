@@ -25,7 +25,7 @@ site lang component = do
   doctype_
   html_ $ do
     head_ h
-    body_ $ do
+    body_ $ div_ [class_ "grid-container"] $ do
       div_ [class_ "grid-navbar"] $ topbar lang
       component
   where

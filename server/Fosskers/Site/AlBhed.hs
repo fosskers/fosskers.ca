@@ -3,7 +3,6 @@ module Fosskers.Site.AlBhed ( alBhed ) where
 import BasePrelude
 import Data.Text (Text)
 import Fosskers.Common (Language(..))
-import Fosskers.Site.Bootstrap
 import Lucid hiding (col_)
 import Lucid.Base (termRawWith)
 
@@ -12,12 +11,12 @@ import Lucid.Base (termRawWith)
 alBhed :: Language -> Html ()
 alBhed lang = do
   heading
-  fluid [style_ "padding-top: 1.0%;padding-bottom: 1.0%"] $ row_ $ do
-    div_ [classes_ ["col-md-3", "offset-md-3"]] $ do
-      div_ [class_ "title"] $ h3_ engLabel
+  div_ $ do
+    div_ [classes_ []] $ do
+      div_ [] $ h3_ engLabel
       form "english-text" engPlace
-    div_ [classes_ ["col-md-3"]] $ do
-      div_ [class_ "title"] $ h3_ alLabel
+    div_ [classes_ []] $ do
+      div_ [] $ h3_ alLabel
       form "al-bhed-text" alPlace
   wasm
   where

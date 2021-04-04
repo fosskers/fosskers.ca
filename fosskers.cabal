@@ -62,7 +62,6 @@ executable server
     Fosskers.Site
     Fosskers.Site.About
     Fosskers.Site.Blog
-    Fosskers.Site.Bootstrap
     Fosskers.Site.CV
     Fosskers.Site.GameOfLife
     Fosskers.Site.AlBhed

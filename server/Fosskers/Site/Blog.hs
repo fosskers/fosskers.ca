@@ -12,7 +12,6 @@ import qualified Data.Map.Strict as M
 import qualified Data.Org as O
 import           Data.Text (Text)
 import           Fosskers.Common
-import           Fosskers.Site.Bootstrap
 import           Lucid hiding (for_)
 
 ---
@@ -28,11 +27,11 @@ choose bs l t = case l of
   Japanese -> M.lookup t (japPosts bs)
 
 blog :: Blogs -> Language -> Maybe Blog -> Html ()
-blog bs l content = row_ $ do
-  div_ [style_ "padding-top: 1.0%", classes_ ["col-xs-12", "col-md-3"]] $ case content of
+blog bs l content = do
+  div_ [class_ "grid-left"]$ case content of
     Nothing -> ""
     Just b  -> indexBar l b
-  div_ [classes_ ["col-xs-12", "col-md-6"]] $ case content of
+  div_ [class_ "grid-main"] $ case content of
     Nothing -> nf
     Just b  -> do
       let !m = O.orgMeta $ blogRaw b
@@ -42,8 +41,8 @@ blog bs l content = row_ $ do
         date <- M.lookup "DATE" m
         let updated = M.lookup "UPDATED" m
         Just $ printf pat author date <> maybe "" (printf upat) updated
-      div_ [style_ "padding-top: 1.0%"] $ blogBody b
-  div_ [style_ "padding-top: 1.0%", classes_ ["col-xs-12", "col-md-3"]] $ articleBar l ps
+      div_ [] $ blogBody b
+  div_ [class_ "grid-right"] $ articleBar l ps
   where
     (ps, nf, pat, upat) = case l of
       English  -> (engByCat bs, "Post not found!", "By %s on %s", ", updated %s")
