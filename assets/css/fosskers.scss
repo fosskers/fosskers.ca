@@ -5,6 +5,7 @@
 @import "../../style/bulma/sass/components/navbar.sass";
 @import "../../style/bulma/sass/components/menu.sass";
 @import "../../style/bulma/sass/elements/button.sass";
+@import "../../style/bulma/sass/elements/content.sass";
 @import "../../style/bulma/sass/elements/title.sass";
 
 // --- CSS Grid --- //
@@ -47,4 +48,8 @@
 .is-centered {
   display: flex;
   justify-content: center;
+}
+
+.left-padding {
+  padding-left: 10px;
 }

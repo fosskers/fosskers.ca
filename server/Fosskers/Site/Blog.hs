@@ -28,7 +28,7 @@ choose bs l t = case l of
 
 blog :: Blogs -> Language -> Maybe Blog -> Html ()
 blog bs l content = do
-  div_ [class_ "grid-left"]$ case content of
+  div_ [class_ "grid-right"]$ case content of
     Nothing -> ""
     Just b  -> indexBar l b
   div_ [class_ "grid-main"] $ case content of
@@ -41,8 +41,8 @@ blog bs l content = do
         date <- M.lookup "DATE" m
         let updated = M.lookup "UPDATED" m
         Just $ printf pat author date <> maybe "" (printf upat) updated
-      div_ [] $ blogBody b
-  div_ [class_ "grid-right"] $ articleBar l ps
+      div_ [class_ "content"] $ blogBody b
+  div_ [class_ "grid-left"] $ articleBar l ps
   where
     (ps, nf, pat, upat) = case l of
       English  -> (engByCat bs, "Post not found!", "By %s on %s", ", updated %s")
@@ -51,8 +51,9 @@ blog bs l content = do
 articleBar :: Language -> NonEmpty BlogCategory -> Html ()
 articleBar l bcs = do
   p_ [classes_ ["title", "is-4", "is-centered"]] label
-  aside_ [class_ "menu"] $ traverse_ g bcs
-  div_ [class_ "is-centered"] coffee
+  div_ [class_ "left-padding"] $ do
+    aside_ [class_ "menu"] $ traverse_ g bcs
+    coffee
   where
     g :: BlogCategory -> Html ()
     g bc = do
@@ -75,7 +76,7 @@ articleBar l bcs = do
 indexBar :: Language -> Blog -> Html ()
 indexBar l b = do
   p_ [classes_ ["title", "is-4", "is-centered"]] label
-  blogTOC b
+  div_ [class_ "content"] $ blogTOC b
   where
     label = case l of
       English  -> "Table of Contents"
