@@ -35,8 +35,8 @@ blog bs l content = do
     Nothing -> nf
     Just b  -> do
       let !m = O.orgMeta $ blogRaw b
-      h1_ [class_ "title"] . maybe "Bug: Title Missing" toHtml $ M.lookup "TITLE" m
-      div_ [class_ "title"] . maybe "" (i_ [class_ "text-muted"] . toHtml @String) $ do
+      h1_ [classes_ ["title", "is-2", "is-centered"]] . maybe "Bug: Title Missing" toHtml $ M.lookup "TITLE" m
+      div_ [classes_ ["subtitle", "is-6", "is-centered"]]. maybe "" (i_ [class_ "text-muted"] . toHtml @String) $ do
         author <- M.lookup "AUTHOR" m
         date <- M.lookup "DATE" m
         let updated = M.lookup "UPDATED" m
@@ -50,18 +50,17 @@ blog bs l content = do
 
 articleBar :: Language -> NonEmpty BlogCategory -> Html ()
 articleBar l bcs = do
-  div_ [class_ "title"] $ h3_ label
-  traverse_ g bcs
-  div_ [class_ "title"] coffee
+  p_ [classes_ ["title", "is-4", "is-centered"]] label
+  aside_ [class_ "menu"] $ traverse_ g bcs
+  div_ [class_ "is-centered"] coffee
   where
     g :: BlogCategory -> Html ()
     g bc = do
-      h5_ . b_ . toHtml $ bcCat bc
-      ul_ $ traverse_ (li_ . f) $ bcBlogs bc
+      p_ [class_ "menu-label"] . toHtml $ bcCat bc
+      ul_ [class_ "menu-list"] $ traverse_ (li_ . f) $ bcBlogs bc
 
     f :: Blog -> Html ()
-    f b = div_
-      $ a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b]
+    f b = a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b]
       $ maybe "Bug: No Title" (h6_ . toHtml) $ M.lookup "TITLE" $ O.orgMeta $ blogRaw b
 
     label = case l of
@@ -75,7 +74,7 @@ articleBar l bcs = do
 
 indexBar :: Language -> Blog -> Html ()
 indexBar l b = do
-  div_ [class_ "title"] $ h3_ label
+  p_ [classes_ ["title", "is-4", "is-centered"]] label
   blogTOC b
   where
     label = case l of

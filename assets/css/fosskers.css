@@ -50,6 +50,11 @@
   width: 0.625em;
 }
 
+.title:not(:last-child),
+.subtitle:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
 .button.is-loading::after {
   animation: spinAround 500ms infinite linear;
   border: 2px solid #dbdbdb;
@@ -1292,6 +1297,55 @@ body.has-spaced-navbar-fixed-bottom {
   min-height: calc(100vh - 3.25rem);
 }
 
+.menu {
+  font-size: 1rem;
+}
+.menu.is-small {
+  font-size: 0.75rem;
+}
+.menu.is-medium {
+  font-size: 1.25rem;
+}
+.menu.is-large {
+  font-size: 1.5rem;
+}
+
+.menu-list {
+  line-height: 1.25;
+}
+.menu-list a {
+  border-radius: 2px;
+  color: #4a4a4a;
+  display: block;
+  padding: 0.5em 0.75em;
+}
+.menu-list a:hover {
+  background-color: whitesmoke;
+  color: #363636;
+}
+.menu-list a.is-active {
+  background-color: #3273dc;
+  color: #fff;
+}
+.menu-list li ul {
+  border-left: 1px solid #dbdbdb;
+  margin: 0.75em;
+  padding-left: 0.75em;
+}
+
+.menu-label {
+  color: #7a7a7a;
+  font-size: 0.75em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.menu-label:not(:first-child) {
+  margin-top: 1em;
+}
+.menu-label:not(:last-child) {
+  margin-bottom: 1em;
+}
+
 .button {
   background-color: white;
   border-color: #dbdbdb;
@@ -2401,6 +2455,102 @@ body.has-spaced-navbar-fixed-bottom {
   margin-right: 0.25rem;
 }
 
+.title,
+.subtitle {
+  word-break: break-word;
+}
+.title em,
+.title span,
+.subtitle em,
+.subtitle span {
+  font-weight: inherit;
+}
+.title sub,
+.subtitle sub {
+  font-size: 0.75em;
+}
+.title sup,
+.subtitle sup {
+  font-size: 0.75em;
+}
+.title .tag,
+.subtitle .tag {
+  vertical-align: middle;
+}
+
+.title {
+  color: #363636;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.125;
+}
+.title strong {
+  color: inherit;
+  font-weight: inherit;
+}
+.title + .highlight {
+  margin-top: -0.75rem;
+}
+.title:not(.is-spaced) + .subtitle {
+  margin-top: -1.25rem;
+}
+.title.is-1 {
+  font-size: 3rem;
+}
+.title.is-2 {
+  font-size: 2.5rem;
+}
+.title.is-3 {
+  font-size: 2rem;
+}
+.title.is-4 {
+  font-size: 1.5rem;
+}
+.title.is-5 {
+  font-size: 1.25rem;
+}
+.title.is-6 {
+  font-size: 1rem;
+}
+.title.is-7 {
+  font-size: 0.75rem;
+}
+
+.subtitle {
+  color: #4a4a4a;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+.subtitle strong {
+  color: #363636;
+  font-weight: 600;
+}
+.subtitle:not(.is-spaced) + .title {
+  margin-top: -1.25rem;
+}
+.subtitle.is-1 {
+  font-size: 3rem;
+}
+.subtitle.is-2 {
+  font-size: 2.5rem;
+}
+.subtitle.is-3 {
+  font-size: 2rem;
+}
+.subtitle.is-4 {
+  font-size: 1.5rem;
+}
+.subtitle.is-5 {
+  font-size: 1.25rem;
+}
+.subtitle.is-6 {
+  font-size: 1rem;
+}
+.subtitle.is-7 {
+  font-size: 0.75rem;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -2428,6 +2578,11 @@ body.has-spaced-navbar-fixed-bottom {
 
 .is-underlined {
   text-decoration: underline;
+}
+
+.is-centered {
+  display: flex;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=fosskers.css.map */

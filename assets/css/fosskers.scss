@@ -3,7 +3,9 @@
 @import "../../style/bulma/sass/utilities/_all.sass";
 @import "../../style/bulma/sass/base/_all.sass";
 @import "../../style/bulma/sass/components/navbar.sass";
+@import "../../style/bulma/sass/components/menu.sass";
 @import "../../style/bulma/sass/elements/button.sass";
+@import "../../style/bulma/sass/elements/title.sass";
 
 // --- CSS Grid --- //
 
@@ -38,4 +40,11 @@
 
 .is-underlined {
   text-decoration: underline;
+}
+
+// --- Blog --- //
+
+.is-centered {
+  display: flex;
+  justify-content: center;
 }
