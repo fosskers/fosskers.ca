@@ -83,9 +83,9 @@ topbar lang =
       dropdown "Demos" [Just ("Game of Life", "/en/demo/game-of-life")]
       item "CV" "/en/cv" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
-      icon "https://twitter.com/fosskers" ["fab", "fa-twitter"]
       icon "mailto:colin@fosskers.ca" ["fas", "fa-envelope"]
       icon "/en/rss" ["fas", "fa-rss"]
+      icon "https://www.buymeacoffee.com/fosskers" ["fas", "fa-mug-hot"]
 
     izakaya :: Html ()
     izakaya = do
@@ -98,9 +98,9 @@ topbar lang =
       dropdown "デモ" [Just ("Game of Life", "/jp/demo/game-of-life")]
       item "履歴書" "/jp/cv" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
-      icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
       icon "/jp/rss" [ "fas", "fa-rss" ]
+      icon "https://www.buymeacoffee.com/fosskers" ["fas", "fa-mug-hot"]
 
     projects :: [Maybe (Html (), Text)]
     projects =
