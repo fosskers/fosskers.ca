@@ -7,7 +7,6 @@ module Fosskers.Site
 import BasePrelude
 import Data.Text (Text)
 import Fosskers.Common
-import Fosskers.Site.Bootstrap
 import Lucid
 import Lucid.Base (makeAttribute)
 
@@ -21,14 +20,14 @@ nowhere = do
   div_ [class_ "title"] "Unfortunately, that page doesn't exist."
   div_ [class_ "title"] "残念ながらそのページは存在しません"
 
-site :: Language -> Page -> Html () -> Html ()
-site lang page component = do
+site :: Language -> Html () -> Html ()
+site lang component = do
   doctype_
   html_ $ do
     head_ h
     body_ $ do
-      topbar lang page
-      fluid [style_ "padding-top: 1.0%;padding-bottom: 1.0%"] component
+      div_ [class_ "grid-navbar"] $ topbar lang
+      component
   where
     h :: Html ()
     h = do
@@ -43,42 +42,32 @@ site lang page component = do
       link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/images/favicon-16x16.png"]
       link_ [rel_ "icon", type_ "image/png", sizes_ "32x32", href_ "/assets/images/favicon-32x32.png"]
 
-topbar :: Language -> Page -> Html ()
-topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark", "bg-dark" ] ] $ do
-  a_ [ class_ "navbar-brand", href_ $ "/" <> langPath lang ]
-    $ img_ [ src_ "/assets/images/fosskers-icon.png", width_ "30", height_ "30" ]
-  navButton
-  div_ [ classes_ [ "collapse", "navbar-collapse" ], id_ navId ]
-    $ ul_ [ class_ "navbar-nav" ]
-    $ theBar lang
-  langButtons
+-- TODO Figure out burger menu on mobile.
+topbar :: Language -> Html ()
+topbar lang =
+  nav_ [ classes_ [ "navbar", "is-dark"]
+       , role_ "navigation"
+       , makeAttribute "aria-label" "main navigation" ] $ do
+    div_ [ class_ "navbar-brand" ]
+      $ a_ [ class_ "navbar-item", href_ $ "/" <> langPath lang ]
+        $ img_ [ src_ "/assets/images/fosskers-icon.png", width_ "30", height_ "30" ]
+    div_ [ class_ "navbar-menu" ] $ do
+      div_ [class_ "navbar-start"] $ theBar lang
+      div_ [class_ "navbar-end"] langButtons
   where
-    navId :: Text
-    navId = "navbarLinks"
-
-    navButton :: Html ()
-    navButton = button_
-      [ class_ "navbar-toggler"
-      , type_ "button"
-      , makeAttribute "data-toggle" "collapse"
-      , makeAttribute "data-target" $ "#" <> navId
-      , makeAttribute "aria-controls" navId
-      , makeAttribute "aria-expanded" "false"
-      , makeAttribute "aria-label" "Toggle navigation" ]
-      $ span_ [ class_ "navbar-toggler-icon" ] ""
-
     theBar :: Language -> Html ()
     theBar English  = pub
     theBar Japanese = izakaya
 
     pub :: Html ()
     pub = do
-      item "About" "/en/about" $ active About
-      item "Blog" "/en/blog" $ active Posts
+      item "About" "/en/about" []
+      item "Blog" "/en/blog" []
       dropdown "Projects" projects
       -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
-      dropdown "Tools" [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
-                       , Just ("Love Letter Tracker", "/en/tools/love-letter") ]
+      dropdown "Tools"
+        [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
+        , Just ("Love Letter Tracker", "/en/tools/love-letter") ]
       dropdown "Demos" [Just ("Game of Life", "/en/demo/game-of-life")]
       item "CV" "/en/cv" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
@@ -88,8 +77,8 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
 
     izakaya :: Html ()
     izakaya = do
-      item "自己紹介" "/jp/about" $ active About
-      item "ブログ" "/jp/blog" $ active Posts
+      item "自己紹介" "/jp/about" []
+      item "ブログ" "/jp/blog" []
       dropdown "プロジェクト" projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
       dropdown "ツール" [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
@@ -115,52 +104,35 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       , Just ("Scala Benchmarks", "https://github.com/fosskers/scala-benchmarks") ]
 
     -- | Highlight the navbar links according to the page we're currently on.
-    active :: Page -> [Text]
-    active p = bool [] ["active", "font-weight-bold"] $ p == page
-
     item :: Html () -> Text -> [Text] -> Html ()
-    item label url cs = li_ [ classes_ $ "nav-item" : cs ]
-      $ a_ [ class_ "nav-link", href_ url ] label
+    item label url cs = a_ [ href_ url, classes_ $ "navbar-item" : cs ] label
 
     icon :: Text -> [Text] -> Html ()
-    icon url cs = li_ [ class_ "nav-item" ]
-      $ a_ [ href_ url, classes_ ("nav-link" : cs), style_ "font-size: 1.33333em" ] ""
+    icon url cs = a_ [ href_ url, classes_ ("navbar-item" : cs) ] ""
 
     langButtons :: Html ()
-    langButtons = div_
-      [ class_ "btn-group"
-      , role_ "group"
-      , makeAttribute "aria-label" "Language" ] $ do
-        a_ [ classes_ [ "btn", eBtn ], role_ "button", href_ "/en" ] "English"
-        a_ [ classes_ [ "btn", jBtn ], role_ "button", href_ "/jp" ] "日本語"
+    langButtons = do
+      a_ [href_ "/en", classes_ $ "navbar-item" : eBtn] "English"
+      a_ [href_ "/jp", classes_ $ "navbar-item" : jBtn] "日本語"
 
-    eBtn :: Text
+    eBtn :: [Text]
     eBtn = case lang of
-      English  -> "btn-info"
-      Japanese -> "btn-outline-info"
+      English  -> ["is-underlined"]
+      Japanese -> []
 
-    jBtn :: Text
+    jBtn :: [Text]
     jBtn = case lang of
-      English  -> "btn-outline-info"
-      Japanese -> "btn-info"
+      English  -> []
+      Japanese -> ["is-underlined"]
 
 -- | Construct a Bootstrap navbar dropdown.
 dropdown :: Text -> [Maybe (Html (), Text)] -> Html ()
 dropdown label links =
-  li_ [ classes_ [ "nav-item", "dropdown" ] ] $ do
-    a_ [ classes_ [ "nav-link", "dropdown-toggle" ]
-       , href_ "#"
-       , id_ did
-       , role_ "button"
-       , makeAttribute "data-toggle" "dropdown"
-       , makeAttribute "aria-haspopup" "true"
-       , makeAttribute "aria-expanded" "false" ] $ toHtml label
-    div_ [ class_ "dropdown-menu", makeAttribute "aria-labelledby" did ]
-      $ traverse_ link links
+  div_ [classes_ ["navbar-item", "has-dropdown", "is-hoverable"]] $ do
+    a_ [class_ "navbar-link"] $ toHtml label
+    div_ [class_ "navbar-dropdown"] $
+      traverse_ link links
   where
-    did :: Text
-    did = "navbarDropdown" <> label
-
     link :: Maybe (Html (), Text) -> Html ()
-    link Nothing         = div_ [class_ "dropdown-divider"] ""
-    link (Just (l, url)) = a_ [ class_ "dropdown-item", href_ url ] l
+    link Nothing         = hr_ [class_ "navbar-divider"]
+    link (Just (l, url)) = a_ [ class_ "navbar-item", href_ url ] l
