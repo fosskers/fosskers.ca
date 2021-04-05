@@ -66,16 +66,24 @@
 [[https://dumps.wikimedia.org/backup-index.html][ウィキのデータベース・ダンプ]]から [[https://github.com/attardi/wikiextractor][字だけ抽出する]] のは結構簡単と半分偶然で発見しました。
 
 #+BEGIN_EXAMPLE
-> python ~/code/python/wikiextractor/WikiExtractor.py --json --processes 4 --output out/ jawiki-20180301-pages-articles-multistream.xml
-...  # 長い出力
-INFO: Finished 4-process extraction of 1097409 articles in 2328.7s (471.3 art/s)
+> python WikiExtractor.py --json \
+    --processes 4 \
+    --output out/ \
+    jawiki-20180301-pages-articles-multistream.xml
+
+INFO: Finished 4-process extraction of 1097409 articles
 #+END_EXAMPLE
 
 ２０１８年3月初日のダンプ（１００万以上の記事！）の10.3gbのXMLから2.5gbのJSONが
 誕生しました。一行の例は以下の様：
 
 #+BEGIN_SRC json
-  {"id": "5", "url": "https://ja.wikipedia.org/wiki?curid=5", "title": "アンパサンド", "text": "アンパサンド..." }
+  {
+    "id": "5",
+    "url": "https://ja.wikipedia.org/wiki?curid=5",
+    "title": "アンパサンド",
+    "text": "アンパサンド..."
+  }
 #+END_SRC
 
 とても処理しやすいフォーマットです。 ~kanji~ を使って全記事を分析すると：

@@ -4,6 +4,7 @@
 @import "../../style/bulma/sass/base/_all.sass";
 @import "../../style/bulma/sass/components/navbar.sass";
 @import "../../style/bulma/sass/components/menu.sass";
+@import "../../style/bulma/sass/elements/box.sass";
 @import "../../style/bulma/sass/elements/button.sass";
 @import "../../style/bulma/sass/elements/content.sass";
 @import "../../style/bulma/sass/elements/title.sass";
@@ -35,6 +36,7 @@
 
 .grid-main {
   grid-area: grid-main;
+  margin-bottom: 1%;
 }
 
 // --- Navbar --- //
@@ -52,4 +54,110 @@
 
 .left-padding {
   padding-left: 10px;
+}
+
+// --- Code --- //
+
+div.org-src-container {
+  margin: 1em 0;
+}
+
+// A bulma override.
+pre.box {
+  border: 1px solid #ccc;
+  background-color: whitesmoke;
+  box-shadow: 3px 3px 3px #eee;
+}
+
+pre.src {
+  border: 1px solid #ccc;
+  overflow: auto;
+  padding-top: 1.2em;
+  position: relative;
+  box-shadow: 3px 3px 3px #eee;
+  border-radius: 6px;
+}
+
+pre.src:before {
+  display: block;
+  position: absolute;
+  background-color: #ccccd0;
+  top: 0;
+  right: 0;
+  padding: 0.25em 0.5em;
+  border-bottom-left-radius: 8px;
+  border: 0;
+  color: #fff;
+  font-size: 80%;
+}
+
+pre.src:hover:before {
+  display: inline;
+}
+
+pre.src-bash:before {
+  content: "Bash";
+}
+pre.src-cabal:before {
+  content: "Cabal";
+}
+pre.src-conf:before {
+  content: "Conf";
+}
+pre.src-diff:before {
+  content: "Diff";
+}
+pre.src-emacs-lisp:before {
+  content: "Emacs Lisp";
+}
+pre.src-fish:before {
+  content: "Fish";
+}
+pre.src-haskell:before {
+  content: "Haskell";
+}
+pre.src-js:before {
+  content: "Javascript";
+}
+pre.src-lisp:before {
+  content: "Lisp";
+}
+pre.src-makefile:before {
+  content: "Makefile";
+}
+pre.src-markdown:before {
+  content: "Markdown";
+}
+pre.src-nix:before {
+  content: "Nix";
+}
+pre.src-org:before {
+  content: "Org";
+}
+pre.src-purescript:before {
+  content: "Purescript";
+}
+pre.src-python:before {
+  content: "Python";
+}
+pre.src-scala:before {
+  content: "Scala";
+}
+pre.src-sh:before {
+  content: "Bash";
+}
+pre.src-sql:before {
+  content: "SQL";
+}
+pre.src-terraform:before {
+  content: "Terraform";
+}
+pre.src-yaml:before {
+  content: "YAML";
+}
+pre.src-toml:before {
+  content: "TOML";
+}
+pre.src-rust:before {
+  content: "Rust";
 }

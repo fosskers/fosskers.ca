@@ -81,9 +81,12 @@ Where does that 86% number come from?
 I discovered that it was fairly simple to [[https://github.com/attardi/wikiextractor][extract all text]] from [[https://dumps.wikimedia.org/backup-index.html][Wikipedia database dumps]]:
 
 #+BEGIN_EXAMPLE
-colin@yumi ~/c/h/j/data> python ~/code/python/wikiextractor/WikiExtractor.py --json --processes 4 --output out/ jawiki-20180301-pages-articles-multistream.xml
-...  # Much output here
-INFO: Finished 4-process extraction of 1097409 articles in 2328.7s (471.3 art/s)
+> python WikiExtractor.py --json \
+    --processes 4 \
+    --output out/ \
+    jawiki-20180301-pages-articles-multistream.xml
+
+INFO: Finished 4-process extraction of 1097409 articles
 #+END_EXAMPLE
 
 This produced 2.5gb of JSON from 10.3gb of original XML, based on the 2018 March 1st
@@ -93,7 +96,7 @@ lens into and grab only the ~Text~ of the article body. Then, normal application
 from my ~kanji~ library gives us aggregate information about the whole set:
 
 #+BEGIN_EXAMPLE
-colin@yumi ~/c/h/jp-wiki> stack exec -- jp-wiki
+> stack exec -- jp-wiki
 Starting...
 Elementary: 86.299255
 Middle School: 7.0112896

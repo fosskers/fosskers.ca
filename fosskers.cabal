@@ -1,6 +1,6 @@
 cabal-version: 2.2
 name:          fosskers
-version:       1.0.0
+version:       1.1.0
 synopsis:      My personal site.
 description:   My personal site.
 homepage:      https://github.com/fosskers/fosskers.ca
@@ -30,7 +30,7 @@ common commons
     , lucid                 ^>=2.9
     , megaparsec            >=7.0 && <9
     , org-mode              ^>=1.1
-    , org-mode-lucid        ^>=1.5
+    , org-mode-lucid        ^>=1.6
     , text
     , time
     , transformers          ^>=0.5

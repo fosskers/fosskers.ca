@@ -121,11 +121,6 @@ skylighting l t = maybe (O.codeHTML l t) (formatHtmlBlock fo) $ do
     fo = defaultFormatOpts
       { containerClasses = "src" : maybe [] (\(O.Language l') -> ["src-" <> l']) l }
 
-sectioning :: O.SectionStyling
-sectioning _ h s = do
-  h
-  div_ [style_ "padding-bottom: 1.0%;padding-left: 2.0%"] s
-
 -- | Abosolute paths to all the @.org@ blog files.
 orgFiles :: IO [FilePath]
 orgFiles = filter (L.isSuffixOf ".org") <$> (listDirectory "blog" >>= traverse f)
@@ -137,7 +132,10 @@ orgs :: NonEmpty FilePath -> IO ([Text], [Blog])
 orgs = fmap partitionEithers . traverse g . NEL.toList
   where
     style :: O.OrgStyle
-    style = O.OrgStyle False (O.TOC 3) True skylighting sectioning (Just ' ')
+    style = O.defaultStyle
+      { O.includeTitle = False
+      , O.bulma = True
+      , O.highlighting = skylighting }
 
     g :: FilePath -> IO (Either Text Blog)
     g f = do
@@ -160,14 +158,17 @@ eread path = do
 
 pages :: IO (Maybe Pages)
 pages = runMaybeT $ Pages
-  <$> ab astyle "org/about-en.org"
-  <*> ab astyle "org/about-jp.org"
-  <*> re cstyle "org/cv-en.org" "Colin Woodbury"
-  <*> re jstyle "org/cv-jp.org" "ウッドブリ・コリン"
+  <$> ab style "org/about-en.org"
+  <*> ab style "org/about-jp.org"
+  <*> re style "org/cv-en.org" "Colin Woodbury"
+  <*> re style "org/cv-jp.org" "ウッドブリ・コリン"
   where
-    astyle = O.OrgStyle False (O.TOC 2) False skylighting sectioning (Just ' ')
-    cstyle = O.OrgStyle False (O.TOC 2) True skylighting sectioning (Just ' ')
-    jstyle = O.OrgStyle False (O.TOC 2) True skylighting sectioning (Just ' ')
+    style :: O.OrgStyle
+    style = O.defaultStyle
+      { O.includeTitle = False
+      , O.tableOfContents = O.TOC 2
+      , O.bulma = True
+      , O.highlighting  = skylighting }
 
     ab :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
     ab s fp = O.body s <$> MaybeT (orgd fp)
@@ -193,7 +194,7 @@ main = do
 
 setup :: Args -> IO ()
 setup args = f >>= \case
-  Left err -> logError err >> exitFailure
+  Left err             -> logError err >> exitFailure
   Right (ps, ens, jps) -> work args ps ens jps
   where
     f :: IO (Either Text (Pages, NonEmpty Blog, NonEmpty Blog))

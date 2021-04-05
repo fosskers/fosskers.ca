@@ -35,15 +35,16 @@ Herokuに載せるサーバーは普段の80・8080・443等ではなく、 ~$PO
 問題ありません：
 
 #+BEGIN_SRC haskell
-  {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
+  {-# LANGUAGE DeriveAnyClass #-}
+  {-# LANGUAGE DeriveGeneric  #-}
 
   import qualified Network.Wai.Handler.Warp as W
   import           Options.Generic
   import           System.Environment (lookupEnv)
   import           Text.Read (readMaybe)
 
-  data Args = Args { port :: Maybe Int
-                     <?> "Port to listen for requests on, otherwise $PORT" }
+  data Args =
+    Args { port :: Maybe Int <?> "Port to listen for requests on." }
     deriving (Generic, ParseRecord)
 
   app :: Application  -- Some `wai` Application

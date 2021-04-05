@@ -51,7 +51,7 @@
 }
 
 .title:not(:last-child),
-.subtitle:not(:last-child), .content:not(:last-child) {
+.subtitle:not(:last-child), .content:not(:last-child), .box:not(:last-child) {
   margin-bottom: 1.5rem;
 }
 
@@ -1344,6 +1344,22 @@ body.has-spaced-navbar-fixed-bottom {
 }
 .menu-label:not(:last-child) {
   margin-bottom: 1em;
+}
+
+.box {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+  color: #4a4a4a;
+  display: block;
+  padding: 1.25rem;
+}
+
+a.box:hover, a.box:focus {
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px #3273dc;
+}
+a.box:active {
+  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.2), 0 0 0 1px #3273dc;
 }
 
 .button {
@@ -2740,6 +2756,7 @@ body.has-spaced-navbar-fixed-bottom {
 
 .grid-main {
   grid-area: grid-main;
+  margin-bottom: 1%;
 }
 
 .is-underlined {
@@ -2753,6 +2770,130 @@ body.has-spaced-navbar-fixed-bottom {
 
 .left-padding {
   padding-left: 10px;
+}
+
+div.org-src-container {
+  margin: 1em 0;
+}
+
+pre.box {
+  border: 1px solid #ccc;
+  background-color: whitesmoke;
+  box-shadow: 3px 3px 3px #eee;
+}
+
+pre.src {
+  border: 1px solid #ccc;
+  overflow: auto;
+  padding-top: 1.2em;
+  position: relative;
+  box-shadow: 3px 3px 3px #eee;
+  border-radius: 6px;
+}
+
+pre.src:before {
+  display: block;
+  position: absolute;
+  background-color: #ccccd0;
+  top: 0;
+  right: 0;
+  padding: 0.25em 0.5em;
+  border-bottom-left-radius: 8px;
+  border: 0;
+  color: #fff;
+  font-size: 80%;
+}
+
+pre.src:hover:before {
+  display: inline;
+}
+
+pre.src-bash:before {
+  content: "Bash";
+}
+
+pre.src-cabal:before {
+  content: "Cabal";
+}
+
+pre.src-conf:before {
+  content: "Conf";
+}
+
+pre.src-diff:before {
+  content: "Diff";
+}
+
+pre.src-emacs-lisp:before {
+  content: "Emacs Lisp";
+}
+
+pre.src-fish:before {
+  content: "Fish";
+}
+
+pre.src-haskell:before {
+  content: "Haskell";
+}
+
+pre.src-js:before {
+  content: "Javascript";
+}
+
+pre.src-lisp:before {
+  content: "Lisp";
+}
+
+pre.src-makefile:before {
+  content: "Makefile";
+}
+
+pre.src-markdown:before {
+  content: "Markdown";
+}
+
+pre.src-nix:before {
+  content: "Nix";
+}
+
+pre.src-org:before {
+  content: "Org";
+}
+
+pre.src-purescript:before {
+  content: "Purescript";
+}
+
+pre.src-python:before {
+  content: "Python";
+}
+
+pre.src-scala:before {
+  content: "Scala";
+}
+
+pre.src-sh:before {
+  content: "Bash";
+}
+
+pre.src-sql:before {
+  content: "SQL";
+}
+
+pre.src-terraform:before {
+  content: "Terraform";
+}
+
+pre.src-yaml:before {
+  content: "YAML";
+}
+
+pre.src-toml:before {
+  content: "TOML";
+}
+
+pre.src-rust:before {
+  content: "Rust";
 }
 
 /*# sourceMappingURL=fosskers.css.map */
