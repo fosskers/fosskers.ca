@@ -157,8 +157,8 @@ This library is very cool, and offered [[https://github.com/fosskers/aura/pull/5
 It was especially silly where vanilla Haskell would suffice:
 
 #+begin_src diff
-  -pure . filter isntMostRecent . zip aurInfos $ aurPkgs ^.. each . field @"version"
-  +pure . filter isntMostRecent . zip aurInfos $ map spVersion aurPkgs
+  -pure . zip aurInfos $ aurPkgs ^.. each . field @"version"
+  +pure . zip aurInfos $ map spVersion aurPkgs
 #+end_src
 
 A coworker and I recently had a debate about naming, and he convinced me that
@@ -213,7 +213,7 @@ dependencies, then consider hiding that feature behind a Cabal Flag set to
 
 #+begin_example
   flag remote-configs
-      Description: enable loading of configuration files from HTTP URLs
+      Description: enable loading of config files from HTTP URLs
       Default: False
       Manual: True
 

@@ -161,12 +161,12 @@ often it's ran, but also says:
         matrix:
           resolver: ['lts-15.6', 'lts-14.27', 'lts-12.26']
           include:
-          - resolver: 'lts-15.6'
-            ghc: '8.8.3'
-          - resolver: 'lts-14.27'
-            ghc: '8.6.5'
-          - resolver: 'lts-12.26'
-            ghc: '8.4.4'
+            - resolver: 'lts-15.6'
+              ghc: '8.8.3'
+            - resolver: 'lts-14.27'
+              ghc: '8.6.5'
+            - resolver: 'lts-12.26'
+              ghc: '8.4.4'
 
       steps:
         - name: Setup GHC
@@ -182,12 +182,17 @@ often it's ran, but also says:
           uses: actions/cache@v1
           with:
             path: ~/.stack
-            key: ${{ runner.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml') }}
+            key: ${{ matrix.resolver }}-${{ hashFiles('stack.yaml') }}
             restore-keys: |
               ${{ runner.os }}-${{ matrix.resolver }}-
 
         - name: Build and run tests
-          run: 'stack test --fast --no-terminal --resolver=${{ matrix.resolver }} --system-ghc'
+          run: >
+            stack test
+              --fast
+              --no-terminal
+              --resolver=${{ matrix.resolver }}
+              --system-ghc
 #+end_src
 
 * README Badges

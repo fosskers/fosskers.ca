@@ -124,9 +124,11 @@ are always /fused/ - they don't allocate additional memory between each step.
 Consider [[https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index][NDVI]]:
 
 #+BEGIN_SRC haskell
-  -- | Doesn't care about the projection or Raster size, so long as they're
-  -- all the same.
-  ndvi :: Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double
+  -- | Doesn't care about the projection or Raster size,
+  -- so long as they're all the same.
+  ndvi :: Raster D p r c Double
+       -> Raster D p r c Double
+       -> Raster D p r c Double
   ndvi nir red = (nir - red) / (nir + red)
 #+END_SRC
 
@@ -134,7 +136,10 @@ Or the [[https://en.wikipedia.org/wiki/Enhanced_vegetation_index][Enhanced Veget
 
 #+BEGIN_SRC haskell
   -- | The constants are interpreted as lazy Rasters of only that value.
-  evi :: Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double
+  evi :: Raster D p r c Double
+      -> Raster D p r c Double
+      -> Raster D p r c Double
+      -> Raster D p r c Double
   evi nir red blue = 2.5 * (numer / denom)
     where numer = nir - red
           denom = nir + (6 * red) - (7.5 * blue) + 1
@@ -244,10 +249,12 @@ One way to handle the NoData in a typesafe way is via ~Maybe~:
 #+BEGIN_SRC haskell
   import Data.Monoid (Sum(..))
 
-  -- | `Maybe` has a `Monoid` instance, which by default ignores any `Nothing`
-  -- that are added to it. `fmonoid` is used to smash the neighbourhood together.
+  -- | `Maybe` has a `Monoid` instance, which by default ignores
+  -- any `Nothing` that are added to it.
+  -- `fmonoid` is used to smash the neighbourhood together.
   nodatafsum :: Raster S p r c Word8 -> Raster DW p r c 512 Word8
-  nodatafsum = fmap (maybe 0 getSum) . fmonoid . strict B . fmap check . lazy
+  nodatafsum =
+    fmap (maybe 0 getSum) . fmonoid . strict B . fmap check . lazy
     where check 0 = Nothing
           check n = Just $ Sum n
 #+END_SRC
@@ -457,10 +464,10 @@ boasts a number of ready-to-use GIS operations, including:
 
 - Cost Distance
 - Hydrology ops
-- Colour + ASCII rendering
+- Colour and ASCII rendering
 - Map Algebra
 - Rasterization (i.e. Vector -> Raster conversion)
-- Reprojection + Resampling
+- Reprojection and Resampling
 - Raster Stitching
 - Viewshed
 
@@ -619,8 +626,11 @@ make GeoTrellis easier to learn:
 Assume we had started with:
 
 #+BEGIN_SRC scala
-  val t1: Tile = IntArrayTile.empty(512, 512).map { (c, r, _) => c * r }
-  val t2: Tile = IntArrayTile.empty(512, 512).map { (c, r, _) => c * r + 1 }
+  val t1: Tile =
+    IntArrayTile.empty(512, 512).map { (c, r, _) => c * r }
+
+  val t2: Tile =
+    IntArrayTile.empty(512, 512).map { (c, r, _) => c * r + 1 }
 #+END_SRC
 
 what does it take to perform a Local Sum?
@@ -799,7 +809,8 @@ Write some given 512x512 Raster.
   -- | PRO: Works on Rasters of any projection, size, and pixel value.
   --   CON: Drops GeoTIFF metadata (none was read to begin with).
   writeItGray :: Elevator a => Raster D p r c a -> IO ()
-  writeItGray = writeImageAuto "output/path/img.tif" . _array . strict S . grayscale
+  writeItGray =
+    writeImageAuto "output/path/img.tif" . _array . strict S . grayscale
 #+END_SRC
 
 Rasterio:
@@ -824,12 +835,13 @@ GeoTrellis:
   import geotrellis.raster.io.geotiff.SinglebandGeoTiff
 
   /** PROs:
-    ,*   - Simple, one method call.
-    ,*   - Maintains `Extent` and `CRS` information in GeoTIFF metadata.
-    ,* CONs:
-    ,*   - Pixel type isn't transparent. Is this writing bytes? Ints? Doubles?
-    ,*   - Returns `Unit` instead of safer `IO[Unit]`.
-    ,*/
+    * - Simple, one method call.
+    * - Maintains `Extent` and `CRS` information in GeoTIFF metadata.
+    * CONs:
+    * - Pixel type isn't transparent.
+    *   Is this writing bytes? Ints? Doubles?
+    * - Returns `Unit` instead of safer `IO[Unit]`.
+    */
   def writeItGray(tile: SinglebandGeoTiff): Unit =
     tile.write("output/path/image.tif")
 #+END_SRC
@@ -858,10 +870,10 @@ GeoTrellis:
   import geotrellis.raster.render.{ColorMap, ColorRamp, ColorRamps, Png}
   import geotrellis.raster.histogram.{Histogram, StreamingHistogram}
 
-  /** Renders straight to an encoded `Png` - there is no "coloured Raster" stage.
-    ,* It was a bit tricky to discover the precise things that need to be called
-    ,* in order to create a `ColorMap`.
-    ,*/
+  /** Renders straight to an encoded `Png` - there is no "coloured Raster"
+    * stage. It was a bit tricky to discover the precise things that need
+    * to be called in order to create a `ColorMap`.
+    */
   def colourIt(tile: Tile): Png = {
     val cr: ColorRamp = ColorRamps.Viridis
     val ht: Histogram[Double] = StreamingHistogram.fromTile(tile)
@@ -878,7 +890,10 @@ GeoTrellis:
 #+BEGIN_SRC haskell
   import Geography.MapAlgebra
 
-  evi :: Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double
+  evi :: Raster D p r c Double
+      -> Raster D p r c Double
+      -> Raster D p r c Double
+      -> Raster D p r c Double
   evi nir red blue = 2.5 * (numer / denom)
     where numer = nir - red
           denom = nir + (6 * red) - (7.5 * blue) + 1

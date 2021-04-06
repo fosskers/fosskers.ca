@@ -77,7 +77,9 @@ On Arch Linux, run the following command to install everything you'll need for
 the main section of the guide and general Wayland compatibility:
 
 #+begin_example
-sudo pacman -S sway alacritty waybar wofi xorg-xwayland xorg-xeyes qt5-wayland glfw-wayland
+sudo pacman -S \
+  sway alacritty waybar wofi \
+  xorg-xwayland xorg-xeyes qt5-wayland glfw-wayland
 #+end_example
 
 ~qt5-wayland~ and ~glfw-wayland~ provide Wayland API compatibility for QT5 and
@@ -369,7 +371,8 @@ XWayland windows *except Alacritty*.
 First, install these packages:
 
 #+begin_example
-  sudo pacman -S fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-mozc fcitx5-qt
+  sudo pacman -S fcitx5 fcitx5-configtool \
+    fcitx5-gtk fcitx5-mozc fcitx5-qt
 #+end_example
 
 Then add the following to ~/etc/environment~:

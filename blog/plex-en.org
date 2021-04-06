@@ -92,8 +92,9 @@ subtitles~. We're in luck if we see something like this:
 Notice the ~S_TEXT/UTF8~. This subtitle is already an ~.srt~, so let's grab it:
 
 #+begin_example
-  > mkvextract tracks the-movie.mkv 8:the-movie.en.srt
-  Extracting track 8 with the CodecID 'S_TEXT/UTF8' to the file 'the-movie.en.srt'. Container format: SRT text subtitles
+  > mkvextract tracks movie.mkv 8:movie.en.srt
+  Extracting track 8 with the CodecID 'S_TEXT/UTF8'.
+  Container format: SRT text subtitles
 #+end_example
 
 We can then check the output to see if it's what we expect:
@@ -133,9 +134,10 @@ convert it first. ~mkvinfo~ would show us something like:
 #+end_example
 
 #+begin_example
-  > mkvextract tracks the-movie.mkv 5:the-movie.en.sub
-  Extracting track 5 with the CodecID 'S_VOBSUB' to the file 'the-movie.en.sub'. Container format: VobSubs
-  Writing the VobSub index file 'the-movie.en.idx'.
+  > mkvextract tracks movie.mkv 5:movie.en.sub
+  Extracting track 5 with the CodecID 'S_VOBSUB'.
+  Container format: VobSubs
+  Writing the VobSub index file 'movie.en.idx'.
 #+end_example
 
 Notice that it produces a ~.idx~ as well. Take both these files and visit

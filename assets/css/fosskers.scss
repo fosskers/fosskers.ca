@@ -67,6 +67,7 @@ pre.box {
   border: 1px solid #ccc;
   background-color: whitesmoke;
   box-shadow: 3px 3px 3px #eee;
+  font-size: 80%;
 }
 
 pre.src {
@@ -76,6 +77,7 @@ pre.src {
   position: relative;
   box-shadow: 3px 3px 3px #eee;
   border-radius: 6px;
+  font-size: 80%;
 }
 
 pre.src:before {
