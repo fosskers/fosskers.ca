@@ -42,14 +42,12 @@ site lang component = do
       link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/images/favicon-16x16.png"]
       link_ [rel_ "icon", type_ "image/png", sizes_ "32x32", href_ "/assets/images/favicon-32x32.png"]
 
--- TODO Figure out burger menu interaction on mobile.
 topbar :: Language -> Html ()
 topbar lang =
   nav_ [ classes_ [ "navbar", "is-dark"]
        , role_ "navigation"
        , makeAttribute "aria-label" "main navigation" ] $ do
-    div_ [ class_ "navbar-brand" ] $ logo *> burger
-    -- div_ [ class_ "navbar-menu" ] $ do
+    div_ [ class_ "navbar-brand" ] logo
     div_ [ classes_ ["navbar-menu"]] $ do
       div_ [class_ "navbar-start"] $ theBar lang
       div_ [class_ "navbar-end"] langButtons
@@ -61,15 +59,6 @@ topbar lang =
     logo :: Html ()
     logo = a_ [ class_ "navbar-item", href_ $ "/" <> langPath lang ]
       $ img_ [ src_ "/assets/images/fosskers-icon.png", width_ "30", height_ "30" ]
-
-    burger :: Html ()
-    burger = a_ [ role_ "button"
-                , class_ "navbar-burger"
-                , makeAttribute "aria-label" "menu"
-                , makeAttribute "aria-expanded" "false" ] $ do
-        span_ [makeAttribute  "aria-hidden" "true"] ""
-        span_ [makeAttribute  "aria-hidden" "true"] ""
-        span_ [makeAttribute  "aria-hidden" "true"] ""
 
     pub :: Html ()
     pub = do

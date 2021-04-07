@@ -1,5 +1,12 @@
 @charset "utf-8";
 
+// --- Bulma Overrides --- //
+
+// This prevent navbar "burgering".
+$navbar-breakpoint: 0;
+
+// --- Bulma Imports --- //
+
 @import "../../style/bulma/sass/utilities/_all.sass";
 @import "../../style/bulma/sass/base/_all.sass";
 @import "../../style/bulma/sass/components/navbar.sass";
