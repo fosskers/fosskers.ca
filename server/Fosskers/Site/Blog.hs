@@ -53,7 +53,6 @@ articleBar l bcs = do
   p_ [classes_ ["title", "is-4", "is-centered"]] label
   div_ [class_ "left-padding"] $ do
     aside_ [class_ "menu"] $ traverse_ g bcs
-    coffee
   where
     g :: BlogCategory -> Html ()
     g bc = do
@@ -67,11 +66,6 @@ articleBar l bcs = do
     label = case l of
       English  -> "Blog Archive"
       Japanese -> "ポスト一覧"
-
-    coffee :: Html ()
-    coffee = a_ [href_ "https://www.buymeacoffee.com/fosskers", classes_ ["button", "is-warning"]] $ do
-      span_ [class_ "icon"] $ i_ [classes_ ["fas", "fa-mug-hot"]] ""
-      span_ "Buy me a coffee"
 
 indexBar :: Language -> Blog -> Html ()
 indexBar l b = do
