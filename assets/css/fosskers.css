@@ -2772,6 +2772,10 @@ a.box:active {
   padding-left: 10px;
 }
 
+figure img {
+  border-radius: 6px;
+}
+
 div.org-src-container {
   margin: 1em 0;
 }

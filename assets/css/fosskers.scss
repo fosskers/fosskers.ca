@@ -56,6 +56,12 @@
   padding-left: 10px;
 }
 
+figure {
+  img {
+    border-radius: 6px;
+  }
+}
+
 // --- Code --- //
 
 div.org-src-container {

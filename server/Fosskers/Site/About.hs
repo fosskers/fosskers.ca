@@ -7,11 +7,12 @@ import Lucid hiding (col_)
 ---
 
 about :: Pages -> Language -> Html ()
-about ps lang = do
-  div_ [classes_ []] content
-  div_ $ do
-    img_ [src_ "/assets/images/jack.jpg", classes_ ["rounded", "mx-auto", "d-block"]]
-    div_ [class_ "text-center"] $ i_ cat
+about ps lang = div_ [class_ "grid-main"] $
+  div_ [class_ "content"] $ do
+    content
+    figure_ $ do
+      img_ [src_ "/assets/images/jack.jpg"]
+      figcaption_ $ em_ cat
   where
     cat :: Html ()
     cat = case lang of
