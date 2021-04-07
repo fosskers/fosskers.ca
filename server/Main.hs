@@ -173,14 +173,10 @@ pages = runMaybeT $ Pages
     ab :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
     ab s fp = O.body s <$> MaybeT (orgd fp)
 
-    re :: O.OrgStyle -> FilePath -> Text -> MaybeT IO (Html ())
+    re :: O.OrgStyle -> FilePath -> Text -> MaybeT IO CirVit
     re s fp t = do
       o <- MaybeT $ orgd fp
-      pure $ do
-        div_ [classes_ ["col-xs-12", "col-md-3"]] $ O.toc s o
-        div_ [classes_ ["col-xs-12", "col-md-6"]] $ do
-          div_ [class_ "title"] . h1_ $ toHtml t
-          O.body s o
+      pure $ CirVit t (O.body s o) (O.toc s o)
 
 orgd :: FilePath -> IO (Maybe O.OrgFile)
 orgd fp = (hush >=> O.org) <$> eread fp

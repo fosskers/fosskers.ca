@@ -4,8 +4,6 @@
 
 * 自己紹介
 
-[[/assets/images/colin-profile.jpg]]
-
 フルスタック開発者・2012年からオープンソースで活躍中・ [[https://github.com/fosskers/aura][Aura]] の作者
 
 ウッドブリ・コリンと申します。カナダ生まれで、以前数年間九州に住んだ事があります。

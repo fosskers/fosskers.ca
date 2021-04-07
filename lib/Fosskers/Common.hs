@@ -5,6 +5,7 @@
 module Fosskers.Common
   ( -- * Static Pages
     Pages(..)
+  , CirVit(..)
     -- * Blog Posts
   , Blog(..)
   , BlogCategory(..)
@@ -54,6 +55,8 @@ langPath :: Language -> Text
 langPath English  = "en"
 langPath Japanese = "jp"
 
+-- | Blog content converted to HTML once upon startup, along with other
+-- metadata.
 data Blog = Blog
   { blogLang :: !Language
   , blogSlug :: !Text
@@ -73,11 +76,17 @@ data Blogs = Blogs
   , engPosts  :: !(Map Text Blog)
   , japPosts  :: !(Map Text Blog) }
 
+-- | CV content converted to HTML once upon startup.
+data CirVit = CirVit
+  { cvTitle :: !Text
+  , cvBody  :: !(Html ())
+  , cvTOC   :: !(Html ()) }
+
 data Pages = Pages
   { engAbout :: !(Html ())
   , japAbout :: !(Html ())
-  , engCV    :: !(Html ())
-  , japCV    :: !(Html ()) }
+  , engCV    :: !CirVit
+  , japCV    :: !CirVit }
 
 newtype Path = Path Text
   deriving stock (Generic)
