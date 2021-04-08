@@ -1,0 +1,6 @@
+[workspace]
+members = ["al-bhed", "love-letter", "game-of-life", "web-effects"]
+
+[profile.release]
+lto = true
+panic = "abort"

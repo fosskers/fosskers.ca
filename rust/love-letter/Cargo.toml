@@ -18,11 +18,3 @@ wee_alloc = "0.4"
 version = "0.8"
 git = "https://github.com/seed-rs/seed"
 rev = "78eedf0828657ecc07394b0e024c0012ebee6210"
-
-[profile.release]
-lto = true
-opt-level = 'z'
-codegen-units = 1
-
-[package.metadata.wasm-pack.profile.release]
-wasm-opt = ['-Os']

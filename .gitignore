@@ -8,6 +8,5 @@ stack.yaml.lock
 weeder.dhall
 deps.jpg
 Cargo.lock
-demos/game-of-life/target/*
-demos/web-effects/target/*
+rust/target/*
 style/*

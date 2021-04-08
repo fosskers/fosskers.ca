@@ -20,19 +20,9 @@ jobs:
       - name: Cache Dependencies
         uses: Swatinem/rust-cache@v1
         with:
-          working-directory: tools/love-letter
+          working-directory: rust
 
-      - name: Game of Life
+      - name: Workspace Build
         run: |
-          cd demos/game-of-life
-          cargo build
-
-      - name: Al Bhed
-        run: |
-          cd tools/al-bhed
-          cargo build
-
-      - name: Love Letter
-        run: |
-          cd tools/love-letter
+          cd rust
           cargo build
