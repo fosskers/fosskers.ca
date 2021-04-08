@@ -87,7 +87,9 @@ topbar lang =
       -- dropdown "ツール" [Just ("漢字分析", "#")]
       dropdown "ツール" [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
                        , Just ("Love Letter Tracker", "/jp/tools/love-letter") ]
-      dropdown "デモ" [Just ("Game of Life", "/jp/demo/game-of-life")]
+      dropdown "デモ"
+        [ Just ("Game of Life", "/jp/demo/game-of-life")
+        , Just ("ウェブ作用", "/jp/demo/web-effects") ]
       item "履歴書" "/jp/cv" []
       item "受託開発" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
