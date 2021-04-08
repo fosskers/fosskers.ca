@@ -15,6 +15,8 @@ $navbar-breakpoint: 0;
 @import "../../style/bulma/sass/elements/button.sass";
 @import "../../style/bulma/sass/elements/content.sass";
 @import "../../style/bulma/sass/elements/title.sass";
+@import "../../style/bulma/sass/form/shared.sass";
+@import "../../style/bulma/sass/form/input-textarea.sass";
 
 // --- CSS Grid --- //
 
@@ -46,21 +48,28 @@ $navbar-breakpoint: 0;
 }
 
 @media (max-width: 1024px) {
-    .grid-container {
-        grid-template-areas:
-            "grid-navbar grid-navbar grid-navbar grid-navbar"
-            "grid-left grid-main grid-main grid-main";
-    }
+  .grid-container {
+    grid-template-areas:
+      "grid-navbar grid-navbar grid-navbar grid-navbar"
+      "grid-left grid-main grid-main grid-main";
+  }
 
-    .grid-right {
-        display: none;
-    }
+  .grid-right {
+    display: none;
+  }
 }
 
 // --- Navbar --- //
 
 .is-underlined {
   text-decoration: underline;
+}
+
+// --- Al Bhed --- //
+
+.al-bhed-inputs {
+  display: flex;
+  justify-content: space-between;
 }
 
 // --- Blog --- //

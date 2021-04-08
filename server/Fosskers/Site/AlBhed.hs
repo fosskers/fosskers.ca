@@ -9,19 +9,19 @@ import Lucid.Base (termRawWith)
 ---
 
 alBhed :: Language -> Html ()
-alBhed lang = do
+alBhed lang = div_ [class_ "grid-main"] $ div_ [class_ "content"] $ do
   heading
-  div_ $ do
+  div_ [class_ "al-bhed-inputs"]$ do
     div_ [classes_ []] $ do
-      div_ [] $ h3_ engLabel
+      h3_ engLabel
       form "english-text" engPlace
     div_ [classes_ []] $ do
-      div_ [] $ h3_ alLabel
+      h3_ alLabel
       form "al-bhed-text" alPlace
   wasm
   where
     form :: Text -> Text -> Html ()
-    form label ph = textarea_ [class_ "form-control", id_ label, rows_ "5", placeholder_ ph] ""
+    form label ph = textarea_ [class_ "textarea", id_ label, placeholder_ ph] ""
 
     (engLabel, engPlace, alLabel, alPlace) = case lang of
       English -> ("English", "Enter English here", "Al Bhed", "Enter Al Bhed here")
@@ -30,16 +30,14 @@ alBhed lang = do
     heading :: Html ()
     heading = case lang of
       English -> do
-        div_ [class_ "title"] $ do
-          h1_ "Al Bhed Translator"
-          "Al Bhed is the language of the Al Bhed people in the land of Spira, the setting for the game Final Fantasy X."
-        div_ [class_ "title"] "Type in either box to see the translated result in the other."
+        h1_ [classes_ ["title", "is-centered"]] "Al Bhed Translator"
+        p_ "Al Bhed is the language of the Al Bhed people in the land of Spira, the setting for the game Final Fantasy X."
+        p_ "Type in either box to see the translated result in the other."
 
       Japanese -> do
-        div_ [class_ "title"] $ do
-          h1_ "アルベド翻訳"
-          "アルベド語はファイナルファンタジーXの舞台となる「スピラ界」のアルベド族が話す言語です。"
-        div_ [class_ "title"] "欄に入力すると、その片方の欄に翻訳が出力されます。"
+        h1_ [classes_ ["title", "is-centered"]] "アルベド翻訳"
+        p_ "アルベド語はファイナルファンタジーXの舞台となる「スピラ界」のアルベド族が話す言語です。"
+        p_ "欄に入力すると、その片方の欄に翻訳が出力されます。"
 
 wasm :: Html ()
 wasm = termRawWith "script" [type_ "module"]
