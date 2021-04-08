@@ -1,6 +1,6 @@
 cabal-version: 2.2
 name:          fosskers
-version:       1.1.1
+version:       1.2.0
 synopsis:      My personal site.
 description:   My personal site.
 homepage:      https://github.com/fosskers/fosskers.ca
@@ -66,6 +66,7 @@ executable server
     Fosskers.Site.GameOfLife
     Fosskers.Site.AlBhed
     Fosskers.Site.Love
+    Fosskers.Site.WebEffects
 
   build-depends:
     , binary

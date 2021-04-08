@@ -1,8 +1,4 @@
 .stack-work/*
-site/node_modules/*
-site/fontawesome-free-5.0.6/*
-site/node-v8.9.4-linux-x64/*
-site/jquery-3.2.1/*
 *.dump-hi
 *~
 *.hie
@@ -13,4 +9,5 @@ weeder.dhall
 deps.jpg
 Cargo.lock
 demos/game-of-life/target/*
+demos/web-effects/target/*
 style/*

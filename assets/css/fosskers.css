@@ -2945,6 +2945,13 @@ a.box:active {
   gap: 10px;
 }
 
+.web-effects {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
 .is-centered {
   display: flex;
   justify-content: center;

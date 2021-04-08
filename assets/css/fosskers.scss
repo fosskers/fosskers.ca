@@ -81,6 +81,15 @@ $navbar-breakpoint: 0;
   gap: 10px;
 }
 
+// --- Web Effects --- //
+
+.web-effects {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
 // --- Blog --- //
 
 .is-centered {

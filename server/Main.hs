@@ -28,6 +28,7 @@ import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
 import           Fosskers.Site.GameOfLife (gol)
 import           Fosskers.Site.Love (love)
+import           Fosskers.Site.WebEffects (webEffects)
 import           Lucid
 import           Network.HTTP.Types
 import           Network.Wai
@@ -84,6 +85,7 @@ app ps bs = compress routes
       [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l $ alBhed l)
       [ _, "tools", "love-letter"] -> resp $ html love
       [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l $ gol l)
+      [ lang, "demo", "web-effects"] -> resp $ withLang lang (\l -> html . site l $ webEffects l)
       -- All blog posts --
       [ lang, "blog" ] ->
         resp $ withLang lang (\l -> html . site l . blog bs l . Just $ newest bs l)

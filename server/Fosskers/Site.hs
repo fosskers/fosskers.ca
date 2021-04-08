@@ -15,10 +15,10 @@ import Lucid.Base (makeAttribute)
 data Page = CV | About | Posts | Demo | Tool | Nowhere deriving (Eq)
 
 nowhere :: Html ()
-nowhere = do
-  h1_ [class_ "title"] "404"
-  div_ [class_ "title"] "Unfortunately, that page doesn't exist."
-  div_ [class_ "title"] "残念ながらそのページは存在しません"
+nowhere = div_ [class_ "grid-main"] $ div_ [class_ "content"] $ do
+  h1_ [classes_ ["title", "is-centered"]] "404"
+  p_ [class_ "is-centered"] "Unfortunately, that page doesn't exist."
+  p_ [class_ "is-centered"] "残念ながらそのページは存在しません"
 
 site :: Language -> Html () -> Html ()
 site lang component = do
@@ -69,7 +69,9 @@ topbar lang =
       dropdown "Tools"
         [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
         , Just ("Love Letter Tracker", "/en/tools/love-letter") ]
-      dropdown "Demos" [Just ("Game of Life", "/en/demo/game-of-life")]
+      dropdown "Demos"
+        [ Just ("Game of Life", "/en/demo/game-of-life")
+        , Just ("Web Effects", "/en/demo/web-effects") ]
       item "CV" "/en/cv" []
       item "Freelance" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
@@ -85,7 +87,9 @@ topbar lang =
       -- dropdown "ツール" [Just ("漢字分析", "#")]
       dropdown "ツール" [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
                        , Just ("Love Letter Tracker", "/jp/tools/love-letter") ]
-      dropdown "デモ" [Just ("Game of Life", "/jp/demo/game-of-life")]
+      dropdown "デモ"
+        [ Just ("Game of Life", "/jp/demo/game-of-life")
+        , Just ("ウェブ作用", "/jp/demo/web-effects") ]
       item "履歴書" "/jp/cv" []
       item "受託開発" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
