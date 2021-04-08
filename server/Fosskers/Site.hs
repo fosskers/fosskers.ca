@@ -69,7 +69,9 @@ topbar lang =
       dropdown "Tools"
         [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
         , Just ("Love Letter Tracker", "/en/tools/love-letter") ]
-      dropdown "Demos" [Just ("Game of Life", "/en/demo/game-of-life")]
+      dropdown "Demos"
+        [ Just ("Game of Life", "/en/demo/game-of-life")
+        , Just ("Web Effects", "/en/demo/web-effects") ]
       item "CV" "/en/cv" []
       item "Freelance" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
