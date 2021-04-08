@@ -72,6 +72,15 @@ $navbar-breakpoint: 0;
   justify-content: space-between;
 }
 
+// --- Game of Life --- //
+
+.game-of-life {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
 // --- Blog --- //
 
 .is-centered {
