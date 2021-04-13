@@ -18,9 +18,9 @@ fn element<T: JsCast>(window: &Window, id: &str) -> T {
         .unwrap()
 }
 
-fn click_event(button: &HtmlButtonElement, player: Arc<HtmlIFrameElement>, channel: String) {
+fn click_event(button: &HtmlButtonElement, player: Arc<HtmlIFrameElement>, channel: &'static str) {
     let closure = Closure::wrap(Box::new(move |_: Event| {
-        set_iframe_src(&player, &channel);
+        set_iframe_src(&player, channel);
     }) as Box<dyn FnMut(_)>);
     button
         .add_event_listener_with_callback("click", closure.as_ref().unchecked_ref())
@@ -53,6 +53,7 @@ pub fn main() {
     let player_0 = Arc::new(player);
     let player_1 = player_0.clone();
     let player_2 = player_0.clone();
+    let player_3 = player_0.clone();
 
     // Program the Watch button.
     let watch_closure = Closure::wrap(Box::new(move |_: Event| {
@@ -63,21 +64,7 @@ pub fn main() {
         .unwrap();
     watch_closure.forget();
 
-    // Program Dan's button.
-    let dan_closure = Closure::wrap(Box::new(move |_: Event| {
-        set_iframe_src(&player_1, "choccy_soup");
-    }) as Box<dyn FnMut(_)>);
-    dan_btn
-        .add_event_listener_with_callback("click", dan_closure.as_ref().unchecked_ref())
-        .unwrap();
-    dan_closure.forget();
-
-    // Program John's button.
-    let john_closure = Closure::wrap(Box::new(move |_: Event| {
-        set_iframe_src(&player_2, "ace_deuce");
-    }) as Box<dyn FnMut(_)>);
-    john_btn
-        .add_event_listener_with_callback("click", john_closure.as_ref().unchecked_ref())
-        .unwrap();
-    john_closure.forget();
+    click_event(&dan_btn, player_1, "choccy_soup");
+    click_event(&john_btn, player_2, "ace_deuce");
+    click_event(&mia_btn, player_3, "miametzmusic");
 }
