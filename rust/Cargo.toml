@@ -1,5 +1,5 @@
 [workspace]
-members = ["al-bhed", "love-letter", "game-of-life", "web-effects"]
+members = ["al-bhed", "love-letter", "game-of-life", "twitch", "web-effects"]
 
 [profile.release]
 lto = true
