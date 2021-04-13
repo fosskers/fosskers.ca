@@ -28,6 +28,7 @@ import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
 import           Fosskers.Site.GameOfLife (gol)
 import           Fosskers.Site.Love (love)
+import           Fosskers.Site.Twitch (twitch)
 import           Fosskers.Site.WebEffects (webEffects)
 import           Lucid
 import           Network.HTTP.Types
@@ -83,6 +84,7 @@ app ps bs = compress routes
       [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l $ about ps l)
       [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l $ cv ps l)
       [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l $ alBhed l)
+      [ lang, "tools", "twitch"] -> resp $ withLang lang (\l -> html $ site l twitch)
       [ _, "tools", "love-letter"] -> resp $ html love
       [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l $ gol l)
       [ lang, "demo", "web-effects"] -> resp $ withLang lang (\l -> html . site l $ webEffects l)

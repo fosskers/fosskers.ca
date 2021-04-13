@@ -68,7 +68,9 @@ topbar lang =
       -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
       dropdown "Tools"
         [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
-        , Just ("Love Letter Tracker", "/en/tools/love-letter") ]
+        , Just ("Love Letter Tracker", "/en/tools/love-letter")
+        , Just ("Twitch Player", "/en/tools/twitch")
+        ]
       dropdown "Demos"
         [ Just ("Game of Life", "/en/demo/game-of-life")
         , Just ("Web Effects", "/en/demo/web-effects") ]
@@ -86,7 +88,9 @@ topbar lang =
       dropdown "プロジェクト" projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
       dropdown "ツール" [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
-                       , Just ("Love Letter Tracker", "/jp/tools/love-letter") ]
+                       , Just ("Love Letter Tracker", "/jp/tools/love-letter")
+                       , Just ("Twitch Player", "/jp/tools/twitch")
+                       ]
       dropdown "デモ"
         [ Just ("Game of Life", "/jp/demo/game-of-life")
         , Just ("ウェブ作用", "/jp/demo/web-effects") ]

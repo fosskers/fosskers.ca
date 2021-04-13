@@ -16,6 +16,7 @@ $navbar-breakpoint: 0;
 @import "../../style/bulma/sass/elements/content.sass";
 @import "../../style/bulma/sass/elements/title.sass";
 @import "../../style/bulma/sass/form/shared.sass";
+@import "../../style/bulma/sass/form/tools.sass";
 @import "../../style/bulma/sass/form/input-textarea.sass";
 
 // --- CSS Grid --- //
@@ -88,6 +89,28 @@ $navbar-breakpoint: 0;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+}
+
+// --- Twitch --- //
+
+.twitch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.twitch-player {
+    padding: 56.25%;
+    position: relative;
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 56.25%;
+    }
 }
 
 // --- Blog --- //
