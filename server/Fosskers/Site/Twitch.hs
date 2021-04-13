@@ -19,6 +19,9 @@ twitch = div_ [class_ "grid-main"] $ div_ [class_ "twitch"] $ do
     a_ [classes_ ["button", "is-primary", "is-rounded"]] $ do
       span_ "choccy_soup"
       span_ [class_ "icon"] $ i_ [classes_ ["fas", "fa-drum"]] ""
+    a_ [classes_ ["button", "is-danger", "is-rounded"]] $ do
+      span_ "ace_deuce"
+      span_ [class_ "icon"] $ i_ [classes_ ["fas", "fa-gamepad"]] ""
     a_ [classes_ ["button", "is-link", "is-rounded"]] $ do
       span_ "miametzmusic"
       span_ [class_ "icon"] $ i_ [classes_ ["fas", "fa-music"]] ""
