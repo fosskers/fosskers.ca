@@ -33,7 +33,7 @@ fn set_iframe_src(player: &HtmlIFrameElement, channel: &str) {
 
     if trimmed.is_empty().not() {
         let src = format!(
-            "https://player.twitch.tv/?channel={}&parent=localhost&autoplay=false",
+            "https://player.twitch.tv/?channel={}&parent=www.fosskers.ca&autoplay=false",
             trimmed
         );
         player.set_src(&src);

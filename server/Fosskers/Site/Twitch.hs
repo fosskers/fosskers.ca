@@ -32,7 +32,7 @@ twitch = div_ [class_ "grid-main"] $ div_ [class_ "twitch"] $ do
   -- Player
   div_ [class_ "twitch-player"] $ do
     iframe_ [ id_ "twitch-embedded-player"
-            , src_ "https://player.twitch.tv/?channel=choccy_soup&parent=localhost&autoplay=false"
+            , src_ "https://player.twitch.tv/?channel=choccy_soup&parent=www.fosskers.ca&autoplay=false"
             , makeAttribute "frameborder" "0"
             , makeAttribute "scrolling" "no"
             , makeAttribute "allowfullscreen" "true" ] ""
