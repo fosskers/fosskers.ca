@@ -1,6 +1,7 @@
 #+TITLE: Full Wayland Setup on Arch Linux
 #+DATE: 2021-03-09
 #+AUTHOR: Colin
+#+UPDATED: 2021-04-16
 #+CATEGORY: tech
 
 This article is a guide for achieving a full-as-possible [[https://wayland.freedesktop.org/][Wayland]] setup on Arch
@@ -79,22 +80,24 @@ the main section of the guide and general Wayland compatibility:
 #+begin_example
 sudo pacman -S \
   sway alacritty waybar wofi \
-  xorg-xwayland xorg-xeyes qt5-wayland glfw-wayland
+  xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayland
 #+end_example
 
 ~qt5-wayland~ and ~glfw-wayland~ provide Wayland API compatibility for QT5 and
-[[https://www.glfw.org/][GLFW]] respectively. ~xeyes~ is explained below.
+[[https://www.glfw.org/][GLFW]] respectively. ~xlsclients~ is explained below.
 
 ** Detecting XWayland with ~xlsclients~
 
-To get a list of all XWayland windows use ~xlsclients~ which outputs a list of
-all windows using xwayland. Example output:
+To get a list of all windows currently running through XWayland, use ~xlsclients~:
 
 #+begin_example
+> xlsclients
 archlinux  discord
 archlinux  krita
 archlinux  steam
 #+end_example
+
+This way, you can quickly test your Wayland config with various applications.
 
 * Sway
 
@@ -252,7 +255,7 @@ true*.
 The ~about:support~ page in Firefox has a field titled /Window Protocol/ that
 tells us which protocol it is running through. If still on X11, this field will
 say ~x11~. If through Sway without the tweak below, you should see ~xwayland~. A
-quick test with ~xeyes~ should also reveal that Firefox isn't yet running
+quick test with ~xlsclients~ should also reveal that Firefox isn't yet running
 natively through Wayland. Let's fix that.
 
 Set the ~MOZ_ENABLE_WAYLAND~ environment variable to ~1~. I place the following
@@ -279,7 +282,7 @@ Chromium's conversion is a bit simpler. In
 --ozone-platform=wayland
 #+end_example
 
-Restart Chromium, and that should be it. You can confirm with ~xeyes~.
+Restart Chromium, and that should be it. You can confirm with ~xlsclients~.
 
 ** Emacs
 
