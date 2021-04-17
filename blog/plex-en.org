@@ -52,12 +52,12 @@ Steps:
   once.
 - Click the drive image to "open" the DVD. This will take a few minutes.
 
-[[/assets/makemkv-drive.png]]
+[[/assets/images/makemkv-drive.png]]
 
 - After excluding tracks for trailers / bonus content, click ~Make MKV~ to save
   the DVD contents to your computer. This will take about 30 minutes.
 
-[[/assets/makemkv-commit.png]]
+[[/assets/images/makemkv-commit.png]]
 
 ** Subtitle Extraction
 
@@ -92,8 +92,9 @@ subtitles~. We're in luck if we see something like this:
 Notice the ~S_TEXT/UTF8~. This subtitle is already an ~.srt~, so let's grab it:
 
 #+begin_example
-  > mkvextract tracks the-movie.mkv 8:the-movie.en.srt
-  Extracting track 8 with the CodecID 'S_TEXT/UTF8' to the file 'the-movie.en.srt'. Container format: SRT text subtitles
+  > mkvextract tracks movie.mkv 8:movie.en.srt
+  Extracting track 8 with the CodecID 'S_TEXT/UTF8'.
+  Container format: SRT text subtitles
 #+end_example
 
 We can then check the output to see if it's what we expect:
@@ -133,9 +134,10 @@ convert it first. ~mkvinfo~ would show us something like:
 #+end_example
 
 #+begin_example
-  > mkvextract tracks the-movie.mkv 5:the-movie.en.sub
-  Extracting track 5 with the CodecID 'S_VOBSUB' to the file 'the-movie.en.sub'. Container format: VobSubs
-  Writing the VobSub index file 'the-movie.en.idx'.
+  > mkvextract tracks movie.mkv 5:movie.en.sub
+  Extracting track 5 with the CodecID 'S_VOBSUB'.
+  Container format: VobSubs
+  Writing the VobSub index file 'movie.en.idx'.
 #+end_example
 
 Notice that it produces a ~.idx~ as well. Take both these files and visit
@@ -156,7 +158,7 @@ needs to avoid Transcoding.
 
 I choose the ~H.264 MKV 1080p30~ preset as a starting point.
 
-[[/assets/handbrake-preset.png]]
+[[/assets/images/handbrake-preset.png]]
 
 *** Video
 
@@ -165,7 +167,7 @@ possible to the original data. Respecting the original frame rate has a big
 effect on this. Then, to increase quality overall, we reduce the ~RF~ and set
 our encoding speed to ~Slow~. Leave everything else as the default values.
 
-[[/assets/handbrake-video.png]]
+[[/assets/images/handbrake-video.png]]
 
 *** Audio
 
@@ -182,25 +184,25 @@ Audio is where we have to be careful. Here are the golden rules:
 - If your DVD came with any other AC3 audio, then we /do/ need to convert it, as
   shown below.
 
-[[/assets/handbrake-audio.png]]
+[[/assets/images/handbrake-audio.png]]
 
 or
 
-[[/assets/handbrake-audio2.png]]
+[[/assets/images/handbrake-audio2.png]]
 
 *** Subtitles
 
 Since we're going to use external ~.srt~ files only, let's make sure we aren't
 wasting time with Handbrake's default language scan:
 
-[[/assets/handbrake-subtitles.png]]
+[[/assets/images/handbrake-subtitles.png]]
 
 *** Metadata
 
 To help Plex, we should set some metadata tags as well. If we don't set at least
 the title, the movie listing will display quite strangely in your Plex library.
 
-[[/assets/handbrake-tags.png]]
+[[/assets/images/handbrake-tags.png]]
 
 After setting the output file name, we can hit ~Start~ to begin the encoding.
 This will take about an hour, which is worth it for the quality of video you get
@@ -225,7 +227,7 @@ drive permissions, which are often a problem.
 Consider also installing ~htop~. We can then confirm that our Plex server is
 running as we expect:
 
-[[/assets/plex-htop.jpg]]
+[[/assets/images/plex-htop.jpg]]
 
 ** Mounting your External Drive
 
@@ -245,7 +247,7 @@ Perform this command, and then attach your drive:
 watch -n 1 "dmesg | tail -n 25"
 #+end_example
 
-[[/assets/plex-sda1.jpg]]
+[[/assets/images/plex-sda1.jpg]]
 
 Ah ha. Unmounting is easy: the device should appear in ~/media/pi/~ already for
 us.
@@ -285,7 +287,7 @@ For files with subtitles, I like to give them their own subfolder (e.g.
 
 Within Plex Web, visit ~Settings~ and go here:
 
-[[/assets/plex-libraries.jpg]]
+[[/assets/images/plex-libraries.jpg]]
 
 Click ~Add Library~ and follow the prompts. Your library for "Movies" would live
 in ~/media/plex/movies/~, for example.
@@ -316,13 +318,13 @@ enjoy our media!
 
 Confirm these settings.
 
-[[/assets/plex-remote.jpg]]
+[[/assets/images/plex-remote.jpg]]
 
 ** Plex Web Quality
 
 Confirm these settings.
 
-[[/assets/plex-quality.jpg]]
+[[/assets/images/plex-quality.jpg]]
 
 ** Roku Plex App
 
@@ -332,14 +334,14 @@ These are settings within the Plex app on your TV.
 
 Quality can be maximum, since you're at home on the same network as the Pi.
 
-[[/assets/roku-quality.jpeg]]
+[[/assets/images/roku-quality.jpeg]]
 
 *** Subtitles
 
 To make sure Plex doesn't get to excited and burn-in your subtitles even when it
 doesn't have to, we make sure this is set:
 
-[[/assets/roku-subtitles.jpeg]]
+[[/assets/images/roku-subtitles.jpeg]]
 
 * Conclusion
 
@@ -390,12 +392,12 @@ them:
 If you're desperate to stop Plex from transcoding video, you can tell it not to
 under ~Settings -> Transcoder~:
 
-[[/assets/plex-disable-transcode.jpg]]
+[[/assets/images/plex-disable-transcode.jpg]]
 
 Be warned, however, that while playing remotely you might get this funny
 message:
 
-[[/assets/plex-cpu.jpg]]
+[[/assets/images/plex-cpu.jpg]]
 
 ** Why do UTF8 characters appear as boxes on my Roku TV?
 
@@ -411,7 +413,7 @@ inject the UTF8 characters on Plex's end, but will cause Transcoding.
 
 You just need to fresh the metadata for that Library entry:
 
-[[/assets/plex-refresh.jpg]]
+[[/assets/images/plex-refresh.jpg]]
 
 * Resources
 

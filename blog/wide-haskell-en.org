@@ -114,11 +114,11 @@ writing a few client-side calls, direct usage of ~http-client~ is sufficient.
 
 Here is the dependency graph of ~http-client~:
 
-[[/assets/http-client.jpg]]
+[[/assets/images/http-client.jpg]]
 
 And here is that of ~servant-client~:
 
-[[/assets/servant-client.jpg]]
+[[/assets/images/servant-client.jpg]]
 
 Notice in particular that this pulls ~QuickCheck~, ~http-api-data~ (and its
 tree), and ~kan-extensions~ (and the transitive kmettoverse) into your code.
@@ -135,12 +135,12 @@ the uniqueness constraint and keep to ~base~? [[https://github.com/fosskers/aura
 
 This freed 4 dependencies and reduced binary size by ~1%.
 
-[[/assets/nonempty-containers.jpg]]
+[[/assets/images/nonempty-containers.jpg]]
 
 This tree looks scary, but can be simplied via passing [[/en/blog/base#org9e1a8a][the right flags for the
 these library]]:
 
-[[/assets/nonempty-containers2.jpg]]
+[[/assets/images/nonempty-containers2.jpg]]
 
 Still, ~semigroupoids~ pulls in some of the kmettoverse.
 
@@ -157,8 +157,8 @@ This library is very cool, and offered [[https://github.com/fosskers/aura/pull/5
 It was especially silly where vanilla Haskell would suffice:
 
 #+begin_src diff
-  -pure . filter isntMostRecent . zip aurInfos $ aurPkgs ^.. each . field @"version"
-  +pure . filter isntMostRecent . zip aurInfos $ map spVersion aurPkgs
+  -pure . zip aurInfos $ aurPkgs ^.. each . field @"version"
+  +pure . zip aurInfos $ map spVersion aurPkgs
 #+end_src
 
 A coworker and I recently had a debate about naming, and he convinced me that
@@ -167,7 +167,7 @@ names. Following that idea, I made all my record fields unique again, and
 removed ~generic-lens~. This freed 7 more dependencies and reduced binary size
 by another 2%.
 
-[[/assets/generic-lens.jpg]]
+[[/assets/images/generic-lens.jpg]]
 
 I see you, ~profunctors~.
 
@@ -213,7 +213,7 @@ dependencies, then consider hiding that feature behind a Cabal Flag set to
 
 #+begin_example
   flag remote-configs
-      Description: enable loading of configuration files from HTTP URLs
+      Description: enable loading of config files from HTTP URLs
       Default: False
       Manual: True
 
@@ -235,7 +235,7 @@ your library.
 
 The dependency graph of Aura now looks like this:
 
-[[/assets/aura-deps.jpg]]
+[[/assets/images/aura-deps.jpg]]
 
 A significant improvement from before, trust me. ~http-client-tls~ still brings
 in its own little universe, but that may be unavoidable. I am happy overall that

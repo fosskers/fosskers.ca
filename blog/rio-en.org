@@ -83,8 +83,11 @@ I can't overstate how removing these in favour of ~RIO Env a~ simplified my
 life. Look at this diff:
 
 #+begin_src diff
-  - install :: (Carrier sig m, Member (Reader Env) sig, Member (Error Failure) sig, Member (Lift IO) sig) =>
-  -   NESet PackagePath -> m ()
+  - install :: ( Carrier sig m
+  -            , Member (Reader Env) sig
+  -            , Member (Error Failure) sig
+  -            , Member (Lift IO) sig
+  -            ) => NESet PackagePath -> m ()
   + install :: NESet PackagePath -> RIO Env ()
 #+end_src
 

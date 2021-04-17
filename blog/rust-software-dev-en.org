@@ -64,17 +64,17 @@ Error Codes that you can query the compiler for to obtain elaborate explanations
 of the cause of the error.
 
 #+begin_example
-error[E0728]: `await` is only allowed inside `async` functions and blocks
-   --> src/main.rs:250:5
-    |
-249 | fn use_it() {
-    |    ------ this is not `async`
-250 |     this_is_special().await;
-    |     ^^^^^^^^^^^^^^^^^^^^^^^ only allowed inside `async` functions and blocks
+  error[E0728]: `await` is only allowed inside `async` functions and blocks
+     --> src/main.rs:250:5
+      |
+  249 | fn use_it() {
+      |    ------ this is not `async`
+  250 |     this_is_special().await;
+      |     ^^^^^^^^^^^^^^^^^^^^^^^
 
-error: aborting due to previous error
+  error: aborting due to previous error
 
-For more information about this error, try `rustc --explain E0728`.
+  For more information about this error, try `rustc --explain E0728`.
 #+end_example
 
 Otherwise, Rust provides [[https://github.com/rust-lang/rls][an official LSP]], so you can expect all the convenience
@@ -126,8 +126,8 @@ common constructs look like:
   // Importing
   use std::collections::HashMap;
 
-  // A public struct with private fields. `derive` macro lets us auto-derive Trait
-  // implementations.
+  // A public struct with private fields. `derive` macro lets us
+  // auto-derive Trait implementations.
   #[derive(Deserialize)]
   pub struct User {
       name: String,
@@ -142,9 +142,10 @@ common constructs look like:
       }
   }
 
-  // A publically exposed function with a docstring hyperlinked to other types.
-  /// Try to extract a position from the `Mess` as a nice integer, as if it
-  /// were a [`SemVer`](struct.SemVer.html).
+  // A publically exposed function with a docstring
+  // hyperlinked to other types.
+  /// Try to extract a position from the `Mess` as a nice integer,
+  /// as if it were a [`SemVer`](struct.SemVer.html).
   pub fn nth(&self, x: usize) -> Option<u32> {
       let i = self.chunk.get(x)?;
       let (i, n) = parsers::unsigned(i).ok()?;
@@ -223,15 +224,16 @@ Rust, mutability is readily available and hard to screw up:
       hm.insert(2, 'b');
       hm.insert(3, 'c');
 
-      // The map is borrowed immutably by the next function, so can still be
-      // manipulated here. No memory is copied.
+      // The map is borrowed immutably by the next function,
+      // so can still be manipulated here. No memory is copied.
       use_the_map(&hm);
 
       // We still own the map, so we're free to continue mutating it.
       hm.insert(4, 'd');
 
-      // Ownership has passed to the next function, the map can no longer be
-      // referenced here. It is deallocated automatically from `move_the_map`'s
+      // Ownership has passed to the next function,
+      // the map can no longer be referenced here.
+      // It is deallocated automatically from `move_the_map`'s
       // end when it returns.
       move_the_map(hm);
 
@@ -283,8 +285,8 @@ fork two system threads and share data between them? Go ahead:
   use std::thread;
 
   fn concurrency() -> thread::Result<u32> {
-      // `Arc` is "Atomic Reference Counter". It's an addition to `Mutex` that
-      // ensures we're sharing memory responsibly.
+      // `Arc` is "Atomic Reference Counter". It's an addition
+      // to `Mutex` that ensures we're sharing memory responsibly.
       let mutex0 = Arc::new(Mutex::new(0));
       let mutex1 = mutex0.clone();
       let mutex2 = mutex0.clone();
@@ -292,11 +294,11 @@ fork two system threads and share data between them? Go ahead:
       // Spawn system threads and mutate shared memory.
       // No explicit unlock call is necessary.
       let handle0 = thread::spawn(move || {
-          *mutex0.lock().unwrap() += 1;
+          ,*mutex0.lock().unwrap() += 1;
       });
 
       let handle1 = thread::spawn(move || {
-          *mutex1.lock().unwrap() += 1;
+          ,*mutex1.lock().unwrap() += 1;
       });
 
       // Wait for the threads to complete.
@@ -318,8 +320,8 @@ Want to iterate over a collection in parallel? Go ahead:
   fn parallel_iteration() {
       let nums = vec![1, 2, 3, 4, 5]; // Could be any size.
 
-      // Maps, filters, and prints entirely in parallel with as many CPU cores as
-      // you have.
+      // Maps, filters, and prints entirely in parallel with
+      // as many CPU cores as you have.
       nums.par_iter()
           .map(|n| n + 1)
           .filter(|n| n % 2 == 0)
@@ -573,7 +575,6 @@ friend ~libc~ is always hanging around:
   libpthread.so.0 => /usr/lib/libpthread.so.0 (0x00007f77a6e88000)
   libdl.so.2 => /usr/lib/libdl.so.2 (0x00007f77a6e82000)
   libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x00007f77a6e68000)
-  /lib64/ld-linux-x86-64.so.2 => /usr/lib64/ld-linux-x86-64.so.2 (0x00007f77a70fd000)
 #+end_example
 
 Fortunately, Rust projects can be [[https://doc.rust-lang.org/edition-guide/rust-2018/platform-and-target-support/musl-support-for-fully-static-binaries.html][compiled with MUSL]] to be fully statically

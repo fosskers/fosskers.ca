@@ -31,7 +31,8 @@ Following the Beam guide, we'd have something like:
 
     primaryKey = UserId . userEmail
 
-  -- | A generic `be` parameter allows this db definition to be used by any backend.
+  -- | A generic `be` parameter allows this db definition
+  -- to be used by any backend.
   data ShoppingCartDb f = ShoppingCartDb
     { shoppingCartUsers :: f (TableEntity UserT) }
     deriving stock (Generic)
@@ -67,8 +68,9 @@ Now we can write some ~IO~ code to run ~createSchema~:
   import Database.Beam.Migrate.Simple (createSchema)
   import Database.Beam.Sqlite.Migrate (migrationBackend)
 
-  -- | `migrationBackend` is a function that is expected to be provided by each
-  -- backend. You just drop it in - no need to construct its type yourself.
+  -- | `migrationBackend` is a function that is expected to be
+  -- provided by each backend. You just drop it in - no need
+  -- to construct its type yourself.
   createTables :: IO ()
   createTables = bracket (open "yourdata.db") close $ \conn ->
     runBeamSqlite conn $ createSchema migrationBackend database

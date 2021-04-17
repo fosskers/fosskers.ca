@@ -192,9 +192,9 @@ So this is as "default" as ~Foldable.length~ can get. Recall ~length -> foldl'
 
 Where the ~Int~ is explained to be:
 
-#+begin_example
+#+begin_quote
   A cache of (rangeSize (l,u)) used to make sure an index is really in range.
-#+end_example
+#+end_quote
 
 ** ~HashMap~
 

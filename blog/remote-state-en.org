@@ -17,11 +17,12 @@ We do this with Terraform as well. In a directory /separate/ from the project
 you wish to enable Remote State for, produce the following:
 
 #+begin_src terraform
-  # The variables here should live in a `variables.tf` file as usual, with their
-  # true values defined in some uncommitted `terraform.tfvars` file.
+  # The variables here should live in a `variables.tf` file
+  # as usual, with their true values defined in some uncommitted
+  # `terraform.tfvars` file.
   provider "aws" {
-    access_key = "${var.access_key}"
-    secret_key = "${var.secret_key}"
+    access_key = var.access_key
+    secret_key = var.secret_key
     region     = "us-east-2" # This can be whatever you want.
     version    = "~> 2.2"
   }
@@ -60,8 +61,8 @@ Within the main ~.tf~ file of your real project, prepend the following:
       # The name of the state file that will appear in S3.
       key = "foobar.tfstate"
 
-      # The region of the S3 bucket, NOT the region of the other resources in this
-      # module!
+      # The region of the S3 bucket, NOT the region of
+      # the other resources in this module!
       region = "us-east-2"
     }
   }

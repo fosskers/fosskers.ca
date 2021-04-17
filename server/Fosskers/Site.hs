@@ -7,7 +7,6 @@ module Fosskers.Site
 import BasePrelude
 import Data.Text (Text)
 import Fosskers.Common
-import Fosskers.Site.Bootstrap
 import Lucid
 import Lucid.Base (makeAttribute)
 
@@ -16,89 +15,91 @@ import Lucid.Base (makeAttribute)
 data Page = CV | About | Posts | Demo | Tool | Nowhere deriving (Eq)
 
 nowhere :: Html ()
-nowhere = do
-  h1_ [class_ "title"] "404"
-  div_ [class_ "title"] "Unfortunately, that page doesn't exist."
-  div_ [class_ "title"] "残念ながらそのページは存在しません"
+nowhere = div_ [class_ "grid-main"] $ div_ [class_ "content"] $ do
+  h1_ [classes_ ["title", "is-centered"]] "404"
+  p_ [class_ "is-centered"] "Unfortunately, that page doesn't exist."
+  p_ [class_ "is-centered"] "残念ながらそのページは存在しません"
 
-site :: Language -> Page -> Html () -> Html ()
-site lang page component = html_ $ do
-  head_ h
-  body_ $ do
-    topbar lang page
-    fluid [style_ "padding-top: 1.0%;padding-bottom: 1.0%"] component
+site :: Language -> Html () -> Html ()
+site lang component = do
+  doctype_
+  html_ $ do
+    head_ h
+    body_ $ div_ [class_ "grid-container"] $ do
+      div_ [class_ "grid-navbar"] $ topbar lang
+      component
   where
     h :: Html ()
     h = do
       title_ "Colin Woodbury"
       meta_ [charset_ "utf-8"]
       meta_ [name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no"]
-      script_ [src_ "/assets/jquery.slim.min.js"] ("" :: Text)
-      script_ [src_ "/assets/bootstrap.min.js"] ("" :: Text)
-      link_ [rel_ "stylesheet", href_ "/assets/bootstrap.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/fontawesome.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/fa-brands.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/fa-solid.min.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/fosskers.css"]
-      link_ [rel_ "stylesheet", href_ "/assets/kate.css"]
-      link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/favicon-16x16.png"]
-      link_ [rel_ "icon", type_ "image/png", sizes_ "32x32", href_ "/assets/favicon-32x32.png"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/fontawesome.min.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/brands.min.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/solid.min.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/fosskers.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/kate.css"]
+      link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/images/favicon-16x16.png"]
+      link_ [rel_ "icon", type_ "image/png", sizes_ "32x32", href_ "/assets/images/favicon-32x32.png"]
 
-topbar :: Language -> Page -> Html ()
-topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark", "bg-dark" ] ] $ do
-  a_ [ class_ "navbar-brand", href_ $ "/" <> langPath lang ]
-    $ img_ [ src_ "/assets/fosskers-icon.png", width_ "30", height_ "30" ]
-  navButton
-  div_ [ classes_ [ "collapse", "navbar-collapse" ], id_ navId ]
-    $ ul_ [ class_ "navbar-nav" ]
-    $ theBar lang
-  langButtons
+topbar :: Language -> Html ()
+topbar lang =
+  nav_ [ classes_ [ "navbar", "is-dark"]
+       , role_ "navigation"
+       , makeAttribute "aria-label" "main navigation" ] $ do
+    div_ [ class_ "navbar-brand" ] logo
+    div_ [ classes_ ["navbar-menu"]] $ do
+      div_ [class_ "navbar-start"] $ theBar lang
+      div_ [class_ "navbar-end"] langButtons
   where
-    navId :: Text
-    navId = "navbarLinks"
-
-    navButton :: Html ()
-    navButton = button_
-      [ class_ "navbar-toggler"
-      , type_ "button"
-      , makeAttribute "data-toggle" "collapse"
-      , makeAttribute "data-target" $ "#" <> navId
-      , makeAttribute "aria-controls" navId
-      , makeAttribute "aria-expanded" "false"
-      , makeAttribute "aria-label" "Toggle navigation" ]
-      $ span_ [ class_ "navbar-toggler-icon" ] ""
-
     theBar :: Language -> Html ()
     theBar English  = pub
     theBar Japanese = izakaya
 
+    logo :: Html ()
+    logo = a_ [ class_ "navbar-item", href_ $ "/" <> langPath lang ]
+      $ img_ [ src_ "/assets/images/fosskers-icon.png", width_ "30", height_ "30" ]
+
     pub :: Html ()
     pub = do
-      item "About" "/en/about" $ active About
-      item "Blog" "/en/blog" $ active Posts
+      item "About" "/en/about" []
+      item "Blog" "/en/blog" []
       dropdown "Projects" projects
       -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
-      dropdown "Tools" [Just ("Al Bhed Translator", "/en/tools/al-bhed")]
-      dropdown "Demos" [Just ("Game of Life", "/en/demo/game-of-life")]
+      dropdown "Tools"
+        [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
+        , Just ("Love Letter Tracker", "/en/tools/love-letter")
+        , Just ("Twitch Player", "/en/tools/twitch")
+        ]
+      dropdown "Demos"
+        [ Just ("Game of Life", "/en/demo/game-of-life")
+        , Just ("Web Effects", "/en/demo/web-effects") ]
       item "CV" "/en/cv" []
+      item "Freelance" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
-      icon "https://twitter.com/fosskers" ["fab", "fa-twitter"]
       icon "mailto:colin@fosskers.ca" ["fas", "fa-envelope"]
       icon "/en/rss" ["fas", "fa-rss"]
+      icon "https://www.buymeacoffee.com/fosskers" ["fas", "fa-mug-hot"]
 
     izakaya :: Html ()
     izakaya = do
-      item "自己紹介" "/jp/about" $ active About
-      item "ブログ" "/jp/blog" $ active Posts
+      item "自己紹介" "/jp/about" []
+      item "ブログ" "/jp/blog" []
       dropdown "プロジェクト" projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
-      dropdown "ツール" [Just ("アルベド翻訳", "/jp/tools/al-bhed")]
-      dropdown "デモ" [Just ("Game of Life", "/jp/demo/game-of-life")]
+      dropdown "ツール" [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
+                       , Just ("Love Letter Tracker", "/jp/tools/love-letter")
+                       , Just ("Twitch Player", "/jp/tools/twitch")
+                       ]
+      dropdown "デモ"
+        [ Just ("Game of Life", "/jp/demo/game-of-life")
+        , Just ("ウェブ作用", "/jp/demo/web-effects") ]
       item "履歴書" "/jp/cv" []
+      item "受託開発" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
-      icon "https://twitter.com/fosskers" [ "fab", "fa-twitter" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
       icon "/jp/rss" [ "fas", "fa-rss" ]
+      icon "https://www.buymeacoffee.com/fosskers" ["fas", "fa-mug-hot"]
 
     projects :: [Maybe (Html (), Text)]
     projects =
@@ -114,52 +115,35 @@ topbar lang page = nav_ [ classes_ [ "navbar", "navbar-expand-md", "navbar-dark"
       , Just ("Scala Benchmarks", "https://github.com/fosskers/scala-benchmarks") ]
 
     -- | Highlight the navbar links according to the page we're currently on.
-    active :: Page -> [Text]
-    active p = bool [] ["active", "font-weight-bold"] $ p == page
-
     item :: Html () -> Text -> [Text] -> Html ()
-    item label url cs = li_ [ classes_ $ "nav-item" : cs ]
-      $ a_ [ class_ "nav-link", href_ url ] label
+    item label url cs = a_ [ href_ url, classes_ $ "navbar-item" : cs ] label
 
     icon :: Text -> [Text] -> Html ()
-    icon url cs = li_ [ class_ "nav-item" ]
-      $ a_ [ href_ url, classes_ ("nav-link" : cs), style_ "font-size: 1.33333em" ] ""
+    icon url cs = a_ [ href_ url, classes_ ("navbar-item" : cs) ] ""
 
     langButtons :: Html ()
-    langButtons = div_
-      [ class_ "btn-group"
-      , role_ "group"
-      , makeAttribute "aria-label" "Language" ] $ do
-        a_ [ classes_ [ "btn", eBtn ], role_ "button", href_ "/en" ] "English"
-        a_ [ classes_ [ "btn", jBtn ], role_ "button", href_ "/jp" ] "日本語"
+    langButtons = do
+      a_ [href_ "/en", classes_ $ "navbar-item" : eBtn] "English"
+      a_ [href_ "/jp", classes_ $ "navbar-item" : jBtn] "日本語"
 
-    eBtn :: Text
+    eBtn :: [Text]
     eBtn = case lang of
-      English  -> "btn-info"
-      Japanese -> "btn-outline-info"
+      English  -> ["is-underlined"]
+      Japanese -> []
 
-    jBtn :: Text
+    jBtn :: [Text]
     jBtn = case lang of
-      English  -> "btn-outline-info"
-      Japanese -> "btn-info"
+      English  -> []
+      Japanese -> ["is-underlined"]
 
 -- | Construct a Bootstrap navbar dropdown.
 dropdown :: Text -> [Maybe (Html (), Text)] -> Html ()
 dropdown label links =
-  li_ [ classes_ [ "nav-item", "dropdown" ] ] $ do
-    a_ [ classes_ [ "nav-link", "dropdown-toggle" ]
-       , href_ "#"
-       , id_ did
-       , role_ "button"
-       , makeAttribute "data-toggle" "dropdown"
-       , makeAttribute "aria-haspopup" "true"
-       , makeAttribute "aria-expanded" "false" ] $ toHtml label
-    div_ [ class_ "dropdown-menu", makeAttribute "aria-labelledby" did ]
-      $ traverse_ link links
+  div_ [classes_ ["navbar-item", "has-dropdown", "is-hoverable"]] $ do
+    a_ [class_ "navbar-link"] $ toHtml label
+    div_ [class_ "navbar-dropdown"] $
+      traverse_ link links
   where
-    did :: Text
-    did = "navbarDropdown" <> label
-
     link :: Maybe (Html (), Text) -> Html ()
-    link Nothing         = div_ [class_ "dropdown-divider"] ""
-    link (Just (l, url)) = a_ [ class_ "dropdown-item", href_ url ] l
+    link Nothing         = hr_ [class_ "navbar-divider"]
+    link (Just (l, url)) = a_ [ class_ "navbar-item", href_ url ] l

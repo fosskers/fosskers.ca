@@ -1,0 +1,20 @@
+[package]
+version = "1.0.1"
+name = "love-letter"
+description = "An information tracker for Love Letter."
+repository = "https://github.com/fosskers/fosskers.ca"
+authors = ["Colin Woodbury <colin@fosskers.ca>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+itertools = "0.10"
+# seed = "0.8"
+wee_alloc = "0.4"
+
+[dependencies.seed]
+version = "0.8"
+git = "https://github.com/seed-rs/seed"
+rev = "78eedf0828657ecc07394b0e024c0012ebee6210"

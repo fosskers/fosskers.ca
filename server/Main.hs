@@ -27,6 +27,9 @@ import           Fosskers.Site.AlBhed (alBhed)
 import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
 import           Fosskers.Site.GameOfLife (gol)
+import           Fosskers.Site.Love (love)
+import           Fosskers.Site.Twitch (twitch)
+import           Fosskers.Site.WebEffects (webEffects)
 import           Lucid
 import           Network.HTTP.Types
 import           Network.Wai
@@ -78,27 +81,30 @@ app ps bs = compress routes
       "webfonts" : rest -> assets (req { pathInfo = rest }) resp
       [ "favicon.ico" ] -> assets req resp
       -- Static pages --
-      [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l About $ about ps l)
-      [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l CV $ cv ps l)
-      [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l Tool $ alBhed l)
-      [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l Demo $ gol l)
+      [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l $ about ps l)
+      [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l $ cv ps l)
+      [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l $ alBhed l)
+      [ lang, "tools", "twitch"] -> resp $ withLang lang (\l -> html $ site l twitch)
+      [ _, "tools", "love-letter"] -> resp $ html love
+      [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l $ gol l)
+      [ lang, "demo", "web-effects"] -> resp $ withLang lang (\l -> html . site l $ webEffects l)
       -- All blog posts --
       [ lang, "blog" ] ->
-        resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
+        resp $ withLang lang (\l -> html . site l . blog bs l . Just $ newest bs l)
       [ lang, "blog", slug ] ->
-        resp $ withLang lang (\l -> html . site l Posts . blog bs l $ choose bs l slug)
+        resp $ withLang lang (\l -> html . site l . blog bs l $ choose bs l slug)
       -- RSS feed --
       [ lang, "rss" ] -> resp $ withLang lang (xml . rss bs)
       -- The language button --
       [ lang ] ->
-        resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
+        resp $ withLang lang (\l -> html . site l . blog bs l . Just $ newest bs l)
       -- Index page yields most recent English blog post --
-      [] -> resp . html . site English Posts . blog bs English . Just $ newest bs English
+      [] -> resp . html . site English . blog bs English . Just $ newest bs English
       _ -> resp err404
 
     err404 :: Response
     err404 = responseLBS status404 [("Content-Type", "text/html")]
-      . renderBS $ site English Nowhere nowhere
+      . renderBS $ site English nowhere
 
     assets :: Application
     assets = staticApp (defaultFileServerSettings "assets")
@@ -119,11 +125,6 @@ skylighting l t = maybe (O.codeHTML l t) (formatHtmlBlock fo) $ do
     fo = defaultFormatOpts
       { containerClasses = "src" : maybe [] (\(O.Language l') -> ["src-" <> l']) l }
 
-sectioning :: O.SectionStyling
-sectioning _ h s = do
-  h
-  div_ [style_ "padding-bottom: 1.0%;padding-left: 2.0%"] s
-
 -- | Abosolute paths to all the @.org@ blog files.
 orgFiles :: IO [FilePath]
 orgFiles = filter (L.isSuffixOf ".org") <$> (listDirectory "blog" >>= traverse f)
@@ -135,7 +136,10 @@ orgs :: NonEmpty FilePath -> IO ([Text], [Blog])
 orgs = fmap partitionEithers . traverse g . NEL.toList
   where
     style :: O.OrgStyle
-    style = O.OrgStyle False (O.TOC 3) True skylighting sectioning (Just ' ')
+    style = O.defaultStyle
+      { O.includeTitle = False
+      , O.bulma = True
+      , O.highlighting = skylighting }
 
     g :: FilePath -> IO (Either Text Blog)
     g f = do
@@ -158,26 +162,25 @@ eread path = do
 
 pages :: IO (Maybe Pages)
 pages = runMaybeT $ Pages
-  <$> ab astyle "org/about-en.org"
-  <*> ab astyle "org/about-jp.org"
-  <*> re cstyle "org/cv-en.org" "Colin Woodbury"
-  <*> re jstyle "org/cv-jp.org" "ウッドブリ・コリン"
+  <$> ab style "org/about-en.org"
+  <*> ab style "org/about-jp.org"
+  <*> re style "org/cv-en.org" "Colin Woodbury"
+  <*> re style "org/cv-jp.org" "ウッドブリ・コリン"
   where
-    astyle = O.OrgStyle False (O.TOC 2) False skylighting sectioning (Just ' ')
-    cstyle = O.OrgStyle False (O.TOC 2) True skylighting sectioning (Just ' ')
-    jstyle = O.OrgStyle False (O.TOC 2) True skylighting sectioning (Just ' ')
+    style :: O.OrgStyle
+    style = O.defaultStyle
+      { O.includeTitle = False
+      , O.tableOfContents = O.TOC 2
+      , O.bulma = True
+      , O.highlighting  = skylighting }
 
     ab :: O.OrgStyle -> FilePath -> MaybeT IO (Html ())
     ab s fp = O.body s <$> MaybeT (orgd fp)
 
-    re :: O.OrgStyle -> FilePath -> Text -> MaybeT IO (Html ())
+    re :: O.OrgStyle -> FilePath -> Text -> MaybeT IO CirVit
     re s fp t = do
       o <- MaybeT $ orgd fp
-      pure $ do
-        div_ [classes_ ["col-xs-12", "col-md-3"]] $ O.toc s o
-        div_ [classes_ ["col-xs-12", "col-md-6"]] $ do
-          div_ [class_ "title"] . h1_ $ toHtml t
-          O.body s o
+      pure $ CirVit t (O.body s o) (O.toc s o)
 
 orgd :: FilePath -> IO (Maybe O.OrgFile)
 orgd fp = (hush >=> O.org) <$> eread fp
@@ -191,7 +194,7 @@ main = do
 
 setup :: Args -> IO ()
 setup args = f >>= \case
-  Left err -> logError err >> exitFailure
+  Left err             -> logError err >> exitFailure
   Right (ps, ens, jps) -> work args ps ens jps
   where
     f :: IO (Either Text (Pages, NonEmpty Blog, NonEmpty Blog))

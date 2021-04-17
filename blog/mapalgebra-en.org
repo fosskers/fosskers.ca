@@ -124,9 +124,11 @@ are always /fused/ - they don't allocate additional memory between each step.
 Consider [[https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index][NDVI]]:
 
 #+BEGIN_SRC haskell
-  -- | Doesn't care about the projection or Raster size, so long as they're
-  -- all the same.
-  ndvi :: Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double
+  -- | Doesn't care about the projection or Raster size,
+  -- so long as they're all the same.
+  ndvi :: Raster D p r c Double
+       -> Raster D p r c Double
+       -> Raster D p r c Double
   ndvi nir red = (nir - red) / (nir + red)
 #+END_SRC
 
@@ -134,7 +136,10 @@ Or the [[https://en.wikipedia.org/wiki/Enhanced_vegetation_index][Enhanced Veget
 
 #+BEGIN_SRC haskell
   -- | The constants are interpreted as lazy Rasters of only that value.
-  evi :: Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double
+  evi :: Raster D p r c Double
+      -> Raster D p r c Double
+      -> Raster D p r c Double
+      -> Raster D p r c Double
   evi nir red blue = 2.5 * (numer / denom)
     where numer = nir - red
           denom = nir + (6 * red) - (7.5 * blue) + 1
@@ -231,7 +236,7 @@ Map Algebra will be rigourous.
 
 Say you have this image:
 
-[[/assets/nodata.jpg]]
+[[/assets/images/nodata.jpg]]
 
 Lots of NoData here, which is pretty common for Landsat imagery. What happens if
 we naively run a Focal Operation over it? Currently, Focal Ops only support a
@@ -244,10 +249,12 @@ One way to handle the NoData in a typesafe way is via ~Maybe~:
 #+BEGIN_SRC haskell
   import Data.Monoid (Sum(..))
 
-  -- | `Maybe` has a `Monoid` instance, which by default ignores any `Nothing`
-  -- that are added to it. `fmonoid` is used to smash the neighbourhood together.
+  -- | `Maybe` has a `Monoid` instance, which by default ignores
+  -- any `Nothing` that are added to it.
+  -- `fmonoid` is used to smash the neighbourhood together.
   nodatafsum :: Raster S p r c Word8 -> Raster DW p r c 512 Word8
-  nodatafsum = fmap (maybe 0 getSum) . fmonoid . strict B . fmap check . lazy
+  nodatafsum =
+    fmap (maybe 0 getSum) . fmonoid . strict B . fmap check . lazy
     where check 0 = Nothing
           check n = Just $ Sum n
 #+END_SRC
@@ -457,10 +464,10 @@ boasts a number of ready-to-use GIS operations, including:
 
 - Cost Distance
 - Hydrology ops
-- Colour + ASCII rendering
+- Colour and ASCII rendering
 - Map Algebra
 - Rasterization (i.e. Vector -> Raster conversion)
-- Reprojection + Resampling
+- Reprojection and Resampling
 - Raster Stitching
 - Viewshed
 
@@ -619,8 +626,11 @@ make GeoTrellis easier to learn:
 Assume we had started with:
 
 #+BEGIN_SRC scala
-  val t1: Tile = IntArrayTile.empty(512, 512).map { (c, r, _) => c * r }
-  val t2: Tile = IntArrayTile.empty(512, 512).map { (c, r, _) => c * r + 1 }
+  val t1: Tile =
+    IntArrayTile.empty(512, 512).map { (c, r, _) => c * r }
+
+  val t2: Tile =
+    IntArrayTile.empty(512, 512).map { (c, r, _) => c * r + 1 }
 #+END_SRC
 
 what does it take to perform a Local Sum?
@@ -799,7 +809,8 @@ Write some given 512x512 Raster.
   -- | PRO: Works on Rasters of any projection, size, and pixel value.
   --   CON: Drops GeoTIFF metadata (none was read to begin with).
   writeItGray :: Elevator a => Raster D p r c a -> IO ()
-  writeItGray = writeImageAuto "output/path/img.tif" . _array . strict S . grayscale
+  writeItGray =
+    writeImageAuto "output/path/img.tif" . _array . strict S . grayscale
 #+END_SRC
 
 Rasterio:
@@ -824,12 +835,13 @@ GeoTrellis:
   import geotrellis.raster.io.geotiff.SinglebandGeoTiff
 
   /** PROs:
-    ,*   - Simple, one method call.
-    ,*   - Maintains `Extent` and `CRS` information in GeoTIFF metadata.
-    ,* CONs:
-    ,*   - Pixel type isn't transparent. Is this writing bytes? Ints? Doubles?
-    ,*   - Returns `Unit` instead of safer `IO[Unit]`.
-    ,*/
+    * - Simple, one method call.
+    * - Maintains `Extent` and `CRS` information in GeoTIFF metadata.
+    * CONs:
+    * - Pixel type isn't transparent.
+    *   Is this writing bytes? Ints? Doubles?
+    * - Returns `Unit` instead of safer `IO[Unit]`.
+    */
   def writeItGray(tile: SinglebandGeoTiff): Unit =
     tile.write("output/path/image.tif")
 #+END_SRC
@@ -858,10 +870,10 @@ GeoTrellis:
   import geotrellis.raster.render.{ColorMap, ColorRamp, ColorRamps, Png}
   import geotrellis.raster.histogram.{Histogram, StreamingHistogram}
 
-  /** Renders straight to an encoded `Png` - there is no "coloured Raster" stage.
-    ,* It was a bit tricky to discover the precise things that need to be called
-    ,* in order to create a `ColorMap`.
-    ,*/
+  /** Renders straight to an encoded `Png` - there is no "coloured Raster"
+    * stage. It was a bit tricky to discover the precise things that need
+    * to be called in order to create a `ColorMap`.
+    */
   def colourIt(tile: Tile): Png = {
     val cr: ColorRamp = ColorRamps.Viridis
     val ht: Histogram[Double] = StreamingHistogram.fromTile(tile)
@@ -878,7 +890,10 @@ GeoTrellis:
 #+BEGIN_SRC haskell
   import Geography.MapAlgebra
 
-  evi :: Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double -> Raster D p r c Double
+  evi :: Raster D p r c Double
+      -> Raster D p r c Double
+      -> Raster D p r c Double
+      -> Raster D p r c Double
   evi nir red blue = 2.5 * (numer / denom)
     where numer = nir - red
           denom = nir + (6 * red) - (7.5 * blue) + 1
@@ -915,7 +930,7 @@ stated, all operations are over a 512x512 image.
 
 *** Local Operations
 
-[[/assets/simple-local-ops.png]]
+[[/assets/images/simple-local-ops.png]]
 
 These are four local ops which could be written for Python. Much more and NumPy
 has no way to approach them (say, Local Variance). ~mapalgebra~ and GeoTrellis
@@ -929,7 +944,7 @@ here, a cost which only needs to be paid once per fused op chain.
 
 EVI demonstrates this better (watch the yellow bar):
 
-[[/assets/evi.png]]
+[[/assets/images/evi.png]]
 
 Recall that EVI has 8 chained numerical operations. As CPU count and Raster size
 increase, ~mapalgebra~ pulls ahead even of the C code that powers NumPy. We can
@@ -938,7 +953,7 @@ expect this to improve further as [[https://summer.haskell.org/news/2018-04-23-a
 Op fusion pays off again as we perform EVI, colour a Raster, and encode it as
 a ~.png~:
 
-[[/assets/evi-to-png.png]]
+[[/assets/images/evi-to-png.png]]
 
 Rasterio was left out here, as it has no support for encoding PNGs outside
 of the IO process.
@@ -948,12 +963,12 @@ of the IO process.
 ~mapalgebra~ [[https://github.com/fosskers/mapalgebra/pull/3][defines more Focal Ops]] than GeoTrellis, but we measure the common ones
 here. Rasterio is left out completely, as it has no support for these.
 
-[[/assets/simple-focal-ops.png]]
+[[/assets/images/simple-focal-ops.png]]
 
 This is the strength of Windowed Rasters, parallelism, and LLVM optimizations.
 That said, remember those slow Surficial ops I mentioned?
 
-[[/assets/surficial-focal-ops.png]]
+[[/assets/images/surficial-focal-ops.png]]
 
 Yikes. I really need to figure out what's killing the optimizations.
 

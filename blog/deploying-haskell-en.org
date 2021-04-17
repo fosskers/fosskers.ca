@@ -90,14 +90,14 @@ a Github repo to link to.
 First, we create a new Heroku project through the UI. Once active, we should see
 the /Deploy/ tab:
 
-[[/assets/heroku00.jpg]]
+[[/assets/images/heroku00.jpg]]
 
 Ignoring the CLI instructions at the bottom, we choose Github as our deployment method,
 and connect our repo in the resulting UI.
 
 Next, head to the /Settings/ tab and find the /Buildpacks/ section:
 
-[[/assets/heroku01.jpg]]
+[[/assets/images/heroku01.jpg]]
 
 Buildpacks are script sets that Heroku uses to build projects of some language type.
 Click the /Add buildpack/ button and enter the following URL:

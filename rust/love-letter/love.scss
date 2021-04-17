@@ -1,0 +1,279 @@
+@charset "utf-8";
+
+// --- Fonts --- //
+
+@font-face {
+  font-family: Junitta;
+  src: url(/assets/webfonts/Junitta.otf);
+}
+
+// --- Common Values --- //
+
+$text-colour: silver;
+$text-shadow: 2px 2px black;
+$box-shadow: 3px 3px 5px black;
+$baron-colour: #d06ffc;
+
+@mixin silver-text() {
+  color: $text-colour;
+  text-shadow: $text-shadow;
+}
+
+// --- Bulma Overrides --- //
+
+$link: $baron-colour;
+
+// --- Bulma Imports --- //
+// Note: Bulma overrides must go above these import lines.
+
+@import "../../style/bulma/sass/utilities/_all.sass";
+@import "../../style/bulma/sass/base/_all.sass";
+@import "../../style/bulma/sass/elements/button.sass";
+@import "../../style/bulma/sass/elements/tag.sass";
+@import "../../style/bulma/sass/elements/title.sass";
+@import "../../style/bulma/sass/form/shared.sass";
+@import "../../style/bulma/sass/form/tools.sass";
+@import "../../style/bulma/sass/form/input-textarea.sass";
+@import "../../style/bulma/sass/helpers/typography.sass";
+
+// --- Top-level Elements --- //
+
+body {
+  background: 0 -100px repeat-x url(/assets/images/bg_gallery.png) #4f191a;
+}
+
+// --- CSS Grid - Startup --- //
+
+.grid-startup-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 0px 0px;
+  grid-template-areas:
+    "grid-startup-main"
+    "grid-startup-footer";
+}
+
+.grid-startup-main {
+  grid-area: grid-startup-main;
+}
+
+.grid-startup-footer {
+  grid-area: grid-startup-footer;
+}
+
+// --- CSS Grid - Main Game --- //
+
+.grid-game-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.2fr 0.3fr 2.5fr;
+  gap: 10px 5px;
+  grid-template-areas:
+    "grid-game-top-left grid-game-top-left grid-game-top-center grid-game-top-center grid-game-top-right grid-game-top-right"
+    "grid-game-unseen grid-game-unseen grid-game-unseen grid-game-seen grid-game-seen grid-game-seen"
+    "grid-game-opponents grid-game-opponents grid-game-opponents grid-game-opponents grid-game-opponents grid-game-opponents";
+}
+
+.grid-game-top-left {
+  grid-area: grid-game-top-left;
+}
+
+.grid-game-top-center {
+  grid-area: grid-game-top-center;
+}
+
+.grid-game-top-right {
+  grid-area: grid-game-top-right;
+}
+
+.grid-game-unseen {
+  grid-area: grid-game-unseen;
+}
+
+.grid-game-seen {
+  grid-area: grid-game-seen;
+}
+
+.grid-game-opponents {
+  grid-area: grid-game-opponents;
+}
+
+@media screen and (max-width: 850px) {
+  .grid-game-container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.2fr 0.3fr 0.3fr 2.2fr;
+    grid-template-areas:
+      "grid-game-top-center grid-game-top-right"
+      "grid-game-unseen grid-game-unseen"
+      "grid-game-seen grid-game-seen"
+      "grid-game-opponents grid-game-opponents";
+  }
+}
+
+// --- Other Elements --- //
+
+.startup-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.love-letter-title {
+  font-family: Junitta, cursive;
+  color: gold;
+  text-shadow: $text-shadow;
+  margin: 1%;
+}
+
+.tracker-version {
+  @include silver-text();
+  margin: 1%;
+}
+
+.credits {
+  margin: 1%;
+}
+
+.reset-button {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+
+  button {
+    margin: 1%;
+  }
+}
+
+.opponent-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 1%;
+}
+
+.opponent-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding-left: 0.5%;
+}
+
+.opponent-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.opponent-name {
+  @include silver-text();
+  font-weight: bold;
+  text-align: center;
+}
+
+.card-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-overlay {
+  position: relative;
+  text-align: center;
+  color: white;
+  font-family: monospace;
+}
+
+.text-overlay span {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+}
+
+.zero {
+  opacity: 0.25;
+}
+
+.bold-silver {
+  @include silver-text();
+  font-weight: bold;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.rounded-image {
+  border-radius: 25px;
+  width: 75%;
+  box-shadow: $box-shadow;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// --- Element Styling --- //
+
+.blue-link a {
+  font-weight: bold;
+  color: #4a9bf7;
+  text-shadow: $text-shadow;
+}
+
+.blue-link a:hover {
+  color: #4a4a4a;
+}
+
+a.gold {
+  color: gold;
+}
+
+a.gold:hover {
+  color: #bfa006;
+}
+
+input[type="image"] {
+  border-radius: 25px;
+  width: 75%;
+  box-shadow: $box-shadow;
+}
+
+input[type="image"]:hover {
+  opacity: 0.8;
+}
+
+em {
+  @include silver-text();
+}
+
+// --- Overrides --- //
+
+input[type="text"] {
+  box-shadow: $box-shadow;
+}
+
+.tag {
+  font-weight: bold;
+}
+
+.button {
+  box-shadow: $box-shadow;
+}
