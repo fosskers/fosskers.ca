@@ -20,12 +20,12 @@ nowhere = div_ [class_ "grid-main"] $ div_ [class_ "content"] $ do
   p_ [class_ "is-centered"] "Unfortunately, that page doesn't exist."
   p_ [class_ "is-centered"] "残念ながらそのページは存在しません"
 
-site :: Language -> Html () -> Html ()
-site lang component = do
+site :: Language -> Page -> Html () -> Html ()
+site lang page component = do
   doctype_
   html_ $ do
     head_ h
-    body_ $ div_ [class_ "grid-container"] $ do
+    body_ $ div_ [class_ grid] $ do
       div_ [class_ "grid-navbar"] $ topbar lang
       component
   where
@@ -41,6 +41,15 @@ site lang component = do
       link_ [rel_ "stylesheet", href_ "/assets/css/kate.css"]
       link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/images/favicon-16x16.png"]
       link_ [rel_ "icon", type_ "image/png", sizes_ "32x32", href_ "/assets/images/favicon-32x32.png"]
+
+    grid :: Text
+    grid = case page of
+      About   -> "grid-full"
+      Demo    -> "grid-full"
+      Tool    -> "grid-full"
+      Nowhere -> "grid-full"
+      CV      -> "grid-with-sidebar"
+      Posts   -> "grid-with-sidebar"
 
 topbar :: Language -> Html ()
 topbar lang =
@@ -64,18 +73,18 @@ topbar lang =
     pub = do
       item "About" "/en/about" []
       item "Blog" "/en/blog" []
-      dropdown "Projects" projects
+      dropdown "Projects" ["mobile-hidden"] projects
       -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
-      dropdown "Tools"
+      dropdown "Tools" []
         [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
         , Just ("Love Letter Tracker", "/en/tools/love-letter")
         , Just ("Twitch Player", "/en/tools/twitch")
         ]
-      dropdown "Demos"
+      dropdown "Demos" ["mobile-hidden"]
         [ Just ("Game of Life", "/en/demo/game-of-life")
         , Just ("Web Effects", "/en/demo/web-effects") ]
       item "CV" "/en/cv" []
-      item "Freelance" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" []
+      item "Freelance" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
       icon "https://github.com/fosskers" ["fab", "fa-github"]
       icon "mailto:colin@fosskers.ca" ["fas", "fa-envelope"]
       icon "/en/rss" ["fas", "fa-rss"]
@@ -85,17 +94,17 @@ topbar lang =
     izakaya = do
       item "自己紹介" "/jp/about" []
       item "ブログ" "/jp/blog" []
-      dropdown "プロジェクト" projects
+      dropdown "プロジェクト" ["mobile-hidden"] projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
-      dropdown "ツール" [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
-                       , Just ("Love Letter Tracker", "/jp/tools/love-letter")
-                       , Just ("Twitch Player", "/jp/tools/twitch")
-                       ]
-      dropdown "デモ"
+      dropdown "ツール" []
+        [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
+        , Just ("Love Letter Tracker", "/jp/tools/love-letter")
+        , Just ("Twitch Player", "/jp/tools/twitch") ]
+      dropdown "デモ" ["mobile-hidden"]
         [ Just ("Game of Life", "/jp/demo/game-of-life")
         , Just ("ウェブ作用", "/jp/demo/web-effects") ]
       item "履歴書" "/jp/cv" []
-      item "受託開発" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" []
+      item "受託開発" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
       icon "/jp/rss" [ "fas", "fa-rss" ]
@@ -137,9 +146,9 @@ topbar lang =
       Japanese -> ["is-underlined"]
 
 -- | Construct a Bootstrap navbar dropdown.
-dropdown :: Text -> [Maybe (Html (), Text)] -> Html ()
-dropdown label links =
-  div_ [classes_ ["navbar-item", "has-dropdown", "is-hoverable"]] $ do
+dropdown :: Text -> [Text] -> [Maybe (Html (), Text)] -> Html ()
+dropdown label classes links =
+  div_ [classes_ $ ["navbar-item", "has-dropdown", "is-hoverable"] <> classes] $ do
     a_ [class_ "navbar-link"] $ toHtml label
     div_ [class_ "navbar-dropdown"] $
       traverse_ link links

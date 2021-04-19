@@ -3182,24 +3182,40 @@ a.box:active {
   resize: none;
 }
 
-.grid-container {
+.grid-with-sidebar {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 0.1fr auto;
   gap: 10px 10px;
-  grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-left grid-main grid-main grid-right";
+  grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-sidebar-left grid-main grid-main grid-sidebar-right";
+}
+
+.grid-full {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.1fr auto;
+  gap: 10px 10px;
+  grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-full-left grid-main grid-main grid-full-right";
 }
 
 .grid-navbar {
   grid-area: grid-navbar;
 }
 
-.grid-left {
-  grid-area: grid-left;
+.grid-sidebar-left {
+  grid-area: grid-sidebar-left;
 }
 
-.grid-right {
-  grid-area: grid-right;
+.grid-sidebar-right {
+  grid-area: grid-sidebar-right;
+}
+
+.grid-full-left {
+  grid-area: grid-full-left;
+}
+
+.grid-full-right {
+  grid-area: grid-full-right;
 }
 
 .grid-main {
@@ -3208,11 +3224,26 @@ a.box:active {
 }
 
 @media (max-width: 1024px) {
-  .grid-container {
-    grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-left grid-main grid-main grid-main";
+  .grid-with-sidebar {
+    grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-sidebar-left grid-main grid-main grid-main";
   }
 
-  .grid-right {
+  .grid-full {
+    grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-main grid-main grid-main grid-main";
+  }
+
+  .grid-sidebar-right,
+.grid-full-left,
+.grid-full-right {
+    display: none;
+  }
+
+  .grid-main {
+    margin-left: 1%;
+    margin-right: 1%;
+  }
+
+  .mobile-hidden {
     display: none;
   }
 }

@@ -81,30 +81,30 @@ app ps bs = compress routes
       "webfonts" : rest -> assets (req { pathInfo = rest }) resp
       [ "favicon.ico" ] -> assets req resp
       -- Static pages --
-      [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l $ about ps l)
-      [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l $ cv ps l)
-      [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l $ alBhed l)
-      [ lang, "tools", "twitch"] -> resp $ withLang lang (\l -> html $ site l twitch)
+      [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l About $ about ps l)
+      [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l CV $ cv ps l)
+      [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l Tool $ alBhed l)
+      [ lang, "tools", "twitch"] -> resp $ withLang lang (\l -> html $ site l Tool twitch)
       [ _, "tools", "love-letter"] -> resp $ html love
-      [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l $ gol l)
-      [ lang, "demo", "web-effects"] -> resp $ withLang lang (\l -> html . site l $ webEffects l)
+      [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l Demo $ gol l)
+      [ lang, "demo", "web-effects"] -> resp $ withLang lang (\l -> html . site l Demo $ webEffects l)
       -- All blog posts --
       [ lang, "blog" ] ->
-        resp $ withLang lang (\l -> html . site l . blog bs l . Just $ newest bs l)
+        resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
       [ lang, "blog", slug ] ->
-        resp $ withLang lang (\l -> html . site l . blog bs l $ choose bs l slug)
+        resp $ withLang lang (\l -> html . site l Posts . blog bs l $ choose bs l slug)
       -- RSS feed --
       [ lang, "rss" ] -> resp $ withLang lang (xml . rss bs)
       -- The language button --
       [ lang ] ->
-        resp $ withLang lang (\l -> html . site l . blog bs l . Just $ newest bs l)
+        resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
       -- Index page yields most recent English blog post --
-      [] -> resp . html . site English . blog bs English . Just $ newest bs English
+      [] -> resp . html . site English Posts . blog bs English . Just $ newest bs English
       _ -> resp err404
 
     err404 :: Response
     err404 = responseLBS status404 [("Content-Type", "text/html")]
-      . renderBS $ site English nowhere
+      . renderBS $ site English Nowhere nowhere
 
     assets :: Application
     assets = staticApp (defaultFileServerSettings "assets")

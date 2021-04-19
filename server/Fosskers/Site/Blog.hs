@@ -28,7 +28,7 @@ choose bs l t = case l of
 
 blog :: Blogs -> Language -> Maybe Blog -> Html ()
 blog bs l content = do
-  div_ [class_ "grid-right"]$ case content of
+  div_ [class_ "grid-sidebar-right"]$ case content of
     Nothing -> ""
     Just b  -> indexBar l b
   div_ [class_ "grid-main"] $ case content of
@@ -42,7 +42,7 @@ blog bs l content = do
         let updated = M.lookup "UPDATED" m
         Just $ printf pat author date <> maybe "" (printf upat) updated
       div_ [class_ "content"] $ blogBody b
-  div_ [class_ "grid-left"] $ articleBar l ps
+  div_ [class_ "grid-sidebar-left"] $ articleBar l ps
   where
     (ps, nf, pat, upat) = case l of
       English  -> (engByCat bs, "Post not found!", "By %s on %s", ", updated %s")
