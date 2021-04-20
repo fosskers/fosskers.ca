@@ -3253,7 +3253,7 @@ a.box:active {
 
 .al-bhed-inputs {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .game-of-life {
