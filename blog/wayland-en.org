@@ -1,7 +1,7 @@
 #+TITLE: Full Wayland Setup on Arch Linux
 #+DATE: 2021-03-09
 #+AUTHOR: Colin
-#+UPDATED: 2021-04-16
+#+UPDATED: 2021-04-20
 #+CATEGORY: tech
 
 This article is a guide for achieving a full-as-possible [[https://wayland.freedesktop.org/][Wayland]] setup on Arch
@@ -419,7 +419,8 @@ you for a window selection, choose /Use operating system settings/:
 
 [[/assets/images/firefox-screen-select.jpg]]
 
-And screen sharing should begin.
+You will notice your cursor change; ~xdg-desktop-portal-wlr~ is expecting you to
+choose a display to share. Click one and screen sharing should begin.
 
 For Chromium, we need to activate a feature flag to allow Chromium to talk to
 Pipewire. First visit ~chrome://flags~, then find and enable the ~WebRTC
