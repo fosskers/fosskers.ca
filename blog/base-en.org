@@ -1,7 +1,7 @@
 #+TITLE: Tracking Changes to Base
 #+DATE: 2020-03-05
 #+AUTHOR: Colin
-#+UPDATED: 2021-04-28
+#+UPDATED: 2021-04-29
 #+CATEGORY: haskell
 
 The [[https://matrix.hackage.haskell.org/#/package/versions][Hackage Matrix Builder]] is a great way to track how compatible a library is
@@ -121,6 +121,17 @@ To see all such libraries, [[https://hackage.haskell.org/packages/search?terms=c
 As of ~these-1~ the project underwent a structural change. Its extended
 dependency graph is now "opt out", and the following can be added to a
 ~stack.yaml~ to accomplish this:
+
+#+begin_src yaml
+  # For `these` >= `1.1`
+  flags:
+    these:
+      assoc: false
+    strict:
+      assoc: false
+#+end_src
+
+If using ~these-1~ or ~these-1.0.1~, set this instead:
 
 #+begin_src yaml
   flags:
