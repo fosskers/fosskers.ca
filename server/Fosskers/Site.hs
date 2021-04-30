@@ -71,44 +71,44 @@ topbar lang =
 
     pub :: Html ()
     pub = do
-      item "About" "/en/about" []
-      item "Blog" "/en/blog" []
-      dropdown "Projects" ["mobile-hidden"] projects
+      item "About" "fa-info-circle" "/en/about" []
+      item "Blog" "fa-book" "/en/blog" []
+      dropdown "Projects" "fa-code" ["mobile-hidden"] projects
       -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
-      dropdown "Tools" []
+      dropdown "Tools" "fa-tools" []
         [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
         , Just ("Love Letter Tracker", "/en/tools/love-letter")
         , Just ("Twitch Player", "/en/tools/twitch")
         ]
-      dropdown "Demos" ["mobile-hidden"]
+      dropdown "Demos" "fa-laptop-code" ["mobile-hidden"]
         [ Just ("Game of Life", "/en/demo/game-of-life")
         , Just ("Web Effects", "/en/demo/web-effects") ]
-      item "CV" "/en/cv" []
-      item "Freelance" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
+      item "CV" "fa-graduation-cap" "/en/cv" []
+      item "Freelance" "fa-money-check-alt" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
+      item "Support" "fa-heart" "https://www.buymeacoffee.com/fosskers" []
       icon "https://github.com/fosskers" ["fab", "fa-github"]
       icon "mailto:colin@fosskers.ca" ["fas", "fa-envelope"]
       icon "/en/rss" ["fas", "fa-rss"]
-      icon "https://www.buymeacoffee.com/fosskers" ["fas", "fa-mug-hot"]
 
     izakaya :: Html ()
     izakaya = do
-      item "自己紹介" "/jp/about" []
-      item "ブログ" "/jp/blog" []
-      dropdown "プロジェクト" ["mobile-hidden"] projects
+      item "自己紹介" "fa-info-circle" "/jp/about" []
+      item "ブログ" "fa-book" "/jp/blog" []
+      dropdown "プロジェクト" "fa-code" ["mobile-hidden"] projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
-      dropdown "ツール" []
+      dropdown "ツール" "fa-tools" []
         [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
         , Just ("Love Letter Tracker", "/jp/tools/love-letter")
         , Just ("Twitch Player", "/jp/tools/twitch") ]
-      dropdown "デモ" ["mobile-hidden"]
+      dropdown "デモ" "fa-laptop-code" ["mobile-hidden"]
         [ Just ("Game of Life", "/jp/demo/game-of-life")
         , Just ("ウェブ作用", "/jp/demo/web-effects") ]
-      item "履歴書" "/jp/cv" []
-      item "受託開発" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
+      item "履歴書" "fa-graduation-cap" "/jp/cv" []
+      item "受託開発" "fa-money-check-alt" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
+      item "支援" "fa-heart" "https://www.buymeacoffee.com/fosskers" []
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
       icon "/jp/rss" [ "fas", "fa-rss" ]
-      icon "https://www.buymeacoffee.com/fosskers" ["fas", "fa-mug-hot"]
 
     projects :: [Maybe (Html (), Text)]
     projects =
@@ -124,8 +124,11 @@ topbar lang =
       , Just ("Scala Benchmarks", "https://github.com/fosskers/scala-benchmarks") ]
 
     -- | Highlight the navbar links according to the page we're currently on.
-    item :: Html () -> Text -> [Text] -> Html ()
-    item label url cs = a_ [ href_ url, classes_ $ "navbar-item" : cs ] label
+    item :: Html () -> Text -> Text -> [Text] -> Html ()
+    item label ic url cs = a_ [ href_ url, classes_ $ "navbar-item" : cs ] $
+      span_ [ class_ "icon-text"] $ do
+        span_ [ class_ "icon" ] $ i_ [ classes_ ["fas", ic] ] ""
+        span_ label
 
     icon :: Text -> [Text] -> Html ()
     icon url cs = a_ [ href_ url, classes_ ("navbar-item" : cs) ] ""
@@ -146,10 +149,13 @@ topbar lang =
       Japanese -> ["is-underlined"]
 
 -- | Construct a Bootstrap navbar dropdown.
-dropdown :: Text -> [Text] -> [Maybe (Html (), Text)] -> Html ()
-dropdown label classes links =
+dropdown :: Html () -> Text -> [Text] -> [Maybe (Html (), Text)] -> Html ()
+dropdown label ic classes links =
   div_ [classes_ $ ["navbar-item", "has-dropdown", "is-hoverable"] <> classes] $ do
-    a_ [class_ "navbar-link"] $ toHtml label
+    a_ [class_ "navbar-link"] $
+      span_ [class_ "icon-text"] $ do
+        span_ [ class_ "icon" ] $ i_ [ classes_ ["fas", ic] ] ""
+        span_ label
     div_ [class_ "navbar-dropdown"] $
       traverse_ link links
   where

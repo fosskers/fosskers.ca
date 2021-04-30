@@ -14,6 +14,7 @@ $navbar-breakpoint: 0;
 @import "../../style/bulma/sass/elements/box.sass";
 @import "../../style/bulma/sass/elements/button.sass";
 @import "../../style/bulma/sass/elements/content.sass";
+@import "../../style/bulma/sass/elements/icon.sass";
 @import "../../style/bulma/sass/elements/title.sass";
 @import "../../style/bulma/sass/form/shared.sass";
 @import "../../style/bulma/sass/form/tools.sass";
@@ -93,7 +94,7 @@ $navbar-breakpoint: 0;
   }
 
   .mobile-hidden {
-      display: none;
+    display: none;
   }
 }
 
