@@ -5,7 +5,8 @@
 This is the repo for my personal website. It serves static HTML pages from a
 Haskell backend built with [[http://hackage.haskell.org/package/servant][servant]], [[http://hackage.haskell.org/package/lucid][lucid]], and [[http://hackage.haskell.org/package/org-mode][org-mode]].
 
-Find my content useful? Consider [[https://www.buymeacoffee.com/fosskers][buying me a coffee]]. :coffee:
+Find my content useful? Consider [[https://www.buymeacoffee.com/fosskers][buying me a coffee]] :coffee: or showing
+appreciation through [[https://github.com/sponsors/fosskers][Github Sponsors]] :octocat:. Your help goes a long way!
 
 * Table of Contents                                       :TOC_4_gh:noexport:
 - [[#english][English]]
