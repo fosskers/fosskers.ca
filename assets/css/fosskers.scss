@@ -16,6 +16,7 @@ $navbar-breakpoint: 0;
 @import "../../style/bulma/sass/elements/content.sass";
 @import "../../style/bulma/sass/elements/icon.sass";
 @import "../../style/bulma/sass/elements/title.sass";
+@import "../../style/bulma/sass/elements/tag.sass";
 @import "../../style/bulma/sass/form/shared.sass";
 @import "../../style/bulma/sass/form/tools.sass";
 @import "../../style/bulma/sass/form/input-textarea.sass";
@@ -165,6 +166,12 @@ figure {
   img {
     border-radius: 6px;
   }
+}
+
+.blog-title {
+  display: flex;
+  align-items: center;
+  gap: 0px 5px;
 }
 
 // --- Code --- //

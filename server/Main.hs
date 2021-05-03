@@ -20,7 +20,7 @@ import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import           Data.Text.Encoding.Error (lenientDecode)
 import qualified Data.Text.IO as T
-import           Data.Time (Day, toGregorian)
+import           Data.Time (Day, UTCTime(..), getCurrentTime, toGregorian)
 import           Fosskers.Common
 import           Fosskers.Site
 import           Fosskers.Site.About (about)
@@ -72,8 +72,8 @@ rss bs l = ByLanguage $ NEL.sortWith (Down . blogDate) ps
 compress :: Application -> Application
 compress = gzip (def { gzipFiles = GzipCompress })
 
-app :: Pages -> Blogs -> Application
-app ps bs = compress routes
+app :: Day -> Pages -> Blogs -> Application
+app today ps bs = compress routes
   where
     routes :: Application
     routes req resp = case pathInfo req of
@@ -91,16 +91,16 @@ app ps bs = compress routes
       [ lang, "demo", "web-effects"] -> resp $ withLang lang (\l -> html . site l Demo $ webEffects l)
       -- All blog posts --
       [ lang, "blog" ] ->
-        resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
+        resp $ withLang lang (\l -> html . site l Posts . blog today bs l . Just $ newest bs l)
       [ lang, "blog", slug ] ->
-        resp $ withLang lang (\l -> html . site l Posts . blog bs l $ choose bs l slug)
+        resp $ withLang lang (\l -> html . site l Posts . blog today bs l $ choose bs l slug)
       -- RSS feed --
       [ lang, "rss" ] -> resp $ withLang lang (xml . rss bs)
       -- The language button --
       [ lang ] ->
-        resp $ withLang lang (\l -> html . site l Posts . blog bs l . Just $ newest bs l)
+        resp $ withLang lang (\l -> html . site l Posts . blog today bs l . Just $ newest bs l)
       -- Index page yields most recent English blog post --
-      [] -> resp . html . site English Posts . blog bs English . Just $ newest bs English
+      [] -> resp . html . site English Posts . blog today bs English . Just $ newest bs English
       _ -> resp err404
 
     err404 :: Response
@@ -215,6 +215,7 @@ work :: Args -> Pages -> NonEmpty Blog -> NonEmpty Blog -> IO ()
 work (Args p) ps ens jps = do
   herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
   cores <- getNumCapabilities
+  today <- utctDay <$> getCurrentTime
   let !prt = fromMaybe 8081 $ p <|> herokuPort
       !eng = mapify ens
       !jap = mapify jps
@@ -223,7 +224,7 @@ work (Args p) ps ens jps = do
       !bls = Blogs (byCats newEs) (byCats newJs) (groupByDate newEs) (groupByDate newJs) eng jap
   logInfo . T.pack $ printf "Blog posts read: %d" (length ens + length jps)
   logInfo . T.pack $ printf "Listening on port %d with %d cores" prt cores
-  W.run prt $ app ps bls
+  W.run prt $ app today ps bls
 
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
 sortByDate = NEL.reverse . NEL.sortWith blogDate
