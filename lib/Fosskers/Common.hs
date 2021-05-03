@@ -34,7 +34,7 @@ import qualified Data.Org as O
 import           Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.Lazy as TL
-import           Data.Time.Calendar (Day(..), fromGregorian)
+import           Data.Time.Calendar (Day(..))
 import           Data.Time.Format
 import           Lucid (Html)
 import           System.FilePath.Posix (takeBaseName)
@@ -60,6 +60,7 @@ langPath Japanese = "jp"
 data Blog = Blog
   { blogLang :: !Language
   , blogSlug :: !Text
+  , blogDate :: !Day
   , blogRaw  :: !O.OrgFile
   , blogBody :: !(Html ())
   , blogTOC  :: !(Html ()) }
@@ -105,19 +106,16 @@ pathSlug = T.dropEnd 3 . T.pack . takeBaseName
 newtype ByLanguage = ByLanguage (NonEmpty Blog)
 
 instance ToXml Blog where
-  toXml (Blog l slug o@(O.OrgFile m _) _ _) =
+  toXml (Blog l slug day (O.OrgFile m _) _ _) =
     element "item" mempty
     $  element "title" mempty (text . TL.fromStrict $ fromMaybe "Untitled" title)
     <> element "link" mempty
     (text . TL.fromStrict $ "https://www.fosskers.ca/" <> langPath l <> "/blog/" <> slug)
-    <> element "pubDate" mempty (text . TL.pack . dtt . dtd $ fromMaybe defDay date)
+    <> element "pubDate" mempty (text . TL.pack . dtt $ dtd day)
     <> element "description" mempty (text . TL.fromStrict $ fromMaybe "No description" title)
     where
+      title :: Maybe Text
       title = M.lookup "TITLE" m
-      date = orgDate o
-
-      defDay :: Day
-      defDay = fromGregorian 2017 1 1
 
 orgDate :: O.OrgFile -> Maybe Day
 orgDate =

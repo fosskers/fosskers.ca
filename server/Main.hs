@@ -149,9 +149,9 @@ orgs = fmap partitionEithers . traverse g . NEL.toList
         c <- content
         ofile <- first (T.pack . errorBundlePretty) $ parse O.orgFile f c
         lang <- note ("Invalid language given for file: " <> path) $ pathLang f
-        void . note ("No date provided for: " <> path) $ orgDate ofile
+        day <- note ("No date provided for: " <> path) $ orgDate ofile
         void . note ("No title provided for: " <> path) . M.lookup "TITLE" $ O.orgMeta ofile
-        Right $ Blog lang (pathSlug f) ofile (O.body style ofile) (O.toc style ofile)
+        Right $ Blog lang (pathSlug f) day ofile (O.body style ofile) (O.toc style ofile)
 
 eread :: FilePath -> IO (Either Text Text)
 eread path = do
