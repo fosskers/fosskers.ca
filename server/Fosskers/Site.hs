@@ -67,7 +67,7 @@ topbar lang =
 
     logo :: Html ()
     logo = a_ [ class_ "navbar-item", href_ $ "/" <> langPath lang ]
-      $ img_ [ src_ "/assets/images/fosskers-icon.png", width_ "30", height_ "30" ]
+      $ img_ [ src_ "/assets/images/aura-logo.png" ]
 
     pub :: Html ()
     pub = do
