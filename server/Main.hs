@@ -20,6 +20,7 @@ import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import           Data.Text.Encoding.Error (lenientDecode)
 import qualified Data.Text.IO as T
+import           Data.Time (Day, toGregorian)
 import           Fosskers.Common
 import           Fosskers.Site
 import           Fosskers.Site.About (about)
@@ -61,7 +62,7 @@ xml = responseLBS status200 headers . toLazyByteString . encode . toXml
     headers = [("Content-Type", "application/xml")]
 
 rss :: Blogs -> Language -> ByLanguage
-rss bs l = ByLanguage $ NEL.sortWith (Down . orgDate . blogRaw) ps
+rss bs l = ByLanguage $ NEL.sortWith (Down . blogDate) ps
   where
     ps = case l of
       English  -> engByCat bs >>= bcBlogs
@@ -149,9 +150,10 @@ orgs = fmap partitionEithers . traverse g . NEL.toList
         c <- content
         ofile <- first (T.pack . errorBundlePretty) $ parse O.orgFile f c
         lang <- note ("Invalid language given for file: " <> path) $ pathLang f
-        day <- note ("No date provided for: " <> path) $ orgDate ofile
+        day <- note ("No date provided for: " <> path) $ orgDate "DATE" ofile
+        let !updated = orgDate "UPDATED" ofile
         void . note ("No title provided for: " <> path) . M.lookup "TITLE" $ O.orgMeta ofile
-        Right $ Blog lang (pathSlug f) day ofile (O.body style ofile) (O.toc style ofile)
+        Right $ Blog lang (pathSlug f) day updated ofile (O.body style ofile) (O.toc style ofile)
 
 eread :: FilePath -> IO (Either Text Text)
 eread path = do
@@ -218,13 +220,22 @@ work (Args p) ps ens jps = do
       !jap = mapify jps
       !newEs = sortByDate ens
       !newJs = sortByDate jps
-      !bls = Blogs (byCats newEs) (byCats newJs) (NEL.head newEs) (NEL.head newJs) eng jap
+      !bls = Blogs (byCats newEs) (byCats newJs) (groupByDate newEs) (groupByDate newJs) eng jap
   logInfo . T.pack $ printf "Blog posts read: %d" (length ens + length jps)
   logInfo . T.pack $ printf "Listening on port %d with %d cores" prt cores
   W.run prt $ app ps bls
 
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
-sortByDate = NEL.reverse . NEL.sortWith (orgDate . blogRaw)
+sortByDate = NEL.reverse . NEL.sortWith blogDate
+
+groupByDate :: NonEmpty Blog -> NonEmpty BlogsByDate
+groupByDate = NEL.map f . NEL.groupWith1 fst . NEL.map (gregYear . blogDate &&& id)
+  where
+    gregYear :: Day -> Integer
+    gregYear = (\(y,_,_) -> y) . toGregorian
+
+    f :: NonEmpty (Integer, Blog) -> BlogsByDate
+    f a@((y, _) :| _) = BlogsByDate y $ NEL.map snd a
 
 byCats :: NonEmpty Blog -> NonEmpty BlogCategory
 byCats = NEL.map toCat . NEL.groupWith1 fst . NEL.sortWith fst . NEL.map (cat &&& id)

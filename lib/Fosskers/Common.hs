@@ -9,6 +9,7 @@ module Fosskers.Common
     -- * Blog Posts
   , Blog(..)
   , BlogCategory(..)
+  , BlogsByDate(..)
   , Blogs(..)
   , Title(..)
   , Language(..)
@@ -58,22 +59,27 @@ langPath Japanese = "jp"
 -- | Blog content converted to HTML once upon startup, along with other
 -- metadata.
 data Blog = Blog
-  { blogLang :: !Language
-  , blogSlug :: !Text
-  , blogDate :: !Day
-  , blogRaw  :: !O.OrgFile
-  , blogBody :: !(Html ())
-  , blogTOC  :: !(Html ()) }
+  { blogLang    :: !Language
+  , blogSlug    :: !Text
+  , blogDate    :: !Day
+  , blogUpdated :: !(Maybe Day)
+  , blogRaw     :: !O.OrgFile
+  , blogBody    :: !(Html ())
+  , blogTOC     :: !(Html ()) }
 
 data BlogCategory = BlogCategory
   { bcCat   :: !Text
   , bcBlogs :: !(NonEmpty Blog) }
 
+data BlogsByDate = BlogsByDate
+  { bbdYear  :: !Integer
+  , bbdBlogs :: !(NonEmpty Blog) }
+
 data Blogs = Blogs
   { engByCat  :: !(NonEmpty BlogCategory)
   , japByCat  :: !(NonEmpty BlogCategory)
-  , engNewest :: !Blog
-  , japNewest :: !Blog
+  , engByDate :: !(NonEmpty BlogsByDate)
+  , japByDate :: !(NonEmpty BlogsByDate)
   , engPosts  :: !(Map Text Blog)
   , japPosts  :: !(Map Text Blog) }
 
@@ -106,7 +112,7 @@ pathSlug = T.dropEnd 3 . T.pack . takeBaseName
 newtype ByLanguage = ByLanguage (NonEmpty Blog)
 
 instance ToXml Blog where
-  toXml (Blog l slug day (O.OrgFile m _) _ _) =
+  toXml (Blog l slug day _ (O.OrgFile m _) _ _) =
     element "item" mempty
     $  element "title" mempty (text . TL.fromStrict $ fromMaybe "Untitled" title)
     <> element "link" mempty
@@ -117,9 +123,9 @@ instance ToXml Blog where
       title :: Maybe Text
       title = M.lookup "TITLE" m
 
-orgDate :: O.OrgFile -> Maybe Day
-orgDate =
-  M.lookup "DATE" . O.orgMeta >=> parseTimeM True defaultTimeLocale "%Y-%m-%d" . T.unpack
+orgDate :: Text -> O.OrgFile -> Maybe Day
+orgDate field o =
+  M.lookup field (O.orgMeta o) >>= parseTimeM True defaultTimeLocale "%Y-%m-%d" . T.unpack
 
 dtd :: Day -> Date
 dtd = dateFromTAIEpoch . toModifiedJulianDay

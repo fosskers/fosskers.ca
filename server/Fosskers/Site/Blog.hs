@@ -8,6 +8,7 @@ module Fosskers.Site.Blog
   ) where
 
 import           BasePrelude
+import qualified Data.List.NonEmpty as NEL
 import qualified Data.Map.Strict as M
 import qualified Data.Org as O
 import           Data.Text (Text)
@@ -17,9 +18,9 @@ import           Lucid hiding (for_)
 ---
 
 newest :: Blogs -> Language -> Blog
-newest bs l = case l of
-  English  -> engNewest bs
-  Japanese -> japNewest bs
+newest bs l = NEL.head . bbdBlogs . NEL.head $ case l of
+  English  -> engByDate bs
+  Japanese -> japByDate bs
 
 choose :: Blogs -> Language -> Text -> Maybe Blog
 choose bs l t = case l of
@@ -42,11 +43,11 @@ blog bs l content = do
         let updated = M.lookup "UPDATED" m
         Just $ printf pat author date <> maybe "" (printf upat) updated
       div_ [class_ "content"] $ blogBody b
-  div_ [class_ "grid-sidebar-left"] $ articleBar l ps
+  div_ [class_ "grid-sidebar-left"] $ articleBar' l ps
   where
     (ps, nf, pat, upat) = case l of
-      English  -> (engByCat bs, "Post not found!", "By %s on %s", ", updated %s")
-      Japanese -> (japByCat bs, "見つかりません！", "%s・%s初出版", "・%s更新")
+      English  -> (engByDate bs, "Post not found!", "By %s on %s", ", updated %s")
+      Japanese -> (japByDate bs, "見つかりません！", "%s・%s初出版", "・%s更新")
 
 articleBar :: Language -> NonEmpty BlogCategory -> Html ()
 articleBar l bcs = do
@@ -58,6 +59,25 @@ articleBar l bcs = do
     g bc = do
       p_ [class_ "menu-label"] . toHtml $ bcCat bc
       ul_ [class_ "menu-list"] $ traverse_ (li_ . f) $ bcBlogs bc
+
+    f :: Blog -> Html ()
+    f b = a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b]
+      $ maybe "Bug: No Title" (h6_ . toHtml) $ M.lookup "TITLE" $ O.orgMeta $ blogRaw b
+
+    label = case l of
+      English  -> "Blog Archive"
+      Japanese -> "ポスト一覧"
+
+articleBar' :: Language -> NonEmpty BlogsByDate -> Html ()
+articleBar' l bbds = do
+  p_ [classes_ ["title", "is-4", "is-centered"]] label
+  div_ [class_ "left-padding"] $ do
+    aside_ [class_ "menu"] $ traverse_ g bbds
+  where
+    g :: BlogsByDate -> Html ()
+    g b = do
+      p_ [class_ "menu-label"] . toHtml . show $ bbdYear b
+      ul_ [class_ "menu-list"] $ traverse_ (li_ . f) $ bbdBlogs b
 
     f :: Blog -> Html ()
     f b = a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b]
