@@ -1,4 +1,4 @@
-/* $navbar-background-color: $primary; */
+/* $navbar-background-color: $body-background-color; */
 /* Bulma Utilities */
 .textarea, .input, .button {
   -moz-appearance: none;
@@ -290,7 +290,7 @@ table th {
   }
 }
 .navbar {
-  background-color: #1f2424;
+  background-color: #375a7f;
   min-height: 3.25rem;
   position: relative;
   z-index: 30;
@@ -1062,7 +1062,7 @@ a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-i
   }
 
   .navbar-menu {
-    background-color: #1f2424;
+    background-color: #375a7f;
     box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
     padding: 0.5rem 0;
   }
@@ -3549,6 +3549,20 @@ a.tag:hover {
   margin-bottom: 1%;
 }
 
+/* .grid-main:after { */
+/*   content: ""; */
+/*   display: block; */
+/*   position: fixed; */
+/*   left: 0; */
+/*   top: 0; */
+/*   width: 100%; */
+/*   height: 100%; */
+/*   /\* background-image: url("../images/space.jpg"); *\/ */
+/*   background-image: url("../images/sun-mountain.jpg"); */
+/*   background-position: center; */
+/*   background-size: cover; */
+/*   opacity: 0.2; */
+/* } */
 @media (max-width: 1024px) {
   .grid-with-sidebar {
     grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-sidebar-left grid-main grid-main grid-main";

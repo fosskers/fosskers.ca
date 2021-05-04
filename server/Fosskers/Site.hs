@@ -54,7 +54,7 @@ site lang page component = do
 
 topbar :: Language -> Html ()
 topbar lang =
-  nav_ [ classes_ [ "navbar" ]
+  nav_ [ classes_ [ "navbar", "is-dark"]
        , role_ "navigation"
        , makeAttribute "aria-label" "main navigation" ] $ do
     div_ [ class_ "navbar-brand" ] logo
