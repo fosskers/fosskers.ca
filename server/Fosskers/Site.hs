@@ -59,7 +59,7 @@ topbar lang =
     div_ [ class_ "navbar-brand" ] logo
     div_ [ classes_ ["navbar-menu"]] $ do
       div_ [class_ "navbar-start"] $ theBar lang
-      div_ [class_ "navbar-end"] langButtons
+      div_ [class_ "navbar-end"] $ icons lang *> langButtons
   where
     theBar :: Language -> Html ()
     theBar English  = pub
@@ -84,11 +84,8 @@ topbar lang =
         [ Just ("Game of Life", "/en/demo/game-of-life")
         , Just ("Web Effects", "/en/demo/web-effects") ]
       item "CV" "fa-graduation-cap" "/en/cv" []
-      item "Freelance" "fa-money-check-alt" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
+      item "Freelance" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
       item "Support" "fa-heart" "https://www.buymeacoffee.com/fosskers" []
-      icon "https://github.com/fosskers" ["fab", "fa-github"]
-      icon "mailto:colin@fosskers.ca" ["fas", "fa-envelope"]
-      icon "/en/rss" ["fas", "fa-rss"]
 
     izakaya :: Html ()
     izakaya = do
@@ -104,11 +101,8 @@ topbar lang =
         [ Just ("Game of Life", "/jp/demo/game-of-life")
         , Just ("ウェブ作用", "/jp/demo/web-effects") ]
       item "履歴書" "fa-graduation-cap" "/jp/cv" []
-      item "受託開発" "fa-money-check-alt" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
+      item "受託開発" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
       item "支援" "fa-heart" "https://www.buymeacoffee.com/fosskers" []
-      icon "https://github.com/fosskers" [ "fab", "fa-github" ]
-      icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
-      icon "/jp/rss" [ "fas", "fa-rss" ]
 
     projects :: [Maybe (Html (), Text)]
     projects =
@@ -132,6 +126,14 @@ topbar lang =
 
     icon :: Text -> [Text] -> Html ()
     icon url cs = a_ [ href_ url, classes_ ("navbar-item" : cs) ] ""
+
+    icons :: Language -> Html ()
+    icons l = do
+      icon "https://github.com/fosskers" [ "fab", "fa-github" ]
+      icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
+      case l of
+        English  -> icon "/en/rss" ["fas", "fa-rss"]
+        Japanese -> icon "/jp/rss" [ "fas", "fa-rss" ]
 
     langButtons :: Html ()
     langButtons = do
