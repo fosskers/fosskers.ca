@@ -12,7 +12,7 @@ import Lucid.Base (makeAttribute)
 
 ---
 
-data Page = CV | About | Posts | Demo | Tool | Nowhere deriving (Eq)
+data Page = Landing | CV | About | Posts | Demo | Tool | Nowhere deriving (Eq)
 
 nowhere :: Html ()
 nowhere = div_ [class_ "grid-main"] $ div_ [class_ "content"] $ do
@@ -44,6 +44,7 @@ site lang page component = do
 
     grid :: Text
     grid = case page of
+      Landing -> "grid-full"
       About   -> "grid-full"
       Demo    -> "grid-full"
       Tool    -> "grid-full"
@@ -170,7 +171,7 @@ topbar lang =
       English  -> []
       Japanese -> ["is-underlined"]
 
--- | Construct a Bootstrap navbar dropdown.
+-- | Construct a navbar dropdown.
 dropdown :: Html () -> Text -> [Text] -> [Maybe (Html (), Text)] -> Html ()
 dropdown label ic classes links =
   div_ [classes_ $ ["navbar-item", "has-dropdown", "is-hoverable"] <> classes] $ do

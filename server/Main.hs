@@ -28,6 +28,7 @@ import           Fosskers.Site.AlBhed (alBhed)
 import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
 import           Fosskers.Site.GameOfLife (gol)
+import           Fosskers.Site.Landing (landing)
 import           Fosskers.Site.Love (love)
 import           Fosskers.Site.Twitch (twitch)
 import           Fosskers.Site.WebEffects (webEffects)
@@ -98,9 +99,9 @@ app today ps bs = compress routes
       [ lang, "rss" ] -> resp $ withLang lang (xml . rss bs)
       -- The language button --
       [ lang ] ->
-        resp $ withLang lang (\l -> html . site l Posts . blog today bs l . Just $ newest bs l)
-      -- Index page yields most recent English blog post --
-      [] -> resp . html . site English Posts . blog today bs English . Just $ newest bs English
+        resp $ withLang lang (\l -> html . site l Landing $ landing l)
+      -- Index page yields the English landing page --
+      [] -> resp . html . site English Landing $ landing English
       _ -> resp err404
 
     err404 :: Response

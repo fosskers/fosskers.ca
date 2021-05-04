@@ -61,10 +61,11 @@ executable server
   other-modules:
     Fosskers.Site
     Fosskers.Site.About
+    Fosskers.Site.AlBhed
     Fosskers.Site.Blog
     Fosskers.Site.CV
     Fosskers.Site.GameOfLife
-    Fosskers.Site.AlBhed
+    Fosskers.Site.Landing
     Fosskers.Site.Love
     Fosskers.Site.Twitch
     Fosskers.Site.WebEffects
