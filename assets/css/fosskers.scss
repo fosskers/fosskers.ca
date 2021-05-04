@@ -6,6 +6,7 @@
 $navbar-breakpoint: 0;
 
 // Dark Theme from Bulmaswatch
+// To disable the theme, just delete this chunk of overrides.
 $grey-lighter: #dbdee0;
 $grey-light: #8c9b9d;
 $grey: darken($grey-light, 18);
@@ -76,7 +77,8 @@ $table-striped-row-even-hover-background-color: lighten($grey-darker, 2);
 $pagination-color: $link;
 $pagination-border-color: $border;
 
-$navbar-background-color: $primary;
+/* $navbar-background-color: $primary; */
+$navbar-background-color: $body-background-color;
 $navbar-item-color: $text;
 $navbar-item-hover-color: $link;
 $navbar-item-hover-background-color: transparent;
@@ -89,6 +91,9 @@ $navbar-dropdown-item-hover-color: $grey-lighter;
 $navbar-dropdown-item-hover-background-color: transparent;
 $navbar-dropdown-item-active-background-color: transparent;
 $navbar-dropdown-item-active-color: $link;
+
+$card-background-color: $primary;
+$card-footer-border-top: 1px solid $navbar-divider-background-color;
 
 $dropdown-content-background-color: $background;
 $dropdown-item-color: $text;

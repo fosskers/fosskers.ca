@@ -1,3 +1,4 @@
+/* $navbar-background-color: $primary; */
 /* Bulma Utilities */
 .textarea, .input, .button {
   -moz-appearance: none;
@@ -289,7 +290,7 @@ table th {
   }
 }
 .navbar {
-  background-color: #375a7f;
+  background-color: #1f2424;
   min-height: 3.25rem;
   position: relative;
   z-index: 30;
@@ -1061,7 +1062,7 @@ a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-i
   }
 
   .navbar-menu {
-    background-color: #375a7f;
+    background-color: #1f2424;
     box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
     padding: 0.5rem 0;
   }
@@ -1347,7 +1348,7 @@ body.has-spaced-navbar-fixed-bottom {
 }
 
 .card {
-  background-color: white;
+  background-color: #375a7f;
   border-radius: 0.25rem;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
   color: #fff;
@@ -1411,7 +1412,7 @@ body.has-spaced-navbar-fixed-bottom {
 
 .card-footer {
   background-color: transparent;
-  border-top: 1px solid #ededed;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
   align-items: stretch;
   display: flex;
 }
@@ -1426,7 +1427,7 @@ body.has-spaced-navbar-fixed-bottom {
   padding: 0.75rem;
 }
 .card-footer-item:not(:last-child) {
-  border-right: 1px solid #ededed;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .card .media:not(:last-child) {
