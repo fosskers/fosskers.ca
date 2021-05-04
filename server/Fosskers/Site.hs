@@ -59,7 +59,7 @@ topbar lang =
     div_ [ class_ "navbar-brand" ] logo
     div_ [ classes_ ["navbar-menu"]] $ do
       div_ [class_ "navbar-start"] $ theBar lang
-      div_ [class_ "navbar-end"] $ icons lang *> langButtons
+      div_ [class_ "navbar-end"] $ icons *> langButtons
   where
     theBar :: Language -> Html ()
     theBar English  = pub
@@ -85,7 +85,7 @@ topbar lang =
         , Just ("Web Effects", "/en/demo/web-effects") ]
       item "CV" "fa-graduation-cap" "/en/cv" []
       item "Freelance" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
-      item "Support" "fa-heart" "https://www.buymeacoffee.com/fosskers" []
+      dropdown "Support" "fa-heart" [] support
 
     izakaya :: Html ()
     izakaya = do
@@ -102,7 +102,27 @@ topbar lang =
         , Just ("ウェブ作用", "/jp/demo/web-effects") ]
       item "履歴書" "fa-graduation-cap" "/jp/cv" []
       item "受託開発" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
-      item "支援" "fa-heart" "https://www.buymeacoffee.com/fosskers" []
+      dropdown "支援" "fa-heart" [] support
+
+
+    support :: [Maybe (Html (), Text)]
+    support =
+      [ Just (coffee, "https://www.buymeacoffee.com/fosskers")
+      , Just (github, "https://github.com/sponsors/fosskers") ]
+      where
+        coffee :: Html ()
+        coffee = div_ [class_ "blog-title"] $ do
+          span_ [ class_ "icon" ] $ i_ [ classes_ ["fas", "fa-mug-hot"] ] ""
+          span_ $ case lang of
+            English  -> "Buy Me A Coffee"
+            Japanese -> "電子コーヒーを贈る"
+
+        github :: Html ()
+        github = div_ [class_ "blog-title"] $ do
+          span_ [ class_ "icon" ] $ i_ [ classes_ ["fab", "fa-github-alt"] ] ""
+          span_ $ case lang of
+            English  -> "Github Sponsors"
+            Japanese -> "ギットハブ・スポンサー"
 
     projects :: [Maybe (Html (), Text)]
     projects =
@@ -127,11 +147,11 @@ topbar lang =
     icon :: Text -> [Text] -> Html ()
     icon url cs = a_ [ href_ url, classes_ ("navbar-item" : cs) ] ""
 
-    icons :: Language -> Html ()
-    icons l = do
+    icons :: Html ()
+    icons = do
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
-      case l of
+      case lang of
         English  -> icon "/en/rss" ["fas", "fa-rss"]
         Japanese -> icon "/jp/rss" [ "fas", "fa-rss" ]
 
