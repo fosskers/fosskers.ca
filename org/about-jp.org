@@ -1,8 +1,7 @@
 ウッドブリ・コリンと申します。ネット上では「fosskers」という通称で知られています。
-ソフト開発者として務めており、主にRustとHaskellとGoを通して [[http://hackage.haskell.org/user/fosskers][複数なライブラリやア
-プリ]] を出しています。私には関数型プログラミング (Functional Programming) はとて
-も興味深く、FPによって己の基本的開発美徳の三つが可能となります：　厳密・最小主義・
-芸術
+ソフト開発者として務めており、主にRustとHaskellを通して [[http://hackage.haskell.org/user/fosskers][複数なライブラリやアプリ]]
+を出しています。私には関数型プログラミング (Functional Programming) はとても興味
+深く、FPによって己の基本的開発美徳の三つが可能となります：　厳密・最小主義・芸術
 
 * 主なプロジェクト
 
@@ -13,7 +12,7 @@
 - [[https://github.com/fosskers/scalaz-and-cats][ScalaZ and Cats Comparison]]
 - [[https://github.com/fosskers/scala-benchmarks][Scala Collections Benchmarks]]
 
-他にはScala・Purescript・Elm・Racket・C・Pythonを含めて様々なプログラミング言語
+他にはScala・Purescript・Elm・Racket・Go・C・Pythonを含めて様々なプログラミング言語
 で開発した経験もあります。AWS・Digital Ocean・Herokuなどでシステム管理した事も。
 
 職歴の [[/jp/cv][詳細はこちら]] 。
