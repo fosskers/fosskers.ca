@@ -241,6 +241,14 @@ $panel-heading-background-color: $grey-dark;
   justify-content: space-evenly;
 }
 
+textarea.textarea {
+    background-color: $grey-lighter;
+
+    &::placeholder {
+        color: black;
+    }
+}
+
 // --- Game of Life --- //
 
 .game-of-life {
@@ -278,6 +286,14 @@ $panel-heading-background-color: $grey-dark;
     width: 100%;
     height: 56.25%;
   }
+}
+
+input.input {
+    background-color: $grey-lighter;
+
+    &::placeholder {
+        color: black;
+    }
 }
 
 // --- Blog --- //

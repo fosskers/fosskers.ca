@@ -12,7 +12,7 @@ webEffects lang = div_ [class_ "grid-main"] $ div_ [class_ "web-effects"] $ do
   h1_ [classes_ ["title", "is-1"]] title
   p_ [classes_ ["subtitle", "is-5"]] subtitle
   div_ $ do
-    button_ [class_ "button", id_ "print-button"] printPage
+    button_ [classes_ ["button", "is-info"], id_ "print-button"] printPage
   wasm
   where
     (title, subtitle, printPage) = case lang of

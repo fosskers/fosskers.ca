@@ -3608,6 +3608,13 @@ a.tag:hover {
   justify-content: space-evenly;
 }
 
+textarea.textarea {
+  background-color: #dbdee0;
+}
+textarea.textarea::placeholder {
+  color: black;
+}
+
 .game-of-life {
   display: flex;
   flex-direction: column;
@@ -3638,6 +3645,13 @@ a.tag:hover {
   left: 0;
   width: 100%;
   height: 56.25%;
+}
+
+input.input {
+  background-color: #dbdee0;
+}
+input.input::placeholder {
+  color: black;
 }
 
 .is-centered {
