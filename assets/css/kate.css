@@ -79,7 +79,7 @@ div.sourceCode {
   }
 }
 code span {
-  color: white;
+  color: #b2b2b2;
 }
 
 /* Normal */
@@ -106,13 +106,13 @@ code span.bn {
 
 /* BaseN */
 code span.bu {
-  color: #f3cd91;
+  color: #4f97d7;
   font-weight: bold;
 }
 
 /* BuiltIn */
 code span.cf {
-  color: #f3cd91;
+  color: #4f97d7;
   font-weight: bold;
 }
 
@@ -123,32 +123,32 @@ code span.ch {
 
 /* Char */
 code span.cn {
-  color: #eb75c0;
+  color: #a45bad;
 }
 
 /* Constant */
 code span.co {
-  color: #4d4342;
+  color: #2aa1ae;
 }
 
 /* Comment */
 code span.cv {
-  color: #4d4342;
+  color: #2aa1ae;
 }
 
 /* CommentVar */
 code span.do {
-  color: #4d4342;
+  color: #2aa1ae;
 }
 
 /* Documentation */
 code span.dt {
-  color: #eb75c0;
+  color: #ce537a;
 }
 
 /* DataType */
 code span.dv {
-  color: #91a404;
+  color: #7590db;
 }
 
 /* DecVal */
@@ -165,17 +165,17 @@ code span.ex {
 
 /* Extension */
 code span.fl {
-  color: #f3cd91;
+  color: #a45bad;
 }
 
 /* Float */
 code span.fu {
-  color: #eb75c0;
+  color: #bc6ec5;
 }
 
 /* Function */
 code span.im {
-  color: #f3cd91;
+  color: #4f97d7;
 }
 
 /* Import */
@@ -185,23 +185,23 @@ code span.in {
 
 /* Information */
 code span.kw {
-  color: #f3cd91;
+  color: #4f97d7;
   font-weight: bold;
 }
 
 /* Keyword */
 code span.op {
-  color: #91a404;
+  color: #b2b2b2;
 }
 
 /* Operator */
 code span.ot {
-  color: #006e28;
+  color: #b2b2b2;
 }
 
 /* Other */
 code span.pp {
-  color: #f3cd91;
+  color: #4f97d7;
 }
 
 /* Preprocessor */
@@ -217,22 +217,22 @@ code span.sc {
 
 /* SpecialChar */
 code span.ss {
-  color: #fbbab1;
+  color: #2d9574;
 }
 
 /* SpecialString */
 code span.st {
-  color: #fbbab1;
+  color: #2d9574;
 }
 
 /* String */
 code span.va {
-  color: #91a404;
+  color: #7590db;
 }
 
 /* Variable */
 code span.vs {
-  color: #fbbab1;
+  color: #2d9574;
 }
 
 /* VerbatimString */

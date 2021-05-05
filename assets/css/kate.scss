@@ -1,15 +1,16 @@
-$comment: #4d4342;
+$base: #b2b2b2;
+$comment: #2aa1ae;
 $bool: #eb75c0;
-$constant: #eb75c0;
-$string: #fbbab1;
+$constant: #a45bad;
+$string: #2d9574;
 $char: #fbbab1;
-$operator: #91a404;
-$number: #f3cd91;
+$operator: $base;
+$number: $constant;
 $attr: #f3cd91;
-$keyword: #f3cd91;
-$function: #eb75c0;
-$type: #eb75c0;
-$variable: #91a404;
+$keyword: #4f97d7;
+$function: #bc6ec5;
+$type: #ce537a;
+$variable: #7590db;
 
 pre > code.sourceCode {
   white-space: pre;
@@ -93,7 +94,7 @@ div.sourceCode {
 }
 
 code span {
-  color: white;
+  color: $base;
 } /* Normal */
 
 code span.al {
@@ -188,11 +189,11 @@ code span.op {
 } /* Operator */
 
 code span.ot {
-  color: #006e28;
+  color: $base;
 } /* Other */
 
 code span.pp {
-    color: $keyword;
+  color: $keyword;
 } /* Preprocessor */
 
 code span.re {

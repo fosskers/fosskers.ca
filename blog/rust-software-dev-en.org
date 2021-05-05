@@ -294,11 +294,11 @@ fork two system threads and share data between them? Go ahead:
       // Spawn system threads and mutate shared memory.
       // No explicit unlock call is necessary.
       let handle0 = thread::spawn(move || {
-          ,*mutex0.lock().unwrap() += 1;
+          *mutex0.lock().unwrap() += 1;
       });
 
       let handle1 = thread::spawn(move || {
-          ,*mutex1.lock().unwrap() += 1;
+          *mutex1.lock().unwrap() += 1;
       });
 
       // Wait for the threads to complete.
