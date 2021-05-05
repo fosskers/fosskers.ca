@@ -3659,23 +3659,20 @@ figure img {
   gap: 0px 5px;
 }
 
-div.org-src-container {
-  margin: 1em 0;
-}
-
 pre.box {
   border: 1px solid #ccc;
-  background-color: whitesmoke;
-  box-shadow: 3px 3px 3px #eee;
+  background-color: #282f2f;
+  /* box-shadow: 3px 3px 3px #eee; */
   font-size: 80%;
 }
 
 pre.src {
   border: 1px solid #ccc;
+  background-color: #282f2f;
   overflow: auto;
   padding-top: 1.2em;
   position: relative;
-  box-shadow: 3px 3px 3px #eee;
+  /* box-shadow: 3px 3px 3px #eee; */
   border-radius: 6px;
   font-size: 80%;
 }
@@ -3683,7 +3680,7 @@ pre.src {
 pre.src:before {
   display: block;
   position: absolute;
-  background-color: #ccccd0;
+  background-color: #5e6d6f;
   top: 0;
   right: 0;
   padding: 0.25em 0.5em;
@@ -3691,10 +3688,6 @@ pre.src:before {
   border: 0;
   color: #fff;
   font-size: 80%;
-}
-
-pre.src:hover:before {
-  display: inline;
 }
 
 pre.src-bash:before {

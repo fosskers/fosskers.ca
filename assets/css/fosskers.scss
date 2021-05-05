@@ -305,24 +305,21 @@ figure {
 
 // --- Code --- //
 
-div.org-src-container {
-  margin: 1em 0;
-}
-
 // A bulma override.
 pre.box {
   border: 1px solid #ccc;
-  background-color: whitesmoke;
-  box-shadow: 3px 3px 3px #eee;
+  background-color: $grey-darker;
+  /* box-shadow: 3px 3px 3px #eee; */
   font-size: 80%;
 }
 
 pre.src {
   border: 1px solid #ccc;
+  background-color: $grey-darker;
   overflow: auto;
   padding-top: 1.2em;
   position: relative;
-  box-shadow: 3px 3px 3px #eee;
+  /* box-shadow: 3px 3px 3px #eee; */
   border-radius: 6px;
   font-size: 80%;
 }
@@ -330,7 +327,7 @@ pre.src {
 pre.src:before {
   display: block;
   position: absolute;
-  background-color: #ccccd0;
+  background-color: $grey;
   top: 0;
   right: 0;
   padding: 0.25em 0.5em;
@@ -338,10 +335,6 @@ pre.src:before {
   border: 0;
   color: #fff;
   font-size: 80%;
-}
-
-pre.src:hover:before {
-  display: inline;
 }
 
 pre.src-bash:before {

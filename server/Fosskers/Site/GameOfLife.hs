@@ -16,7 +16,7 @@ gol lang = div_ [class_ "grid-main"] $ div_ [class_ "game-of-life"] $ do
     Japanese -> japanese
   div_ [classes_ ["buttons", "has-addons"]] $ do
       button_ [classes_ ["button", "is-outlined", "is-warning"], id_ "pause-button"] "Pause"
-      button_ [classes_ ["button", "is-outlined", "is-dark"], id_ "reset-button"] "Reset"
+      button_ [classes_ ["button", "is-outlined", "is-info"], id_ "reset-button"] "Reset"
   canvas_ [id_ "game-of-life-canvas"] ""
   wasm
   where
