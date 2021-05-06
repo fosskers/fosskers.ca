@@ -45,6 +45,8 @@
 /* Common animation settings */
 .my-name,
 .my-role,
+.my-passions,
+.my-blog,
 .card-rust,
 .card-aura,
 .card-haskell {
@@ -55,17 +57,17 @@
 
 .card-rust {
   animation-name: slideDown;
-  animation-delay: 300ms;
+  animation-delay: 400ms;
 }
 
 .card-haskell {
-    animation-name: slideDown;
-    animation-delay: 500ms;
+  animation-name: slideDown;
+  animation-delay: 600ms;
 }
 
 .card-aura {
   animation-name: slideUp;
-  animation-delay: 400ms;
+  animation-delay: 500ms;
 }
 
 .my-name {
@@ -76,4 +78,14 @@
 .my-role {
   animation-name: slideRight;
   animation-delay: 200ms;
+}
+
+.my-passions {
+  animation-name: slideLeft;
+  animation-delay: 300ms;
+}
+
+.my-blog {
+  animation-name: slideDown;
+  animation-delay: 700ms;
 }

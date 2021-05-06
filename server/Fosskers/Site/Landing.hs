@@ -6,12 +6,11 @@ import Lucid
 
 ---
 
--- TODO Get total stars and downloads
-
 landing :: Language -> Html ()
 landing _ = div_ [classes_ ["grid-main", "landing"]] $ do
   span_ [classes_ ["title", "is-1", "my-name"]] "Colin Woodbury"
   span_ [classes_ ["subtitle", "is-3", "my-role"]] "Full-stack Software Developer"
+  span_ [classes_ ["subtitle", "is-6", "my-passions"]] $ em_ "I love programming, rock climbing, languages, and playing the bass!"
   div_ [class_ "cards"] $ do
     div_ [classes_ ["card", "card-rust"]] $ do
       div_ [class_ "card-header"] $ p_ [class_ "card-header-title"] "Rust Crates"
@@ -39,3 +38,7 @@ landing _ = div_ [classes_ ["grid-main", "landing"]] $ do
           span_ [class_ "icon"] $ i_ [classes_ ["fas", "fa-box-open"]] ""
         a_ [class_ "card-footer-item", href_ "https://github.com/fosskers?tab=repositories&q=&type=source&language=haskell&sort=stargazers"] $
           span_ [class_ "icon"] $ i_ [classes_ ["fab", "fa-github"]] ""
+  div_ [classes_ ["my-blog"]] $ do
+    "Check out my "
+    a_ [href_ "/en/blog"] "Blog"
+    "!"
