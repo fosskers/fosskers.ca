@@ -151,10 +151,10 @@ $panel-heading-background-color: $grey-dark;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 0.1fr auto;
-  gap: 10px 10px;
+  gap: 0px 0px;
   grid-template-areas:
     "grid-navbar"
-    "grid-main";
+    "grid-open-main";
 }
 
 .grid-navbar {
@@ -178,8 +178,12 @@ $panel-heading-background-color: $grey-dark;
 }
 
 .grid-main {
-  grid-area: grid-main;
-  margin-bottom: 1%;
+    grid-area: grid-main;
+    margin-bottom: 1%;
+}
+
+.grid-open-main {
+  grid-area: grid-open-main;
 }
 
 /* .grid-main:after { */

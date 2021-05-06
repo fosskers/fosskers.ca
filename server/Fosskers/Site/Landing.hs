@@ -7,7 +7,7 @@ import Lucid
 ---
 
 landing :: Language -> Html ()
-landing _ = div_ [classes_ ["grid-main", "landing"]] $ do
+landing _ = div_ [classes_ ["grid-open-main", "landing"]] $ do
   span_ [classes_ ["title", "is-1", "my-name"]] "Colin Woodbury"
   span_ [classes_ ["subtitle", "is-3", "my-role"]] "Full-stack Software Developer"
   span_ [classes_ ["subtitle", "is-6", "my-passions"]] $ em_ "I love programming, rock climbing, languages, and playing the bass!"

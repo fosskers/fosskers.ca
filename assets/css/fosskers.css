@@ -3529,8 +3529,8 @@ a.tag:hover {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 0.1fr auto;
-  gap: 10px 10px;
-  grid-template-areas: "grid-navbar" "grid-main";
+  gap: 0px 0px;
+  grid-template-areas: "grid-navbar" "grid-open-main";
 }
 
 .grid-navbar {
@@ -3556,6 +3556,10 @@ a.tag:hover {
 .grid-main {
   grid-area: grid-main;
   margin-bottom: 1%;
+}
+
+.grid-open-main {
+  grid-area: grid-open-main;
 }
 
 /* .grid-main:after { */
