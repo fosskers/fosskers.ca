@@ -7,10 +7,16 @@ import Lucid
 ---
 
 landing :: Language -> Html ()
-landing _ = div_ [classes_ ["grid-open-main", "landing"]] $ do
-  span_ [classes_ ["title", "is-1", "my-name"]] "Colin Woodbury"
-  span_ [classes_ ["subtitle", "is-3", "my-role"]] "Full-stack Software Developer"
-  span_ [classes_ ["subtitle", "is-6", "my-passions"]] $ em_ "I love programming, rock climbing, languages, and playing the bass!"
+landing lang = div_ [classes_ ["grid-open-main", "landing"]] $ do
+  span_ [classes_ ["title", "is-1", "my-name"]] $ case lang of
+    English  -> "Colin Woodbury"
+    Japanese -> "ウッドブリ・コリン"
+  span_ [classes_ ["subtitle", "is-3", "my-role"]] $ case lang of
+    English  -> "Full-stack Software Developer"
+    Japanese -> "フルスタック開発者"
+  span_ [classes_ ["subtitle", "is-6", "my-passions"]] $ em_ $ case lang of
+    English -> "I love programming, rock climbing, languages, and playing the bass!"
+    Japanese -> "プログラミング・クライミング・言語学修・ベース弾奏を趣味としています"
   div_ [class_ "cards"] $ do
     div_ [classes_ ["card", "card-rust"]] $ do
       div_ [class_ "card-header"] $ p_ [class_ "card-header-title"] "Rust Crates"
@@ -38,7 +44,6 @@ landing _ = div_ [classes_ ["grid-open-main", "landing"]] $ do
           span_ [class_ "icon"] $ i_ [classes_ ["fas", "fa-box-open"]] ""
         a_ [class_ "card-footer-item", href_ "https://github.com/fosskers?tab=repositories&q=&type=source&language=haskell&sort=stargazers"] $
           span_ [class_ "icon"] $ i_ [classes_ ["fab", "fa-github"]] ""
-  div_ [classes_ ["my-blog"]] $ do
-    "Check out my "
-    a_ [href_ "/en/blog"] "Blog"
-    "!"
+  div_ [classes_ ["my-blog"]] $ case lang of
+    English  -> "Check out my " *> a_ [href_ "/en/blog"] "Blog" *> "!"
+    Japanese -> "是非" *> a_ [href_ "/jp/blog"] "ブログ" *> "にご覧を！"
