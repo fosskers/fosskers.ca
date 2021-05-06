@@ -145,6 +145,18 @@ $panel-heading-background-color: $grey-dark;
     "grid-full-left grid-main grid-main grid-full-right";
 }
 
+// For pages like the landing page that want full control over the main area.
+.grid-open {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.1fr auto;
+  gap: 10px 10px;
+  grid-template-areas:
+    "grid-navbar"
+    "grid-main";
+}
+
 .grid-navbar {
   grid-area: grid-navbar;
 }
@@ -242,11 +254,11 @@ $panel-heading-background-color: $grey-dark;
 }
 
 textarea.textarea {
-    background-color: $grey-lighter;
+  background-color: $grey-lighter;
 
-    &::placeholder {
-        color: black;
-    }
+  &::placeholder {
+    color: black;
+  }
 }
 
 // --- Game of Life --- //
@@ -289,11 +301,11 @@ textarea.textarea {
 }
 
 input.input {
-    background-color: $grey-lighter;
+  background-color: $grey-lighter;
 
-    &::placeholder {
-        color: black;
-    }
+  &::placeholder {
+    color: black;
+  }
 }
 
 // --- Blog --- //

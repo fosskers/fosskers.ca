@@ -39,12 +39,13 @@ site lang page component = do
       link_ [rel_ "stylesheet", href_ "/assets/css/solid.min.css"]
       link_ [rel_ "stylesheet", href_ "/assets/css/fosskers.css"]
       link_ [rel_ "stylesheet", href_ "/assets/css/kate.css"]
+      link_ [rel_ "stylesheet", href_ "/assets/css/animations.css"]
       link_ [rel_ "icon", type_ "image/png", sizes_ "16x16", href_ "/assets/images/favicon-16x16.png"]
       link_ [rel_ "icon", type_ "image/png", sizes_ "32x32", href_ "/assets/images/favicon-32x32.png"]
 
     grid :: Text
     grid = case page of
-      Landing -> "grid-full"
+      Landing -> "grid-open"
       About   -> "grid-full"
       Demo    -> "grid-full"
       Tool    -> "grid-full"

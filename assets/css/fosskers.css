@@ -3524,6 +3524,15 @@ a.tag:hover {
   grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-full-left grid-main grid-main grid-full-right";
 }
 
+.grid-open {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.1fr auto;
+  gap: 10px 10px;
+  grid-template-areas: "grid-navbar" "grid-main";
+}
+
 .grid-navbar {
   grid-area: grid-navbar;
 }
