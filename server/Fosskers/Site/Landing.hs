@@ -46,4 +46,4 @@ landing lang = div_ [classes_ ["grid-open-main", "landing"]] $ do
           span_ [class_ "icon"] $ i_ [classes_ ["fab", "fa-github"]] ""
   div_ [classes_ ["my-blog"]] $ case lang of
     English  -> "Check out my " *> a_ [href_ "/en/blog"] "Blog" *> "!"
-    Japanese -> "是非" *> a_ [href_ "/jp/blog"] "ブログ" *> "にご覧を！"
+    Japanese -> "是非" *> a_ [href_ "/jp/blog"] "ブログ" *> "をご覧に！"
