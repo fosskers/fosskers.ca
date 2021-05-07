@@ -3617,6 +3617,11 @@ a.tag:hover {
   gap: 20px;
 }
 
+@media (max-width: 1024px) {
+  .cards {
+    display: none;
+  }
+}
 .al-bhed-inputs {
   display: flex;
   justify-content: space-evenly;

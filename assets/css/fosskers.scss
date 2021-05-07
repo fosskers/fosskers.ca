@@ -178,8 +178,8 @@ $panel-heading-background-color: $grey-dark;
 }
 
 .grid-main {
-    grid-area: grid-main;
-    margin-bottom: 1%;
+  grid-area: grid-main;
+  margin-bottom: 1%;
 }
 
 .grid-open-main {
@@ -249,6 +249,12 @@ $panel-heading-background-color: $grey-dark;
 .cards {
   display: flex;
   gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .cards {
+    display: none;
+  }
 }
 
 // --- Al Bhed --- //
