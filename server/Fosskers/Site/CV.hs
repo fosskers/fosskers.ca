@@ -12,10 +12,10 @@ cv ps lang = do
   div_ [classes_ ["grid-main"]] $ do
     h1_ [classes_ ["title", "is-2", "is-centered"]] $ toHtml $ cvTitle c
     div_ [class_ "content"] $ do
-      figure_ $ img_ [src_ "/assets/images/colin-profile.jpg"]
+      figure_ $ img_ [src_ "/assets/images/indoor_1.jpg", width_ "300"]
       cvBody c
   where
     c :: CirVit
     c = case lang of
-      English  -> engCV ps
+      English -> engCV ps
       Japanese -> japCV ps
