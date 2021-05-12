@@ -338,6 +338,28 @@ So to reiterate, here is the environment variable I have set in Fish:
 
 And I override this to ~x11~ on a case-by-case basis within Steam.
 
+** Signal
+
+In early May of 2021, Signal released ~5.1.0~ which uses a Wayland-compatible
+version of Electron. Unfortunately the Arch package ~signal-desktop~ doesn't yet
+run in this mode by default, so manual activation is necessary. From the command
+line:
+
+#+begin_src bash
+signal-desktop --use-tray-icon --enable-features=UseOzonePlatform --ozone-platform=wayland
+#+end_src
+
+Or if you run Signal via a launcher, we can edit the ~.desktop~ file provided by
+the package to respect these options as well. Within
+~/usr/share/applications/signal-desktop.desktop~, alter the ~Exec~ line to have the
+following:
+
+#+begin_example
+Exec=signal-desktop --use-tray-icon --enable-features=UseOzonePlatform --ozone-platform=wayland -- %u
+#+end_example
+
+A similar strategy would work for other Electron apps that use at least version 12.
+
 * Other Settings
 
 If the sections here aren't applicable to you, feel free to skip them.
@@ -440,10 +462,11 @@ support Wayland]] and thus always runs in XWayland.
 
 ** Electron Apps
 
-Electron apps (Discord, Slack, Signal, VSCode) always run in XWayland, but
-[[https://github.com/electron/electron/pull/26022][Wayland support has recently landed]] in version 12. Once the apps catch up to the
-newest Electron, we should get Wayland support "for free". Until then, screen
-sharing in apps like Discord will only work for other XWayland apps.
+As of 2021 May, Signal and VSCode can now be ran in Wayland thanks to their
+upgrading to Electron 12.
+
+Other Electron apps like Discord and Slack instead must run in XWayland until
+they can upgrade.
 
 * Community Tips
 
