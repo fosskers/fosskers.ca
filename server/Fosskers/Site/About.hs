@@ -9,9 +9,9 @@ import Lucid hiding (col_)
 about :: Pages -> Language -> Html ()
 about ps lang = div_ [class_ "grid-main"] $
   div_ [class_ "content"] $ do
-    content
     figure_ $ do
       img_ [src_ "/assets/images/Quay_2.jpg"]
+    content
     figure_ $ do
       img_ [src_ "/assets/images/jack.jpg"]
       figcaption_ $ em_ cat
