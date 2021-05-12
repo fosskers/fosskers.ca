@@ -137,7 +137,9 @@ topbar lang =
       , Just ("Go Libraries", "https://pkg.go.dev/search?q=fosskers")
       , Nothing
       , Just ("ScalaZ and Cats", "https://github.com/fosskers/scalaz-and-cats")
-      , Just ("Scala Benchmarks", "https://github.com/fosskers/scala-benchmarks") ]
+      , Just ("Scala Benchmarks", "https://github.com/fosskers/scala-benchmarks")
+      , Nothing
+      , Just ("My Dotfiles", "https://github.com/fosskers/dotfiles")]
 
     -- | Highlight the navbar links according to the page we're currently on.
     item :: Html () -> Text -> Text -> [Text] -> Html ()
