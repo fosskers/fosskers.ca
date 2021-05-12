@@ -1,7 +1,7 @@
 #+TITLE: Full Wayland Setup on Arch Linux
 #+DATE: 2021-03-09
 #+AUTHOR: Colin
-#+UPDATED: 2021-04-20
+#+UPDATED: 2021-05-12
 #+CATEGORY: tech
 
 This article is a guide for achieving a full-as-possible [[https://wayland.freedesktop.org/][Wayland]] setup on Arch
