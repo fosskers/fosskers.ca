@@ -3621,6 +3621,14 @@ a.tag:hover {
   .cards {
     display: none;
   }
+
+  .my-name, .my-role, .my-passions {
+    text-align: center;
+  }
+
+  .my-role {
+    margin-bottom: 0% !important;
+  }
 }
 .al-bhed-inputs {
   display: flex;

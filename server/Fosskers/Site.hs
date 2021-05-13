@@ -77,15 +77,14 @@ topbar lang =
       item "Blog" "fa-book" "/en/blog" []
       dropdown "Projects" "fa-code" ["mobile-hidden"] projects
       -- dropdown "Tools" [Just ("Kanji Analysis", "#")]
-      dropdown "Tools" "fa-tools" []
+      dropdown "Tools" "fa-tools" ["mobile-hidden"]
         [ Just ("Al Bhed Translator", "/en/tools/al-bhed")
         , Just ("Love Letter Tracker", "/en/tools/love-letter")
-        , Just ("Twitch Player", "/en/tools/twitch")
-        ]
+        , Just ("Twitch Player", "/en/tools/twitch") ]
       dropdown "Demos" "fa-laptop-code" ["mobile-hidden"]
         [ Just ("Game of Life", "/en/demo/game-of-life")
         , Just ("Web Effects", "/en/demo/web-effects") ]
-      item "CV" "fa-graduation-cap" "/en/cv" []
+      item "CV" "fa-graduation-cap" "/en/cv" ["mobile-hidden"]
       item "Freelance" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
       dropdown "Support" "fa-heart" [] support
 
@@ -95,17 +94,16 @@ topbar lang =
       item "ブログ" "fa-book" "/jp/blog" []
       dropdown "プロジェクト" "fa-code" ["mobile-hidden"] projects
       -- dropdown "ツール" [Just ("漢字分析", "#")]
-      dropdown "ツール" "fa-tools" []
+      dropdown "ツール" "fa-tools" ["mobile-hidden"]
         [ Just ("アルベド翻訳", "/jp/tools/al-bhed")
         , Just ("Love Letter Tracker", "/jp/tools/love-letter")
         , Just ("Twitch Player", "/jp/tools/twitch") ]
       dropdown "デモ" "fa-laptop-code" ["mobile-hidden"]
         [ Just ("Game of Life", "/jp/demo/game-of-life")
         , Just ("ウェブ作用", "/jp/demo/web-effects") ]
-      item "履歴書" "fa-graduation-cap" "/jp/cv" []
+      item "履歴書" "fa-graduation-cap" "/jp/cv" ["mobile-hidden"]
       item "受託開発" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
       dropdown "支援" "fa-heart" [] support
-
 
     support :: [Maybe (Html (), Text)]
     support =
@@ -146,7 +144,7 @@ topbar lang =
     item label ic url cs = a_ [ href_ url, classes_ $ "navbar-item" : cs ] $
       span_ [ class_ "icon-text"] $ do
         span_ [ class_ "icon" ] $ i_ [ classes_ ["fas", ic] ] ""
-        span_ label
+        span_ [ class_ "mobile-hidden" ] label
 
     icon :: Text -> [Text] -> Html ()
     icon url cs = a_ [ href_ url, classes_ ("navbar-item" : cs) ] ""
@@ -154,15 +152,15 @@ topbar lang =
     icons :: Html ()
     icons = do
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
-      icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope" ]
+      icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope", "mobile-hidden" ]
       case lang of
         English  -> icon "/en/rss" ["fas", "fa-rss"]
         Japanese -> icon "/jp/rss" [ "fas", "fa-rss" ]
 
     langButtons :: Html ()
     langButtons = do
-      a_ [href_ "/en", classes_ $ "navbar-item" : eBtn] "English"
-      a_ [href_ "/jp", classes_ $ "navbar-item" : jBtn] "日本語"
+      a_ [href_ "/en", classes_ $ "navbar-item" : "mobile-hidden" : eBtn] "English"
+      a_ [href_ "/jp", classes_ $ "navbar-item" : "mobile-hidden" : jBtn] "日本語"
 
     eBtn :: [Text]
     eBtn = case lang of
@@ -181,7 +179,7 @@ dropdown label ic classes links =
     a_ [class_ "navbar-link"] $
       span_ [class_ "icon-text"] $ do
         span_ [ class_ "icon" ] $ i_ [ classes_ ["fas", ic] ] ""
-        span_ label
+        span_ [ class_ "mobile-hidden" ] label
     div_ [class_ "navbar-dropdown"] $
       traverse_ link links
   where

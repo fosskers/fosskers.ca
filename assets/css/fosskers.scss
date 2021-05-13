@@ -255,6 +255,14 @@ $panel-heading-background-color: $grey-dark;
   .cards {
     display: none;
   }
+
+  .my-name, .my-role, .my-passions {
+    text-align: center;
+  }
+
+  .my-role {
+    margin-bottom: 0% !important;
+  }
 }
 
 // --- Al Bhed --- //
