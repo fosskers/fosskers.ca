@@ -27,6 +27,7 @@ import           Fosskers.Site.About (about)
 import           Fosskers.Site.AlBhed (alBhed)
 import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
+import           Fosskers.Site.Drj (drj)
 import           Fosskers.Site.GameOfLife (gol)
 import           Fosskers.Site.Landing (landing)
 import           Fosskers.Site.Love (love)
@@ -82,6 +83,8 @@ app today ps bs = compress routes
       "assets" : rest -> assets (req { pathInfo = rest }) resp
       "webfonts" : rest -> assets (req { pathInfo = rest }) resp
       [ "favicon.ico" ] -> assets req resp
+      -- Languageless endpoints --
+      [ "drj" ] -> resp $ html drj
       -- Static pages --
       [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l About $ about ps l)
       [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l CV $ cv ps l)
