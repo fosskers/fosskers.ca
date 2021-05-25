@@ -1,0 +1,19 @@
+[package]
+version = "0.1.0"
+name = "seed-effects"
+repository = "https://github.com/seed-rs/seed-quickstart"
+authors = ["Colin Woodbury <colin@fosskers.ca>"]
+description = "App Description"
+categories = ["category"]
+license = "MIT"
+readme = "./README.md"
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+seed = "0.8.0"
+serde = { version = "1.0", features = [ "derive" ] }
+serde_json = "1.0"
+
