@@ -1,8 +1,14 @@
-resolver: lts-17.9
+resolver: lts-17.13
 
 ghc-options:
   $everything: -split-sections
   $locals: -fwrite-ide-info -hiedir=.hie -fmax-relevant-binds=0
+
+flags:
+  these:
+    assoc: false
+  strict:
+    assoc: false
 
 extra-deps:
   # --- Missing from Stackage --- #
