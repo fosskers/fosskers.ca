@@ -3,7 +3,11 @@ use serde::Deserialize;
 
 const URL: &str = "https://jsonplaceholder.typicode.com/posts/1";
 
-fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
+fn init(_: Url, orders: &mut impl Orders<Msg>) -> Model {
+    orders.subscribe(|subs::UrlRequested(_, url_request)| {
+        url_request.handled();
+    });
+
     Model {
         title: None,
         working: None,
