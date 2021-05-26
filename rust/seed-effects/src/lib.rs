@@ -66,41 +66,32 @@ fn view(model: &Model) -> Node<Msg> {
 
 fn v_json(model: &Model) -> Node<Msg> {
     div![
-        C!["field", "is-grouped"],
-        p![
-            C!["control"],
-            button![
-                C!["button", "is-info"],
-                "Fetch JSON",
-                ev(Ev::Click, |_| Msg::SendReq)
-            ]
+        C!["seed-row"],
+        button![
+            C!["button", "is-info"],
+            "Fetch JSON",
+            ev(Ev::Click, |_| Msg::SendReq)
         ],
-        p![
-            C!["control"],
-            input![
-                C!["input"],
-                attrs!(At::Type => "text", At::Disabled => ""),
-                model.title.as_deref().map(|s| attrs!(At::Value => s))
-            ]
+        input![
+            C!["input"],
+            attrs!(At::Type => "text", At::Disabled => ""),
+            model.title.as_deref().map(|s| attrs!(At::Value => s))
         ],
         match model.working {
             None => None,
             Some(Working::Now) => {
-                Some(p![
-                    C!["control"],
-                    span![C!["icon"], i![C!["fas", "fa-question-circle"]]]
-                ])
+                Some(span![C!["icon"], i![C!["fas", "fa-question-circle"]]])
             }
             Some(Working::Success) => {
-                Some(p![
-                    C!["control"],
-                    span![C!["icon"], i![C!["fas", "fa-check"]]]
+                Some(span![
+                    C!["icon"],
+                    i![C!["fas", "fa-check", "has-text-success"]]
                 ])
             }
             Some(Working::Failed) => {
-                Some(p![
-                    C!["control"],
-                    span![C!["icon"], i![C!["fas", "fa-times-circle"]]]
+                Some(span![
+                    C!["icon"],
+                    i![C!["fas", "fa-times-circle", "has-text-danger"]]
                 ])
             }
         }

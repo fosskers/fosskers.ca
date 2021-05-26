@@ -119,6 +119,7 @@ $panel-heading-background-color: $grey-dark;
 @import "../../style/bulma/sass/form/shared.sass";
 @import "../../style/bulma/sass/form/tools.sass";
 @import "../../style/bulma/sass/form/input-textarea.sass";
+@import "../../style/bulma/sass/helpers/color.sass";
 
 // --- CSS Grid --- //
 
@@ -256,7 +257,9 @@ $panel-heading-background-color: $grey-dark;
     display: none;
   }
 
-  .my-name, .my-role, .my-passions {
+  .my-name,
+  .my-role,
+  .my-passions {
     text-align: center;
   }
 
@@ -296,6 +299,14 @@ textarea.textarea {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+}
+
+// --- Seed Effects --- //
+
+.seed-row {
+  display: flex;
+  gap: 0px 10px;
+  align-items: center;
 }
 
 // --- Twitch --- //

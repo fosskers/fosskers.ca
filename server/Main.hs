@@ -31,6 +31,7 @@ import           Fosskers.Site.Drj (drj)
 import           Fosskers.Site.GameOfLife (gol)
 import           Fosskers.Site.Landing (landing)
 import           Fosskers.Site.Love (love)
+import           Fosskers.Site.SeedEffects (seedEffects)
 import           Fosskers.Site.Twitch (twitch)
 import           Fosskers.Site.WebEffects (webEffects)
 import           Lucid
@@ -93,6 +94,7 @@ app today ps bs = compress routes
       [ _, "tools", "love-letter"] -> resp $ html love
       [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l Demo $ gol l)
       [ lang, "demo", "web-effects"] -> resp $ withLang lang (\l -> html . site l Demo $ webEffects l)
+      [ lang, "demo", "seed-effects"] -> resp $ withLang lang (\l -> html . site l Demo $ seedEffects l)
       -- All blog posts --
       [ lang, "blog" ] ->
         resp $ withLang lang (\l -> html . site l Posts . blog today bs l . Just $ newest bs l)

@@ -83,7 +83,8 @@ topbar lang =
         , Just ("Twitch Player", "/en/tools/twitch") ]
       dropdown "Demos" "fa-laptop-code" ["mobile-hidden"]
         [ Just ("Game of Life", "/en/demo/game-of-life")
-        , Just ("Web Effects", "/en/demo/web-effects") ]
+        , Just ("Web Effects", "/en/demo/web-effects")
+        , Just ("Seed Effects", "/en/demo/seed-effects") ]
       item "CV" "fa-graduation-cap" "/en/cv" ["mobile-hidden"]
       item "Freelance" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
       dropdown "Support" "fa-heart" [] support
@@ -100,7 +101,8 @@ topbar lang =
         , Just ("Twitch Player", "/jp/tools/twitch") ]
       dropdown "デモ" "fa-laptop-code" ["mobile-hidden"]
         [ Just ("Game of Life", "/jp/demo/game-of-life")
-        , Just ("ウェブ作用", "/jp/demo/web-effects") ]
+        , Just ("ウェブ作用", "/jp/demo/web-effects")
+        , Just ("Seed作用", "/jp/demo/seed-effects") ]
       item "履歴書" "fa-graduation-cap" "/jp/cv" ["mobile-hidden"]
       item "受託開発" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
       dropdown "支援" "fa-heart" [] support
