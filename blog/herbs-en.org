@@ -1,0 +1,28 @@
+#+TITLE: The Ultimate Herb Combination Chart
+#+DATE: 2021-06-29
+#+AUTHOR: Colin
+
+Amongst the gems to be found in the home of my 98-year-old grandmother was this,
+a *Common Combinations Herb Chart* from 1985. Feel free to copy this and print it
+out!
+
+[[/assets/images/herb-combinations-scaled.jpg]]
+
+Oh, you want an [[/assets/images/herb-combinations.jpeg][even bigger version]]? (3.8mb)
+
+* Usage
+
+Following the NOTES at the bottom, we see meals on the left, and herbs on the
+top. Then you just match them: Got beef and rosemary? Add thyme! See a ~*~ at a
+particular index? That means that herb is to be used alone.
+
+Also quoting the notes:
+
+#+begin_quote
+Many of these herbs and herb combinations are good when used in conjunction with
+onion, garlic and/or with sauces - tomato, white, etc.
+#+end_quote
+
+* Resources
+
+- [[https://www.reddit.com/r/Cooking/comments/oaec8x/the_ultimate_herb_combination_chart/][Reddit Discussion]]

@@ -512,3 +512,4 @@ If you found this article helpful, please consider [[https://www.buymeacoffee.co
 - [[https://hg.sr.ht/~scoopta/wofi][Sway: Wofi launcher]]
 - [[https://wiki.archlinux.org/index.php/Wayland][Arch Wiki: Wayland]]
 - [[https://arewewaylandyet.com/][Are We Wayland Yet?]]
+- [[https://hugo.barrera.io/journal/2020/06/14/zoom-screensharing-on-archlinux/][Blog: Zoom Screen Sharing]]
