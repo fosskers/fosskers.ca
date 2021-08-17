@@ -1,0 +1,307 @@
+#+TITLE: Contributing to Emacs
+#+AUTHOR: Colin Woodbury
+#+DATE: 2021-08-17
+#+CATEGORY: tech
+
+I recently contributed a new Elisp function to the "Files" API of upstream
+Emacs. Being more than just a typo fix, this threw me into the deepend of their
+entire dev process. This article explains their mailing-list-based workflow from
+start to finish in the age of Github and Pull Requests. It was actually pretty
+smooth!
+
+Keep in mind that if you /are/ just correcting a typo, etc., much of what is
+written here can be ignored. You could skip right to /Sending a Patch Email/
+below.
+
+* Motivation
+
+Until recently, Emacs lacked a function to set or swap the extension of a string
+that you're handling as a filename. It was important to me that this be done in
+a sane, checked way that we'd expect from other modern languages, as opposed to
+just slapping strings together. I initially tried to add this in a PR to [[https://github.com/hlissner/doom-emacs][Doom
+Emacs]], but it was rejected for a good reason:
+
+#+begin_quote
+I don't want Doom to trend any further toward reinventing f.el (which has
+f-swap-ext). Sorry for the trouble!
+#+end_quote
+
+I was sad for a bit, but it's actually good that Doom's maintainer didn't merge
+it. Turns out the code was wrong!
+
+I took a look at [[https://github.com/rejeep/f.el][f.el]] and its ~f-swap-ext~ as had been pointed out, but found it
+didn't account for certain edge cases:
+
+#+begin_src emacs-lisp
+(defun f-swap-ext (path ext)
+  "Return PATH but with EXT as the new extension.
+EXT must not be nil or empty."
+  (if (s-blank? ext)
+      (error "Extension cannot be empty or nil")
+    (concat (f-no-ext path) "." ext)))
+#+end_src
+
+I could have patched this, but that would only be useful/discoverable to users
+of ~f.el~. And so I opted to upstream my code straight to the source: Emacs
+itself.
+
+* How Emacs is Developed
+
+Emacs follows the same development paradigm as the Linux Kernel and Arch Linux's
+~pacman~: mailing lists and mailed-in patch files. After some email-based
+discussion (and perhaps resubmission of fixed patches), maintainers merge these
+patches manually, assigning you the "Author" field of the commit, while they are
+the "Committer" (that's why there's a difference).
+
+- [[https://lists.gnu.org/archive/html/emacs-devel/][Mailing List: Emacs Devel]] (mainly for discussion)
+- [[https://lists.gnu.org/archive/html/bug-gnu-emacs/][Mailing List: Bug Gnu Emacs]] (mainly for bug fixes)
+
+* Cloning the Repo
+
+The repo is otherwise a normal Git repo that you can ~git clone~:
+
+- [[https://git.savannah.gnu.org/cgit/emacs.git][https://git.savannah.gnu.org/cgit/emacs.git]]
+
+* Adding a Lisp Function
+
+** The Code
+
+Here is final form of the code, after being nudged in various directions by
+maintainers:
+
+#+begin_src emacs-lisp
+(defun file-name-with-extension (filename extension)
+  "Set the EXTENSION of a FILENAME.
+The extension (in a file name) is the part that begins with the last \".\".
+
+Trims a leading dot from the EXTENSION so that either \"foo\" or
+\".foo\" can be given.
+
+Errors if the FILENAME or EXTENSION are empty, or if the given
+FILENAME has the format of a directory.
+
+See also `file-name-sans-extension'."
+  (let ((extn (string-trim-left extension "[.]")))
+    (cond ((string-empty-p filename) (error "Empty filename: %s" filename))
+          ((string-empty-p extn) (error "Malformed extension: %s" extension))
+          ((directory-name-p filename) (error "Filename is a directory: %s" filename))
+          (t (concat (file-name-sans-extension filename) "." extn)))))
+#+end_src
+
+Understanding this code isn't important: we're trying to dissect the Emacs
+development workflow.
+
+There was a decent amount of back-and-forth and corrections before it finally
+went in. This makes total sense: the maintainers would want to get an addition
+right the first time before merging, since once it's in and part of the Lisp API
+of Emacs, it's hard to rip back out.
+
+** Documentation
+
+The content of a function's /docstring/ is what appears when you ~C-h f~ that
+function.
+
+#+begin_src emacs-lisp
+  "Set the EXTENSION of a FILENAME.
+The extension (in a file name) is the part that begins with the last \".\".
+
+Trims a leading dot from the EXTENSION so that either \"foo\" or
+\".foo\" can be given.
+
+Errors if the FILENAME or EXTENSION are empty, or if the given
+FILENAME has the format of a directory.
+
+See also `file-name-sans-extension'."
+#+end_src
+
+There are three rules to writing proper docstrings:
+
+- The first line must be a complete sentence.
+- Past the first line, you must not indent.
+- The function arguments must appear in the docstring, but capitalized.
+
+** Error Conventions
+
+Notice that we're just erroring if given bad input:
+
+#+begin_src emacs-lisp
+(cond ((string-empty-p extn) (error "Malformed extension: %s" extension)))
+#+end_src
+
+Initially I was yielding ~nil~ in such cases to avoid exceptions, citing bad user
+experience, but this approach was rejected. Instead it's considered standard
+practice to use the global debug mode built in to Emacs to view full stacktraces
+if you really want to know how and why a function failed.
+
+** Unit Tests
+
+Every Lisp file has a corresponding file under a ~test~ directory in which to
+place unit tests. In ~test/lisp/files-test.el~ we add:
+
+#+begin_src emacs-lisp
+(ert-deftest files-tests-file-name-with-extension-good ()
+  "Test that `file-name-with-extension' succeeds with reasonable input."
+  (should (string= (file-name-with-extension "Jack" "css") "Jack.css"))
+  (should (string= (file-name-with-extension "Jack" ".css") "Jack.css"))
+  (should (string= (file-name-with-extension "Jack.scss" "css") "Jack.css"))
+  (should (string= (file-name-with-extension "/path/to/Jack.md" "org") "/path/to/Jack.org")))
+#+end_src
+
+A workable flow for running these:
+
+- Write/change your unit test.
+- Run ~eval-buffer~ (or type ~gR~ in Doom).
+- Run ~ert-run-tests-interactively~.
+- Auto-complete to the test you want to run.
+- View results:
+
+#+begin_example
+Selector: files-tests-file-name-with-extension-good
+Passed:  1
+Failed:  0
+Skipped: 0
+Total:   1/1
+
+Started at:   2021-08-14 09:39:24-0700
+Finished.
+Finished at:  2021-08-14 09:39:24-0700
+#+end_example
+
+Presumably these are all run as a batch in some mysterious Emacs CI somewhere
+when actually merged.
+
+** Updating the Manual
+
+- [[https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html][The Emacs Lisp Manual]]
+
+Having docs appear under ~C-h f~ is great, but our new function also needs an
+official manual entry. In ~doc/lispref/files.texi~ we add:
+
+#+begin_example
+@defun file-name-with-extension filename extension
+This function returns @var{filename} with its extension set to
+@var{extension}.  A single leading dot in the @var{extension} will be
+stripped if there is one.  For example:
+
+@example
+(file-name-with-extension "file" "el")
+     @result{} "file.el"
+(file-name-with-extension "file" ".el")
+     @result{} "file.el"
+(file-name-with-extension "file.c" "el")
+     @result{} "file.el"
+@end example
+
+Note that this function will error if @var{filename} or
+@var{extension} are empty, or if the @var{filename} is shaped like a
+directory (i.e., if @code{directory-name-p} returns non-@code{nil}).
+@end defun
+#+end_example
+
+Note the special markup.
+
+With this, the next time an Emacs release is made with our change included, a
+new version of the Manual will also be published with our examples.
+
+** Updating the "Short Docs"
+
+Along with the Manual or our usual ~C-h f~, there is another documentation
+paradigm for viewing the real, executed effects of various functions. In
+~lisp/emacs-lisp/shortdoc.el~ we add the following to the ~file-name~ group:
+
+#+begin_src elisp
+(file-name-with-extension
+ :eval (file-name-with-extension "foo.txt" "bin")
+ :eval (file-name-with-extension "foo" "bin"))
+#+end_src
+
+Now, if we run ~M-x shortdoc-display-group~ and follow the completions to
+~file-name~, we see the following rendered examples:
+
+#+begin_example
+(file-name-with-extension filename extension)
+  Set the EXTENSION of a FILENAME.
+  (file-name-with-extension "foo.txt" "bin")
+    ⇒ "foo.bin"
+  (file-name-with-extension "foo" "bin")
+    ⇒ "foo.bin"
+#+end_example
+
+This is handy for knowing what to expect from functions without running them
+ourselves.
+
+** Updating the NEWS
+
+This file is huge, and it took a while to figure out where to actually insert
+the entry. Eventually I found the heading /Lisp Changes in Emacs 28.1/ and added:
+
+#+begin_example
++++
+,** New function 'file-name-with-extension'.
+This function allows a canonical way to set/replace the extension of a file name.
+#+end_example
+
+* Sending a Patch Email
+
+- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Sending-Patches.html][Manual: Sending Patches]]
+
+Assuming we've done our coding on a separate (local) branch, we can output a
+usable patch file with:
+
+#+begin_example
+git diff master > cool-patch.patch
+#+end_example
+
+Following that, we _attach that file as a normal email attachment_ (i.e. not
+copy-pasted into the email body) and send it via whatever mail client we like to
+/bug-gnu-emacs@gnu.org/ in most cases, or /emacs-devel@gnu.org/ if we think the
+patch warrants more discussion. Patches seem to be accepted on either mailing
+list.
+
+Maintainers will get back to us via email. The threads in their entirety can be
+viewed on the Archives.
+
+* Copyright Assignment
+
+- [[https://git.savannah.gnu.org/cgit/gnulib.git/plain/doc/Copyright/request-assign.future][Copyright Assignment Template]]
+
+If the patch is non-trivial (i.e. more than just fixing a typo, etc.), we need
+to assign copyright to the Free Software Foundation. Once complete, our
+contribution falls under the legal protection of the FSF.
+
+To assign copyright:
+
+- Fill out the template above and email it to /assign@gnu.org/.
+- Wait for a nice man named Craig to send you a personalised form to fill out.
+- Fill out the assignment form, scan it, and send it back to them.
+- ~N+K~ days later, you'll get a copy of the form signed by someone on their end.
+- Legal protection complete!
+
+You may feel the urge here to grumble about red tape, but overall I think this
+Assignment process to be worth it.
+
+* Merging
+
+With any luck, we'll eventually get a response on the mailing list from somebody
+with Merge powers that our patch has been merged. This can be confirmed by
+checking [[https://git.savannah.gnu.org/cgit/emacs.git/log/][the commit list]]. We did it!
+
+* Advertisement in Emacs Newsletter
+
+- [[https://sachachua.com/blog/category/emacs-news/][https://sachachua.com/blog/category/emacs-news/]]
+
+Much like /This Week in Rust/ and similar newsletters, Emacs has one too. The
+author usually provides links when new patches have been merged.
+
+* Conclusion
+
+And that's that! Honestly, before I had started the entire process I had assumed
+it would be worse than it was; that I'd be forced to use arcane tooling or
+configure my mail client in a special way in order to submit patches. But no!
+
+That said, a workflow based on Github (or similar) has the advantage of
+first-class CI, cleaner reviews, and other intricate project settings (like
+teams, etc.). I'm glad my own projects are on Github.
+
+Either way, Emacs development is alive and well, and commits flow into its
+~master~ branch daily. Pretty good for a project born in the 70s!
