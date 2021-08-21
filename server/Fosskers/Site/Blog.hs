@@ -85,6 +85,7 @@ articleBar' today l bbds = do
     f :: Blog -> Html ()
     f b = a_ [href_ $ "/" <> langPath l <> "/blog/" <> blogSlug b] $ do
       div_ [class_ "blog-title"] $ do
+        span_ . maybe (i_ [classes_ ["fas", "fa-question"]] "") catIcon $ blogCat b
         span_ . maybe "Bug: No Title" toHtml . M.lookup "TITLE" . O.orgMeta $ blogRaw b
         let days = diffDays today <$> blogUpdated b
             updated = maybe False (< 60) days

@@ -9,6 +9,7 @@ module Fosskers.Common
     -- * Blog Posts
   , Blog(..)
   , BlogCategory(..)
+  , catFromText, catIcon
   , BlogsByDate(..)
   , Blogs(..)
   , Title(..)
@@ -37,7 +38,7 @@ import qualified Data.Text as T
 import qualified Data.Text.Lazy as TL
 import           Data.Time.Calendar (Day(..))
 import           Data.Time.Format
-import           Lucid (Html)
+import           Lucid
 import           System.FilePath.Posix (takeBaseName)
 import           Time.Compat (dateFromTAIEpoch)
 import           Time.Types (Date(..))
@@ -63,9 +64,37 @@ data Blog = Blog
   , blogSlug    :: !Text
   , blogDate    :: !Day
   , blogUpdated :: !(Maybe Day)
+  , blogCat     :: !(Maybe BlogCat)
   , blogRaw     :: !O.OrgFile
   , blogBody    :: !(Html ())
   , blogTOC     :: !(Html ()) }
+
+-- | The category of the blog post.
+data BlogCat = Tech | Haskell | Rust | Programming | Language | Food | Games
+
+catFromText :: Text -> Maybe BlogCat
+catFromText t = case t of
+  "tech"        -> Just Tech
+  "haskell"     -> Just Haskell
+  "rust"        -> Just Rust
+  "programming" -> Just Programming
+  "language"    -> Just Language
+  "food"        -> Just Food
+  "games"       -> Just Games
+  _             -> Nothing
+
+-- | Convert a `BlogCat` into a useable Font Awesome icon.
+catIcon :: BlogCat -> Html ()
+catIcon c = i_ [classes_ cs] ""
+  where
+    cs = case c of
+      Tech        -> ["fas", "fa-cog"]
+      Haskell     -> ["fas", "fa-magic"]
+      Rust        -> ["fab", "fa-rust"]
+      Programming -> ["fas", "fa-laptop-code"]
+      Language    -> ["fas", "fa-language"]
+      Food        -> ["fas", "fa-utensils"]
+      Games       -> ["fas", "fa-gamepad"]
 
 data BlogCategory = BlogCategory
   { bcCat   :: !Text
@@ -112,7 +141,7 @@ pathSlug = T.dropEnd 3 . T.pack . takeBaseName
 newtype ByLanguage = ByLanguage (NonEmpty Blog)
 
 instance ToXml Blog where
-  toXml (Blog l slug day _ (O.OrgFile m _) _ _) =
+  toXml (Blog l slug day _ _ (O.OrgFile m _) _ _) =
     element "item" mempty
     $  element "title" mempty (text . TL.fromStrict $ fromMaybe "Untitled" title)
     <> element "link" mempty

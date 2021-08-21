@@ -1,6 +1,6 @@
 cabal-version: 2.2
 name:          fosskers
-version:       1.3.1
+version:       1.3.2
 synopsis:      My personal site.
 description:   My personal site.
 homepage:      https://github.com/fosskers/fosskers.ca

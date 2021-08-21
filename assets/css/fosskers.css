@@ -4042,7 +4042,7 @@ figure img {
 .blog-title {
   display: flex;
   align-items: center;
-  gap: 0px 5px;
+  gap: 0px 10px;
 }
 
 pre.box {
