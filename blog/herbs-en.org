@@ -1,6 +1,7 @@
 #+TITLE: The Ultimate Herb Combination Chart
 #+DATE: 2021-06-29
 #+AUTHOR: Colin
+#+CATEGORY: food
 
 Amongst the gems to be found in the home of my 98-year-old grandmother was this,
 a *Common Combinations Herb Chart* from 1985. Feel free to copy this and print it

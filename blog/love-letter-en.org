@@ -1,7 +1,7 @@
 #+TITLE: The Love Letter Tracker
 #+DATE: 2021-04-01
 #+AUTHOR: Colin
-#+CATEGORY: tech
+#+CATEGORY: games
 
 Are you in love with [[https://www.asmodee-digital.com/en/love-letter/][Love Letter]], but tired of keeping track of all those pesky
 details about who has what? Me too! Enter: [[/en/tools/love-letter][The Love Letter Tracker]].

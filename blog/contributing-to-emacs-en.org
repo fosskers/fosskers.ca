@@ -2,7 +2,7 @@
 #+AUTHOR: Colin Woodbury
 #+DATE: 2021-08-17
 #+UPDATED: 2021-08-21
-#+CATEGORY: tech
+#+CATEGORY: programming
 
 I recently contributed a new Elisp function to the "Files" API of upstream
 Emacs. Being more than just a typo fix, this threw me into the deepend of their
