@@ -81,7 +81,7 @@ executable server
     , http-types            ^>=0.12
     , microlens             ^>=0.4
     , mtl                   ^>=2.2
-    , optparse-applicative  ^>=0.15
+    , optparse-applicative  ^>=0.16
     , skylighting           >=0.8 && < 0.11
     , skylighting-lucid     ^>=1.0
     , wai                   ^>=3.2
