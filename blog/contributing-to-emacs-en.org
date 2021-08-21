@@ -242,7 +242,7 @@ the entry. Eventually I found the heading /Lisp Changes in Emacs 28.1/ and added
 This function allows a canonical way to set/replace the extension of a file name.
 #+end_example
 
-** Forming a Commit
+* Forming a Commit
 
 Like any large project, the Emacs folks prefer a particular format for commit
 messages. The message associated with our particular patch was:
