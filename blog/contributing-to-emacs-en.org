@@ -1,6 +1,7 @@
 #+TITLE: Contributing to Emacs
 #+AUTHOR: Colin Woodbury
 #+DATE: 2021-08-17
+#+UPDATED: 2021-08-21
 #+CATEGORY: tech
 
 I recently contributed a new Elisp function to the "Files" API of upstream
@@ -237,9 +238,32 @@ the entry. Eventually I found the heading /Lisp Changes in Emacs 28.1/ and added
 
 #+begin_example
 +++
-,** New function 'file-name-with-extension'.
+** New function 'file-name-with-extension'.
 This function allows a canonical way to set/replace the extension of a file name.
 #+end_example
+
+** Forming a Commit
+
+Like any large project, the Emacs folks prefer a particular format for commit
+messages. The message associated with our particular patch was:
+
+#+begin_example
+Add new function file-name-with-extension
+
+* lisp/files.el (file-name-with-extension): New function.
+* doc/lispref/files.texi (File Name Components): Document it.
+* lisp/emacs-lisp/shortdoc.el (file-name): Ditto.
+#+end_example
+
+If your patch only tweaks a single function in a single file, you can just use
+the git message's top line:
+
+#+begin_example
+; * lisp/dired.el (dired-jump): Doc fix.
+#+end_example
+
+Notice the semicolon. Check the =git log= in the Emacs repo for more examples of
+the commit format.
 
 * Sending a Patch Email
 
@@ -249,7 +273,7 @@ Assuming we've done our coding on a separate (local) branch, we can output a
 usable patch file with:
 
 #+begin_example
-git diff master > cool-patch.patch
+git format-patch master
 #+end_example
 
 Following that, we _attach that file as a normal email attachment_ (i.e. not
