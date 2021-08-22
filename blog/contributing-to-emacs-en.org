@@ -14,6 +14,11 @@ Keep in mind that if you /are/ just correcting a typo, etc., much of what is
 written here can be ignored. You could skip right to /Sending a Patch Email/
 below.
 
+Community Discussion:
+
+- [[https://www.reddit.com/r/emacs/comments/p67jni/blog_how_to_contribute_to_emacs/][Reddit Thread]]
+- [[https://www.youtube.com/watch?v=AA9EyyTufVo][System Crafters: Can we fix a bug in Emacs?]]
+
 * Motivation
 
 Until recently, Emacs lacked a function to set or swap the extension of a string
