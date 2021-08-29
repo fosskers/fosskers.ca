@@ -183,6 +183,12 @@ $panel-heading-background-color: $grey-dark;
   margin-bottom: 1%;
 }
 
+@-moz-document url-prefix() {
+  .grid-main {
+    width: 95%;
+  }
+}
+
 .grid-open-main {
   grid-area: grid-open-main;
 }
@@ -224,7 +230,6 @@ $panel-heading-background-color: $grey-dark;
   .grid-main {
     margin-left: 1%;
     margin-right: 1%;
-    width: 95%;
   }
 
   .mobile-hidden {

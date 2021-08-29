@@ -3894,6 +3894,11 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   margin-bottom: 1%;
 }
 
+@-moz-document url-prefix() {
+  .grid-main {
+    width: 95%;
+  }
+}
 .grid-open-main {
   grid-area: grid-open-main;
 }
@@ -3930,7 +3935,6 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   .grid-main {
     margin-left: 1%;
     margin-right: 1%;
-    width: 95%;
   }
 
   .mobile-hidden {
