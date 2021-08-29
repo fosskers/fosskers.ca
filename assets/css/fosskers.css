@@ -3941,6 +3941,31 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
     display: none;
   }
 }
+@media (max-width: 480px) {
+  .grid-with-sidebar {
+    grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-main grid-main grid-main grid-main" "grid-sidebar-left grid-sidebar-left grid-sidebar-left grid-sidebar-left";
+  }
+
+  .grid-full {
+    grid-template-areas: "grid-navbar grid-navbar grid-navbar grid-navbar" "grid-main grid-main grid-main grid-main";
+  }
+
+  .grid-sidebar-right,
+.grid-full-left,
+.grid-full-right {
+    display: none;
+  }
+
+  .grid-main,
+.grid-sidebar-left {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  .mobile-hidden {
+    display: none;
+  }
+}
 .is-underlined {
   text-decoration: underline;
 }
