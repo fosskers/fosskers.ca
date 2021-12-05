@@ -83,6 +83,7 @@ app today ps bs = compress routes
       -- Assets --
       "assets" : rest -> assets (req { pathInfo = rest }) resp
       "webfonts" : rest -> assets (req { pathInfo = rest }) resp
+      ".well-known" : rest -> wellKnown (req { pathInfo = rest }) resp
       [ "favicon.ico" ] -> assets req resp
       -- Languageless endpoints --
       [ "drj" ] -> resp $ html drj
@@ -115,6 +116,9 @@ app today ps bs = compress routes
 
     assets :: Application
     assets = staticApp (defaultFileServerSettings "assets")
+
+    wellKnown :: Application
+    wellKnown = staticApp (defaultFileServerSettings ".well-known")
 
     withLang :: Text -> (Language -> Response) -> Response
     withLang "en" f = f English
