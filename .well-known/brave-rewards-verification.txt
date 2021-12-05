@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: fosskers.ca
+Token: ea2ad9c974e785525ddd2df19c57112c9dd91d05c0b20eb39a22eb759ab22b37
