@@ -50,7 +50,7 @@ cards :: Html ()
 cards = div_ [class_ "cards"] $ do
   div_ [classes_ ["card", "card-rust"]] $ do
     div_ [class_ "card-header"] $ p_ [class_ "card-header-title"] "Rust Crates"
-    div_ [class_ "card-content"] $ span_ [classes_  ["title", "is-5"]] "67,000+ Downloads"
+    div_ [class_ "card-content"] $ span_ [classes_  ["title", "is-5"]] "100,000+ Downloads"
     div_ [class_ "card-footer"] $ do
       a_ [class_ "card-footer-item", href_ "https://crates.io/users/fosskers"] $
         span_ [class_ "icon"] $ i_ [classes_ ["fas", "fa-box-open"]] ""
@@ -58,7 +58,7 @@ cards = div_ [class_ "cards"] $ do
         span_ [class_ "icon"] $ i_ [classes_ ["fab", "fa-github"]] ""
   div_ [classes_ ["card", "card-aura"]] $ do
     div_ [class_ "card-header"] $ p_ [class_ "card-header-title"] "The Aura Package Manager"
-    div_ [class_ "card-content"] $ span_ [classes_ ["title", "is-5"]] "1,000+ Stars・100,000+ Downloads"
+    div_ [class_ "card-content"] $ span_ [classes_ ["title", "is-5"]] "1,300+ Stars・100,000+ Downloads"
     div_ [class_ "card-footer"] $ do
       a_ [class_ "card-footer-item", href_ "https://fosskers.github.io/aura/"] $
         span_ [class_ "icon"] $ i_ [classes_ ["fas", "fa-link"]] ""
