@@ -1,0 +1,84 @@
+#+TITLE: Arc Borrowing Patterns
+#+DATE: 2021-12-21
+#+AUTHOR: Colin
+#+CATEGORY: rust
+
+In Rust, there are times you have an ~Arc<T>~ but want the ~T~ back out, say to pass
+around to other functions without an ~Arc~ in the mix. It could be any ~T~, but
+let's demonstrate with strings:
+
+#+begin_src rust
+fn arc_borrow(foo: Arc<String>) -> &str {
+    foo.as_ref()
+}
+#+end_src
+
+An ~as_ref()~ call is the usual way to "get something out" of an ~Arc~, but here
+this does not compile, citing:
+
+#+begin_example
+error[E0106]: missing lifetime specifier
+ --> src/main.rs:2:36
+  |
+2 | fn arc_borrow(foo: Arc<String>) -> &str {
+  |                                    ^ expected named lifetime parameter
+#+end_example
+
+Hm, we need some source lifetime to connect the output to; it can't just be
+~'static~ here. Hey, ~Cow~ is what solves all our lifetime problems, right? Right?
+
+#+begin_src rust
+fn arc_borrow<'a>(foo: Arc<Cow<'a, str>>) -> &'a str {
+    foo.as_ref()
+}
+#+end_src
+
+#+begin_example
+error[E0515]: cannot return reference to function parameter `foo`
+ --> src/main.rs:7:5
+  |
+7 |     foo.as_ref()
+  |     ^^^^^^^^^^^^ returns a reference to data owned by the current function
+#+end_example
+
+Really? We're the owner here? Well, we /might/ be. This can be seen clearly if we
+pull the ~Arc~ and ~Cow~ apart:
+
+#+begin_src rust
+fn arc_borrow<'a>(foo: Arc<Cow<'a, str>>) -> &'a str {
+    let a: &Cow<'a, str> = foo.as_ref();
+    match a {
+        Cow::Borrowed(s) => s,
+        Cow::Owned(s) => s.as_str(),
+    }
+}
+#+end_src
+
+Neither ~Cow~ nor ~Arc~ are silver bullets to ownership; it still matters where the
+actual owned memory is. In this case, we don't know how many copies of this ~Arc~
+there are, and we don't know if the underlying ~Cow~ variant is ~Owned~ or not.
+Hence this formulation isn't allowed as-is.
+
+But it turns out we're trying too hard.
+
+#+begin_src rust
+fn arc_borrow(foo: Arc<&str>) -> &str {
+    foo.as_ref()
+}
+#+end_src
+
+This compiles. And of course it does; the thing in the ~Arc~ was never owned by it
+in the first place. Since the ~Arc~ was able to be created around a read-only
+reference, we know that our memory is safe and the reference will never go
+stale, and thus we can pull it out. Note that here the ~Arc~ itself is consumed.
+
+This also works:
+
+#+begin_src rust
+fn arc_borrow(foo: &Arc<String>) -> &str {
+    foo.as_ref()
+}
+#+end_src
+
+Here, the true owner of the ~Arc~ is somewhere higher up, so we can borrow freely
+so long as the lifetimes match.
