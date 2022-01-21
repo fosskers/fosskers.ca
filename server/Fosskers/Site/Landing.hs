@@ -50,7 +50,7 @@ cards :: Html ()
 cards = div_ [class_ "cards"] $ do
   div_ [classes_ ["card", "card-rust"]] $ do
     div_ [class_ "card-header"] $ p_ [class_ "card-header-title"] "Rust Crates"
-    div_ [class_ "card-content"] $ span_ [classes_  ["title", "is-5"]] "100,000+ Downloads"
+    div_ [class_ "card-content"] $ span_ [classes_  ["title", "is-5"]] "120,000+ Downloads"
     div_ [class_ "card-footer"] $ do
       a_ [class_ "card-footer-item", href_ "https://crates.io/users/fosskers"] $
         span_ [class_ "icon"] $ i_ [classes_ ["fas", "fa-box-open"]] ""
