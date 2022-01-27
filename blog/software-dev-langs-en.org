@@ -14,6 +14,9 @@ Development Language/ and the usual term we use, /Programming Language/. This
 post is the first of a series that describes this difference and analyses a few
 languages through this lens.
 
+- [[/en/blog/rust-software-dev][Part 2: Rust]]
+- [[/en/blog/haskell-software-dev][Part 3: Haskell]]
+
 * Expanding the Concept of Programming Language
 
 What is a Software Development Language and how is that different from a
@@ -150,3 +153,6 @@ my creations alive. Next week, we'll apply the above philosophies to Rust, and
 see how it measures as a Software Development Language.
 
 - [[/en/blog/rust-software-dev][Part 2: Rust]]
+- [[/en/blog/haskell-software-dev][Part 3: Haskell]]
+
+If you liked the article, consider [[https://www.buymeacoffee.com/fosskers][sending me a coffee]]!

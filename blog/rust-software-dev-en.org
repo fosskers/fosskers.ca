@@ -24,6 +24,9 @@ If you have been curious about trying Rust, I highly recommend it. Just think:
 The sections below don't need to be read in order. Feel free to jump around to
 what interests you via the Table of Contents above.
 
+- [[/en/blog/software-dev-langs][Part 1: Software Development Languages]]
+- [[/en/blog/haskell-software-dev][Part 3: Haskell]]
+
 * Rust for Software Development
 
 Rust is a fantastic language for Software Development. Not because it has or
@@ -650,7 +653,10 @@ Rust is a serious tool for Software Development, and not because of its language
 features, its performance, or how it looks. It's the entire package, and I see
 myself enjoying it for some time.
 
-In the next addition to this series, we'll analyse Haskell in the same way.
+- [[/en/blog/software-dev-langs][Part 1: Software Development Languages]]
+- [[/en/blog/haskell-software-dev][Part 3: Haskell]]
+
+If you liked the article, consider [[https://www.buymeacoffee.com/fosskers][sending me a coffee]]!
 
 * Appendix
 
