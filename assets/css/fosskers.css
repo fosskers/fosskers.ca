@@ -4074,6 +4074,10 @@ figure img {
   gap: 0px 10px;
 }
 
+code {
+  color: #00c3ff;
+}
+
 pre.box {
   border: 1px solid #ccc;
   background-color: #282f2f;

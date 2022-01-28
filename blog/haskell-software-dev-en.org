@@ -232,9 +232,9 @@ and (typeclass) derivation. Bye-bye boilerplate! You may have heard of things
 like "Monads" before, but these and other features are nothing but facilities to
 help you pipe your effectful code together.
 
-However, Haskell has something that no other language boasts: hole fits. I miss
-these most when I'm working in other languages. Let the compiler tell you what
-it wants!
+However, Haskell has something that almost no other language boasts: hole fits.
+I miss these most when I'm working in other languages. Let the compiler tell you
+what it wants!
 
 #+begin_src haskell
 foo :: String -> _
@@ -402,9 +402,8 @@ the exact versions of Stack/Cabal/GHC you wish to test with. In fact, I have
 *** How do I track changes to Haskell itself?
 
 The [[https://discourse.haskell.org/c/announcements/10][Announcements]] area of the Discourse is good for tracking a variety of
-ecosystem updates, not just the compiler. How the overll ecosystem is doing can
-be tracked by Gabriella Gonzalez's [[https://github.com/Gabriel439/post-rfc/blob/main/sotu.md][Haskell State of the Union]] or [[https://github.com/krispo/awesome-haskell][Awesome
-Haskell]].
+ecosystem updates, not just the compiler. How the overall ecosystem is doing can
+be tracked by Gabriel Gonzalez's [[https://github.com/Gabriel439/post-rfc/blob/main/sotu.md][Haskell State of the Union]] or [[https://github.com/krispo/awesome-haskell][Awesome Haskell]].
 
 *** Are there competing paradigms to write Haskell?
 
