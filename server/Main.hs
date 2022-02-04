@@ -163,8 +163,8 @@ orgs = fmap partitionEithers . traverse g . NEL.toList
         day <- note ("No date provided for: " <> path) $ orgDate "DATE" ofile
         let !updated = orgDate "UPDATED" ofile
         let !cat = M.lookup "CATEGORY" (O.orgMeta ofile) >>= catFromText
-        void . note ("No title provided for: " <> path) . M.lookup "TITLE" $ O.orgMeta ofile
-        Right $ Blog lang (pathSlug f) day updated cat ofile (O.body style ofile) (O.toc style ofile)
+        title <- note ("No title provided for: " <> path) . M.lookup "TITLE" $ O.orgMeta ofile
+        Right $ Blog lang (pathSlug f) title day updated cat ofile (O.body style ofile) (O.toc style ofile)
 
 eread :: FilePath -> IO (Either Text Text)
 eread path = do

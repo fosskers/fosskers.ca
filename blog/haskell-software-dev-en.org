@@ -403,7 +403,7 @@ the exact versions of Stack/Cabal/GHC you wish to test with. In fact, I have
 
 The [[https://discourse.haskell.org/c/announcements/10][Announcements]] area of the Discourse is good for tracking a variety of
 ecosystem updates, not just the compiler. How the overall ecosystem is doing can
-be tracked by Gabriel Gonzalez's [[https://github.com/Gabriel439/post-rfc/blob/main/sotu.md][Haskell State of the Union]] or [[https://github.com/krispo/awesome-haskell][Awesome Haskell]].
+be tracked by the community maintained [[https://github.com/Gabriel439/post-rfc/blob/main/sotu.md][Haskell State of the Union]] or [[https://github.com/krispo/awesome-haskell][Awesome Haskell]].
 
 *** Are there competing paradigms to write Haskell?
 

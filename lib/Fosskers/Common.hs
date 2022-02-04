@@ -42,7 +42,7 @@ import           Lucid
 import           System.FilePath.Posix (takeBaseName)
 import           Time.Compat (dateFromTAIEpoch)
 import           Time.Types (Date(..))
-import           Xmlbf (Node, ToXml(..), element, text)
+import qualified Xmlbf as X
 
 ---
 
@@ -62,6 +62,7 @@ langPath Japanese = "jp"
 data Blog = Blog
   { blogLang    :: !Language
   , blogSlug    :: !Text
+  , blogTitle   :: !Text
   , blogDate    :: !Day
   , blogUpdated :: !(Maybe Day)
   , blogCat     :: !(Maybe BlogCat)
@@ -140,17 +141,14 @@ pathSlug = T.dropEnd 3 . T.pack . takeBaseName
 -- | For the RSS feed.
 newtype ByLanguage = ByLanguage (NonEmpty Blog)
 
-instance ToXml Blog where
-  toXml (Blog l slug day _ _ (O.OrgFile m _) _ _) =
-    element "item" mempty
-    $  element "title" mempty (text . TL.fromStrict $ fromMaybe "Untitled" title)
-    <> element "link" mempty
-    (text . TL.fromStrict $ "https://www.fosskers.ca/" <> langPath l <> "/blog/" <> slug)
-    <> element "pubDate" mempty (text . TL.pack . dtt $ dtd day)
-    <> element "description" mempty (text . TL.fromStrict $ fromMaybe "No description" title)
-    where
-      title :: Maybe Text
-      title = M.lookup "TITLE" m
+instance X.ToXml Blog where
+  toXml (Blog l slug title day _ _ _  _ _) =
+    X.element "item" mempty
+    $  X.element "title" mempty (X.text $ TL.fromStrict title)
+    <> X.element "link" mempty
+    (X.text . TL.fromStrict $ "https://www.fosskers.ca/" <> langPath l <> "/blog/" <> slug)
+    <> X.element "pubDate" mempty (X.text . TL.pack . dtt $ dtd day)
+    <> X.element "description" mempty (X.text $ TL.fromStrict title)
 
 orgDate :: Text -> O.OrgFile -> Maybe Day
 orgDate field o =
@@ -168,16 +166,16 @@ dtt d@(Date ye mo da) = printf "%s, %d %s %d 00:00:00 GMT" wd da mo' ye
     wd = take 3 . show $ getWeekDay d
     mo' = take 3 $ show mo
 
-instance ToXml ByLanguage where
+instance X.ToXml ByLanguage where
   toXml (ByLanguage bs) =
-    element "rss" (HM.singleton "version" "2.0")
-    $ element "channel" mempty (info <> foldMap toXml bs)
+    X.element "rss" (HM.singleton "version" "2.0")
+    $ X.element "channel" mempty (info <> foldMap X.toXml bs)
     where
-      info :: [Node]
-      info = element "title" mempty (text "Fosskers.ca Blog")
-             <> element "link" mempty (text "https://www.fosskers.ca")
-             <> element "description" mempty
-             (text "Articles on Haskell, Functional Programming, and Japanese")
+      info :: [X.Node]
+      info = X.element "title" mempty (X.text "Fosskers.ca Blog")
+             <> X.element "link" mempty (X.text "https://www.fosskers.ca")
+             <> X.element "description" mempty
+             (X.text "Articles on Haskell, Functional Programming, and Japanese")
 
 --------------------------------------------------------------------------------
 -- Utils
