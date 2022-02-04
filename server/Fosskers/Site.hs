@@ -20,8 +20,8 @@ nowhere = div_ [class_ "grid-main"] $ div_ [class_ "content"] $ do
   p_ [class_ "is-centered"] "Unfortunately, that page doesn't exist."
   p_ [class_ "is-centered"] "残念ながらそのページは存在しません"
 
-site :: Language -> Page -> Html () -> Html ()
-site lang page component = do
+site :: Language -> Page -> Maybe Text -> Html () -> Html ()
+site lang page title component = do
   doctype_
   html_ $ do
     head_ h
@@ -31,7 +31,7 @@ site lang page component = do
   where
     h :: Html ()
     h = do
-      title_ "Colin Woodbury"
+      title_ . toHtml $ "Colin Woodbury" <> maybe "" (" - " <>) title
       meta_ [charset_ "utf-8"]
       meta_ [name_ "viewport", content_ "width=device-width, initial-scale=1, shrink-to-fit=no"]
       link_ [rel_ "stylesheet", href_ "/assets/css/fontawesome.min.css"]

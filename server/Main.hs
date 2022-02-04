@@ -88,31 +88,31 @@ app today ps bs = compress routes
       -- Languageless endpoints --
       [ "drj" ] -> resp $ html drj
       -- Static pages --
-      [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l About $ about ps l)
-      [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l CV $ cv ps l)
-      [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l Tool $ alBhed l)
-      [ lang, "tools", "twitch"] -> resp $ withLang lang (\l -> html $ site l Tool twitch)
+      [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l About (Just "About") $ about ps l)
+      [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l CV (Just "CV") $ cv ps l)
+      [ lang, "tools", "al-bhed"] -> resp $ withLang lang (\l -> html . site l Tool (Just "Al Bhed Translator") $ alBhed l)
+      [ lang, "tools", "twitch"] -> resp $ withLang lang (\l -> html $ site l Tool (Just "Twitch Player") twitch)
       [ _, "tools", "love-letter"] -> resp $ html love
-      [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l Demo $ gol l)
-      [ lang, "demo", "web-effects"] -> resp $ withLang lang (\l -> html . site l Demo $ webEffects l)
-      [ lang, "demo", "seed-effects"] -> resp $ withLang lang (\l -> html . site l Demo $ seedEffects l)
+      [ lang, "demo", "game-of-life"] -> resp $ withLang lang (\l -> html . site l Demo (Just "Game of Life") $ gol l)
+      [ lang, "demo", "web-effects"] -> resp $ withLang lang (\l -> html . site l Demo (Just "Web Effects Demo") $ webEffects l)
+      [ lang, "demo", "seed-effects"] -> resp $ withLang lang (\l -> html . site l Demo (Just "Seed Demo") $ seedEffects l)
       -- All blog posts --
       [ lang, "blog" ] ->
-        resp $ withLang lang (\l -> html . site l Posts . blog today bs l . Just $ newest bs l)
+        resp $ withLang lang (\l -> html . (\b -> site l Posts (Just $ blogTitle b) $ blog today bs l (Just b)) $ newest bs l)
       [ lang, "blog", slug ] ->
-        resp $ withLang lang (\l -> html . site l Posts . blog today bs l $ choose bs l slug)
+        resp $ withLang lang (\l -> html . (\mb -> site l Posts (blogTitle <$> mb) $ blog today bs l mb) $ choose bs l slug)
       -- RSS feed --
       [ lang, "rss" ] -> resp $ withLang lang (xml . rss bs)
       -- The language button --
       [ lang ] ->
-        resp $ withLang lang (\l -> html . site l Landing $ landing l)
+        resp $ withLang lang (\l -> html . site l Landing Nothing $ landing l)
       -- Index page yields the English landing page --
-      [] -> resp . html . site English Landing $ landing English
+      [] -> resp . html . site English Landing Nothing $ landing English
       _ -> resp err404
 
     err404 :: Response
     err404 = responseLBS status404 [("Content-Type", "text/html")]
-      . renderBS $ site English Nowhere nowhere
+      . renderBS $ site English Nowhere (Just "404") nowhere
 
     assets :: Application
     assets = staticApp (defaultFileServerSettings "assets")
@@ -136,7 +136,7 @@ skylighting l t = maybe (O.codeHTML l t) (formatHtmlBlock fo) $ do
     fo = defaultFormatOpts
       { containerClasses = "src" : maybe [] (\(O.Language l') -> ["src-" <> l']) l }
 
--- | Abosolute paths to all the @.org@ blog files.
+-- | Absolute paths to all the @.org@ blog files.
 orgFiles :: IO [FilePath]
 orgFiles = filter (L.isSuffixOf ".org") <$> (listDirectory "blog" >>= traverse f)
   where
