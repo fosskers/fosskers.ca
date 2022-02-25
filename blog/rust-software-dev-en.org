@@ -1,7 +1,7 @@
 #+TITLE: Software Development Languages: Rust
 #+DATE: 2020-08-11
 #+AUTHOR: Colin
-#+UPDATED: 2020-08-12
+#+UPDATED: 2022-02-25
 #+CATEGORY: programming
 
 In [[/en/blog/software-dev-langs][the first part]] of this series we gave formal definitions for /Programming
@@ -413,13 +413,13 @@ a real problem because:
 optimizations. Add the following to your ~Cargo.toml~ to reduce binary size and
 further improve performance:
 
-#+begin_src toml
-  [profile.release]
-  lto = true
+#+begin_src conf-toml
+[profile.release]
+lto = true
+strip = true
 #+end_src
 
-You can also run ~strip~ on the final binary to reduce its size even more. Here
-are the stripped binary sizes of a few simple programs:
+Here are the stripped binary sizes of a few simple programs:
 
 | Program                  | Go    | Haskell | Rust  |
 |--------------------------+-------+---------+-------|
@@ -564,6 +564,9 @@ it. Yanking only prevents /new/ projects from depending on the bad version.
 Note also that the compiler has a CI system that runs the test suites of /all/
 crates on crates.io to look for regressions. In theory, a change to the compiler
 that would fundamentally break your library should be seen a long way off.
+
+As of Rust 1.59 (2022 February), ~cargo~ will now [[https://blog.rust-lang.org/2022/02/24/Rust-1.59.0.html#future-incompatibility-warnings][warn you]] if you have
+dependencies that use deprecated language features.
 
 **** System Libraries
 
