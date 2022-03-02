@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Clone Project
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Cache Dependencies
         uses: Swatinem/rust-cache@v1
