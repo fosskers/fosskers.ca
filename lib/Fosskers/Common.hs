@@ -90,7 +90,7 @@ catIcon c = i_ [classes_ cs] ""
   where
     cs = case c of
       Tech        -> ["fas", "fa-cog"]
-      Haskell     -> ["fas", "fa-magic"]
+      Haskell     -> ["fas", "fa-wand-magic-sparkles"]
       Rust        -> ["fab", "fa-rust"]
       Programming -> ["fas", "fa-laptop-code"]
       Language    -> ["fas", "fa-language"]
