@@ -1,7 +1,7 @@
 #+TITLE: Full Wayland Setup on Arch Linux
 #+DATE: 2021-03-09
 #+AUTHOR: Colin
-#+UPDATED: 2021-05-12
+#+UPDATED: 2022-03-07
 #+CATEGORY: tech
 
 This article is a guide for achieving a full-as-possible [[https://wayland.freedesktop.org/][Wayland]] setup on Arch
@@ -93,7 +93,6 @@ To get a list of all windows currently running through XWayland, use ~xlsclients
 #+begin_example
 > xlsclients
 archlinux  discord
-archlinux  krita
 archlinux  steam
 #+end_example
 
@@ -174,11 +173,10 @@ change to take effect.
 
 *Random Wallpapers*
 
-While not yet integrated in my own config, [[https://github.com/fosskers/rs-setwall][setwall]] can be used to set a random
-background image:
+[[https://github.com/fosskers/rs-setwall][setwall]] can be used to set a random background image every time to boot Sway:
 
 #+begin_example
-  setwall random ~/Pictures/backgrounds/ -c sway
+exec_always setwall random ~/Pictures/backgrounds/ -c sway
 #+end_example
 
 ** Alacritty
@@ -191,9 +189,10 @@ just went away.
 The only thing I change about Alacritty's default config is the background
 opacity. Within ~/home/you/.config/alacritty/alacritty.yml~:
 
-#+begin_example
-  background_opacity: 0.8
-#+end_example
+#+begin_src yaml
+window:
+  opacity: 0.8
+#+end_src
 
 Voilà, transparent terminals!
 
@@ -304,6 +303,15 @@ binary. We can install it with a tool like [[https://github.com/fosskers/aura][A
 
 Note that this package ~Provides: emacs~, so it will take the place of any other
 Emacs package you have installed.
+
+If you're willing to build the =master= branch and thereby get early access to
+Emacs 29, then you can set Emacs' background opacity with:
+
+#+begin_src emacs-lisp
+(set-frame-parameter nil 'alpha-background 80)
+#+end_src
+
+to achieve native transparency.
 
 ** Steam and Gaming
 
@@ -453,12 +461,6 @@ If you're having issues with either of these browsers, check the [[https://githu
 * XWayland and Incompatibilities
 
 Know of any other incompatibilities? [[https://github.com/fosskers/fosskers.ca][Please let me know]].
-
-** Krita
-
-The digial art program [[https://krita.org/en/][Krita]] is a wonderful app that runs in QT5, but for
-reasons due to certain hardware support immaturity (for styli, etc.) it [[https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=955730][does not
-support Wayland]] and thus always runs in XWayland.
 
 ** Electron Apps
 
