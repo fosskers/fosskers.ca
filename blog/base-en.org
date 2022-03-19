@@ -21,7 +21,7 @@ free to bookmark it or even [[https://github.com/fosskers/fosskers.ca][help upda
 
 |  GHC | ~base~ version | Stackage LTS | Cabal | Notable Changes                        |
 |------+--------------+--------------+-------+----------------------------------------|
-|  [[https://downloads.haskell.org/ghc/9.0.1/docs/html/users_guide/9.0.1-notes.html][9.0]] |         4.15 |           18 |   3.4 | ~LinearTypes~ available                |
+|  [[https://downloads.haskell.org/ghc/9.0.1/docs/html/users_guide/9.0.1-notes.html][9.0]] |         4.15 |           19 |   3.4 | ~LinearTypes~ available                  |
 |------+--------------+--------------+-------+----------------------------------------|
 | 8.10 |         4.14 |           17 |   3.2 | ~+RTS -xn~ for non-moving, concurrent GC |
 |------+--------------+--------------+-------+----------------------------------------|

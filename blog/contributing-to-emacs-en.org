@@ -215,7 +215,7 @@ Along with the Manual or our usual ~C-h f~, there is another documentation
 paradigm for viewing the real, executed effects of various functions. In
 ~lisp/emacs-lisp/shortdoc.el~ we add the following to the ~file-name~ group:
 
-#+begin_src elisp
+#+begin_src emacs-lisp
 (file-name-with-extension
  :eval (file-name-with-extension "foo.txt" "bin")
  :eval (file-name-with-extension "foo" "bin"))
