@@ -11,11 +11,12 @@ give conference presentations in both English and Japanese.
 
 ** Programming Languages
 
-- Rust, Go, C
-- Haskell, Purescript
-- Scala, Java
-- Python
-- HTML, CSS, Javascript, Web Assembly
+- *Low-Level:* Rust, Go, C
+- *Functional:* Haskell, Purescript
+- *Distributed:* Elixir
+- *JVM:* Scala, Java
+- *Scripting:* Emacs Lisp, Python
+- *Web:* HTML, CSS, Typescript, Web Assembly
 
 ** Web Technologies
 
@@ -163,15 +164,18 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project             | Role     | Language   | Description                                 |
 |------+---------------------+----------+------------+---------------------------------------------|
-| 2021 | [[https://www.fosskers.ca/en/tools/love-letter][Love Letter Tracker]] | Author   | Rust/WASM  | Knowledge tracking tool for /Love Letter/   |
+| 2022 | [[https://git.sr.ht/~fosskers/faur-supervisor][faur-supervisor]]     | Author   | Elixir     | Data refresh and watchdog for a =faur= server |
+| 2022 | [[https://git.sr.ht/~fosskers/faur][faur]]                | Author   | Rust       | Fast data mirror for the AUR                |
+|------+---------------------+----------+------------+---------------------------------------------|
+| 2021 | [[https://www.fosskers.ca/en/tools/love-letter][Love Letter Tracker]] | Author   | Rust/WASM  | Knowledge tracking tool for /Love Letter/     |
 |------+---------------------+----------+------------+---------------------------------------------|
 | 2020 | [[https://github.com/fosskers/linya][linya]]               | Author   | Rust       | Simple Concurrent Progress Bars             |
 |      | [[https://github.com/fosskers/totp][totp]]                | Author   | Go         | Time-based One-Time Password library        |
 |      | [[https://github.com/fosskers/totp-lite][totp-lite]]           | Author   | Rust       | Time-based One-Time Password library        |
 |      | [[https://github.com/fosskers/credit][credit]]              | Author   | Rust       | Tool for measuring Github contributions     |
 |      | [[https://crates.io/crates/cargo-aur][cargo-aur]]           | Author   | Rust       | Tool to release Rust projects on Arch Linux |
-|      | [[https://crates.io/crates/versions][versions]]            | Author   | Rust       | Rust port of my ~versions~ library          |
-|      | [[https://github.com/fosskers/rs-kanji][kanji]]               | Author   | Rust       | Rust port and update of my ~kanji~ library  |
+|      | [[https://crates.io/crates/versions][versions]]            | Author   | Rust       | Rust port of my ~versions~ library            |
+|      | [[https://github.com/fosskers/rs-kanji][kanji]]               | Author   | Rust       | Rust port and update of my ~kanji~ library    |
 |      | [[https://github.com/fosskers/active][active]]              | Author   | Go         | Tool to keep Github CI Actions up-to-date   |
 |      | [[https://hackage.haskell.org/package/skylighting-lucid][skylighting-lucid]]   | Author   | Haskell    | Lucid support for [[https://hackage.haskell.org/package/skylighting][skylighting]]               |
 |      | [[http://hackage.haskell.org/package/org-mode][org-mode]]            | Author   | Haskell    | Parser for Emacs Org Mode files             |
@@ -228,6 +232,7 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Topic                          | Date      | Venue                    | Location  | Language |
 |--------------------------------+-----------+--------------------------+-----------+----------|
+| Fortran and Doom Emacs         | 2022 Feb  | DoomConf                 | Online    | English  |
 | Terminal Progress Bars in Rust | 2021 Feb  | Vancouver Rust Meetup    | Vancouver | English  |
 | [[https://www.youtube.com/watch?v=CmMzkOspHTU][Haskell in Production]]          | 2019 June | LambdaConf               | Boulder   | English  |
 | Beauty and Correctness in Code | 2019 May  | Polyglot Unconference    | Vancouver | English  |
@@ -259,9 +264,10 @@ I specialize in Japanese, but have also studied German, Italian, and Esperanto.
 
 ** Music
 
-| Group                         | Date                    | Position  |
-|-------------------------------+-------------------------+-----------|
-| SFU Choir                     | 2019 Fall               | Voice     |
-| SFU Choir                     | 2013 Fall - 2016 Spring | Voice     |
-| Haiki PTA Chorus              | 2010 - 2013             | Voice     |
-| Westwood Collegiate Jazz Band | 2002 Fall - 2006 Spring | Tenor Sax |
+| Group                         | Date                    | Position      |
+|-------------------------------+-------------------------+---------------|
+| [[https://www.youtube.com/watch?v=oOgi0EZTXEg][VVGO: Skyword Sword]]           | 2022 Summer             | Electric Bass |
+| SFU Choir                     | 2019 Fall               | Voice         |
+| SFU Choir                     | 2013 Fall - 2016 Spring | Voice         |
+| Haiki PTA Chorus              | 2010 - 2013             | Voice         |
+| Westwood Collegiate Jazz Band | 2002 Fall - 2006 Spring | Tenor Sax     |
