@@ -1,0 +1,202 @@
+#+TITLE: Túrin and Nellas
+#+DATE: 2022-07-17
+#+AUTHOR: Colin
+#+CATEGORY: tolkien
+
+I recently received Tolkien's /Unfinished Tales/ as a birthday gift, and within
+the second of the "Great Tales", the /Narn i Hîn Húrin/ (Eng.: The Tale of the
+Children of Húrin) we hear of Nellas the elf-maiden of Doriath. Although
+unmentioned in the published /Silmarillion/, Nellas spent much time with Húrin's
+son Túrin during his fosterhood in Doriath. Mention of Nellas is brief but
+important to Túrin's absolvement of his "crime" again the elf Saeros, who died
+in a tragic fall.
+
+The glossary gives the following description of Nellas:
+
+#+begin_quote
+Elf of Doriath, friend of Túrin in his boyhood; bore witness against Saeros in
+the trial of Túrin before Thingol.
+#+end_quote
+
+This only. Yet this does not tell their full story, and I am compelled to quote
+all mentions of her here to imply my first impression; that Nellas loved Túrin
+but he never knew, and this was a grief that she bore in silence.
+
+* Túrin in Doriath
+
+By a hard road in exile from his homeland of Dorlómin comes Túrin to Doriath,
+the forest kingdom of the Gray Elves.
+
+#+begin_quote
+In the years of his childhood in the kingdom of Doriath Túrin was watched over
+by Melian, though he saw her seldom. But there was a maiden named Nellas, who
+lived in the woods; and at Melian's bidding she would follow Túrin if he strayed
+in the forest, and often she met him there, as it were by chance. From Nellas
+Túrin learned much concerning the ways and the wild things of Doriath, and she
+taught him to speak the Sindarin tongue after the manner of the ancient realm,
+older, and more courteous, and richer in beautiful words.
+#+end_quote
+
+An editorial note by Christopher Tolkien goes on here to say:
+
+#+begin_quote
+Elsewhere my father remarked that the speech of Doriath, whether of the King or
+others, was even in the days of Túrin more antique than that used elsewhere; and
+also that Mîm observed that one thing of which Túrin never rid himself, despite
+his grievance against Doriath, was the speech he had acquired during his
+fostering.
+#+end_quote
+
+The original text continues.
+
+#+begin_quote
+Thus for a little while his mood was lightened, until he fell again under
+shadow, and that friendship passed like a morning of spring. For Nellas did not
+go to Menegroth, and was unwilling ever to walk under roofs of stone; so that as
+Túrin's boyhood passed and he turned his thoughts to the deeds of men, he saw
+her less and less often, and at last called for her no more. But she watched
+over him still, though now she remained hidden.
+#+end_quote
+
+* Thingol Pronounces Túrin's Doom
+
+Túrin, now a man, has laboured much in battles against the Orcs along the
+northern borders of Doriath. An envious and malicious elf named Saeros makes an
+attempt on Túrin's life, but ends up dead himself. Túrin flees and
+misunderstanding grows among the elves, and as Thingol the king is about to
+announce Túrin's banishment, there is a revelation.
+
+#+begin_quote
+Then there was silence in the hall, and Thingol lifted up his hand to pronounce
+his doom. But at that moment Beleg entered in haste, and cried: "Lord, may I yet
+speak?"
+
+"You come late," said Thingol. "Were you not bidden with the others?"
+
+"Truly, lord," answered Beleg, "but I was delayed; I sought for one whom I knew.
+Now I bring at last a witness who should be heard, ere your doom falls."
+
+"All were summoned who had aught to tell," said the King. "What can he tell me
+now of more weight than those to whom I have listened?"
+
+"You shall judge when you have heard," said Beleg. "Grant this to me, if I have
+ever deserved your grace."
+
+"To you I grant it," said Thingol. Then Beleg went out, and led in by the hand
+the maiden Nellas, who dwelt in the woods, and came never into Menegroth; and
+she was afraid, both for the great pillared hall and the roof of stone, and for
+the company of many eyes that watched her. And when Thingol bade her speak, she
+said: "Lord, I was sitting in a tree"; but then she faltered in awe of the King,
+and could say no more.
+
+At that the King smiled, and said: "Others have done this also, but have felt no
+need to tell me of it."
+
+"Others indeed", said she, taking courage from his smile. "Even Lúthien! And of
+her I was thinking that morning, and of Beren the Man."
+#+end_quote
+
+She was watching Túrin from afar, as always, thinking of Beren and Lúthien, the
+first union of Men and Elves.
+
+#+begin_quote
+To that Thingol said nothing, and he smiled no longer, but waited until Nellas
+should speak again.
+
+"For Túrin reminded me of Beren," she said at last. "They are akin, I am told,
+and their kinship can be seen by some: by some that look close."
+
+Then Thingol grew impatient. "That may be," he said. "But Túrin son of Húrin is
+gone in scorn of me, and you will see him no more to read his kindred. For now I
+will speak my judgement."
+
+"Lord King!" she cried then. "Bear with me, and let me speak first. I sat in a
+tree to look on Túrin as he went away; and I saw Saeros come out from the wood
+with sword and shield, and spring on Túrin unawares."
+
+At that there was a murmur in the hall; and the King lifted his hand, saying:
+"You bring graver news to my ear than seemed likely. Take heed now to all that
+you say; for this is a court of doom."
+
+"So Beleg has told me," she answered, "and only for that have I dared to come
+here, so that Túrin shall not be ill judged. He is valiant, but he is merciful.
+They fought, lord, these two, until Túrin had bereft Saeros of both shield and
+sword; but he did not slay him. Therefore I do not believe that he willed his
+death in the end. If Saeros were put to shame, it was shame that he had earned."
+#+end_quote
+
+Thingol goes on to find Túrin thus innocent, and that he should be called back
+to Doriath.
+
+#+begin_quote
+But when the doom was pronounced, suddenly Nellas wept. "Where can he be found?"
+she said. "He has left our land, and the world is wide."
+#+end_quote
+
+She knew he had left, because she must have followed him as far as her courage
+would allow, perhaps to the borders of Doriath itself.
+
+* Beleg and Túrin Reunite in the Wild
+
+Many search for Túrin, but only Beleg remains true to the task. Eventually Túrin
+is found, and Beleg tells him all that has happened.
+
+#+begin_quote
+Then Túrin sat in silence, and strove with his pride, which would not let him
+turn back; and he brooded on the years that lay behind him. But coming suddenly
+out of his thought he said to Beleg: "The elf-maiden whom you named: I owe her
+well for her timely witness; yet I cannot recall her. Why did she watch my
+ways?"
+
+Then Beleg looked strangley at him. "Why indeed?" he said. "Túrin, have you
+lived always with your heart and half your mind far away? You walked with Nellas
+in the woods of Doriath, when you were a boy."
+#+end_quote
+
+Elves have a long memory. Beleg knew the relationship Nellas had with Túrin, and
+from the above quotes it seems he knew her personally as well. It isn't hard to
+believe that she watched over Túrin for many years and that while Túrin might
+not have noticed, Beleg certainly had. Beleg knew she would have witnessed the
+fight.
+
+#+begin_quote
+"That was long ago," said Túrin. "Or so my childhood now seems, and a mist is
+over it - save only the memory of my father's house in Dor-lómin. But why should
+I have walked with an elf-maiden?"
+#+end_quote
+
+A man with his mind on other things. Far things that Nellas could have no part
+of. Why does he retain no memory of her at all?
+
+#+begin_quote
+"To learn what she could teach, maybe," said Beleg. "Alas, child of Men! There
+are other griefs in Middle-earth than yours, and wounds made by no weapon.
+Indeed, I begin to think that Elves and Men should not meet or meddle."
+#+end_quote
+
+It is clear what he means by "meet or meddle". Beleg believes only tragedy can
+come of it, as the "loss" of Lúthien would seem to an Elf of Doriath like
+himself.
+
+#+begin_quote
+Túrin said nothing, but looked long in Beleg's face, as if he would read in it
+the riddle of his words. But Nellas of Doriath never saw him again, and his
+shadow passed from her.
+#+end_quote
+
+The final line struck me the most. This could mean either "the curse of Morgoth
+that follows Húrin's kin" or "the weight of unrequited love". My first reading
+was the latter meaning. Then, perhaps that her feelings could even pass away at
+all is proof that he was not Beren, she was not Lúthien, and their love was not
+a destined thing. It is good that she was one day free of that weight, but
+surely bitter in the passing nonetheless.
+
+Nellas isn't mentioned again, but she remains within Túrin as the one who gave
+him a new voice:
+
+#+begin_quote
+The sun shone and the young leaves were green; and Túrin was irked by the
+squalid camp of the outlaws, and he wandered away alone far into the forest.
+Against his will he remembered the Hidden Kingdom, and he seemed to hear the
+names of the flowers of Doriath as echoes of an old tongue almost forgotten.
+#+end_quote
