@@ -39,7 +39,7 @@ blog today bs l content = do
     Just b  -> do
       let !m = O.orgMeta $ blogRaw b
       h1_ [classes_ ["title", "is-2", "is-centered"]] . maybe "Bug: Title Missing" toHtml $ M.lookup "TITLE" m
-      div_ [classes_ ["subtitle", "is-6", "is-centered"]]. maybe "" (i_ [class_ "text-muted"] . toHtml @String) $ do
+      div_ [classes_ ["subtitle", "is-6", "is-centered"]] . maybe "" (i_ [class_ "text-muted"] . toHtml @String) $ do
         author <- M.lookup "AUTHOR" m
         date <- M.lookup "DATE" m
         let updated = M.lookup "UPDATED" m
