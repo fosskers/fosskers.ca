@@ -1,4 +1,4 @@
-resolver: lts-19.7
+resolver: lts-18.28
 
 ghc-options:
   $everything: -split-sections
@@ -12,7 +12,7 @@ flags:
 
 extra-deps:
   # --- Missing from Stackage --- #
-  - org-mode-2.0.1
-  - org-mode-lucid-1.6.3
+  - org-mode-2.0.2
+  - org-mode-lucid-1.6.4
   - skylighting-lucid-1.0.2
   - xmlbf-0.6.1
