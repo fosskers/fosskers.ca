@@ -1,0 +1,93 @@
+#+TITLE: Yubikey-based SSH Keys
+#+DATE: 2022-09-15
+#+AUTHOR: Colin
+#+CATEGORY: tech
+
+This short guide is a supplement to those supplied on the [[https://developers.yubico.com/PIV/Guides/][Yubico website]] and
+[[https://wiki.archlinux.org/][Arch Wiki]] for establishing Yubikey-based SSH keys. Doing so allows you to leave
+the private key(s) on the Yubikey itself, leaving no other copies around on your
+local machine.
+
+These instructions should work for any systemd-based system. They diverge
+slightly from the official instructions from Yubico due to those being slightly
+out of date. The method presented here is simpler overall.
+
+* Prerequisites
+
+Install ~yubikey-manager~ to get the ~ykman~ executable. On an Arch system:
+
+#+begin_example
+sudo pacman -S yubikey-manager
+#+end_example
+
+We also need a certain AUR package, ~yubico-piv-tool~. Get this with a tool like
+[[https://github.com/fosskers/aura/][Aura]]:
+
+#+begin_example
+aura -A yubico-piv-tool
+#+end_example
+
+This gives us access to a first-class PKCS11 module from Yubico (i.e. ~opensc~ is
+no longer necessary).
+
+Next allow card-like devices to be read:
+
+#+begin_example
+sudo systemctl enable --now pcscd.socket
+#+end_example
+
+Now we're ready to begin.
+
+* Key Generation
+
+We're going to start from a blank slate. Let's reset the Yubikey (at least, the
+parts we care about):
+
+#+begin_example
+ykman piv reset
+#+end_example
+
+Now we'll set custom PINs and keys. The default PIN is 123456.
+
+#+begin_example
+ykman piv access change-pin
+ykman piv access change-puk
+ykman piv access change-management-key --generate --protect
+#+end_example
+
+Now we'll generate our key:
+
+#+begin_example
+ykman piv keys generate 9a public.pem
+ykman piv certificates generate --subject "CN=SSH-key" 9a public.pem
+#+end_example
+
+The private key is now stored on the Yubikey. A ~public.pem~ file was output as
+well, but this is in the wrong format for SSH. Let's fix that:
+
+#+begin_example
+ssh-keygen -D /usr/lib/libykcs11.so -e
+#+end_example
+
+This _should_ output two SSH public keys. The one we want _should_ be the first one.
+Copy this to Github (or whereever). Now add the following to the top of your
+~/home/YOU/.ssh/config~ file:
+
+#+begin_example
+PKCS11Provider /usr/lib/libykcs11.so
+#+end_example
+
+To test it all:
+
+#+begin_example
+ssh -T git@github.com
+#+end_example
+
+You should be prompted for the PIN you set at a previous step, after which a
+connection is made and Github accepts the key usage. That's it! Feel free to
+delete the ~public.pem~, it's no longer needed.
+
+* Resources
+
+- [[https://github.com/fredxinfan/ykman-piv-ssh][Github: Generate SSH keys via Yubikey Manager]]
+- [[https://developers.yubico.com/PIV/Guides/SSH_with_PIV_and_PKCS11.html][Yubico: Using PIV for SSH through PKCS11]]
