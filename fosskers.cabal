@@ -82,7 +82,7 @@ executable server
     , microlens             ^>=0.4
     , mtl                   ^>=2.2
     , optparse-applicative  >= 0.16 && < 0.18
-    , skylighting           >=0.8 && < 0.13
+    , skylighting           >=0.8 && < 0.14
     , skylighting-lucid     ^>=1.0
     , wai                   ^>=3.2
     , wai-app-static        ^>=3.1

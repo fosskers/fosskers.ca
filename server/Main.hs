@@ -3,7 +3,7 @@
 
 module Main ( main ) where
 
-import           BasePrelude hiding (app, option)
+import           BasePrelude hiding (app)
 import           Control.Monad.Trans.Except (runExceptT)
 import           Control.Monad.Trans.Maybe (MaybeT(..))
 import           Data.Binary.Builder (toLazyByteString)
