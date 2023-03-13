@@ -31,6 +31,7 @@ import           Fosskers.Site.Drj (drj)
 import           Fosskers.Site.GameOfLife (gol)
 import           Fosskers.Site.Landing (landing)
 import           Fosskers.Site.Love (love)
+import           Fosskers.Site.Otama (otama)
 import           Fosskers.Site.SeedEffects (seedEffects)
 import           Fosskers.Site.Twitch (twitch)
 import           Fosskers.Site.WebEffects (webEffects)
@@ -87,6 +88,7 @@ app today ps bs = compress routes
       [ "favicon.ico" ] -> assets req resp
       -- Languageless endpoints --
       [ "drj" ] -> resp $ html drj
+      [ "otama" ] -> resp $ html otama
       -- Static pages --
       [ lang, "about" ] -> resp $ withLang lang (\l -> html . site l About (Just "About") $ about ps l)
       [ lang, "cv" ] -> resp $ withLang lang (\l -> html . site l CV (Just "CV") $ cv ps l)

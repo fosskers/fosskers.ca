@@ -68,6 +68,7 @@ executable server
     Fosskers.Site.GameOfLife
     Fosskers.Site.Landing
     Fosskers.Site.Love
+    Fosskers.Site.Otama
     Fosskers.Site.SeedEffects
     Fosskers.Site.Twitch
     Fosskers.Site.WebEffects
