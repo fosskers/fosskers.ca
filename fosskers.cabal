@@ -29,8 +29,8 @@ common commons
     , hourglass             ^>=0.2
     , lucid                 >= 2.9 && < 2.12
     , megaparsec            >=7.0 && <10
-    , org-mode              ^>=2.0
-    , org-mode-lucid        ^>=1.6
+    , org-mode              ^>=2.1
+    , org-mode-lucid        ^>=1.7
     , text
     , time
     , transformers          ^>=0.5
