@@ -1,0 +1,36 @@
+#+TITLE: On Making Things
+#+DATE: 2023-04-19
+#+AUTHOR: Colin
+#+CATEGORY: tech
+
+The Emperor commands:
+
+#+begin_quote
+Build me a Daibutsu.
+#+end_quote
+
+How does one build a giant Buddha statue?
+
+1. Carve the wood.
+2. Attach the pieces.
+3. Repeat.
+
+Other tasks like planning, material procurement, and hiring are all overhead and
+separate from the actual process of making the statue. They are not "work" in
+the same sense that the carpenters are doing. To make it clearer which resource
+depends on which:
+
+1. No matter how good the plans or materials, without carpenters you're stuck.
+2. The amount of work the carpenters need to do is basically fixed, but that of
+   the planners and managers can loop and extend without end.
+3. Any activity or obstacle that stops what the carpenters are doing delays the project.
+
+The carpenters are the centre. That said, starting a big project without a plan
+would be foolish. The problem is thus:
+
+#+begin_quote
+How should we balance planning and real work in a way that doesn't delay the
+carpenters more than necessary?
+#+end_quote
+
+The Emperor wants his statue.
