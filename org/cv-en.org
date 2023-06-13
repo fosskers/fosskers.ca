@@ -168,7 +168,9 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role     | Language    | Description                                   |
 |------+----------------------+----------+-------------+-----------------------------------------------|
-| 2023 | [[https://github.com/fosskers/nonempty-collections][nonempty-collections]] | Author   | Rust        | Correct-by-construction non-empty collections |
+| 2023 | [[https://fosskers.itch.io/falldown][Falldown]]             | Author   | Fennel      | A classic TI-83 game revived.                 |
+|      | [[https://tic80.com/play?cart=3375][Snake]]                | Author   | Fennel      | A simple implementation of Snake.             |
+|      | [[https://github.com/fosskers/nonempty-collections][nonempty-collections]] | Author   | Rust        | Correct-by-construction non-empty collections |
 |      | [[https://github.com/fosskers/transducers.fnl][transducers]]          | Author   | [[https://fennel-lang.org/][Fennel]]      | Ergonomic, efficient data processing          |
 |      | [[https://github.com/fosskers/cl-transducers][transducers]]          | Author   | Common Lisp | Ergonomic, efficient data processing          |
 |------+----------------------+----------+-------------+-----------------------------------------------|
