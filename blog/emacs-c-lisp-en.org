@@ -1,0 +1,17 @@
+#+title: How much Lisp and C are in Emacs?
+
+- C code looked for under ~src/~.
+- Lisp code looked for under ~lisp/~.
+- C sources in ~lib/~ and ~lib-src/~ are not counted (see README).
+- C header files are ignored.
+- Comment/blank lines are ignored.
+
+| Emacs Version | Lines of Lisp | Lines of C | Ratio |
+|---------------+---------------+------------+-------|
+|          29.1 |       1199775 |     306772 |  3.91 |
+|          28.2 |       1141528 |     257981 |  4.42 |
+|          27.2 |       1100237 |     252476 |  4.36 |
+|          26.3 |       1081561 |     235791 |  4.59 |
+|          25.3 |       1061723 |     226388 |  4.69 |
+|          24.5 |       1042357 |     215830 |  4.83 |
+#+TBLFM: $>=$2 / $3;%.2f
