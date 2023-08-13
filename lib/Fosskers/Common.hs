@@ -71,7 +71,7 @@ data Blog = Blog
   , blogTOC     :: !(Html ()) }
 
 -- | The category of the blog post.
-data BlogCat = Tech | Haskell | Rust | Programming | Language | Food | Games | Tolkien
+data BlogCat = Tech | Haskell | Rust | Programming | Language | Food | Games | Tolkien | Lisp
 
 catFromText :: Text -> Maybe BlogCat
 catFromText t = case t of
@@ -83,6 +83,7 @@ catFromText t = case t of
   "food"        -> Just Food
   "games"       -> Just Games
   "tolkien"     -> Just Tolkien
+  "lisp"        -> Just Lisp
   _             -> Nothing
 
 -- | Convert a `BlogCat` into a useable Font Awesome icon.
@@ -98,6 +99,7 @@ catIcon c = i_ [classes_ cs] ""
       Food        -> ["fas", "fa-utensils"]
       Games       -> ["fas", "fa-gamepad"]
       Tolkien     -> ["fas", "fa-hat-wizard"]
+      Lisp        -> ["fas", "fa-yin-yang"]
 
 data BlogCategory = BlogCategory
   { bcCat   :: !Text
