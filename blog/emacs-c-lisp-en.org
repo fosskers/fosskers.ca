@@ -3,6 +3,11 @@
 #+AUTHOR: Colin
 #+CATEGORY: programming
 
+Emacs is largely a Lisp program, but has a C core. What's the ratio of SLOC
+between the two languages, and how have they changed over time?
+
+Note that:
+
 - C code looked for under ~src/~.
 - Lisp code looked for under ~lisp/~.
 - C sources in ~lib/~ and ~lib-src/~ are not counted (see README).
@@ -17,4 +22,6 @@
 |          26.3 |       1081561 |     235791 |  4.59 |
 |          25.3 |       1061723 |     226388 |  4.69 |
 |          24.5 |       1042357 |     215830 |  4.83 |
-#+TBLFM: $>=$2 / $3;%.2f
+
+Between 28 and 29 we see a 19% increase in the size of the C. I wonder what
+changed? Perhaps the PGTK backend?
