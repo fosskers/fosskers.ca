@@ -1,7 +1,7 @@
 #+TITLE: How much Lisp and C are in Emacs?
 #+DATE: 2023-08-15
 #+AUTHOR: Colin
-#+CATEGORY: software
+#+CATEGORY: programming
 
 - C code looked for under ~src/~.
 - Lisp code looked for under ~lisp/~.
