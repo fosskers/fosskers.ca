@@ -13,6 +13,9 @@
 
 * Resources and References
 
+- [[https://cl-community-spec.github.io/pages/index.html][Common Lisp Community Spec]] (stdlib)
 - [[https://lispcookbook.github.io/cl-cookbook/][Common Lisp Cookbook]]
+- [[https://github.com/CodyReichert/awesome-cl][Awesome CL]] (community blessed libraries, etc.)
 - [[https://quickdocs.org/][Quickdocs]] (package listing)
 - [[https://ultralisp.org/][Ultralisp]] (package registry)
+- Implementations that support [[https://0branch.com/notes/tco-cl.html][Tail Recursion]]
