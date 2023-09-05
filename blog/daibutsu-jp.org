@@ -1,7 +1,7 @@
 #+TITLE: 物を作るには
 #+DATE: 2023-04-19
 #+AUTHOR: こりん
-#+CATEGORY: tech
+#+CATEGORY: philosophy
 
 聖武天皇が命じた：
 

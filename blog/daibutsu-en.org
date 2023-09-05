@@ -1,7 +1,7 @@
 #+TITLE: On Making Things
 #+DATE: 2023-04-19
 #+AUTHOR: Colin
-#+CATEGORY: tech
+#+CATEGORY: philosophy
 
 The Emperor commands:
 

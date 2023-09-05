@@ -1,0 +1,140 @@
+#+TITLE: Subsetting your Life
+#+DATE: 2023-09-03
+#+AUTHOR: Colin
+#+CATEGORY: philosophy
+
+You may have heard it said:
+
+#+begin_quote
+Javascript is a pretty good language if you stick to the good parts.
+#+end_quote
+
+Depending on your personal tolerance for cleanliness - be it physical or
+conceptual - this quote may bother you. Why should you need to go out of your
+way to avoid bad features? Other programmers are going to use those bad
+features, mix with your code, and cause you problems. Language /Foo/ certainly
+doesn't have or need feature /Bar/; why should you suffer its existence? Why can't
+you have tools that just work and have no blemishes?
+
+Where is Utopia?
+
+Unfortunately, there is no return to Eden. For every programming language you
+use for the rest of your life, there will be parts you don't agree with and will
+have to consciously avoid. But don't consider this a burden; you do this every
+day. The quote above is an appeal to /subsetting/. This is the idea that the world
+is a machine of many parts, not all of them relevant to you. Despite conceptual
+ideals, you are a real human alive today with a duty to live. But how should we
+even approach such a complex machine as life?
+
+We must subset. This means:
+
+#+begin_quote
+Focusing today to reach tomorrow.
+#+end_quote
+
+"Today" and "tomorrow" are metaphors; we need not obsess over time itself. To
+subset, we choose things that are relevant to us and our goals, and ignore the
+rest. Once ignored, we put them out of our minds. If we don't, we face choice
+paralysis and lingering doubt. These lead to an unsettled mind.
+
+You've already picked a country to live in. You've chosen to a language to
+speak. You've committed to a religion (or not). You've selected a professional
+calling.
+
+Let's think through some of these and see if we can polish our subsets.
+
+* Subsetting your Views
+
+Setting aside notions of the afterlife for a moment, religions provides us with
+a scope to interpret our surroundings and act on them. Chiefly they are a means
+to reach tomorrow despite the chaos of today. Theology itself is secondary.
+
+Speaking of religion, the book /The Year of Living Biblically/ by A. J. Jacobs
+provides an interesting example of subsetting within religion itself. The
+author, by origin a secular Jew from the United States, spent a year doing his
+utmost to follow each and every rule he could identify within the Bible. This
+hardly starts and ends with the Ten Commandments; he identified several hundred
+such rules. He cross referenced stacks of translations of both Jewish and
+Christian sources, but still had to consult living experts from across the
+religious spectrum to finally hone in on what was expected.
+
+During such expert interviews he came to a fascinating discovery - /everyone is
+subsetting/. No one group, no matter how "orthodox", was following all the rules.
+Everyone was picking their subset, perhaps stretching it in different ways, and
+moving on with life. It seemed sufficient that the groups were internally
+consistent.
+
+This doesn't mean that religions are "false" because sects can't agree, but
+rather demonstrates that _finding harmony among constraints is difficult._ Groups
+living apart will naturally arrive at different subsets more applicable to their
+environment. Migrations shrink sets, but also grow them, inviting yet another
+eventual subsetting.
+
+Does this sound familiar?
+
+* Subsetting in Programming
+
+If we were to follow Rich Hickey's advice, we'd only ever accrete our APIs,
+never removing old functions, never reducing API surface area. Then we subset to
+the good parts. But if we only ever grow-then-subset, when do we get a chance to
+"really fix things" and remove all the old cruft? How long must we wait?
+
+The answer is: until the revolution when we build the next language. And this
+happens all the time. In each case, it's an expression of the idea that "feature
+X was never really necessary".
+
+- Lisp dropped the idea that computing is about submitting sequential
+  instructions to a Von Neumann Machine.
+- Erlang dropped single-machine-single-core thinking.
+- The scripting languages of the 90s dropped strict typing.
+- Javascript dropped Java-style OO.
+- Elm dropped Haskell's typeclasses and some elements of syntax.
+- Go dropped OO entirely, exceptions, and union types.
+- Clojure dropped CLOS, mutability, and the centrality of ~cons~ cells.
+- Rust dropped the IO Monad and ~null~.
+
+No programming language will last forever, so I don't think we should hold on to
+our favourites with too tight a grip. We grow them until we can't, and then
+instead of "just make a new namespace" as Rich would say, we make a new language
+entirely. We build a new world and live there until we no longer understand it.
+
+* Subsetting your Life
+
+If we assume that no one is coming to save us, then it's up to us to manage the
+lives we've been given. However, _the default "everyday" is probably not the
+optimal subset_ for doing so. So we must consciously pick for ourselves. Let's
+ask ourselves:
+
+Food:
+
+- What should be considered food, and what's effectively "candy"?
+- Do I eat out? How often? Where?
+- How much alcohol do I drink?
+
+Living:
+
+- Do I need to be living in a city the size of the one I'm in?
+- Does my dwelling need to be as big as it is?
+- How many possessions do I have? (re: possession-minimalism)
+
+Finance:
+
+- How many bank accounts, credit cards, and point cards do I have?
+- How many financial goals am I saving for simultaneously?
+- How many currencies do I operate my life in?
+
+Tech:
+
+- How many "free" big-tech services do I use?
+- How many media streaming services do I rent? (audio and video)
+- How many projects are I involved in, and in how many languages?
+
+Programming:
+
+- Do I need OO?
+- Do I need a VM or other runtime?
+- Do I need more than a single thread?
+- Do I need more than SQLite?
+
+I suspect that the smaller the answers are, the simpler our lives will be, and
+the easier we can get on with the day.
