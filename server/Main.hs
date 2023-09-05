@@ -29,7 +29,6 @@ import           Fosskers.Site.Blog (blog, choose, newest)
 import           Fosskers.Site.CV (cv)
 import           Fosskers.Site.Drj (drj)
 import           Fosskers.Site.GameOfLife (gol)
-import           Fosskers.Site.Landing (landing)
 import           Fosskers.Site.Love (love)
 import           Fosskers.Site.Otama (otama)
 import           Fosskers.Site.SeedEffects (seedEffects)
@@ -106,10 +105,9 @@ app today ps bs = compress routes
       -- RSS feed --
       [ lang, "rss" ] -> resp $ withLang lang (xml . rss bs)
       -- The language button --
-      [ lang ] ->
-        resp $ withLang lang (\l -> html . site l Landing Nothing $ landing l)
+      [ lang ] -> resp $ withLang lang (\l -> html . site l About (Just "About") $ about ps l)
       -- Index page yields the English landing page --
-      [] -> resp . html . site English Landing Nothing $ landing English
+      [] -> resp $ withLang "en" (\l -> html . site l About (Just "About") $ about ps l)
       _ -> resp err404
 
     err404 :: Response
