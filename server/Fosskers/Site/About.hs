@@ -18,10 +18,10 @@ about ps lang = div_ [class_ "grid-main"] $
   where
     cat :: Html ()
     cat = case lang of
-      English -> "Jack in a sunbeam."
-      Japanese -> "日差しを浴びるジャック"
+      English  -> "Jack in a sunbeam."
+      Japanese -> "日光を浴びるジャック"
 
     content :: Html ()
     content = case lang of
-      English -> engAbout ps
+      English  -> engAbout ps
       Japanese -> japAbout ps

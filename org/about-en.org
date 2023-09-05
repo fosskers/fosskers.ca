@@ -1,27 +1,19 @@
 I'm Colin Woodbury, known as Fosskers on the web. I am a professional developer
-and am also active in Open Source, with a [[http://hackage.haskell.org/user/fosskers][number of published applications and
-libraries]] in Rust and Haskell. Functional programming interests me greatly and
+and am also active in Open Source, with a number of published applications and
+libraries in [[https://crates.io/users/fosskers][Rust]] and [[https://hackage.haskell.org/user/fosskers][Haskell]]. Functional programming interests me greatly and
 allows me to realize my core programming values: Rigour, Minimalism, and Beauty.
 
-* Public Projects of Note
+My largest public project is the [[https://github.com/fosskers/aura][Aura Package Manager]] for Arch Linux.
 
-- The [[https://github.com/fosskers/aura][Aura Package Manager]] for Arch Linux
-- [[https://github.com/fosskers/mapalgebra][MapAlgebra]]  - An implementation of /GIS and Cartographic Modelling/ by Dana Tomlin
-- Mapbox VectorTile codecs ([[https://github.com/fosskers/vectortiles][Haskell]], [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]])
-- [[https://github.com/fosskers/scalaz-and-cats][ScalaZ and Cats Comparison]] and the [[https://github.com/fosskers/scala-benchmarks][Scala Collections Benchmarks]]
+Otherwise, I've written code in a variety of languages, including Scala,
+Purescript, Elm, Go, C, Python, Emacs Lisp, Common Lisp, Fennel, and Clojure.
 
-Otherwise, I've written code in many other languages including Scala,
-Purescript, Elm, Go, C, Python, and Java, and deployed projects to production on
-AWS, Digital Ocean, and Heroku using a variety of industry-standard tools and
-frameworks.
-
-For more specifics, please see [[/en/cv][my full CV]].
+For specifics, please see [[/en/cv][my full CV]].
 
 Before pursuing programming professionally, I taught English in Japan for
 several years. I speak both English and Japanese, and have studied German,
 Italian, and Esperanto. Apart from learning languages, I often go rock climbing
-in my spare time. You can donate to my Open Source efforts through
-[[https://github.com/sponsors/fosskers][Github Sponsors]] or by [[https://www.buymeacoffee.com/fosskers][buying me a coffee]].
+in my spare time.
 
 This website is written in Haskell using the [[http://hackage.haskell.org/package/wai][wai]], [[http://hackage.haskell.org/package/lucid][lucid]], and [[http://hackage.haskell.org/package/org-mode][org-mode]] libraries,
 and uses absolutely no Javascript.

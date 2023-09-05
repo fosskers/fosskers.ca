@@ -1,19 +1,12 @@
 ウッドブリ・コリンと申します。ネット上では「fosskers」という通称で知られています。
-ソフト開発者として務めており、主にRustとHaskellを通して [[http://hackage.haskell.org/user/fosskers][複数なライブラリやアプリ]]
+ソフト開発者として務めており、主に [[https://crates.io/users/fosskers][Rust]] と [[https://hackage.haskell.org/user/fosskers][Haskell]] を通して複数なライブラリやアプリ
 を出しています。私には関数型プログラミング (Functional Programming) はとても興味
 深く、FPによって己の基本的開発美徳の三つが可能となります：　厳密・最小主義・芸術
 
-* 主なプロジェクト
+Arch Linuxの [[https://github.com/fosskers/aura][Aura Package Manager]] は今まで一番規模の大きかった自分のプロジェクトです。
 
-- Arch Linuxの [[https://github.com/fosskers/aura][Aura Package Manager]]
-- [[https://github.com/fosskers/mapalgebra][MapAlgebra]] ・Dana Tomlin作の「GIS and Cartographic Modelling」の実装
-- Mapbox VectorTileコーデック ([[https://github.com/fosskers/vectortiles][Haskell]], [[https://github.com/locationtech/geotrellis/tree/master/vectortile][Scala]])
-- [[https://geotrellis.github.io/vectorpipe/][VectorPipe]]
-- [[https://github.com/fosskers/scalaz-and-cats][ScalaZ and Cats Comparison]]
-- [[https://github.com/fosskers/scala-benchmarks][Scala Collections Benchmarks]]
-
-他にはScala・Purescript・Elm・Racket・Go・C・Pythonを含めて様々なプログラミング言語
-で開発した経験もあります。AWS・Digital Ocean・Herokuなどでシステム管理した事も。
+その他にはScala・Purescript・Elm・Racket・Go・C・Python・Emacs Lisp・Common Lisp・
+Fennel・Clojureを含めて様々なプログラミング言語で開発した経験もあります。
 
 職歴の [[/jp/cv][詳細はこちら]] 。
 
