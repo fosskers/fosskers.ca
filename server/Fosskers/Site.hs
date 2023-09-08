@@ -86,8 +86,6 @@ topbar lang =
         , Just ("Web Effects", "/en/demo/web-effects")
         , Just ("Seed Effects", "/en/demo/seed-effects") ]
       item "CV" "fa-graduation-cap" "/en/cv" ["mobile-hidden"]
-      item "Freelance" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
-      dropdown "Support" "fa-heart" [] support
 
     izakaya :: Html ()
     izakaya = do
@@ -104,27 +102,6 @@ topbar lang =
         , Just ("ウェブ作用", "/jp/demo/web-effects")
         , Just ("Seed作用", "/jp/demo/seed-effects") ]
       item "履歴書" "fa-graduation-cap" "/jp/cv" ["mobile-hidden"]
-      item "受託開発" "fa-handshake" "https://www.upwork.com/o/profiles/users/~01b5f223de8f22da34/" ["mobile-hidden"]
-      dropdown "支援" "fa-heart" [] support
-
-    support :: [Maybe (Html (), Text)]
-    support =
-      [ Just (coffee, "https://www.buymeacoffee.com/fosskers")
-      , Just (github, "https://github.com/sponsors/fosskers") ]
-      where
-        coffee :: Html ()
-        coffee = div_ [class_ "blog-title"] $ do
-          span_ [ class_ "icon" ] $ i_ [ classes_ ["fas", "fa-mug-hot"] ] ""
-          span_ $ case lang of
-            English  -> "Buy Me A Coffee"
-            Japanese -> "電子コーヒーを贈る"
-
-        github :: Html ()
-        github = div_ [class_ "blog-title"] $ do
-          span_ [ class_ "icon" ] $ i_ [ classes_ ["fab", "fa-github-alt"] ] ""
-          span_ $ case lang of
-            English  -> "Github Sponsors"
-            Japanese -> "ギットハブ・スポンサー"
 
     projects :: [Maybe (Html (), Text)]
     projects =
