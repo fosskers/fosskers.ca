@@ -168,7 +168,8 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role     | Language    | Description                                   |
 |------+----------------------+----------+-------------+-----------------------------------------------|
-| 2023 | [[https://fosskers.itch.io/falldown][Falldown]]             | Author   | Fennel      | A classic TI-83 game revived.                 |
+| 2023 | [[https://git.sr.ht/~fosskers/transducers.el][transducers]]          | Author   | Emacs Lisp  | Ergonomic, efficient data processing          |
+|      | [[https://fosskers.itch.io/falldown][Falldown]]             | Author   | Fennel      | A classic TI-83 game revived.                 |
 |      | [[https://tic80.com/play?cart=3375][Snake]]                | Author   | Fennel      | A simple implementation of Snake.             |
 |      | [[https://github.com/fosskers/nonempty-collections][nonempty-collections]] | Author   | Rust        | Correct-by-construction non-empty collections |
 |      | [[https://github.com/fosskers/transducers.fnl][transducers]]          | Author   | [[https://fennel-lang.org/][Fennel]]      | Ergonomic, efficient data processing          |
@@ -178,6 +179,8 @@ A four-year degree, majoring in Asian History and Languages.
 |      | [[https://git.sr.ht/~fosskers/faur][faur]]                 | Author   | Rust        | Fast data mirror for the AUR                  |
 |------+----------------------+----------+-------------+-----------------------------------------------|
 | 2021 | [[https://www.fosskers.ca/en/tools/love-letter][Love Letter Tracker]]  | Author   | Rust/WASM   | Knowledge tracking tool for /Love Letter/       |
+|      | [[https://github.com/fosskers/validated][validated]]            | Author   | Rust        | The cumulative sibling of =Result= and =Either=   |
+|      | [[https://github.com/fosskers/streak][streak]]               | Author   | Emacs Lisp  | A minor mode for tracking "streaks"           |
 |------+----------------------+----------+-------------+-----------------------------------------------|
 | 2020 | [[https://github.com/fosskers/linya][linya]]                | Author   | Rust        | Simple Concurrent Progress Bars               |
 |      | [[https://github.com/fosskers/totp][totp]]                 | Author   | Go          | Time-based One-Time Password library          |
