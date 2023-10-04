@@ -1,0 +1,254 @@
+#+TITLE: Arch Linux: Encrypting your Hard Drive
+#+DATE: 2023-10-04
+#+AUTHOR: Colin
+#+CATEGORY: tech
+
+This is a guide for encrypting your hard drive with [[https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup][LUKS]] _after_ you've already
+completed the Arch installation. In my own case, I had been using my system for
+a year before doing the encryption. All of the information presented here is
+available on the Arch Wiki, but here the execution steps are filtered and
+ordered to be more immediately reproducable.
+
+This guide assumes that you:
+
+- have ~/boot~ on a separate partition
+- use GRUB as your boot manager
+- have a USB drive to flash an Arch ISO onto
+- can read this guide on a device other than the one you're encrypting
+
+If these aren't the case, then you shouldn't follow this guide.
+
+* Overview
+
+While several places in the Wiki make statements like:
+
+#+begin_quote
+Depending on your situation, you may have to XYZ...
+#+end_quote
+
+for my case, these were the main steps:
+
+1. Back up important files.
+2. Flash an Arch image onto a USB.
+3. Boot from the USB.
+4. Resize the filesystem.
+5. Encrypt the partition.
+6. Configure the kernel and GRUB.
+
+* Encryption
+
+** Backing up Important Files
+
+It's up to you how to do this, but consider:
+
+- Uploading all unfinished code to a Git forge
+- Keeping all your config files in a ~dotfiles~ repo
+- Using [[https://syncthing.net/][Syncthing]] to copy files automatically between machines
+
+Remember that on-disk backups won't save you if you destroy the partition in a
+later step.
+
+** Flashing an Arch Image
+
+First, [[https://archlinux.org/download/][download the latest Arch ISO]]. Then plug in your USB drive and find out
+what it's called:
+
+#+begin_src bash
+ls -l /dev/disk/by-id/usb-*
+#+end_src
+
+#+begin_example
+lrwxrwxrwx 1 root root 9 Oct  4 19:15 /dev/disk/by-id/usb-TOSHIBA_TransMemory_0022CFF6B8A6C311EC7DAD98-0:0 -> ../../sdb
+#+end_example
+
+This USB here doesn't have partitions, but yours likely will (e.g. ~sdb1~).
+_Make sure it's not mounted._ You can confirm this as follows:
+
+#+begin_src bash :results raw
+lsblk
+#+end_src
+
+#+begin_example
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda      8:0    0 476.9G  0 disk
+└─sda1   8:1    0 476.9G  0 part /
+sdb      8:16   1  28.9G  0 disk
+#+end_example
+
+Now become ~root~ and copy the image:
+
+#+begin_src bash
+su
+cat ~/Downloads/archlinux-2023.09.01-x86_64.iso > /dev/disk/by-id/usb-TOSHIBA_TransMemory_0022CFF6B8A6C311EC7DAD98-0:0
+#+end_src
+
+It is critical that you copy the ISO directly to the root of the USB, not to one
+of its partitions. The image already has a file system and a partition table, so
+it needs to be inserted right at the beginning to overwrite whatever was already
+there.
+
+Run ~sync~ once the ~cat~ is complete for good measure, and remove the drive.
+
+** Booting from the USB
+
+It's time to boot the USB drive that you just flashed. If your USB is plugged in
+when you start your machine, you should be able to enter a boot or BIOS menu and
+boot from the USB. Do so, and eventually systemd will start and automatically
+drop you into a root shell.
+
+This should look familiar, as you probably did this to install Arch in the first
+place.
+
+If you use an alternate keyboard scheme like Colemak, set it now:
+
+#+begin_src bash
+loadkeys colemak
+#+end_src
+
+Let's check the disks on this machine:
+
+#+begin_src bash
+lsblk
+#+end_src
+
+#+begin_example
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0         7:0    0 682.6M  1 loop /run/archiso/airootfs
+sda           8:0    1  14.4G  0 disk
+└─sda1        8:1    1   789M  0 part
+└─sda2        8:2    1    15M  0 part
+nvme0n1     259:0    0 476.9G  0 disk
+└─nvme0n1p1 259:1    0   260M  0 part
+└─nvme0n1p2 259:2    0 476.7G  0 part
+#+end_example
+
+In my case, the ~sda~ entries belong the boot USB, and the ~nvme0n1~ entries are the
+harddrive. ~nvme0n1p1~ is normally mounted to ~/boot~, so it's the ~p2~ partition we'd
+be working on. For all example commands below that include ~nvme0n1p2~, replace it
+with the partition on your own machine.
+
+** Resizing the Filesystem
+
+Before you continue, the ~dm_crypt~ kernel module _must_ be loaded.
+
+#+begin_src bash
+modprobe dm_crypt
+lsmod | grep crypt
+#+end_src
+
+#+begin_example
+dm_crypt        65536  0
+encrypted_keys  28672  1 dm_crypt
+... etc. ...
+#+end_example
+
+Since you booted Arch from a USB and we just saw from ~lsblk~ that the hard drive
+isn't mounted, you can now check its filesystem:
+
+#+begin_src bash
+e2fsck -f /dev/nvme0n1p2
+#+end_src
+
+And then resize it to add space for the LUKS header. Note that this does not
+shrink the partition, and won't result in any data loss.
+
+#+begin_src bash
+resize2fs -p -M /dev/nvme0n1p2
+#+end_src
+
+~-M~ will shrink the filesystem as much as it can. The Wiki suggests doing some
+clever math instead and only shrinking as much as you need, but I used ~-M~ as-is.
+It took about an hour on a 500gb machine.
+
+** Encrypting the Partition
+
+_Reminder:_ The ~dm_crypt~ kernel module must be loaded for this step to work!
+
+The following command will encrypt your partition with sane defaults:
+
+#+begin_src bash
+cryptsetup reencrypt --encrypt --reduce-device-size 32M /dev/nvme0n1p2
+#+end_src
+
+It will ask you to set a passphrase to use for decrypting during the normal boot
+process. This doesn't need to be your usual password. The encryption will take
+some time.
+
+Once complete, decrypt the partition and expand the filesystem back to its
+original size:
+
+#+begin_src bash
+cryptsetup open /dev/nvme0n1p2 recrypt
+resize2fs /dev/mapper/recrypt
+#+end_src
+
+The name ~recrypt~ here can be a name of your choosing. It refers to the partition
+after decryption.
+
+Alright, your partition should now have its encryption set up! Don't shut down
+yet though, there's some final configuration to do.
+
+** Configuring the Kernel and GRUB
+
+Assuming everything above went well, it's time to mount your decrypted partition
+and configure some boot parameters before shutting down. Without this step, GRUB
+and the kernel won't actually know what to decrypt during boot.
+
+First, let's get into your filesystem:
+
+#+begin_src bash
+mount /dev/mapper/recrypt /mnt
+mount /dev/nvme0n1p1 /mnt/boot
+arch-chroot /mnt
+#+end_src
+
+You should now be inside your normal system as ~root~.
+Now edit ~/etc/mkinitcpio.conf~. The ~HOOKS~ array should look like:
+
+#+begin_example
+HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block encrypt filesystems fsck)
+#+end_example
+
+You need ~udev~, ~keymap~, ~consolefont~, and most importantly ~encrypt~. Generate a new
+kernel image:
+
+#+begin_src bash
+mkinitcpio -P
+#+end_src
+
+Now edit ~/etc/default/grub~. To its ~GRUB_CMDLINE_LINUX_DEFAULT~ string, add:
+
+#+begin_example
+cryptdevice=/dev/nvme0n1p2:mycrypt
+#+end_example
+
+The ~mycrypt~ name can be anything. Like above, this is the name given to the
+partition after decryption.
+
+Finally, regenerate your GRUB configuration:
+
+#+begin_src bash
+grub-mkconfig -o /boot/grub/grub.cfg
+#+end_src
+
+Now restart your machine and boot normally. If everything was successful, you
+should be prompted for the passphrase you set previously. Doing so decrypts your
+drive, and then you'll be brought to the usual login prompt.
+
+A last ~lsblk~ will confirm that you're mounted to the decrypted partition:
+
+#+begin_example
+NAME        MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
+nvme0n1     259:0    0 476.9G  0 disk
+└─nvme0n1p1 259:1    0   260M  0 part  /boot
+└─nvme0n1p2 259:2    0 476.7G  0 part
+  └─mycrypt 254:0    0 476.7G  0 crypt /
+#+end_example
+
+Well done.
+
+* Resources
+
+- Arch Wiki: [[https://wiki.archlinux.org/title/USB_flash_installation_medium][Flashing an installation medium]]
+- Arch Wiki: [[https://wiki.archlinux.org/title/Installation_guide][Installation Guide]]
+- Arch Wiki: [[https://wiki.archlinux.org/title/Dm-crypt/Device_encryption#Encrypt_an_existing_unencrypted_file_system][Encrypt an existing unencrypted file system]]

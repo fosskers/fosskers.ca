@@ -15,14 +15,14 @@ Below is a quick guide to solve this.
 in the ~gpac~ package. Before we can extract subtitles, let's analyse our file:
 
 #+begin_src bash
-  MP4Box -info video.mp4
+MP4Box -info video.mp4
 #+end_src
 
 This will highlight all the video, audio, and subtitles "tracks" within the
 file. If our target subtitle track were "Track 4", then to extract it:
 
 #+begin_src bash
-  MP4Box -raw 4 video.mp4
+MP4Box -raw 4 video.mp4
 #+end_src
 
 * Conversion to ~.srt~
