@@ -16,10 +16,9 @@
 ** プログラミング言語
 
 - *システム系:* Rust, Go, C
-- *関数系:* Haskell, Purescript
-- *分散系:* Elixir
-- *JVM:* Scala, Java
+- *関数系:* Haskell, Common Lisp, Clojure, Scala
 - *スクリプト系:* Emacs Lisp, Python
+- *Web系:* HTML, CSS, Web Assembly
 
 ** ウェブ技術
 
@@ -36,7 +35,6 @@
 - Git, Github, Gitlab
 - SQL (SQLite, MySQL, MariaDB, Postgres)
 - Apache Spark
-- Nix, NixOS
 - Emacs
 - LaTeX
 - Geographic Information Systems

@@ -12,11 +12,9 @@ give conference presentations in both English and Japanese.
 ** Programming Languages
 
 - *Low-Level:* Rust, Go, C
-- *Functional:* Haskell, Purescript
-- *Distributed:* Elixir
-- *JVM:* Scala, Java
+- *Functional:* Haskell, Common Lisp, Clojure, Scala
 - *Scripting:* Emacs Lisp, Python
-- *Web:* HTML, CSS, Typescript, Web Assembly
+- *Web:* HTML, CSS, Web Assembly
 
 ** Web Technologies
 
@@ -33,7 +31,6 @@ give conference presentations in both English and Japanese.
 - Git, Github, Gitlab
 - SQL (SQLite, MySQL, MariaDB, Postgres)
 - Apache Spark
-- Nix, NixOS
 - Emacs
 - LaTeX
 - Geographic Information Systems
