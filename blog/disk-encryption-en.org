@@ -87,7 +87,7 @@ of its partitions. The image already has a file system and a partition table, so
 it needs to be inserted right at the beginning to overwrite whatever was already
 there.
 
-Run ~sync~ once the ~cat~ is complete for good measure, and remove the drive.
+Once the ~cat~ is complete, run ~sync~ for good measure and remove the drive.
 
 ** Booting from the USB
 
@@ -122,12 +122,14 @@ nvme0n1     259:0    0 476.9G  0 disk
 └─nvme0n1p2 259:2    0 476.7G  0 part
 #+end_example
 
-In my case, the ~sda~ entries belong the boot USB, and the ~nvme0n1~ entries are the
-harddrive. ~nvme0n1p1~ is normally mounted to ~/boot~, so it's the ~p2~ partition we'd
-be working on. For all example commands below that include ~nvme0n1p2~, replace it
-with the partition on your own machine.
+In my case, the ~sda~ entries belong to the boot USB, and the ~nvme0n1~ entries are
+the hard drive. ~nvme0n1p1~ is normally mounted to ~/boot~, so it's the ~p2~ partition
+we'd be working on. For all example commands below that include ~nvme0n1p2~,
+replace it with the partition on your own machine.
 
 ** Resizing the Filesystem
+
+_Warning:_ Do not mount your filesystem!
 
 Before you continue, the ~dm_crypt~ kernel module _must_ be loaded.
 
