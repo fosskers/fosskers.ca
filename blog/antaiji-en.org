@@ -1,0 +1,318 @@
+#+TITLE: Life at Antaiji
+#+DATE: 2023-07-11
+#+AUTHOR: Colin
+#+CATEGORY: buddhism
+
+There are many worlds on this one planet. I spent the last week in one; a Zen
+temple called 安泰寺 (Antaiji) in the mountains of 兵庫 (Hyō-go) Prefecture.
+Antaiji offers three retreats per year for people interested in 坐禅 (Zazen -
+Zen meditation), although the retreats themselves are not just for meditation.
+You live as the monks live, following their five-day periodic schedule, waking
+when they do, eating as they do, sitting Zazen as they do, and sweating in the
+sun pulling weeds as they do. Antaiji is entirely self-sufficient. They produce
+everything they need for their survival by themselves, meaning that physical
+labour makes up a good portion of their day. Much of the rest is devoted to
+Zazen. Somewhere in between is squeezed leisure time and sleep.
+
+I had the privilege of experiencing this lifestyle first-hand, and here is what
+I saw.
+
+* Schedules and Seasons
+
+The monks live in five-day cycles.
+
+Everyone wakes up at 3:45 every morning. One of the monks runs loudly up and
+down the wooden halls ringing a handbell, and there is no sleeping through it.
+Morning meditation starts in the 本堂 (Hondō, main hall) at 4:00 and lasts two
+hours. There is a 10-minute stretching session after the first hour. At 6:00, we
+head directly to breakfast which has been miraculously produced by the 典座
+(Tenzo), the head cook for the current cycle. (Meals themselves are described in
+another section below.) From about 6:45 starts the temple cleaning, followed by
+作務 (Samu, "work") from 7:30. There's a short break at 9:30, and then Samu
+continues until noon. After lunch Samu continues until 15:00, where there is a
+chance to bathe. 薬石 (Yakuseki, dinner) is at 17:00, and evening Zazen runs
+from 18:00 to 20:00. You basically need to sleep by 20:30 or the next day will
+not be pleasant. And besides, it's pitch black out by then, so there's not much
+to do.
+
+Three days are spent like this. The fourth is a 接心 (Sesshin) day, where the
+monks sit ten 45-minute Zazen sessions in a row with 行経 (Kinhin, walking
+meditation) in between, and only a short break for breakfast at 9:00. We also
+did this, and made it through to the end. The final day is 放参 (Hōsan, a day
+off) where there is no Zazen and no physical labour. Then the cycle repeats.
+
+The first cycle of every month, however, is a 5-day Sesshin marathon. In these,
+they sit not ten but fifteen Zazen sessions per day. It sounds like a lot, but
+according to the monks the long sits get better with time.
+
+So, six 5-day "weeks" per month for each month of the year. Weekdays and
+weekends do not really apply to the monks, and we too soon lost our sense of
+what day it was.
+
+In July and August the monks alternate taking 10-day holidays. This gives them a
+chance to visit relatives and take care of "worldly" tasks like paying for
+health insurance and visiting the dentist. Since they have no salary as monks,
+they raise the money for such expenses in November and spring by doing 托鉢
+(Takuhatsu, begging), as is traditional for monks in many lands and eras. In
+winter they are snowed in. By that point they've harvested all the food they
+need, which needs to last until summer when spring's planting is finally grown.
+One monk mentioned that winter has a reputation of being a time of little food,
+but in reality it's when they've stock-piled the most, and the Tenzo has to work
+hard to use it all before it goes bad. Naturally though, they plant a lot of
+hardy vegetables that don't easily spoil. By the end of spring they're often
+foraging the mountains for 山菜 (Sansai, wild mountain vegetables) to fill out
+their diet. They're at no risk of starving though, as they have rice stored in
+abundance and, to our surprise, deer meat.
+
+The snow piles high in winter; they're mostly unable to leave. Every ten days a
+few of them don traditional snowshoes and hike down to the nearest village where
+they have an arrangement with a local to collect mail on their behalf. The
+round-trip takes several hours. Because they can't work the fields, winter is
+mostly for study. They pick a research topic, write an essay, present it, and
+discuss their interpretations. They also study parts of the 正法眼蔵
+(Shōbōgenzō, the 95-chapter Zen Buddhism series by 道元 [Dōgen]) as a group.
+Then the snow melts and it's back to work.
+
+* Zazen - Meditation
+
+Normal days have four hours of Zazen, two each in the morning and evening. You
+might be barely conscious while walking to the Hondō at four in the morning, but
+it barely matters because after everyone sits and the starting bell sounds
+thrice, all lights are extinguished and you're thrust into darkness. Since Zazen
+is done with eyes open, you spend the next two hours slowly watching the room
+brighten. Different birds start their songs at different times, and the night
+bugs trade places with the day ones. Before you know it, the ending bell rings
+and it's breakfast time.
+
+Antaiji in particular does a 10-minute stretching session at 5:00. It really
+helps get one through the second hour. At the end of the morning session, the
+following お経 (okyō, sutra) is recited three times:
+
+#+begin_quote
+大哉解脱服（だい・さい・げ・だっぷく）
+
+無相福田衣（む・そう・ふく・でん・え）
+
+被奉如来教（ひ・ぷ・にょらい・きょう）
+
+広度諸衆生（こう・ど・しょ・しゅ・じょう）
+#+end_quote
+
+This is the 塔袈裟偈（たっけさげ）. Another name is 袈裟頂戴の偈 (けさちょうだいのげ).
+
+In terms of how to sit Zazen, we were told two things clearly:
+
+1. Keep your back straight with your hips pushed back.
+2. Don't move.
+
+Otherwise, we sit facing the wall on special cushions, and what comes to mind
+comes to mind.
+
+* Food and Meals
+
+Zen monks eat with a special set of bowls and utensils called 応量器 ([[https://en.wikipedia.org/wiki/%C5%8Cry%C5%8Dki][Ōryōki]]).
+They taught us to use, clean, and bundle these in the same way they do. Meals
+are taken in silence, and they generally aim to finish eating at the same time.
+Everyone sits 正座 (Seiza, "proper sitting") during the meal.
+
+Before eating begins, the following is chanted:
+
+#+begin_quote
+若飲食事（にゃく・おん・じき・じ）
+
+当願衆生（とう・がん・しゅ・じょう）
+
+禅悦為食（ぜん・えつ・い・じき）
+
+法喜充満（ほう・き・じゅう・まん）
+#+end_quote
+
+And after:
+
+#+begin_quote
+飯食巳訖（ぼん・じき・い・こつ）
+
+当願衆生（とう・がん・しゅ・じょう）
+
+徳行充盈（とく・ぎょう・じゅう・よう）
+
+成十種力（じょう・じゅう・しゅ・りき）
+#+end_quote
+
+The meals themselves only take about twenty minutes. You're allowed to get
+seconds of rice and miso soup, but only once about halfway through when everyone
+has signalled they're ready. This is done by placing the chopsticks diagonally
+across the miso bowl. Pots are already on the tables as well, and people seated
+closer to them are expected to help serve those who aren't.
+
+To us who are used to a "city diet", it seems that the monks eat very little and
+that we were being served hardly anything; brown rice, a shallow bowl of miso,
+and two small side dishes. But you'd be surprised how far that goes, despite the
+physical labour of Samu. We're encouraged to eat slowly and deliberately,
+picking up each plate one at a time and eating directly from it. This is
+different from the usual style of Japanese eating, where one often has a rice
+bowl fixed in one hand, while the chopsticks hover from dish to dish and lift
+food to the mouth from there. Likewise, the monks don't mix different foods in
+the mouth. You eat one thing at a time. Although there is a general pressure to
+finish the meal quickly, eating this way naturally slows you down and you spend
+a lot of time chewing. In a way, this stretches out your seemingly small
+portion. I never finished a meal feeling unsatisfied.
+
+Recall too that after dinner is the evening Zazen followed by sleep, so why
+stuff yourself?
+
+Everyone cleans their own Ōryōki at the table in a three-step process. First, a
+piece of small 漬物 (Tsukemono, a pickled vegetable, often Daikon) is placed in
+each bowl. Since of course you've already eaten every noticeable speck of food
+from your bowls, you wipe the Tsukemono around the bowl with your chopsticks to
+loosen up any remaining food residues. For saucy dishes, this helps you gather
+the sauce in one place to drink up. The Tsukemono wiping isn't perfect, but my
+guess is that the acid in the pickling has a disinfecting effect on the bowls.
+
+Next, a small kettle is passed around. Hot water (not too much) is poured into
+the rice bowl, and you use an お刷 (Osetsu, a flat stick clothed on one end) to
+clean it. Upon cleaning one bowl, you pour the water into the next largest one,
+dry the first with a white cloth, and repeat the process. Our sets had three
+bowls.
+
+Lastly, each bowl is stacked together and wrapped in a larger, coloured cloth.
+The chopsticks and Osetsu are added, and the whole stack is tied together. Once
+everyone is done, a final standing bow is done, and the Ōryōki sets are carried
+away in pairs to a shelf.
+
+Dinners are followed by a Tea Meeting, where the progress of the day's Samu is
+reported, and the plans for the next day are announced. There is tea too of
+course, which is drank in unison in three sips, matching the speed of the 住職
+(Jūshoku, the head monk).
+
+** Meat
+
+The Buddhist Precepts mandate one not to kill. It has been a matter of
+disagreement between schools of Buddhism over time whether or not this forbids
+Buddhists from eating meat. Either way, the monks of Antaiji do. After spending
+an afternoon skinning a deer together, I asked a monk how this relates to the
+idea of non-killing. He offered this (translated and paraphrased):
+
+#+begin_quote
+It's a matter of balancing ideals with living in reality. We do a lot of hard,
+physical labour, and we need protein. In the past the temple used to purchase
+大豆 (Daizu, soy beans) for protein, but that costs precious money and we have no
+檀家 (Danka, temple parishioners). Instead, we accept deer donations. Deer in
+this area are overpopulated and kept in check by local hunters. The villagers
+were never interested in the meat though, and used to just dispose of the
+carcasses as-is. At some point they offered to donate the deer instead, and we
+accepted.
+#+end_quote
+
+The meat donations help a lot during the winter months. So while it might not be
+the monks' preference to eat meat, they admit it a necessity of their lifestyle.
+
+* Samu - Work
+
+Samu begins after the morning cleaning and is a representation of Zazen in one's
+daily duties. The monks of Antaiji grow all of their own food, so there is a lot
+to do. They have three rice paddies and several other vegetable fields. We
+helped them pick potatoes and carrots, as well as weed other patches, tie up
+some lazy tomatoes, and plant soy beans. The participants who came back from
+"rice field duty" were covered in mud; they had been weeding in the paddy waters
+all day.
+
+All cooking is done by firewood, so there is always wood to be chopped into
+forearm-length pieces for the stoves. I spent a day doing that and splitting
+larger cedar trunk pieces in the "wood barn". The monks occasionally search the
+mountains for fallen trees, which they cut up a haul back to be dried for
+several years before splitting for use. Small pieces and other scraps are
+sifting into sawdust to be used for the toilets. No, the monks do not have the
+privilege of flush toilets, and they use excrement for fertilizer.
+
+Each monk is assigned certain main responsibilities for the season, like care of
+the various fields, the herb patch, or the Zen Garden. Separate from these are
+weekly rotating positions, perhaps the most important of which is the Tenzo, the
+cook. The Tenzo wakes at 3:00 and must have the meals prepared by 6:00. They
+basically spend all day cooking, and are also in charge of heating the bath
+water. They're able to sit some of the Sesshin, but not most of it. The Tenzo
+has special wooden mallets that are knocked together before meals to signal to
+everyone out working to return to the main hall. They're quite loud and can be
+heard from far away. Even so, the monks themselves all wear simple watches so
+lunchtime is never a surprise. While the main cooking is done by firewood, they
+have otherwise allowed themselves a few conveniences like rice cookers, a
+fridge, and running water. The water is drawn from a dam in the mountains that
+was constructed by the founding monks decades ago.
+
+* Sesshin
+
+/To be elaborated on later./
+
+* The Character of the Monks
+
+A rough calculation puts their total yearly meditation time at over 2000 hours.
+As expected, that much meditation seems to transform a human mind. They aren't
+excitable or nervous, nor are they phased by the [[https://en.wikipedia.org/wiki/Asian_giant_hornet][giant Sparrow Hornets]] that fly
+into the meditation hall from time to time. They speak calmly and are quite
+orderly.
+
+One of the foundational ideas of Buddhism is that of "The Middle Way", and I
+felt that idea through this advice from one of the monks:
+
+#+begin_quote
+You can't please everyone; make sure to take care of yourself. Doing so will
+eventually translate to helping others.
+#+end_quote
+
+* Appendix
+** Glossary
+
+- 作務・さむ
+  - Samu - A Buddhist term for physical labour and other work duties.
+- 坐禅
+  - Zazen - Zen meditation. For Sōtō Zen buddhists, this means the practice of
+    "just sitting".
+- 行経・きんひん
+  - Kinhin - Slow walking meditation.
+- 接心・せっしん
+  - Sesshin - Day-long meditation sessions split into 10 (or 15) 45-minute
+    sitting sessions. Separated by 15-minute "walking meditation". No one speaks
+    during this time.
+- 只管打坐・しかんたざ
+  - Shikantaza - "Just sitting". Meditation for its own sake without any
+    expectation of gain or hope for enlightenment. Meditation without any
+    "focus" or imagery as used in some other sects/traditions.
+- 正法眼蔵・しょうぼうげんぞう
+  - Shōbōgenzō - The 95-chapter essay series on Buddhism by Dōgen.
+- 典座・てんぞ
+  - Tenzo - The cook for the current 5-day cycle. Also in charge of managing the
+    bath water. As far as I could tell, the Tenzo wakes up at 3 a.m.
+- 薬石・やくせき
+  - Yakuseki - lit. "medicine rock". A Zen Buddhist term for dinner. In the past
+    monks were forbidden from eating past noon, but eventually Yakuseki was
+    invented and thought of as a "medicine" to fuel one's Zen practice.
+- 応量器・おうりょうき
+  - Ōryōki - lit. "containers of appropriate volume". A personal set of bowls
+    and utentils.
+- 本堂・ほんどう
+  - Hondō - The main hall of the temple where meditation occurs. A statue of
+    the Buddha watches over the practitioners from the central alcove.
+- 住職・じゅうしょく
+  - Jūshoku - The head monk of a temple.
+- 放参・ほうさん
+  - Hōsan - A day off. Originally meant a day where no villagers would come for
+    group meditations and services.
+- 托鉢・たくはつ
+  - Takuhatsu - Public begging for food and money. The monks often recite sutras
+    while doing so.
+- 檀家・だんか
+  - Danka - A temple's parishioners. In most sects of Japanese Buddhism, this
+    means a family grave is administered by the temple for a fee. It is the
+    Japanese tradition to cremate the deceased and intern their ashes in the
+    family grave.
+- 衆生・しゅじょう
+  - Shujō - All living beings.
+- 雀蜂・すずめばち
+  - A giant Japanese hornet. About three times larger than a North American
+    wasp. Sounds like a helicopter when it's anywhere near you. Radiates evil
+    (in my opinion).
+
+** Resources
+
+- [[https://antaiji.org/en/][Antaiji Website]]
+- [[https://en.wikipedia.org/wiki/S%C5%8Dt%C5%8D][Wikipedia: Sōtō Zen]]
