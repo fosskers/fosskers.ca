@@ -21,6 +21,11 @@ free to bookmark it or even [[https://github.com/fosskers/fosskers.ca][help upda
 
 |  GHC | ~base~ version | Stackage LTS | Cabal | Notable Changes                        |
 |------+--------------+--------------+-------+----------------------------------------|
+|  9.8 |         4.19 |              |       | ~ExtendedLiterals~                       |
+|------+--------------+--------------+-------+----------------------------------------|
+|  9.6 |         4.18 |              |       | WASM and JS backends (initial preview) |
+|      |              |              |       | Delimited continuation primops         |
+|------+--------------+--------------+-------+----------------------------------------|
 |  [[https://www.haskell.org/ghc/blog/20220807-ghc-9.4.1-released.html][9.4]] |         4.17 |           21 |       | ~\cases~ syntax                          |
 |------+--------------+--------------+-------+----------------------------------------|
 |  [[https://downloads.haskell.org/ghc/9.2.1/docs/html/users_guide/9.2.1-notes.html][9.2]] |         4.16 |           20 |       | [[https://github.com/ghc-proposals/ghc-proposals/blob/master/proposals/0282-record-dot-syntax.rst][Record Dot Syntax]] available            |
