@@ -1,7 +1,7 @@
 #+TITLE: Tracking Changes to Base
 #+DATE: 2020-03-05
 #+AUTHOR: Colin
-#+UPDATED: 2023-10-11
+#+UPDATED: 2023-11-10
 #+CATEGORY: haskell
 
 The [[https://matrix.hackage.haskell.org/#/package/versions][Hackage Matrix Builder]] is a great way to track how compatible a library is
@@ -21,9 +21,9 @@ free to bookmark it or even [[https://github.com/fosskers/fosskers.ca][help upda
 
 |  GHC | ~base~ version | Stackage LTS | Cabal | Notable Changes                        |
 |------+--------------+--------------+-------+----------------------------------------|
-|  9.8 |         4.19 |              |       | ~ExtendedLiterals~                       |
+|  [[https://ghc.gitlab.haskell.org/ghc/doc/users_guide/9.8.1-notes.html][9.8]] |         4.19 |              |       | ~ExtendedLiterals~                       |
 |------+--------------+--------------+-------+----------------------------------------|
-|  9.6 |         4.18 |              |       | WASM and JS backends (initial preview) |
+|  [[https://ghc.gitlab.haskell.org/ghc/doc/users_guide/9.6.1-notes.html][9.6]] |         4.18 |              |       | WASM and JS backends (initial preview) |
 |      |              |              |       | Delimited continuation primops         |
 |------+--------------+--------------+-------+----------------------------------------|
 |  [[https://www.haskell.org/ghc/blog/20220807-ghc-9.4.1-released.html][9.4]] |         4.17 |           21 |       | ~\cases~ syntax                          |
