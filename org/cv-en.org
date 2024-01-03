@@ -165,11 +165,13 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role     | Language    | Description                                   |
 |------+----------------------+----------+-------------+-----------------------------------------------|
+| 2024 | [[https://git.sr.ht/~fosskers/sly-overlay][sly-overlay]]          | Author   | Emacs Lisp  | Evaluation overlays for Common Lisp in Emacs  |
+|------+----------------------+----------+-------------+-----------------------------------------------|
 | 2023 | [[https://git.sr.ht/~fosskers/transducers.el][transducers]]          | Author   | Emacs Lisp  | Ergonomic, efficient data processing          |
 |      | [[https://fosskers.itch.io/falldown][Falldown]]             | Author   | Fennel      | A classic TI-83 game revived.                 |
 |      | [[https://tic80.com/play?cart=3375][Snake]]                | Author   | Fennel      | A simple implementation of Snake.             |
 |      | [[https://github.com/fosskers/nonempty-collections][nonempty-collections]] | Author   | Rust        | Correct-by-construction non-empty collections |
-|      | [[https://github.com/fosskers/transducers.fnl][transducers]]          | Author   | [[https://fennel-lang.org/][Fennel]]      | Ergonomic, efficient data processing          |
+|      | [[https://git.sr.ht/~fosskers/transducers.fnl][transducers]]          | Author   | [[https://fennel-lang.org/][Fennel]]      | Ergonomic, efficient data processing          |
 |      | [[https://github.com/fosskers/cl-transducers][transducers]]          | Author   | Common Lisp | Ergonomic, efficient data processing          |
 |------+----------------------+----------+-------------+-----------------------------------------------|
 | 2022 | [[https://git.sr.ht/~fosskers/faur-supervisor][faur-supervisor]]      | Author   | Elixir      | Data refresh and watchdog for a =faur= server   |
@@ -276,9 +278,16 @@ I specialize in Japanese, but have also studied German, Italian, and Esperanto.
 
 | Group                         | Date                    | Position      |
 |-------------------------------+-------------------------+---------------|
-| Tokyo Embassy Choir           | 2022 Fall - Ongoing     | Voice         |
+| [[https://www.embassy-choir.org/en/][Tokyo Embassy Choir]]           | 2022 Fall - Ongoing     | Voice         |
 | [[https://www.youtube.com/watch?v=oOgi0EZTXEg][VVGO: Skyword Sword]]           | 2022 Summer             | Electric Bass |
 | SFU Choir                     | 2019 Fall               | Voice         |
 | SFU Choir                     | 2013 Fall - 2016 Spring | Voice         |
 | Haiki PTA Chorus              | 2010 - 2013             | Voice         |
 | Westwood Collegiate Jazz Band | 2002 Fall - 2006 Spring | Tenor Sax     |
+
+*** Performances
+
+- TEC: [[https://www.youtube.com/playlist?list=PLQT_8TGvdSoikLLkHrIuilVSk2RUctYep][2023 Christmas]]
+- TEC: [[https://www.youtube.com/playlist?list=PLQT_8TGvdSogKMnBNypS_hjXht6Y8Lqbu][2023 November]] (with orchestra)
+- TEC: [[https://www.youtube.com/playlist?list=PLQT_8TGvdSohLr99nRRk8V3PtFImsoZjH][2023 Summer]]
+- TEC: [[https://www.youtube.com/playlist?list=PLQT_8TGvdSogGzlvz-QBuE21jLUmJ1X-U][2022 Christmas]]
