@@ -165,9 +165,11 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role     | Language    | Description                                   |
 |------+----------------------+----------+-------------+-----------------------------------------------|
-| 2024 | [[https://git.sr.ht/~fosskers/sly-overlay][sly-overlay]]          | Author   | Emacs Lisp  | Evaluation overlays for Common Lisp in Emacs  |
+| 2024 | [[https://codeberg.org/fosskers/filepaths][filepaths]]            | Author   | Common Lisp | Modern, consistent filepath manipulation      |
+|      | [[https://git.sr.ht/~fosskers/sly-overlay][sly-overlay]]          | Author   | Emacs Lisp  | Evaluation overlays for Common Lisp in Emacs  |
 |------+----------------------+----------+-------------+-----------------------------------------------|
 | 2023 | [[https://git.sr.ht/~fosskers/transducers.el][transducers]]          | Author   | Emacs Lisp  | Ergonomic, efficient data processing          |
+|      | [[https://git.sr.ht/~fosskers/faur][faur]]                 | Author   | Clojure     | Fast data mirror for the AUR (Clojure port)   |
 |      | [[https://fosskers.itch.io/falldown][Falldown]]             | Author   | Fennel      | A classic TI-83 game revived.                 |
 |      | [[https://tic80.com/play?cart=3375][Snake]]                | Author   | Fennel      | A simple implementation of Snake.             |
 |      | [[https://github.com/fosskers/nonempty-collections][nonempty-collections]] | Author   | Rust        | Correct-by-construction non-empty collections |
