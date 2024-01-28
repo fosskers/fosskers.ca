@@ -1,0 +1,269 @@
+#+TITLE: A Tour of the Lisps
+#+DATE: 2024-01-28
+#+AUTHOR: Colin
+#+CATEGORY: lisp
+
+2023 seems to have been the year where I "made the rounds" of a number of major
+Lisps. There were several elements that lead to this. Firstly must have been my
+exposure to Elixir in 2022, which introduced me to the idea of debugging live
+systems and "staying in your program". Secondly must have been my chief
+complaint of Rust; although it is a wonderful language and ecosystem in many
+ways, you can't say that it's beautiful, which my previous love Haskell very
+much was. Thirdly then must been the talk [[https://www.youtube.com/watch?v=8Ab3ArE8W3s&pp=ygUnc3RvcCB3cml0aW5nIGRlYWQgcHJvZ3JhbXMgamFjayBkb25vdmFu][Stop Writing Dead Programs]] by Jack
+Rusher, which opened my eyes to the prevalence of the write-compile-run
+development cycle and how we can escape from it. And last was my day-to-day
+usage of Emacs, whose configuration language is also a Lisp. Thanks Henrik.
+
+Over the past year I published software in five Lisps: Guile, Common Lisp,
+Fennel, Clojure, and Emacs Lisp. Based on some questions I received from a Doom
+Emacs community member, I'll talk about each of these and reveal where I am now
+in my views and usage of Lisp languages.
+
+* Questions
+
+** What was the purpose of doing the rounds?
+
+It happened organically, I didn't plan to do it.
+
+I mostly switched away from Haskell to Rust during COVID, sometime during 2020.
+I had some time off, decided to learn both Go and Rust, and was happier with
+latter as I found that I could very much "speak Haskell" in it while gaining
+[[/en/blog/rust-software-dev][other modern benefits]] like the Ownership system. Very little compromise for
+massive gain.
+
+Yet I've always had a love for terser, elegant languages, and I've always had a
+soft spot for Lisps. I like Rust, but somehow it didn't feel like home. The
+purpose of the rounds was to once and for all find a language that could satisfy
+my needs as a working software developer, but also "tickle my fancy" in terms of
+day-to-day joy and match my values as a person.
+
+** What draws you to a Lisp dialect?
+
+Beauty in programs is important. I generally believe that beautiful code is less
+likely to be buggy, since beauty and simplicity are related, simplicity is the
+dual of complexity, and complexity is the womb from which bugs emerge.
+
+Lisps are beautiful. Code is generally quite terse thanks to its syntax. And
+something interesting happens with even a bit of serious Lisp experience: you
+stop seeing the parentheses. Not that they'd be a bother if you did; the parens
+allow "structural editing" which can speed up your editing. You're no longer
+bound to characters and lines, you can swap and move entire s-expressions
+freely. And besides, modern editor setups handle the parenthesis balancing for
+you. I spend no extra time herding parentheses, but I can see how this would
+have been an issue in the past.
+
+So I'm clearly drawn to the aesthetics, as I was in my Haskell years. But what
+drew me to the particular Lisps I tried?
+
+_Guile_ has Scheme's cleanliness and consistency. It's also a GNU language and
+installed by default on many systems, and there was a part of me that loved /the
+freedom, man, yeah/. It was here that I discovered Transducers and fell in love,
+proceeding to port the paradigm to [[https://git.sr.ht/~fosskers/cl-transducers][Common Lisp]], [[https://git.sr.ht/~fosskers/transducers.fnl][Fennel]], and [[https://git.sr.ht/~fosskers/transducers.el][Emacs Lisp]]. Guile
+though is hard to produce larger projects in if you aren't using Guix, since
+there exists no non-Guix-based dependency management.
+
+_Common Lisp_ is the classic. It has its historical warts, but I found an active
+ecosystem and enthusiastic community. It's still best-in-class for debuggability
+and interactivity for any language I've used. Have you ever wanted to debug
+external library code, but from within your program? While it's running? In prod
+across the network? Well you can. It's also a compiled language but allows
+hotswapping like Erlang, and has a static type system if you want it for
+API-hardening and performance tuning. It's definitely a power user's language.
+There are modern libraries for papering over some of the historical stdlib API
+oddities, although discovering these is sometimes difficult. There is also no
+"one Common Lisp", you need to [[https://github.com/CodyReichert/awesome-cl#implementations][pick an implementation]] to work with. No LSP
+either.
+
+[[https://fennel-lang.org/][Fennel]] is simple and clean. It compiles to Lua, shares its semantics, and can
+trivially use Lua libraries. The [[https://tic80.com/][TIC-80]] supports it natively for retro game
+development, which I used to write [[https://tic80.com/play?cart=3375][Snake]] and a port of the classic TI83 game
+[[https://fosskers.itch.io/falldown][Falldown]]. It's tooling improves with time and you can produce static binaries
+with it, but direct vendoring is the recommended dependency management strategy.
+It also lacks Common Lisp's debuggability, given that it sits entirely within
+Lua's runtime.
+
+_Clojure_ is what happens when a smart, experienced developer sits down for two
+years and thinks about what a programming language really needs to be to get
+work done in the real world. And Rich Hickey did an excellent job. Clojure is
+very clean, has best-in-class ergonomics, and best-in-class tooling. Great data
+structure literals. Its community is also very strong and [[https://www.clojuriststogether.org/][self-funds]] many of the
+popular projects. Its heavy integration with the JVM turns a lot of people off
+(myself included), but there are [[https://github.com/babashka/babashka][alternate platforms]] available, including an
+upcoming [[https://github.com/jank-lang/jank/][C++-based native implementation]] which I've had my eye on for some time.
+Clojure can definitely be said to have "brought Lisp into the modern age", and I
+used it to power the [[https://git.sr.ht/~fosskers/faur][AUR data mirror]] that [[https://github.com/fosskers/aura][Aura]] uses. Unfortunately Clojure does
+have famously poor error messages, and while it has some of Common Lisp's
+prod-debuggability and hotswapping, I always miss having the Condition System.
+
+And finally, the strength of _Emacs Lisp_ is that it's always at hand.
+Best-in-class discoverability due to editor integration, and especially in
+combination with Org Mode it's easiest to whip out quick code samples. I write a
+lot of small script-like functionality in it, which is then always available
+without leaving the editor and is only one button press away from executing. It
+also has a very active [[https://melpa.org/#/][ecosystem]] and community projects like [[https://github.com/doomemacs/doomemacs/][Doom Emacs]]. Given
+how old it is though, senior even to Common Lisp, it has some historical cruft
+and lacks "obvious" things like first-class async. Makes for some really clean
+editor config, though!
+
+As you can see, each dialect has its strengths but is not without drawbacks.
+
+** What have you learned, big-picture-wise, from doing the rounds?
+
+Several things.
+
+First, I learned that I had been obsessing over Order. In things being "just so",
+especially with regards to the type system. I've overhauled Aura enough times to
+know that I gain joy from pushing puzzle pieces into place, but that doesn't
+necessarily lead to a state of "being done" and freedom in the [[https://medium.com/@bre/the-cult-of-done-manifesto-724ca1c2ff13][Getting Stuff Done]]
+sense. Type systems are great for maintainability, but especially through my
+exposure to Clojure-thinking and live, in-editor testing like:
+
+#+begin_src clojure
+(comment
+  (clojure.str/join "foo" "bar"))
+#+end_src
+
+and leaving a ~repl.clj~ or ~repl.lisp~ file around in every project filled with
+little utilities for live testing, I've come around to the idea that:
+
+#+begin_quote
+It's okay to start dynamic and tighten down the API later with gradual-typing
+mechanisms once the domain crystalizes.
+#+end_quote
+
+Some Lisps have such things, such as Common Lisp, Racket, and Clojure. Heck even
+Simon Peyton-Jones, the inventor of Haskell, has [[https://codersatwork.com/][gone on record]] saying:
+
+#+begin_quote
+...dynamic languages are still interesting and important. There are programs you
+can write which can't be typed by a particular type system but which
+nevertheless don't "go wrong" at runtime, which is the gold standard - don't
+segfault, don't add integers to characters. They're just fine.
+
+I think to try to specify all that a program should do, you get specifications
+that are themselves so complicated that you're not longer confident that they
+say what you intended.
+#+end_quote
+
+The harder it is to test things in-editor, the more you need top-down structure
+like type systems and unit tests. Lisp makes in-editor testing very easy.
+
+Now second, I learned that I had never truly debugged before. The tools provided
+particularly by Common Lisp and to a slightly lesser degree Clojure allow me to
+_be inside my program_ at all times. Why do print-line-debugging to find out
+what's happening at a location in code when you can just be inside your program
+and inspect everything live as it's running? I had never known that this existed
+as a paradigm. The write-compile-run cycle we usually suffer through in other
+languages is silly, and I do feel this pain in Rust.
+
+Third, that Lisps are mostly not about writing macros. I have written perhaps
+two small ones. Functions do the job the vast majority of the time. No, I'd say
+"the center of Lisp", if it's anywhere, is the interactive REPL-based
+development. And that doesn't mean you should be typing things into a REPL
+prompt manually like a Neanderthal; modern setups have you type directly into
+your editor and /send/ the code to the REPL, receiving the result as an in-editor
+overlay. It's quite pretty (see the ~comment~ example above).
+
+And finally fourth, I got confirmation that Lisps are entirely usable in the
+modern day. Real, working, maintainable software can be written for basically
+[[https://store.steampowered.com/app/1261430/Kandria/][any domain]]. And did you know salaries for Lisp languages [[https://survey.stackoverflow.co/2023/#salary-and-experience-by-language][seem to be quite high]]?
+
+** What's your current mental model of an "ideal Lisp"?
+
+It would be something like a fusion of Clojure and Common Lisp, but with
+stronger-yet-still-optional static typing features. Enums are great,
+traits/typeclasses are great, so let's have those when we want them. Maybe the
+latter isn't as necessary if you're doing generic-dispatch properly.
+
+I like Functional Programming, and I'm not married to CLOS. Structs do the job
+just fine for me, but maybe I'm missing something.
+
+I'd want the debuggability of Common Lisp for sure, and its ability to compile
+natively. Rich was both right and wrong about parens; I'm not offended by
+CL-style paren usage, for example in this ~let~:
+
+#+begin_src lisp
+(let* ((foo (bar 5))
+       (baz (zoo foo)))
+  #(foo baz))
+#+end_src
+
+versus
+
+#+begin_src clojure
+(let [foo (bar 5)
+      bar (zoo foo)]
+  [foo baz])
+#+end_src
+
+Yet as seen in the second example, I _do_ want special brackets for well-used
+collections like vectors, maps, and sets.
+
+After that I'd be happy with good tooling and a talented community.
+
+As an aside, it should be known that some folks have gone to great lengths to
+embed other languages inside Common Lisp, namely [[https://github.com/coalton-lang/coalton][Coalton]], a Haskell-like Lisp,
+and [[https://github.com/phantomics/april][April]], which is APL. These can be easily slotted into existing CL
+programs.
+
+** Do you believe s-expressions are the be-all-end-all of Lisp syntax?
+
+Yes, because of structural editing and because Lisp isn't APL or [[https://www.uiua.org/][Uiua]]. Something
+is lost when you still want to be a word-based language but insist on
+whitespace-only like Python or Haskell. Efforts to abandon parentheses for fear
+that they turn away theoretical new users are misguided. Mature people can see
+past such surface details. Growth for its own sake is not a virtue.
+
+** How can newcomers get the most out of learning Lisp?
+
+1. Start with a proper setup.
+2. Embrace the REPL.
+3. Immerse yourself.
+4. Get help.
+
+Immersion is the best way to learn a human language; so too of programming.
+Configuring your [[https://github.com/doomemacs/doomemacs/][Editor]] (another option: [[https://lem-project.github.io/][Lem]]), your [[https://github.com/atlas-engineer/nyxt][Browser]], or your [[https://guix.gnu.org/][OS]] in a
+Lisp is a good way to stay immersed.
+
+You'll also want to build something real. Naturally as in any project, if you
+don't have a goal in mind you aren't going to get very far, so I'd also say that
+the next time you want to build something, just pick a Lisp to do it in.
+
+Before that though, you'll want to make sure you have a proper setup. Get the
+[[https://github.com/joaotavora/sly][editor modes]], find the LSPs, download the dependency managers, grab the
+[[https://github.com/justinbarclay/parinfer-rust-mode][paren-balancers]].
+
+If you want help, check out the Clojure Slack. They're very welcoming there. For
+Common Lisp, see my article on [[/en/blog/common-lisp][Common Lisp resources]]. Consider also joining the
+Doom Emacs Discord server or the Lisp Discord server. Also try to find meetups
+in your area. You might be surprised at how much is happening in this world.
+
+If you just want to get your feet wet, consider [[https://exercism.org/][Exercism]].
+
+Overall, I'd say start with Clojure, get a feel for the style, then swing over
+to Common Lisp to see what each is missing. If you've built something real in
+either, you should have gotten a feel for what the paradigm offers. I personally
+don't feel you necessarily need to slog through a giant 1000-page textbook to
+learn a Lisp. That includes the famous [[https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs][Structure and Interpretation of Computer
+Programs]]. At the end of the day, you just need to write code, and no amount of
+reading will ever be a substitute for that.
+
+* Conclusion
+
+I find myself [[https://codeberg.org/fosskers/filepaths][writing Common Lisp]] lately. I had a moment at work recently where
+odd behaviour in our Rust application code was likely due to a bug in a library,
+but I couldn't debug it /right there/ to confirm the problem. What follows is a
+clone, patch, push, re-pin, retest, ok, merge, release, re-pin again... you get
+it. I noticed myself thinking "if this were Common Lisp this debug would have
+taken 30 seconds." So here I am, at least for my personal coding.
+
+Both Common Lisp and Lisps in general are "chill cafés". The communities are
+small enough to find yourself a nice window seat, and projects are generally
+well-written. The folks themselves are self-selecting and I've had nothing but
+positive experiences.
+
+Have I found my "one true language"? Well, no, because there isn't such a thing.
+No matter which tool we pick, we'll always [[/en/blog/subsetting-your-life][have to choose an inner subset]] of
+features to adopt, at least until "the next stage". And as nice as newer
+languages like Clojure and Rust are, these aren't Man's final programming
+languages. But I'm happy for now.
