@@ -72,7 +72,8 @@ API-hardening and performance tuning. It's definitely a power user's language.
 There are modern libraries for papering over some of the historical stdlib API
 oddities, although discovering these is sometimes difficult. There is also no
 "one Common Lisp", you need to [[https://github.com/CodyReichert/awesome-cl#implementations][pick an implementation]] to work with. No LSP
-either.
+either, although existing editor integrations are of sufficently high quality
+and predate the notion of LSPs, so they aren't particularly missed.
 
 [[https://fennel-lang.org/][Fennel]] is simple and clean. It compiles to Lua, shares its semantics, and can
 trivially use Lua libraries. The [[https://tic80.com/][TIC-80]] supports it natively for retro game
