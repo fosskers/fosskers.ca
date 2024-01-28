@@ -1,6 +1,7 @@
 #+TITLE: A Tour of the Lisps
 #+DATE: 2024-01-28
 #+AUTHOR: Colin
+#+UPDATED: 2024-01-29
 #+CATEGORY: lisp
 
 2023 seems to have been the year where I "made the rounds" of a number of major
@@ -63,17 +64,17 @@ though is hard to produce larger projects in if you aren't using Guix, since
 there exists no non-Guix-based dependency management.
 
 _Common Lisp_ is the classic. It has its historical warts, but I found an active
-ecosystem and enthusiastic community. It's still best-in-class for debuggability
-and interactivity for any language I've used. Have you ever wanted to debug
-external library code, but from within your program? While it's running? In prod
-across the network? Well you can. It's also a compiled language but allows
-hotswapping like Erlang, and has a static type system if you want it for
-API-hardening and performance tuning. It's definitely a power user's language.
-There are modern libraries for papering over some of the historical stdlib API
-oddities, although discovering these is sometimes difficult. There is also no
-"one Common Lisp", you need to [[https://github.com/CodyReichert/awesome-cl#implementations][pick an implementation]] to work with. No LSP
-either, although existing editor integrations are of sufficently high quality
-and predate the notion of LSPs, so they aren't particularly missed.
+ecosystem and enthusiastic community. Best-in-class debuggability and
+interactivity for any language I've used. Have you ever wanted to debug external
+library code, but from within your program? While it's running? In prod across
+the network? Well you can. It's also a compiled language but allows hotswapping
+like Erlang, and has a static type system if you want it for API-hardening and
+performance tuning. It's definitely a power user's language. There are modern
+libraries for papering over some of the historical stdlib API oddities, although
+discovering these is sometimes difficult. There is also no "one Common Lisp",
+you need to [[https://github.com/CodyReichert/awesome-cl#implementations][pick an implementation]] to work with. No LSP either, although
+existing editor integrations are of sufficently high quality and predate the
+notion of LSPs, so they aren't particularly missed.
 
 [[https://fennel-lang.org/][Fennel]] is simple and clean. It compiles to Lua, shares its semantics, and can
 trivially use Lua libraries. The [[https://tic80.com/][TIC-80]] supports it natively for retro game
@@ -268,3 +269,28 @@ No matter which tool we pick, we'll always [[/en/blog/subsetting-your-life][have
 features to adopt, at least until "the next stage". And as nice as newer
 languages like Clojure and Rust are, these aren't Man's final programming
 languages. But I'm happy for now.
+
+* Feedback
+
+Here are my responses to some questions I got regarding the article.
+
+#+begin_quote
+What about other Schemes like Chicken, Chez, Gambit, etc.? Like CL, the Scheme
+implementation you pick can affect your day to day experience a lot.
+#+end_quote
+
+I had tried Chicken a bit in 2022 (I think). It seemed like a decent package,
+although I turned away nonetheless. Racket I had also tried in the past but
+moved on for similar reasons.
+
+To me, the Schemes seem like good languages, but when doing software development
+the language itself [[/en/blog/software-dev-langs][isn't all there is to it]].
+
+#+begin_quote
+What about Clojure's Condition System library, Farolero?
+#+end_quote
+
+[[https://github.com/IGJoshua/farolero][I have tried this]]. It's a solid attempt at introducing as much of the Condition
+System as possible given the underlying platform's capabilities. Although, since
+it's not first-class, isn't trivial to integrate across libraries. Probably
+decent for application development.
