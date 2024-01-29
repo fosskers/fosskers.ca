@@ -1,7 +1,7 @@
 #+TITLE: A Tour of the Lisps
 #+DATE: 2024-01-28
 #+AUTHOR: Colin
-#+UPDATED: 2024-01-29
+#+UPDATED: 2024-01-30
 #+CATEGORY: lisp
 
 2023 seems to have been the year where I "made the rounds" of a number of major
@@ -19,6 +19,8 @@ Over the past year I published software in five Lisps: Guile, Common Lisp,
 Fennel, Clojure, and Emacs Lisp. Based on some questions I received from a Doom
 Emacs community member, I'll talk about each of these and reveal where I am now
 in my views and usage of Lisp languages.
+
+See also: [[https://news.ycombinator.com/item?id=39182721][Discussion on Hacker News]]
 
 * Questions
 
