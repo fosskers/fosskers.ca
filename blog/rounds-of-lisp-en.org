@@ -27,7 +27,7 @@ in my views and usage of Lisp languages.
 It happened organically, I didn't plan to do it.
 
 I mostly switched away from Haskell to Rust during COVID, sometime during 2020.
-I had some time off, decided to learn both Go and Rust, and was happier with
+I had some time off, decided to learn both Go and Rust, and was happier with the
 latter as I found that I could very much "speak Haskell" in it while gaining
 [[/en/blog/rust-software-dev][other modern benefits]] like the Ownership system. Very little compromise for
 massive gain.
@@ -292,5 +292,5 @@ What about Clojure's Condition System library, Farolero?
 
 [[https://github.com/IGJoshua/farolero][I have tried this]]. It's a solid attempt at introducing as much of the Condition
 System as possible given the underlying platform's capabilities. Although, since
-it's not first-class, isn't trivial to integrate across libraries. Probably
+it's not first-class, it isn't trivial to integrate across libraries. Probably
 decent for application development.
