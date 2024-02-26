@@ -166,76 +166,81 @@ Scala開発者。
 
 * オープンソース
 
-|    年 | プロジェクト             | 役割      | 言語         | 概要                                     |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2024 | [[https://codeberg.org/fosskers/filepaths][filepaths]]            | 作者      | Common Lisp | 現代的な filepath 機能                     |
-|      | [[https://git.sr.ht/~fosskers/sly-overlay][sly-overlay]]          | 作者      | Emacs Lisp  | Common Lispの実行結果の overlays           |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2023 | [[https://git.sr.ht/~fosskers/transducers.el][transducers]]          | 作者      | Emacs Lisp  | 快適かつ効率のよいデータ処理                   |
-|      | [[https://git.sr.ht/~fosskers/faur][faur]]                 | 作者      | Clojure     | AURのデータミラー                            |
-|      | [[https://fosskers.itch.io/falldown][Falldown]]             | 作者      | Fennel      | 昔のTI-83の流行りゲーム、復活                  |
-|      | [[https://tic80.com/play?cart=3375][Snake]]                | 作者      | Fennel      | 簡単な蛇ゲーム                              |
-|      | [[https://github.com/fosskers/nonempty-collections][nonempty-collections]] | 作者      | Rust        | 値が必ずあるデータ構造                        |
-|      | [[https://git.sr.ht/~fosskers/transducers.fnl][transducers]]          | 作者      | [[https://fennel-lang.org/][Fennel]]      | 快適かつ効率のよいデータ処理                   |
-|      | [[https://github.com/fosskers/cl-transducers][transducers]]          | 作者      | Common Lisp | 快適かつ効率のよいデータ処理                   |
-|------+----------------------+----------+-------------+-----------------------------------------|
+|   年 | プロジェクト            | 役割      | 言語        | 概要                                    |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2024 | [[https://codeberg.org/fosskers/nonempty][nonempty]]             | 作者      | Common Lisp | 値が必ず入っている構造                       |
+|      | [[https://codeberg.org/fosskers/filepaths][filepaths]]            | 作者      | Common Lisp | 現代的な filepath 機能                    |
+|      | [[https://git.sr.ht/~fosskers/sly-overlay][sly-overlay]]          | 作者      | Emacs Lisp  | Common Lispの実行結果の overlays          |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2023 | [[https://git.sr.ht/~fosskers/transducers.el][transducers]]          | 作者      | Emacs Lisp  | 快適かつ効率のよいデータ処理                  |
+|      | [[https://git.sr.ht/~fosskers/faur][faur]]                 | 作者      | Clojure     | AURのデータミラー                           |
+|      | [[https://fosskers.itch.io/falldown][Falldown]]             | 作者      | Fennel      | 昔のTI-83の流行りゲーム、復活                 |
+|      | [[https://tic80.com/play?cart=3375][Snake]]                | 作者      | Fennel      | 簡単な蛇ゲーム                             |
+|      | [[https://github.com/fosskers/nonempty-collections][nonempty-collections]] | 作者      | Rust        | 値が必ず入っているデータ構造                  |
+|      | [[https://git.sr.ht/~fosskers/transducers.fnl][transducers]]          | 作者      | [[https://fennel-lang.org/][Fennel]]      | 快適かつ効率のよいデータ処理                  |
+|      | [[https://github.com/fosskers/cl-transducers][transducers]]          | 作者      | Common Lisp | 快適かつ効率のよいデータ処理                  |
+|------+----------------------+-----------+-------------+-----------------------------------------|
 | 2022 | [[https://git.sr.ht/~fosskers/faur-supervisor][faur-supervisor]]      | 作者      | Elixir      | faurサーバーの自動管理                      |
-|      | [[https://git.sr.ht/~fosskers/faur][faur]]                 | 作者      | Rust        | AURのデータミラー                            |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2021 | [[https://www.fosskers.ca/en/tools/love-letter][Love Letter Tracker]]  | 作者      | Rust/WASM   | /Love Letter/ の援助ツール                   |
-|      | [[https://github.com/fosskers/validated][validated]]            | 作者      | Rust        | ~Result~ と ~Either~ の蓄積する兄弟             |
-|      | [[https://github.com/fosskers/streak][streak]]               | 作者      | Emacs Lisp  | 記録を図る minor-mode                      |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2020 | [[https://github.com/fosskers/linya][linya]]                | 作者      | Rust        | ターミナルでのプロセス進行バー                  |
-|      | [[https://github.com/fosskers/totp][totp]]                 | 作者      | Go          | Time-based One-Time Passwordのライブラリ    |
-|      | [[https://github.com/fosskers/totp-lite][totp-lite]]            | 作者      | Rust        | Time-based One-Time Passwordのライブラリ    |
-|      | [[https://github.com/fosskers/credit][credit]]               | 作者      | Rust        | プロジェクト活躍を測るツール                    |
+|      | [[https://git.sr.ht/~fosskers/faur][faur]]                 | 作者      | Rust        | AURのデータミラー                           |
+|      | [[https://github.com/fosskers/disown][disown]]               | 作者      | Rust        | methodで所有権を落とす                      |
+|      | [[https://crates.io/crates/r2d2-alpm][r2d2-alpm]]            | 作者      | Rust        | R2D2用のALPMコネクションプール                |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2021 | [[https://www.fosskers.ca/en/tools/love-letter][Love Letter Tracker]]  | 作者      | Rust/WASM   | /Love Letter/ の援助ツール                  |
+|      | [[https://github.com/fosskers/validated][validated]]            | 作者      | Rust        | ~Result~ と ~Either~ の蓄積する兄弟            |
+|      | [[https://github.com/fosskers/streak][streak]]               | 作者      | Emacs Lisp  | 記録を図る minor-mode                     |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2020 | [[https://github.com/fosskers/linya][linya]]                | 作者      | Rust        | ターミナルでのプロセス進行バー                 |
+|      | [[https://github.com/fosskers/totp][totp]]                 | 作者      | Go          | Time-based One-Time Passwordのライブラリ   |
+|      | [[https://github.com/fosskers/totp-lite][totp-lite]]            | 作者      | Rust        | Time-based One-Time Passwordのライブラリ   |
+|      | [[https://github.com/fosskers/credit][credit]]               | 作者      | Rust        | プロジェクト活躍を測るツール                   |
 |      | [[https://crates.io/crates/cargo-aur][cargo-aur]]            | 作者      | Rust        | Arch LinuxでRustのプロジェクトをリリースするツール |
-|      | [[https://crates.io/crates/versions][versions]]             | 作者      | Rust        | バージョン数字のパーサ                        |
-|      | [[https://github.com/fosskers/rs-kanji][kanji]]                | 作者      | Rust        | 日本漢字の分析                             |
-|      | [[https://github.com/fosskers/active][active]]               | 作者      | Go          | Github CI Actionsを更新するツール            |
+|      | [[https://crates.io/crates/versions][versions]]             | 作者      | Rust        | バージョン数字のパーサ                       |
+|      | [[https://github.com/fosskers/rs-kanji][kanji]]                | 作者      | Rust        | 日本漢字の分析                            |
+|      | [[https://github.com/fosskers/active][active]]               | 作者      | Go          | Github CI Actionsを更新するツール           |
 |      | [[https://hackage.haskell.org/package/skylighting-lucid][skylighting-lucid]]    | 作者      | Haskell     | [[https://hackage.haskell.org/package/skylighting][skylighting]]とLucidの統合                  |
-|      | [[http://hackage.haskell.org/package/org-mode][org-mode]]             | 作者      | Haskell     | Emacs Org Modeパーサ                      |
-|      | [[https://github.com/kadena-io/chainweb-data][chainweb-data]]        | 中心開発者 | Haskell     | Chainweb情報を一括処理するツール              |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2019 | [[https://github.com/kadena-io/chainweb-node][Chainweb]]             | 中心開発者 | Haskell     | Proof-of-Workのブロックチェーン               |
-|      | [[https://github.com/kadena-community/bag-of-holding][bag-of-holding]]       | 作者      | Haskell     | Chainwebのウォレット                         |
-|      | [[https://gitlab.com/fosskers/bounded-queue][bounded-queue]]        | 作者      | Haskell     | キューのライブラリ                            |
-|      | [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]]       | 作者      | Haskell     | Chainwebの採掘クライアント                    |
-|      | [[https://github.com/kadena-io/streaming-events][streaming-events]]     | 作者      | Haskell     | EventStreamをクライアント側で処理するライブラリ    |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2018 | [[https://github.com/fosskers/mapalgebra][MapAlgebra]]           | 作者      | Haskell     | [[https://en.wikipedia.org/wiki/Map_algebra][Map Algebra]]ライブラリ                       |
-|      | [[https://github.com/fosskers/fosskers.ca][fosskers.ca]]          | 作者      | Purescript  | 自分のサイト                                |
-|      | [[https://github.com/fosskers/streaming-pcap][streaming-pcap]]       | 作者      | Haskell     | libpcapのパケットををストリーム                  |
+|      | [[http://hackage.haskell.org/package/org-mode][org-mode]]             | 作者      | Haskell     | Emacs Org Modeパーサ                     |
+|      | [[https://github.com/kadena-io/chainweb-data][chainweb-data]]        | 中心開発者 | Haskell     | Chainweb情報を一括処理するツール             |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2019 | [[https://github.com/kadena-io/chainweb-node][Chainweb]]             | 中心開発者 | Haskell     | Proof-of-Workのブロックチェーン              |
+|      | [[https://github.com/kadena-community/bag-of-holding][bag-of-holding]]       | 作者      | Haskell     | Chainwebのウォレット                        |
+|      | [[https://gitlab.com/fosskers/bounded-queue][bounded-queue]]        | 作者      | Haskell     | キューのライブラリ                           |
+|      | [[https://github.com/kadena-io/chainweb-miner][chainweb-miner]]       | 作者      | Haskell     | Chainwebの採掘クライアント                   |
+|      | [[https://github.com/kadena-io/streaming-events][streaming-events]]     | 作者      | Haskell     | EventStreamをクライアント側で処理するライブラリ   |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2018 | [[https://github.com/fosskers/mapalgebra][MapAlgebra]]           | 作者      | Haskell     | [[https://en.wikipedia.org/wiki/Map_algebra][Map Algebra]]ライブラリ                      |
+|      | [[https://github.com/fosskers/fosskers.ca][fosskers.ca]]          | 作者      | Purescript  | 自分のサイト                               |
+|      | [[https://github.com/fosskers/streaming-pcap][streaming-pcap]]       | 作者      | Haskell     | libpcapのパケットををストリーム                 |
 |      | [[https://github.com/fosskers/servant-xml][servant-xml]]          | 作者      | Haskell     | XMLとServantの統合                        |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2017 | [[https://github.com/geotrellis/vectorpipe][VectorPipe]]           | 作者      | Scala       | GeoTrellisを通してVectorTile処理            |
-|      | [[https://github.com/fosskers/draenor][draenor]]              | 作者      | Haskell     | OSM PBFをORCファイルに変換                   |
-|      | [[https://github.com/fosskers/streaming-osm][streaming-osm]]        | 作者      | Haskell     | OpenStreetMap情報をストリーム                |
-|      | [[https://github.com/fosskers/scalaz-and-cats][scalaz-and-cats]]      | 作者      | Scala       | ScalazとCatsのベンチマーク                   |
-|      | [[https://github.com/fosskers/scala-benchmarks][scala-benchmarks]]     | 作者      | Scala       | Scalaのベンチマーク                         |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2016 | [[https://github.com/locationtech/geotrellis][GeoTrellis]]           | 中心開発者 | Scala       | 地理情報の一括処理                          |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2017 | [[https://github.com/geotrellis/vectorpipe][VectorPipe]]           | 作者      | Scala       | GeoTrellisを通してVectorTile処理           |
+|      | [[https://github.com/fosskers/draenor][draenor]]              | 作者      | Haskell     | OSM PBFをORCファイルに変換                  |
+|      | [[https://github.com/fosskers/axe][axe]]                  | 作者      | Haskell     | 巨大なOSM XMLファイルを分割                  |
+|      | [[https://github.com/fosskers/streaming-osm][streaming-osm]]        | 作者      | Haskell     | OpenStreetMap情報をストリーム               |
+|      | [[https://github.com/fosskers/scalaz-and-cats][scalaz-and-cats]]      | 作者      | Scala       | ScalazとCatsのベンチマーク                  |
+|      | [[https://github.com/fosskers/scala-benchmarks][scala-benchmarks]]     | 作者      | Scala       | Scalaのベンチマーク                        |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2016 | [[https://github.com/locationtech/geotrellis][GeoTrellis]]           | 中心開発者 | Scala       | 地理情報の一括処理                         |
 |      | [[https://github.com/fosskers/pipes-random][pipes-random]]         | 作者      | Haskell     | ランダムの数字などをストリーム                   |
-|      | [[https://github.com/fosskers/vectortiles/][vectortiles]]          | 作者      | Haskell     | Mapboxが定義するGIS Vector Tilesの処理      |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2015 | [[https://github.com/fosskers/myshroom-api][MyShroom]]             | 中心開発者 | Scala       | キノコを画像から認識する人工知能システム           |
+|      | [[https://github.com/fosskers/vectortiles/][vectortiles]]          | 作者      | Haskell     | Mapboxが定義するGIS Vector Tilesの処理     |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2015 | [[https://github.com/fosskers/myshroom-api][MyShroom]]             | リード開発者 | Scala       | キノコを画像から認識する人工知能システム          |
+|      | [[https://github.com/fosskers/crypto-classical][crypto-classical]]     | 作者      | Haskell     | 歴史的な暗号                              |
 |      | [[http://hackage.haskell.org/package/microlens-aeson][microlens-aeson]]      | 作者      | Haskell     | LensとAesonの統合                         |
 |      | [[https://github.com/fosskers/opengl-linalg][opengl-linalg]]        | 作者      | C           | OpenGLで線形代数                          |
 |      | [[https://github.com/fosskers/tetris][Tetris]]               | 作者      | C           | OpenGLを通して３次元テトリス                   |
-|      | [[https://gitlab.com/fosskers/versions][versions]]             | 作者      | Haskell     | バージョン数字のパーサ                        |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2014 | [[https://github.com/fosskers/elm-touch][elm-touch]]            | 作者      | Elm         | Elm言語のタッチ・ライブラリ                     |
-|      | [[https://github.com/fosskers/2048][2048 Game]]            | 作者      | Elm         | 2048ゲーム ([[http://fosskers.github.io/2048/][ブラウザーで遊ぶ]])                 |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2013 | [[https://github.com/fosskers/hisp][Hisp]]                 | 作者      | Haskell     | 簡単なLisp                                |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2012 | [[https://github.com/aurapm/aura/][Aura]]                 | 作者      | Haskell     | Arch Linuxのパッケージ管理ツール              |
-|      | [[https://github.com/fosskers/kanji][kanji]]                | 作者      | Haskell     | 日本漢字の分析                             |
-|------+----------------------+----------+-------------+-----------------------------------------|
-| 2011 | [[https://github.com/fosskers/sudoku][Sudoku]]               | 作者      | Python      | 数独を解くツール                             |
-|      | [[https://github.com/fosskers/tgrep][tgrep]]                | 作者      | Python      | Redditのログファイルを検索するツール             |
-|------+----------------------+----------+-------------+-----------------------------------------|
+|      | [[https://gitlab.com/fosskers/versions][versions]]             | 作者      | Haskell     | バージョン数字のパーサ                       |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2014 | [[https://github.com/fosskers/elm-touch][elm-touch]]            | 作者      | Elm         | Elm言語のタッチ・ライブラリ                    |
+|      | [[https://github.com/fosskers/2048][2048 Game]]            | 作者      | Elm         | 2048ゲーム ([[http://fosskers.github.io/2048/][ブラウザーで遊ぶ]])                |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2013 | [[https://github.com/fosskers/hisp][Hisp]]                 | 作者      | Haskell     | 簡単なLisp                               |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2012 | [[https://github.com/aurapm/aura/][Aura]]                 | 作者      | Haskell     | Arch Linuxのパッケージ管理ツール             |
+|      | [[https://github.com/fosskers/kanji][kanji]]                | 作者      | Haskell     | 日本漢字の分析                            |
+|------+----------------------+-----------+-------------+-----------------------------------------|
+| 2011 | [[https://github.com/fosskers/sudoku][Sudoku]]               | 作者      | Python      | 数独を解くツール                            |
+|      | [[https://github.com/fosskers/tgrep][tgrep]]                | 作者      | Python      | Redditのログファイルを検索するツール            |
+|------+----------------------+-----------+-------------+-----------------------------------------|
 
 * 資格・免許
 
