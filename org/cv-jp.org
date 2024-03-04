@@ -288,14 +288,15 @@ Scala開発者。
 
 ** 音楽演奏
 
-| 団体                 | 時期                    | 役割    |
-|---------------------+------------------------+--------|
-| [[https://www.embassy-choir.org/jp/][東京Embassyコーラス]]    | ２０２２年冬･･･現在        | 声      |
-| [[https://www.youtube.com/watch?v=oOgi0EZTXEg][VVGO: Skyword Sword]] | ２０２２年夏              | ベース   |
-| SFU大学コーラス        | ２０１９年秋              | 声      |
-| SFU大学コーラス        | ２０１３年秋･･･２０１６年春 | 声・部長 |
-| 早岐地区PTAコーラス    | ２０１０年･･･２０１３年     | 声      |
-| Westwood高校ジャズ    | ２００２年秋･･･２００６年春 | サックス |
+| 団体                              | 時期              | 役割   |
+|-----------------------------------+-------------------+--------|
+| [[https://youtu.be/lpKgWtiKcQo][VVGO: FF7 Opening Bombing Mission]] | 2024年3月         | ベース  |
+| [[https://www.embassy-choir.org/jp/][東京Embassyコーラス]]                  | ２０２２年冬･･･現在     | 声     |
+| [[https://www.youtube.com/watch?v=oOgi0EZTXEg][VVGO: Skyword Sword]]               | ２０２２年夏           | ベース  |
+| SFU大学コーラス                      | ２０１９年秋           | 声     |
+| SFU大学コーラス                      | ２０１３年秋･･･２０１６年春 | 声・部長 |
+| 早岐地区PTAコーラス                  | ２０１０年･･･２０１３年    | 声     |
+| Westwood高校ジャズ                  | ２００２年秋･･･２００６年春 | サックス |
 
 *** 演奏
 

@@ -286,14 +286,15 @@ I specialize in Japanese, but have also studied German, Italian, and Esperanto.
 
 ** Music
 
-| Group                         | Date                    | Position      |
-|-------------------------------+-------------------------+---------------|
-| [[https://www.embassy-choir.org/en/][Tokyo Embassy Choir]]           | 2022 Fall - Ongoing     | Voice         |
-| [[https://www.youtube.com/watch?v=oOgi0EZTXEg][VVGO: Skyword Sword]]           | 2022 Summer             | Electric Bass |
-| SFU Choir                     | 2019 Fall               | Voice         |
-| SFU Choir                     | 2013 Fall - 2016 Spring | Voice         |
-| Haiki PTA Chorus              | 2010 - 2013             | Voice         |
-| Westwood Collegiate Jazz Band | 2002 Fall - 2006 Spring | Tenor Sax     |
+| Group                             | Date                    | Position      |
+|-----------------------------------+-------------------------+---------------|
+| [[https://youtu.be/lpKgWtiKcQo][VVGO: FF7 Opening Bombing Mission]] | 2024 March              | Electric Bass |
+| [[https://www.embassy-choir.org/en/][Tokyo Embassy Choir]]               | 2022 Fall - Ongoing     | Voice         |
+| [[https://www.youtube.com/watch?v=oOgi0EZTXEg][VVGO: Skyword Sword]]               | 2022 Summer             | Electric Bass |
+| SFU Choir                         | 2019 Fall               | Voice         |
+| SFU Choir                         | 2013 Fall - 2016 Spring | Voice         |
+| Haiki PTA Chorus                  | 2010 - 2013             | Voice         |
+| Westwood Collegiate Jazz Band     | 2002 Fall - 2006 Spring | Tenor Sax     |
 
 *** Performances
 
