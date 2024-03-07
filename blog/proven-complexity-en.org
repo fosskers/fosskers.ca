@@ -1,0 +1,174 @@
+#+TITLE: Proven Complexity and Technology Choice
+#+DATE: 2024-03-07
+#+AUTHOR: Colin
+#+CATEGORY: programming
+
+In software development, there is a tendency for programmers to produce a
+solution before understanding the problem. While it's true that we often can't
+fully understand all aspects of an issue before we attempt solving it, we've all
+heard of "solutions looking for problems". Similarly, we often apply the
+technologies that are our favourites (or current obsession) to each problem that
+arises, regardless of their long-term applicability. Teams also find themselves
+in trouble when they adopt too many half-understood, fringe technologies at once
+and blow their "Novelty Budget".
+
+This article lays out a [[https://en.wikipedia.org/wiki/Philosophical_razor][Razor]] for determining if we're going overboard with our
+technology choices.
+
+* The Razor
+
+Complexity has eaten projects in unknown number and developers greater than we.
+Its antidote is simplicity and careful choice. Technology can unlock new
+capability, but we must be wary of costs.
+
+With a clear [[https://youtu.be/c5QF2HjHLSE][problem statement]], before starting any project it must be proven
+that the problem could not be solved by:
+
+1. Running Lua
+2. with SQLite
+3. on a Raspberry Pi
+4. by a one-person team.
+
+Essentially, the simplest possible human-software-deployment triad.
+
+** Simple Languages
+
+As they say, a master never blames his tools. But nor should a master be
+complacent with poor ones.
+
+#+begin_quote
+My code must run as fast as possible.
+#+end_quote
+
+Must it? Are you running physics simulations or training ML models?
+
+Lua (particularly [[https://github.com/LuaJIT/LuaJIT][LuaJit]]) rivals the fastest languages and is far simpler. It
+contains essentially the fewest concepts necessary for producing useful
+programs.
+
+#+begin_quote
+I need async/await and callbacks and all that. Runtimes! Actor systems! Mass concurrency!
+#+end_quote
+
+Do you? Are you running the [[https://www.youtube.com/watch?v=BXmOlCy0oBM][phone system of an entire country]]?
+
+Lua is typically single-CPU, but supports [[https://www.lua.org/pil/9.4.html][non-premptive multithreading]] via
+coroutines. The simplest way to avoid [[https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/][the Red-Blue Problem]] is to not introduce
+complicated control-flow structures to the language in the first place.
+
+#+begin_quote
+I need memory safety.
+#+end_quote
+
+You're probably right. Statistically, most developers are not qualified to write
+memory-safe C. However, Lisp had garbage collection long before C was ever
+invented, which, prior to the Ownership system popularized by Rust, was a
+servicable solution for most scenarios. But even here we must ask: what about
+your project is so memory-critical that a GC'd language is not enough? Ownership
+is not free either.
+
+#+begin_quote
+I can only hire BlubLang programmers.
+#+end_quote
+
+Any programmer could learn a language like Lua in a weekend. Your business can
+afford the retraining.
+
+Mention of Lua here is not dogmatic; there are of course other simplicity-first
+languages like Clojure and Elm that focus on solving problems in proven ways
+while avoiding self-inflicted pains imposed by less thought-out technologies.
+
+** Simple Databases
+
+#+begin_quote
+I need sharding and backups and cloud connections.
+#+end_quote
+
+Are you Twitter?
+
+[[https://blog.wesleyac.com/posts/consider-sqlite][SQLite is already faster]] than most services need, and it's significantly simpler
+to set up. It can store more data than your company will ever have. And before
+you reach for Postgres-backed CloudSQL, note that putting a network connection
+between your program and your database significantly reduces throughput.
+
+** Hardware you Own
+
+You probably do not need Docker, let alone Kubernetes.
+
+#+begin_quote
+I need automated deployments.
+#+end_quote
+
+I get why Google might, but can you name your motivations concretely?
+
+#+begin_quote
+I need to coordinate dependencies between developer machines and production
+machines.
+#+end_quote
+
+Unix won. It's not hard to throw dependency install instructions into a script.
+Plenty of you are doing that in your Dockerfiles anyway! The border into the
+Docker realm should be crossed only after a serious analysis of the costs.
+
+#+begin_quote
+I can't afford any down time. I need load balancers and supervisors for when my
+servers crash.
+#+end_quote
+
+If your servers are crashing, it's probably because of poor programming and not
+because of an attack. If you are being attacked, well, [[https://sourcehut.org/blog/2024-01-19-outage-post-mortem/][DDoS mitigation wasn't
+enough even for SourceHut]]. The solution they ended up employing amounted to
+"wait until the attack is over and redeploy somewhere else". And they're fine
+now. You'll be too. Tomorrow will come.
+
+#+begin_quote
+These enterprise solutions are vetted by the pros.
+#+end_quote
+
+Be careful when someone is trying to sell you something. The best discount is
+100% off; i.e. not buying the thing in the first place.
+
+#+begin_quote
+Our system is serious. We need huge, powerful machines to run it.
+#+end_quote
+
+The CPU frequency of the [[https://en.wikipedia.org/wiki/Apollo_Guidance_Computer][Apollo Guidance Computer]] that put Man on the moon was 2
+MHz, which it divvied for various purposes. The Raspberry Pi 4 in my living room
+has four CPUs of 1,500 MHz each. That's three orders of magnitude more, each. Do
+you know precisely what your software is spending all those cycles on?
+
+** Non-Teams
+
+#+begin_quote
+Something something Agile Development, Team Topologies.
+#+end_quote
+
+One person is 50% less than two. Two people are 100% more than one. When
+optimizing, after 10x differences, 2x differences are the next thing to aim for.
+It only takes three 2x differences to rival 10x, and six or seven to rival 100x.
+
+If you can get away with doing something by yourself, then do it. Yes this
+creates a maintainability risk (re: bus factor), but if you've kept the rest of
+your system simple, that risk may be acceptable. That said, even the Romans had
+two consuls. Our brains have two hemispheres. But not three.
+
+Sometimes teams, departments, and companies are over-staffed. This creates a
+"rocket problem" where each additional human in the room creates more
+coordination overhead. Soon you're hiring people to manage the overhead itself,
+and then again to manage those managers. With the [[https://en.wikipedia.org/wiki/Pareto_principle][Pareto Principle]] in mind, I
+truly wonder how many massive tech organizations could get by with just 100, or
+50, or 10 caring people who really knew what they were doing.
+
+God forbid that that would free the rest of the workforce to go do something
+actually useful.
+
+* Conclusion
+
+Do we over-engineer things just [[https://effectiviology.com/shirky-principle/][to give ourselves something to do]]? But do you
+really not want to finish and move on?
+
+Be aware that I'm not suggesting you literally run your next company with Lua on
+a Raspberry Pi. It's an example, a mental framing technique. You're perfectly
+welcome to run Rust in some Docker containers on AWS, but _prove to yourself
+first that you should_, not because you've been caught in the winds of hype or
+"best practice".
