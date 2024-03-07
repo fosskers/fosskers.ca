@@ -22,7 +22,7 @@ Its antidote is simplicity and careful choice. Technology can unlock new
 capability, but we must be wary of costs.
 
 With a clear [[https://youtu.be/c5QF2HjHLSE][problem statement]], before starting any project it must be proven
-that the problem could not be solved by:
+that the problem could _not_ be solved by:
 
 1. Running Lua
 2. with SQLite
@@ -32,6 +32,8 @@ that the problem could not be solved by:
 Essentially, the simplest possible human-software-deployment triad.
 
 ** Simple Languages
+
+Let's put aside our favourites for a moment.
 
 As they say, a master never blames his tools. But nor should a master be
 complacent with poor ones.
@@ -47,14 +49,15 @@ contains essentially the fewest concepts necessary for producing useful
 programs.
 
 #+begin_quote
-I need async/await and callbacks and all that. Runtimes! Actor systems! Mass concurrency!
+I need async/await and callbacks and all that. Runtimes! Channels! Actor systems! Mass concurrency!
 #+end_quote
 
 Do you? Are you running the [[https://www.youtube.com/watch?v=BXmOlCy0oBM][phone system of an entire country]]?
 
 Lua is typically single-CPU, but supports [[https://www.lua.org/pil/9.4.html][non-premptive multithreading]] via
 coroutines. The simplest way to avoid [[https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/][the Red-Blue Problem]] is to not introduce
-complicated control-flow structures to the language in the first place.
+complicated control-flow structures to the language in the first place. You
+can't shoot yourself in the foot if the language has no guns.
 
 #+begin_quote
 I need memory safety.
@@ -62,8 +65,8 @@ I need memory safety.
 
 You're probably right. Statistically, most developers are not qualified to write
 memory-safe C. However, Lisp had garbage collection long before C was ever
-invented, which, prior to the Ownership system popularized by Rust, was a
-servicable solution for most scenarios. But even here we must ask: what about
+invented, and garbage collection remaing a servicable solution for most
+scenarios. But what about Rust's Ownership concept? Here we must ask: what about
 your project is so memory-critical that a GC'd language is not enough? Ownership
 is not free either.
 
@@ -93,7 +96,8 @@ between your program and your database significantly reduces throughput.
 
 ** Hardware you Own
 
-You probably do not need Docker, let alone Kubernetes.
+You probably do not need Docker, let alone Kubernetes. Neither existed until
+quite recently.
 
 #+begin_quote
 I need automated deployments.
@@ -108,7 +112,8 @@ machines.
 
 Unix won. It's not hard to throw dependency install instructions into a script.
 Plenty of you are doing that in your Dockerfiles anyway! The border into the
-Docker realm should be crossed only after a serious analysis of the costs.
+Docker realm should be crossed only after a serious analysis of the costs. Its
+use is neither free nor self-explanatory.
 
 #+begin_quote
 I can't afford any down time. I need load balancers and supervisors for when my
@@ -137,6 +142,9 @@ MHz, which it divvied for various purposes. The Raspberry Pi 4 in my living room
 has four CPUs of 1,500 MHz each. That's three orders of magnitude more, each. Do
 you know precisely what your software is spending all those cycles on?
 
+As with Docker, "the Cloud" is a relatively new invention. Is its use obvious?
+I've seen what companies pays their Cloud Providers. My $100 RPi is skeptical.
+
 ** Non-Teams
 
 #+begin_quote
@@ -156,8 +164,8 @@ Sometimes teams, departments, and companies are over-staffed. This creates a
 "rocket problem" where each additional human in the room creates more
 coordination overhead. Soon you're hiring people to manage the overhead itself,
 and then again to manage those managers. With the [[https://en.wikipedia.org/wiki/Pareto_principle][Pareto Principle]] in mind, I
-truly wonder how many massive tech organizations could get by with just 100, or
-50, or 10 caring people who really knew what they were doing.
+truly wonder how many tech organizations could get by with just 10 people who
+cared and really knew what they were doing.
 
 God forbid that that would free the rest of the workforce to go do something
 actually useful.
