@@ -143,7 +143,7 @@ has four CPUs of 1,500 MHz each. That's three orders of magnitude more, each. Do
 you know precisely what your software is spending all those cycles on?
 
 As with Docker, "the Cloud" is a relatively new invention. Is its use obvious?
-I've seen what companies pays their Cloud Providers. My $100 RPi is skeptical.
+I've seen what companies pay their Cloud Providers. My $100 RPi is skeptical.
 
 ** Non-Teams
 
