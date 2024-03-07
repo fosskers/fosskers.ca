@@ -35,8 +35,8 @@ Essentially, the simplest possible human-software-deployment triad.
 
 Let's put aside our favourites for a moment.
 
-As they say, a master never blames his tools. But nor should a master be
-complacent with poor ones.
+As they say, a master never blames his tools. But nor should he be complacent
+with poor ones.
 
 #+begin_quote
 My code must run as fast as possible.
@@ -54,7 +54,7 @@ I need async/await and callbacks and all that. Runtimes! Channels! Actor systems
 
 Do you? Are you running the [[https://www.youtube.com/watch?v=BXmOlCy0oBM][phone system of an entire country]]?
 
-Lua is typically single-CPU, but supports [[https://www.lua.org/pil/9.4.html][non-premptive multithreading]] via
+Lua is typically single-CPU, but supports [[https://www.lua.org/pil/9.4.html][non-preemptive multithreading]] via
 coroutines. The simplest way to avoid [[https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/][the Red-Blue Problem]] is to not introduce
 complicated control-flow structures to the language in the first place. You
 can't shoot yourself in the foot if the language has no guns.
@@ -65,7 +65,7 @@ I need memory safety.
 
 You're probably right. Statistically, most developers are not qualified to write
 memory-safe C. However, Lisp had garbage collection long before C was ever
-invented, and garbage collection remaing a servicable solution for most
+invented, and garbage collection remains a servicable solution for most
 scenarios. But what about Rust's Ownership concept? Here we must ask: what about
 your project is so memory-critical that a GC'd language is not enough? Ownership
 is not free either.
@@ -164,8 +164,8 @@ Sometimes teams, departments, and companies are over-staffed. This creates a
 "rocket problem" where each additional human in the room creates more
 coordination overhead. Soon you're hiring people to manage the overhead itself,
 and then again to manage those managers. With the [[https://en.wikipedia.org/wiki/Pareto_principle][Pareto Principle]] in mind, I
-truly wonder how many tech organizations could get by with just 10 people who
-cared and really knew what they were doing.
+truly wonder how many tech organizations could get by fine with just 10 people
+who cared and really knew what they were doing.
 
 God forbid that that would free the rest of the workforce to go do something
 actually useful.
