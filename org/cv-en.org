@@ -247,7 +247,7 @@ A four-year degree, majoring in Asian History and Languages.
 | Certification                                 | Level | Year |
 |-----------------------------------------------+-------+------|
 | Goethe-Zertifikat German Language Proficiency | B1    | 2015 |
-| Japanese Kanji Proficiency Test               | Pre-2 | 2013 |
+| Japanese Kanji Proficiency Test               | 2     | 2024 |
 | Japanese Language Proficiency Test            | N1    | 2012 |
 
 * Talks and Presentations
