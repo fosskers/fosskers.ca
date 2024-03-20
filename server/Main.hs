@@ -39,6 +39,7 @@ import           Network.HTTP.Types
 import           Network.Wai
 import           Network.Wai.Application.Static
 import qualified Network.Wai.Handler.Warp as W
+import qualified Network.Wai.Handler.WarpTLS as TLS
 import           Network.Wai.Middleware.Gzip
 import           Options.Applicative hiding (style)
 import           Skylighting hiding (formatHtmlBlock)
@@ -50,11 +51,16 @@ import           Xmlbf (ToXml(..), encode)
 
 ---
 
-newtype Args = Args (Maybe Int)
+-- | Commandline arguments.
+data Args = Args { _port :: !(Maybe Int)
+                 , _cert :: !(Maybe FilePath)
+                 , _key  :: !(Maybe FilePath) }
 
 pArgs :: Parser Args
 pArgs = Args
   <$> optional (option auto $ long "port" <> help "Port to listen on, otherwise $PORT")
+  <*> optional (strOption $ long "cert" <> help "Path to the TLS cert file")
+  <*> optional (strOption $ long "key" <> help "Path to the TLS key file")
 
 html :: Html () -> Response
 html = responseLBS status200 [("Content-Type", "text/html")] . renderBS
@@ -223,7 +229,7 @@ splitLs :: [Blog] -> Maybe (NonEmpty Blog, NonEmpty Blog)
 splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . partition (\b -> blogLang b == English)
 
 work :: Args -> Pages -> NonEmpty Blog -> NonEmpty Blog -> IO ()
-work (Args p) ps ens jps = do
+work (Args p mc mk) ps ens jps = do
   herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
   cores <- getNumCapabilities
   today <- utctDay <$> getCurrentTime
@@ -235,7 +241,12 @@ work (Args p) ps ens jps = do
       !bls = Blogs (byCats newEs) (byCats newJs) (groupByDate newEs) (groupByDate newJs) eng jap
   logInfo . T.pack $ printf "Blog posts read: %d" (length ens + length jps)
   logInfo . T.pack $ printf "Listening on port %d with %d cores" prt cores
-  W.run prt $ app today ps bls
+  case (mc, mk) of
+    (Just c, Just k) ->
+      let tls = TLS.tlsSettings c k
+          set = W.setPort prt W.defaultSettings
+      in TLS.runTLS tls set $ app today ps bls
+    _ -> W.run prt $ app today ps bls
 
 sortByDate :: NonEmpty Blog -> NonEmpty Blog
 sortByDate = NEL.reverse . NEL.sortWith blogDate

@@ -88,3 +88,4 @@ executable server
     , wai-app-static        ^>=3.1
     , wai-extra             >=3.0   && <3.2
     , warp                  >=3.2   && <3.4
+    , warp-tls              >=3.4   && <3.5
