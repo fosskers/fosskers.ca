@@ -230,10 +230,11 @@ splitLs = bitraverse NEL.nonEmpty NEL.nonEmpty . partition (\b -> blogLang b == 
 
 work :: Args -> Pages -> NonEmpty Blog -> NonEmpty Blog -> IO ()
 work (Args p mc mk) ps ens jps = do
-  herokuPort <- (>>= readMaybe) <$> lookupEnv "PORT"
   cores <- getNumCapabilities
   today <- utctDay <$> getCurrentTime
-  let !prt = fromMaybe 8081 $ p <|> herokuPort
+  let !prt = case (mc, mk) of
+        (Just _, Just _) -> 443
+        _ -> fromMaybe 8081 p
       !eng = mapify ens
       !jap = mapify jps
       !newEs = sortByDate ens
