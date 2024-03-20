@@ -1,17 +1,11 @@
-resolver: lts-20.26
+resolver: lts-22.13
 
 ghc-options:
   $everything: -split-sections
   $locals: -fwrite-ide-info -hiedir=.hie -fmax-relevant-binds=0
 
-flags:
-  these:
-    assoc: false
-  strict:
-    assoc: false
-
 extra-deps:
   # --- Missing from Stackage --- #
   - org-mode-2.1.0
   - org-mode-lucid-1.7.0
-  - skylighting-lucid-1.0.3
+  - skylighting-lucid-1.0.4

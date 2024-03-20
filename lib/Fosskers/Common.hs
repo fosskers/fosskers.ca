@@ -35,7 +35,6 @@ import qualified Data.Map.Strict as M
 import qualified Data.Org as O
 import           Data.Text (Text)
 import qualified Data.Text as T
-import qualified Data.Text.Lazy as TL
 import           Data.Time.Calendar (Day(..))
 import           Data.Time.Format
 import           Lucid
@@ -153,11 +152,11 @@ newtype ByLanguage = ByLanguage (NonEmpty Blog)
 instance X.ToXml Blog where
   toXml (Blog l slug title day _ _ _  _ _) =
     X.element "item" mempty
-    $  X.element "title" mempty (X.text $ TL.fromStrict title)
+    $  X.element "title" mempty (X.text title)
     <> X.element "link" mempty
-    (X.text . TL.fromStrict $ "https://www.fosskers.ca/" <> langPath l <> "/blog/" <> slug)
-    <> X.element "pubDate" mempty (X.text . TL.pack . dtt $ dtd day)
-    <> X.element "description" mempty (X.text $ TL.fromStrict title)
+    (X.text $ "https://www.fosskers.ca/" <> langPath l <> "/blog/" <> slug)
+    <> X.element "pubDate" mempty (X.text . T.pack . dtt $ dtd day)
+    <> X.element "description" mempty (X.text title)
 
 orgDate :: Text -> O.OrgFile -> Maybe Day
 orgDate field o =
