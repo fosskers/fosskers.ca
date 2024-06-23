@@ -1,6 +1,7 @@
 #+TITLE: Proven Complexity and Technology Choice
 #+DATE: 2024-03-07
 #+AUTHOR: Colin
+#+UPDATED: 2024-06-23
 #+CATEGORY: programming
 
 In software development, there is a tendency for programmers to produce a
@@ -27,9 +28,9 @@ that the problem could _not_ be solved by:
 1. Running Lua
 2. with SQLite
 3. on a Raspberry Pi
-4. by a one-person team.
+4. all by one-person.
 
-Essentially, the simplest possible human-software-deployment triad.
+Essentially, the simplest possible human-software-deployment combination.
 
 ** Simple Languages
 
@@ -103,7 +104,8 @@ quite recently.
 I need automated deployments.
 #+end_quote
 
-I get why Google might, but can you name your motivations concretely?
+I get why Google might, but can you name your motivations concretely? Could you
+manage with a long-lived ~tmux~ session, running hand-uploaded binaries?
 
 #+begin_quote
 I need to coordinate dependencies between developer machines and production
@@ -172,7 +174,7 @@ actually useful.
 
 * Conclusion
 
-Do we over-engineer things just [[https://effectiviology.com/shirky-principle/][to give ourselves something to do]]? But do you
+Do we over-engineer things just [[https://effectiviology.com/shirky-principle/][to give ourselves something to do]]? But do we
 really not want to finish and move on?
 
 Be aware that I'm not suggesting you literally run your next company with Lua on
