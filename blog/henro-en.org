@@ -1370,3 +1370,36 @@ Original Japanese:
 
 雨の日。十一時頃から本降りになり宿に着くまでにかなり濡れた、特に靴。晩はホテルで
 buffet。相撲も放送されていた。
+
+** Day 28 - May 13 (26km)
+
+It was still raining this morning but the route demands progress.
+
+The climb up to Shussekiji (Bekkaku 7) didn't take as long as I thought it
+would, and it was quite peaceful. I felt like the only human on the mountain.
+There were some tricky sections, but that made it fun. I was there by 14:00 or
+so, and the view from the top was stunning. A temple sat upon a mountain peak.
+
+When I get home I won't be pursuing KanjiNet. I'm going to move on to Big Sky
+directly. That's what I want.
+
+Post-trip Addendum:
+
+Shussekiji, while a Bekkaku, is massive and gets many visitors. Only a few were
+there while I was, but you could tell it's a frequented location, despite not
+being part of the main 88. This was the only temple on the entire pilgrimage
+that I was able to stay at officially. My room was quite spacious and the shared
+bath was surprisingly modern. I had to cook for myself though, and boiled my
+pasta noodles over by the temple gate with the Guardian Statues peering down
+over me.
+
+Big Sky is my next major software project, after I release [[https://github.com/fosskers/aura][Aura 4]]. Stay tuned.
+
+Original Japanese:
+
+朝はまだ雨だったが出発するしかなかった。出石寺への登山は静かで平和だった。その頃
+雨も止んでいた。寺は山頂に在り景色が相当な物。
+
+やはり帰ったら漢字ネットじゃなくて直接 BigSky に移る。 That's what I want.
+
+[[/assets/images/henro/0513-mountaintop.jpg]]
