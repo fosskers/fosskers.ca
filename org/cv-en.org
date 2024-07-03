@@ -165,7 +165,8 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role       | Language    | Description                                   |
 |------+----------------------+------------+-------------+-----------------------------------------------|
-| 2024 | [[https://codeberg.org/fosskers/nonempty][nonempty]]             | Author     | Common Lisp | Non-empty collections for Common Lisp         |
+| 2024 | [[https://codeberg.org/fosskers/applying][applying]]             | Author     | Rust        | Apply functions in method position.           |
+|      | [[https://codeberg.org/fosskers/nonempty][nonempty]]             | Author     | Common Lisp | Non-empty collections for Common Lisp         |
 |      | [[https://codeberg.org/fosskers/filepaths][filepaths]]            | Author     | Common Lisp | Modern, consistent filepath manipulation      |
 |      | [[https://git.sr.ht/~fosskers/sly-overlay][sly-overlay]]          | Author     | Emacs Lisp  | Evaluation overlays for Common Lisp in Emacs  |
 |------+----------------------+------------+-------------+-----------------------------------------------|
