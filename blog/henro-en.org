@@ -1470,3 +1470,86 @@ Original Japanese:
 お接待：餅・サラダ・情報・妙な柑橘類
 
 [[/assets/images/henro/0514-uchiko.jpg]]
+
+** Day 30 - May 15 (44km)
+
+I killed it again today. I was up at 4:30, gone by 5:00, and was on a tight
+schedule the entire day. It was non-stop walking, and a lot of it uphill.
+
+At one point I hit another farmer's fence, which seemed to cut off the route
+entirely. I took the obvious detour, except it wasn't, and I found myself in the
+bush again. I turned around and quickly discovered that the fence had a little
+door which in my haste I had missed.
+
+I really flew today. Heading for the Nōso Pass I walked 5km uphill on a mountain
+highway, finally passing through the flat Mayumi Tunnel. At the foot of the pass
+I was already mostly out of food but had to keep going. I did manage to get
+water from a local. Back uphill you come upon the ruins of Nakano village, and
+there isn't a soul in sight. This is several hundred meters above sea level in
+the middle of the mountains. They have a school up there too, but it clearly has
+not been used in decades. Their Jinja was quite large, but similarly looked
+unkept. After that the true climb began, with several poorly marked sections of
+trail, also highly overgrown. I was afraid to take this route because I knew
+that Nakano Shūhei, the author of a Henro book I had read, got lost here. But I
+decided I had to. In the end I made it through confidently and I don't know
+where he could've gotten lost.
+
+This particular route is special because you descend upon temple 45 from the
+top, doing it before 44 to avoid backtracking. I arrived through the mountain
+gate at 16:15 (recall: they close at 17:00). Considering how far I had walked,
+that's amazing timing.
+
+Another 3km down from the temple was a hut standing beside a hot spring and
+restaurant, unfortunately closed today. Which meant no real dinner, since all I
+had left was dried apples and Calorie Mate. At least there are drink machines
+and a bathroom here.
+
+Can I make it to Matsuyama tomorrow?
+
+Animals: 2 cats, 2 snakes
+
+Post-trip Addendum:
+
+This day was the greatest accomplishment of planning, mental fortitude, and
+physical execution of the entire pilgrimage. I walked from Uchiko to Iwayaji
+(45) in one day. That's almost unheard of, and had the conditions been any
+different I wouldn't have made it. Rain? Bad wind? Slightly slower pace? One
+break too many? Getting lost in the mountains? No path optimizations? Any of
+that and I wouldn't have made it. But I did.
+
+The "unrecommended" route above Nakano village was probably also the most
+challenging of the pilgrimage in terms of execution difficulty. There were some
+very thin sections of trail, upon which a slip would mean a tumble down the
+hill. The trail itself was also very poorly marked in places.
+
+Original Japanese:
+
+また一日頑張った日。四時半起きで五時出発。ひたすら歩いた。ある場所で農家が道に柵
+を張ってて避けようとまた藪の所に突っ込んた。すぐ通れんくなって引き返したら普通に
+柵のドアを開けるべきだった事が分かった。
+
+かなり飛ばした。農祖峠と槙の谷の道を通って行った。途中で水がなくなり近所の人に頼
+んだ。中ノ村もあったがもう誰も居ない。古い小学校の校舎もあってようこんな高い所に
+学校を建てたなと思った。村の神社も壮大やったがこれも最近触られていると思えない。
+その先は本格的に山道になるが結局中野周平がどこで迷えたかは分からなかった。
+
+寺に着いたのは四時十五分頃。三粁下山した所に東屋があり今日はここで野宿。明日から
+松山？
+
+動物：猫２・蛇２
+
+[[/assets/images/henro/0515-turnleft.jpg]]
+
+The pillar reads:
+
+#+begin_quote
+Left, Daihōji, 3.4km. Right, Iwayaji, 9.5km.
+#+end_quote
+
+The sign reads:
+
+#+begin_quote
+The route to Iwayaji is not passable. Turn left here and visit Daihōji first.
+#+end_quote
+
+No.
