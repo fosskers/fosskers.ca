@@ -1861,21 +1861,21 @@ I had only slept in that tent 10-15 times, and I already had a pole failure? Not
 at all what I wanted to happen when the sun was already down and I had no help,
 but I figured it out.
 
-I didn't see Aoyama-san again after that. During our walk we had talked about
-what it meant to be Japanese. Japan has the somewhat rare convergence of
-language, culture, ethnicity, nationality, and geography being essentially
-entirely unified. Basically, Japanese-speaking Japonic-asian citizens of the
-country of Japan upon the Japanese archapelago. Yes there are dialects and yes
-there is something of differing cultural attitudes between the East and West,
-and no I haven't forgotten about the Ainu or the Okinawans, but by and large
-Japan is "the same" throughout the country. This instills the people with an
-amusing assumption that everywhere else is like that too: unified and uniform.
-So the contrast surprised him when I described myself as an English-native,
-Japan-influenced, European-descent Caucasian citizen of Canada, living in Japan,
-but also that there are plenty of Canadian who don't fit that description at
-all. For the rice-loving Japanese, to the question "So what's your staple?", the
-answer "I don't have one" nearly doesn't compute. Honestly it's probably rice at
-this point for me anyway.
+During my walk with Aoyama-san we had talked about what it meant to be Japanese.
+Japan has the somewhat rare convergence of language, culture, ethnicity,
+nationality, and geography being nearly entirely unified. Basically,
+Japanese-speaking Japonic-asian citizens of the country of Japan upon the
+Japanese archapelago. Yes there are dialects and yes there is something of
+differing cultural attitudes between the East and West, and no I haven't
+forgotten about the Ainu or the Okinawans, but by and large Japan is "the same"
+throughout the country. This instills the people with an amusing assumption that
+everywhere else is like that too: unified and uniform. So the contrast surprised
+him when I described myself as an English-native, Japan-influenced,
+European-descent Caucasian citizen of Canada, living in Japan, but also that
+there are plenty of Canadian who don't fit that description at all. For the
+rice-loving Japanese, to the question "So what's the staple food in Canada?",
+the answer "There isn't one" nearly doesn't compute. Honestly it's probably rice
+at this point for me.
 
 Original Japanese:
 
@@ -1945,3 +1945,55 @@ Electric Shaverが買いたくて困っている人の人助けもした。通�
 動物：猫３・猿１３・小蛇１
 
 お接待：５００円
+
+** Day 38 - May 23 (27km)
+
+It was raining slightly as I stepped out of the hotel. Luckily it soon stopped,
+and I boarded my 6:30 train back to Sangawa without issue. Aoyama-san had had
+the same idea and was on the same train, so we walked together from there until
+around noon. He talked a lot and it was starting to get on my nerves.
+
+The grounds of Sankakuji (65) were beautiful. Yet a contender for #1 of the
+entire journey was next: Bekkaku 13, Senryūji. It had a mountain climb to reach
+it, a massive main building, a main hall carved out of the mountain side, and
+was surrounded by slopes and deep forest. The monk also offered me water from a
+mountain spring. It was everything you could hope a mountain temple to be. I
+wish I could have stayed longer.
+
+After that it was an ordinary descent. Houses dotted the mountain road, which
+sat above a dammed river. Prior to the damming there used to be other buildings
+further down, but they have since been swallowed by the water.
+
+Bekkaku 14 was waiting for me down in the valley town. I liked it for its unique
+name, Tsubakidō, the [[https://en.wikipedia.org/wiki/Camellia][Camellia]] Hall. Another 2km up the road was an official
+Henro Hut, my home-sweet-home for tonight. I celebrated a good day with some
+traditional Buddhist meat sauce pasta.
+
+Animals: 1 baby snake, 1 cat
+
+Osettai: Juice, water
+
+Post-trip Addendum:
+
+Aoyama-san and I parted at Bekkaku 13, and I didn't see him again after that. We
+took the same route down, but I somehow never caught up to him.
+
+Original Japanese:
+
+朝、外に出ると小降り。幸いすぐ止んで六時半の電車で寒川駅まで戻った。青山さんも居
+たので昼頃まで一緒に歩いた。ちょっとお喋りで途中で飽きた。
+
+三角寺は境内が綺麗でよく出来ている。しかしこの旅一番を争うのが別格十三番仙龍寺。
+山登り、巨大な本坊、岩を彫った本堂、nice大師堂、豊かな自然、泉の水をくれる和尚さ
+ん。もっと居たかったな。
+
+それから単に山を下った。今日は遍路小屋。
+
+今日の backpack は今までで一番重かったが最後まで歩けた。登山はいつもより遅かった
+がくじける事なかった。
+
+動物：小蛇１・猫１
+
+お接待：ジュース・水
+
+[[/assets/images/henro/0523-senryuuji.jpg]]
