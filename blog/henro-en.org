@@ -1,6 +1,7 @@
 #+TITLE: The Henro Pilgrimage
 #+DATE: 2024-06-04
 #+AUTHOR: Colin
+#+UPDATED: 2024-07-23
 #+CATEGORY: buddhism
 
 From 2024 April 16th to June 1st I walked 1265 kilometers around the island of
@@ -2531,3 +2532,104 @@ Original Japanese:
 明日から歩かんでいい。
 
 [[/assets/images/henro/0601-gate.jpg]]
+
+* Conclusion
+
+The benefits of the pilgrimage were multifold. It showed me what I, and humans
+in general, are physically capable of. It focused my goals and next steps. It
+introduced me to new ideas and philosophical avenues. I interacted with hundreds
+of people. I got turned down for lodging over the phone in Japanese over and
+over again. I saw the beauty of Shikoku in the Spring. I had extended exposure
+to hands-on Buddhist practice. I was alone with myself and at peace for weeks on
+end. I learned what "early" is. I learned what "wet" is. I learned what "far"
+is. I overcame something hard.
+
+Not once did I consider quitting. I'm going to take that as a sign of strength.
+
+** Statistics
+
+_Distances_
+
+| Walked Distance                  | 1265km |
+| Walking Days                     | 45     |
+| Rest Days                        | 2      |
+| Shortest Day                     | 16km   |
+| Longest Day                      | 47km   |
+| Average Distance per Day         | 26.9km |
+| Average Distance per Walking Day | 28.1km |
+
+I reached all of the Bekkaku Temples except 1, 2, 3, and 20. The first three
+were before I had decided to do them, and 20 was beyond my time budget. This
+gives me a reason to return.
+
+_Lodging_
+
+| Style              | Times | Total Cost | Average Cost |
+|--------------------+-------+------------+--------------|
+| Inns, hotels, etc. |    25 | 121,730    |        4,869 |
+| Camping            |    16 | 3,820      |          239 |
+| Friend's House     |     3 | 0          |            0 |
+| Temple (Tsūyadō)   |     2 | 0          |            0 |
+| Temple (Shukubō)   |     1 | 4,000      |        4,000 |
+| Zenkonyado         |     1 | 0          |            0 |
+|--------------------+-------+------------+--------------|
+| Total              |    48 | 129,550    |        2,699 |
+
+Roughly half paid lodging, half near-free camping. I should have been able to
+achieve a cheaper average for paid lodging, but I often threw in the extra for
+cooked meals. Those were always much better than the inevitable, half-plastic
+convenience store meals that otherwise awaited.
+
+_Animals_
+
+| Animal  | Count |
+|---------+-------|
+| Cats    |    93 |
+| Monkeys |    26 |
+| Snakes  |    16 |
+| Hornets |    3+ |
+| Mamushi |     3 |
+
+Also untold numbers of turtles, frogs, crabs, and various birds. I was hoping to
+break 100 for cats.
+
+** Home Again
+
+I complete this series on July 23rd. It has been about 7 weeks since my return.
+In that time I have maintained my morning routine and put around 80 hours into
+personal projects. I am well on track to soon begin my next major undertaking,
+Big Sky.
+
+JC was recently back in Tokyo for a few final days before returning to Canada,
+and we met twice for dinner. He had bought a special mechanical Japanese toilet
+seat to take back with him. Anyone who has been here and experienced that
+shining ivory would understand why. His pilgrimage had been fruitful too, and he
+was over-ready to get back to life with his newly focused mind.
+
+This past weekend I cycled around Tokyo to visit the [[https://ja.wikipedia.org/wiki/%E6%B1%9F%E6%88%B8%E4%B8%89%E5%8D%81%E4%B8%89%E8%A6%B3%E9%9F%B3%E6%9C%AD%E6%89%80][Edo 33 Kannon Temples]]. I
+fear this trend may continue.
+
+** Thank You
+
+I could not have started this journey were it not for the effort and struggles
+of centuries of past pilgrims before me. Thank you Shinnen for formalising the
+route in the 17th century. Thank you Kūkai for risking death on the sea voyage
+to Tang China, and bringing back what you learned there to keep [[https://en.wikipedia.org/wiki/Vajrayana][Vajrayana]] alive.
+
+I could not have completed the journey without the day-to-day help and support
+of hundreds of strangers and fellow pilgrims.
+
+Thank you to everyone who fed me.
+
+To my family and friends who waited all week for my Mondayly updates: thank you
+for your patience.
+
+Thank you to my employer, who took a bet on letting me take that much time off.
+
+Thank you to everyone who followed along as I posted these entries here and on Mastodon.
+
+北川家と栗原家へも、いつも仲間で居てくれてありがとうございます。
+
+Thank you to me for taking every step.
+
+南無大師遍照金剛
