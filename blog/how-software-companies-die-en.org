@@ -1,4 +1,4 @@
-#+TITLE: How Software Companies Die
+#+TITLE: O.S. Card: How Software Companies Die
 #+DATE: 2023-04-03
 #+AUTHOR: Orson Scott Card
 #+CATEGORY: programming
