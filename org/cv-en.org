@@ -165,7 +165,9 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role       | Language    | Description                                   |
 |------+----------------------+------------+-------------+-----------------------------------------------|
-| 2024 | [[https://codeberg.org/fosskers/applying][applying]]             | Author     | Rust        | Apply functions in method position.           |
+| 2024 | [[https://github.com/fosskers/save-the-farm][Save the Farm]]        | Author     | Common Lisp | A demo game to learn the [[https://github.com/Shirakumo/trial][Trial]] engine         |
+|      | [[https://github.com/fosskers/empty-collections][empty-collections]]    | Author     | Rust        | Correct-by-construction empty collections     |
+|      | [[https://codeberg.org/fosskers/applying][applying]]             | Author     | Rust        | Apply functions in method position            |
 |      | [[https://codeberg.org/fosskers/nonempty][nonempty]]             | Author     | Common Lisp | Non-empty collections for Common Lisp         |
 |      | [[https://codeberg.org/fosskers/filepaths][filepaths]]            | Author     | Common Lisp | Modern, consistent filepath manipulation      |
 |      | [[https://git.sr.ht/~fosskers/sly-overlay][sly-overlay]]          | Author     | Emacs Lisp  | Evaluation overlays for Common Lisp in Emacs  |
@@ -253,19 +255,20 @@ A four-year degree, majoring in Asian History and Languages.
 
 * Talks and Presentations
 
-| Topic                          | Date      | Venue                    | Location  | Language |
-|--------------------------------+-----------+--------------------------+-----------+----------|
-| Fortran and Doom Emacs         | 2022 Feb  | DoomConf                 | Online    | English  |
-| Terminal Progress Bars in Rust | 2021 Feb  | Vancouver Rust Meetup    | Vancouver | English  |
-| [[https://www.youtube.com/watch?v=CmMzkOspHTU][Haskell in Production]]          | 2019 June | LambdaConf               | Boulder   | English  |
-| Beauty and Correctness in Code | 2019 May  | Polyglot Unconference    | Vancouver | English  |
-| Pact Basics                    | 2018 Nov  | NODE Tokyo               | Tokyo     | Japanese |
-| Introduction to Chainweb       | 2018 Nov  | Neutrino Meetup          | Tokyo     | Japanese |
-| [[https://www.youtube.com/watch?v=-UEOLfyDi74][How not to Write Slow Scala]]    | 2018 June | LambdaConf               | Boulder   | English  |
-| Tips on Scala Performance      | 2018 May  | Polyglot Unconference    | Vancouver | English  |
-| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/229599314/][Extensible Effects]]             | 2016 Apr  | Vancouver Haskell Meetup | Vancouver | English  |
-| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/170696382/][Applicative Functors]]           | 2014 Apr  | Vancouver Haskell Meetup | Vancouver | English  |
-| Thoughts on Japanese Education | 2012 Feb  | Arkas Sasebo             | Sasebo    | Japanese |
+| Topic                          | Date     | Venue                    | Location  | Language |
+|--------------------------------+----------+--------------------------+-----------+----------|
+| [[https://youtu.be/khicXrTCeMc][Pearls of Parallelism]]          | 2024 Sep | CADDi                    | Tokyo     | English  |
+| Fortran and Doom Emacs         | 2022 Feb | DoomConf                 | Online    | English  |
+| Terminal Progress Bars in Rust | 2021 Feb | Vancouver Rust Meetup    | Vancouver | English  |
+| [[https://www.youtube.com/watch?v=CmMzkOspHTU][Haskell in Production]]          | 2019 Jun | LambdaConf               | Boulder   | English  |
+| Beauty and Correctness in Code | 2019 May | Polyglot Unconference    | Vancouver | English  |
+| Pact Basics                    | 2018 Nov | NODE Tokyo               | Tokyo     | Japanese |
+| Introduction to Chainweb       | 2018 Nov | Neutrino Meetup          | Tokyo     | Japanese |
+| [[https://www.youtube.com/watch?v=-UEOLfyDi74][How not to Write Slow Scala]]    | 2018 Jun | LambdaConf               | Boulder   | English  |
+| Tips on Scala Performance      | 2018 May | Polyglot Unconference    | Vancouver | English  |
+| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/229599314/][Extensible Effects]]             | 2016 Apr | Vancouver Haskell Meetup | Vancouver | English  |
+| [[https://www.meetup.com/Vancouver-Haskell-Unmeetup/events/170696382/][Applicative Functors]]           | 2014 Apr | Vancouver Haskell Meetup | Vancouver | English  |
+| Thoughts on Japanese Education | 2012 Feb | Arkas Sasebo             | Sasebo    | Japanese |
 
 * Hobbies
 
