@@ -39,9 +39,13 @@ give conference presentations in both English and Japanese.
 
 ** Software Development
 
+*** Braid Technologies - Senior Software Developer
+
+/2024 November - Present/
+
 *** CADDi - Rust Developer
 
-/2022 September - Present/
+/2022 September - 2024 October/
 
 *** Freelance Software (Rust, Go)
 
