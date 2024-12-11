@@ -264,6 +264,7 @@ Scala開発者。
 
 | テーマ                          | 日付      | 会場                     | 場所      | 言語  |
 |--------------------------------+-----------+--------------------------+-----------+-------|
+| [[https://emacsconf.org/2024/talks/transducers/][Transducers]]                    | 2024年１２月 | EmacsConf                | オンライン   | 英語  |
 | [[https://youtu.be/khicXrTCeMc][Pearls of Parallelism]]          | 2024年9月 | CADDi本社                | 東京      | 英語  |
 | Fortran and Doom Emacs         | 2022年2月 | DoomConf                 | オンライン   | 英語  |
 | Terminal Progress Bars in Rust | 2021年２月 | Vancouver Rust Meetup    | バンクーバー | 英語  |

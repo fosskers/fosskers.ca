@@ -261,6 +261,7 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Topic                          | Date     | Venue                    | Location  | Language |
 |--------------------------------+----------+--------------------------+-----------+----------|
+| [[https://emacsconf.org/2024/talks/transducers/][Transducers]]                    | 2024 Dec | EmacsConf                | Online    | English  |
 | [[https://youtu.be/khicXrTCeMc][Pearls of Parallelism]]          | 2024 Sep | CADDi                    | Tokyo     | English  |
 | Fortran and Doom Emacs         | 2022 Feb | DoomConf                 | Online    | English  |
 | Terminal Progress Bars in Rust | 2021 Feb | Vancouver Rust Meetup    | Vancouver | English  |
