@@ -169,6 +169,9 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role       | Language    | Description                                   |
 |------+----------------------+------------+-------------+-----------------------------------------------|
+| 2025 | [[https://github.com/fosskers/vend][vend]]                 | Author     | Common Lisp | Dependency management tool                    |
+|      | [[https://github.com/fosskers/simple-graph][simple-graph]]         | Author     | Common Lisp | A very simple graph library                   |
+|------+----------------------+------------+-------------+-----------------------------------------------|
 | 2024 | [[https://github.com/fosskers/save-the-farm][Save the Farm]]        | Author     | Common Lisp | A demo game to learn the [[https://github.com/Shirakumo/trial][Trial]] engine         |
 |      | [[https://github.com/fosskers/empty-collections][empty-collections]]    | Author     | Rust        | Correct-by-construction empty collections     |
 |      | [[https://codeberg.org/fosskers/applying][applying]]             | Author     | Rust        | Apply functions in method position            |

@@ -172,6 +172,9 @@ Scala開発者。
 
 |   年 | プロジェクト            | 役割      | 言語        | 概要                                    |
 |------+----------------------+-----------+-------------+-----------------------------------------|
+| 2025 | [[https://github.com/fosskers/vend][vend]]                 | 作者      | Common Lisp | 依存管理ツール                             |
+|      | [[https://github.com/fosskers/simple-graph][simple-graph]]         | 作者      | Common Lisp | とても単純なグラフのライブラリ                  |
+|------+----------------------+-----------+-------------+-----------------------------------------|
 | 2024 | [[https://github.com/fosskers/save-the-farm][Save the Farm]]        | 作者      | Common Lisp | [[https://github.com/Shirakumo/trial][Trial]] を学ぶためのデモゲーム                 |
 |      | [[https://github.com/fosskers/empty-collections][empty-collections]]    | 作者      | Rust        | 値が必ず入っていないデータ構造                 |
 |      | [[https://codeberg.org/fosskers/applying][applying]]             | 作者      | Rust        | メソドのように関数を呼ぶ                       |
