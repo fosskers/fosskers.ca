@@ -169,7 +169,8 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role       | Language    | Description                                   |
 |------+----------------------+------------+-------------+-----------------------------------------------|
-| 2025 | [[https://github.com/fosskers/vend][vend]]                 | Author     | Common Lisp | Dependency management tool                    |
+| 2025 | [[https://github.com/fosskers/aero-fighter][Aero Fighter]]         | Author     | Common Lisp | Top-down NES-style fighter game               |
+|      | [[https://github.com/fosskers/vend][vend]]                 | Author     | Common Lisp | Dependency management tool                    |
 |      | [[https://github.com/fosskers/simple-graph][simple-graph]]         | Author     | Common Lisp | A very simple graph library                   |
 |------+----------------------+------------+-------------+-----------------------------------------------|
 | 2024 | [[https://github.com/fosskers/save-the-farm][Save the Farm]]        | Author     | Common Lisp | A demo game to learn the [[https://github.com/Shirakumo/trial][Trial]] engine         |
