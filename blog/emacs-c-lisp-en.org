@@ -2,6 +2,7 @@
 #+DATE: 2023-08-15
 #+AUTHOR: Colin
 #+CATEGORY: programming
+#+UPDATED: 2025-02-24
 
 Emacs is largely a Lisp program, but has a C core. What's the ratio of SLOC
 between the two languages, and how have they changed over time?
@@ -14,14 +15,17 @@ Note that:
 - C header files are ignored.
 - Comment/blank lines are ignored.
 
-| Emacs Version | Lines of Lisp | Lines of C | Ratio |
-|---------------+---------------+------------+-------|
-|          29.1 |       1199775 |     306772 |  3.91 |
-|          28.2 |       1141528 |     257981 |  4.42 |
-|          27.2 |       1100237 |     252476 |  4.36 |
-|          26.3 |       1081561 |     235791 |  4.59 |
-|          25.3 |       1061723 |     226388 |  4.69 |
-|          24.5 |       1042357 |     215830 |  4.83 |
+| Emacs Version | Lines of Lisp | New Lisp (%) | Lines of C | New C (%) | Lisp/C Ratio |
+|---------------+---------------+--------------+------------+-----------+--------------|
+|          30.1 |       1245905 |         3.74 |     354775 |     15.62 |         3.51 |
+|          29.4 |       1201002 |         5.21 |     306835 |     18.94 |         3.91 |
+|          28.2 |       1141528 |         3.75 |     257981 |      2.18 |         4.42 |
+|          27.2 |       1100237 |         1.72 |     252476 |      7.07 |         4.36 |
+|          26.3 |       1081561 |         1.87 |     235791 |      4.15 |         4.59 |
+|          25.3 |       1061723 |         1.86 |     226388 |      4.89 |         4.69 |
+|          24.5 |       1042357 |              |     215830 |           |         4.83 |
 
 Between 28 and 29 we see a 19% increase in the size of the C. I wonder what
 changed? Perhaps the PGTK backend?
+
+For 30, the increase in C is likely due to the new native JSON parser.
