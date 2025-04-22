@@ -170,7 +170,7 @@ A four-year degree, majoring in Asian History and Languages.
 | Year | Project              | Role       | Language    | Description                                   |
 |------+----------------------+------------+-------------+-----------------------------------------------|
 | 2025 | [[https://github.com/fosskers/parcom][parcom]]               | Author     | Common Lisp | Parser Combinators                            |
-|      | [[https://github.com/fosskers/raylib][raylib]]               | Author     | Common Lisp | Bindings to [[https://www.raylib.com/]]           |
+|      | [[https://github.com/fosskers/raylib][raylib]]               | Author     | Common Lisp | Bindings to [[https://github.com/raysan5/raylib/][Raylib]]                            |
 |      | [[https://github.com/fosskers/clfmt][clfmt]]                | Author     | Common Lisp | Light code reformatter                        |
 |      | [[https://github.com/fosskers/aero-fighter][Aero Fighter]]         | Author     | Common Lisp | Top-down NES-style fighter game               |
 |      | [[https://github.com/fosskers/vend][vend]]                 | Author     | Common Lisp | Dependency management tool                    |
