@@ -3,8 +3,7 @@
 #+AUTHOR: Colin
 #+CATEGORY: programming
 
-Kypver is a new versioning scheme centered around decade-to-century scale API
-stability.
+Kypver is a new versioning scheme centered around long-term API stability.
 
 * The Pledge
 
@@ -162,6 +161,8 @@ good will multiplied across your thousands of downstream users?
 
 ** Doesn't this put all the burden on upstream software authors?
 
+What to do about "Open Source Entitlement"?
+
 To the degree that we put something of our creation out into the world, we are
 responsible for it. However, recall the other half of the promise: that the user
 vows not to depend on undefined behaviour. This highlights the dual nature of
@@ -185,6 +186,11 @@ Update Waves. The [[https://0ver.org/][0ver]] joke scheme embodies the silliness
 versioning pattern, as in practice many projects never move to =1.0= if they
 aren't forced to. With Kypver, software is by definition =1.0= as soon as it is
 released.
+
+** How is "Kypver" pronounced?
+
+Kipp-ver, where "Ky" does not rhyme with "eye", nor is it a Greek/German Y (ü)
+sound.
 
 * Definitions
 
