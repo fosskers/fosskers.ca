@@ -51,13 +51,6 @@ the notion that APIs can "change" in-place; instead they can only grow. To
 "change" a piece of software is to make it a different thing under the same
 name, i.e. a breakage.
 
-1. An API "Change" does not exist. There are only Additions or Breakage.
-2. Zerover is a lie to yourself and a disservice to others. "I indefinitely
-   retain the right to be an asshole to you at any point and frequency in the
-   future."
-
-Consider also [[https://xkcd.com/1172/][spacebar heating]]. _What if someone depends on buggy behaviour?_
-
 * Case Studies
 
 - Arch Linux vs Ubuntu (stay bleeding vs paranoia + "big jumps")
