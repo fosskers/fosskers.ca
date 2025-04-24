@@ -1,0 +1,235 @@
+#+TITLE: Kypver - Keep your Promises
+#+DATE: 2025-04-25
+#+AUTHOR: Colin
+#+CATEGORY: programming
+
+Kypver is a new versioning scheme centered around decade-to-century scale API
+stability.
+
+* The Pledge
+
+#+begin_quote
+As a software author, I pledge never to break my API.
+
+As a software user, I pledge to not willingly depend on _undefined behaviour_.
+#+end_quote
+
+* Rules
+
+1. _Software_ versions MUST be specified primarily by three numbers with optional
+   prerelease and metadata sections of the form =MAJOR.MINOR.PATCH-PRERELEASE+METADATA=.
+2. Software that has been _released_ MUST have a fixed _Major Version_ >= 1.
+3. You MUST keep your _promises_: _API_ usage patterns MUST remain available until
+   the natural death and disappearance of the application, service, or language
+   ecosystem.
+4. API usage patterns MAY accrete to supplement existing behaviour (e.g. new keyword arguments).
+
+** On Bugs
+
+Software is _alive_ when it can be _maintained_. Software is _dead_ when it cannot.
+Buggy behaviour is not part of the promise when software is alive, and thus can
+be fixed freely and not considered breakage, even in a user mistakenly depended
+on the bug.
+
+** On Performance
+
+Significant performance regressions are considered a break of the promise. The
+user, however, will not depend on how slow or gluttonous (memory-wise) something
+is; the author is free to improve performance.
+
+* Philosophy
+
+By adopting Kypver, we strive to:
+
+1. Avoid expensive _update waves_.
+2. Reduce the fear of upgrading.
+3. Provide perpetual access to future improvements.
+4. Maintain good will.
+
+We consider the release of software to be the forging of a promise. We reject
+the notion that APIs can "change" in-place; instead they can only grow. To
+"change" a piece of software is to make it a different thing under the same
+name, i.e. a breakage.
+
+1. An API "Change" does not exist. There are only Additions or Breakage.
+2. Zerover is a lie to yourself and a disservice to others. "I indefinitely
+   retain the right to be an asshole to you at any point and frequency in the
+   future."
+
+Consider also [[https://xkcd.com/1172/][spacebar heating]]. _What if someone depends on buggy behaviour?_
+
+* Case Studies
+
+- Arch Linux vs Ubuntu (stay bleeding vs paranoia + "big jumps")
+- Python (the cost of 2 -> 3)
+- SQLite
+- Clojure
+- Alexandria?
+- Bugs in consoles that need to be reimplemented in emulators?
+
+* Discussion
+
+** How do I transition from Semver?
+
+The shape of Kypver and Semver are intentionally the same. By freezing your
+Major Version and refusing to break APIs, you are already compliant. You could
+perhaps add a mention of Kypver in your CHANGELOG.
+
+** Can't users who don't want breakage stay down-pinned to old versions?
+
+No, because this locks them out of other future improvements and bug fixes. Over
+time, upgrading will become even harder, further perpetuating delay, until some
+external environmental factor forces it or their software dies completely.
+
+** How do I deprecate things, or change APIs I consider totally broken?
+
+Add a new namespace / module which the user can opt into at their convenience.
+In the best case it will mostly be a matter of managing reexports. You can also
+continue to expose the old API in the original namespace, but have it
+underpinned by the implementation of the new one.
+
+#+begin_quote
+Does that mean I have to continue to fix and improve the old namespace,
+potentially doubling my workload?
+#+end_quote
+
+Luckily no. The original namespace would be in the state it always was when you
+created the new one. As mentioned above, they can share implementations as much
+as possible so that bugs only need to be fixed in one place. For other
+improvements, the user can upgrade to the new namespace. You're otherwise free
+to pepper the old API with as many deprecation warnings as you want.
+
+In the extreme case, you can release an entirely new library under an altered
+name. For instance, Python's =numpy= could have released =numpy2= instead of rising
+to =2.0.0=. Indeed SQLite took this path, with its shared objects being available
+as =libsqlite3.so=.
+
+** Doesn't this prevent me from cleaning things up?
+
+Personal aesthetics are important. With Kypver, we accept that it's okay for
+"warts" to lie around until the natural death of the software. The cost of an
+Update Wave is much higher than our personal aesthetic discomfort in the moment.
+
+** How do I add a new field to a struct / class?
+
+This depends on the language. Languages that support pattern matching with
+"struct desugaring" like Rust and Haskell cannot safely add new struct fields:
+
+#+begin_src rust
+struct User {
+    age: usize,
+    name: String,
+}
+
+fn work(user: User) {
+    // Breaks if a new field is added to `User`.
+    let User { age, name } = user;
+}
+#+end_src
+
+** How can I take away function arguments that are no longer needed?
+
+You cannot. Just ignore that argument, while exposing a new function that
+doesn't need it at all, and connect the two implementations.
+
+** What about closed source / in-house software?
+
+When you're able to have all stake holders physically in a room and the impact
+of breaking changes is agreed upon, feel free to break APIs. Kypver's focus is
+on _promises made to strangers_, who despite being strangers, are nonetheless
+connected back to you in unseen ways through the karmaic cause-and-effect web of
+human reality.
+
+In essense: You should care about people you don't know.
+
+** What about transitive dependency updates causing breakage in my library?
+
+Library authors should be vigilant about managing the acceptable version ranges of
+their own dependencies, actively test, and avoid "open version ranges".
+
+Application authors should strongly consider [[https://github.com/fosskers/vend?tab=readme-ov-file#why-vendor-dependencies][vendoring their dependencies]].
+
+In both cases, it is prudent to actively minimize the number of dependencies you
+have, and look for ones that themselves have few or no dependencies, thus
+ensuring that your dependency graph is "wide" and not "deep".
+
+** If breakage is what really matters, why fix the major version to 1?
+
+This is a matter of signalling. By now, people have expectations about what the
+major version means, especially "1.0", mostly regardless of the versioning
+scheme. By fixing the major version to =1= from the start, you're announcing "this
+is it".
+
+** Isn't this a lot of extra work?
+
+Perhaps in theory. In practice, it's better that the original authors shoulder
+the burden of compatibility due to one-to-many effects. Breaking an API might be
+a calm Sunday afternoon for you, but what are the costs of time, calories, and
+good will multiplied across your thousands of downstream users?
+
+** Doesn't this put all the burden on upstream software authors?
+
+To the degree that we put something of our creation out into the world, we are
+responsible for it. However, recall the other half of the promise: that the user
+vows not to depend on undefined behaviour. This highlights the dual nature of
+the promise and offers some moral recourse for the original authors.
+
+** What about "trial periods" that Semver's =0= Major Version allows?
+
+Semver allows you to release software perpetually under a major version of =0=,
+where as an exception the Minor Version signals potential breaking changes. The
+intent is that while nascent software is gestating, the author may want to break
+the API freely and only release =1.0= when the software is "done". Kypver rejects
+this approach, as it signals to your users:
+
+#+begin_quote
+I indefinitely retain the right to betray you at any point and frequency in the
+future.
+#+end_quote
+
+This is a disservice to yourself and others, as it does nothing to prevent
+Update Waves. The [[https://0ver.org/][0ver]] joke scheme embodies the silliness of this rampant
+versioning pattern, as in practice many projects never move to =1.0= if they
+aren't forced to. With Kypver, software is by definition =1.0= as soon as it is
+released.
+
+* Definitions
+
+- API: Function calls, type names and interfaces, non-bug behaviour, CLI
+  commands, configuration options.
+- Maintenance: The ability and action of improving software based on a live
+  understanding of it in the mind of a human being. Maintainable software is
+  _alive_. Unmaintainable software is _dead_. Simply updating dependencies and
+  pushing releases does not imply maintainability, merely stasis.
+- Major Version: The =1= in =1.2.3=.
+- One-to-many relationship: An asymmetrical dependency relationship. You have
+  one dentist, but your dentist has hundreds of patients. When you are sick at
+  home, your dentist won't notice. When the dentist is sick at home, many people
+  are inconvenienced.
+- Promise: A commitment to mutual success and prosperity, staked on your
+  reputation and person integrity.
+- Released: A git tag (or otherwise) has been created and a CHANGELOG entry made
+  OR the package has been uploaded to a public package repository (crates.io,
+  PyPI, etc.). Simply being available as a source repository does not constitute
+  "released" status, because no promise has yet been made.
+- Software: Libraries, executable applications, web service API endpoints.
+- Software death: When software can no longer be maintained, not necessarily
+  when it can no longer be run.
+- Undefined behaviour: A function, etc., has four bodies of behaviour: its
+  intended, productive logic, its performance, its bugs, and its "transient" or
+  "coincidental" behaviour. Transient behaviour includes both the usual notions
+  of "UB" from C languages, but also things like the mutual ordering of two
+  elements that have been tie-broken during a sort. By depending on software
+  versioned with Kypver, the user pledges to not willingly depend on bugs, slow
+  performance, poor memory consumption, or transient behaviour, and the original
+  software author is exempt from complaints incurred therefrom. This addresses
+  the [[https://xkcd.com/1172/][spacebar heating problem]], also known as [[https://www.hyrumslaw.com/][Hyrum's Law]].
+- Update wave: The expensive, churning process of thousands of downstream
+  developers slogging through changelogs and compiler errors to fix breakage
+  induced by upstream updates in a _one-to-many relationship_.
+
+* Comparisons
+* Resources
+
+- [[https://youtu.be/oyLBGkS5ICk][Youtube: Spec-ulation]] (Rich Hickey)
+- [[https://www.hyrumslaw.com/][Hyrum's Law]]
