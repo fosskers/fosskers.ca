@@ -43,7 +43,7 @@ By adopting Kypver, we strive to:
 1. Avoid expensive _Update Waves_.
 2. Reduce the fear of upgrading.
 3. Provide perpetual access to future improvements.
-4. Prevent downstream software death.
+4. Slow the force of bitrot to prevent downstream software death.
 5. Maintain good will.
 
 We believe it is possible and preferable to produce stable, long-term software,
@@ -54,12 +54,38 @@ same name, i.e. a breakage.
 
 * Case Studies
 
-- Arch Linux vs Ubuntu (stay bleeding vs paranoia + "big jumps")
-- Python (the cost of 2 -> 3)
-- SQLite
-- Clojure
-- Alexandria?
-- Bugs in consoles that need to be reimplemented in emulators?
+** Python 3
+
+Potentially the most famous Update Wave incurred in software history to this
+point. The full transition took over a decade and likely had a cost to humanity
+on the scale of billions of dollars. Some OS distributions still package Python
+3 executables as =python3= to avoid conflicts.
+
+This isn't to say they shouldn't have done it, or that the on-going benefits
+today of Python 3 don't outweigh those costs, but that Update Waves can be
+shockingly expensive and should only be invoked with great deliberation.
+
+** Standardized Languages: Fortran, C, Common Lisp
+
+Standardized languages have the benefit of "just working". There is an
+undeniable power in being able to compile code today that was written by someone
+decades ago. [[https://fortran-lang.org/][Fortran]] is the gold standard here, capable of compiling code
+written in the style of the 1960s. Did we think we wouldn't be using the same
+code for 100 years? We might soon find ourselves doing just that.
+
+We can apply that same rigour to libraries we write today.
+
+** SQLite
+
+#+begin_quote
+The intent of the developers is to support SQLite through the year 2050.
+#+end_quote
+
+How many software projects make [[https://www.sqlite.org/lts.html][commitments like this]]? By consistently
+delivering this degree of stability, Good Will and peace of mind increase
+world-wide.
+
+By 2025, SQLite has been on =3.x.x= for over 20 years.
 
 * Discussion
 
@@ -94,7 +120,7 @@ fn foo(s: &str) -> bool { ... }
 fn foo<S: AsRef<str>>(s: S) -> bool { ... }
 #+end_src
 
-Type unions are similar:
+Python type unions are similar:
 
 #+begin_src python
 # Before: Specific.
@@ -161,10 +187,10 @@ external environmental factor forces it or their software dies completely.
 
 ** Doesn't this prevent me from cleaning things up?
 
-Personal aesthetics are important. With Kypver, we accept that it's okay for
-"warts" to lie around until the natural death of the software. Our successors
-will do better the next time around. The cost of an Update Wave is much higher
-than our personal aesthetic discomfort in the moment.
+Personal aesthetics are important. With Kypver however, we accept that it's okay
+for "warts" to lie around until the natural death of the software. Our
+successors will do better the next time around. The cost of an Update Wave is
+much higher than our personal aesthetic discomfort in the moment.
 
 ** What about closed source / in-house software?
 
