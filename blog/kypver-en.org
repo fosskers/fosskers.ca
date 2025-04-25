@@ -8,7 +8,7 @@ Kypver is a new versioning scheme centered around long-term API stability.
 * The Pledge
 
 #+begin_quote
-As a software author, I pledge never to break my API.
+As a software author, I pledge to never break my API.
 
 As a software user, I pledge to not willingly depend on _undefined behaviour_.
 #+end_quote
@@ -40,15 +40,17 @@ is; the author is free to improve performance.
 
 By adopting Kypver, we strive to:
 
-1. Avoid expensive _update waves_.
+1. Avoid expensive _Update Waves_.
 2. Reduce the fear of upgrading.
 3. Provide perpetual access to future improvements.
-4. Maintain good will.
+4. Prevent downstream software death.
+5. Maintain good will.
 
-We consider the release of software to be the forging of a promise. We reject
-the notion that APIs can "change" in-place; instead they can only grow. To
-"change" a piece of software is to make it a different thing under the same
-name, i.e. a breakage.
+We believe it is possible and preferable to produce stable, long-term software,
+and we consider the release of software to be the forging of a promise. We
+reject the notion that APIs can "change" in-place; instead they can only grow.
+To "change" a piece of software would be to make it a different thing under the
+same name, i.e. a breakage.
 
 * Case Studies
 
@@ -61,17 +63,67 @@ name, i.e. a breakage.
 
 * Discussion
 
+** How do I adopt this for new software?
+
+When you create a Release Tag on a software forge, or otherwise upload your
+software for the first time as a package to a service like crates.io, PyPI, npm,
+Maven, etc., your software is considered "Released" and there is no going back.
+At this point, it must be =1.0.0=. Going forward, you pledge to only grow your API
+as defined here, and never break it.
+
+If your software is not ready, then do not release it. Use it privately until it
+is. Craft it.
+
 ** How do I transition from Semver?
 
 The shape of Kypver and Semver are intentionally the same. By freezing your
 Major Version and refusing to break APIs, you are already compliant. You could
 perhaps add a mention of Kypver in your CHANGELOG.
 
-** Can't users who don't want breakage stay down-pinned to old versions?
+** How do I "relax" a function's argument type?
 
-No, because this locks them out of other future improvements and bug fixes. Over
-time, upgrading will become even harder, further perpetuating delay, until some
-external environmental factor forces it or their software dies completely.
+You can "grow" a function's capacity to accept inputs when you relax the type of
+an argument from something more specific to less specific. For example, going
+from a concrete type to a Trait-bounded one, or a child class to a super class.
+
+#+begin_src rust
+/// Before: Specific.
+fn foo(s: &str) -> bool { ... }
+
+/// After: More permissive.
+fn foo<S: AsRef<str>>(s: S) -> bool { ... }
+#+end_src
+
+Type unions are similar:
+
+#+begin_src python
+# Before: Specific.
+def foo(path: Path) -> bool:
+    # ... implementation ...
+
+# After: More permissive.
+def foo(path: Path | str) -> bool:
+    # Check type, do conversions if necessary.
+#+end_src
+
+** How do I add a new field to a struct / class?
+
+This depends on the language. Languages that support pattern matching with
+"struct desugaring" like Rust and Haskell cannot safely add new struct fields:
+
+#+begin_src rust
+struct User {
+    age: usize,
+    name: String,
+}
+
+fn work(user: User) {
+    // Breaks if a new field is added to `User`.
+    let User { age, name } = user;
+}
+#+end_src
+
+But there are many languages for which this would be a harmless addition.
 
 ** How do I deprecate things, or change APIs I consider totally broken?
 
@@ -96,33 +148,23 @@ name. For instance, Python's =numpy= could have released =numpy2= instead of ris
 to =2.0.0=. Indeed SQLite took this path, with its shared objects being available
 as =libsqlite3.so=.
 
-** Doesn't this prevent me from cleaning things up?
-
-Personal aesthetics are important. With Kypver, we accept that it's okay for
-"warts" to lie around until the natural death of the software. The cost of an
-Update Wave is much higher than our personal aesthetic discomfort in the moment.
-
-** How do I add a new field to a struct / class?
-
-This depends on the language. Languages that support pattern matching with
-"struct desugaring" like Rust and Haskell cannot safely add new struct fields:
-
-#+begin_src rust
-struct User {
-    age: usize,
-    name: String,
-}
-
-fn work(user: User) {
-    // Breaks if a new field is added to `User`.
-    let User { age, name } = user;
-}
-#+end_src
-
 ** How can I take away function arguments that are no longer needed?
 
 You cannot. Just ignore that argument, while exposing a new function that
 doesn't need it at all, and connect the two implementations.
+
+** Can't users who don't want breakage stay down-pinned to old versions?
+
+No, because this locks them out of other future improvements and bug fixes. Over
+time, upgrading will become even harder, further perpetuating delay, until some
+external environmental factor forces it or their software dies completely.
+
+** Doesn't this prevent me from cleaning things up?
+
+Personal aesthetics are important. With Kypver, we accept that it's okay for
+"warts" to lie around until the natural death of the software. Our successors
+will do better the next time around. The cost of an Update Wave is much higher
+than our personal aesthetic discomfort in the moment.
 
 ** What about closed source / in-house software?
 
@@ -150,7 +192,7 @@ ensuring that your dependency graph is "wide" and not "deep".
 This is a matter of signalling. By now, people have expectations about what the
 major version means, especially "1.0", mostly regardless of the versioning
 scheme. By fixing the major version to =1= from the start, you're announcing "this
-is it".
+is it". Code that compiled under =1.0= should still compile under =1.100=.
 
 ** Isn't this a lot of extra work?
 
@@ -158,6 +200,17 @@ Perhaps in theory. In practice, it's better that the original authors shoulder
 the burden of compatibility due to one-to-many effects. Breaking an API might be
 a calm Sunday afternoon for you, but what are the costs of time, calories, and
 good will multiplied across your thousands of downstream users?
+
+#+begin_quote
+But won't my project get filled with extra namespaces every time I want to
+change something?
+#+end_quote
+
+In practice this doesn't happen. We believe in developers' ability to foresee a
+reasonable API the first time around, and correct major oversights within two or
+three "passes". Today, while we often see a v2 or v3 get released, we rarely see
+a v7. See the famous [[https://gitlab.common-lisp.net/alexandria/alexandria][Alexandria]] library from Common Lisp: it has been released
+for 20 years and only needed to "fork" its internal namespace once.
 
 ** Doesn't this put all the burden on upstream software authors?
 
