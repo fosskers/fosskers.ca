@@ -266,6 +266,42 @@ versioning pattern, as in practice many projects never move to =1.0= if they
 aren't forced to. With Kypver, software is by definition =1.0= as soon as it is
 released.
 
+** I'm inexperienced and already scared to release my software. Now what?
+
+Do your best, since we're basically guaranteed to make mistakes. Long-term
+software maintenance is a big commitment, but you have to start somewhere.
+If you're truly terrified, just don't "release" it, as defined here.
+
+** No amount of "promising" will prevent users from complaining.
+
+As in, "you can't stop [[https://www.hyrumslaw.com/][Hyrum's Law]]"? Perhaps we can't stop users from depending
+on Undefined Behaviour, but there needs to be some moral recourse for how to
+handle the aftermath of tiny Update Waves that affect the 0.001% of users who
+were [[https://xkcd.com/1172/][spacebar heating]].
+
+** This won't prevent authors from breaking their APIs anyway.
+
+We've learned that it's not sufficient to only trust Semver-based versions when
+updating dependencies. It's mostly hope, as with Kypver, meaning we're back to
+trusting individual humans again.
+
+** We don't need a new versioning scheme just to avoid breaking APIs.
+
+Correct, what's more important is the underlying behaviour, but there is still
+benefit in being able to point to an explicit list of said behaviours to say
+"that's what we're doing, join us if you like". No one is forcing you.
+
+** This won't fix the churn of the Python and Javascript ecosystems.
+
+You're right. How should we construct our projects in general?
+
+- Minimize dependencies.
+- Vendor dependencies.
+- Choose dependencies that don't change much.
+
+This is possible in any language, but a matter of individual responsibility.
+People already uninterested in software stability will not be swayed by Kypver.
+
 ** How is "Kypver" pronounced?
 
 Kipp-ver, where "Ky" does not rhyme with "eye", nor is it a Greek/German Y (ü)
