@@ -1,6 +1,7 @@
 #+TITLE: Optimizing Common Lisp
 #+DATE: 2025-05-07
 #+AUTHOR: Colin
+#+UPDATED: 2025-05-08
 #+CATEGORY: lisp
 
 I recently released a [[https://github.com/fosskers/parcom][Parser Combinator library]] for Common Lisp, but was unhappy
@@ -225,14 +226,40 @@ inspect the type of a string literal like ~"hello"~, you'll see:
 (SIMPLE-ARRAY CHARACTER (5))
 #+end_example
 
-Also known as a ~simple-string~. If we know our source input is a ~simple-string~,
-we gain access to ~schar~, a faster version of ~char~ (or ~aref~), for accessing
-elements. The importance of this can't be overstated. With ~char~ and especially
-on a string slice / "displaced array", we're likely to see our ~sb-sprof~ results
-filled with calls to ~%DATA-VECTOR-INDEX~ and mentions of "hairy data". This is the
-compiler being unsure of the contents of the underlying array, and doing lots of
-wasteful bounds checking and offset calculations. With ~schar~, we get what we'd
-expect: no-nonsense, ~O(1)~ access to the char.
+Which is a child type of a ~simple-string~. If we know our source input is a
+~simple-string~, we gain access to ~schar~, a faster version of ~char~ (or ~aref~), for
+accessing elements. The importance of this can't be overstated. With ~char~ and
+especially on a string slice / "displaced array", we're likely to see our
+~sb-sprof~ results filled with calls to ~%DATA-VECTOR-INDEX~ and mentions of "hairy
+data". This is the compiler being unsure of the contents of the underlying
+array, and doing lots of wasteful bounds checking and offset calculations. With
+~schar~, we get what we'd expect: no-nonsense, ~O(1)~ access to the char.
+
+In ~parcom~, I use this whereever possible:
+
+#+begin_src lisp
+(deftype char-string ()
+  '(simple-array character (*)))
+#+end_src
+
+** Type Signatures
+
+Usage of a ~char-string~ type declaration was mentioned above. In strictly typed
+languages, we image these types as contracts that protect us from stupidity like
+addings ints to strings. Some CL compilers can treat them this way, but their
+main advantage is in helping the compiler optimize. Consider this signature:
+
+#+begin_src lisp
+(declaim (ftype (function (p::char-string fixnum fixnum) p::char-string) escaped))
+#+end_src
+
+Telling it exactly what our string type is, as mentioned above, will allow the
+compiler to optimize ~schar~ calls. Likewise, being clear about numeric inputs and
+outputs is critical to avoid internal calls to ~GENERIC-+~ and similar functions.
+If your code needs to do generic dispatch for basic numerics, it will be slow.
+
+Declaring ~fixnum~ should be sufficient for integer operations, but there are
+[[https://lispcookbook.github.io/cl-cookbook/numbers.html][other subdivisions]] if you need them.
 
 ** Multiple Return Values
 
@@ -271,7 +298,7 @@ In Common Lisp, you can declare to the compiler when you want a local variable
 to be allocated on the stack and not the heap. Within ~parcom/json~, I have:
 
 #+begin_src lisp
-(declaim (ftype (function (simple-string fixnum fixnum) simple-string) escaped))
+(declaim (ftype (function (p::char-string fixnum fixnum) p::char-string) escaped))
 (defun escaped (s from to)
   "Escape a string."
   (declare (optimize (speed 3) (safety 0)))

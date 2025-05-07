@@ -132,7 +132,6 @@ topbar lang =
     icons = do
       icon "https://github.com/fosskers" [ "fab", "fa-github" ]
       icon "https://x.com/fosskers" [ "fab", "fa-twitter" ]
-      a_ [ rel_ "me", href_ "https://m.fosskers.ca/@fosskers", classes_ ["navbar-item", "fab", "fa-mastodon"] ] ""
       icon "mailto:colin@fosskers.ca" [ "fas", "fa-envelope", "mobile-hidden" ]
       case lang of
         English  -> icon "/en/rss" ["fas", "fa-rss"]
