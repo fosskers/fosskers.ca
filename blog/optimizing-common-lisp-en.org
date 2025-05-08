@@ -274,8 +274,8 @@ hot spot for this is your ~loop~ variables, especially within lambdas. The
 following is possible:
 
 #+begin_src lisp
-(loop :for i fixnum :from offset :below +input-length+
-      :while (funcall p (schar +input+ i))
+(loop :for i fixnum :from offset :below *input-length*
+      :while (funcall p (schar *input* i))
       :finally (return (- i offset)))
 #+end_src
 
@@ -284,7 +284,7 @@ on ~loop~, we see:
 
 #+begin_src lisp
 (block nil
-  (let ((i offset) (#:lim273 +input-length+))
+  (let ((i offset) (#:lim273 *input-length*))
     (declare (ignorable #:lim273)
              (type (and fixnum real) #:lim273)
              (ignorable i)
@@ -362,9 +362,9 @@ example, here is the original definition of the ~char~ parser:
   "Parse a given character."
   (lambda (offset)
     (declare (optimize (speed 3) (safety 0)))
-    (if (>= offset +input-length+)
+    (if (>= offset *input-length*)
         (fail offset)
-        (let ((head (schar +input+ offset)))
+        (let ((head (schar *input* offset)))
           (if (equal c head)
               (ok (off 1 offset) head)
               (fail offset))))))
@@ -390,20 +390,20 @@ doing a lot of allocation you never intended. We can avoid this with custom
 "lambda caches".
 
 #+begin_src lisp
-(defparameter +char-cache+ (make-hash-table :size 64 :test #'eql))
+(defparameter *char-cache* (make-hash-table :size 64 :test #'eql))
 
 (defun char (c)
   "Parse a given character."
-  (or (gethash c +char-cache+)
+  (or (gethash c *char-cache*)
       (let ((f (lambda (offset)
                  (declare (optimize (speed 3) (safety 0)))
-                 (if (>= offset +input-length+)
+                 (if (>= offset *input-length*)
                      (fail offset)
-                     (let ((head (schar +input+ offset)))
+                     (let ((head (schar *input* offset)))
                        (if (equal c head)
                            (ok (off 1 offset) head)
                            (fail offset)))))))
-        (setf (gethash c +char-cache+) f)
+        (setf (gethash c *char-cache*) f)
         f)))
 #+end_src
 
