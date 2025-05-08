@@ -246,7 +246,7 @@ In ~parcom~, I use this whereever possible:
 
 Usage of a ~char-string~ type declaration was mentioned above. In strictly typed
 languages, we image these types as contracts that protect us from stupidity like
-addings ints to strings. Some CL compilers can treat them this way, but their
+adding ints to strings. Some CL compilers can treat them this way, but their
 main advantage is in helping the compiler optimize. Consider this signature:
 
 #+begin_src lisp
@@ -260,6 +260,36 @@ If your code needs to do generic dispatch for basic numerics, it will be slow.
 
 Declaring ~fixnum~ should be sufficient for integer operations, but there are
 [[https://lispcookbook.github.io/cl-cookbook/numbers.html][other subdivisions]] if you need them.
+
+*** Loop Variables
+
+If you notice a significant presence of ~SB-KERNEL:TWO-ARG->=~ in your profiler
+output, the compiler is somehow "forgetting" some numeric type declarations. One
+hot spot for this is your ~loop~ variables, especially within lambdas. The
+following is possible:
+
+#+begin_src lisp
+(loop :for i fixnum :from offset :below +input-length+
+      :while (funcall p (schar +input+ i))
+      :finally (return (- i offset)))
+#+end_src
+
+See the ~i fixnum~? You can declare the type of ~i~ inline. If we do a macroexpand
+on ~loop~, we see:
+
+#+begin_src lisp
+(block nil
+  (let ((i offset) (#:lim273 +input-length+))
+    (declare (ignorable #:lim273)
+             (type (and fixnum real) #:lim273)
+             (ignorable i)
+             (type (and real fixnum) i))
+    ...))
+#+end_src
+
+Where ~(and fixnum real)~ is the same as ~fixnum~. /Without/ the explicit ~fixnum~
+declaration, you may see ~(and number real)~, which is the source of the generic
+dispatch.
 
 ** Multiple Return Values
 
