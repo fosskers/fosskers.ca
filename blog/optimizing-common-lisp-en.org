@@ -10,6 +10,10 @@ built in to SBCL, to identify both CPU and memory allocation hotspots, improving
 the runtime speed of the ~parcom/json~ module by 3x and decreasing memory
 allocation by 25x.
 
+- [[https://news.ycombinator.com/item?id=43913727][Hacker News]]
+- [[https://lobste.rs/s/7ldnnl/optimizing_common_lisp][Lobsters]]
+- [[https://www.reddit.com/r/Common_Lisp/comments/1kgtea4/optimizing_common_lisp/][Reddit]]
+
 * Introduction to sb-sprof
 
 SBCL has a number of built-in extension libraries. ~sb-sprof~ is a "statistical
@@ -59,7 +63,7 @@ is where the "25x reduction" stat comes from.
 
 ** with-profiling: CPU Mode
 
-Evaluting the ~SPEED~ form above, we see:
+Evaluating the ~SPEED~ form above, we see:
 
 #+begin_example
            Self        Total        Cumul
@@ -245,9 +249,10 @@ In ~parcom~, I use this whereever possible:
 ** Type Signatures
 
 Usage of a ~char-string~ type declaration was mentioned above. In strictly typed
-languages, we image these types as contracts that protect us from stupidity like
-adding ints to strings. Some CL compilers can treat them this way, but their
-main advantage is in helping the compiler optimize. Consider this signature:
+languages, we imagine these types as contracts that protect us from stupidity
+like adding ints to strings. Some CL compilers can treat them this way, but
+their main advantage is in helping the compiler optimize. Consider this
+signature:
 
 #+begin_src lisp
 (declaim (ftype (function (p::char-string fixnum fixnum) p::char-string) escaped))
@@ -430,3 +435,48 @@ turnaround in producing them was slower than just reading the text charts.
 Thanks to these tools I was able to vastly improve the performance of my
 library, which demonstrates that Parser Combinators can be both an elegant and
 performant way to parse text in Common Lisp.
+
+* Feedback
+
+** Is fixnum "big enough"?
+
+All of the string indexing and loop variables use ~fixnum~ in ~parcom~. However, I
+was told:
+
+#+begin_quote
+Never use fixnum if you want your program to be portable.
+#+end_quote
+
+| Compiler | most-positive-fixnum |
+|----------+----------------------|
+| SBCL     |  4611686018427387903 |
+| ECL      |  2305843009213693951 |
+| Clasp    |  2305843009213693951 |
+| CCL      |  1152921504606846975 |
+| Allegro  |  1152921504606846975 |
+| Clisp    |      281474976710655 |
+| ABCL     |           2147483647 |
+
+Seems big enough to me. Also considering that ~parcom~ only works on in-memory
+strings, you'd have to read a JSON file larger than 2gb into memory on ABCL
+(25mb already takes a long time) and then attempt to parse it for this to
+realistically be a problem.
+
+** (safety 0) or (safety 1) ?
+
+#+begin_quote
+(safety 0) is a very bad habit to get used to, in general, and may create the
+impression that it's needed for optimized code.
+#+end_quote
+
+Easy enough to test. I changed all uses of ~(safety 0)~ to ~(safety 1)~ and reran my
+benchmarks. Times are in seconds.
+
+| Compiler | (safety 0) | (safety 1) |
+|----------+------------+------------|
+| SBCL     |       0.75 |       0.75 |
+| ECL      |        4.7 |        5.2 |
+| ABCL     |        6.9 |        6.9 |
+
+Hm, a slowdown on ECL. Checking [[https://ecl.common-lisp.dev/static/files/manual/current-manual/Evaluation-and-compilation.html#Compiler-declaration-optimize][its documentation]], there is indeed a difference
+between 0 and 1 here. I'll stick with 0.
