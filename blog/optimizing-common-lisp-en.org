@@ -479,5 +479,5 @@ benchmarks. Times are in seconds.
 | ABCL     |        6.9 |        6.9 |
 
 Hm, a slowdown on ECL. Checking [[https://ecl.common-lisp.dev/static/files/manual/current-manual/Evaluation-and-compilation.html#Compiler-declaration-optimize][its documentation]], there is indeed a difference
-between 0 and 1 here. I'll stick with 0, as I'm only used it in specific,
+between 0 and 1 here. I'll stick with 0, as I'm only using it in specific,
 controlled locations.
