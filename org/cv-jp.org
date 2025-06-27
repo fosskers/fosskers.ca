@@ -172,7 +172,10 @@ Scala開発者。
 
 |   年 | プロジェクト            | 役割      | 言語        | 概要                                    |
 |------+----------------------+-----------+-------------+-----------------------------------------|
-| 2025 | parcom/toml          | 作者      | Common Lisp | TOMLのパーサー                            |
+| 2025 | [[https://github.com/fosskers/fluent][fluent]]               | 作者      | Common Lisp | [[https://projectfluent.org/][Project Fluent]] のCL実装                  |
+|      | [[https://github.com/fosskers/plurals][plurals]]              | 作者      | Common Lisp | 言語の「複数形」規則                         |
+|      | parcom/xml           | 作者      | Common Lisp | XMLのパーサー                             |
+|      | parcom/toml          | 作者      | Common Lisp | TOMLのパーサー                            |
 |      | parcom/json          | 作者      | Common Lisp | JSONのパーサー                            |
 |      | [[https://github.com/fosskers/parcom][parcom]]               | 作者      | Common Lisp | Parser Combinators                      |
 |      | [[https://github.com/fosskers/raylib][raylib]]               | 作者      | Common Lisp | [[https://github.com/raysan5/raylib/][Raylib]] へのバインディング                    |

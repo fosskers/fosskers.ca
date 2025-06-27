@@ -169,7 +169,10 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role       | Language    | Description                                   |
 |------+----------------------+------------+-------------+-----------------------------------------------|
-| 2025 | parcom/toml          | Author     | Common Lisp | A TOML parser                                 |
+| 2025 | [[https://github.com/fosskers/fluent][fluent]]               | Author     | Common Lisp | CL implementation of [[https://projectfluent.org/][Project Fluent]]           |
+|      | [[https://github.com/fosskers/plurals][plurals]]              | Author     | Common Lisp | Language plural rules                         |
+|      | parcom/xml           | Author     | Common Lisp | An XML parser                                 |
+|      | parcom/toml          | Author     | Common Lisp | A TOML parser                                 |
 |      | parcom/json          | Author     | Common Lisp | A JSON parser                                 |
 |      | [[https://github.com/fosskers/parcom][parcom]]               | Author     | Common Lisp | Parser Combinators                            |
 |      | [[https://github.com/fosskers/raylib][raylib]]               | Author     | Common Lisp | Bindings to [[https://github.com/raysan5/raylib/][Raylib]]                            |
