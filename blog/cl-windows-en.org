@@ -1,0 +1,259 @@
+#+TITLE: Cross-compiling Common Lisp for Windows
+#+DATE: 2025-06-28
+#+AUTHOR: Colin
+#+CATEGORY: lisp
+
+I recently enabled Windows support for my [[https://github.com/fosskers/raylib/][Raylib]] bindings library and a game of
+mine that uses it, [[https://github.com/fosskers/raylib/][Aero Fighter]]. The process was surprisingly smooth.
+
+This article describes how to:
+
+- cross-compile C code for Windows from Linux
+- install a Windows-based SBCL with [[https://www.winehq.org/][Wine]]
+- run that SBCL as your REPL in Linux-based Emacs
+- load ~.dll~ files into a Lisp image
+- produce a ~.exe~ executable of a Lisp program
+
+* Cross-compiling C
+
+We can easily produce Windows executables from Linux with no extra
+configuration just by using the correct compiler toolchain. On Arch Linux:
+
+#+begin_example
+pacman -S mingw-w64-toolchain
+#+end_example
+
+Then, given the following C code:
+
+#+begin_src c
+#include <stdio.h>
+
+int main() {
+  printf("Hello, World!\n");
+  return 0;
+}
+#+end_src
+
+we can compile and run it like so:
+
+#+begin_example
+> x86_64-w64-mingw32-gcc hello.c
+> wine ./a.exe
+Hello, World!
+#+end_example
+
+** Linking to a DLL
+
+Feel free to skip this if you not interested in linking to C code.
+
+Assuming you have a local clone of Raylib, it can be cross-compiled by setting
+the following within its ~src/Makefile~:
+
+#+begin_example
+RAYLIB_LIBTYPE   ?= SHARED
+HOST_PLATFORM_OS ?= LINUX
+PLATFORM_OS      ?= WINDOWS
+CC = x86_64-w64-mingw32-gcc
+AR = x86_64-w64-mingw32-ar
+#+end_example
+
+Then a call to ~make PLATFORM_OS=WINDOWS~ will produce a ~.dll~ file. Now, given
+this sample C:
+
+#+begin_src c
+#include "raylib.h"
+
+int main(void) {
+  const int screenWidth = 800;
+  const int screenHeight = 450;
+
+  InitWindow(screenWidth, screenHeight, "raylib example 01 - Windows");
+  SetTargetFPS(60);
+
+  while (!WindowShouldClose()) {
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+    DrawText("Saluete!", 190, 200, 20, LIGHTGRAY);
+    EndDrawing();
+  }
+
+  CloseWindow();
+
+  return 0;
+}
+#+end_src
+
+Copy (or symlink) ~raylib.h~, ~raylib.dll~, and ~libraylibdll.a~ to the same
+directory, and compile it with:
+
+#+begin_example
+> x86_64-w64-mingw32-gcc hello.c -L"." -lraylib
+#+end_example
+
+Then, ~wine ./a.exe~ should open a Raylib window. Quit with ~ESC~.
+
+* Installing SBCL
+
+Visit the [[https://www.sbcl.org/platform-table.html][SBCL Downloads]] page and download the ~.msi~ installer file by clicking
+on the Windows cell of the Binaries matrix. Run ~wine~ on this. By default the
+~sbcl.exe~ binary is installed to:
+
+#+begin_example
+$HOME/.wine/drive_c/Program Files/Steel Bank Common Lisp/
+#+end_example
+
+You can confirm its function by running:
+
+#+begin_example
+wine $HOME/.wine/drive_c/Program Files/Steel Bank Common Lisp/sbcl.exe
+#+end_example
+
+Try inspecting the content of the ~*features*~ list:
+
+#+begin_example
+(:ARENA-ALLOCATOR :X86-64 :GENCGC :64-BIT :ANSI-CL :COMMON-LISP
+ :IEEE-FLOATING-POINT :LITTLE-ENDIAN :PACKAGE-LOCAL-NICKNAMES :SB-LDB
+ :SB-PACKAGE-LOCKS :SB-SAFEPOINT :SB-THREAD :SB-UNICODE :SBCL :WIN32)
+#+end_example
+
+Notice the presence of ~:WIN32~ and the lack of ~:LINUX~ and ~:UNIX~. It's Windows!
+
+** Pathnames
+
+Feel free to ignore this section, it is optional information.
+
+Filepaths work differently between Linux and Windows, and we can observe how
+SBCL handles this. In our REPL:
+
+#+begin_example
+> (inspect #p"Z:/home/colin/code/foo.json")
+
+The object is a PATHNAME.
+0. NAMESTRING: NIL
+1. HOST: #<SB-IMPL::WIN32-HOST {1100039A13}>
+2. DEVICE: "Z"
+3. DIR+HASH: ((:ABSOLUTE "home" "colin" "code") . 3675096247244793922)
+4. NAME: "foo"
+5. TYPE: "json"
+6. VERSION: :NEWEST
+#+end_example
+
+Notice that the ~:device~ field is actually populated. On Linux this would have
+been ~nil~. Notice also that, for our convenience, the path component separator is
+~/~ and not those accursed backslashes!
+
+The [[https://github.com/fosskers/filepaths][filepaths]] library offers additional convenience regarding paths, and
+supports both Linux and Windows.
+
+* Wine-based SBCL in Emacs
+
+[[https://github.com/fosskers/vend][vend]] is a dependency manager for Common Lisp, and luckily it helps us simplify
+our Windows setup, since we don't need to bother with a Quicklisp installation
+within Wine. Since ~vend repl~ allows us to run any compiler and load our systems
+with all of our project dependencies available, why not just ask it to run SBCL
+through Wine as above?
+
+#+begin_example
+> pwd
+/home/colin/code/common-lisp/filepaths
+> vend repl wine /home/colin/.wine/drive_c/Program\ Files/Steel\ Bank\ Common\ Lisp/sbcl.exe
+> (asdf:test-system :filepaths)
+;; ... compiling, etc. ...
+Passed:    79
+Failed:     0
+Skipped:    0
+#+end_example
+
+Likewise, ~vend test~ "just works":
+
+#+begin_example
+> vend test wine /home/colin/.wine/drive_c/Program\ Files/Steel\ Bank\ Common\ Lisp/sbcl.exe
+[vend] Running tests.
+;; ... yeah yeah ...
+Passed:    79
+Failed:     0
+Skipped:    0
+#+end_example
+
+It's able to find all of our vendored dependencies by virtue of the fact that
+our Linux filesystem is also available through Wine under ~Z:~. When ~vend~
+internally asks ~uiop~ where we currently are, we get what we'd expect:
+
+#+begin_example
+> (uiop:getcwd)
+#P"Z:/home/colin/code/common-lisp/filepaths/"
+#+end_example
+
+Now that we've proven we can load systems through Wine, we can configure [[https://github.com/joaotavora/sly][Sly]] to
+use our Wine-based SBCL as an in-editor REPL:
+
+#+begin_src emacs-lisp
+(setq sly-lisp-implementations
+      '((sbcl ("vend" "repl" "sbcl" "--dynamic-space-size" "4GB"))
+        ;; ... other compilers ...
+        (wine ("vend" "repl" "wine" "/home/colin/.wine/drive_c/Program Files/Steel Bank Common Lisp/sbcl.exe"))))
+#+end_src
+
+Adjust as necessary for [[https://github.com/slime/slime][Slime]]. Then, ~SPC m ;~ in Doom (or ~C-u sly~) and selecting
+~wine~ will start our Windows SBCL. We can now develop interactively as normal,
+but with Windows assumptions.
+
+* Loading Windows DLLs
+
+Remember those Raylib DLLs we built above? My bindings library assures they're
+loaded upon ~asdf:load-system~ via:
+
+#+begin_src lisp
+(defun load-shared-objects (&key (target nil))
+  "Dynamically load the necessary `.so' files. This is wrapped as a function so that
+downstream callers can call it again as necessary when the Lisp Image is being
+restarted. Note the use of `:dont-save' below. This is to allow the package to
+be compiled with `.so' files found in one location, but run with ones from another."
+  (let ((dir (case target
+               (:linux "/usr/lib/")
+               (t "lib/"))))
+    #+linux
+    (progn
+      (load-shared-object (merge-pathnames "liblisp-raylib.so" dir) :dont-save t)
+      (load-shared-object (merge-pathnames "liblisp-raylib-shim.so" dir) :dont-save t))
+    #+win32
+    (progn
+      (load-shared-object (merge-pathnames "lisp-raylib.dll" dir) :dont-save t)
+      (load-shared-object (merge-pathnames "lisp-raylib-shim.dll" dir) :dont-save t))))
+
+(load-shared-objects)
+#+end_src
+
+This works as-is. Essentially, you're able to call ~load-shared-object~ on any
+~.dll~ file and it will be loaded into the Lisp image. Note also the presence of
+~:dont-save t~, which is important when building executables.
+
+* Building Executables
+
+Assuming all your ~.dll~ files are in place (if necessary), which you can ensure
+via a [[https://github.com/fosskers/aero-fighter/blob/master/Makefile][Makefile]], creating a ~.exe~ file of your Lisp program is as simple as
+writing a short ~build.lisp~:
+
+#+begin_src lisp
+(require :asdf)
+
+;; Force ASDF to only look here for systems.
+(asdf:initialize-source-registry `(:source-registry (:tree ,(uiop:getcwd)) :ignore-inherited-configuration))
+
+(let ((bin (or #+win32 #p"aero-fighter.exe"
+               #p"aero-fighter")))
+  (sb-ext:save-lisp-and-die
+   bin
+   :toplevel #'aero-fighter:launch
+   :executable t
+   :compression (if (member :sb-core-compression *features*) t)))
+#+end_src
+
+Note that Core Compression doesn't seem to be available for Windows, so the
+resulting binary will be quite a bit larger than its Linux one (~4x in the case
+of Aero Fighter, 11mb -> 40mb. The Linux binary under ECL is only 1mb).
+
+[[https://github.com/fosskers/aero-fighter/blob/master/build.lisp][See here]] for the full build script. Running ~sbcl --load build.lisp~ will
+build your Windows executable.
+
+That's it!
