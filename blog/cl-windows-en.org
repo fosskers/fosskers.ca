@@ -253,7 +253,7 @@ Note that Core Compression doesn't seem to be available for Windows, so the
 resulting binary will be quite a bit larger than its Linux one (~4x in the case
 of Aero Fighter, 11mb -> 40mb. The Linux binary under ECL is only 1mb).
 
-[[https://github.com/fosskers/aero-fighter/blob/master/build.lisp][See here]] for the full build script. Running ~sbcl --load build.lisp~ will
+[[https://github.com/fosskers/aero-fighter/blob/master/build.lisp][See here]] for the full build script. Running ~sbcl.exe --load build.lisp~ will
 build your Windows executable.
 
 That's it!
