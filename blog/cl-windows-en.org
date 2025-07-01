@@ -4,7 +4,7 @@
 #+CATEGORY: lisp
 
 I recently enabled Windows support for my [[https://github.com/fosskers/raylib/][Raylib]] bindings library and a game of
-mine that uses it, [[https://github.com/fosskers/raylib/][Aero Fighter]]. The process was surprisingly smooth.
+mine that uses it, [[https://github.com/fosskers/aero-fighter][Aero Fighter]]. The process was surprisingly smooth.
 
 This article describes how to:
 
