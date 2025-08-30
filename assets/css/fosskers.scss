@@ -436,6 +436,10 @@ pre.src:before {
   font-size: 80%;
 }
 
+div.org-src-container {
+  margin-bottom: 1em;
+}
+
 pre.src-bash:before {
   content: "Bash";
 }

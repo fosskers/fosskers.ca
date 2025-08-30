@@ -1,0 +1,489 @@
+#+TITLE: Quirks of Common Lisp Types
+#+DATE: 2025-08-28
+#+AUTHOR: Colin
+#+CATEGORY: lisp
+
+"But I need types," he told me.
+
+Humans have a tendency toward binary thinking (pardon the pun). If it's not A,
+it's B. Perhaps because Lisps have REPLs, they are often thought of from the
+outside as being dynamic, interpreted languages. Our years of Python have taught
+us that such languages don't really have strong typing - it's all a wild guess
+until the interpreter calls ~foo~ on ~a~ and ~b~ and we find out who everyone really
+is.
+
+Yet Common Lisp is fully typed, and AOT compiled. You can assign strict types to
+variables and entire functions, and the compilers will use this both for
+optimization and general correctness checking, and you can freely inspect the
+assembly code of any compiled function. All of this while maintaining the
+fluidity of development flows usually reserved for dynamic languages.
+
+But we're not here today for the revelation that Common Lisp has types.
+
+This article elaborates Common Lisp's conception of "types" and their
+triple-natured reality, answering the questions:
+
+- What is a type?
+- What is a class?
+- What is the machine really doing?
+
+* Types are of the Sky
+
+I settled on Common Lisp two years ago because I found it to be the most
+debuggable language I had tried in my career. The time between discovery of the
+/What/ of a problem to the /Why/ is the shortest for me in this language, and this
+is due to how inspectable everything is.
+
+In Common Lisp, each type is a _set_, and each piece of Lisp data belongs to at
+least one. We can ask any such data value for its type:
+
+#+begin_src lisp :results verbatim :exports both
+(type-of 37)
+#+end_src
+
+#+begin_example
+(INTEGER 0 4611686018427387903)
+#+end_example
+
+An unsigned integer, by the looks of it, of 62-bit range. How about a string
+literal?
+
+#+begin_src lisp :results verbatim :exports both
+(type-of "漣")
+#+end_src
+
+#+begin_example
+(SIMPLE-ARRAY CHARACTER (1))
+#+end_example
+
+A one-dimensional, length-one ~array~ of ~character~ values.
+
+We can interrogate these values a bit further:
+
+#+begin_src lisp :results verbatim :exports both
+(list (typep 37 'integer)
+      (typep 37 'real)
+      (typep 37 'number)
+      (typep 37 t))
+#+end_src
+
+#+begin_example
+(T T T T)
+#+end_example
+
+Where ~T~ means "True".
+
+#+begin_src lisp :results verbatim :exports both
+(list (typep "漣" 'simple-array)
+      (typep "漣" 'string)
+      (typep "漣" 'vector)
+      (typep "漣" 'array)
+      (typep "漣" t))
+#+end_src
+
+#+begin_example
+(T T T T T)
+#+end_example
+
+As we can see, these types form larger and larger sets, and the same value can
+be a member of many such sets at the same time. Note also that this isn't a
+linear hierarchy: in the String example above, ~simple-array~ and ~string~ are
+unrelated. While any given string-like value will always be a ~string~, it might
+not be a ~simple-array~, depending on how it was initialized. [[https://lispcookbook.github.io/cl-cookbook/strings.html#string-and-character-types-hierarchy][See here for an
+illustration]]. I hear you thinking perhaps of Diamond Inheritance, so let us flee
+from these considerations for now.
+
+** Types for Correctness
+
+The age old test: can I add an int to a string?
+
+#+begin_src lisp :results verbatim :exports both
+(+ 37 "漣")
+#+end_src
+
+If we try to run this in our REPL, we're told:
+
+#+begin_example
+Value of #1="漣" in (+ 37 "漣") is #1#, not a NUMBER.
+#+end_example
+
+Thank goodness. And if we try to really compile it?
+
+#+begin_src lisp :results verbatim :exports both
+(defun rigourous-addition (n)
+  (+ n "漣"))
+#+end_src
+
+Luckily this also fails:
+
+#+begin_example
+warning: Constant "漣" conflicts with its asserted type NUMBER.
+#+end_example
+
+The assertion here is coming from usage of ~+~, which knows the expected types of
+its own arguments:
+
+#+begin_example
+(FUNCTION (&REST NUMBER) (VALUES NUMBER &OPTIONAL))
+#+end_example
+
+We can set types on struct fields as well.
+
+#+begin_src lisp
+(defstruct sky
+  (molecules 0 :type integer))
+#+end_src
+
+And if we try to violate that contract:
+
+#+begin_src lisp
+(make-sky :molecules 1.1)
+#+end_src
+
+#+begin_example
+The value
+  1.1
+is not of type
+  INTEGER
+when setting slot MOLECULES of structure SKY
+#+end_example
+
+It even works for array lengths:
+
+#+begin_src lisp
+(defstruct haiku
+  "A poem of 5-7-5 characters."
+  (mora nil :type (simple-array character (17))))
+#+end_src
+
+#+begin_src lisp
+(make-haiku :mora "まなつのひつうきんてらすおれはあつい")
+#+end_src
+
+#+begin_example
+The value
+  "まなつのひつうきんてらすおれはあつい"
+is not of type
+  (SIMPLE-ARRAY CHARACTER (17))
+when setting slot MORA of structure HAIKU
+#+end_example
+
+Looks like I can't write a proper Haiku - I have one character too many, so its
+type is actually ~(simple-array character (18))~. Had there been one less, it
+would have run without issue.
+
+So as we can see, at both run-time and compile-time, Common Lisp does
+typechecking to prevent silly errors.
+
+** Types for Optimization
+
+More often, however, such type hints are used to coax the compiler into
+producing better assembly code. Fortunately, we can be active participants in
+this process.
+
+Let's improve our ~rigourous-addition~ function.
+
+#+begin_src lisp
+(defun rigourous-addition (n)
+  (+ n 37))
+#+end_src
+
+If we compile this and run ~(disassemble #'rigourous-addition)~, we see:
+
+#+begin_example
+; disassembly for RIGOUROUS-ADDITION
+; Size: 30 bytes. Origin: #xB800C62D23                        ; RIGOUROUS-ADDITION
+; 23:       498B4D10         MOV RCX, [R13+16]                ; thread.binding-stack-pointer
+; 27:       48894DF8         MOV [RBP-8], RCX
+; 2B:       BF10000000       MOV EDI, 16
+; 30:       488BD0           MOV RDX, RAX
+; 33:       E818E339FF       CALL #xB800001050                ; SB-VM::GENERIC-+
+; 38:       488B45F0         MOV RAX, [RBP-16]
+; 3C:       C9               LEAVE
+; 3D:       F8               CLC
+; 3E:       C3               RET
+; 3F:       CC0F             INT3 15                          ; Invalid argument count trap
+#+end_example
+
+Here we notice something dreadful, a separate function call to a generic function.
+
+#+begin_example
+
+CALL #xB800001050                ; SB-VM::GENERIC-+
+#+end_example
+
+It's doing this because at the moment it can't know what the type of ~n~ is. At
+best it could constrain it to ~number~, but that's the type at [[https://lispcookbook.github.io/cl-cookbook/numbers.html][the top of the
+number tower]], and adding ints to floats is not going to be free.
+
+Let's add a function signature to tell the compiler that we know what we want.
+
+#+begin_src lisp
+(declaim (ftype (function (fixnum) fixnum) rigourous-addition))
+(defun rigourous-addition (n)
+  (+ n 8))
+#+end_src
+
+~fixnum~ is lower in the tower than ~integer~, and (mostly) corresponds to a machine
+word, so this should always be the fastest thing to do arithmetic with. If we
+recompile and run ~disassemble~ again:
+
+#+begin_example
+; disassembly for RIGOUROUS-ADDITION
+; Size: 25 bytes. Origin: #xB800C64DE9                        ; RIGOUROUS-ADDITION
+; DE9:       498B4D10         MOV RCX, [R13+16]               ; thread.binding-stack-pointer
+; DED:       48894DF8         MOV [RBP-8], RCX
+; DF1:       488BD0           MOV RDX, RAX
+; DF4:       4883C210         ADD RDX, 16
+; DF8:       7005             JO L0
+; DFA:       C9               LEAVE
+; DFB:       F8               CLC
+; DFC:       C3               RET
+; DFD:       CC0F             INT3 15                         ; Invalid argument count trap
+; DFF: L0:   CC2E             INT3 46                         ; ADD-SUB-OVERFLOW-ERROR
+; E01:       09               BYTE #X09                       ; RDX(a)
+#+end_example
+
+The extra function call has been compiled away into a single ~ADD~ instruction on
+two raw machine words. Don't yet worry about why there's a ~16~, not an ~8~, sitting
+there.
+
+** Type Fluidity
+
+It seems that we've achieved strong typing, until we see something like this:
+
+#+begin_src lisp :results output
+(let ((a 1)
+      (b 37))
+  (format t "A:   ~a~%" (type-of a))
+  (format t "B:   ~a~%" (type-of b))
+  (format t "SUM: ~a~%" (type-of (+ a b)))
+  (format t "NEG: ~a~%" (type-of (+ a b -39))))
+#+end_src
+
+#+begin_example
+A:   BIT
+B:   (INTEGER 0 4611686018427387903)
+SUM: (INTEGER 0 4611686018427387903)
+NEG: FIXNUM
+#+end_example
+
+The C-mind sees type casting, but that isn't what's happening here. In
+C-thought, when it comes to types, we believe "an int is an int and a struct is
+a struct". We use aliases like ~bool~, but we know it's really just an unsigned
+byte under that.
+
+In Common Lisp, _types offer a notion of general compatibility between
+operations_, but are in fact _disconnected from their data presentations_ within
+Lisp itself. See for yourself:
+
+#+begin_src lisp :results output
+(let ((a 1)
+      (b 37))
+  (format t "A:   ~a~%" (class-of a))
+  (format t "B:   ~a~%" (class-of b))
+  (format t "SUM: ~a~%" (class-of (+ a b)))
+  (format t "NEG: ~a~%" (class-of (+ a b -39))))
+#+end_src
+
+#+begin_example
+A:   #<BUILT-IN-CLASS COMMON-LISP:FIXNUM>
+B:   #<BUILT-IN-CLASS COMMON-LISP:FIXNUM>
+SUM: #<BUILT-IN-CLASS COMMON-LISP:FIXNUM>
+NEG: #<BUILT-IN-CLASS COMMON-LISP:FIXNUM>
+#+end_example
+
+Now onto classes.
+
+* Classes are of the Earth
+
+Many of us were raised on the Big OO languages but later escaped, so even the
+word "class" may evoke complex emotions. Some OO languages make a distinction
+between classes and primitives (Java), while others call everything a class
+and box all their data (Ruby).
+
+In Common Lisp, if the word "type" corresponds to a "compatibility family", then
+"class" is what the data value is actually implemented as internally. So "class"
+here means "type" in C-thought.
+
+As we saw above, ~class-of~ can be used to inspect what our data "really is". How
+about that string literal from before?
+
+#+begin_src lisp
+(list (type-of "漣")
+      (class-of "漣"))
+#+end_src
+
+#+begin_example
+((SIMPLE-ARRAY CHARACTER (1))
+#<BUILT-IN-CLASS SB-KERNEL:SIMPLE-CHARACTER-STRING>)
+#+end_example
+
+Likely for performance reasons, the SBCL compiler is using its own internal
+implementation for this, whose true details we have basically no access to.
+While the type claims it's a ~simple-array~, technically the implementation is
+under no obligation to /be/ a true array (in the C-sense) at all (although I'm
+sure it is). It only has to /act/ like one.
+
+Classes are also types, as we can see from the ~NEG~ example from the previous
+section. ~fixnum~ was given as both the type and class of that return value, which
+is why we can use ~fixnum~ in function signatures and the ~:type~ declaration of
+struct fields.
+
+Finally, we point out that while a value is only ever one class, and may have
+many types (recall the string example from the beginning), which type-sets it is
+a member of _depends on the value itself_. Recall ~bit~. If you are a ~fixnum~ class
+you'll always be of ~fixnum~ type as well, but if you're of value 0 or 1, you'll
+also be of ~bit~ type (meaning you can interact with a ~bit-vector~).
+
+** Inheritance
+
+I said that values only have one class, which is true in terms of
+implementation, but Common Lisp also supports class inheritance in the usual OO
+sense. This lets child classes "act as" their parents if a certain function had
+expected the parent, and has implications about what fields are available
+(called "slots" in CL). Recall that like Haskell, struct/class field access is
+all done through typed functions (not ~foo.bar~ calls), and the concept of
+"method" exists but is different in a nice way.
+
+** Generic Function Dispatch
+
+In Common Lisp, methods are not defined directly on classes. They are instead
+"associated". We first define a "generic function":
+
+#+begin_src lisp
+(defgeneric collide (a b)
+  (:documentation "Smash two objects together."))
+#+end_src
+
+~collide~ wants two of something. Let's define a method for it:
+
+#+begin_src lisp
+(defmethod collide ((a fixnum) (b string))
+  "Who said I couldn't add an int and a string?"
+  (+ a (length b)))
+#+end_src
+
+Just because the ~fixnum~ argument comes first doesn't mean that ~collide~ "belongs"
+to ~fixnum~ in any way. In fact, when defining a ~defgeneric~ we can ask for as many
+arguments as we want.  Critically, the "type annotations" here are actually
+_class annotations_. You cannot, for instance, do:
+
+#+begin_src lisp
+(defmethod collide ((a bit) (b (simple-array character (37)))))
+#+end_src
+
+Since neither ~bit~ nor ~simple-array~ are classes.
+
+It should be noted in passing that while ~defmethod~ is very flexible, in that we
+can define new ones anywhere and on any classes (whether we own them or not), we
+run the risk of "orphan instances" if we own neither the original ~defgeneric~ nor
+the classes we're associating with it.
+
+* The Heart of the Machine
+
+** "Abstract" Classes
+
+So classes are "real" and types are ephemeral, just compiler aids? Well no,
+classes might be ghostly too. While "abstract class" is never a term used in the
+Common Lisp world, some parent classes may be just that. Recall our string
+literal ~"漣"~ and its class ~sb-kernel:simple-character-string~. If we inspect its
+chain of superclasses (not supertypes), we see:
+
+#+begin_example
+sb-kernel:simple-character-string
+sb-kernel::character-string
+common-lisp:string
+common-lisp:vector
+...
+#+end_example
+
+Now let's construct an adjustable string and see what we see:
+
+#+begin_src lisp
+(let ((s (make-array 5 :element-type 'character :adjustable t :fill-pointer 0)))
+  (vector-push #\a s)
+  (class-of s))
+#+end_src
+
+#+begin_example
+#<BUILT-IN-CLASS SB-KERNEL::CHARACTER-STRING>
+#+end_example
+
+So we can't actually make something that is just a ~string~ with SBCL, but we can
+with ECL, where ~class-of~ on both literals and this adjustable string yields
+~string~; the same "class" even though they have different "types". But then how
+does the compiler really know what to do when I call a function like ~schar~,
+which in this case can only be called on the literal and not the adjustable
+string?
+
+Here we'd do well to recall that to the machine, our programming languages do
+not exist. The compiler is under no obligation to produce machine code that has
+any trace of the original types and classes we thought we were using. Rather,
+its duty to us is to ensure that we believe that when we call ~schar~ that the
+results produced are interpreted by us as what we wanted.
+
+So during development what we really care about is behaviour, not
+implementation. And the guarantor of behaviour in Common Lisp is chiefly the
+_type system_. This explains why types, not classes, are what is shown by ~inspect~
+when we view the result of some call.
+
+** Fixnums
+
+To drive home the point that perceived behaviour and implementation can differ,
+let's recall our optimized ~rigourous-addition~ function.
+
+Why did ~(+ n 8)~ become ~ADD RDX, 16~?
+
+This is because (at least with SBCL), the compiler sets certain bits of each
+machine word to use as "type tags". These enable various optimizations. For
+~fixnum~, it is mandated that the least significant bit be 0, meaning that finite
+ints are really only 62-bit (1 sign bit, 62 value bits, 1 tag bit). Yet this
+"machine truth" is hidden from us. If we inspect ~#b0110~:
+
+#+begin_example
+#<(INTEGER 0 4611686018427387903) {C}>
+--------------------
+Value: 6 = #x00000006 = #o6 = #b110 = 6.0e+0
+#+end_example
+
+6, as we expected. And if we do a rightward bitshift to mess up the tag bit?
+
+#+begin_src lisp
+(ash #b0110 -1)
+#+end_src
+
+#+begin_example
+Value: 3 = #x00000003 = #o3 = #b11 = 3.0e+0
+#+end_example
+
+Thwarted. Really the tag bit isn't even shown to us here. Yet I promise you that
+if we could "get in" to that value on the hardware, we'd see the first four bits
+as ~0110~. 8 became 16 in the assembly because:
+
+#+begin_example
+0000 1000 <- 8
+0001 0000 <- 16
+#+end_example
+
+But as we have seen, being aware of this is not necessary for daily Lisp usage.
+
+* Summary
+
+As [[https://en.wikipedia.org/wiki/Arjuna][Arjuna]] asked Krishna, "Yeah okay, but now what?"
+
+For Common Lisp development, we can mostly think in terms of types. Specifically:
+
+- For function call and struct field compatibility, it's the _type_ that matters.
+- For optimization, it's the _type_ that matters.
+- For method dispatch, it's the _class_ that matters.
+- For OO inheritance, it's the _class_ that matters.
+
+Please let me know if I've overlooked or mistaken any detail.
+
+* Resources
+
+- [[https://www.lispworks.com/documentation/HyperSpec/Body/04_a.htm][Hyperspec: Introduction to Types]]
+- [[https://lispcookbook.github.io/cl-cookbook/strings.html#string-and-character-types-hierarchy][Type Hierarchy of Strings]]
+- [[https://www.chiark.greenend.org.uk/doc/sbcl/sbcl-internals/Type-tags.html][SBCL Type Tags]]
+- [[https://github.com/guicho271828/sbcl-wiki/wiki/Object-representation-%28lowtags%2C-widetags%2C-memory-consumption%2C-arrays%29][SBCL Object Representation]]

@@ -223,7 +223,7 @@ operate over the raw input string, not on a slice. Read on for why that matters.
 
 ** simple-string and schar
 
-In Common Lisp, Vectors are just Arrays, and String are just Vectors. If you
+In Common Lisp, Vectors are just Arrays, and Strings are just Vectors. If you
 inspect the type of a string literal like ~"hello"~, you'll see:
 
 #+begin_example
