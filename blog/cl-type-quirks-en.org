@@ -1,5 +1,5 @@
 #+TITLE: Quirks of Common Lisp Types
-#+DATE: 2025-08-28
+#+DATE: 2025-08-30
 #+AUTHOR: Colin
 #+CATEGORY: lisp
 
@@ -439,27 +439,27 @@ This is because (at least with SBCL), the compiler sets certain bits of each
 machine word to use as "type tags". These enable various optimizations. For
 ~fixnum~, it is mandated that the least significant bit be 0, meaning that finite
 ints are really only 62-bit (1 sign bit, 62 value bits, 1 tag bit). Yet this
-"machine truth" is hidden from us. If we inspect ~#b0110~:
+"machine truth" is hidden from us. If we inspect ~#b1111~:
 
 #+begin_example
-#<(INTEGER 0 4611686018427387903) {C}>
+#<(INTEGER 0 4611686018427387903) {1E}>
 --------------------
-Value: 6 = #x00000006 = #o6 = #b110 = 6.0e+0
+Value: 15 = #x0000000F = #o17 = #b1111 = 1.5e+1
 #+end_example
 
-6, as we expected. And if we do a rightward bitshift to mess up the tag bit?
+15, as we expected. And if we do a rightward bitshift to mess up the tag bit?
 
 #+begin_src lisp
-(ash #b0110 -1)
+(ash #b1111 -1)
 #+end_src
 
 #+begin_example
-Value: 3 = #x00000003 = #o3 = #b11 = 3.0e+0
+Value: 7 = #x00000007 = #o7 = #b111 = 7.0e+0
 #+end_example
 
-Thwarted. Really the tag bit isn't even shown to us here. Yet I promise you that
-if we could "get in" to that value on the hardware, we'd see the first four bits
-as ~0110~. 8 became 16 in the assembly because:
+Thwarted: ~0111~. Really the tag bit isn't even shown to us here. Yet I promise you that
+if we could [[https://simonsafar.com/2020/sbcl/]["get in"]] to that value on the hardware, we'd see the first four bits
+as ~1110~. 8 became 16 in the assembly because:
 
 #+begin_example
 0000 1000 <- 8
@@ -487,3 +487,6 @@ Please let me know if I've overlooked or mistaken any detail.
 - [[https://lispcookbook.github.io/cl-cookbook/strings.html#string-and-character-types-hierarchy][Type Hierarchy of Strings]]
 - [[https://www.chiark.greenend.org.uk/doc/sbcl/sbcl-internals/Type-tags.html][SBCL Type Tags]]
 - [[https://github.com/guicho271828/sbcl-wiki/wiki/Object-representation-%28lowtags%2C-widetags%2C-memory-consumption%2C-arrays%29][SBCL Object Representation]]
+
+_Caution:_ the SBCL links here have outdated information regarding the length of
+fixnum tag bits, but are still good resources.
