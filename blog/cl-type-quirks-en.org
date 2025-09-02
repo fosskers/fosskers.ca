@@ -27,6 +27,11 @@ triple-natured reality, answering the questions:
 - What is a class?
 - What is the machine really doing?
 
+Discussions:
+
+- [[https://news.ycombinator.com/item?id=45079131][Hacker News]]
+- [[https://lobste.rs/s/vn42xa/quirks_common_lisp_types][Lobsters]]
+
 * Types are of the Sky
 
 I settled on Common Lisp two years ago because I found it to be the most
