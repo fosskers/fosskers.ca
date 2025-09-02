@@ -274,7 +274,7 @@ a struct". We use aliases like ~bool~, but we know it's really just an unsigned
 byte under that.
 
 In Common Lisp, _types offer a notion of general compatibility between
-operations_, but are in fact _disconnected from their data presentations_ within
+operations_, but are in fact _disconnected from their data representations_ within
 Lisp itself. See for yourself:
 
 #+begin_src lisp :results output
