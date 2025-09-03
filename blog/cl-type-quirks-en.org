@@ -485,6 +485,24 @@ For Common Lisp development, we can mostly think in terms of types. Specifically
 - For OO inheritance, it's the _class_ that matters.
 
 Please let me know if I've overlooked or mistaken any detail.
+* Feedback
+** Defining "Common Lisp"
+
+#+begin_quote
+Typechecking and performance tweaks as described in the article are
+compiler-specific and not guaranteed by the language specification, so it's
+inaccurate to associate these with "Common Lisp" per se.
+#+end_quote
+
+There is occasionally disagreement about what "Common Lisp" even means, and the
+spec is often cited, but as far as all of my posts, library work, and
+application work are concerned, Common Lisp means "the current reality of the
+major compilers as implemented in 2025". This is a descriptive / bottom-up
+definition, and as an active author of software it is the one I'm more concerned
+with. For instance, the ~:local-nicknames~ feature has been universally
+implemented among the active compilers, despite not being part of the spec. To
+me, this makes that feature "part of Common Lisp", especially since basically
+all CL software written today assumes its availability.
 
 * Resources
 
