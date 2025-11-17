@@ -81,7 +81,7 @@ notion of LSPs, so they aren't particularly missed.
 [[https://fennel-lang.org/][Fennel]] is simple and clean. It compiles to Lua, shares its semantics, and can
 trivially use Lua libraries. The [[https://tic80.com/][TIC-80]] supports it natively for retro game
 development, which I used to write [[https://tic80.com/play?cart=3375][Snake]] and a port of the classic TI83 game
-[[https://fosskers.itch.io/falldown][Falldown]]. It's tooling improves with time and you can produce static binaries
+[[https://fosskers.itch.io/falldown][Falldown]]. Its tooling improves with time and you can produce static binaries
 with it, but direct vendoring is the recommended dependency management strategy.
 It also lacks Common Lisp's debuggability, given that it sits entirely within
 Lua's runtime.
