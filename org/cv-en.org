@@ -32,7 +32,7 @@ give conference presentations in both English and Japanese.
 - SQL (SQLite, MySQL, MariaDB, Postgres)
 - Apache Spark
 - Emacs
-- LaTeX
+- LaTeX, Typst
 - Geographic Information Systems
 
 * Experience
@@ -169,11 +169,17 @@ A four-year degree, majoring in Asian History and Languages.
 
 | Year | Project              | Role       | Language    | Description                                   |
 |------+----------------------+------------+-------------+-----------------------------------------------|
-| 2025 | [[https://github.com/fosskers/fluent][fluent]]               | Author     | Common Lisp | CL implementation of [[https://projectfluent.org/][Project Fluent]]           |
+| 2026 | [[https://github.com/fosskers/mongoose][mongoose]]             | Author     | Common Lisp | Bindings to the [[https://mongoose.ws/][Mongoose]] web server           |
+|      | [[https://github.com/fosskers/html][html]]                 | Author     | Common Lisp | Simple HTML generation                        |
+|------+----------------------+------------+-------------+-----------------------------------------------|
+| 2025 | [[https://github.com/fosskers/logfmt][logfmt]]               | Author     | Common Lisp | Parser for the logfmt logging style           |
+|      | [[https://github.com/fosskers/fluent][fluent]]               | Author     | Common Lisp | CL implementation of [[https://projectfluent.org/][Project Fluent]]           |
 |      | [[https://github.com/fosskers/plurals][plurals]]              | Author     | Common Lisp | Language plural rules                         |
 |      | parcom/xml           | Author     | Common Lisp | An XML parser                                 |
 |      | parcom/toml          | Author     | Common Lisp | A TOML parser                                 |
 |      | parcom/json          | Author     | Common Lisp | A JSON parser                                 |
+|      | parcom/datetime      | Author     | Common Lisp | [[https://datatracker.ietf.org/doc/html/rfc3339][RFC3339]]-compliant timestamp parsing           |
+|      | parcom/email         | Author     | Common Lisp | [[https://datatracker.ietf.org/doc/html/rfc5322][RFC5322]]-compliant email address parsing       |
 |      | [[https://github.com/fosskers/parcom][parcom]]               | Author     | Common Lisp | Parser Combinators                            |
 |      | [[https://github.com/fosskers/raylib][raylib]]               | Author     | Common Lisp | Bindings to [[https://github.com/raysan5/raylib/][Raylib]]                            |
 |      | [[https://github.com/fosskers/clfmt][clfmt]]                | Author     | Common Lisp | Light code reformatter                        |

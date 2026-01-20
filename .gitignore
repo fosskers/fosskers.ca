@@ -12,3 +12,4 @@ rust/target/*
 style/*
 rust/love-letter/assets
 rust/love-letter/webfonts
+assets/temp/
