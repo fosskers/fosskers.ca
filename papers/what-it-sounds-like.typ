@@ -40,7 +40,7 @@ which this claim is made:
 That is to say, we didn't "make up" our legends. We didn't tell ourselves
 stories of gods and demons simply to ward off boredom or to control each other.
 When I finally watched Kpop Demon Hunters (apparently the last one on Earth to
-have done so), it was like a meteor striking my mind. While written by people,
+have done so), it was like a meteor had struck my mind. While written by people,
 set in a certain time and place, and filled with fictional elements, it also
 isn't "made up" in the sense that it contains no truth about the human
 experience. Quite the opposite; Kpop Demon Hunters is humanity's favourite
@@ -59,7 +59,7 @@ Demons threaten us and our world. They feast upon the living and feed our soul
 energy back to their god-king Gwi-ma (귀마). Standing against these forces are
 the Hunters, three Korean female Shaman-warriors charged with the upkeep of the
 Honmoon (혼문). They are taught that if they can channel the Honmoon into a
-golden state that it will become permanent, and Demons will no longer stalk
+Golden state that it will become permanent, and Demons will no longer stalk
 humanity. Rumi in particular, a half-human half-demon, believes that the Golden
 Honmoon will rid her of her "patterns" - the tell-tale marks of Gwi-ma's
 influence borne by every Demon. Only then can she truly live. To accomplish
@@ -97,11 +97,12 @@ the source of all existence. The Great Mother in turn is an aspect of the
 Ouroboros - the dragon-snake biting its own tail - a symbol that has appeared in
 human engravings and artwork independently across the world for thousands of
 years. It represents, among other things, the cycle of energy and time, and thus
-that of life and death. Specifically Gwi-ma is an incarnation of The Terrible
-Mother. This is not a comment on Gwi-ma's parenting; "Terrible" here does not
-mean "lacking skill", but instead "of terror". Gwi-ma is vindictive, merciless,
-cannibalistic, and bloodthirsty. His goal is nothing less than the reabsorption
-of all conscious humanity back into himself.
+that of life and death. Specifically Gwi-ma is an incarnation of a subtype of
+The Great Mother: The Terrible Mother. This is not a comment on Gwi-ma's
+parenting; "Terrible" here does not mean "lacking skill", but instead "of
+terror". Gwi-ma is vindictive, merciless, cannibalistic, and bloodthirsty. His
+goal is nothing less than the reabsorption of all conscious humanity back into
+himself.
 
 Psychologically, Gwi-ma is the bedrock of the Unconscious and its prime mover.
 To it, Consciousness is something of an aberration, a growth that it naturally
@@ -116,7 +117,7 @@ and Zoey states:
 
 #quote[
   Before I joined Huntrix, I felt like my thoughts and my lyrics and all my
-  notesbooks were just useless and weird.
+  notebooks were just useless and weird.
 ]
 
 It's not clear if Mira and Zoey had spiritual powers to begin with, or whether
@@ -135,8 +136,8 @@ emotions, and secondly that Gwi-ma tortures them psychically. Rumi demonstrates
 a similar ignorance with regards to Derpy the Tiger.
 
 // "Demons don't feel anything!" -> "Is that what you think?"
-// -- Jinu is honestly taken aback here.
 // Image: "Do you not hear him in your ear?" -> "What are you talking about?"
+// -- Jinu is honestly taken aback by this exchange.
 // Image: What are you?
 
 // What does this mean psychologically?
@@ -158,51 +159,162 @@ careers, they take pleasure in dealing out death in judgement.
 The Hunters, and more specifically Rumi, represent the Conscious Mind, although
 one still developing. They go about their appointed mission, doing violence to
 elements of the Unconscious of which they have no understanding. If it's from
-"down there", it's to be hated, punished, and pushed back down. The Authorities
-demand it.
+"down there", it's to be hated, punished, and pushed back down. The Spirit
+Father demands it.
 
 // Image: Derpy.
 
-== The Honmoon (The Authorities)
+== The Honmoon (The Spirit Father)
 
-// Old Honmoon: the idea that you can perfectly seal away all the darkness and
-// imperfection within you if you just work hard enough.
-//
-// Golden Honmoon probably not desirable.
-//
-// Gold as a representative of an ideal.
-//
-// Mental (soul?) state of Honmoon maintainers can affect it.
-//
-// Irony: Demonic influence weakens the Honmoon, but at the same time a
-// weakening and complete destruction is necessary for Rebirth.
+The Honmoon discourages, but does not wholly prevent, the invasion of demons
+into the human world. It is formed from the soul energy of inspired human beings
+and woven by the Hunters, spanning the entire earth. Something of the Hunters
+themselves seems present in it too; Rumi's emotional state is seen rippling
+through it more than once.
+
+// Image: Why!?
+
+The Honmoon requires upkeep. Without a regular influx of inspiration it weakens,
+permitting the entrance of more demons who are always waiting just below the
+surface. Gwi-ma cannot pass through it, but the Saja Boys are able to without
+issue, and creatures like Derpy the Tiger even seem atuned to it, manipulating
+it freely.
+
+The Hunters dream of a Golden Honmoon, a concept even Gwi-ma seems aware of.
+
+// Image: ...it's over for us!
+
+Mythologically, the Honmoon represents Order through the archetype of the Spirit
+Father. It is everything that has brought you to where you are. It is tradition,
+expectation, ideal, and light. It does in fact protect you, but it grows rigid
+with age. By being a proven solution, there is great fear in altering it. Still
+we yearn for some Golden state, a permanent paradise free of the whirling chaos
+of the outside world. Through blind dedication to this mission we risk what
+Neumann calls "patriarchal castration". Castration here refers to being cut off
+from one's core energy, vitality, and purpose. The patriarchal variety comes
+from over-obsession, "rising too high", and a disconnect from the creative
+forces that well up from below. This Father, in his Terrible form, holds back
+the Hero.
+
+Psychologically, the Honmoon is your set of habits and behaviours, some yours,
+but many absorbed from your surroundings. A Golden one is the idea that you can
+perfectly seal away all the darkness and imperfection within you if you just
+work hard enough. Here the movie speaks for itself: a Golden Honmoon is probably
+not desirable, even if the world shouts the opposite at you, and you reply with
+with self-congratulation.
+
+// Image: It's the only way to protect the Honmoon!
+
+We are shown that demonic influence weakens the Honmoon, but at the same time a
+weakening and complete destruction is necessary for Rebirth, as we shall see
+later.
 
 == Demons (The Shadow)
 
-// There is certainly a "power" to be gained by being a demon. Teleportation,
-// great strength, etc., are a respresentation of this.
-//
-// Soul suck consumes body.
+Demons are the minions of Gwi-ma. Many spring from him, while others like Jinu
+come to him as fallen humans. There is certainly a power to be gained by being a
+demon. We see them teleporting, shape-shifting, and tearing an airplane apart.
+They seek to siphon human souls back to Gwi-ma, the process of which absorbs the
+victim's body.
+
+// Image: Rujinu girl. The train.
+
+Despite this, above the Honmoon they are surprisingly frail. Most, even the Saja
+Boys, disintegrate from a single strike of a Honmoon weapon. Nor are all demons
+unambiguously evil; Jinu and Rumi's father being a testament to this.
+
+Psychologically, the collective of Demons represents the Shadow. Quoting
+Neumann:
+
+// p.351
+#quote[
+
+  The Shadow contains all those elements in the personality which the ego
+  condemns as negative values. This selective valuation is collectively
+  determined by the class of values current in the individual's cultural canon.
+
+]
+
+It is everything you think you dislike about yourself, and the source of
+thoughts you believe you shouldn't be having. The Shadow, along with the
+Animus/Anima we will later discuss, is referred to as one of the "Authorities"
+of the personality and has a balancing effect against the ego, preventing it
+from running away with itself. It plays this role as a kind of intermediary
+between the Conscious and Unconscious. Indeed, Neumann goes on to say:
+
+// p.353
+#quote[
+
+  In psychological development, the self lies hidden in the shadow; he is the
+  "keeper of the gate", the guardian of the threshold. The way to the self
+  lies through him; behind the dark aspect he represents there stands the
+  aspect of wholeness, and only by making friends with the shadow do we gain
+  the friendship of the self.
+
+]
+
+We are beginning to see the message of the movie.
+
+// Having a special power means "not playing by the rules" or behaving
+// unexpectedly. What could better describe the elements of the Unconscious?
 
 = Characters
-== Jinu the Human
+
+Ostensibly, Kpop Demon Hunters centers around Rumi. Likewise, the Hero's Story
+centers around the Hero, the other characters being aspects of her myth, or
+elements of her (your) own mind.
+
+Perhaps her most important ally in her fight against the Dragon - Gwi-ma - and
+the achievement of consciousness is Jinu, her Animus.
+
+== Jinu (The Animus)
+
 
 // Image: you have a beautiful soul.
 
-// Jinu wasn't a true heartless demon. He did not enjoy his errand. He had pets.
-// He had humour.
-//
-// Dual motivations for actions. Their "date" scene, and then during the reveal
-// of his betryal, he didn't _have_ to tell Rumi anything about his motivations.
-// That too perhaps was some form of plea.
-//
-// After their first fight he was really curious about her.
+Jinu was not a true, heartless demon. He did not enjoy his errand. He had pets.
+He had humour. He felt love. Enough that the pain of regret was still raw after
+400 years.
 
-#quote(attribution: [Jinu])[The memories... I want them erased.]
+// Image: Jinu petting Derpy.
 
-He was trying to escape from his human.
+Jinu shows us that people can have conflicting motivations and follow through
+with both simultaneously. During the signing, their "date", and then again at
+the reveal of his betryal, he didn't have to tell Rumi anything about his
+motivations, but he did. This was perhaps some form of plea.
 
-== Rumi the Liar
+Recall too that after their first fight in the bathhouse, he was genuinely
+curious about her as he strolled the alleyway.
+
+Mythologically, Jinu serves two purposes. Firstly he is a victim of matriarchal
+castration. Like the patriarchal, he is cut off from everything that makes one
+great, a slave to the Great Mother. In seeking to erase his memories, he is
+attempting to complete that castration. Secondly, he is the Captive, the
+prisoner of the Dragon to be rescued by the Hero.
+
+Psychologically, Jinu is Rumi's Animus. To a feminine soul, the Animus is the
+spirit of stability, might, order, and reason. To a masculine soul, the Anima is
+the spirit of creation, connection, change, and emotion. We are born with both
+energies, but one side is inevitably pushed down into a position as an
+Authority, although its voice often goes unheard, still smothered by forces of
+the unconscious. It is lonely, and it is waiting for you.
+
+// #quote(attribution: [Jinu])[The memories... I want them erased.]
+
+Rumi has an instant connection with Jinu, but as long-estranged Hero/Animus they
+don't know how to interact. They try to touch but cannot. Jinu leaves her lying
+on the ground and mocks her, while Rumi, recognizing him simply as "something
+from below" then attempts his murder at the first opportunity.
+
+// Image: The head cut.
+
+The fans know better.
+
+// Image: Rujinu shirt.
+
+== Rumi (The Hero)
+
+// Demon blood: she is a mix of the conscious and unconscious. Part of her "comes from below".
 
 Rumi has a problem with the Truth.
 
