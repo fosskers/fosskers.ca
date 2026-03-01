@@ -22,7 +22,7 @@
 
 = Preface
 
-Kpop Demon Hunters is memorable for more than its music: it is a telling of the
+KPop Demon Hunters is memorable for more than its music: it is a telling of the
 Hero's Story. Beneath the surface it has little to do with Kpop or idols, and it
 follows humanity's beloved plot pattern of threat, doubt, adventure, collapse,
 rebirth, and final victory.
@@ -39,14 +39,14 @@ which this claim is made:
 
 That is to say, we didn't "make up" our legends. We didn't tell ourselves
 stories of gods and demons simply to ward off boredom or to control each other.
-When I finally watched Kpop Demon Hunters (apparently the last one on Earth to
+When I finally watched KPop Demon Hunters (apparently the last one on Earth to
 have done so), it was like a meteor had struck my mind. While written by people,
 set in a certain time and place, and filled with fictional elements, it also
 isn't "made up" in the sense that it contains no truth about the human
-experience. Quite the opposite; Kpop Demon Hunters is humanity's favourite
+experience. Quite the opposite; KPop Demon Hunters is humanity's favourite
 story. It is the story of the Hero - the story of you.
 
-Following Neumann, this article observes Kpop Demon Hunters from three angles;
+Following Neumann, this article observes KPop Demon Hunters from three angles;
 that of the #u[surface story] itself, that of the #u[mythological layer]
 underpinning it, and that of the #u[psychological layer] which reflects those
 myths.
@@ -192,16 +192,16 @@ we yearn for some Golden state, a permanent paradise free of the whirling chaos
 of the outside world. Through blind dedication to this mission we risk what
 Neumann calls "patriarchal castration". Castration here refers to being cut off
 from one's core energy, vitality, and purpose. The patriarchal variety comes
-from over-obsession, "rising too high", and a disconnect from the creative
-forces that well up from below. This Father, in his Terrible form, holds back
-the Hero.
+from over-devotion, "rising too high", and a disconnect from the creative forces
+that well up from below. This Father, in his Terrible form, holds back the Hero.
 
 Psychologically, the Honmoon is your set of habits and behaviours, some yours,
-but many absorbed from your surroundings. A Golden one is the idea that you can
+but many absorbed from your culture. A Golden one is the idea that you can
 perfectly seal away all the darkness and imperfection within you if you just
 work hard enough. Here the movie speaks for itself: a Golden Honmoon is probably
-not desirable, even if the world shouts the opposite at you, and you reply with
-with self-congratulation.
+not desirable, even if the world shouts to you that it is, and you strain
+yourself agreeing. _Golden_ is a great song, but self-congratulation
+nonetheless.
 
 // Image: It's the only way to protect the Honmoon!
 
@@ -238,7 +238,7 @@ Neumann:
 It is everything you think you dislike about yourself, and the source of
 thoughts you believe you shouldn't be having. The Shadow, along with the
 Animus/Anima we will later discuss, is referred to as one of the "Authorities"
-of the personality and has a balancing effect against the ego, preventing it
+of the personality and has a balancing effect against the Ego, preventing it
 from running away with itself. It plays this role as a kind of intermediary
 between the Conscious and Unconscious. Indeed, Neumann goes on to say:
 
@@ -260,7 +260,7 @@ We are beginning to see the message of the movie.
 
 = Characters
 
-Ostensibly, Kpop Demon Hunters centers around Rumi. Likewise, the Hero's Story
+Ostensibly, KPop Demon Hunters centers around Rumi. Likewise, the Hero's Story
 centers around the Hero, the other characters being aspects of her myth, or
 elements of her (your) own mind.
 
@@ -269,37 +269,44 @@ the achievement of consciousness is Jinu, her Animus.
 
 == Jinu (The Animus)
 
-
 // Image: you have a beautiful soul.
 
-Jinu was not a true, heartless demon. He did not enjoy his errand. He had pets.
-He had humour. He felt love. Enough that the pain of regret was still raw after
-400 years.
+Jinu is not a true, heartless demon. He does not enjoy his errand, nor is he on
+Gwi-ma's "side". He has pets. He has humour. He feels love. Enough that the pain
+of regret is still raw after 400 years.
 
+// Image: If hate could defeat Gwi-ma...
 // Image: Jinu petting Derpy.
+// Image: Running away while snickering.
 
-Jinu shows us that people can have conflicting motivations and follow through
-with both simultaneously. During the signing, their "date", and then again at
-the reveal of his betryal, he didn't have to tell Rumi anything about his
-motivations, but he did. This was perhaps some form of plea.
+Jinu shows us that people can have conflicting motivations and follow through on
+both simultaneously. During the signing, their "date", and then again at the
+reveal of his betryal, Jinu didn't have to tell Rumi anything about his true
+thoughts and motivations, but he did. This was perhaps some form of plea.
+
+// Image: That's right, I lied to you!
 
 Recall too that after their first fight in the bathhouse, he was genuinely
 curious about her as he strolled the alleyway.
 
-Mythologically, Jinu serves two purposes. Firstly he is a victim of matriarchal
-castration. Like the patriarchal, he is cut off from everything that makes one
-great, a slave to the Great Mother. In seeking to erase his memories, he is
-attempting to complete that castration. Secondly, he is the Captive, the
-prisoner of the Dragon to be rescued by the Hero.
+// Image: A hunter who's part demon...
+
+Mythologically, Jinu serves two roles. Firstly he is a victim of matriarchal
+castration, like the Greek king Oedipus. As with patriarchal castration, he is
+cut off from everything that makes one great, now a slave to the Great Mother.
+Instead of rising too high, he has fallen too low. In seeking to erase his
+memories, he is attempting to complete the castration. Secondly, he is the
+Captive, the prisoner of the Dragon to be rescued by the Hero.
+
+// Image: The memories... I want them erased.
+// Image: Jinu's pattered arm. "Chains".
 
 Psychologically, Jinu is Rumi's Animus. To a feminine soul, the Animus is the
 spirit of stability, might, order, and reason. To a masculine soul, the Anima is
 the spirit of creation, connection, change, and emotion. We are born with both
 energies, but one side is inevitably pushed down into a position as an
-Authority, although its voice often goes unheard, still smothered by forces of
-the unconscious. It is lonely, and it is waiting for you.
-
-// #quote(attribution: [Jinu])[The memories... I want them erased.]
+Authority, although its voice often goes unheard, smothered by forces of the
+unconscious. It is lonely, and it is waiting for you.
 
 Rumi has an instant connection with Jinu, but as long-estranged Hero/Animus they
 don't know how to interact. They try to touch but cannot. Jinu leaves her lying
@@ -314,19 +321,50 @@ The fans know better.
 
 == Rumi (The Hero)
 
-// Demon blood: she is a mix of the conscious and unconscious. Part of her "comes from below".
+Rumi is a half-demon through her father, but she has always rejected that part
+of herself. She believes that the Goldening of the Honmoon will result in her
+purification, allowing her to finally live as "the girl they all see". This is
+despite that fact that a Golden Honmoon has never been achieved before, thus no
+living Hunter can predict its effects. Following our thinking thusfar, it is not
+unreasonable to assume that the Golden Honmoon would instead kill Rumi.
 
-Rumi has a problem with the Truth.
+// Image: Maybe they'll understand?
 
-She was trying to escape from her demon.
+Rumi is a liar. She lies to protect herself because she is afraid of exposure
+and deep rejection. Her long sleeves and turtlenecks represent this materially.
 
 // Running from the Golden debut.
 // Lying to Mira.
 // Gaslighting Mira.
 
+But at the same time we know she is capable of great acts of love and
+compassion. Like with Jinu, people aren't just one thing.
+
+// Image: Extending the bracelet to Jinu.
+
+Mythologically, Rumi is a nascent Hero-Consciousness who is losing the "fight"
+with the underforces - the Great Mother. Her patterns spreading and the loss of
+her voice are signs of her downward slide. She has not yet faced the Dragon
+directly, and is instead trying to avoid that conflict by removing it. However,
+the harder she pushes away from the underworld, the tighter its grip on her
+becomes. Naturally this tension also stresses the Honmoon.
+
+Psychologically, Rumi is a human being who has not yet achieved what the
+literature calls Centroversion. This is something of a superior form of either
+intro- or extroversion alone; it is a balanced mind in which the forces of the
+Ego, Authorities, and Unconscious are in creative harmony. A healthy mind
+naturally seeks this state, and it should be clear that this is precisely the
+opposite of what achieving a Golden Honmoon would mean, as that represents a
+complete separation of the Conscious and Unconscious minds, something that would
+undoubtedly be fatal. Still, she tries.
+
+// Image: We could be free.
+
 = Timeline
 
-Kpop Demon Hunters takes place in the spring of 2025, in the same timeline that
+We can now discuss the events leading to Rumi's Dragon fight and her rebirth.
+
+KPop Demon Hunters takes place in the spring of 2025, in the same timeline that
 we live in. We know this because:
 
 1. The citizens of Seoul are confused whether it's jacket weather or t-shirt weather.
@@ -336,18 +374,35 @@ we live in. We know this because:
 
 // Images: One for each bullet point.
 
-// The story took place over a series of weeks, not months.
-//
-// They were initially supposed to have 2 weeks of vacation, and then presumably
-// a bit more prep until the Idol Awards.
-//
-// "Okay we have two weeks to fix Rumi's voice." It would have taken at least a
-// few days to get all the Golden stuff together after Rumi initially released
-// it.
+The movie spans two time blocks - before and after the initial, failed Golden
+concert. The length of the first block depends on how long it would take Korea's
+top girl group to book and prepare the Olympic Stadium in Seoul. Mira hints that
+with their influence, this could be at minimum only a few days.
 
-// Mostly in terms of the timing of Rumi and Jinu's meetings.
+The second block is clearer, as are given two direct hints. The first is a quote
+from Mira after Rumi admits her problem: "Okay, we have two weeks to fix Rumi's
+voice." The second is that there seem to be weekly song ranking awards, and we
+are shown two victory ceremonies.
+
+The story largely takes place in the latter time block, and we will focus on
+Rumi's and Jinu's meetings. The Climax is given its own section below.
 
 == The Alley
+
+Demons are attractive, albeit in a cheap way. They want to pull you down into
+their collective, feeding you to Gwi-ma (the Unconscious). This is precisely the
+message of _Soda Pop_ and _Your Idol_. When captured, you lose some important
+piece of yourself. Rumi has lots of practice "fighting demons", so she isn't
+immediately fooled by this.
+
+// Image: the Saja boys in a line. Hair flip.
+// Image: Mira/Zoey heart eyes.
+
+Jinu however is different. He appears with a halo and Rumi is instantly struck.
+The Hero and Animus have reunited.
+
+// Image: Halo.
+// Image: Rumi's jaw drop.
 
 == The Bathhouse
 
@@ -416,13 +471,18 @@ me.
 
 == Sacrifice
 
-// Offers herself as a sacrifice to _a_ Great Mother, Seline, who is both too
-// loving to accept the death sacrifice but not loving enough _not_ to continue
-// Rumi's castration and binding by the "old Honmoon".
+// Seline as an emissary of the Unconscious, perhaps that of the Spirit Father.
+// She is fiercly dedicated to the protection of the Old Honmoon, thereby
+// denying Rumi her Consciousness.
+
+// Rumi offers herself as a sacrifice to _a_ Great Mother (father?), Seline, who
+// is both too loving to accept the death sacrifice but not loving enough _not_
+// to continue Rumi's castration and binding by the "old Honmoon".
 //
 // Seline can't bring her self to touch Rumi's face.
 //
 // Rumi's demonic moment.
+
 
 == Collapse
 
@@ -448,11 +508,14 @@ ancient enemies the arthropods.
 //
 // Jinu's own hero sacrifice.
 
+// Why do you think the ending line of What it sounds like is the cover of the
+// album? This was the true song. The song they couldn't write.
+
 = Afterword
 
 Writing this has been a strange experience for me.
 
-My first contact with Kpop Demon Hunters was through its music; a fellow choir
+My first contact with KPop Demon Hunters was through its music; a fellow choir
 member sang _Golden_ at a karaoke night. I somehow then stumbled upon the movie
 trailer on Youtube, then perhaps the lyric videos of _Golden_, _Soda Pop_, _How
 it's Done_, and _Takedown_. By then I was hooked, but wisely left a few songs
@@ -484,7 +547,7 @@ say thank you to Maggie Kang and the entire KDH team for giving this to me. Let
 this article be an expression of my gratitude and love for what they created,
 and an embrace of my own Anima.
 
-Kpop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
+KPop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 
 #quote[
   My voice without the lies, this is what it sounds like. \
@@ -503,8 +566,11 @@ Kpop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 // Do these in chronological order.
 //
 // T-shirt guy with a Gwi-ma shirt. (His SNS handle is MrDaveBleich)
-// We'll be there in 3 minutes. 1:34:48
-// Fixed mixing/leveling in _How it's Done_.
+// We'll be there in 3 minutes.
+// - Cut the call: 1:34:48
+// - Song starts: 1:33:53
+// - Landed: 1:32:03
+// - Song over: 1:31:07
 // 대세 목욕탕 "popular bathhouse".
 
 // Twice poster and _Strategy_ scene.
@@ -539,7 +605,7 @@ Kpop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 //
 // Darts -> Tax evasion.
 //
-// The subway station name is 삼(island) 유원지(amusement partk). The English
+// The subway station name is 삼(island) 유원지(amusement park). The English
 // says "Island Resort". This may refer to the stop 뚣섬유원지, which has a
 // bridge over the river leading right to it. There is also a large stadium on
 // the side of the river they would have come from: 잠실 (Jam-sil) Stadium.
@@ -551,7 +617,18 @@ Kpop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 //
 // Zoey wearing a Derpy shirt.
 
+// 귀마 probably means "ear demon". There is some play on words here. The word
+// used for devil / Satan in Korean is 마귀 (Ma-gwi), but the word used for
+// Demons in general in the movie is 악귀 (悪鬼 - ak-kwi). Here we see the
+// Chinese-style reading of 귀 to mean Demon in these compound words, while 귀
+// on its own as a native Korean word just means "ear". There is a nod to this
+// in the English version, during the assassination attempt on Jinu.
+//
+// Image: Do you not hear him in your ear?
+
 == FAQ
+
+// TODO: Remove this?
 
 === Is Gwi-ma Rumi's dad?
 
