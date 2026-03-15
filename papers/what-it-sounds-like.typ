@@ -24,7 +24,7 @@
 
 KPop Demon Hunters is memorable for more than its music: it is a telling of the
 Hero's Story. Beneath the surface it has little to do with Kpop or idols, and it
-follows humanity's beloved plot pattern of threat, doubt, adventure, collapse,
+follows humanity's beloved plot pattern of threat, adventure, doubt, collapse,
 rebirth, and final victory.
 
 The book #u[The Origins and History of Consciousness] by Erich Neumann (1949)
@@ -90,7 +90,7 @@ found out.
 
 He can physically drag demons through the air and rip them down from above the
 Honmoon, but he cannot read all thoughts; he had to ask Jinu what he wanted. Yet
-he can at least access people's fears and painful memories.
+he can at least access people's fears and amplify painful memories.
 
 Mythologically, while depicted as male, Gwi-ma is an avatar of The Great Mother,
 the source of all existence. The Great Mother in turn is an aspect of the
@@ -103,6 +103,10 @@ parenting; "Terrible" here does not mean "lacking skill", but instead "of
 terror". Gwi-ma is vindictive, merciless, cannibalistic, and bloodthirsty. His
 goal is nothing less than the reabsorption of all conscious humanity back into
 himself.
+
+In the context of the Hero's final challenge, Gwi-ma becomes The Dragon which must be overcome.
+
+// Image: Uroboros.
 
 Psychologically, Gwi-ma is the bedrock of the Unconscious and its prime mover.
 To it, Consciousness is something of an aberration, a growth that it naturally
@@ -121,10 +125,9 @@ and Zoey states:
 ]
 
 It's not clear if Mira and Zoey had spiritual powers to begin with, or whether
-these were developed with training. They can see the Honmoon, see demons, draw
-weapons from the Honmoon's essence, and channel soul power back into the
-Honmoon. Seline is their mentor - Rumi's mother is dead, and the fate of the
-third Sunlight Sister is unknown.
+these were developed with training. They can see the Honmoon, draw weapons from
+its essence, and channel soul power back into it. Seline is their mentor -
+Rumi's mother is dead, and the fate of the third Sunlight Sister is unknown.
 
 // Image: Demons are never nice!
 // Image: Rumi flipping onto rooves.
@@ -162,8 +165,6 @@ elements of the Unconscious of which they have no understanding. If it's from
 "down there", it's to be hated, punished, and pushed back down. The Spirit
 Father demands it.
 
-// Image: Derpy.
-
 == The Honmoon (The Spirit Father)
 
 The Honmoon discourages, but does not wholly prevent, the invasion of demons
@@ -200,14 +201,14 @@ but many absorbed from your culture. A Golden one is the idea that you can
 perfectly seal away all the darkness and imperfection within you if you just
 work hard enough. Here the movie speaks for itself: a Golden Honmoon is probably
 not desirable, even if the world shouts to you that it is, and you strain
-yourself agreeing. _Golden_ is a great song, but self-congratulation
-nonetheless.
+yourself agreeing. _Golden_ is a good song, but self-congratulation nonetheless.
+A far greater song comes later.
 
 // Image: It's the only way to protect the Honmoon!
 
 We are shown that demonic influence weakens the Honmoon, but at the same time a
 weakening and complete destruction is necessary for Rebirth, as we shall see
-later.
+below.
 
 == Demons (The Shadow)
 
@@ -221,7 +222,10 @@ victim's body.
 
 Despite this, above the Honmoon they are surprisingly frail. Most, even the Saja
 Boys, disintegrate from a single strike of a Honmoon weapon. Nor are all demons
-unambiguously evil; Jinu and Rumi's father being a testament to this.
+unambiguously evil; Jinu and Rumi's father being a testament to this. All humans
+seem to be able to see demons - they don't have an invisible spirit form.
+
+// Image: An Ji-hu in the concert crowd.
 
 Psychologically, the collective of Demons represents the Shadow. Quoting
 Neumann:
@@ -247,7 +251,7 @@ between the Conscious and Unconscious. Indeed, Neumann goes on to say:
 
   In psychological development, the self lies hidden in the shadow; he is the
   "keeper of the gate", the guardian of the threshold. The way to the self
-  lies through him; behind the dark aspect he represents there stands the
+  lies through him; behind the dark aspect he represents, there stands the
   aspect of wholeness, and only by making friends with the shadow do we gain
   the friendship of the self.
 
@@ -302,13 +306,13 @@ Captive, the prisoner of the Dragon to be rescued by the Hero.
 // Image: Jinu's pattered arm. "Chains".
 
 Psychologically, Jinu is Rumi's Animus. To a feminine soul, the Animus is the
-spirit of stability, might, order, and reason. To a masculine soul, the Anima is
-the spirit of creation, connection, change, and emotion. We are born with both
-energies, but one side is inevitably pushed down into a position as an
+spirit of stability, might, order, and reason. To a masculine soul, the _Anima_
+is the spirit of creation, connection, change, and emotion. We are born with
+both energies, but one side is inevitably pushed down into a position as an
 Authority, although its voice often goes unheard, smothered by forces of the
-unconscious. It is lonely, and it is waiting for you.
+Unconscious. It is lonely, and it is waiting for you.
 
-Rumi has an instant connection with Jinu, but as long-estranged Hero/Animus they
+Rumi has an instant connection with Jinu, but as long-estranged Ego/Animus they
 don't know how to interact. They try to touch but cannot. Jinu leaves her lying
 on the ground and mocks her, while Rumi, recognizing him simply as "something
 from below" then attempts his murder at the first opportunity.
@@ -362,7 +366,8 @@ undoubtedly be fatal. Still, she tries.
 
 = Timeline
 
-We can now discuss the events leading to Rumi's Dragon fight and her rebirth.
+We can now discuss the events leading to Rumi's Dragon fight and her rebirth as
+a conscious human being.
 
 KPop Demon Hunters takes place in the spring of 2025, in the same timeline that
 we live in. We know this because:
@@ -374,20 +379,24 @@ we live in. We know this because:
 
 // Images: One for each bullet point.
 
-The movie spans two time blocks - before and after the initial, failed Golden
+The movie spans two time blocks: before and after the initial, failed Golden
 concert. The length of the first block depends on how long it would take Korea's
 top girl group to book and prepare the Olympic Stadium in Seoul. Mira hints that
-with their influence, this could be at minimum only a few days.
+with their influence, this could be at minimum only a few days, but perhaps a
+week or more is more realistic.
 
-The second block is clearer, as are given two direct hints. The first is a quote
-from Mira after Rumi admits her problem: "Okay, we have two weeks to fix Rumi's
-voice." The second is that there seem to be weekly song ranking awards, and we
-are shown two victory ceremonies.
+The second block is clearer, as we are given two direct hints. The first is a
+quote from Mira after Rumi admits her problem: "Okay, we have two weeks to fix
+Rumi's voice." The second is that there seem to be weekly song ranking awards,
+and we are shown two victory ceremonies.
 
 The story largely takes place in the latter time block, and we will focus on
-Rumi's and Jinu's meetings. The Climax is given its own section below.
+Rumi and Jinu's meetings. The Climax is given its own section further below as
+it follows mythological development stages.
 
 == The Alley
+
+// Image: the Saja boys in a line. Hair flip.
 
 Demons are attractive, albeit in a cheap way. They want to pull you down into
 their collective, feeding you to Gwi-ma (the Unconscious). This is precisely the
@@ -395,66 +404,245 @@ message of _Soda Pop_ and _Your Idol_. When captured, you lose some important
 piece of yourself. Rumi has lots of practice "fighting demons", so she isn't
 immediately fooled by this.
 
-// Image: the Saja boys in a line. Hair flip.
-// Image: Mira/Zoey heart eyes.
+// Image: Mira/Zoey heart eyes / Rumi staring at them in disbelief.
 
-Jinu however is different. He appears with a halo and Rumi is instantly struck.
-The Hero and Animus have reunited.
+Jinu however is different. He appears wreathed in a halo and Rumi is instantly
+struck. The Ego and Animus have reunited.
 
 // Image: Halo.
 // Image: Rumi's jaw drop.
 
+It is short-lived. Presumably Jinu knows exactly who the Hunters are, so his
+rejection of Rumi here is purposeful. Especially after it's clear to the Hunters
+that the Saja Boys are Demons, to Rumi and Jinu the other is nothing more than
+their surface identity. They haven't had a real conversation to break through
+that wall of "other".
+
 == The Bathhouse
 
-// He _was_ legitimately curious about her, shown when he was alone in the
-// alleyway talking to himself.
-//
+This series of scenes serves to crack through that wall for the audience too,
+and make Jinu into more than just a Demon. At the gameshow we see the first hint
+of Jinu's playfulness, yet there is still some malice in his actions.
+
+// Image: ...play games with us!
+// Image: The Demon smiles.
+
+Especially after Jinu's puddle slip and hall giggling, on my first viewing I
+found myself thrown off. Jinu had been disarmed. He was not simply an implacable
+enemy with a one-dimensional, evil nature, which to the chagrin of the audience
+makes him harder to hate.
+
+// Image: Giggling Jinu.
+
+// Image: ...you're strong!
+
+Rumi's upper hand in their scuffle is more evidence that her strength and
+abilities are not only the product of hard work. By this point we already knew
+of Rumi's demonic heritage, but to Jinu this is new information. After the fight
+we see him legitimately curious about her as he strolls the alleyway. He's not
+worried per se, but this is an element to the situation that he had not
+expected.
+
+// Image: The hug.
+// Image: The whispers. "The Ear Demon". Jinu's expression.
+
+Back in the underworld, Gwi-ma praises Jinu, which Jinu subtly rejects. While
+mostly fallen, Jinu is still what Neumann would call a "Struggler" against the
+Great Mother.
+
 // "I've taught you well, Jinu." <- not a compliment
 
 == The Talk
 
+// Image: "I just want to talk." -> "Talk!?"
+
+Jinu is still following the plan, and in this scene is being entirely
+manipulative. We can hear it in the tone of his voice and notice it from his
+conversation tactics:
+
+1. Disarm the enemy by mocking her appearance. // Aspects of 男女 here.
+2. Blackmail her with knowledge she can't reveal to her social circle.
+3. Confuse her by shaking her world view. // Demons can feel.
+4. Tell her a doctored version of your tragic past to engender sympathy.
+5. Claim you're the only one who can truly understand her.
+6. Maximize frustration by effortlessly evading attacks and parting on your own terms.
+
+It works, of course; she tosses the pants as soon as she's home. The pants are
+just a proxy for Jinu himself and her confused frustration toward him.
+
+Psychologically there is one action of note here: the Animus reaching out to the
+Ego and saying "you need me". She also allowed the contact. Yet neither is
+really ready.
+
+// Image: Jinu touching her collar.
+// Image: There won't be a next time!
+
 == The Signing
+
+The Saja Boys are still moving to undermine everything Huntrix does, including a
+signing event. By converting fans, they weaken the Honmoon. Rumi instead insists
+that the two groups sit together, a plan which backfires on both. Here Rumi
+learns precisely why Jinu is helping Gwi-ma, Jinu in turn learns that he might
+have a choice, and we learn that Jinu can feel physical pain.
+
+// Image: Foot stamp.
+
+Rumi's anger soon fades, and what appears as mocking is instead an example of
+her mercy.
+
+// Image: Maybe listen to those voices instead...
+// Image: Jinu, everybody!
+
+Psychologically, we can view this scene as the elements of the Unconscious
+distracting the function of our daily lives. The Unconscious parts of our minds
+have their own priorities, often contrary to our Ego's benefit, and will push us
+to pursue them.
+
+// Image: No, I'll sign first! (Fighting for priority)
+
+Critically though, the Ego and Animus have had a turning point in their
+relationship.
 
 == The Date
 
-// Image: Date? No. Eww!
-//
-// She's saying Eww not because she's unattracted, but because a boundary was
-// encroached upon and she wasn't ready for it.
+// Image: Sleeping Derpy.
 
-// The "Bye" moment. That was Jinu's honest reaction. She was already walking
-// away and she couldn't see him. He didn't walk away with the smirk and swagger
-// of someone who was being purely manipulative.
+Some time has passed. Jinu's pets are comfortably in Rumi's room, and it's
+probably not the first time. She crosses out aggressive song lyrics and a plan
+is forming in her mind. After being contronted by Mira for her recent behaviour,
+Rumi moves decisively to meet with Jinu.
+
+// Image: Her surprise and her facial expression. Now it's her being playful.
+// Image: Date? No. Eww!
+
+She's saying "eww" because a mental boundary was encroached upon and she wasn't
+ready for it.
+
+Rumi reveals not only her plan, but also her weakness: her own opinion of
+herself. Jinu catches this and acts on it afterwards, but his words and
+reactions to her later in this scene are genuine.
+
+// Image: The bracelet briefly on her wrist.
+
+The bracelet represents their repaired connection. It's a loop for the same
+reason a wedding ring is. She didn't just give it to him, she put it on once
+very briefly.
+
+// Image: I don't think you're a mistake.
+
+At the awkward "Bye" moment, we know this is Jinu's honest reaction. She had
+already turned away and couldn't see him. He didn't walk away with the smirk and
+swagger of someone who was being purely manipulative. They are both thoroughly
+conflicted.
 
 == The Mystery
 
-// If nothing happened between their "Bye" parting and the Free scene, then we
-// can only attribute her sudden love confession to "Disney pacing".
-//
-// "The more I talk to you..." feels strange unless they had some other
-// interaction that we weren't shown. We also weren't shown an explicit moment
-// of realization that her voice was better. It's borderline a dropped plot
-// point. The bracelet handoff / "we might be a thing" moment happened _after_
-// Rumi talked to Mira in her bedroom.
-//
-// The train fight happened in the early morning, otherwise how could she
-// contact Jinu so quickly? Presumably after the fight they went back to the
-// stadium for more practice.
+At first I only felt it, a kind of gap that couldn't be seen but whose hidden
+gravitational pull tugged at me as I rewatched these scenes. Immediately after
+their date, we are shown:
 
-At first I only felt it, a kind of gap that couldn't be seen but still tugged at
-me.
+1. People complaining on social media.
+2. Rumi appearing at the Olympic Stadium in the same clothes we just saw her in.
+3. Rumi wearing different clothing as Huntrix rehearses _Takedown_.
+4. The train fight.
+5. The _Free_ duet.
 
-// Basically they must have had an evening they spent together where they did a
-// whole lot of talking. Either that or after their awkward parting, one of them
-// turned back to go catch the other.
+_Free_ itself will be dealt with fully in the next section, but we mention it
+here briefly to note that even before the duet, Rumi claims her voice is healed,
+and afterward she brings a hand to her throat as if surprised at her own
+singing. Near the beginning of the song she also effectively confesses her
+affection for Jinu. The questions we must ask are then: When precisely did her
+voice get better, and when did the spark of love ignite? I see these
+possibilities:
+
+1. "Disney pacing". Love is often accelerated in these movies for plot purposes.
+2. _The Signing_, as a turning point, was enough to begin the healing.
+Immediately afterward is the confrontation by Mira, where Rumi "sounds good".
+_The Date_, though ended awkwardly, was enough for love.
+3. Rumi and Jinu met again off screen and had a deep conversion.
+
+(3) is my chosen interpretation. The first thing that bothered me was this line
+from Rumi before the duet:
+
+#quote[
+
+  But since I've met you, and the more I talk to you, I don't understand it,
+  but somehow, my voice has healed.
+
+]
+
+"The more I talk to you"? We're only shown three conversations between them,
+totaling mere minutes. The second clue is these lines from _Free_ itself:
+
+#quote[
+
+  Here with you I can finally breathe,
+  You say you're no good,
+  but you're good for me.
+  I've been hoping to change,
+  now I know we can change.
+  But I won't if you're not by my side.
+
+  Why does it feel right
+  every time I let you in?
+  Why does it feel like
+  I can tell you anything?
+
+]
+
+The third clue is from the Betrayal:
+
+#quote[
+
+  J: It was all a lie.
+  R: It was real, what we had was real, I know it was!
+  J: The things I said, I just needed you to trust me.
+  R: No, no!
+
+]
+
+It is possible to feel this way about another person even early in a
+relationship, but as-is these expressions are hard to reconcile without "Disney
+pacing". The awkward parting after their Date is not enough to justify the
+affection during _Free_. Hence I propose that either:
+
+a. One of them immediately turned back to catch the other.
+b. They met again on another day.
+
+Upon which they talked deeply for hours about their lives. Let us establish that
+the Date we're shown occurred in the evening, and that the _Takedown_ / Train
+scenes happened in the morning, either the next day or some days later. All
+three scenes have ambiguous, pinkish lighting, but the Train scene seems
+brighter overall than the rehearsal, implying an early morning session. We know
+that the Idol Awards "are tomorrow", and that _Free_ occurs that same night, so
+it seems impossible that Rumi could have gone from the Date we're shown directly
+to the _Takedown_ rehearsal scene. This is our window: Rumi and Jinu met again.
+
+Reasons not to believe this:
+
+1. During the Idol Awards, the demons only mocked her with the exact line she
+said to Jinu: "You're a mistake, you have been since the moment you were born." If they had talked more,
+there should have been more ammunition.
+2. If you disagree about the day-night cycles of the Date/Train/Free scenes.
+3. Gwi-ma only tormented Jinu after _Free_ about sticking to the plan.
+4. If you think it's significant that Rumi is shown in the same clothing during
+the Date and _Free_. The Date would have had to occur very early in the morning,
+but if so, what was the auntie doing selling bracelets to strangers at 5 a.m.?
 
 == Free
+
+// Image: Jinu lost in regret.
+// Image: Derpy snapping him out of his reverie.
+
+// Image: The two images of Jinu.
 
 // The Monmoon reacting to Jinu's singing.
 //
 // Gwima's voice can't get through to Jinu.
 // When the patterns come back, he's resentful and steels himself for the coming encounter.
 // Image: Jinu bracing himself.
+
+// Image: Yeah... that's funny.
 
 = The Climax
 
@@ -480,6 +668,10 @@ me.
 // to continue Rumi's castration and binding by the "old Honmoon".
 //
 // Seline can't bring her self to touch Rumi's face.
+
+// Seline covering Rumi with her sweater and Rumi throwing it back off are
+// symbolic of the Honmoon itself (and its representations).
+
 //
 // Rumi's demonic moment.
 
@@ -489,6 +681,8 @@ me.
 // Rumi had to go all the way to rock bottom before she could be reborn.
 
 == Communion
+
+// Image: Smiling demons.
 
 This frame is terrifying. It has everything that repels a primate:
 feline-reptilian eyes, fangs, and fingers spread to resemble the legs of our
@@ -507,6 +701,9 @@ ancient enemies the arthropods.
 // overcome Gwima, which is just another form of the Great Mother.
 //
 // Jinu's own hero sacrifice.
+
+// Image: The Sword - "Unity".
+// Image: "The Honmoon Seed".
 
 // Why do you think the ending line of What it sounds like is the cover of the
 // album? This was the true song. The song they couldn't write.
@@ -611,6 +808,7 @@ KPop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 // the side of the river they would have come from: 잠실 (Jam-sil) Stadium.
 // Olympic Stadium.
 //
+// Demon flight attendent's name is visible (TODO find it)
 // Demon's name during How it's done is 안지후 (An Ji-hu).
 //
 // Hidden frame in their Namsan concert announcement.
@@ -625,6 +823,24 @@ KPop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 // in the English version, during the assassination attempt on Jinu.
 //
 // Image: Do you not hear him in your ear?
+
+// Rumi is ambidextrous. Writes right-handed.
+//
+// Takedown montage:
+// - Interrogating demon: right
+// - Landing: right
+// - Standing look at Saja screen: left
+//
+// Subway:
+// - Landing: right
+// - After the tear: left
+// - Leap: right-handed "batter" swing. Right hand is higher.
+//
+// Confronting Seline:
+// - Picking up sword: right
+
+// "What are you, from the 19th century?" In the Korean version, she accuses him
+// of being a person of the "Joseon Dynasty" (조선 시대, 1392-1897), which of course he is.
 
 == FAQ
 
@@ -649,3 +865,5 @@ contact for additional assets, etc. Given #link("https://typst.app/")[the right
   tooling], it was also quite nice to type up and style.
 
 == Version History
+
+//  LocalWords:  Mythologically
