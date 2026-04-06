@@ -665,7 +665,7 @@ This duet scene is the seal on their relationship, and generally proves that
 Jinu is not evil outright. We see:
 
 1. Him actively in regret before Rumi even arrives.
-2. His reflection matching his words.
+2. His window reflection matching his words.
 3. The Honmoon reacting to his footsteps.
 4. A love bond blocking Gwi-ma's voice.
 5. Jinu bracing himself for the inevitable encounter.
@@ -676,9 +676,8 @@ The fact remains that the fight with the Dragon itself is being avoided, a cold
 truth that Gwi-ma reminds Jinu of immediately upon his return to the underworld.
 The Captive has to be earned.
 
-The psychological situation is a natural mirror: the Ego and Animus really see
-each other now, although the Unconscious is loathe to permit any further rising
-of the Animus.
+Psychologically, the Ego and Animus really see each other now, although the
+Unconscious is loathe to permit any further integration of the Animus.
 
 // Image: The two images of Jinu.
 
@@ -692,16 +691,62 @@ of the Animus.
 
 = The Climax
 
+We have reached the final stages of the Hero's Journey: a rapid descent to the
+abyss, break down, and rebirth.
+
 == Breakup
+
+When Bobby declares "the Saja Boys are fighting", it's unclear what's really
+behind this, but the outcome is the same. Huntrix performs first, and Jinu's
+plan is put into action.
+
+// Image: You're a demon!
+// Image: A scared animal.
+
+Rumi is completely exposed. The world knows her secret, or so she believes. The
+audience likely doesn't realize what they're seeing, but Mira and Zoey certainly
+do.
+
+// Image: Shock at seeing Rumi's patterns.
+
+Mira and Zoey are mental support structures for Rumi, similar to Authorities.
+Backstage the two confront her, and we see the Ego's insistence on independence
+and control, despite having been deeply disturbed by an attack from the
+Unconscious.
+
+// Image: I can still fix it!
+
+Gwi-ma's searching influence has found cracks into Mira and Zoey, and the three
+are briefly enemies. The Hero has lost allies - Centralized Consciousness is
+dissolving.
+
+// Image: Mira raising her weapon.
+
 == Betrayal
 
-// They were both wrong about to how to handle their demons. "That's not how it
-// works!" or "Suffering with my mistakes is all I deserve." "Yes it is!" or "We
-// just have to push all our flaws down perfectly." This is something she grew
-// up believing and has had to believe, and is visibly shocked when it's clear
-// that is doesn't work.
-//
-// He didn't have to tell her the truth. That he did shows his inner conflict.
+// Image: How could you do this?
+
+Why did Jinu do it? In this instance of the endless variations of the Hero's
+Journey, the Dragon has tried a new trick: turning the Captive against the Hero.
+The brief hope he held during _Free_ has been smothered, and the Captive has
+given up. He believes will never escape bondage, so his only recourse is at
+least to escape the pain of his conscience. Why was he waiting for her
+backstage? To twist the knife a final time and complete the destruction of the
+Hero along with himself, but also to plead. Jinu is not gone entirely.
+
+// Image: "This is just your demon talking. You have to fight it!" --> "That's not how it works!"  --> "Yes it is!"
+
+Both Jinu and Rumi were wrong about how to handle their demons. Jinu's answer
+was despair and wallowing. Rumi's was endless resistance, a strategy she grew up
+believing. She is visibly shocked to realize her futility.
+
+// Image: Honmoon tearing.
+
+The Honmoon is tearing along her footsteps as the Honmoon is a part of Rumi
+herself. Recall that it is her fundamental mental framework, her set of filters,
+basic assumptions, habits, and expectations.
+
+Before it unravels entirely, there is one person left to turn to.
 
 == Sacrifice
 
