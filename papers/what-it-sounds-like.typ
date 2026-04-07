@@ -692,7 +692,9 @@ Unconscious is loathe to permit any further integration of the Animus.
 = The Climax
 
 We have reached the final stages of the Hero's Journey: a rapid descent to the
-abyss, break down, and rebirth.
+abyss, break down, and rebirth. To defeat the Dragon, Rumi must join forces with
+her inner Demon and rescue the Captive. To achieve Consciousness, she must come
+to accept the Shadow and reconcile with the Animus.
 
 == Breakup
 
@@ -750,22 +752,58 @@ Before it unravels entirely, there is one person left to turn to.
 
 == Sacrifice
 
-// Seline as an emissary of the Unconscious, perhaps that of the Spirit Father.
-// She is fiercly dedicated to the protection of the Old Honmoon, thereby
-// denying Rumi her Consciousness.
+Seline is the Honmoon in human form, an emissary of the Spirit Father. From
+Rumi's perspective, Seline is the source of the message of culture and
+expectation. This is demonstrated by her carriage but also her speech. In the
+English audio, but even more so in the Korean, Seline speaks quite formally and
+firmly, not at all like a source of warmth and compassion one might expect of a
+mother figure. We could say this is due to her long years of worldly
+responsibility, or simply that she is herself the Honmoon. Her existence itself
+thus denies Rumi her Consciousness.
 
-// Rumi offers herself as a sacrifice to _a_ Great Mother (father?), Seline, who
-// is both too loving to accept the death sacrifice but not loving enough _not_
-// to continue Rumi's castration and binding by the "old Honmoon".
-//
-// Seline can't bring her self to touch Rumi's face.
+// Image: "I ran out of time."
+
+We don't know exactly where this tree is, but presumably Rumi teleported here.
+We can only imagine what transpired in her mind between her parting with Jinu
+and this moment. Perhaps four hours pass between the start of the Idol Awards
+(20:00?) and the start of _Your Idol_ at Namsan Tower (midnight). During those
+four hours we only see Rumi go one place - the Spirit Tree. What else was she
+doing?
+
+Whereever she went and whatever she did, her conclusion was death. Like Jinu
+before her, Rumi now attempts to complete her own castration by offering herself
+as a sacrifice to her mission. "...before I destroy what I swore to protect".
+Her mission is the Honmoon is Seline. Yet the mother essence reappears here and
+Seline's two representations conflict - she is both too loving to accept Rumi's
+sacrifice, but not loving enough to release her from her duty.
+
+// Image: Seline can't bring her self to touch Rumi's face.
+// Image: "It's the only way to protect the Honmoon!"
+
+Rumi realizes what the problem was, and just as she throws off Seline's sweater
+we are reminded of a core duty of the Hero: to renew the world. To renew, one
+must first undo. Critically though this is not an act solely of destruction from
+a place of hatred and bitterness. Recall:
+
+#quote[
+
+  Fix the world and make it right
+  When darkness finally meets the light.
+
+]
+
+The Hunter's Mantra.
+
+// TODO: Quote the book and mention how the "throwing off of the old" is
+// precisely the duty of the Hero.
 
 // Seline covering Rumi with her sweater and Rumi throwing it back off are
 // symbolic of the Honmoon itself (and its representations).
 
-//
-// Rumi's demonic moment.
+// Image: Rumi's demonic moment.
 
+This moment chilled me. It seemed like Rumi was gone, and I honestly did not
+know what would happen.
 
 == Collapse
 
