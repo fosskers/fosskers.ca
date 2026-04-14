@@ -698,7 +698,7 @@ to accept the Shadow and reconcile with the Animus.
 
 == Breakup
 
-When Bobby declares "the Saja Boys are fighting", it's unclear what's really
+When Bobby declares "the Saja Boys are fighting", it is unclear what is really
 behind this, but the outcome is the same. Huntrix performs first, and Jinu's
 plan is put into action.
 
@@ -731,8 +731,8 @@ dissolving.
 Why did Jinu do it? In this instance of the endless variations of the Hero's
 Journey, the Dragon has tried a new trick: turning the Captive against the Hero.
 The brief hope he held during _Free_ has been smothered, and the Captive has
-given up. He believes will never escape bondage, so his only recourse is at
-least to escape the pain of his conscience. Why was he waiting for her
+given up. In this moment he believes will never escape bondage, so his only
+recourse is at least to forget the pain of his conscience. Yet why wait for her
 backstage? To twist the knife a final time and complete the destruction of the
 Hero along with himself, but also to plead. Jinu is not gone entirely.
 
@@ -740,7 +740,7 @@ Hero along with himself, but also to plead. Jinu is not gone entirely.
 
 Both Jinu and Rumi were wrong about how to handle their demons. Jinu's answer
 was despair and wallowing. Rumi's was endless resistance, a strategy she grew up
-believing. She is visibly shocked to realize her futility.
+believing. She is shocked to realize her futility.
 
 // Image: Honmoon tearing.
 
@@ -758,19 +758,19 @@ expectation. This is demonstrated by her carriage but also her speech. In the
 English audio, but even more so in the Korean, Seline speaks quite formally and
 firmly, not at all like a source of warmth and compassion one might expect of a
 mother figure. We could say this is due to her long years of worldly
-responsibility, or simply that she is herself the Honmoon. Her existence itself
-thus denies Rumi her Consciousness.
+responsibility, or simply that she is herself the Honmoon. Seline's existence
+itself thus denies Rumi her Consciousness.
 
 // Image: "I ran out of time."
 
 We don't know exactly where this tree is, but presumably Rumi teleported here.
 We can only imagine what transpired in her mind between her parting with Jinu
-and this moment. Perhaps four hours pass between the start of the Idol Awards
+and this moment. Perhaps four hours pass between the opening of the Idol Awards
 (20:00?) and the start of _Your Idol_ at Namsan Tower (midnight). During those
 four hours we only see Rumi go one place - the Spirit Tree. What else was she
 doing?
 
-Whereever she went and whatever she did, her conclusion was death. Like Jinu
+Wherever she went and whatever she did, her conclusion was death. Like Jinu
 before her, Rumi now attempts to complete her own castration by offering herself
 as a sacrifice to her mission. "...before I destroy what I swore to protect".
 Her mission is the Honmoon is Seline. Yet the mother essence reappears here and
@@ -778,12 +778,16 @@ Seline's two representations conflict - she is both too loving to accept Rumi's
 sacrifice, but not loving enough to release her from her duty.
 
 // Image: Seline can't bring her self to touch Rumi's face.
+// Image: "Why couldn't you love me?"
 // Image: "It's the only way to protect the Honmoon!"
 
 Rumi realizes what the problem was, and just as she throws off Seline's sweater
 we are reminded of a core duty of the Hero: to renew the world. To renew, one
-must first undo. Critically though this is not an act solely of destruction from
-a place of hatred and bitterness. Recall:
+must first undo. Critically though, such undoing is not an act solely of
+destruction from a place of hatred and bitterness. Recall:
+
+// TODO: Also mention later how even in a renewed world, you still need a
+// Honmoon! You still need some structure to order your reality.
 
 #quote[
 
@@ -792,35 +796,85 @@ a place of hatred and bitterness. Recall:
 
 ]
 
-The Hunter's Mantra.
+The Hunter's Mantra. "Meet" could mean "to meet in battle", but also "to
+contact" or "to bond with".
+
+// TODO: Perhaps move this whole section about the mantra to after Rumi appears in the stadium.
 
 // TODO: Quote the book and mention how the "throwing off of the old" is
 // precisely the duty of the Hero.
 
-// Seline covering Rumi with her sweater and Rumi throwing it back off are
-// symbolic of the Honmoon itself (and its representations).
-
 // Image: Rumi's demonic moment.
 
-This moment chilled me. It seemed like Rumi was gone, and I honestly did not
-know what would happen.
+Rumi freely teleports away, now in acceptance of her nature. This moment chilled
+me. It seemed like Rumi was lost, and I honestly did not know what would happen.
 
 == Collapse
+
+// TODO: Remove?
 
 // Rumi had to go all the way to rock bottom before she could be reborn.
 
 == Communion
 
-// Image: Smiling demons.
+// Image: Initial smiling demons easter egg.
+
+Midnight at Namsan Tower.
+
+The story and the myth and the psychology are merging. Gwi-ma, the Great
+Mother-Dragon, the Unconscious is here to eat you and fold you back into itself.
+The snake is trying to bite its own tail. And who better to make the opening
+toast but Jinu, the tragic Captive-Animus?
+
+The people of Seoul are here because they have been ensnared by a something, and
+that something has seduced them with a call very difficult for a human to
+resist: "Come home." While not as hive-minded as ants, we are not solitary cats
+either, and the urge to belong can degrade into a preconscious desire to desolve
+individual identity into a mass of oneness, a never-beginning and never-ending
+togetherness in the embrace of the Great Mother. Yet this is precisely the
+opposite direction of Conscious Civilization. The achievement of independent
+greatness is what the Great Mother - if unchecked by Hero Consciousness - always
+seeks to prevent. But where is Rumi?
+
+To say that _Your Idol_ is about the perils of boy band worship is to miss the
+deeper warning; that the danger is in the loss of self itself.
+
+// TODO: Be creepy here with the quotes.
+#quote[
+  Keeping you in check, keeping you obsessed.
+]
+
+
+#quote[
+  I can be your sanctuary.
+]
+
+// Image: Smiling demons during the song.
 
 This frame is terrifying. It has everything that repels a primate:
 feline-reptilian eyes, fangs, and fingers spread to resemble the legs of our
 ancient enemies the arthropods.
 
+#quote[
+  I will make you free when you're all a part of me.
+]
+
 // Crucifixion imagery, undermining the notion of "savior". Their legs are
 // crossed over just like Jesus is depicted!
 
-// JINU IS WEARING THE BRACELET!
+Arms wide with legs crossed, rising to the sky. The symbol of Jesus as a saviour
+is most obviously invoked here, although perverted, and salvation is not the
+realization of personal freedom but the collapse of the self into a mass.
+Neumann calls this phenomenon "Recollectivization" and names it a chief threat
+to humanity. We have witnessed numerous outbreaks over the previous century, and
+in our own time the internet acts as an accelerant to this seemingly natural
+tendency to want to "go back to sleep". The only antidote is Consciousness.
+
+She's almost here.
+
+// Image: JINU IS WEARING THE BRACELET!
+
+Jinu is wearing the bracelet.
 
 == Rebirth
 
@@ -956,7 +1010,7 @@ KPop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 // Image: Do you not hear him in your ear?
 
 // Rumi is ambidextrous. Picked up her phone right-handed. Writes right-handed.
-// Plays guitar right-handed.
+// Plays guitar right-handed. Chopsticks right-handed.
 //
 // Surprised by Derpy: right hand
 //
