@@ -1020,40 +1020,153 @@ By Colin. 2026/05/03 in Seoul.
 == Bibliography
 == Easter Eggs
 
-=== Geographic Liberties
+=== The Huntrix Penthouse
 
+The building they live in exists. It's called _Lotte World Tower_ and it's the
+tallest building in Korea. Their living room is based on the tower's observation
+deck floors which are open to the public.
 
+// Image: My shot of their living room vs the shots we're shown from the movie.
 
-=== Other
+However there are some inconsistencies with the view we're shown from their
+window. The angle to Namsan Tower isn't quite right, and where we'd normally see
+the Han River we instead see cityscape.
+
+// However the angle to Namsan tower isn't quite right, making it seem closer to
+// the JW Marriot Hotel, or perhaps between Banpo station and Jam-won station.
+// You can see what appears to be the Hannam bridge from their window.
+
+=== Concert Venues
+
+Likewise, the location of the Golden concert and later Idol Awards concert is
+also real: the Olympic Stadium. It's actually quite close to Lotte Tower and to
+the above-water subway line we're shown during the _Takedown_ fight, which runs
+between Cheongdam Stadium (청담역) and Jayang Stadium (자양역). There are a few
+inconsistencies here too, however.
+
+Olympic Stadium borders the south side of the Han River and isn't really near
+any buildings, whereas Rumi is shown running through city streets after fleeing
+the Golden concert.
+
+// Image: Rumi running.
+
+The station the Hunters get off at (자양역) is somewhat darker than what we're shown.
+
+// Image: Metro station.
+
+Finally, after the Idol Awards people are shown shuffling into the city streets
+with a direct view of Namsan Tower. These locations are across the city from
+each other and so no direct view exists nearby, but a similar view can be seen
+from City Hall and may be the original inspiration for the shot.
+
+// Image: view of Namsan Tower through the streets at night.
+
+Speaking of Namsan Tower, the movie shows a giant stadium up there, but of
+course no such complex exists, and the peak of the mountain is far too small for
+that. Locals often walk the various routes to the tower on a nice day.
+
+// Image: the rest area by Namsan Tower.
+
+=== Names of Unnamed Characters
+
+T-shirt guy's SNS handle is MrDaveBleich. Did you notice his Gwi-ma shirt?
+
+// Image: His handle.
+// Image: His shirt.
+
+The only surviving demon of the _How it's Done_ crash had "An Ji-hu" (안지후) on
+his name tag.
+
+// Image: Demon nametag.
+
+// TODO: Female demon flight attendant.
+
+=== Pronunciation of Names
+
+Speaking of names, Jinu's name isn't Jinu. As we can see from his signed note to
+Rumi, his name is written 진우 (Chi-noo). The "Revised Romanization" introduced
+by the Korean Government in 2000 renders ㅈ into an English J, while it's closer
+to Ch when in a word's "head position". The voiced J is then what everyone uses
+in the English, but you can hear the difference clearly if you switch to Korean
+audio for this scene.
+
+Likewise, Zoey's name is pronounced "Cho-i" because there is no Z sound in
+Korean. And if it wasn't clear, in this entire article I've written Gwi-ma's
+name in the official way with a G, but in head position a similar effect occurs
+and it is in reality "Kwi-ma".
+
+=== The Ear Demon
+
+Gwi-ma (귀마) probably means "ear demon". There is some play on words here. The
+word used for devil / Satan in Korean is 마귀 (Ma-gwi), but the word for Demons
+in general within the movie is 악귀 (悪鬼 - ak-kwi). Here we see the
+Chinese-style reading of 귀 to mean Demon in these compound words, while 귀 on
+its own as a native Korean word just means "ear". There is a nod to this in the
+English version, during Rumi's assassination attempt on Jinu.
+
+// Image: Do you not hear him in your ear?
+
+=== The Joseon Dynasty
+
+Guys, if your crush attempts your murder, just be persistent.
+
+During their Date scene when Jinu complains of her being late, she calls him
+old-fashioned by retorting with "What are you, from the 19th century?" In the
+Korean version she instead accuses him of being a person from the "Joseon
+Dynasty" (조선 시대, 1392-1897), which of course he is.
+
+=== Hidden Frames
+
+There are two "subliminal messaging" frames that reveal the true natures of the
+Saja Boys. The first appears before they announce the Namsan concert. The second
+immediately before _Your Idol_ begins.
+
+// Image: Frame 1.
+// Image: Frame 2.
+
+=== Real Songs
+
+A number of real K-pop songs are featured throughout the film.
+
+1. _Strategy_ by Twice: as Huntrix starts their "vacation".
+2. _Love Me Right_ by EXO: when they first meet the Saja Boys in the alley.
+3. _Love, Maybe_ by MeloMance: when Jinu first appears in the alley.
+
+Twice also appears in a poster, and of course during the ending credits.
+
+// Image: The poster.
+
+=== Tax Evasion
+
+You thought the Saja Boys were bad because they murder the innocent? No - they
+don't even pay their taxes.
+
+// Image: Tax evasion.
+
+=== Derpie and Sussie
+
+The Tiger and Magpie have names - Derpie and Sussie respectively. Derpie because
+of his moronic grin, and Sussie because of his suspicious glare.
+
+At the very end we see Zoey wearing a Derpie hoodie, so by this point they must
+have been introduced.
+
+// Image: Derpie hoodie.
+
+And look what can be found on the path down from Namsan tower.
+
+// Image: Wooden Sussie.
+
+// --- Rest --- //
 
 // Do these in chronological order.
 //
-// T-shirt guy with a Gwi-ma shirt. (His SNS handle is MrDaveBleich)
 // We'll be there in 3 minutes.
 // - Cut the call: 1:34:48
 // - Song starts: 1:33:53
 // - Landed: 1:32:03
 // - Song over: 1:31:07
 // 대세 목욕탕 "popular bathhouse".
-
-// Twice poster and _Strategy_ scene.
-// Songs when Huntrix first sees the Saja boys:
-// - "Love Me Right" by EXO
-// - "Love, Maybe" by Melomance
-
-// They live in the penthouse of the Lotte World Tower.
-//
-// Image: Observation deck. It's their living room.
-//
-// However the angle to Namsan tower isn't quite right, making it seem closer to
-// the JW Marriot Hotel, or perhaps between Banpo station and Jam-won station.
-// You can see what appears to be the Hannam bridge from their window.
-//
-// His name is actually "Chi-noo" 진우. The "Revised Romanization" introduced by
-// the Korean Government in 2000 renders ㅈ into and English J, while it's
-// closer to Ch when in "head position". The voiced J is then what everyone uses
-// in the English, but you can hear the difference clearly if you switch to
-// Korean audio for this scene.
 
 // Saja Boys concert happened at "Myeong-dong Square", which may not exist.
 
@@ -1068,29 +1181,11 @@ By Colin. 2026/05/03 in Seoul.
 // Your Idol: English with Korean
 // What it Sounds Like: Japanese
 //
-// Darts -> Tax evasion.
-//
 // The subway station name is 삼(island) 유원지(amusement park). The English
 // says "Island Resort". This may refer to the stop 뚣섬유원지, which has a
 // bridge over the river leading right to it. There is also a large stadium on
 // the side of the river they would have come from: 잠실 (Jam-sil) Stadium.
 // Olympic Stadium.
-//
-// Demon flight attendent's name is visible (TODO find it)
-// Demon's name during How it's done is 안지후 (An Ji-hu).
-//
-// Hidden frame in their Namsan concert announcement.
-//
-// Zoey wearing a Derpy shirt.
-
-// 귀마 probably means "ear demon". There is some play on words here. The word
-// used for devil / Satan in Korean is 마귀 (Ma-gwi), but the word used for
-// Demons in general in the movie is 악귀 (悪鬼 - ak-kwi). Here we see the
-// Chinese-style reading of 귀 to mean Demon in these compound words, while 귀
-// on its own as a native Korean word just means "ear". There is a nod to this
-// in the English version, during the assassination attempt on Jinu.
-//
-// Image: Do you not hear him in your ear?
 
 // Rumi is ambidextrous. Picked up her phone right-handed. Writes right-handed.
 // Plays guitar right-handed. Chopsticks right-handed.
@@ -1111,9 +1206,6 @@ By Colin. 2026/05/03 in Seoul.
 //
 // Confronting Seline:
 // - Picking up sword: right
-
-// "What are you, from the 19th century?" In the Korean version, she accuses him
-// of being a person of the "Joseon Dynasty" (조선 시대, 1392-1897), which of course he is.
 
 == FAQ
 
@@ -1170,3 +1262,6 @@ contact for additional assets, etc. Given #link("https://typst.app/")[the right
 
 == Version History
 
+=== 2026-05-03
+
+Initial draft completed.
