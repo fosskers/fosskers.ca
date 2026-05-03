@@ -22,8 +22,8 @@
 
 = Preface
 
-KPop Demon Hunters is memorable for more than its music: it is a telling of the
-Hero's Story. Beneath the surface it has little to do with Kpop or idols, and it
+KPop Demon Hunters is memorable for more than its music. It is a telling of the
+Hero's Story, and beneath the surface it has little to do with Kpop or idols. It
 follows humanity's beloved plot pattern of threat, adventure, doubt, collapse,
 rebirth, and final victory.
 
@@ -142,11 +142,12 @@ fate of the third Sunlight Sister is unknown.
 The Hunters function as exterminator-assassins, and while very experienced they
 know little to nothing about the true nature of demons. Firstly that demons have
 emotions, and secondly that Gwi-ma tortures them psychically. Rumi demonstrates
-a similar ignorance with regards to Derpy the Tiger.
+a similar ignorance with regards to Derpie the Tiger.
 
 // "Demons don't feel anything!" -> "Is that what you think?"
 // Image: "Do you not hear him in your ear?" -> "What are you talking about?"
 // -- Jinu is honestly taken aback by this exchange.
+//
 // Image: What are you?
 
 // What does this mean psychologically?
@@ -156,7 +157,7 @@ a similar ignorance with regards to Derpy the Tiger.
 // The conscious mind can do violence against the elements of the unconscious.
 
 The weight of this increases when we realize that by this point in their Hunter
-careers, they take pleasure in dealing out death in judgement.
+careers, they take pleasure in dealing out punishment to demons.
 
 // All smiles during _How it's Done_. "These chicks dig murder."
 // Let's go kill these guys.
@@ -184,7 +185,7 @@ through it more than once.
 The Honmoon requires upkeep. Without a regular influx of inspiration it weakens,
 permitting the entrance of more demons who are always waiting just below the
 surface. Gwi-ma cannot pass through it, but the Saja Boys are able to without
-issue, and creatures like Derpy the Tiger even seem atuned to it, manipulating
+issue, and creatures like Derpie the Tiger even seem atuned to it, manipulating
 it freely.
 
 The Hunters dream of a Golden Honmoon, a concept even Gwi-ma seems aware of.
@@ -207,8 +208,8 @@ but many absorbed from your culture. A Golden one is the idea that you can
 perfectly seal away all the darkness and imperfection within you if you just
 work hard enough. Here the movie speaks for itself: a Golden Honmoon is probably
 not desirable, even if the world shouts to you that it is, and you strain
-yourself agreeing. _Golden_ is a good song, but self-congratulation nonetheless.
-A far greater song comes later.
+yourself agreeing. _Golden_ is a good song, but self-congratulation and
+self-deception nonetheless. A far greater song comes later.
 
 // Image: It's the only way to protect the Honmoon!
 
@@ -369,7 +370,7 @@ the harder she pushes away from the underworld, the tighter its grip on her
 becomes. Naturally this tension also stresses the Honmoon itself.
 
 Psychologically, Rumi is a human being who has not yet achieved what the
-literature calls Centroversion. This is something of a superior form of either
+literature calls _Centroversion_. This is something of a superior form of either
 intro- or extroversion alone; it is a balanced mind in which the forces of the
 Ego, Authorities, and Unconscious are in creative harmony. A healthy mind
 naturally seeks this state, and it should be clear that this is precisely the
@@ -398,7 +399,7 @@ The movie spans two time blocks: before and after the initial, failed Golden
 concert. The length of the first block depends on how long it would take Korea's
 top girl group to book and prepare the Olympic Stadium in Seoul. Mira hints that
 with their influence, this could be at minimum only a few days, but perhaps a
-week or more is more realistic.
+week or longer is more realistic.
 
 The second block is clearer, as we are given two direct hints. The first is a
 quote from Mira after Rumi admits her problem: "Okay, we have two weeks to fix
@@ -541,8 +542,8 @@ reactions to her later in this scene are genuine.
 // Image: The bracelet briefly on her wrist.
 
 The bracelet represents their repaired connection. It's a loop for the same
-reason a wedding ring is. She didn't just give it to him, she put it on once
-very briefly.
+reason that a wedding ring is. She didn't just give it to him, she put it on
+once very briefly.
 
 // Image: I don't think you're a mistake.
 
@@ -567,7 +568,7 @@ their date, we are shown:
 4. The train fight.
 5. The _Free_ duet.
 
-_Free_ itself will be dealt with fully in the next section, but we mention it
+_Free_ itself will be dealt with more in the next section, but we mention it
 here briefly to note that even before the duet, Rumi claims her voice is healed,
 and afterward she brings a hand to her throat as if surprised at her own
 singing. Near the beginning of the song she also effectively confesses her
@@ -578,7 +579,7 @@ voice recover, and when did the spark of love ignite? I see these possibilities:
 2. _The Signing_, as a turning point, was enough to begin the healing.
 Immediately afterward is the confrontation by Mira, where Rumi "sounds good".
 _The Date_, though ended awkwardly, was enough for love.
-3. Rumi and Jinu met again off screen and had a deep conversion.
+3. Rumi and Jinu met again off-screen and had a deep conversion.
 
 (3) is my chosen interpretation. The first thing that bothered me was this line
 from Rumi before the duet:
@@ -679,7 +680,7 @@ The Captive has to be earned.
 Psychologically, the Ego and Animus really see each other now, although the
 Unconscious is loathe to permit any further integration of the Animus.
 
-// Image: The two images of Jinu.
+// Image: The window images of Jinu.
 
 // The Monmoon reacting to Jinu's singing.
 //
@@ -696,13 +697,13 @@ abyss, break down, and rebirth. To defeat the Dragon, Rumi must join forces with
 her inner Demon and rescue the Captive. To achieve Consciousness, she must come
 to accept the Shadow and reconcile with the Animus.
 
-== Breakup
+== Breakup (The Idol Awards)
 
 When Bobby declares "the Saja Boys are fighting", it is unclear what is really
 behind this, but the outcome is the same. Huntrix performs first, and Jinu's
 plan is put into action.
 
-// Image: You're a demon!
+// Image: "You're a demon!"
 // Image: A scared animal.
 
 Rumi is completely exposed. The world knows her secret, or so she believes. The
@@ -724,7 +725,7 @@ dissolving.
 
 // Image: Mira raising her weapon.
 
-== Betrayal
+== Betrayal (Backstage)
 
 // Image: How could you do this?
 
@@ -745,12 +746,12 @@ believing. She is shocked to realize her futility.
 // Image: Honmoon tearing.
 
 The Honmoon is tearing along her footsteps as the Honmoon is a part of Rumi
-herself. Recall that it is her fundamental mental framework, her set of filters,
-basic assumptions, habits, and expectations.
+herself. Recall that it is her own fundamental mental framework, her set of
+filters, basic assumptions, habits, and expectations.
 
 Before it unravels entirely, there is one person left to turn to.
 
-== Sacrifice
+== Sacrifice (The Tree)
 
 Seline is the Honmoon in human form, an emissary of the Spirit Father. From
 Rumi's perspective, Seline is the source of the message of culture and
@@ -759,7 +760,7 @@ English audio, but even more so in the Korean, Seline speaks quite formally and
 firmly, not at all like a source of warmth and compassion one might expect of a
 mother figure. We could say this is due to her long years of worldly
 responsibility, or simply that she is herself the Honmoon. Seline's existence
-itself thus denies Rumi her Consciousness.
+itself thus denies Rumi her independent Consciousness.
 
 // Image: "I ran out of time."
 
@@ -770,7 +771,7 @@ and this moment. Perhaps four hours pass between the opening of the Idol Awards
 four hours we only see Rumi go one place - the Spirit Tree. What else was she
 doing?
 
-Wherever she went and whatever she did, her conclusion was death. Like Jinu
+Wherever she went and whatever she did, her conclusion was suicide. Like Jinu
 before her, Rumi now attempts to complete her own castration by offering herself
 as a sacrifice to her mission. "...before I destroy what I swore to protect".
 Her mission is the Honmoon is Seline. Yet the mother essence reappears here and
@@ -782,9 +783,10 @@ sacrifice, but not loving enough to release her from her duty.
 // Image: "It's the only way to protect the Honmoon!"
 
 Rumi realizes what the problem was, and just as she throws off Seline's sweater
-we are reminded of a core duty of the Hero: to renew the world. To renew, one
-must first undo. Critically though, such undoing is not an act solely of
-destruction from a place of hatred and bitterness. Recall:
+we are reminded of a core duty of the Hero: the renewal of the world. To renew,
+one must first undo. Critically though, such undoing is not an act solely of
+destruction from a place of hatred and bitterness. Recall this from the Hunter's
+Mantra:
 
 // TODO: Also mention later how even in a renewed world, you still need a
 // Honmoon! You still need some structure to order your reality.
@@ -796,8 +798,7 @@ destruction from a place of hatred and bitterness. Recall:
 
 ]
 
-The Hunter's Mantra. "Meet" could mean "to meet in battle", but also "to
-contact" or "to bond with".
+"Meet" could mean "to meet in battle", but also "to contact" or "to bond with".
 
 // TODO: Perhaps move this whole section about the mantra to after Rumi appears in the stadium.
 
@@ -809,13 +810,7 @@ contact" or "to bond with".
 Rumi freely teleports away, now in acceptance of her nature. This moment chilled
 me. It seemed like Rumi was lost, and I honestly did not know what would happen.
 
-== Collapse
-
-// TODO: Remove?
-
-// Rumi had to go all the way to rock bottom before she could be reborn.
-
-== Communion
+== Communion (Your Idol)
 
 // Image: Initial smiling demons easter egg.
 
@@ -823,7 +818,7 @@ Midnight at Namsan Tower.
 
 The story and the myth and the psychology are merging. Gwi-ma, the Great
 Mother-Dragon, the Unconscious is here to eat you and fold you back into itself.
-The snake is trying to bite its own tail. And who better to make the opening
+The snake is trying to devour its own tail. And who better to make the opening
 toast but Jinu, the tragic Captive-Animus?
 
 The people of Seoul are here because they have been ensnared by a something, and
@@ -843,7 +838,6 @@ deeper warning; that the danger is in the loss of self itself.
 #quote[
   Keeping you in check, keeping you obsessed.
 ]
-
 
 #quote[
   I can be your sanctuary.
@@ -870,26 +864,108 @@ to humanity. We have witnessed numerous outbreaks over the previous century, and
 in our own time the internet acts as an accelerant to this seemingly natural
 tendency to want to "go back to sleep". The only antidote is Consciousness.
 
-She's almost here.
+She's almost here. Before we welcome her, there is one last thing to notice.
 
 // Image: JINU IS WEARING THE BRACELET!
 
 Jinu is wearing the bracelet.
 
-== Rebirth
+== Rebirth (The Dragon Fight - What It Sounds Like)
 
-// Gwi-ma shooting Dragon Fire at her.
-//
-// Rumi's fusion with her animus and acceptance of her shadow. It allows her to
-// overcome Gwima, which is just another form of the Great Mother.
-//
-// Jinu's own hero sacrifice.
+// TODO Talk more about the Honmoon being destroyed by this point?
 
+// Image: You come here like this?
+
+// TODO: Confirm.
+#quote[
+
+  G: You come here like this? You want to fix the world - but you can't even fix yourself.
+  R: I can't.
+  G: And now the whole world sees you for what you truly are.
+  R: They do.
+  G: And the Honmoon is gone.
+  R: It is.
+
+]
+
+_You come here like this?_ Imagine that after your centuries of scheming that
+your nemesis appears for the final battle broken down and toothless. You come
+here like this? What did you hope to accomplish? Why did you even come? Now
+imagine the other side - Rumi's position. After decades of your own effort and
+centuries of struggle by your predecessors you appear at the war's climax as
+nothing but your ragged self. Just you.
+
+_You come here like this?_
+
+Yes. And that's enough. Thus begins the Greatest song of the film.
+
+// The Dragon is confident in his victory. Meanwhile, Rumi is finally admitting the
+// truth to herself and everyone else, although in this moment she seems in a
+// trance, defeated, and lost to us. Then begins the Greatest song of the film.
+
+_What It Sounds Like_ is not the Greatest song because it's the catchiest or
+most immediately memorable. It isn't. It's the Greatest because it's the song
+they couldn't write. They couldn't write it because they hadn't been ready to
+tell the truth until now. It's the only song of the entire set that has real
+lyrical content that isn't perverted by the influence of the Honmoon or their
+insecurities. The song to "win the idol awards" was never going to be _Golden_
+or _Takedown_. "The song we couldn't write - this is what it sounds like." It's
+what they had been searching for the entire time, and now that they've found it,
+look at how they smile!
+
+// Image: All smiles.
+
+The song opens with Rumi's patterns changing colour. She has integrated the
+Shadow. Her voice and her apology revive her friends, they harmonize and
+recentralize. The Ego has reunitied itself, but Gwi-ma unleashes his demons at
+the trio and then pours his Dragon Fire directly at Rumi.
+
+// Image: Gwi-ma shooting Dragon Fire at her.
+
+This is depicted as fire both to fit the Dragon image, but also to the notion
+that the Unconscious - as the Great Mother - is the source of creation and
+creative energy. Fire is used often in mythological imagery to depict this
+power, and like fire it can burn the wielder. This is where in our culture we
+receive the motif of the "tortured artist"; it's precisely the fire of creation
+that acts as fuel for both their work and their insanity.
+
+Here too it seems that the Unconscious will overwhelm the Conscious and consume
+Rumi, until the Animus finally rises to action and achieves a Hero sacrifice of
+his own.
+
+// Image: "I wanted to set you free." -- "You already did."
+
+Jinu's dissolution into a soul gift and Rumi's acceptance of it is the
+long-awaited unification of the Ego and the Animus. Final contact with her
+masculine Animus has granted her his energy as might, which manifests as a
+sword.
+
+// TODO Name it in Korean.
 // Image: The Sword - "Unity".
+// Image: Split Gwi-ma.
+
+Rumi splits Gwi-ma. The Conscious mind is precisely that which divides and
+reconstructs. This is akin to Adam's naming of the animals in Genesis and the
+nature of the Scientific Method overall.
+
+// Image: Running. "Awakening".
+
+The song returns to the chorus and the audience joins in. Finally unified, Rumi
+achieves Centroversion and begins to fly. Mira and Zoey join her to form the
+seed of a new Honmoon, the new social order, the new mental framework.
+
 // Image: "The Honmoon Seed".
 
-// Why do you think the ending line of What it sounds like is the cover of the
-// album? This was the true song. The song they couldn't write.
+Gwi-ma is blown away, resubjugated to the combined strength of centralized
+Consciousness.
+
+The shot of the final line of the song was made the album cover of the movie's
+soundtrack because this moment is what the entire film was about. It was the
+outcome we couldn't have guessed, the song they couldn't write.
+
+// Image: The final line.
+
+Behold, human beings.
 
 = Afterword
 
@@ -938,10 +1014,17 @@ KPop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 
 감사합니다!
 
+By Colin. 2026/05/03 in Seoul.
+
 = Appendices
-== Glossary
 == Bibliography
 == Easter Eggs
+
+=== Geographic Liberties
+
+
+
+=== Other
 
 // Do these in chronological order.
 //
@@ -1034,8 +1117,6 @@ KPop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 
 == FAQ
 
-// TODO: Remove this?
-
 === Is Gwi-ma Rumi's dad?
 
 No.
@@ -1047,6 +1128,35 @@ Banished. You can't kill the Unconscious, nor would you want to.
 === Are Romance and Baby still alive?
 
 Probably not.
+
+=== When did the Saja Boys set the trap in the bathhouse?
+
+The Saja Boys were probably not deliberately trying to lure the Hunters onto the
+game show. Jinu is shown noticing them hiding and then improvising to have them
+reveal themselves. After both parties come face to face in the bathhouse, we hear:
+
+// TODO Confirm
+#quote[
+  J: I can't believe you actually followed us in here.
+  A: I told you they would.
+]
+
+The Boys dashed in there on a whim, and so must have the ability to summon other
+demons at will in order to have trapped the Hunters as they did.
+
+=== If the Saja Boys knew where the Hunters live, why didn't they attack them while asleep?
+
+Presumably because they couldn't. We see the Hunters pull weapons out of thin
+air and detect Honmoon disturbances, so it's not unreasonable to assume that
+there are other magical traps or barriers around their home that prevent
+assassination.
+
+Counter: Derpie does a Honmoon-crossing right in Rumi's bedroom. But perhaps he
+can only do this because he's a "spirit creature" and not a demon.
+
+The bathhouse trap shows us that the Saja Boys did actually want the Hunters
+dead, but they must have felt that ambushing them in public would have
+compromised their greater goal of sabotaging the entire Honmoon.
 
 === Why is this a PDF?
 
@@ -1060,4 +1170,3 @@ contact for additional assets, etc. Given #link("https://typst.app/")[the right
 
 == Version History
 
-//  LocalWords:  Mythologically
