@@ -142,7 +142,7 @@ fate of the third Sunlight Sister is unknown.
 The Hunters function as exterminator-assassins, and while very experienced they
 know little to nothing about the true nature of demons. Firstly that demons have
 emotions, and secondly that Gwi-ma tortures them psychically. Rumi demonstrates
-a similar ignorance with regards to Derpie the Tiger.
+a similar ignorance with regards to Derpy the Tiger.
 
 // "Demons don't feel anything!" -> "Is that what you think?"
 // Image: "Do you not hear him in your ear?" -> "What are you talking about?"
@@ -185,7 +185,7 @@ through it more than once.
 The Honmoon requires upkeep. Without a regular influx of inspiration it weakens,
 permitting the entrance of more demons who are always waiting just below the
 surface. Gwi-ma cannot pass through it, but the Saja Boys are able to without
-issue, and creatures like Derpie the Tiger even seem atuned to it, manipulating
+issue, and creatures like Derpy the Tiger even seem atuned to it, manipulating
 it freely.
 
 The Hunters dream of a Golden Honmoon, a concept even Gwi-ma seems aware of.
@@ -531,10 +531,6 @@ Rumi moves decisively to meet with Jinu.
 // Image: Her surprise and her facial expression. Now it's her being playful.
 // Image: Date? No. Eww!
 
-// TODO: Remove?
-She's saying "eww" because a mental boundary was encroached upon and she wasn't
-ready for it.
-
 Rumi reveals not only her plan, but also her weakness: her own opinion of
 herself. Jinu catches this and acts on it afterwards, but his words and
 reactions to her later in this scene are genuine.
@@ -546,15 +542,17 @@ reason that a wedding ring is. She didn't just give it to him, she put it on
 once very briefly.
 
 // Image: I don't think you're a mistake.
+// Image: Walking away awkwardly.
 
 At the awkward "Bye" moment, we know this is Jinu's honest reaction. She had
 already turned away and couldn't see him. He didn't walk away with the smirk and
 swagger of someone who was being purely manipulative. They are both thoroughly
 conflicted.
 
-// TODO: Think about this.
 Mythologically, we see a problem immediately. The Hero has told the Captive "you
-can run away, you can free yourself".
+can run away, you can free yourself". While still fleeing from the core conflict
+herself, she has at least gifted him the seed of his eventual freedom during the
+Climax.
 
 == The Mystery
 
@@ -870,7 +868,7 @@ She's almost here. Before we welcome her, there is one last thing to notice.
 
 Jinu is wearing the bracelet.
 
-== Rebirth (The Dragon Fight - What It Sounds Like)
+== Rebirth (The Dragon Fight)
 
 // TODO Talk more about the Honmoon being destroyed by this point?
 
@@ -976,14 +974,12 @@ member sang _Golden_ at a karaoke night. I somehow then stumbled upon the movie
 trailer on Youtube, then perhaps the lyric videos of _Golden_, _Soda Pop_, _How
 it's Done_, and _Takedown_. By then I was hooked, but wisely left a few songs
 untouched, realizing that I had to watch the movie properly before an upcoming
-trip to Thailand. I knew my brain wouldn't leave me alone if I didn't. A few
-nights before the trip I signed up for Netflix and watched it, and it
-immediately did something to my brain. I watched it again several times during
-the trip, going back and forth over the songs and scenes, and the content of
-this article welled up naturally. I took copious notes in a strange
-preoccupation. I write these exact sentences at 3:30 in the morning, having
-woken up with a realization about a clever rhyming pattern in Jinu's lyrics
-within _Free_.
+trip to Thailand. A few nights before the trip I signed up for Netflix and
+watched it, and it blew me away. I watched it again several times during the
+trip, going back and forth over the songs and scenes, and the content of this
+article welled up naturally. I took copious notes in a strange preoccupation. I
+write these exact sentences at 3:30 in the morning, having woken up with a
+realization about a clever rhyming pattern in Jinu's lyrics within _Free_.
 
 // TODO: Show the rhyming pattern in a footnote.
 //
@@ -992,18 +988,15 @@ within _Free_.
 // I don't trust it, but I _wannu_,
 // I keep coming back to...
 
-I think this is my favourite movie. It matches me somehow. I sing, I live in
-Asia, I've always had cats, I love archetypal stories, and I deeply appreciate
-unapologetically multilingual media. And I see you, Jinu.
+This may be my favourite movie. It matches me somehow. I sing, I live in Asia,
+I've always had cats, I love archetypal stories, and I deeply appreciate
+unapologetically multilingual media. My own Honmoon too seems somehow reworked.
 
-More than that, it feels like something of my own Honmoon has been lifted. I am
-somehow more relaxed, less tense despite returning to life in the biggest city
-in the world with the pressures of trying to find a place for myself. I can only
-say thank you to Maggie Kang and the entire KDH team for giving this to me. Let
-this article be an expression of my gratitude and love for what they created,
-and an embrace of my own Anima.
+I can only say thank you to Maggie Kang and the entire KDH team for giving me
+this experience. Let this article be an expression of my gratitude and love for
+what they created, and an embrace of my own Anima.
 
-KPop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
+KPop Demon Hunters is the Hero's Story, and it is a tale we will never stop telling.
 
 #quote[
   My voice without the lies, this is what it sounds like. \
@@ -1017,20 +1010,28 @@ KPop Demon Hunters is the Hero's Story. It is a tale we will never stop telling.
 By Colin. 2026/05/03 in Seoul.
 
 = Appendices
+== Glossary
 == Bibliography
+
+// Netflix article of locations.
+// That guy's Korean culture article.
+
 == Easter Eggs
 
 === The Huntrix Penthouse
 
 The building they live in exists. It's called _Lotte World Tower_ and it's the
-tallest building in Korea. Their living room is based on the tower's observation
-deck floors which are open to the public.
+tallest building in Korea. Their living room is based on the tower's highest
+publically accessible floor, the 123 Lounge.
 
-// Image: My shot of their living room vs the shots we're shown from the movie.
+// Image: My shot of their living room.
+// Quote: "Try the cheesecake."
 
 However there are some inconsistencies with the view we're shown from their
 window. The angle to Namsan Tower isn't quite right, and where we'd normally see
 the Han River we instead see cityscape.
+
+// Image: Shots we're shown in the movie.
 
 // However the angle to Namsan tower isn't quite right, making it seem closer to
 // the JW Marriot Hotel, or perhaps between Banpo station and Jam-won station.
@@ -1041,12 +1042,13 @@ the Han River we instead see cityscape.
 Likewise, the location of the Golden concert and later Idol Awards concert is
 also real: the Olympic Stadium. It's actually quite close to Lotte Tower and to
 the above-water subway line we're shown during the _Takedown_ fight, which runs
-between Cheongdam Stadium (청담역) and Jayang Stadium (자양역). There are a few
-inconsistencies here too, however.
+between Cheongdam Stadium (청담역) and Jayang Stadium (자양역).
 
-Olympic Stadium borders the south side of the Han River and isn't really near
-any buildings, whereas Rumi is shown running through city streets after fleeing
-the Golden concert.
+// Image: My photo of Olympic stadium from above.
+
+There are a few inconsistencies here too, however. Olympic Stadium borders the
+south side of the Han River and isn't really near any buildings, whereas Rumi is
+shown running through city streets after fleeing the Golden concert.
 
 // Image: Rumi running.
 
@@ -1067,9 +1069,26 @@ that. Locals often walk the various routes to the tower on a nice day.
 
 // Image: the rest area by Namsan Tower.
 
+=== Date Locations
+
+// Image: Bukchon.
+
+We're shown three "dates", all in real places. The first is at Bukchon (북촌)
+Hanok Village, where Rumi attempts to kill Jinu. It seems like Derpy lead her
+there on foot from the Lotte Tower, but navigation apps claim it's a four hour
+walk.
+
+// Image: Screenshot of the Naver route.
+
+The second date is within Naksan Park (낙산공원).
+
+// Image: "For what it's worth, I don't think you're a mistake."
+
+And the third, the _Free_ duet, is back in Bukchon.
+
 === Names of Unnamed Characters
 
-T-shirt guy's SNS handle is MrDaveBleich. Did you notice his Gwi-ma shirt?
+T-shirt Guy's SNS handle is MrDaveBleich. Did you notice his Gwi-ma shirt?
 
 // Image: His handle.
 // Image: His shirt.
@@ -1085,15 +1104,15 @@ his name tag.
 
 Speaking of names, Jinu's name isn't Jinu. As we can see from his signed note to
 Rumi, his name is written 진우 (Chi-noo). The "Revised Romanization" introduced
-by the Korean Government in 2000 renders ㅈ into an English J, while it's closer
-to Ch when in a word's "head position". The voiced J is then what everyone uses
-in the English, but you can hear the difference clearly if you switch to Korean
-audio for this scene.
+by the Korean Government in 2000 renders ㅈ into an English _J_, while it's
+closer to _Ch_ when in a word's "head position". The voiced _J_ is then what
+everyone uses in the English, but you can hear the difference clearly if you
+switch to Korean audio for this scene.
 
-Likewise, Zoey's name is pronounced "Cho-i" because there is no Z sound in
+Likewise, Zoey's name is pronounced _Cho-i_ because there is no _Z_ sound in
 Korean. And if it wasn't clear, in this entire article I've written Gwi-ma's
-name in the official way with a G, but in head position a similar effect occurs
-and it is in reality "Kwi-ma".
+name in the official way with a _G_, but in head position a similar effect
+occurs and it is in reality _Kwi-ma_ when spoken.
 
 === The Ear Demon
 
@@ -1108,7 +1127,7 @@ English version, during Rumi's assassination attempt on Jinu.
 
 === The Joseon Dynasty
 
-Guys, if your crush attempts your murder, just be persistent.
+Guys, if your crush tries to kill you, just be persistent.
 
 During their Date scene when Jinu complains of her being late, she calls him
 old-fashioned by retorting with "What are you, from the 19th century?" In the
@@ -1143,15 +1162,15 @@ don't even pay their taxes.
 
 // Image: Tax evasion.
 
-=== Derpie and Sussie
+=== Derpy and Sussie
 
-The Tiger and Magpie have names - Derpie and Sussie respectively. Derpie because
+The Tiger and Magpie have names - Derpy and Sussie respectively. Derpy because
 of his moronic grin, and Sussie because of his suspicious glare.
 
-At the very end we see Zoey wearing a Derpie hoodie, so by this point they must
+At the very end we see Zoey wearing a Derpy hoodie, so by this point they must
 have been introduced.
 
-// Image: Derpie hoodie.
+// Image: Derpy hoodie.
 
 And look what can be found on the path down from Namsan tower.
 
@@ -1243,7 +1262,7 @@ air and detect Honmoon disturbances, so it's not unreasonable to assume that
 there are other magical traps or barriers around their home that prevent
 assassination.
 
-Counter: Derpie does a Honmoon-crossing right in Rumi's bedroom. But perhaps he
+Counter: Derpy does a Honmoon-crossing right in Rumi's bedroom. But perhaps he
 can only do this because he's a "spirit creature" and not a demon.
 
 The bathhouse trap shows us that the Saja Boys did actually want the Hunters
