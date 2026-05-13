@@ -4,6 +4,8 @@
 //   size: 7pt,
 // )
 
+#show link: it => text(fill: blue, underline(it))
+
 #set quote(block: true)
 
 #let u(body) = underline(body)
@@ -28,23 +30,28 @@ follows humanity's beloved plot pattern of threat, adventure, doubt, collapse,
 rebirth, and final victory.
 
 The book #u[The Origins and History of Consciousness] by Erich Neumann (1949)
-describes the growth of individual consciousness within human beings by tracking
-our historical development alongside that of our body of myths and legends. It
-then contrasts these evolutions with semi-concurrent psychological ones, during
-which this claim is made:
+describes the growth of individual #link(<consciousness>)[consciousness] within
+human beings by tracking our historical development alongside that of our body
+of myths and legends. It then contrasts these evolutions with semi-concurrent
+psychological ones, during which this claim is made:
 
+// Page 263
 #quote[
-  As humanity's own psychological development advanced, we projected that advance into our myths.
+  Myth figures are archetypal projections of the collective unconscious; in other words,
+  humanity is putting something outside itself in its myths, something of whose meaning
+  it is not conscious.
 ]
 
-That is to say, we didn't "make up" our legends. We didn't tell ourselves
-stories of gods and demons simply to ward off boredom or to control each other.
-When I finally watched KPop Demon Hunters (apparently the last one on Earth to
-have done so), it was like a meteor had struck my mind. While written by people,
-set in a certain time and place, and filled with fictional elements, it also
-isn't "made up" in the sense that it contains no truth about the human
-experience. Quite the opposite; KPop Demon Hunters is humanity's favourite
-story. It is the story of the Hero - the story of you.
+This is to say that as humanity's own psychological development advanced, we
+projected that advance into our myths. We didn't "make up" our legends. We
+didn't tell ourselves stories of gods and demons simply to ward off boredom or
+to control each other. When I finally watched KPop Demon Hunters (apparently the
+last one on Earth to have done so), it was like a meteor had struck my mind.
+While written by people, set in a certain time and place, and filled with
+fictional elements, it also isn't "made up" in the sense that it contains no
+truth about the human experience. Quite the opposite; KPop Demon Hunters is
+humanity's favourite story. It is the story of the #link(<hero>)[Hero] - the
+story of you.
 
 Following Neumann, this article observes KPop Demon Hunters from three angles;
 that of the #u[surface story] itself, that of the #u[mythological layer]
@@ -70,10 +77,10 @@ close to their goal, the culmination of generations of effort.
 Beyond this surface premise, we immediately recognize the split between the
 light, Conscious world and the dark, Unconscious underworld. This subsurface
 land is vast, and within it dwell things we do not understand. It is ruled by a
-power from which individual consciousness first arises, but it is also that same
-power that is ever-welcoming, seductive, and all-consuming. The conflict between
-upper and lower, light and dark, plays out within the mind of every person and
-within our wider societies.
+power from which individual #link(<ego>)[Ego] consciousness first arises, but it
+is also that same power that is ever-welcoming, seductive, and all-consuming.
+The conflict between upper and lower, light and dark, plays out within the mind
+of every person and within our wider societies.
 
 // Images: Gwima birthing and reabsorbing demons.
 
@@ -96,20 +103,21 @@ He can physically drag demons through the air and rip them down from above the
 Honmoon, but he cannot read all thoughts; he had to ask Jinu what he wanted. Yet
 he can at least access people's fears and amplify painful memories.
 
-Mythologically, while depicted as male, Gwi-ma is an avatar of the archetypal
-creator goddess know as The Great Mother, who is in turn an essence of the
-Ouroboros - the dragon-snake biting its own tail - a symbol that has appeared in
-human engravings and artwork independently across the world for thousands of
-years. It represents, among other things, the cycle of energy and time, and thus
-that of life and death. Specifically Gwi-ma is an incarnation of a subtype of
-The Great Mother: The Terrible Mother. This is not a comment on Gwi-ma's
+Mythologically, while depicted as male, Gwi-ma is an avatar of the
+#link(<archetype>)[archetypal] creator goddess known as #link(<mother>)[The
+  Great Mother], who is in turn one half of the #link(<ouroboros>)[Ouroboros] --
+the dragon-snake biting its own tail -- a symbol that has appeared in human
+engravings and artwork independently across the world for thousands of years. It
+represents, among other things, the cycle of energy and time, and thus that of
+life and death. Specifically the Gwi-ma we see is an incarnation of a subtype of
+the Great Mother: The Terrible Mother. This is not a comment on Gwi-ma's
 parenting; "Terrible" here does not mean "lacking skill", but instead "of
 terror". Gwi-ma is vindictive, merciless, cannibalistic, and bloodthirsty. His
 goal is nothing less than the reabsorption of all conscious humanity back into
 himself.
 
-In the context of the Hero's final challenge, Gwi-ma is The Dragon which must be
-overcome.
+In the context of the Hero's final challenge, Gwi-ma is #link(<dragon>)[The
+  Dragon] which must be overcome.
 
 // Image: Uroboros.
 
@@ -192,16 +200,17 @@ The Hunters dream of a Golden Honmoon, a concept even Gwi-ma seems aware of.
 
 // Image: ...it's over for us!
 
-Mythologically, the Honmoon represents Order through the archetype of the Spirit
-Father. It is everything that has brought you to where you are. It is tradition,
-expectation, ideal, and light. It does in fact protect you, but it grows rigid
-with age. By being a proven solution, there is great fear in altering it. Still
-we yearn for some Golden state, a permanent paradise free of the whirling chaos
-of the outside world. Through blind dedication to this mission we risk what
-Neumann calls "patriarchal castration". Castration here refers to being cut off
-from one's core energy, vitality, and purpose. The patriarchal variety comes
-from over-devotion, "rising too high", and a disconnect from the creative forces
-that well up from below. This Father, in his Terrible form, holds back the Hero.
+Mythologically, the Honmoon represents Order through the
+#link(<archetype>)[archetype] of the Spirit Father. It is everything that has
+brought you to where you are. It is tradition, expectation, ideal, and light. It
+does in fact protect you, but it grows rigid with age. By being a proven
+solution, there is great fear in altering it. Still we yearn for some Golden
+state, a permanent paradise free of the whirling chaos of the outside world.
+Through blind dedication to this mission we risk what Neumann calls "patriarchal
+castration". Castration here refers to being cut off from one's core energy,
+vitality, and purpose. The patriarchal variety comes from over-devotion, "rising
+too high", and a disconnect from the creative forces that well up from below.
+This Father, in his Terrible form, holds back the Hero.
 
 Psychologically, the Honmoon is your set of habits and behaviours, some yours,
 but many absorbed from your culture. A Golden one is the idea that you can
@@ -235,8 +244,7 @@ although this doesn't explain the old man in the bathhouse.
 
 // Image: An Ji-hu in the concert crowd.
 
-Psychologically, the collective of Demons represents the Shadow. Quoting
-Neumann:
+Psychologically, the collective of Demons represents #link(<shadow>)[The Shadow]. Quoting Neumann:
 
 // TODO: Get Steven to voice these quotes?
 // p.351
@@ -250,11 +258,12 @@ Neumann:
 
 It is everything you think you dislike about yourself, and the source of
 thoughts and emotions you believe you shouldn't be having. Rumi, for instance,
-suppresses her anger. The Shadow, along with the Animus/Anima we will later
-discuss, is referred to as one of the "Authorities" of the personality and has a
-balancing effect against the Ego, preventing it from running away with itself.
-It plays this role as a kind of intermediary between the Conscious and
-Unconscious. Indeed, Neumann goes on to say:
+#link(<repression>)[represses] her anger. The Shadow, along with the
+Animus/Anima we will later discuss, is referred to as one of the
+#link(<authorities>)[Authorities] of the personality and has a balancing effect
+against the Ego, preventing it from running away with itself. It plays this role
+as a kind of intermediary between the Conscious and Unconscious. Indeed, Neumann
+goes on to say:
 
 // p.353
 #quote[
@@ -315,12 +324,12 @@ Captive, the prisoner of the Dragon to be rescued by the Hero.
 // Image: The memories... I want them erased.
 // Image: Jinu's pattered arm. "Chains".
 
-Psychologically, Jinu is Rumi's Animus. To a feminine soul, the Animus is the
-spirit of stability, might, order, and reason. To a masculine soul, the _Anima_
-is the spirit of creation, connection, change, and emotion. We are born with
-both energies, but one side is inevitably pushed down into a position as an
-Authority, although its voice often goes unheard, smothered by various internal
-forces. It is lonely, and it is waiting for you.
+Psychologically, Jinu is Rumi's #link(<animus>)[Animus]. To a feminine soul, the
+Animus is the spirit of stability, might, order, and reason. To a masculine
+soul, the #link(<anima>)[Anima] is the spirit of creation, connection, change,
+and emotion. We are born with both energies, but one side is inevitably pushed
+down into a position as an Authority, although its voice often goes unheard,
+smothered by various internal forces. It is lonely, and it is waiting for you.
 
 Rumi has an instant connection with Jinu, but as long-estranged Ego/Animus they
 don't know how to interact. They try to touch but cannot. Jinu leaves her lying
@@ -352,6 +361,8 @@ kill Rumi.
 
 Rumi is a liar. She lies to protect herself because she is afraid of exposure
 and deep rejection. Her long sleeves and turtlenecks represent this materially.
+In the lyrics of _Golden_ she laments this surface-level
+#link(<persona>)[Persona] she must show everyone.
 
 // Running from the Golden debut.
 // Lying to Mira.
@@ -370,13 +381,13 @@ the harder she pushes away from the underworld, the tighter its grip on her
 becomes. Naturally this tension also stresses the Honmoon itself.
 
 Psychologically, Rumi is a human being who has not yet achieved what the
-literature calls _Centroversion_. This is something of a superior form of either
-intro- or extroversion alone; it is a balanced mind in which the forces of the
-Ego, Authorities, and Unconscious are in creative harmony. A healthy mind
-naturally seeks this state, and it should be clear that this is precisely the
-opposite of what achieving a Golden Honmoon would mean, as that represents a
-complete separation of the Conscious and Unconscious minds, something that would
-undoubtedly be fatal. Still, she tries.
+literature calls #link(<centroversion>)[Centroversion]. This is something of a
+superior form of either intro- or extroversion alone; it is a balanced mind in
+which the forces of the Ego, Authorities, and Unconscious are in creative
+harmony. A healthy mind naturally seeks this state, and it should be clear that
+this is precisely the opposite of what achieving a Golden Honmoon would mean, as
+that represents a complete separation of the Conscious and Unconscious minds,
+something that would undoubtedly be fatal. Still, she tries.
 
 // Image: We could be free.
 
@@ -1010,7 +1021,125 @@ KPop Demon Hunters is the Hero's Story, and it is a tale we will never stop tell
 By Colin. 2026/05/03 in Seoul.
 
 = Appendices
+
+// TODO Mention somewhere that they should really need OaHoC if they want more.
+
 == Glossary
+
+// TODO Fix the styling.
+// TODO Add back links to the original usage sites?
+
+=== Mythological
+
+#u[Archetype] <archetype>
+
+// p 295
+#quote[
+
+  When instincts are centrally represented, i.e., when they appear as images,
+  Jung calls them archetypes.
+
+]
+
+#u[The Dragon] <dragon> Hello
+
+#u[The Great Mother] <mother>
+
+// p 285
+#quote[
+
+  It is not her pleasure-loving of wishful nature, but rather her collective
+  character, that sets the Great Mother in opposition to ego consciousness.
+
+]
+
+#u[The Hero] <hero>
+
+// p377
+#quote[
+
+  The true hero is one who brings the new and shatters the fabric of old values.
+
+]
+
+// p379
+#quote[
+
+  The hero is one who can call his soul his own because he has fought for it and won it.
+
+]
+
+// p 375
+#quote[
+
+  Conquering normal life - which is the life of the unheroic - always means
+  sacrificing normal values and so coming into conflict with the collective.
+
+]
+
+#u[Ouroboros] <ouroboros>
+
+=== Psychological
+
+#u[Anima] <anima>
+
+#u[Animus] <animus>
+
+#u[Authorities] <authorities>
+
+#u[Centroversion] <centroversion> "The innate tendency of a whole to create
+unity within its parts and to synthesize their differences in unified systems."
+A striving for wholeness.
+
+#u[Consciousness] <consciousness> The capacity for voluntary action. Fatigue exhausts consciousness.
+
+// p 281
+#quote[
+
+  It seems that the organ of consciousness is still at an early state of
+  development and relatively unstable.
+
+]
+
+// Page 271
+#quote[
+
+  Group unity is participation is still so widely prevalent, even in modern man,
+  that it is only through the ceaseless conscious efforts of certain individuals
+  of genius that we gradually become aware of the psychic factors which, as the
+  unconscious "cultural pattern" we so blindly accept, regulate the life and
+  death of each one of us.
+
+]
+
+// Page 274
+#quote[
+
+  Even today, the ruled are mostly supine members of the herd with no direct
+  orientation of their own. The ruler, the State, etc., acts as a substitute
+  for individual consciousness and sweeps us blindly into mass movements,
+  wars, etc.
+
+]
+
+#u[Ego] <ego> The central complex in the psychic system. Has two main powers,
+Analytic and Synthetic.
+
+- Analytic: The power to separate, dissect, pull apart, classify, name, distinguish, judge.
+- Synthetic: The power to put what was split back together again.
+
+#u[Persona] <persona> The "you" that you build to interface well enough with
+society. A "workable and successful sham personality".
+
+#u[Repression] <repression> Thrusting out of the conscious and into the
+unconscious without knowing it.
+
+#u[Suppression] <suppression> Consciously holding down or restricting some
+impulse.
+
+#u[The Shadow] <shadow> "It contains all those elements in the personality which
+the ego condemns as negative values."
+
 == Bibliography
 
 // Netflix article of locations.
@@ -1234,7 +1363,20 @@ No.
 
 === Is Gwi-ma dead or just banished?
 
-Banished. You can't kill the Unconscious, nor would you want to.
+Banished. You can't kill the Unconscious, nor would you want to, because:
+
+// p389
+#quote[
+
+  The splitting off of the unconscious leads on one hand to an ego life
+  emptied of meaning, and on the other hand to an activation of the deeper
+  lying layers which, now grown destructive, devastate the autocratic world of
+  the ego with transpersonal invasions, collective epidemics, and mass
+  psychoses.
+
+]
+
+Gwi-ma was desperate precisely because the Hunters were trying to shut him away completely.
 
 === Are Romance and Baby still alive?
 
