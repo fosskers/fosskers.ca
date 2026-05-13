@@ -201,16 +201,17 @@ The Hunters dream of a Golden Honmoon, a concept even Gwi-ma seems aware of.
 // Image: ...it's over for us!
 
 Mythologically, the Honmoon represents Order through the
-#link(<archetype>)[archetype] of the Spirit Father. It is everything that has
-brought you to where you are. It is tradition, expectation, ideal, and light. It
-does in fact protect you, but it grows rigid with age. By being a proven
-solution, there is great fear in altering it. Still we yearn for some Golden
-state, a permanent paradise free of the whirling chaos of the outside world.
-Through blind dedication to this mission we risk what Neumann calls "patriarchal
-castration". Castration here refers to being cut off from one's core energy,
-vitality, and purpose. The patriarchal variety comes from over-devotion, "rising
-too high", and a disconnect from the creative forces that well up from below.
-This Father, in his Terrible form, holds back the Hero.
+#link(<archetype>)[archetype] of the #link(<father>)[Spirit Father]. It is
+everything that has brought you to where you are. It is tradition, expectation,
+ideal, and light. It does in fact protect you, but it grows rigid with age. By
+being a proven solution, there is great fear in altering it. Still we yearn for
+some Golden state, a permanent paradise free of the whirling chaos of the
+outside world. Through blind dedication to this mission we risk what Neumann
+calls "patriarchal castration". #link(<castration>)[Castration] here refers to
+being cut off from one's core energy, vitality, and purpose. The patriarchal
+variety comes from over-devotion, "rising too high", and a disconnect from the
+creative forces that well up from below. This Father, in his Terrible form,
+holds back the Hero.
 
 Psychologically, the Honmoon is your set of habits and behaviours, some yours,
 but many absorbed from your culture. A Golden one is the idea that you can
@@ -742,9 +743,10 @@ Why did Jinu do it? In this instance of the endless variations of the Hero's
 Journey, the Dragon has tried a new trick: turning the Captive against the Hero.
 The brief hope he held during _Free_ has been smothered, and the Captive has
 given up. In this moment he believes will never escape bondage, so his only
-recourse is at least to forget the pain of his conscience. Yet why wait for her
-backstage? To twist the knife a final time and complete the destruction of the
-Hero along with himself, but also to plead. Jinu is not gone entirely.
+recourse is at least to forget the pain of his #link(<conscience>)[conscience].
+Yet why wait for her backstage? To twist the knife a final time and complete the
+destruction of the Hero along with himself, but also to plead. Jinu is not gone
+entirely.
 
 // Image: "This is just your demon talking. You have to fight it!" --> "That's not how it works!"  --> "Yes it is!"
 
@@ -1053,7 +1055,7 @@ By Colin. 2026/05/03 in Seoul.
 
 ]
 
-#u[The Hero] <hero>
+#u[The Hero] <hero> The redeemer who often sacrifices himself for the quest.
 
 // p377
 #quote[
@@ -1077,21 +1079,101 @@ By Colin. 2026/05/03 in Seoul.
 
 ]
 
+// p191
+#quote[
+
+  The three basic elements in the hero myth were the hero, the dragon, and the
+  treasure. [His] goal, whether it be the deloved, the maiden in distress, or
+  the "treasure hard to obtain," is intimately linked with what happens to the
+  hero in the course of the fight.
+
+  Only in this struggle does the hero show himself a hero and change his nature;
+  for whether he is the doer who redeems or the conqueror who liberates, what he
+  transforms transforms him too.
+
+]
+
 #u[Ouroboros] <ouroboros>
+
+#u[The Spirit Father] <father> An aspect of The Father, itself one half of the
+Ouroboros. Represents an old spiritual / thought system that holds the son back
+and prevents his psychic development.
+
+// p187
+#quote[
+
+  This spiritual system appears as the binding force of the old law, the old
+  religion, the old morality, the old order; as conscience, convention,
+  tradition, or any other spiritual phenomenon that seizes hold of the son and
+  obstructs his progress into the future.
+
+]
 
 === Psychological
 
-#u[Anima] <anima>
+#u[Anima] <anima> The feminine energy within a man.
 
-#u[Animus] <animus>
+#u[Animus] <animus> The masculine energy within a woman.
 
 #u[Authorities] <authorities>
 
-#u[Centroversion] <centroversion> "The innate tendency of a whole to create
-unity within its parts and to synthesize their differences in unified systems."
-A striving for wholeness.
+#u[Castration] <castration> From Neumann:
 
-#u[Consciousness] <consciousness> The capacity for voluntary action. Fatigue exhausts consciousness.
+// p53
+#quote[
+
+  In order to avoid misunderstanding let it be emphasized once and for all
+  that wherever in our discussion we speak of castration we mean a symbolic
+  castration, and never a personalistic castration complex acquired in
+  childhood and having concretistic reference to the male genitalia.
+
+  The stage of the son-lover and of his relation to the Great Mother has a
+  phallic accent; that is, the activity of the adolescent is symbolized by the
+  phallus and his world is ruled by fertility ritual. Hence the dangers that
+  threaten his destruction are associated with the symbolism of a castration
+  that was often carried out in the actual ritual. But castration symbolism must
+  be understood in a general sense, even when its terminology is derived from
+  the phallic adolescent phase.
+
+  Negative castration symbolism is typical of the hostility of the unconscious
+  to the ego and consciousness, but is closely associated with the positive
+  symbol of sacrifice, which stands for an active offering up of the ego to
+  the unconscious. Both symbols - castration and sacrifice - are united in the
+  archetype of surrender, which can be active and passive, positive and
+  negative, and rules the ego's relation to the self in the various stages of
+  development.
+
+]
+
+// p189
+#quote[
+
+  Whereas matriarchal castration is orgiastic, the other [patriarchal variety]
+  tends towards asceticism.
+
+]
+
+#u[Centroversion] <centroversion> _"The innate tendency of a whole to create
+unity within its parts and to synthesize their differences in unified systems."_
+A striving for wholeness. _"Centroversion expresses itself in an organism through
+its regulation of the whole and through its compensatory striving for balance
+and systemization."_
+
+#u[Conscience] <conscience> _"The advocacy of the canon of values inherited from
+the fathers and enforced by education manifests itself in the psychic structure
+of the individual as 'conscience'."_ // p173
+
+#u[Consciousness] <consciousness> _"Only in the light of consciousness can man
+know."_ Consciousness is the capacity for voluntary action, and therefore is the
+path to deliverance. Fatigue exhausts consciousness.
+
+// p121
+#quote[
+
+  To become conscious of oneself, to be conscious at all, begins with saying
+  "no" to the uroboros, to the Great Mother, to the unconscious.
+
+]
 
 // p 281
 #quote[
@@ -1426,3 +1508,5 @@ contact for additional assets, etc. Given #link("https://typst.app/")[the right
 === 2026-05-03
 
 Initial draft completed.
+
+//  LocalWords:  uroboros
