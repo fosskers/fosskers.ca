@@ -105,7 +105,7 @@ he can at least access people's fears and amplify painful memories.
 
 Mythologically, while depicted as male, Gwi-ma is an avatar of the
 #link(<archetype>)[archetypal] creator goddess known as #link(<mother>)[The
-  Great Mother], who is in turn one half of the #link(<ouroboros>)[Ouroboros] --
+  Great Mother], who is in turn one half of the #link(<uroboros>)[Uroboros] --
 the dragon-snake biting its own tail -- a symbol that has appeared in human
 engravings and artwork independently across the world for thousands of years. It
 represents, among other things, the cycle of energy and time, and thus that of
@@ -1033,19 +1033,26 @@ By Colin. 2026/05/03 in Seoul.
 
 === Mythological
 
-#u[Archetype] <archetype>
+#u[Archetype] <archetype> From Neumann:
 
-// p 295
+//p xv
 #quote[
 
-  When instincts are centrally represented, i.e., when they appear as images,
-  Jung calls them archetypes.
+  The structural elements of the collective unconscious are named by Jung
+  "archetypes" or "primordial images." They are the pictorial forms of the
+  instincts, for the unconscious reveals itself to the conscious mind in
+  images which, as in dreams and fantasies, initiate the process of conscious
+  reaction and assimilation.
+
+  The archetypal structural elements of the psyche are psychic organs upon
+  whose functioning the well-being of the individual depends, and whose injury
+  has disastrous consequences.
 
 ]
 
-#u[The Dragon] <dragon> Hello
+#u[Dragon] <dragon> Hello
 
-#u[The Great Mother] <mother>
+#u[Great Mother] <mother> The opponent of Ego-consciousness.
 
 // p 285
 #quote[
@@ -1055,7 +1062,7 @@ By Colin. 2026/05/03 in Seoul.
 
 ]
 
-#u[The Hero] <hero> The redeemer who often sacrifices himself for the quest.
+#u[Hero] <hero> The redeemer who often must sacrifice himself for the quest.
 
 // p377
 #quote[
@@ -1093,10 +1100,8 @@ By Colin. 2026/05/03 in Seoul.
 
 ]
 
-#u[Ouroboros] <ouroboros>
-
-#u[The Spirit Father] <father> An aspect of The Father, itself one half of the
-Ouroboros. Represents an old spiritual / thought system that holds the son back
+#u[Spirit Father] <father> An aspect of The Father, itself one half of the
+Uroboros. Represents an old spiritual / thought system that holds the son back
 and prevents his psychic development.
 
 // p187
@@ -1106,6 +1111,24 @@ and prevents his psychic development.
   religion, the old morality, the old order; as conscience, convention,
   tradition, or any other spiritual phenomenon that seizes hold of the son and
   obstructs his progress into the future.
+
+]
+
+#u[Uroboros] <uroboros> The "most ancient deity of the prehistoric world."
+Independently appears as a symbol across many ancient cultures. From Neumann:
+
+#quote[
+
+  Although absolute rest is something static and eternal, unchanging and
+  therefore without history, it is at the same time the place of origin and the
+  germ cell of creativity. Living the cycle of its own life, it is the circular
+  snake, the primal dragon of the beginning that bites its own tail, the
+  self-begetting "οὐροβόρος".
+
+  This is the ancient Egyptian symbol of which it is said: "Draco interfecit se
+  ipsum, maritat se ipsum, impraegnat se ipsum." It slays, weds, and impregnates
+  itself. It is man and woman, begetting and conceiving, devouring and giving
+  birth, active and passive, above and below, at once.
 
 ]
 
@@ -1212,6 +1235,11 @@ Analytic and Synthetic.
 
 #u[Persona] <persona> The "you" that you build to interface well enough with
 society. A "workable and successful sham personality".
+
+#u[Recollectivization] <recollectivization> My own grandmother, German-born but
+only a child during World War II and now 90, still holds certain opinions that
+would pain many modern, peace-time North Americans to hear. Be careful what you
+let into your mind.
 
 #u[Repression] <repression> Thrusting out of the conscious and into the
 unconscious without knowing it.
@@ -1492,6 +1520,39 @@ can only do this because he's a "spirit creature" and not a demon.
 The bathhouse trap shows us that the Saja Boys did actually want the Hunters
 dead, but they must have felt that ambushing them in public would have
 compromised their greater goal of sabotaging the entire Honmoon.
+
+=== Who was Erich Neumann?
+
+Born in Berlin in 1905, he held a PhD in Philosophy, was a psychologist by
+trade, and was a student of Carl Jung. He and his wife fled Nazi Germany in the
+1930s, so when Neumann speaks of the dangers of societal
+#link(<recollectivization>)[recollectivization], he is speaking from experience.
+
+His greatest work was _The Origins and History of Consciousness_, published
+initially in 1949 in German and translated by R.F.C. Hull by 1954. In turn, the
+English-speaking world has Hull to thank for much of the translated body of
+Jungian works.
+
+=== Who was Carl Jung?
+
+Born in Switzerland in 1875, Jung was a psychoanalyst and founder of the school
+of "analytical" or "depth" psychology. He invented the notion of
+#link(<archetype>)[archetype] as used in this article.
+
+Of _The Origins and History of Consciousness_, Jung gives this praise:
+
+#quote[
+
+  It begins just where I, too, if I were granted a second lease of life, would
+  start to gather up the _disjecta membra_ of my own writings, to sift out all
+  those "beginnings without continuations" and knead them into a whole.
+
+  This difficult and meritorious task the author has performed with outstanding
+  success. He has woven his facts into a pattern and created a unified whole,
+  which no pioneer could have done.
+
+]
+
 
 === Why is this a PDF?
 
