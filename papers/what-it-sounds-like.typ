@@ -1050,7 +1050,20 @@ By Colin. 2026/05/03 in Seoul.
 
 ]
 
-#u[Dragon] <dragon> Hello
+It should be emphasized that Archetypes and their characteristics are not wholly
+distinct and separated within the mind - they flow in a kind of gradient. When
+we speak of the chain of symbols from, say, Uroboros -> World Parents -> Great
+Mother -> Terrible Mother, and their relationship to the image of the Dragon,
+there is overlap between them and certainly further reasonable subdivisions. We
+give them names, as if distinct, to aid our understanding.
+
+#u[Dragon] <dragon> A consuming and destructive form of the Uroboros / Great
+Mother as they are related to the creative origin of all things, the "abyss", or
+the source of eternal chaos, change, and undifferentiated energy / potential.
+Enemy of the Hero, forever guarding the "treasure" or "captive". Within various
+myths (e.g. Babylonian Tiamat), the defeat of the Dragon and the splitting up of
+its body often corresponds with the creation of the gods or the creation of the
+world.
 
 #u[Great Mother] <mother> The opponent of Ego-consciousness.
 
