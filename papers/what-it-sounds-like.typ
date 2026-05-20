@@ -1065,12 +1065,28 @@ myths (e.g. Babylonian Tiamat), the defeat of the Dragon and the splitting up of
 its body often corresponds with the creation of the gods or the creation of the
 world.
 
-#u[Great Mother] <mother> The opponent of Ego-consciousness.
+#u[Great Mother] <mother> As the ego awakens, it finds itself in the world of
+nature. From Neumann:
+
+#quote[
+
+  The overwhelming might of the unconscious, i.e., the devouring, destructive
+  aspect under which it may also manifest itself, is seen figuratively as the
+  evil mother, whether as the bloodstained goddess of death, plague, famine,
+  flood, and the force of instinct, or as the sweetness that lures to
+  destruction. But, as the good mother, she is fullness and abundance; the
+  dispenser of life and happiness, the nutrient earth, the cornucopia of the
+  fruitful womb. She is mankind's instinctive experience of the world's depth
+  and beauty, of the goodness and graciousness of Mother Nature who daily
+  fulfills the promise of redemption and resurrection, of new life and new
+  birth.
+
+]
 
 // p 285
 #quote[
 
-  It is not her pleasure-loving of wishful nature, but rather her collective
+  It is not her pleasure-loving or wishful nature, but rather her collective
   character, that sets the Great Mother in opposition to ego consciousness.
 
 ]
