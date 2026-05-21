@@ -394,8 +394,8 @@ something that would undoubtedly be fatal. Still, she tries.
 
 = Timeline
 
-We can now discuss the events leading to Rumi's Dragon fight and her rebirth as
-a conscious human being.
+We can now discuss the events leading to Rumi's #link(<dragon-fight>)[Dragon
+  Fight] and her rebirth as a conscious human being.
 
 KPop Demon Hunters takes place in the spring of 2025, in the same timeline that
 we live in. We know this because:
@@ -1065,9 +1065,23 @@ myths (e.g. Babylonian Tiamat), the defeat of the Dragon and the splitting up of
 its body often corresponds with the creation of the gods or the creation of the
 world.
 
+#u[Dragon Fight] <dragon-fight> From Neumann:
+
+#quote[
+
+  The dragon fight is correlated psychologically with different phases of the
+  ontogenetic development of consciousness. The conditions of the fight, its
+  aim and also the period in which it takes place, vary. It occurs during the
+  childhood phase, during puberty, and at the change of consciousness in the
+  second half of life, whenever in fact a rebirth or a reorientation of
+  consciousness is indicated.
+
+]
+
 #u[Great Mother] <mother> As the ego awakens, it finds itself in the world of
 nature. From Neumann:
 
+// p39-40
 #quote[
 
   The overwhelming might of the unconscious, i.e., the devouring, destructive
@@ -1091,35 +1105,16 @@ nature. From Neumann:
 
 ]
 
-#u[Hero] <hero> The redeemer who often must sacrifice himself for the quest.
-
-// p377
-#quote[
-
-  The true hero is one who brings the new and shatters the fabric of old values.
-
-]
-
-// p379
-#quote[
-
-  The hero is one who can call his soul his own because he has fought for it and won it.
-
-]
-
-// p 375
-#quote[
-
-  Conquering normal life - which is the life of the unheroic - always means
-  sacrificing normal values and so coming into conflict with the collective.
-
-]
+#u[Hero] <hero> The redeemer who often must sacrifice himself for the quest. To
+be "great" is to be different, and to be different is to stand apart from the
+group. He is one who _"brings the new and shatters the fabric of old values"._
+From Neumann:
 
 // p191
 #quote[
 
   The three basic elements in the hero myth were the hero, the dragon, and the
-  treasure. [His] goal, whether it be the deloved, the maiden in distress, or
+  treasure. [His] goal, whether it be the beloved, the maiden in distress, or
   the "treasure hard to obtain," is intimately linked with what happens to the
   hero in the course of the fight.
 
@@ -1130,8 +1125,8 @@ nature. From Neumann:
 ]
 
 #u[Spirit Father] <father> An aspect of The Father, itself one half of the
-Uroboros. Represents an old spiritual / thought system that holds the son back
-and prevents his psychic development.
+Uroboros. Represents an old spiritual / thought system that holds the son (the
+Hero) back and prevents his psychic development.
 
 // p187
 #quote[
@@ -1143,7 +1138,7 @@ and prevents his psychic development.
 
 ]
 
-#u[Uroboros] <uroboros> The "most ancient deity of the prehistoric world."
+#u[Uroboros] <uroboros> The _"most ancient deity of the prehistoric world."_
 Independently appears as a symbol across many ancient cultures. From Neumann:
 
 #quote[
@@ -1161,13 +1156,19 @@ Independently appears as a symbol across many ancient cultures. From Neumann:
 
 ]
 
+// TODO: Include an image.
+
 === Psychological
 
 #u[Anima] <anima> The feminine energy within a man.
 
-#u[Animus] <animus> The masculine energy within a woman.
+#u[Animus] <animus> The masculine energy within a woman. Both Anima and Animus
+are part of the Unconscious, yet when relations are repaired, the association
+with the Ego is voluntary and positive.
 
-#u[Authorities] <authorities>
+#u[Authorities] <authorities> Alongside the Ego, the other "seats at the table
+of Consciousness". The Animus/Anima, the Shadow, the collective voice of your
+society, etc.
 
 #u[Castration] <castration> From Neumann:
 
