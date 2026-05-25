@@ -1065,7 +1065,8 @@ myths (e.g. Babylonian Tiamat), the defeat of the Dragon and the splitting up of
 its body often corresponds with the creation of the gods or the creation of the
 world.
 
-#u[Dragon Fight] <dragon-fight> From Neumann:
+#u[Dragon Fight] <dragon-fight> The Hero's final test. If victorious, he is
+fundamentally transformed. From Neumann:
 
 #quote[
 
@@ -1078,8 +1079,9 @@ world.
 
 ]
 
-#u[Great Mother] <mother> As the ego awakens, it finds itself in the world of
-nature. From Neumann:
+#u[Great Mother] <mother> As the Ego awakens, it finds itself in the earthly
+world of nature, and that that world has a governor. A being simultaneously of
+Love and Destruction. From Neumann:
 
 // p39-40
 #quote[
@@ -1096,6 +1098,9 @@ nature. From Neumann:
   birth.
 
 ]
+
+She is also also the force behind the Collective Unconscious, and in being so
+stands against the Ego.
 
 // p 285
 #quote[
@@ -1163,8 +1168,8 @@ Independently appears as a symbol across many ancient cultures. From Neumann:
 #u[Anima] <anima> The feminine energy within a man.
 
 #u[Animus] <animus> The masculine energy within a woman. Both Anima and Animus
-are part of the Unconscious, yet when relations are repaired, the association
-with the Ego is voluntary and positive.
+are part of the Unconscious, when properly connected with the Ego the
+association is voluntary, positive, and creative.
 
 #u[Authorities] <authorities> Alongside the Ego, the other "seats at the table
 of Consciousness". The Animus/Anima, the Shadow, the collective voice of your
@@ -1195,14 +1200,6 @@ society, etc.
   archetype of surrender, which can be active and passive, positive and
   negative, and rules the ego's relation to the self in the various stages of
   development.
-
-]
-
-// p189
-#quote[
-
-  Whereas matriarchal castration is orgiastic, the other [patriarchal variety]
-  tends towards asceticism.
 
 ]
 
@@ -1257,19 +1254,46 @@ path to deliverance. Fatigue exhausts consciousness.
 
 ]
 
-#u[Ego] <ego> The central complex in the psychic system. Has two main powers,
-Analytic and Synthetic.
+#u[Ego] <ego> The central complex in the psychic system. Your main "you". Has
+two main powers, Analytic and Synthetic.
 
 - Analytic: The power to separate, dissect, pull apart, classify, name, distinguish, judge.
 - Synthetic: The power to put what was split back together again.
 
+These two powers are also what fuel the Scientific Method, perhaps the chief
+tool of mankind.
+
+Against the eternal draw of the Unconscious, the Ego has a tendency to want to
+dissolve, and this dissolution is perceived as pleasurable. This is the ecstasy
+felt by those possessed by mass movements in politics or religion. It is
+pleasurable because it is a release of tension, the dropping of the weight of
+your reality. Sleep and dreaming are miniature varieties of this, seemingly
+critical for our health.
+
 #u[Persona] <persona> The "you" that you build to interface well enough with
 society. A "workable and successful sham personality".
 
-#u[Recollectivization] <recollectivization> My own grandmother, German-born but
-only a child during World War II and now 90, still holds certain opinions that
-would pain many modern, peace-time North Americans to hear. Be careful what you
-let into your mind.
+#u[Recollectivization] <recollectivization> A lowering of total Consciousness
+within society, often under the banner of a mass movement. There have been
+several large-scale examples of this within the past century. One of the
+greatest threats to the long-term success of humanity. From Neumann:
+
+#quote[
+
+  Common descent from the same tribe, the sharing of a common life, and, above
+  all, common experiences create emotional bonds even today, as we well know.
+  Social, religious, aesthetic, and other collective experiences of whatever
+  coloring - from the tribal head-hunt to the modern mass meeting - activate the
+  unconscious emotional foundations of the group psyche. The individual has not
+  yet broken loose from the emotional undercurrent, and any excitation of one
+  part of the group can affect the whole, as a fever seizes upon all parts of
+  the organism. The emotional fusion then sweeps away the still feebly developed
+  differences of conscious structure in the individuals concerned and
+  continually restores the original group unity. This phenomenon still exerts a
+  powerful influence upon the life of the individual in relation to the
+  community.
+
+]
 
 #u[Repression] <repression> Thrusting out of the conscious and into the
 unconscious without knowing it.
@@ -1314,6 +1338,7 @@ the above-water subway line we're shown during the _Takedown_ fight, which runs
 between Cheongdam Stadium (청담역) and Jayang Stadium (자양역).
 
 // Image: My photo of Olympic stadium from above.
+// Image: Scene of them jumping from the plane with the stadium clearly right beside the river.
 
 There are a few inconsistencies here too, however. Olympic Stadium borders the
 south side of the Han River and isn't really near any buildings, whereas Rumi is
@@ -1582,7 +1607,6 @@ Of _The Origins and History of Consciousness_, Jung gives this praise:
   which no pioneer could have done.
 
 ]
-
 
 === Why is this a PDF?
 
