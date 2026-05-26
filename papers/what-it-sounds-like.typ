@@ -1168,8 +1168,8 @@ Independently appears as a symbol across many ancient cultures. From Neumann:
 #u[Anima] <anima> The feminine energy within a man.
 
 #u[Animus] <animus> The masculine energy within a woman. Both Anima and Animus
-are part of the Unconscious, when properly connected with the Ego the
-association is voluntary, positive, and creative.
+are part of the Unconscious, but when voluntarily connected to the Ego the
+association is positive and creative.
 
 #u[Authorities] <authorities> Alongside the Ego, the other "seats at the table
 of Consciousness". The Animus/Anima, the Shadow, the collective voice of your
@@ -1214,16 +1214,9 @@ the fathers and enforced by education manifests itself in the psychic structure
 of the individual as 'conscience'."_ // p173
 
 #u[Consciousness] <consciousness> _"Only in the light of consciousness can man
-know."_ Consciousness is the capacity for voluntary action, and therefore is the
-path to deliverance. Fatigue exhausts consciousness.
-
-// p121
-#quote[
-
-  To become conscious of oneself, to be conscious at all, begins with saying
-  "no" to the uroboros, to the Great Mother, to the unconscious.
-
-]
+know."_ Consciousness is the capacity for independent action, and therefore is
+the path to individual deliverance. Fatigue exhausts it. Even of we of the
+present day, Neumann states:
 
 // p 281
 #quote[
@@ -1233,10 +1226,12 @@ path to deliverance. Fatigue exhausts consciousness.
 
 ]
 
+And further, of society as a whole:
+
 // Page 271
 #quote[
 
-  Group unity is participation is still so widely prevalent, even in modern man,
+  Group unity in participation is still so widely prevalent, even in modern man,
   that it is only through the ceaseless conscious efforts of certain individuals
   of genius that we gradually become aware of the psychic factors which, as the
   unconscious "cultural pattern" we so blindly accept, regulate the life and
@@ -1267,16 +1262,17 @@ Against the eternal draw of the Unconscious, the Ego has a tendency to want to
 dissolve, and this dissolution is perceived as pleasurable. This is the ecstasy
 felt by those possessed by mass movements in politics or religion. It is
 pleasurable because it is a release of tension, the dropping of the weight of
-your reality. Sleep and dreaming are miniature varieties of this, seemingly
-critical for our health.
+your reality. Sleep and dreaming are miniature varieties of this, although
+seemingly critical for our health.
 
 #u[Persona] <persona> The "you" that you build to interface well enough with
-society. A "workable and successful sham personality".
+society. A _"workable and successful sham personality"._
 
 #u[Recollectivization] <recollectivization> A lowering of total Consciousness
 within society, often under the banner of a mass movement. There have been
-several large-scale examples of this within the past century. One of the
-greatest threats to the long-term success of humanity. From Neumann:
+several large-scale examples of this within the past century. Despite a focus on
+group unity, Recollectivization is one of the greatest threats to the long-term
+success of humanity. From Neumann:
 
 #quote[
 
@@ -1295,14 +1291,16 @@ greatest threats to the long-term success of humanity. From Neumann:
 
 ]
 
+From the movie: the lure of the Saja Boys and the feeding of fans to Gwi-ma.
+
 #u[Repression] <repression> Thrusting out of the conscious and into the
 unconscious without knowing it.
 
 #u[Suppression] <suppression> Consciously holding down or restricting some
 impulse.
 
-#u[The Shadow] <shadow> "It contains all those elements in the personality which
-the ego condemns as negative values."
+#u[The Shadow] <shadow> _"All those elements in the personality which the ego
+condemns as negative values."_ Within the movie, these are the Demons.
 
 == Bibliography
 
@@ -1314,15 +1312,19 @@ the ego condemns as negative values."
 === The Huntrix Penthouse
 
 The building they live in exists. It's called _Lotte World Tower_ and it's the
-tallest building in Korea. Their living room is based on the tower's highest
-publically accessible floor, the 123 Lounge.
+tallest building in Korea. The closest one can get to where their living room
+would be is the tower's highest publically accessible floor, the 123 Lounge.
 
 // Image: My shot of their living room.
 // Quote: "Try the cheesecake."
+// Image: Their penthouse above the Lounge.
 
-However there are some inconsistencies with the view we're shown from their
-window. The angle to Namsan Tower isn't quite right, and where we'd normally see
-the Han River we instead see cityscape.
+Although their penthouse appears even higher than where the Lounge is, which on
+the real building is just scaffolding.
+
+There are also some inconsistencies with the view we're shown from their window.
+The angle to Namsan Tower isn't quite right, and where we'd normally see the Han
+River we instead see cityscape.
 
 // Image: Shots we're shown in the movie.
 
@@ -1332,17 +1334,18 @@ the Han River we instead see cityscape.
 
 === Concert Venues
 
-Likewise, the location of the Golden concert and later Idol Awards concert is
-also real: the Olympic Stadium. It's actually quite close to Lotte Tower and to
-the above-water subway line we're shown during the _Takedown_ fight, which runs
-between Cheongdam Stadium (청담역) and Jayang Stadium (자양역).
+Likewise, the location of the _How it's Done_ concert and the later Idol Awards
+venue is also real: the Olympic Stadium. It's actually quite close to Lotte
+Tower and to the above-water subway line we're shown during the _Takedown_
+fight, which runs between Cheongdam Station (청담역) and Jayang Station
+(자양역).
 
 // Image: My photo of Olympic stadium from above.
 // Image: Scene of them jumping from the plane with the stadium clearly right beside the river.
 
-There are a few inconsistencies here too, however. Olympic Stadium borders the
-south side of the Han River and isn't really near any buildings, whereas Rumi is
-shown running through city streets after fleeing the Golden concert.
+However as Rumi flees the Golden concert she is shown running past the Olympic
+Stadium, heading home. There is no large television studio nearby, so did she
+sprint across the city?
 
 // Image: Rumi running.
 
