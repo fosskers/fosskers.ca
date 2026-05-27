@@ -1324,7 +1324,9 @@ the real building is just scaffolding.
 
 There are also some inconsistencies with the view we're shown from their window.
 The angle to Namsan Tower isn't quite right, and where we'd normally see the Han
-River we instead see cityscape.
+River we instead see cityscape. However this isn't a problem if we simply assume
+that their window faces north instead of west as in the real Lounge and
+observation decks.
 
 // Image: Shots we're shown in the movie.
 
@@ -1349,14 +1351,15 @@ sprint across the city?
 
 // Image: Rumi running.
 
-The station the Hunters get off at (자양역) is somewhat darker than what we're shown.
+After failing to save the train passengers, the station that the Hunters get off
+at (자양역) is somewhat darker in reality than what we're shown.
 
 // Image: Metro station.
 
 Finally, after the Idol Awards people are shown shuffling into the city streets
 with a direct view of Namsan Tower. These locations are across the city from
 each other and so no direct view exists nearby, but a similar view can be seen
-from City Hall and may be the original inspiration for the shot.
+from City Hall.
 
 // Image: view of Namsan Tower through the streets at night.
 
@@ -1371,7 +1374,7 @@ that. Locals often walk the various routes to the tower on a nice day.
 // Image: Bukchon.
 
 We're shown three "dates", all in real places. The first is at Bukchon (북촌)
-Hanok Village, where Rumi attempts to kill Jinu. It seems like Derpy lead her
+Hanok Village, where Rumi attempts to kill Jinu. It seems like Derpy led her
 there on foot from the Lotte Tower, but navigation apps claim it's a four hour
 walk.
 
@@ -1409,7 +1412,8 @@ switch to Korean audio for this scene.
 Likewise, Zoey's name is pronounced _Cho-i_ because there is no _Z_ sound in
 Korean. And if it wasn't clear, in this entire article I've written Gwi-ma's
 name in the official way with a _G_, but in head position a similar effect
-occurs and it is in reality _Kwi-ma_ when spoken.
+occurs, and it is in reality _Kwi-ma_ when spoken and _Ki-ma_ when being lazy
+with the intermediate _W_, which happens often in similar words.
 
 === The Ear Demon
 
@@ -1426,7 +1430,7 @@ English version, during Rumi's assassination attempt on Jinu.
 
 Guys, if your crush tries to kill you, just be persistent.
 
-During their Date scene when Jinu complains of her being late, she calls him
+During their Date scene when Jinu complains of Rumi being late, she calls him
 old-fashioned by retorting with "What are you, from the 19th century?" In the
 Korean version she instead accuses him of being a person from the "Joseon
 Dynasty" (조선 시대, 1392-1897), which of course he is.
@@ -1578,6 +1582,16 @@ can only do this because he's a "spirit creature" and not a demon.
 The bathhouse trap shows us that the Saja Boys did actually want the Hunters
 dead, but they must have felt that ambushing them in public would have
 compromised their greater goal of sabotaging the entire Honmoon.
+
+=== Did the creators account for all this consciousness stuff when writing the movie?
+
+The beauty is that it actually doesn't matter if they didn't. Recall the claim
+made in the beginning of the article; that as humanity matured, we projected the
+growth of our consciousness as images into our myths and legends. These kinds of
+stories are fundamental to us, and we've been naturally retelling them for
+thousands of years with different characters and settings, and we've never
+gotten bored. Does that lessen the achievement of the writers? Not at all. And
+perhaps they're fans of Jung after all.
 
 === Who was Erich Neumann?
 
