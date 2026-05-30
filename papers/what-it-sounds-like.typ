@@ -8,6 +8,8 @@
 
 #set quote(block: true)
 
+#set figure(numbering: none)
+
 #let u(body) = underline(body)
 
 #place(
@@ -82,7 +84,19 @@ is also that same power that is ever-welcoming, seductive, and all-consuming.
 The conflict between upper and lower, light and dark, plays out within the mind
 of every person and within our wider societies.
 
-// Images: Gwima birthing and reabsorbing demons.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("gwima-birthing-demons.png"),
+    caption: [Gwi-ma birthing demons.],
+  ),
+  figure(
+    image("gwima-absorbing-demons.png"),
+    caption: [Gwi-ma absorbing demons.],
+  ),
+)
+
 
 == Gwi-ma (The Great Mother)
 
@@ -97,7 +111,13 @@ can see through the Honmoon to some degree but he is not omniscient. He knows
 what a boyband is, but he was not aware of Rumi's patterns until Jinu himself
 found out.
 
-// Image: "Let me guess... they got away again."
+#figure(
+  image("let-me-guess.png"),
+  caption: [
+    "Let me guess... they got away again." \
+    "맞혀 볼까? 놈들을 또 놓쳤나?"
+  ],
+)
 
 He can physically drag demons through the air and rip them down from above the
 Honmoon, but he cannot read all thoughts; he had to ask Jinu what he wanted. Yet
@@ -116,10 +136,21 @@ terror". Gwi-ma is vindictive, merciless, cannibalistic, and bloodthirsty. His
 goal is nothing less than the reabsorption of all conscious humanity back into
 himself.
 
-In the context of the Hero's final challenge, Gwi-ma is #link(<dragon>)[The
-  Dragon] which must be overcome.
+In the context of the #link(<dragon-fight>)[Hero's final challenge], Gwi-ma is
+#link(<dragon>)[The Dragon] which must be overcome.
 
-// Image: Uroboros.
+// TODO: Have four in a grid?
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("Serpiente_alquimica.jpg"),
+  ),
+  figure(
+    image("uro-dragon.jpg", width: 100%),
+  ),
+)
 
 Psychologically, Gwi-ma is the bedrock of the Unconscious and its prime mover.
 To it, Consciousness is something of an aberration, a growth that it naturally
@@ -143,14 +174,44 @@ its essence, channel soul power back into it, and evidently survive a skydive
 from high altitudes. Seline is their mentor - Rumi's mother is dead, and the
 fate of the third Sunlight Sister is unknown.
 
-// Image: Demons are never nice!
-// Image: Rumi flipping onto rooves.
-// Image: Oh great, my favourite...
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  rows: auto,
+  figure(
+    image("demons-are-never-nice.png"),
+    caption: ["Demons are never nice!" \ "그럴 리가 없잖아!"],
+  ),
+  figure(
+    image("rooftop-assassins.png"),
+    caption: ["Let's go kill these guys." \ "이것들 죽이러 가자."],
+  ),
+  figure(
+    image("my-favourite.png"),
+    caption: ["Water demons!" \ "물귀들이야!"],
+  ),
+)
 
 The Hunters function as exterminator-assassins, and while very experienced they
 know little to nothing about the true nature of demons. Firstly that demons have
 emotions, and secondly that Gwi-ma tortures them psychically. Rumi demonstrates
 a similar ignorance with regards to Derpy the Tiger.
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("demons-dont-feel.png"),
+    caption: ["Demon's don't feel anything." \ "악귀는 그런 거 봇 느껴."],
+  ),
+  figure(
+    image("is-that-what-you-think.png"),
+    caption: ["Is that what you think?" \ "정말 그럴까?"],
+  ),
+)
+
+// TODO: 2026-05-30 Decide if I want a Derpy pic here too. But then I need a
+// final one to form a grid. If I do, then make it two separate grids. I single
+// one makes the caption text too cramped.
 
 // "Demons don't feel anything!" -> "Is that what you think?"
 // Image: "Do you not hear him in your ear?" -> "What are you talking about?"
@@ -167,12 +228,28 @@ a similar ignorance with regards to Derpy the Tiger.
 The weight of this increases when we realize that by this point in their Hunter
 careers, they take pleasure in dealing out punishment to demons.
 
-// All smiles during _How it's Done_. "These chicks dig murder."
-// Let's go kill these guys.
-// Laughing backstage about killing the Saja Boys.
-// "You're supposed to be dead by now!" She absolutely intended his death. Is this a kids movie?
-// Stabbing the ground during Takedown.
-// Mira smile: A demon with no feelings doesn't deserve to live.
+#grid(
+  columns: (1fr, 1fr),
+  rows: (auto, auto, auto),
+  figure(
+    image("how-its-done.png"),
+  ),
+  figure(
+    image("done-done-done.png"),
+  ),
+
+  figure(
+    image("stabbing.png"),
+  ),
+  figure(
+    image("doesnt-deserve.png"),
+  ),
+
+  grid.cell(
+    colspan: 2,
+    align(center, pad(top: 5pt)[These chicks dig murder.]),
+  ),
+)
 
 The Hunters, and more specifically Rumi, represent the Conscious Mind, although
 one still developing. They go about their appointed mission, doing violence to
@@ -188,7 +265,22 @@ and woven by the Hunters, spanning the entire earth. Something of the Hunters
 themselves seems present in it too; Rumi's emotional state is seen rippling
 through it more than once.
 
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("why.png"),
+    caption: ["Why!? \ 왜!?"],
+  ),
+  figure(
+    image("done-done-done.png"),
+    caption: ["I can still fix it!" \ "내가 고칠 수 있다고!"],
+  ),
+)
+
+
 // Image: Why!?
+// Image: I can still fix it!
 
 The Honmoon requires upkeep. Without a regular influx of inspiration it weakens,
 permitting the entrance of more demons who are always waiting just below the
@@ -1059,7 +1151,7 @@ give them names, as if distinct, to aid our understanding.
 
 #u[Dragon] <dragon> A consuming and destructive form of the Uroboros / Great
 Mother as they are related to the creative origin of all things, the "abyss", or
-the source of eternal chaos, change, and undifferentiated energy / potential.
+the source of eternal chaos, change, and undifferentiated energy and potential.
 Enemy of the Hero, forever guarding the "treasure" or "captive". Within various
 myths (e.g. Babylonian Tiamat), the defeat of the Dragon and the splitting up of
 its body often corresponds with the creation of the gods or the creation of the
@@ -1313,22 +1405,23 @@ condemns as negative values."_ Within the movie, these are the Demons.
 
 The building they live in exists. It's called _Lotte World Tower_ and it's the
 tallest building in Korea. The closest one can get to where their living room
-would be is the tower's highest publically accessible floor, the 123 Lounge.
+would be is the tower's highest publicly accessible floor, the 123 Lounge.
 
 // Image: My shot of their living room.
 // Quote: "Try the cheesecake."
 // Image: Their penthouse above the Lounge.
 
-Although their penthouse appears even higher than where the Lounge is, which on
+However their penthouse appears even higher than where the Lounge is, which on
 the real building is just scaffolding.
 
 There are also some inconsistencies with the view we're shown from their window.
 The angle to Namsan Tower isn't quite right, and where we'd normally see the Han
-River we instead see cityscape. However this isn't a problem if we simply assume
-that their window faces north instead of west as in the real Lounge and
-observation decks.
+River we instead see cityscape. This isn't a problem if we simply assume that
+their window faces north instead of west as in the real Lounge and observation
+decks.
 
 // Image: Shots we're shown in the movie.
+// Image: "Why" scene. Rumi on her knees on top of the tower, facing north.
 
 // However the angle to Namsan tower isn't quite right, making it seem closer to
 // the JW Marriot Hotel, or perhaps between Banpo station and Jam-won station.
@@ -1374,13 +1467,14 @@ that. Locals often walk the various routes to the tower on a nice day.
 // Image: Bukchon.
 
 We're shown three "dates", all in real places. The first is at Bukchon (북촌)
-Hanok Village, where Rumi attempts to kill Jinu. It seems like Derpy led her
-there on foot from the Lotte Tower, but navigation apps claim it's a four hour
-walk.
+Hanok Village, where Rumi attempts to kill Jinu. The scene transition implies
+that Derpy led her there on foot from Lotte Tower, but navigation apps claim
+it's a four hour walk.
 
 // Image: Screenshot of the Naver route.
 
-The second date is within Naksan Park (낙산공원).
+The second date is within Naksan Park (낙산공원), along its well-known walled
+walkway.
 
 // Image: "For what it's worth, I don't think you're a mistake."
 
@@ -1583,11 +1677,11 @@ The bathhouse trap shows us that the Saja Boys did actually want the Hunters
 dead, but they must have felt that ambushing them in public would have
 compromised their greater goal of sabotaging the entire Honmoon.
 
-=== Did the creators account for all this consciousness stuff when writing the movie?
+=== Did the creators account for psychology and the Hero's Story when writing the movie?
 
-The beauty is that it actually doesn't matter if they didn't. Recall the claim
-made in the beginning of the article; that as humanity matured, we projected the
-growth of our consciousness as images into our myths and legends. These kinds of
+The beauty is that it doesn't matter if they didn't. Recall the claim made in
+the beginning of the article; that as humanity matured, we projected the growth
+of our consciousness as images into our myths and legends. These kinds of
 stories are fundamental to us, and we've been naturally retelling them for
 thousands of years with different characters and settings, and we've never
 gotten bored. Does that lessen the achievement of the writers? Not at all. And
