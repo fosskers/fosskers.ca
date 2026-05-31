@@ -201,7 +201,7 @@ a similar ignorance with regards to Derpy the Tiger.
   rows: auto,
   figure(
     image("demons-dont-feel.png"),
-    caption: ["Demon's don't feel anything." \ "악귀는 그런 거 봇 느껴."],
+    caption: ["Demon's don't feel anything." \ "악귀는 그런 거 못 느껴."],
   ),
   figure(
     image("is-that-what-you-think.png"),
@@ -1718,6 +1718,60 @@ Of _The Origins and History of Consciousness_, Jung gives this praise:
   which no pioneer could have done.
 
 ]
+
+=== Which non-English dub is this best?
+
+I personally prefer the Korean dub, even to the English. By this point my ears
+are far more used to the voices. Sorry Arden.
+
+To attempt fairness in judging the dubs, I've picked several key scenes that
+contain critical dialogue, with which I gauge:
+
+1. Emotional impact of the delivered line.
+2. Syllable count.
+3. Overall aural aesthetic of the line in the language.
+
+These intend to measure both how well the lines were delivered by the voice
+actor, but also how hard the translators were trying to craft good lines. The
+results of #3 are obviously biased to my personal linguistic taste. Where
+possible I add the line itself as well, except for languages I can't type. Sorry
+Arabic.
+
+==== I can still fix it!
+
+Rumi shouting at her friends not to leave her. Impact is measured by the degree
+of desperation heard in Rumi's voice. Aesthetics also measure the quality of the
+"demon voice echo".
+
+#table(
+  columns: 4,
+  [Language], [Line], [Impact], [Syllables],
+  [English], [I can still fix it!], [Classic], [5],
+  [French], [Je vais tout arranger!], [Desperate and commanding], [6],
+  [Korean], [내가 고칠 수 있다고!], [Great - She means it], [8],
+  [Italian], [Io posso rimediare!], [Great - Good rhythm], [9],
+  [Polish], [Jeszcze mamy szansę!], [Good+], [6],
+  [Hindi], [...], [Good], [6],
+  [Mandarin], [我還是能解決問題!], [Good], [8],
+  [Hebrew], [...], [Good], [9],
+  [German], [Ich bring es wieder in Ordnung!], [Okay], [8],
+  [Vietnamese], [...], [Okay], [7],
+  [Norwegian], [Jeg kan fortsatt fikse det!], [Okay], [7],
+  [Finnish], [Mä voin viel korjata tän!], [Okay], [7],
+  [Brazillian Porto], [Ainda posso dar um jeito!], [Okay], [9],
+  [Greek], [...], [Unconvincing], [7],
+  [Crotian], [Još mogu sve popraviti!], [Extends too long, unconvincing], [8],
+  [Japanese], [今からでもやり直せる！], [Too wordy], [12],
+)
+
+Notes:
+
+- Fewer syllables is correlated with better impact.
+- There is a split between "I _can_ fix it" and "I _will_ fix it".
+- The Japanese only says that something can be fixed, but doesn't state that
+  it's necessarily Rumi.
+- Polish says "We still have a chance!"
+- Special mention to Vietnamese for unique demon static.
 
 === Why is this a PDF?
 
