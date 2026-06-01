@@ -242,13 +242,13 @@ careers, they take pleasure in dealing out punishment to demons.
     image("stabbing.png"),
   ),
   figure(
-    image("doesnt-deserve.png"),
+    image("rumi-kills.png"),
   ),
 
-  grid.cell(
-    colspan: 2,
-    align(center, pad(top: 5pt)[These chicks dig murder.]),
-  ),
+  // grid.cell(
+  //   colspan: 2,
+  //   align(center, pad(top: 5pt)[These chicks dig murder.]),
+  // ),
 )
 
 The Hunters, and more specifically Rumi, represent the Conscious Mind, although
@@ -273,14 +273,10 @@ through it more than once.
     caption: ["Why!? \ 왜!?"],
   ),
   figure(
-    image("done-done-done.png"),
+    image("can-still-fix-it.png"),
     caption: ["I can still fix it!" \ "내가 고칠 수 있다고!"],
   ),
 )
-
-
-// Image: Why!?
-// Image: I can still fix it!
 
 The Honmoon requires upkeep. Without a regular influx of inspiration it weakens,
 permitting the entrance of more demons who are always waiting just below the
@@ -290,7 +286,13 @@ it freely.
 
 The Hunters dream of a Golden Honmoon, a concept even Gwi-ma seems aware of.
 
-// Image: ...it's over for us!
+#figure(
+  image("gwima-gold.png"),
+  caption: [
+    "Once the Hunters turn the Honmoon gold, it's over for us!" \
+    "혼문이 황금 혼문이 되면 우린 다 끝이야!"
+  ],
+)
 
 Mythologically, the Honmoon represents Order through the
 #link(<archetype>)[archetype] of the #link(<father>)[Spirit Father]. It is
@@ -306,14 +308,29 @@ creative forces that well up from below. This Father, in his Terrible form,
 holds back the Hero.
 
 Psychologically, the Honmoon is your set of habits and behaviours, some yours,
-but many absorbed from your culture. A Golden one is the idea that you can
-perfectly seal away all the darkness and imperfection within you if you just
-work hard enough. Here the movie speaks for itself: a Golden Honmoon is probably
-not desirable, even if the world shouts to you that it is, and you strain
-yourself agreeing. _Golden_ is a good song, but self-congratulation and
+but many absorbed from your culture and environment. A Golden one is the idea
+that you can perfectly seal away all the darkness and imperfection within you if
+you just work hard enough. Here the movie speaks for itself: a Golden Honmoon is
+probably not desirable, even if the world shouts to you that it is and you've
+always agreed. _Golden_ is a good song, but self-congratulation and
 self-deception nonetheless. A far greater song comes later.
 
-// Image: It's the only way to protect the Honmoon!
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("only-way.png"),
+  ),
+  figure(
+    image("golden-lie.png"),
+  ),
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 5pt,
+    )["It's the only way to protect the Honmoon!" \ "혼문을 지킬 수 있는 방법은 그것뿐이야!"]),
+  ),
+)
 
 We are shown that demonic influence weakens the Honmoon, but at the same time a
 weakening and complete destruction is necessary for Rebirth, as we shall see
@@ -327,7 +344,16 @@ demon. We see them teleporting, shape-shifting, and tearing an airplane apart.
 They seek to siphon human souls back to Gwi-ma, the process of which absorbs the
 victim's body.
 
-// Image: Rujinu girl. The train.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("missing.png"),
+  ),
+  figure(
+    image("passengers.png"),
+  ),
+)
 
 Despite this, above the Honmoon they are surprisingly frail. Most, even the Saja
 Boys, disintegrate from a single strike of a Honmoon weapon. Nor are all demons
@@ -335,7 +361,18 @@ unambiguously evil; Jinu and Rumi's father being a testament to this. All humans
 seem to be able to see demons - they don't have an invisible spirit form,
 although this doesn't explain the old man in the bathhouse.
 
-// Image: An Ji-hu in the concert crowd.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("cool-costume.png"),
+    caption: ["Cool costume!"],
+  ),
+  figure(
+    image("confetti.png"),
+    caption: [They saw the demon through their monitors.],
+  ),
+)
 
 Psychologically, the collective of Demons represents #link(<shadow>)[The Shadow]. Quoting Neumann:
 
@@ -385,15 +422,35 @@ the achievement of consciousness is Jinu, her Animus.
 
 == Jinu (The Animus)
 
-// Image: you have a beautiful soul.
 
 Jinu is not a true, heartless demon. He does not enjoy his errand, nor is he on
 Gwi-ma's "side". He has pets. He has humour. He feels love. Enough that the pain
 of regret is still raw after 400 years.
 
-// Image: If hate could defeat Gwi-ma...
-// Image: Jinu petting Derpy.
-// Image: Running away while snickering.
+#grid(
+  columns: (1fr, 1fr),
+  rows: (auto, auto, auto),
+  figure(
+    image("beautiful-soul.png"),
+  ),
+  figure(
+    image("if-hate.png"),
+  ),
+
+  figure(
+    image("snickering.png"),
+  ),
+  figure(
+    image("petting-derpy.png"),
+  ),
+
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 5pt,
+    )["If hate could defeat Gwi-ma..." \ "증오로 귀마를 이길 수있으면..."]),
+  ),
+)
 
 Jinu shows us that people can have conflicting motivations and follow through on
 each simultaneously. During the Signing, their "Date", and then again at the
@@ -1719,59 +1776,80 @@ Of _The Origins and History of Consciousness_, Jung gives this praise:
 
 ]
 
-=== Which non-English dub is this best?
+=== How are the non-English dubs?
 
-I personally prefer the Korean dub, even to the English. By this point my ears
-are far more used to the voices. Sorry Arden.
+A proper comparison is beyond the scope of this article, but my personal
+favourite is the Korean. Sorry Arden. They also did quite a good job of choosing
+dialogue that matches the existing English mouth movements.
 
-To attempt fairness in judging the dubs, I've picked several key scenes that
-contain critical dialogue, with which I gauge:
+The French dub is also excellent in this regard, and went so far as to dub their
+songs as well (unfortunately cutting the Korean mixed lyrics in the process).
+The rhyming is tasteful and Rumi's singing voice is excellent.
 
-1. Emotional impact of the delivered line.
-2. Syllable count.
-3. Overall aural aesthetic of the line in the language.
+// The Italian is overall not very good. The voices of Mira's and Rumi's voice
+// actors are too similar, and Zoey sounds like she's "putting on a voice". She
+// also sounds much older.
 
-These intend to measure both how well the lines were delivered by the voice
-actor, but also how hard the translators were trying to craft good lines. The
-results of #3 are obviously biased to my personal linguistic taste. Where
-possible I add the line itself as well, except for languages I can't type. Sorry
-Arabic.
+// The Japanese dub is trash. There is so much nuance loss. Particularly bad:
+//
+// - Train fight.
+// - I can still fix it!
+// - Golden lyrics.
 
-==== I can still fix it!
+// I personally prefer the Korean dub, even to the English.
+// To attempt fairness in judging the dubs, I've picked several key scenes that
+// contain critical dialogue, with which I gauge:
 
-Rumi shouting at her friends not to leave her. Impact is measured by the degree
-of desperation heard in Rumi's voice. Aesthetics also measure the quality of the
-"demon voice echo".
+// 1. Emotional impact of the delivered line.
+// 2. Syllable count.
+// 3. Overall aural aesthetic of the line in the language.
 
-#table(
-  columns: 4,
-  [Language], [Line], [Impact], [Syllables],
-  [English], [I can still fix it!], [Classic], [5],
-  [French], [Je vais tout arranger!], [Desperate and commanding], [6],
-  [Korean], [내가 고칠 수 있다고!], [Great - She means it], [8],
-  [Italian], [Io posso rimediare!], [Great - Good rhythm], [9],
-  [Polish], [Jeszcze mamy szansę!], [Good+], [6],
-  [Hindi], [...], [Good], [6],
-  [Mandarin], [我還是能解決問題!], [Good], [8],
-  [Hebrew], [...], [Good], [9],
-  [German], [Ich bring es wieder in Ordnung!], [Okay], [8],
-  [Vietnamese], [...], [Okay], [7],
-  [Norwegian], [Jeg kan fortsatt fikse det!], [Okay], [7],
-  [Finnish], [Mä voin viel korjata tän!], [Okay], [7],
-  [Brazillian Porto], [Ainda posso dar um jeito!], [Okay], [9],
-  [Greek], [...], [Unconvincing], [7],
-  [Crotian], [Još mogu sve popraviti!], [Extends too long, unconvincing], [8],
-  [Japanese], [今からでもやり直せる！], [Too wordy], [12],
-)
+// These intend to measure both how well the lines were delivered by the voice
+// actor, but also how hard the translators were trying to craft good lines. The
+// results of #3 are obviously biased to my personal linguistic taste. Where
+// possible I add the line itself as well, except for languages I can't type. Sorry
+// Arabic.
 
-Notes:
+// ==== I can still fix it!
 
-- Fewer syllables is correlated with better impact.
-- There is a split between "I _can_ fix it" and "I _will_ fix it".
-- The Japanese only says that something can be fixed, but doesn't state that
-  it's necessarily Rumi.
-- Polish says "We still have a chance!"
-- Special mention to Vietnamese for unique demon static.
+// Rumi shouting at her friends not to leave her. Impact is measured by the degree
+// of desperation heard in Rumi's voice. Aesthetics also measure the quality of the
+// "demon voice echo".
+
+// #table(
+//   columns: 4,
+//   [Language], [Line], [Impact], [Syllables],
+//   [English], [I can still fix it!], [Classic], [5],
+//   [French], [Je vais tout arranger!], [Desperate and commanding], [6],
+//   [Korean], [내가 고칠 수 있다고!], [Great - She means it], [8],
+//   [Italian], [Io posso rimediare!], [Great - Good rhythm], [9],
+//   [Polish], [Jeszcze mamy szansę!], [Good+], [6],
+//   [Hindi], [...], [Good], [6],
+//   [Mandarin], [我還是能解決問題!], [Good], [8],
+//   [Hebrew], [...], [Good], [9],
+//   [German], [Ich bring es wieder in Ordnung!], [Okay], [8],
+//   [Vietnamese], [...], [Okay], [7],
+//   [Norwegian], [Jeg kan fortsatt fikse det!], [Okay], [7],
+//   [Finnish], [Mä voin viel korjata tän!], [Okay], [7],
+//   [Brazillian Porto], [Ainda posso dar um jeito!], [Okay], [9],
+//   [Greek], [...], [Unconvincing], [7],
+//   [Crotian], [Još mogu sve popraviti!], [Extends too long, unconvincing], [8],
+//   [Japanese], [今からでもやり直せる！], [Too wordy], [12],
+// )
+
+// Notes:
+
+// - Fewer syllables is correlated with better impact.
+// - There is a split between "I _can_ fix it" and "I _will_ fix it".
+// - In the Japanese it's entirely unclear if it's _I_ or _We_ to be fixing things.
+// - Polish says "We still have a chance!"
+// - Special mention to Vietnamese for unique demon static.
+
+// ==== Meet you? I'm not going to meet you!
+
+// ==== Rumi and Mira on the Train
+
+// ==== Why couldn't you love me?
 
 === Why is this a PDF?
 
