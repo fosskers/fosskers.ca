@@ -1628,6 +1628,42 @@ And look what can be found on the path down from Namsan tower.
 
 // Image: Wooden Sussie.
 
+=== Non-English Dubs
+
+A proper comparison is beyond the scope of this article, but the Korean dub is
+very well done and is my personal favourite. There's a minor mismatch between
+Jinu's low speaking voice (Korean) and high singing voice (English), but the
+translators otherwise did a good job of choosing dialogue that matches the
+existing English mouth movements. Languages naturally embed cultural norms as
+well, and the Korean variant gives us an alternate window into character
+relationships. Jinu, for instance, is obligated to speak in polite grammatical
+forms to Gwi-ma despite hating him, and the feel of the "Han Clinic" scene is a
+bit different. Bobby is close enough to the Hunters to speak with casual forms,
+despite being their employee. It's fun to be reminded that the characters are in
+fact Korean, something which is harder to "feel" when they're speaking other
+languages.
+
+The French version is also excellent, with impressive lip-matching dialog,
+lyrics, lyric rhyming, and singing. The voice actor for Gwi-ma is low-voiced and
+convincing.
+
+The Filipino has tasteful English code switching, including during their songs.
+They also inserted spoken Korean in the same places as the English (Rumi reading
+Jinu's note, Zoey when entering the clinic, etc.).
+
+Languages which dubbed their songs:
+
+- Brazillian Portuguese // meh
+- Filipino // code switching!
+- French // amazing
+- Greek (Only _Free_, _Golden_, and _What it Sounds Like_)
+- Hebrew
+- Hindi
+- Japanese (Only _Free_, _Golden_, and _What it Sounds Like_) // the worst
+- Latin American Spanish // but not from Spain!
+- Russian // bad
+- Turkish
+
 // --- Rest --- //
 
 // Do these in chronological order.
@@ -1775,81 +1811,6 @@ Of _The Origins and History of Consciousness_, Jung gives this praise:
   which no pioneer could have done.
 
 ]
-
-=== How are the non-English dubs?
-
-A proper comparison is beyond the scope of this article, but my personal
-favourite is the Korean. Sorry Arden. They also did quite a good job of choosing
-dialogue that matches the existing English mouth movements.
-
-The French dub is also excellent in this regard, and went so far as to dub their
-songs as well (unfortunately cutting the Korean mixed lyrics in the process).
-The rhyming is tasteful and Rumi's singing voice is excellent.
-
-// The Italian is overall not very good. The voices of Mira's and Rumi's voice
-// actors are too similar, and Zoey sounds like she's "putting on a voice". She
-// also sounds much older.
-
-// The Japanese dub is trash. There is so much nuance loss. Particularly bad:
-//
-// - Train fight.
-// - I can still fix it!
-// - Golden lyrics.
-
-// I personally prefer the Korean dub, even to the English.
-// To attempt fairness in judging the dubs, I've picked several key scenes that
-// contain critical dialogue, with which I gauge:
-
-// 1. Emotional impact of the delivered line.
-// 2. Syllable count.
-// 3. Overall aural aesthetic of the line in the language.
-
-// These intend to measure both how well the lines were delivered by the voice
-// actor, but also how hard the translators were trying to craft good lines. The
-// results of #3 are obviously biased to my personal linguistic taste. Where
-// possible I add the line itself as well, except for languages I can't type. Sorry
-// Arabic.
-
-// ==== I can still fix it!
-
-// Rumi shouting at her friends not to leave her. Impact is measured by the degree
-// of desperation heard in Rumi's voice. Aesthetics also measure the quality of the
-// "demon voice echo".
-
-// #table(
-//   columns: 4,
-//   [Language], [Line], [Impact], [Syllables],
-//   [English], [I can still fix it!], [Classic], [5],
-//   [French], [Je vais tout arranger!], [Desperate and commanding], [6],
-//   [Korean], [내가 고칠 수 있다고!], [Great - She means it], [8],
-//   [Italian], [Io posso rimediare!], [Great - Good rhythm], [9],
-//   [Polish], [Jeszcze mamy szansę!], [Good+], [6],
-//   [Hindi], [...], [Good], [6],
-//   [Mandarin], [我還是能解決問題!], [Good], [8],
-//   [Hebrew], [...], [Good], [9],
-//   [German], [Ich bring es wieder in Ordnung!], [Okay], [8],
-//   [Vietnamese], [...], [Okay], [7],
-//   [Norwegian], [Jeg kan fortsatt fikse det!], [Okay], [7],
-//   [Finnish], [Mä voin viel korjata tän!], [Okay], [7],
-//   [Brazillian Porto], [Ainda posso dar um jeito!], [Okay], [9],
-//   [Greek], [...], [Unconvincing], [7],
-//   [Crotian], [Još mogu sve popraviti!], [Extends too long, unconvincing], [8],
-//   [Japanese], [今からでもやり直せる！], [Too wordy], [12],
-// )
-
-// Notes:
-
-// - Fewer syllables is correlated with better impact.
-// - There is a split between "I _can_ fix it" and "I _will_ fix it".
-// - In the Japanese it's entirely unclear if it's _I_ or _We_ to be fixing things.
-// - Polish says "We still have a chance!"
-// - Special mention to Vietnamese for unique demon static.
-
-// ==== Meet you? I'm not going to meet you!
-
-// ==== Rumi and Mira on the Train
-
-// ==== Why couldn't you love me?
 
 === Why is this a PDF?
 
