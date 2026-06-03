@@ -213,7 +213,6 @@ a similar ignorance with regards to Derpy the Tiger.
 // final one to form a grid. If I do, then make it two separate grids. I single
 // one makes the caption text too cramped.
 
-// "Demons don't feel anything!" -> "Is that what you think?"
 // Image: "Do you not hear him in your ear?" -> "What are you talking about?"
 // -- Jinu is honestly taken aback by this exchange.
 //
@@ -286,6 +285,7 @@ it freely.
 
 The Hunters dream of a Golden Honmoon, a concept even Gwi-ma seems aware of.
 
+
 #figure(
   image("gwima-gold.png"),
   caption: [
@@ -300,19 +300,19 @@ everything that has brought you to where you are. It is tradition, expectation,
 ideal, and light. It does in fact protect you, but it grows rigid with age. By
 being a proven solution, there is great fear in altering it. Still we yearn for
 some Golden state, a permanent paradise free of the whirling chaos of the
-outside world. Through blind dedication to this mission we risk what Neumann
-calls "patriarchal castration". #link(<castration>)[Castration] here refers to
-being cut off from one's core energy, vitality, and purpose. The patriarchal
-variety comes from over-devotion, "rising too high", and a disconnect from the
-creative forces that well up from below. This Father, in his Terrible form,
-holds back the Hero.
+outside world. Through blind dedication to this idea we risk what Neumann calls
+"patriarchal castration". #link(<castration>)[Castration] here refers to being
+cut off from one's core energy, vitality, and purpose. The patriarchal variety
+comes from over-devotion, "rising too high", and a disconnect from the creative
+forces that well up from below. This Father, in his Terrible form, holds back
+the Hero.
 
 Psychologically, the Honmoon is your set of habits and behaviours, some yours,
 but many absorbed from your culture and environment. A Golden one is the idea
 that you can perfectly seal away all the darkness and imperfection within you if
 you just work hard enough. Here the movie speaks for itself: a Golden Honmoon is
-probably not desirable, even if the world shouts to you that it is and you've
-always agreed. _Golden_ is a good song, but self-congratulation and
+probably not desirable, even if the world shouts to you that it is and you
+believe you agree. _Golden_ is a good song, but self-congratulation and
 self-deception nonetheless. A far greater song comes later.
 
 #grid(
@@ -358,7 +358,7 @@ victim's body.
 Despite this, above the Honmoon they are surprisingly frail. Most, even the Saja
 Boys, disintegrate from a single strike of a Honmoon weapon. Nor are all demons
 unambiguously evil; Jinu and Rumi's father being a testament to this. All humans
-seem to be able to see demons - they don't have an invisible spirit form,
+seem to be able to see demons - they don't have an invisible spirit form;
 although this doesn't explain the old man in the bathhouse.
 
 #grid(
@@ -370,7 +370,7 @@ although this doesn't explain the old man in the bathhouse.
   ),
   figure(
     image("confetti.png"),
-    caption: [They saw the demon through their monitors.],
+    caption: [They saw the demons through their monitors.],
   ),
 )
 
@@ -448,7 +448,7 @@ of regret is still raw after 400 years.
     colspan: 2,
     align(center, pad(
       top: 5pt,
-    )["If hate could defeat Gwi-ma..." \ "증오로 귀마를 이길 수있으면..."]),
+    )["If hate could defeat Gwi-ma..." \ "증오로 귀마를 이길 수 있으면..."]),
   ),
 )
 
@@ -457,19 +457,32 @@ each simultaneously. During the Signing, their "Date", and then again at the
 reveal of his betryal, Jinu didn't have to tell Rumi anything about his true
 thoughts and motivations, but he did. This was perhaps some form of plea.
 
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("i-lied.png"),
+    caption: ["I left them!" \ "내가 버렸어!"],
+  ),
+  figure(
+    image("alleyway.png"),
+    caption: ["A hunter who's part demon..." \ "악귀의 문양을 가진 헌터?"],
+  ),
+)
+
 // Image: That's right, I lied to you!
+// Image: A hunter who's part demon...
 
 Recall too that after their first fight in the bathhouse, he was genuinely
 curious about her as he strolled the alleyway.
 
-// Image: A hunter who's part demon...
 
 Mythologically, Jinu serves two roles. Firstly he is a victim of matriarchal
 castration, like the Greek king Oedipus. As with patriarchal castration, he is
 cut off from everything that makes one great, now a slave to the Great Mother.
 Instead of rising too high, he has fallen too low. In seeking to erase his
 memories, he is attempting to complete the castration. Secondly, he is the
-Captive, the prisoner of the Dragon to be rescued by the Hero.
+#link(<captive>)[Captive], the prisoner of the Dragon to be rescued by the Hero.
 
 // Image: The memories... I want them erased.
 // Image: Jinu's pattered arm. "Chains".
@@ -1206,6 +1219,9 @@ Mother -> Terrible Mother, and their relationship to the image of the Dragon,
 there is overlap between them and certainly further reasonable subdivisions. We
 give them names, as if distinct, to aid our understanding.
 
+#u[Captive] <captive> Something precious, a treasure. The prisoner of the Dragon
+and that which the Hero seeks to liberate.
+
 #u[Dragon] <dragon> A consuming and destructive form of the Uroboros / Great
 Mother as they are related to the creative origin of all things, the "abyss", or
 the source of eternal chaos, change, and undifferentiated energy and potential.
@@ -1640,8 +1656,10 @@ relationships. Jinu, for instance, is obligated to speak in polite grammatical
 forms to Gwi-ma despite hating him, and the feel of the "Han Clinic" scene is a
 bit different. Bobby is close enough to the Hunters to speak with casual forms,
 despite being their employee. It's fun to be reminded that the characters are in
-fact Korean, something which is harder to "feel" when they're speaking other
+fact Korean, something which is harder to feel when they're speaking other
 languages.
+
+// There is also light swearing in the Korean.
 
 The French version is also excellent, with impressive lip-matching dialog,
 lyrics, lyric rhyming, and singing. The voice actor for Gwi-ma is low-voiced and
@@ -1828,4 +1846,3 @@ contact for additional assets, etc. Given #link("https://typst.app/")[the right
 
 Initial draft completed.
 
-//  LocalWords:  uroboros
