@@ -455,7 +455,9 @@ of regret is still raw after 400 years.
 Jinu shows us that people can have conflicting motivations and follow through on
 each simultaneously. During the Signing, their "Date", and then again at the
 reveal of his betryal, Jinu didn't have to tell Rumi anything about his true
-thoughts and motivations, but he did. This was perhaps some form of plea.
+thoughts and motivations, but he did. He wanted to be understood.
+
+// TODO: Get a few frames later in "I left them!"
 
 #grid(
   columns: (1fr, 1fr),
@@ -470,22 +472,30 @@ thoughts and motivations, but he did. This was perhaps some form of plea.
   ),
 )
 
-// Image: That's right, I lied to you!
-// Image: A hunter who's part demon...
-
 Recall too that after their first fight in the bathhouse, he was genuinely
 curious about her as he strolled the alleyway.
 
+// TODO Who did Neumann say was a victim of this?
 
 Mythologically, Jinu serves two roles. Firstly he is a victim of matriarchal
-castration, like the Greek king Oedipus. As with patriarchal castration, he is
-cut off from everything that makes one great, now a slave to the Great Mother.
-Instead of rising too high, he has fallen too low. In seeking to erase his
-memories, he is attempting to complete the castration. Secondly, he is the
-#link(<captive>)[Captive], the prisoner of the Dragon to be rescued by the Hero.
+castration. As with patriarchal castration, he is cut off from everything that
+makes one great, now a slave to the Great Mother. Instead of rising too high, he
+has fallen too low. In seeking to erase his memories, he is attempting to
+complete the castration. Secondly, he is the #link(<captive>)[Captive], the
+prisoner of the Dragon to be rescued by the Hero.
 
-// Image: The memories... I want them erased.
-// Image: Jinu's pattered arm. "Chains".
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("erased.png"),
+    caption: ["The memories... I want them erased." \ "내 기억을 전부 다 지워 줘요."],
+  ),
+  figure(
+    image("chains.png"),
+    caption: [Chains.],
+  ),
+)
 
 Psychologically, Jinu is Rumi's #link(<animus>)[Animus]. To a feminine soul, the
 Animus is the spirit of stability, might, order, and reason. To a masculine
@@ -499,11 +509,18 @@ don't know how to interact. They try to touch but cannot. Jinu leaves her lying
 on the ground and mocks her, while Rumi, recognizing him simply as "something
 from below" then attempts his murder at the first opportunity.
 
-// Image: The head cut.
-
 The fans know better.
 
-// Image: Rujinu shirt.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("headcut.png"),
+  ),
+  figure(
+    image("rujinu.png"),
+  ),
+)
 
 == Rumi (The Hero)
 
