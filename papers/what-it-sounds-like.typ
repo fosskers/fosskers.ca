@@ -501,8 +501,8 @@ Psychologically, Jinu is Rumi's #link(<animus>)[Animus]. To a feminine soul, the
 Animus is the spirit of stability, might, order, and reason. To a masculine
 soul, the #link(<anima>)[Anima] is the spirit of creation, connection, change,
 and emotion. We are born with both energies, but one side is inevitably pushed
-down into a position as an Authority, although its voice often goes unheard,
-smothered by various internal forces. It is lonely, and it is waiting for you.
+down into a position as an Authority and its voice often goes unheard, smothered
+by various internal forces. It is lonely, and it is waiting for you.
 
 Rumi has an instant connection with Jinu, but as long-estranged Ego/Animus they
 don't know how to interact. They try to touch but cannot. Jinu leaves her lying
@@ -514,6 +514,13 @@ The fans know better.
 #grid(
   columns: (1fr, 1fr),
   rows: auto,
+  figure(
+    image("jinu-reaching.png"),
+  ),
+  figure(
+    image("rumi-reaching.png"),
+  ),
+
   figure(
     image("headcut.png"),
   ),
@@ -532,28 +539,59 @@ The fans know better.
 Rumi is a half-demon through her father, but she has always rejected that part
 of herself. She believes that the Goldening of the Honmoon will result in her
 purification, allowing her to finally live as "the girl they all see". This is
-despite that fact that a Golden Honmoon has never been achieved before, thus no
-living Hunter can predict its effects. Following our psychological thinking
-thusfar, it is not unreasonable to assume that the Golden Honmoon would instead
-kill Rumi.
+despite the fact that a Golden Honmoon has never been achieved before, thus no
+living Hunter can predict its full effects. Following our psychological thinking
+thusfar, we should assume that the Golden Honmoon would instead kill Rumi. Every
+time they saw a flash of gold, Rumi was inches from death.
 
-// Image: Maybe they'll understand?
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("maybe-theyll-understand.png"),
+    caption: ["Maybe they'll understand?" \ "말해도 되지 않을까요?"],
+  ),
+  figure(
+    image("rumi-running.png"),
+    caption: [Fleeing the concert.],
+  ),
+)
 
-Rumi is a liar. She lies to protect herself because she is afraid of exposure
-and deep rejection. Her long sleeves and turtlenecks represent this materially.
-In the lyrics of _Golden_ she laments this surface-level
-#link(<persona>)[Persona] she must show everyone.
+Rumi is a liar. She lies to protect herself and is terrified of exposure and
+deep rejection. Her long sleeves and turtlenecks represent this materially. In
+the lyrics of _Golden_ she laments this surface-level #link(<persona>)[Persona]
+she must show everyone.
 
-// Running from the Golden debut.
-// Lying to Mira.
-// Gaslighting Mira.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("rumi-lying.png"),
+    caption: ["I'm not keeping anything from you." \ "나 너한테 숨기는 거 없어."],
+  ),
+  figure(
+    image("insecurities.png"),
+    caption: ["Not everything is about your insecurities, Mira!" \ "모든 걸 다 네 콤플렉스랑 연결 지으려고 하지 마!"],
+  ),
+)
 
 But at the same time we know she is capable of great acts of love and
 compassion. Like with Jinu, people aren't just one thing.
 
-// Image: Extending the bracelet to Jinu.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("listen-to-those-voices.png"),
+    caption: [Encouragement.],
+  ),
+  figure(
+    image("bracelet.png"),
+    caption: [Hope.],
+  ),
+)
 
-Mythologically, Rumi is a nascent Hero-Consciousness who is losing the "fight"
+Mythologically, Rumi is a nascent Hero-Consciousness who is losing the fight
 with the underforces - the Great Mother. Her patterns spreading and the loss of
 her voice are signs of her downward slide. She has not yet faced the Dragon
 directly, and is instead trying to avoid that conflict by removing it. However,
