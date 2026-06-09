@@ -22,6 +22,11 @@
 
 // TODO: Put a logo here.
 
+// Potential subtitles:
+//
+// Of Myth and Psychology in KPop Demon Hunters
+// The Three Layers of KPop Demon Hunters
+
 #outline(title: [Table of Contents])
 
 = Preface
@@ -457,8 +462,6 @@ each simultaneously. During the Signing, their "Date", and then again at the
 reveal of his betryal, Jinu didn't have to tell Rumi anything about his true
 thoughts and motivations, but he did. He wanted to be understood.
 
-// TODO: Get a few frames later in "I left them!"
-
 #grid(
   columns: (1fr, 1fr),
   rows: auto,
@@ -476,6 +479,8 @@ Recall too that after their first fight in the bathhouse, he was genuinely
 curious about her as he strolled the alleyway.
 
 // TODO Who did Neumann say was a victim of this?
+//
+// Couldn't find it under "matriarchal castration".
 
 Mythologically, Jinu serves two roles. Firstly he is a victim of matriarchal
 castration. As with patriarchal castration, he is cut off from everything that
@@ -575,8 +580,8 @@ she must show everyone.
   ),
 )
 
-But at the same time we know she is capable of great acts of love and
-compassion. Like with Jinu, people aren't just one thing.
+At the same time we know she is capable of acts of love and compassion that
+cross "enemy lines". Like with Jinu, people aren't just one thing.
 
 #grid(
   columns: (1fr, 1fr),
@@ -607,7 +612,10 @@ this is precisely the opposite of what achieving a Golden Honmoon would mean, as
 that represents a complete separation of the Conscious and Unconscious minds,
 something that would undoubtedly be fatal. Still, she tries.
 
-// Image: We could be free.
+#figure(
+  image("we-could-be-free.png"),
+  caption: [We could be free.],
+)
 
 = Timeline
 
@@ -618,17 +626,35 @@ KPop Demon Hunters takes place in the spring of 2025, in the same timeline that
 we live in. We know this because:
 
 1. The citizens of Seoul are confused whether it's jacket weather or t-shirt weather.
-2. Twice's song _Strategy_, which came out in December 2024, is #2 under Huntrix's _How it's Done_.
+2. Twice's song _Strategy_, released in December 2024, is \#2 under Huntrix's _How It's Done_.
 3. The cell phones have 2020s size, shape, and UI layout.
 4. North Korea is dark at night.
 
-// Images: One for each bullet point.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("tshirt.png"),
+  ),
+  figure(
+    image("twice2.png"),
+  ),
+
+  figure(
+    image("bobby-phone.png"),
+  ),
+  figure(
+    image("north-korea.png"),
+  ),
+)
+
+
 
 The movie spans two time blocks: before and after the initial, failed Golden
 concert. The length of the first block depends on how long it would take Korea's
-top girl group to book and prepare the Olympic Stadium in Seoul. Mira hints that
-with their influence, this could be at minimum only a few days, but perhaps a
-week or longer is more realistic.
+top pop group to book and prepare the Olympic Stadium in Seoul after Rumi
+released _Golden_. Mira hints that with their influence, this could be at
+minimum only a few days, but perhaps a week or longer is more realistic.
 
 The second block is clearer, as we are given two direct hints. The first is a
 quote from Mira after Rumi admits her problem: "Okay, we have two weeks to fix
@@ -641,21 +667,49 @@ it follows common mythological development stages.
 
 == The Alley
 
-// Image: the Saja boys in a line. Hair flip.
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("saja-alley.png"),
+  ),
+  figure(
+    image("heart-kisses.png"),
+  ),
+)
+
 
 Demons are attractive, albeit in a cheap way. They want to pull you down into
 their collective, feeding you to Gwi-ma (the Unconscious). This is precisely the
 message of _Soda Pop_ and _Your Idol_. When captured, you lose some important
-piece of yourself. Rumi has lots of practice "fighting demons", so she isn't
-immediately fooled by this.
+piece of yourself. Rumi has a lifetime of practice "fighting demons", so she
+isn't immediately fooled by this.
 
-// Image: Mira/Zoey heart eyes / Rumi staring at them in disbelief.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("heart-eyes.png"),
+  ),
+  figure(
+    image("rumi-disbelief.png"),
+  ),
+)
 
 Jinu however is different. He appears wreathed in a halo and Rumi is instantly
 struck. The Ego and Animus have reunited.
 
-// Image: Halo.
-// Image: Rumi's jaw drop.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("jinu-halo.png"),
+  ),
+  figure(
+    image("rumi-jaw-drop.png"),
+  ),
+)
 
 It is short-lived. Presumably Jinu knows exactly who the Hunters are, so his
 rejection of Rumi here is purposeful. Especially after it's clear to the Hunters
@@ -669,8 +723,18 @@ This series of scenes serves to crack through that wall for the audience too,
 and make Jinu into more than just a Demon. At the gameshow we see the first hint
 of Jinu's playfulness, yet there is still some malice in his actions.
 
-// Image: ...play games with us!
-// Image: The Demon smiles.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("play-games-with-us.png"),
+    caption: ["Play games with us!" \ "우리랑 놀자!"],
+  ),
+  figure(
+    image("demon-smiles.png"),
+    caption: [Snake eyes.],
+  ),
+)
 
 Especially after Jinu's puddle slip and hall giggling, on my first viewing I
 found myself thrown off. Jinu had been disarmed. He was not simply an implacable
@@ -678,7 +742,6 @@ enemy with a one-dimensional, evil nature, which to the chagrin of the audience
 makes him harder to hate.
 
 // Image: Giggling Jinu.
-
 // Image: ...you're strong!
 
 Rumi's upper hand in their scuffle is more evidence that her strength and
@@ -1793,9 +1856,10 @@ Languages which dubbed their songs:
 
 No.
 
-=== Is Gwi-ma dead or just banished?
+=== Is Gwi-ma dead now?
 
-Banished. You can't kill the Unconscious, nor would you want to, because:
+Prefer "tamed" or "relegated to his proper place". You can't kill the
+Unconscious, nor would you want to, because:
 
 // p389
 #quote[
@@ -1812,7 +1876,8 @@ Gwi-ma was desperate precisely because the Hunters were trying to shut him away 
 
 === Are Romance and Baby still alive?
 
-Probably not.
+Unlike Abby and Mystery we weren't shown them dying, but revenge plots from
+these remaining two wouldn't make for a compelling sequel. I assume they're gone.
 
 === When did the Saja Boys set the trap in the bathhouse?
 
@@ -1837,7 +1902,8 @@ there are other magical traps or barriers around their home that prevent
 assassination.
 
 Counter: Derpy does a Honmoon-crossing right in Rumi's bedroom. But perhaps he
-can only do this because he's a "spirit creature" and not a demon.
+can only do this because he's a "spirit creature" and not a demon, or because
+she willingly let him in.
 
 The bathhouse trap shows us that the Saja Boys did actually want the Hunters
 dead, but they must have felt that ambushing them in public would have
@@ -1848,10 +1914,10 @@ compromised their greater goal of sabotaging the entire Honmoon.
 The beauty is that it doesn't matter if they didn't. Recall the claim made in
 the beginning of the article; that as humanity matured, we projected the growth
 of our consciousness as images into our myths and legends. These kinds of
-stories are fundamental to us, and we've been naturally retelling them for
-thousands of years with different characters and settings, and we've never
-gotten bored. Does that lessen the achievement of the writers? Not at all. And
-perhaps they're fans of Jung after all.
+stories are fundamental to us. We've been naturally retelling them for thousands
+of years with different characters and settings, and we've never gotten bored.
+Does that lessen the achievement of the writers? Not at all. And perhaps they're
+fans of Jung after all.
 
 === Who was Erich Neumann?
 
