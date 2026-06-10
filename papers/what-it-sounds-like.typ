@@ -562,10 +562,10 @@ time they saw a flash of gold, Rumi was inches from death.
   ),
 )
 
-Rumi is a liar. She lies to protect herself and is terrified of exposure and
-deep rejection. Her long sleeves and turtlenecks represent this materially. In
-the lyrics of _Golden_ she laments this surface-level #link(<persona>)[Persona]
-she must show everyone.
+Rumi is a liar. She lies to protect herself because she is terrified of exposure
+and deep rejection. Her long sleeves and turtlenecks represent this materially.
+In the lyrics of _Golden_ she laments this surface-level
+#link(<persona>)[Persona] she must show everyone.
 
 #grid(
   columns: (1fr, 1fr),
@@ -601,20 +601,22 @@ with the underforces - the Great Mother. Her patterns spreading and the loss of
 her voice are signs of her downward slide. She has not yet faced the Dragon
 directly, and is instead trying to avoid that conflict by removing it. However,
 the harder she pushes away from the underworld, the tighter its grip on her
-becomes. Naturally this tension also stresses the Honmoon itself.
+becomes. Naturally this tension also stresses the Honmoon itself, letting
+through more and more demons.
 
 Psychologically, Rumi is a human being who has not yet achieved what the
 literature calls #link(<centroversion>)[Centroversion]. This is something of a
-superior form of either intro- or extroversion alone; it is a balanced mind in
-which the forces of the Ego, Authorities, and Unconscious are in creative
-harmony. A healthy mind naturally seeks this state, and it should be clear that
-this is precisely the opposite of what achieving a Golden Honmoon would mean, as
-that represents a complete separation of the Conscious and Unconscious minds,
+superior form of either #link(<introversion>)[intro-] or
+#link(<extroversion>)[extroversion] alone; it is a balanced mind in which the
+forces of the Ego, Authorities, and Unconscious are in creative harmony. A
+healthy mind naturally seeks this state, and it should be clear that this is
+precisely the opposite of what achieving a Golden Honmoon would mean, as that
+represents a complete separation of the Conscious and Unconscious minds,
 something that would undoubtedly be fatal. Still, she tries.
 
 #figure(
   image("we-could-be-free.png"),
-  caption: [We could be free.],
+  caption: ["We could be free."],
 )
 
 = Timeline
@@ -677,18 +679,7 @@ it follows common mythological development stages.
   figure(
     image("heart-kisses.png"),
   ),
-)
 
-
-Demons are attractive, albeit in a cheap way. They want to pull you down into
-their collective, feeding you to Gwi-ma (the Unconscious). This is precisely the
-message of _Soda Pop_ and _Your Idol_. When captured, you lose some important
-piece of yourself. Rumi has a lifetime of practice "fighting demons", so she
-isn't immediately fooled by this.
-
-#grid(
-  columns: (1fr, 1fr),
-  rows: auto,
   figure(
     image("heart-eyes.png"),
   ),
@@ -696,6 +687,13 @@ isn't immediately fooled by this.
     image("rumi-disbelief.png"),
   ),
 )
+
+
+Demons are attractive, albeit in a cheap way. They want to pull you down into
+their collective, feeding you to Gwi-ma (the Unconscious). This is precisely the
+message of _Soda Pop_ and _Your Idol_. When captured, you lose some important
+piece of yourself. Rumi has a lifetime of practice "fighting demons", so she
+isn't immediately deceived.
 
 Jinu however is different. He appears wreathed in a halo and Rumi is instantly
 struck. The Ego and Animus have reunited.
@@ -741,8 +739,16 @@ found myself thrown off. Jinu had been disarmed. He was not simply an implacable
 enemy with a one-dimensional, evil nature, which to the chagrin of the audience
 makes him harder to hate.
 
-// Image: Giggling Jinu.
-// Image: ...you're strong!
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("puddle-slip.png"),
+  ),
+  figure(
+    image("sword-to-neck.png"),
+  ),
+)
 
 Rumi's upper hand in their scuffle is more evidence that her strength and
 abilities are not only the product of hard work. By this point we already knew
@@ -751,14 +757,22 @@ we see him legitimately curious about her as he strolls the alleyway. He's not
 worried per se, but this is an element to the situation that he had not
 expected.
 
-// Image: The hug.
-// Image: The whispers. "The Ear Demon". Jinu's expression.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("hug.png"),
+    caption: [Contact.],
+  ),
+  figure(
+    image("not-a-compliment.png"),
+    caption: [Not a compliment.],
+  ),
+)
 
 Back in the underworld, Gwi-ma praises Jinu, which Jinu subtly rejects. While
 mostly fallen, Jinu is still what Neumann would call a "Struggler" against the
 Great Mother.
-
-// "I've taught you well, Jinu." <- not a compliment
 
 == The Talk
 
@@ -1548,6 +1562,12 @@ pleasurable because it is a release of tension, the dropping of the weight of
 your reality. Sleep and dreaming are miniature varieties of this, although
 seemingly critical for our health.
 
+#u[Extroversion] <extroversion> The tendency of a person to explore the outer
+world of people, places, and things.
+
+#u[Introversion] <introversion> The tendency of a person to explore the inner
+world of the soul.
+
 #u[Persona] <persona> The "you" that you build to interface well enough with
 society. A _"workable and successful sham personality"._
 
@@ -1893,6 +1913,10 @@ reveal themselves. After both parties come face to face in the bathhouse, we hea
 
 The Boys dashed in there on a whim, and so must have the ability to summon other
 demons at will in order to have trapped the Hunters as they did.
+
+=== How did Jinu tie Rumi's arm band?
+
+Demon magic.
 
 === If the Saja Boys knew where the Hunters live, why didn't they attack them while asleep?
 
