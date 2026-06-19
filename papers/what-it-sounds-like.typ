@@ -32,9 +32,9 @@
 = Preface
 
 KPop Demon Hunters is memorable for more than its music. It is a telling of the
-Hero's Story, and beneath the surface it has little to do with Kpop or idols. It
-follows humanity's beloved plot pattern of threat, adventure, doubt, collapse,
-rebirth, and final victory.
+Hero's Story, and beneath the surface it has little to do with K-pop or idols.
+It follows humanity's beloved plot pattern of threat, adventure, doubt,
+collapse, rebirth, and final victory.
 
 The book #u[The Origins and History of Consciousness] by Erich Neumann (1949)
 describes the growth of individual #link(<consciousness>)[consciousness] within
@@ -145,6 +145,7 @@ In the context of the #link(<dragon-fight>)[Hero's final challenge], Gwi-ma is
 #link(<dragon>)[The Dragon] which must be overcome.
 
 // TODO: Have four in a grid?
+// TODO: Add a Yin-yang, and maybe the Korean flag.
 
 #grid(
   columns: (1fr, 1fr),
@@ -362,7 +363,7 @@ victim's body.
 
 Despite this, above the Honmoon they are surprisingly frail. Most, even the Saja
 Boys, disintegrate from a single strike of a Honmoon weapon. Nor are all demons
-unambiguously evil; Jinu and Rumi's father being a testament to this. All humans
+unambiguously evil; Rumi's father and Jinu being a testament to this. All humans
 seem to be able to see demons - they don't have an invisible spirit form;
 although this doesn't explain the old man in the bathhouse.
 
@@ -1003,31 +1004,40 @@ to accept the Shadow and reconcile with the Animus.
 
 == Breakup (The Idol Awards)
 
-When Bobby declares "the Saja Boys are fighting", it is unclear what is really
-behind this, but the outcome is the same. Huntrix performs first, and Jinu's
-plan is put into action.
+When Bobby declares that "the Saja Boys are fighting", it is unclear what is
+really behind this, but the outcome is the same. Huntrix performs first, and
+Jinu's plan is put into action.
 
 // Image: "You're a demon!"
 // Image: A scared animal.
 
-Rumi is completely exposed. The world knows her secret, or so she believes. The
-audience likely doesn't realize what they're seeing, but Mira and Zoey certainly
-do.
+#quote[
+
+  So sweet, so easy on the eyes, but hideous on the inside. \
+  Whole life spreading lies, but you can't hide, baby, nice try. \
+  ... \
+  'Cause I see your real face, and it's ugly as sin. \
+  Time to put you in your place, 'cause you're rotten within.
+
+]
+
+Fake Mira and fake Zoey sing the _Takedown_ lyrics, now directed toward Rumi
+herself. They tear off her long sleeves - her lies - and she is completely
+exposed. The world knows her secret, or so she believes. The audience likely
+doesn't realize what they're seeing, but the real Mira and Zoey certainly do.
 
 // Image: Shock at seeing Rumi's patterns.
+// Image: I can still fix it!
 
 Mira and Zoey are mental support structures for Rumi, similar to Authorities.
 Backstage the two confront her, and we see the Ego's insistence on independence
 and control, despite having been deeply disturbed by an attack from the
-Unconscious.
-
-// Image: I can still fix it!
-
-Gwi-ma's searching influence has found cracks into Mira and Zoey, and the three
-are briefly enemies. The Hero has lost allies - Centralized Consciousness is
-dissolving.
+Unconscious. Gwi-ma's searching influence has found cracks into Mira and Zoey,
+and the three are briefly enemies. The Hero has lost allies - Centralized
+Consciousness is dissolving.
 
 // Image: Mira raising her weapon.
+// Image: Rumi's pained expression.
 
 == Betrayal (Backstage)
 
@@ -1039,8 +1049,8 @@ The brief hope he held during _Free_ has been smothered, and the Captive has
 given up. In this moment he believes will never escape bondage, so his only
 recourse is at least to forget the pain of his #link(<conscience>)[conscience].
 Yet why wait for her backstage? To twist the knife a final time and complete the
-destruction of the Hero along with himself, but also to plead. Jinu is not gone
-entirely.
+destruction of the Hero along with himself perhaps, but also to plead. Jinu is
+not gone entirely.
 
 // Image: "This is just your demon talking. You have to fight it!" --> "That's not how it works!"  --> "Yes it is!"
 
@@ -1048,9 +1058,10 @@ Both Jinu and Rumi were wrong about how to handle their demons. Jinu's answer
 was despair and wallowing. Rumi's was endless resistance, a strategy she grew up
 believing. She is shocked to realize her futility.
 
+// Image: Rumi, shocked.
 // Image: Honmoon tearing.
 
-The Honmoon is tearing along her footsteps as the Honmoon is a part of Rumi
+The Honmoon tears along her footsteps because the Honmoon is a part of Rumi
 herself. Recall that it is her own fundamental mental framework, her set of
 filters, basic assumptions, habits, and expectations.
 
@@ -1061,63 +1072,51 @@ Before it unravels entirely, there is one person left to turn to.
 Seline is the Honmoon in human form, an emissary of the Spirit Father. From
 Rumi's perspective, Seline is the source of the message of culture and
 expectation. This is demonstrated by her carriage but also her speech. In the
-English audio, but even more so in the Korean, Seline speaks quite formally and
+English audio, and even more so in the Korean, Seline speaks formally and
 firmly, not at all like a source of warmth and compassion one might expect of a
 mother figure. We could say this is due to her long years of worldly
 responsibility, or simply that she is herself the Honmoon. Seline's existence
 itself thus denies Rumi her independent Consciousness.
 
+// Image: "Rumi?"
 // Image: "I ran out of time."
 
-We don't know exactly where this tree is, but presumably Rumi teleported here.
-We can only imagine what transpired in her mind between her parting with Jinu
-and this moment. Perhaps four hours pass between the opening of the Idol Awards
-(20:00?) and the start of _Your Idol_ at Namsan Tower (midnight). During those
-four hours we only see Rumi go one place - the Spirit Tree. What else was she
-doing?
+We don't know exactly where this tree is, but presumably Rumi teleported here
+with Demon magic. We can only imagine what transpired in her mind between her
+parting with Jinu and this moment. Perhaps four hours pass between the opening
+of the Idol Awards (20:00?) and the start of _Your Idol_ at Namsan Tower
+(midnight). During those four hours we only see Rumi go one place - the Spirit
+Tree. What else was she doing?
 
 Wherever she went and whatever she did, her conclusion was suicide. Like Jinu
 before her, Rumi now attempts to complete her own castration by offering herself
-as a sacrifice to her mission. "...before I destroy what I swore to protect".
+as a sacrifice to her mission. "...before I destroy what I swore to protect."
 Her mission is the Honmoon is Seline. Yet the mother essence reappears here and
 Seline's two representations conflict - she is both too loving to accept Rumi's
 sacrifice, but not loving enough to release her from her duty.
 
 // Image: Seline can't bring her self to touch Rumi's face.
+// Image: "We can still hide it."
+// Image: Rumi incredulous.
 // Image: "Why couldn't you love me?"
-// Image: "It's the only way to protect the Honmoon!"
 
-Rumi realizes what the problem was, and just as she throws off Seline's sweater
-we are reminded of a core duty of the Hero: the renewal of the world. To renew,
-one must first undo. Critically though, such undoing is not an act solely of
-destruction from a place of hatred and bitterness. Recall this from the Hunter's
-Mantra:
+The contradiction opens Rumi's eyes. Just as she throws off Seline's sweater we
+are reminded of a core duty of the Hero: the renewal of the world. To renew, one
+must first undo. Rumi abandons the old mission, welcoming the destruction of the
+Honmoon. Likewise to renew the mind, dead wood - old habits - must be cast
+adrift. Rumi teleports away in full acceptance of her nature. Without the
+psychological context we have been discussing thusfar, it seems to the viewer
+that Rumi has "given in" and is lost.
 
-// TODO: Also mention later how even in a renewed world, you still need a
-// Honmoon! You still need some structure to order your reality.
-
-#quote[
-
-  Fix the world and make it right
-  When darkness finally meets the light.
-
-]
-
-"Meet" could mean "to meet in battle", but also "to contact" or "to bond with".
-
-// TODO: Perhaps move this whole section about the mantra to after Rumi appears in the stadium.
-
-// TODO: Quote the book and mention how the "throwing off of the old" is
-// precisely the duty of the Hero.
+// // TODO: Also mention later how even in a renewed world, you still need a
+// // Honmoon! You still need some structure to order your reality.
 
 // Image: Rumi's demonic moment.
-
-Rumi freely teleports away, now in acceptance of her nature. This moment chilled
-me. It seemed like Rumi was lost, and I honestly did not know what would happen.
 
 == Communion (Your Idol)
 
 // Image: Initial smiling demons easter egg.
+// Image: The second easter egg.
 
 Midnight at Namsan Tower.
 
@@ -1129,17 +1128,18 @@ toast but Jinu, the tragic Captive-Animus?
 The people of Seoul are here because they have been ensnared by a something, and
 that something has seduced them with a call very difficult for a human to
 resist: "Come home." While not as hive-minded as ants, we are not solitary cats
-either, and the urge to belong can degrade into a preconscious desire to desolve
-individual identity into a mass of oneness, a never-beginning and never-ending
-togetherness in the embrace of the Great Mother. Yet this is precisely the
-opposite direction of Conscious Civilization. The achievement of independent
-greatness is what the Great Mother - if unchecked by Hero Consciousness - always
-seeks to prevent. But where is Rumi?
+either, and the urge to belong can degrade into a preconscious desire to
+dissolve individual identity into a mass of oneness, a never-beginning and
+never-ending togetherness in the embrace of the Great Mother. Yet this is
+precisely the opposite direction of Conscious Civilization. The achievement of
+independent greatness is what the Great Mother - if unchecked by Hero
+Consciousness - always seeks to prevent. But where is Rumi?
 
 To say that _Your Idol_ is about the perils of boy band worship is to miss the
 deeper warning; that the danger is in the loss of self itself.
 
 // TODO: Be creepy here with the quotes.
+// TODO: Replace these blocks with quoted images.
 #quote[
   Keeping you in check, keeping you obsessed.
 ]
@@ -1158,18 +1158,16 @@ ancient enemies the arthropods.
   I will make you free when you're all a part of me.
 ]
 
-// Crucifixion imagery, undermining the notion of "savior". Their legs are
-// crossed over just like Jesus is depicted!
-
 Arms wide with legs crossed, rising to the sky. The symbol of Jesus as a saviour
 is most obviously invoked here, although perverted, and salvation is not the
 realization of personal freedom but the collapse of the self into a mass.
-Neumann calls this phenomenon "Recollectivization" and names it a chief threat
-to humanity. We have witnessed numerous outbreaks over the previous century, and
-in our own time the internet acts as an accelerant to this seemingly natural
-tendency to want to "go back to sleep". The only antidote is Consciousness.
+Neumann calls this phenomenon #link(<recollectivization>)[Recollectivization]
+and names it a chief threat to humanity. We have witnessed numerous outbreaks
+over the previous century, and in our own time the internet acts as an
+accelerant to this seemingly natural tendency to seek mental slumber. The only
+antidote is Consciousness.
 
-She's almost here. Before we welcome her, there is one last thing to notice.
+She's almost here. There is one last thing to notice.
 
 // Image: JINU IS WEARING THE BRACELET!
 
@@ -1177,100 +1175,128 @@ Jinu is wearing the bracelet.
 
 == Rebirth (The Dragon Fight)
 
-// TODO Talk more about the Honmoon being destroyed by this point?
+// TODO: Mention somewhere (probably earlier) that the people of Seoul represent
+// aspects of the Conscious mind. Humans being eaten or Demons being killed -
+// this is attrition war between the Conscious and Unconscious minds.
+
+The Honmoon has been torn back, and the Unconscious is bursting through its
+restraints into the rest of the mind. The people of Seoul, the denizens of the
+Conscious, will be devoured. Only insanity waits beyond.
+
+Until the Ego appears.
+
+// Image: Rumi standing at the entrance. "A human being."
+
+To renew, the Hero must undo. But such undoing is not merely an act of hateful
+destruction. Recall the Hunter's Mantra:
+
+#quote[
+
+  We are hunters, voices strong \
+  Slaying demons with our song \
+  Fix the world and make it right \
+  When darkness finally meets the light.
+
+]
+
+"Meet" can mean "to meet in battle", but also "to contact" or "to bond with" as
+encompassed by the Hanja 合. The Mantra isn't describing a renewal of the world
+after the defeat of darkness, but rather its assimilation. It says "Fix the
+world when you have become yourself." Rumi is moments away from this state.
 
 // Image: You come here like this?
 
-// TODO: Confirm.
 #quote[
 
-  G: You come here like this? You want to fix the world - but you can't even fix yourself.
-  R: I can't.
-  G: And now the whole world sees you for what you truly are.
-  R: They do.
-  G: And the Honmoon is gone.
+  G: You come here like this? You think you can fix the world - you can't even fix yourself. \
+  R: I can't. \
+  G: And now everyone finally sees you for what you really are. \
+  R: They do. \
+  G: And the Honmoon is gone. \
   R: It is.
 
 ]
 
 _You come here like this?_ Imagine that after your centuries of scheming that
 your nemesis appears for the final battle broken down and toothless. You come
-here like this? What did you hope to accomplish? Why did you even come? Now
-imagine the other side - Rumi's position. After decades of your own effort and
-centuries of struggle by your predecessors you appear at the war's climax as
-nothing but your ragged self. Just you.
+here like this? What did you hope to accomplish? Now imagine the other side -
+Rumi's position. After decades of your own effort and centuries of struggle by
+your predecessors you appear at the war's climax as nothing but your ragged
+self. Just you.
 
 _You come here like this?_
 
-Yes. And that's enough. Thus begins the Greatest song of the film.
-
-// The Dragon is confident in his victory. Meanwhile, Rumi is finally admitting the
-// truth to herself and everyone else, although in this moment she seems in a
-// trance, defeated, and lost to us. Then begins the Greatest song of the film.
+Yes, and that's enough. Thus begins the Greatest song of the film.
 
 _What It Sounds Like_ is not the Greatest song because it's the catchiest or
 most immediately memorable. It isn't. It's the Greatest because it's the song
 they couldn't write. They couldn't write it because they hadn't been ready to
 tell the truth until now. It's the only song of the entire set that has real
-lyrical content that isn't perverted by the influence of the Honmoon or their
-insecurities. The song to "win the idol awards" was never going to be _Golden_
-or _Takedown_. "The song we couldn't write - this is what it sounds like." It's
-what they had been searching for the entire time, and now that they've found it,
-look at how they smile!
+lyrical content that isn't perverted by the influence of the Honmoon-Mission or
+their insecurities. The song to "win the idol awards" was never going to be
+_Golden_ or _Takedown_. "The song we couldn't write - this is what it sounds
+like." It's what they had been searching for the entire time, and now that
+they've found it, look at how they smile!
 
 // Image: All smiles.
 
 The song opens with Rumi's patterns changing colour. She has integrated the
-Shadow. Her voice and her apology revive her friends, they harmonize and
-recentralize. The Ego has reunitied itself, but Gwi-ma unleashes his demons at
+Shadow. Her voice and her apology revive her friends, they harmonize, and
+recentralize. The Ego has reunitied itself, but Gwi-ma unleashes his Demons at
 the trio and then pours his Dragon Fire directly at Rumi.
 
 // Image: Gwi-ma shooting Dragon Fire at her.
+// Image: An midevil painting of a hero shielding fire from a dragon.
 
 This is depicted as fire both to fit the Dragon image, but also to the notion
 that the Unconscious - as the Great Mother - is the source of creation and
 creative energy. Fire is used often in mythological imagery to depict this
 power, and like fire it can burn the wielder. This is where in our culture we
-receive the motif of the "tortured artist"; it's precisely the fire of creation
+receive the motif of the "tortured artist"; it is precisely the fire of creation
 that acts as fuel for both their work and their insanity.
 
 Here too it seems that the Unconscious will overwhelm the Conscious and consume
 Rumi, until the Animus finally rises to action and achieves a Hero sacrifice of
 his own.
 
-// Image: "I wanted to set you free." -- "You already did."
+// Image: "I wanted to set you free." -- "You did."
 
 Jinu's dissolution into a soul gift and Rumi's acceptance of it is the
 long-awaited unification of the Ego and the Animus. Final contact with her
 masculine Animus has granted her his energy as might, which manifests as a
 sword.
 
-// TODO Name it in Korean.
-// Image: The Sword - "Unity".
+// Image: The Sword - "Unity". 통일
 // Image: Split Gwi-ma.
 
 Rumi splits Gwi-ma. The Conscious mind is precisely that which divides and
 reconstructs. This is akin to Adam's naming of the animals in Genesis and the
-nature of the Scientific Method overall.
+nature of the Scientific Method overall. To name, to define, is what humanity
+does to order our world. To forget, to undefine, to soften, to blur - this is
+the opposite power. Too much of either is death. The Hero is that which stands
+in between these poles.
 
 // Image: Running. "Awakening".
 
-The song returns to the chorus and the audience joins in. Finally unified, Rumi
-achieves Centroversion and begins to fly. Mira and Zoey join her to form the
-seed of a new Honmoon, the new social order, the new mental framework.
+The song returns to the chorus and the audience adds their voices. This is the
+Conscious mind finally unified in purpose. Rumi has achieved Centroversion and
+begins to fly. Mira and Zoey join her to form the seed of a new Honmoon, the new
+social order, the new mental framework.
 
 // Image: "The Honmoon Seed".
 
 Gwi-ma is blown away, resubjugated to the combined strength of centralized
 Consciousness.
 
-The shot of the final line of the song was made the album cover of the movie's
-soundtrack because this moment is what the entire film was about. It was the
-outcome we couldn't have guessed, the song they couldn't write.
+This shot of the final line of the song was made into the album cover of the
+movie's soundtrack because this moment is what the entire film was about. It was
+the outcome we couldn't have guessed, the song they couldn't write.
 
 // Image: The final line.
 
-Behold, human beings.
+Human beings.
+
+// TODO: Discuss the lyrics more?
 
 = Afterword
 
@@ -1281,12 +1307,13 @@ member sang _Golden_ at a karaoke night. I somehow then stumbled upon the movie
 trailer on Youtube, then perhaps the lyric videos of _Golden_, _Soda Pop_, _How
 it's Done_, and _Takedown_. By then I was hooked, but wisely left a few songs
 untouched, realizing that I had to watch the movie properly before an upcoming
-trip to Thailand. A few nights before the trip I signed up for Netflix and
-watched it, and it blew me away. I watched it again several times during the
-trip, going back and forth over the songs and scenes, and the content of this
-article welled up naturally. I took copious notes in a strange preoccupation. I
-write these exact sentences at 3:30 in the morning, having woken up with a
-realization about a clever rhyming pattern in Jinu's lyrics within _Free_.
+trip to Thailand or it would bother me. A few nights before the trip I signed up
+for Netflix and watched it, and it blew me away. I watched it again several
+times during the trip, going back and forth over the songs and scenes, and the
+content of this article welled up naturally. I took copious notes in a strange
+preoccupation. I write these exact sentences at 3:30 in the morning, having
+woken up with a realization about a clever rhyming pattern in Jinu's lyrics
+within _Free_.
 
 // TODO: Show the rhyming pattern in a footnote.
 //
@@ -1698,12 +1725,22 @@ T-shirt Guy's SNS handle is MrDaveBleich. Did you notice his Gwi-ma shirt?
 // Image: His handle.
 // Image: His shirt.
 
-The only surviving demon of the _How it's Done_ crash had "An Ji-hu" (안지후) on
-his name tag.
+Two of the demon flight attendants also had recognizable nametags.
 
-// Image: Demon nametag.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("flight-attendant.png"),
+    caption: [Kim Su-Nyeong - 김수녕],
+  ),
+  figure(
+    image("anjihu.png"),
+    caption: [An Ji-hu - 안지후],
+  ),
+)
 
-// TODO: Female demon flight attendant.
+Ms. Kim is the poor soul who was later roasted by Gwi-ma for their failure.
 
 === Pronunciation of Names
 
