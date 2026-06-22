@@ -962,7 +962,7 @@ place.
 
 At first I only felt it, a kind of gap that couldn't be seen but whose hidden
 gravitational pull tugged at me as I rewatched these scenes. Immediately after
-their date, we are shown:
+their Date, we are shown:
 
 1. People complaining on social media.
 2. Rumi appearing at the Olympic Stadium in the same clothes we just saw her in.
@@ -979,8 +979,8 @@ voice recover, and when did the spark of love ignite? I see these possibilities:
 
 1. "Disney pacing". Love is often accelerated in these movies for plot purposes.
 2. _The Signing_, as a turning point, was enough to begin the healing.
-Immediately afterward is the confrontation by Mira, where Rumi "sounds good".
-_The Date_, though ended awkwardly, was enough for love.
+  Immediately afterward is the confrontation by Mira, where Rumi "sounds good".
+  _The Date_, though ended awkwardly, was enough for love.
 3. Rumi and Jinu met again off-screen and had a deep conversion.
 
 (3) is my chosen interpretation. The first thing that bothered me was this line
@@ -993,7 +993,7 @@ from Rumi before the duet:
 
 ]
 
-"The more I talk to you"? We're only shown three conversations between them,
+The more I talk to you? We're only shown three conversations between them,
 totaling mere minutes. The second clue is these lines from _Free_ itself:
 
 #quote[
@@ -1023,9 +1023,9 @@ The third clue is from the Betrayal:
 
 #quote[
 
-  J: It was all a lie.
-  R: It was real, what we had was real, I know it was!
-  J: The things I said, I just needed you to trust me.
+  J: It was all a lie. \
+  R: It was real, what we had was real, I know it was! \
+  J: The things I said, I just needed you to trust me. \
   R: No, no!
 
 ]
@@ -1035,29 +1035,36 @@ relationship, but as-is these expressions are hard to reconcile without "Disney
 pacing". The awkward parting after their Date is not enough to justify the
 affection during _Free_. Hence I propose that either:
 
-a. One of them immediately turned back to catch the other.
-b. They met again on another day.
+1. One of them immediately turned back to catch the other.
+2. They met again on another day.
 
-Upon which they talked deeply for hours about their lives. Let us establish that
-the Date we're shown occurred in the evening, and that the _Takedown_ / Train
-scenes happened in the morning, either the next day or some days later. All
-three scenes have ambiguous, pinkish lighting, but the Train scene seems
-brighter overall than the rehearsal, implying an early morning session. We know
-that the Idol Awards "are tomorrow", and that _Free_ occurs that same night, so
-it seems impossible that Rumi could have gone from the Date we're shown directly
-to the _Takedown_ rehearsal scene. This is our window: Rumi and Jinu met again.
+// TODO: Rethink the first line below.
+
+Upon which they had the kind of real conversation that makes one think "now
+_that_ was a first date". Let us establish that the Date we're shown occurred in
+the evening, and that the _Takedown_ / Train scenes happened in the morning,
+either the next day or some days later. All three scenes have ambiguous, pinkish
+lighting, but the Train scene seems brighter overall than the rehearsal,
+implying an early morning session. We know that the Idol Awards "are tomorrow",
+and that _Free_ occurs that same night, so it seems impossible that Rumi could
+have gone from the Date we're shown directly to the _Takedown_ rehearsal scene.
+This is our window: Rumi and Jinu met again.
 
 Reasons not to believe this:
 
 1. During the Idol Awards, the demons only mocked her with the exact line she
-said to Jinu: "You're a mistake, you have been since the moment you were born." If they had talked more,
-there should have been more ammunition.
+  said to Jinu: "You're a mistake, you have been since the moment you were born." If Rumi and Jinu had talked more,
+  there should have been more ammunition.
 2. If you disagree about the day-night cycles of the Date/Train/Free scenes.
 3. Gwi-ma only tormented Jinu after _Free_ about sticking to the plan. Since Gwi-ma can see everything Jinu
-does, there should have been more retribution.
+  does, there should have been more retribution.
 4. If you think it's significant that Rumi is shown in the same clothing during
-the Date and _Free_. The Date would have had to occur very early in the morning,
-but if so, what was the auntie doing selling bracelets to strangers at 5 a.m.?
+  the Date and _Free_. The Date would have had to occur very early in the morning,
+  and if so, what was the auntie doing selling bracelets to strangers at 5 a.m.?
+
+Finally, let it be pointed out that notions of romantic love and dating only
+make sense within the top-level story and perhaps the Mythological layer, but
+not at the Psychological one.
 
 == Free
 
@@ -1852,13 +1859,13 @@ Likewise, Zoey's name is pronounced _Cho-i_ because there is no _Z_ sound in
 Korean. And if it wasn't clear, in this entire article I've written Gwi-ma's
 name in the official way with a _G_, but in head position a similar effect
 occurs, and it is in reality _Kwi-ma_ when spoken and _Ki-ma_ when being lazy
-with the intermediate _W_, which happens often in similar words.
+with the intermediate _W_, which happens often in similar words like 괜찮아.
 
 === The Ear Demon
 
 Gwi-ma (귀마) probably means "ear demon". There is some play on words here. The
 word used for devil / Satan in Korean is 마귀 (Ma-gwi), but the word for Demons
-in general within the movie is 악귀 (悪鬼 - ak-kwi). Here we see the
+in general within the movie is 악귀 (悪鬼 - Ak-kwi). Here we see the
 Chinese-style reading of 귀 to mean Demon in these compound words, while 귀 on
 its own as a native Korean word just means "ear". There is a nod to this in the
 English version, during Rumi's assassination attempt on Jinu.
@@ -1867,7 +1874,7 @@ English version, during Rumi's assassination attempt on Jinu.
 
 === The Joseon Dynasty
 
-Guys, if your crush tries to kill you, just be persistent.
+Gentlemen, if your sweetheart tries to kill you, just be persistent.
 
 During their Date scene when Jinu complains of Rumi being late, she calls him
 old-fashioned by retorting with "What are you, from the 19th century?" In the
@@ -2041,8 +2048,8 @@ reveal themselves. After both parties come face to face in the bathhouse, we hea
 
 // TODO Confirm
 #quote[
-  J: I can't believe you actually followed us in here.
-  A: I told you they would.
+  Jinu: I can't believe you actually followed us in here. \
+  Abby: I told you they would.
 ]
 
 The Boys dashed in there on a whim, and so must have the ability to summon other
