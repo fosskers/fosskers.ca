@@ -109,19 +109,25 @@ of every person and within our wider societies.
 // are looking _down_ upon the stage? It's as if they're peering through the
 // Honmoon into the real world, if they're right "beside" it.
 
-// Image: Demons have always haunted our world.
-
 Gwi-ma is ancient, but beaten down and starving in the modern day. It seems he
 can see through the Honmoon to some degree but he is not omniscient. He knows
 what a boyband is, but he was not aware of Rumi's patterns until Jinu himself
 found out.
 
-#figure(
-  image("let-me-guess.png"),
-  caption: [
-    "Let me guess... they got away again." \
-    "맞혀 볼까? 놈들을 또 놓쳤나?"
-  ],
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("haunted-our-world.png"),
+    caption: ["Demons have always haunted our world." \ "악귀들은 언제나 우리 세상을 탐했어."],
+  ),
+  figure(
+    image("let-me-guess.png"),
+    caption: [
+      "Let me guess... they got away again." \
+      "맞혀 볼까? 놈들을 또 놓쳤나?"
+    ],
+  ),
 )
 
 He can physically drag demons through the air and rip them down from above the
@@ -259,8 +265,8 @@ careers, they take pleasure in dealing out punishment to demons.
 The Hunters, and more specifically Rumi, represent the Conscious Mind, although
 one still developing. They go about their appointed mission, doing violence to
 elements of the Unconscious of which they have no understanding. If it's from
-"down there", it's to be hated, punished, and pushed back down. The Spirit
-Father demands it.
+"down there", it's to be hated, punished, and pushed back down. The
+#link(<father>)[Spirit Father] demands it.
 
 == The Honmoon (The Spirit Father)
 
@@ -777,7 +783,21 @@ Great Mother.
 
 == The Talk
 
-// Image: "I just want to talk." -> "Talk!?"
+Accepting Jinu's sudden invitation, Rumi follows Derpy through the nighttime
+streets of Seoul. She tries to kill Jinu, but he saw it coming.
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("talk.png"),
+    caption: ["Talk?" \ "얘기?"],
+  ),
+  figure(
+    image("those-pants.png"),
+    caption: [Those pants.],
+  ),
+)
 
 Jinu is still following the plan, and in this scene is being entirely
 manipulative. We can hear it in the tone of his voice and notice it from his
@@ -791,14 +811,29 @@ conversation tactics:
 6. Maximize frustration by effortlessly evading attacks and parting on your own terms.
 
 It works, of course; she tosses the pants as soon as she's home. The pants are a
-proxy for Jinu himself and her confused frustration toward him.
+proxy for Jinu himself and her confusion toward him.
 
 Psychologically there is one action of note here: the Animus reaching out to the
 Ego and saying "you need me". She also allowed the contact. Yet neither is
 really ready.
 
-// Image: Jinu touching her collar.
-// Image: There won't be a next time!
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("collar-touch.png"),
+  ),
+  figure(
+    image("wont-be-a-next-time.png"),
+  ),
+
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 5pt,
+    )["There won't be a next time!" \ "다음 좋아하시네!"]),
+  ),
+)
 
 == The Signing
 
@@ -808,48 +843,105 @@ that the two groups sit together, a plan which backfires on both. Here Rumi
 learns precisely why Jinu is helping Gwi-ma, Jinu in turn learns that he might
 have another choice, and we learn that Jinu can feel physical pain.
 
-// Image: Foot stamp.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("foot-stamp.png"),
+  ),
+  figure(
+    image("woo-jinu.png"),
+  ),
+)
 
 Rumi's anger soon fades, and what appears as mocking is instead an example of
 her mercy.
 
-// Image: Maybe listen to those voices instead...
-// Image: Jinu, everybody!
-
 Psychologically, we can view this scene as the elements of the Unconscious
 distracting the function of our daily lives. The Unconscious parts of our minds
-have their own priorities, often contrary to our Ego's benefit, and will push us
-to pursue them.
+have their own priorities and will push us to pursue them, often contrary to our
+Ego's benefit.
 
-// Image: No, I'll sign first! (Fighting for priority)
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("barking.png"),
+  ),
+  figure(
+    image("ill-sign-first.png"),
+  ),
 
-Critically though, the Ego and Animus have had a turning point in their
-relationship.
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 3pt,
+    )[Demons getting in the way.]),
+  ),
+)
+
+Critically, the Ego and Animus have had a turning point in their relationship
+here.
 
 == The Date
 
-// Image: Sleeping Derpy.
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("sleepy-derpy.png"),
+  ),
+  figure(
+    image("crossed-lyrics.png"),
+  ),
+)
+
 
 Some time has passed. Jinu's pets are comfortably in Rumi's room, and it's
 probably not the first time. She crosses out aggressive song lyrics and a plan
 is forming in her mind. After being contronted by Mira for her recent behaviour,
 Rumi moves decisively to meet with Jinu.
 
-// Image: Her surprise and her facial expression. Now it's her being playful.
-// Image: Date? No. Eww!
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("rumi-surprise.png"),
+    caption: [Being playful.],
+  ),
+  figure(
+    image("i-am-a-mistake.png"),
+    caption: ["I am a mistake." \ "난 존재 자체가 실수야."],
+  ),
+)
 
 Rumi reveals not only her plan, but also her weakness: her own opinion of
 herself. Jinu catches this and acts on it afterwards, but his words and
 reactions to her later in this scene are genuine.
 
-// Image: The bracelet briefly on her wrist.
+#figure(
+  image("briefly-on-her-wrist.png"),
+  caption: [Rumi with the bracelet on.],
+)
 
-The bracelet represents their repaired connection. It's a loop for the same
-reason that a wedding ring is. She didn't just give it to him, she put it on
-once very briefly.
+The bracelet represents their connection. It's a loop for the same reason that a
+wedding ring and the Uroboros are. To christen it, so to speak, she didn't just
+give it to him but put it on once very briefly.
 
-// Image: I don't think you're a mistake.
-// Image: Walking away awkwardly.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("i-dont-think-youre-a-mistake.png"),
+    caption: ["I don't think you're a mistake." \
+      "난 네 존재가 실수라고 생각 안 해."],
+  ),
+  figure(
+    image("okay-bye.png"),
+    caption: ["Okay bye." \ "나 간다."],
+  ),
+)
 
 At the awkward "Bye" moment, we know this is Jinu's honest reaction. She had
 already turned away and couldn't see him. He didn't walk away with the smirk and
@@ -860,6 +952,11 @@ Mythologically, we see a problem immediately. The Hero has told the Captive "you
 can run away, you can free yourself". While still fleeing from the core conflict
 herself, she has at least gifted him the seed of his eventual freedom during the
 Climax.
+
+Psychologically, it's clear that to tell the Animus, a part of the Unconscious
+mind, that "you'll be fine on your own" is ridiculous. Strong as the Ego may be,
+it was just such a disconnected state that lead to these problems in the first
+place.
 
 == The Mystery
 
