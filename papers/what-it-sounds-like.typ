@@ -984,7 +984,7 @@ voice recover, and when did the spark of love ignite? I see these possibilities:
 3. Rumi and Jinu met again off-screen and had a deep conversion.
 
 (3) is my chosen interpretation. The first thing that bothered me was this line
-from Rumi before the duet:
+from Rumi before the _Free_ duet:
 
 #quote[
 
@@ -998,24 +998,24 @@ totaling mere minutes. The second clue is these lines from _Free_ itself:
 
 #quote[
 
-  Here with you I can finally breathe,
-  You say you're no good,
-  but you're good for me.
-  I've been hoping to change,
-  now I know we can change.
-  But I won't if you're not by my side.
+  Here with you I can finally breathe, \
+  You say you're no good, \
+  but you're good for me. \
+  I've been hoping to change, \
+  now I know we can change. \
+  But I won't if you're not by my side. \
 
-  Why does it feel right
-  every time I let you in?
-  Why does it feel like
-  I can tell you anything?
+  Why does it feel right \
+  every time I let you in? \
+  Why does it feel like \
+  I can tell you anything? \
 
 ]
 
 and during Jinu's rap:
 
 #quote[
-  It's just easy when I'm with you,
+  It's just easy when I'm with you, \
   no one sees me the way you do.
 ]
 
@@ -1031,24 +1031,27 @@ The third clue is from the Betrayal:
 ]
 
 It is possible to feel this way about another person even early in a
-relationship, but as-is these expressions are hard to reconcile without "Disney
-pacing". The awkward parting after their Date is not enough to justify the
-affection during _Free_. Hence I propose that either:
+relationship, but as-is expressions like "what we had" are hard to reconcile
+without "Disney pacing". The awkward parting after their Date is not enough to
+justify the affection during _Free_. Hence I propose that after they walked
+away, either:
 
 1. One of them immediately turned back to catch the other.
 2. They met again on another day.
 
 // TODO: Rethink the first line below.
 
-Upon which they had the kind of real conversation that makes one think "now
-_that_ was a first date". Let us establish that the Date we're shown occurred in
-the evening, and that the _Takedown_ / Train scenes happened in the morning,
-either the next day or some days later. All three scenes have ambiguous, pinkish
-lighting, but the Train scene seems brighter overall than the rehearsal,
-implying an early morning session. We know that the Idol Awards "are tomorrow",
-and that _Free_ occurs that same night, so it seems impossible that Rumi could
-have gone from the Date we're shown directly to the _Takedown_ rehearsal scene.
-This is our window: Rumi and Jinu met again.
+Upon which they had one of those rare, real conversations that sparks a genuine
+connection.
+
+Let us establish that the Date we're shown occurred in the evening, and that the
+_Takedown_ / Train scenes happened in the morning, either the next day or some
+days later. All three scenes have ambiguous, pinkish lighting, but the Train
+scene seems brighter overall than the rehearsal, implying an early morning
+session. We know that the Idol Awards "are tomorrow", and that _Free_ occurs
+that same night, so it seems impossible that Rumi could have gone from the Date
+we're shown directly to the _Takedown_ rehearsal scene. This is our window: Rumi
+and Jinu met again.
 
 Reasons not to believe this:
 
@@ -1064,21 +1067,49 @@ Reasons not to believe this:
 
 Finally, let it be pointed out that notions of romantic love and dating only
 make sense within the top-level story and perhaps the Mythological layer, but
-not at the Psychological one.
+not at the Psychological one. The Anima / Animus are indeed targets of love, but
+more familial.
 
 == Free
 
-// Image: Jinu lost in regret.
-// Image: Derpy snapping him out of his reverie.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("jinu-regret.png"),
+  ),
+  figure(
+    image("jinu-abandons-family.png"),
+  ),
+)
 
 This duet scene is the seal on their relationship, and generally proves that
 Jinu is not evil outright. We see:
 
 1. Him actively in regret before Rumi even arrives.
 2. His window reflection matching his words.
-3. The Honmoon reacting to his footsteps.
+3. The Honmoon reacting to his footsteps and voice.
 4. A love bond blocking Gwi-ma's voice.
 5. Jinu bracing himself for the inevitable encounter.
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("jinu-window.png"),
+  ),
+  figure(
+    image("jinu-honmoon-step.png"),
+  ),
+
+  figure(
+    image("i-dont-hear-his-voice.png"),
+  ),
+  figure(
+    image("jinu-steeled.png"),
+  ),
+)
+
 
 Mythologically, the two have made progress, although it is still misguided. The
 invitation has morphed from "you can run away" to "we can run away together".
@@ -1087,17 +1118,25 @@ truth that Gwi-ma reminds Jinu of immediately upon his return to the underworld.
 The Captive has to be earned.
 
 Psychologically, the Ego and Animus really see each other now, although the
-Unconscious is loathe to permit any further integration of the Animus.
+Unconscious is loathe to permit any further integration.
 
-// Image: The window images of Jinu.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("you-thought-you-could-be-free.png"),
+  ),
+  figure(
+    image("thats-funny.png"),
+  ),
 
-// The Monmoon reacting to Jinu's singing.
-//
-// Gwima's voice can't get through to Jinu.
-// When the patterns come back, he's resentful and steels himself for the coming encounter.
-// Image: Jinu bracing himself.
-
-// Image: Yeah... that's funny.
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 3pt,
+    )["Yeah, that's... that's funny." \ "네, 뭐, 재밌네요."]),
+  ),
+)
 
 = The Climax
 
@@ -1112,8 +1151,18 @@ When Bobby declares that "the Saja Boys are fighting", it is unclear what is
 really behind this, but the outcome is the same. Huntrix performs first, and
 Jinu's plan is put into action.
 
-// Image: "You're a demon!"
-// Image: A scared animal.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("youre-a-demon.png"),
+    caption: ["You're a demon." \ "넌 악귀야."],
+  ),
+  figure(
+    image("scared-animal.png"),
+    caption: [A scared animal.],
+  ),
+)
 
 #quote[
 
@@ -1130,8 +1179,16 @@ herself. They tear off her long sleeves - her lies - and she is completely
 exposed. The world knows her secret, or so she believes. The audience likely
 doesn't realize what they're seeing, but the real Mira and Zoey certainly do.
 
-// Image: Shock at seeing Rumi's patterns.
-// Image: I can still fix it!
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("shock.png"),
+  ),
+  figure(
+    image("can-still-fix-it.png"),
+  ),
+)
 
 Mira and Zoey are mental support structures for Rumi, similar to Authorities.
 Backstage the two confront her, and we see the Ego's insistence on independence
