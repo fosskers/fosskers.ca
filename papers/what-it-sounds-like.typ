@@ -1145,7 +1145,7 @@ abyss, break down, and rebirth. To defeat the Dragon, Rumi must join forces with
 her inner Demon and rescue the Captive. To achieve Consciousness, she must come
 to accept the Shadow and reconcile with the Animus.
 
-== Breakup (The Idol Awards)
+== Dissolution (The Idol Awards)
 
 When Bobby declares that "the Saja Boys are fighting", it is unclear what is
 really behind this, but the outcome is the same. Huntrix performs first, and
@@ -1170,14 +1170,17 @@ Jinu's plan is put into action.
   Whole life spreading lies, but you can't hide, baby, nice try. \
   ... \
   'Cause I see your real face, and it's ugly as sin. \
-  Time to put you in your place, 'cause you're rotten within.
+  Time to put you in your place, 'cause you're rotten within. \
+  When your patterns start to show \
+  It makes the hatred wanna grow outta my veins.
 
 ]
 
 Fake Mira and fake Zoey sing the _Takedown_ lyrics, now directed toward Rumi
 herself. They tear off her long sleeves - her lies - and she is completely
-exposed. The world knows her secret, or so she believes. The audience likely
-doesn't realize what they're seeing, but the real Mira and Zoey certainly do.
+exposed. The world knows her secret, or so she believes. The concert audience
+likely doesn't realize what they're seeing, but the real Mira and Zoey certainly
+do.
 
 #grid(
   columns: (1fr, 1fr),
@@ -1190,19 +1193,58 @@ doesn't realize what they're seeing, but the real Mira and Zoey certainly do.
   ),
 )
 
-Mira and Zoey are mental support structures for Rumi, similar to Authorities.
-Backstage the two confront her, and we see the Ego's insistence on independence
-and control, despite having been deeply disturbed by an attack from the
-Unconscious. Gwi-ma's searching influence has found cracks into Mira and Zoey,
-and the three are briefly enemies. The Hero has lost allies - Centralized
-Consciousness is dissolving.
+If only considering the Psychological level, the surface story "isn't really
+happening" and is merely a vehicle by which to describe evolutions within the
+mind of an individual human we've been calling "Rumi". In this sense, Mira and
+Zoey are mainly mental support structures for her, similar to Authorities, and
+this is why we aren't shown much about them throughout the film. Backstage the
+two confront her, and we see the Ego's insistence on independence and control,
+despite having been deeply disturbed by an attack from the Unconscious. Gwi-ma's
+searching influence has found cracks into Mira and Zoey, and the three are
+briefly enemies. The Hero has lost allies - Centralized Consciousness is
+dissolving. "Backstage" may itself be a metaphor for lonliness, solitude, sleep,
+or even purgatory. Is it not odd that there is no one else back here, when
+moments ago these halls were flooded with workers?
 
-// Image: Mira raising her weapon.
-// Image: Rumi's pained expression.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("weapon-raised.png"),
+  ),
+  figure(
+    image("rumi-sad.png"),
+  ),
+
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 3pt,
+    )[Insanity is not far away.]),
+  ),
+)
 
 == Betrayal (Backstage)
 
-// Image: How could you do this?
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("say-you-didnt-do-this.png"),
+  ),
+  figure(
+    image("how-could-you-do-this.png"),
+  ),
+
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 3pt,
+    )["How could you do this?" \ "네가 어떻게 이래!"]),
+  ),
+)
+
 
 Why did Jinu do it? In this instance of the endless variations of the Hero's
 Journey, the Dragon has tried a new trick: turning the Captive against the Hero.
@@ -1227,6 +1269,10 @@ herself. Recall that it is her own fundamental mental framework, her set of
 filters, basic assumptions, habits, and expectations.
 
 Before it unravels entirely, there is one person left to turn to.
+
+// TODO Mention perhaps somewhere the notion of "undefinition". That by
+// unravelling you become too undefined, and a human mind can't handle that. But
+// also does it suffer from overdefinition and rigidity.
 
 == Sacrifice (The Tree)
 
@@ -1363,7 +1409,8 @@ destruction. Recall the Hunter's Mantra:
 "Meet" can mean "to meet in battle", but also "to contact" or "to bond with" as
 encompassed by the Hanja 合. The Mantra isn't describing a renewal of the world
 after the defeat of darkness, but rather its assimilation. It says "Fix the
-world when you have become yourself." Rumi is moments away from this state.
+world when you have become yourself." Rumi is moments away from this state, and
+fortunately Gwi-ma misunderstands.
 
 // Image: You come here like this?
 
@@ -1392,12 +1439,12 @@ Yes, and that's enough. Thus begins the Greatest song of the film.
 _What It Sounds Like_ is not the Greatest song because it's the catchiest or
 most immediately memorable. It isn't. It's the Greatest because it's the song
 they couldn't write. They couldn't write it because they hadn't been ready to
-tell the truth until now. It's the only song of the entire set that has real
-lyrical content that isn't perverted by the influence of the Honmoon-Mission or
-their insecurities. The song to "win the idol awards" was never going to be
-_Golden_ or _Takedown_. "The song we couldn't write - this is what it sounds
-like." It's what they had been searching for the entire time, and now that
-they've found it, look at how they smile!
+tell the truth. It's the only song of the entire set that has real lyrical
+content that isn't perverted by the influence of the Honmoon-Mission or their
+insecurities. The song to "win the idol awards" was never going to be _Golden_
+or _Takedown_. "The song we couldn't write - this is what it sounds like." It's
+what they had been searching for the entire time, and now that they've found it,
+look at how happy they are!
 
 // Image: All smiles.
 
@@ -1435,7 +1482,7 @@ reconstructs. This is akin to Adam's naming of the animals in Genesis and the
 nature of the Scientific Method overall. To name, to define, is what humanity
 does to order our world. To forget, to undefine, to soften, to blur - this is
 the opposite power. Too much of either is death. The Hero is that which stands
-in between these poles.
+in between these poles and holds the world together.
 
 // Image: Running. "Awakening".
 
@@ -1455,7 +1502,7 @@ the outcome we couldn't have guessed, the song they couldn't write.
 
 // Image: The final line.
 
-Human beings.
+It was never about K-pop and monsters. It was about Human Beings.
 
 // TODO: Discuss the lyrics more?
 
