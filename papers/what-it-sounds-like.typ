@@ -2066,29 +2066,45 @@ condemns as negative values."_ Within the movie, these are the Demons.
 
 === The Huntrix Penthouse
 
-The building they live in exists. It's called _Lotte World Tower_ and it's the
-tallest building in Korea. The closest one can get to where their living room
-would be is the tower's highest publicly accessible floor, the 123 Lounge.
+The building that the Hunters live in exists. It's called _Lotte World Tower_
+and it's the tallest building in Korea. The closest one can get to where their
+living room would be is the tower's highest publicly accessible floor, the 123
+Lounge.
 
-// Image: My shot of their living room.
-// Quote: "Try the cheesecake."
-// Image: Their penthouse above the Lounge.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("lounge123.png"),
+    caption: [Try the cheesecake.],
+  ),
+  figure(
+    image("penthouse.png"),
+    caption: [Image faces SW - Main window faces north.],
+  ),
+)
 
 However their penthouse appears even higher than where the Lounge is, which on
-the real building is just scaffolding.
+the real building is just scaffolding. Note also that the Lounge window faces
+west, while their main window faces north. Otherwise a number of shots we're
+shown don't make sense.
 
-There are also some inconsistencies with the view we're shown from their window.
-The angle to Namsan Tower isn't quite right, and where we'd normally see the Han
-River we instead see cityscape. This isn't a problem if we simply assume that
-their window faces north instead of west as in the real Lounge and observation
-decks.
-
-// Image: Shots we're shown in the movie.
-// Image: "Why" scene. Rumi on her knees on top of the tower, facing north.
-
-// However the angle to Namsan tower isn't quite right, making it seem closer to
-// the JW Marriot Hotel, or perhaps between Banpo station and Jam-won station.
-// You can see what appears to be the Hannam bridge from their window.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("north-of-river.png"),
+  ),
+  figure(
+    image("north-of-river-2.png"),
+  ),
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 5pt,
+    )[North. Namsan Tower is visible while Han River isn't.]),
+  ),
+)
 
 === Concert Venues
 
@@ -2098,32 +2114,54 @@ Tower and to the above-water subway line we're shown during the _Takedown_
 fight, which runs between Cheongdam Station (청담역) and Jayang Station
 (자양역).
 
-// Image: My photo of Olympic stadium from above.
-// Image: Scene of them jumping from the plane with the stadium clearly right beside the river.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("stadium.png"),
+  ),
+  figure(
+    image("stadium-by-river.png"),
+  ),
+)
 
 However as Rumi flees the Golden concert she is shown running past the Olympic
 Stadium, heading home. There is no large television studio nearby, so did she
 sprint across the city?
 
-// Image: Rumi running.
+#figure(image("running-by-stadium.png"))
 
 After failing to save the train passengers, the station that the Hunters get off
-at (자양역) is somewhat darker in reality than what we're shown.
+at (Jayang - 자양역) is somewhat darker in reality than what we're shown. The
+station name in the movie is 섬유원지 (Island Amusement Park), and there is a
+small facility on the river bank among a kilometer of public park land.
 
-// Image: Metro station.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("bright-station.png"),
+  ),
+  figure(
+    image("dark-station.png"),
+  ),
+)
 
 Finally, after the Idol Awards people are shown shuffling into the city streets
 with a direct view of Namsan Tower. These locations are across the city from
 each other and so no direct view exists nearby, but a similar view can be seen
 from City Hall.
 
-// Image: view of Namsan Tower through the streets at night.
+#figure(image("tower-from-city-hall.png"))
 
 Speaking of Namsan Tower, the movie shows a giant stadium up there, but of
 course no such complex exists, and the peak of the mountain is far too small for
 that. Locals often walk the various routes to the tower on a nice day.
 
-// Image: the rest area by Namsan Tower.
+#figure(
+  image("namsan-rest-area.png"),
+  caption: [Rest area at the peak.],
+)
 
 === Date Locations
 
