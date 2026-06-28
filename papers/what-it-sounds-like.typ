@@ -221,21 +221,6 @@ a similar ignorance with regards to Derpy the Tiger.
   ),
 )
 
-// TODO: 2026-05-30 Decide if I want a Derpy pic here too. But then I need a
-// final one to form a grid. If I do, then make it two separate grids. I single
-// one makes the caption text too cramped.
-
-// Image: "Do you not hear him in your ear?" -> "What are you talking about?"
-// -- Jinu is honestly taken aback by this exchange.
-//
-// Image: What are you?
-
-// What does this mean psychologically?
-//
-// "They are things in your unconscious that you didn't know were there."
-// "We are largely unaware of the layout and function of our unconscious minds."
-// The conscious mind can do violence against the elements of the unconscious.
-
 The weight of this increases when we realize that by this point in their Hunter
 careers, they take pleasure in dealing out punishment to demons.
 
@@ -1353,7 +1338,7 @@ protect." Her mission is the Honmoon is Seline. Yet the mother essence reappears
 here and Seline's two representations conflict - she is both too loving to
 accept Rumi's sacrifice, but not loving enough to release her from her duty.
 Moreover she is repulsed by Rumi, unable to touch her or even look straight at
-her.
+her. The old abhors the new.
 
 #grid(
   columns: (1fr, 1fr),
@@ -1375,14 +1360,13 @@ her.
 )
 
 What is an individual to do when realizing that the system around you both
-coddles you and denies you? The contradiction opens Rumi's eyes. Just as she
-throws off Seline's sweater we are reminded of a core duty of the Hero: the
-renewal of the world. To renew, one must first undo. Rumi abandons the old
-mission, welcoming the destruction of the Honmoon. Likewise to renew the mind,
-dead wood - old habits - must be cast adrift. Rumi teleports away in full
-acceptance of her nature. However, without the psychological context we have
-been discussing thusfar, it seems to the viewer that Rumi has "given in" and is
-lost.
+coddles and denies you? The contradiction opens Rumi's eyes. Just as she throws
+off Seline's sweater we are reminded of a core duty of the Hero: the renewal of
+the world. To renew, one must first undo. Rumi abandons the old mission,
+welcoming the destruction of the Honmoon. Likewise to renew the mind, dead wood
+-- old habits -- must be cast adrift. Rumi teleports away in full acceptance of
+her nature. However, without the psychological context we have been discussing
+thusfar, it seems to the viewer that Rumi has given in and is lost.
 
 // // TODO: Also mention later how even in a renewed world, you still need a
 // // Honmoon! You still need some structure to order your reality.
@@ -1448,11 +1432,11 @@ constituent parts, the individuals. The Great Mother loves you in a way, but not
 you for you. She is happy to see you die, or to kill you herself, and have you
 rejoin the endless natural cycle of death and rebirth. The Unconscious doesn't
 need the Conscious, is somewhat annoyed by it, and gets along just fine without
-it in the rest of animalia. The force of Entropy in the universe seeks to smooth
-out higher structure and complexity, such structure in an "uncaring" universe
-seems superfluous to begin with, and yet at every level we see some counter
-force inevitably fighting back. Life within the universe. Individuals within
-society. Consciousness within the mind.
+it in the rest of animalia. Within the universe as a whole, the force of Entropy
+seeks to smooth out higher structure and complexity. Such structure in an
+"uncaring" universe seems superfluous to begin with, and yet at every level we
+see some counter force inevitably fighting back. Life within the universe.
+Individuals within society. Consciousness within the mind.
 
 #figure(
   image("your-idol-demons.png"),
@@ -1476,12 +1460,13 @@ ancient enemies the arthropods.
 
 Arms wide with legs crossed, rising to the sky. The symbol of Jesus as a saviour
 is most obviously invoked here, although perverted, and salvation is not the
-realization of personal freedom but the collapse of the self into a mass.
-Neumann calls this phenomenon #link(<recollectivization>)[Recollectivization]
-and names it a chief threat to humanity. It is mental entropy at the societal
-level. We have witnessed numerous outbreaks over the previous century, and in
-our own time the internet acts as an accelerant to this seemingly natural
-tendency to seek mental slumber. The only antidote is Consciousness.
+realization of personal freedom but the collapse of the self into a mass. This
+is the aim of the concert. Neumann calls this phenomenon
+#link(<recollectivization>)[Recollectivization] and names it a chief threat to
+humanity. It is mental entropy at the societal level. We have witnessed numerous
+outbreaks over the previous century, and in our own time the internet acts as an
+accelerant to this seemingly natural tendency to seek mental slumber. The only
+antidote is Consciousness.
 
 She's almost here. There is one last thing to notice.
 
@@ -1498,7 +1483,7 @@ She's almost here. There is one last thing to notice.
     colspan: 2,
     align(center, pad(
       top: 5pt,
-    )[Look closely - Jinu is wearing the bracelet.]),
+    )[Jinu is wearing the bracelet.]),
   ),
 )
 
@@ -1568,10 +1553,10 @@ fortunately Gwi-ma misunderstands.
 ]
 
 Imagine that after your centuries of scheming that your nemesis appears for the
-final battle broken down and toothless. _You come here like this?_ Now imagine
-the other side - Rumi's position. After decades of your own effort and centuries
-of struggle by your predecessors you appear at the war's climax as nothing but
-your ragged self. Just you. _You come here like this?_
+final battle broken down and toothless. _You come here like this?_ Now consider
+Rumi's position. After decades of your own effort and centuries of struggle by
+your predecessors you appear at the war's climax as nothing but your ragged
+self. Just you. _You come here like this?_
 
 Yes, and that's enough. Thus begins the Greatest song of the film.
 
@@ -1628,9 +1613,6 @@ recentralize. The Ego has restabilized itself.
   ),
 )
 
-// Image: Gwi-ma shooting Dragon Fire at her.
-// Image: An midevil painting of a hero shielding fire from a dragon.
-
 Gwi-ma unleashes his Demons at the trio and then pours his Dragon Fire directly
 at Rumi. This is depicted as fire both to fit the Dragon image, but also to the
 notion that the Unconscious - as the Great Mother - is the source of creation
@@ -1681,15 +1663,16 @@ sword.
   ),
   figure(
     image("gwima-split.png"),
+    caption: [Rumi splits Gwi-ma.],
   ),
 )
 
-Rumi splits Gwi-ma. The Conscious mind is precisely that which divides and
-reconstructs. This is akin to Adam's naming of the animals in Genesis and the
-nature of the Scientific Method overall. To name, to define, is what humanity
-does to order our world. To forget, to undefine, to soften, to blur - this is
-the opposite power. Too much of either is death. The Hero is that which stands
-in between these poles and holds the world together.
+The Conscious mind is precisely that which divides and reconstructs. This is
+akin to Adam's naming of the animals in Genesis and the nature of the Scientific
+Method overall. To name, to define, is what humanity does to order our world. To
+forget, to undefine, to soften, to blur - this is the opposite power. Too much
+of either is death. The Hero is that which stands in between these poles and
+holds the world together.
 
 #figure(
   image("awakening.png"),
@@ -2133,8 +2116,8 @@ sprint across the city?
 
 After failing to save the train passengers, the station that the Hunters get off
 at (Jayang - 자양역) is somewhat darker in reality than what we're shown. The
-station name in the movie is 섬유원지 (Island Amusement Park), and there is a
-small facility on the river bank among a kilometer of public park land.
+station name in the movie is 섬유원지 (Island Amusement Park), and there is such
+a facility for children on the river bank among a kilometer of public park land.
 
 #grid(
   columns: (1fr, 1fr),
@@ -2165,28 +2148,53 @@ that. Locals often walk the various routes to the tower on a nice day.
 
 === Date Locations
 
-// Image: Bukchon.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("free-bukchon.png"),
+  ),
+  figure(
+    image("bukchon.png"),
+  ),
+)
 
 We're shown three "dates", all in real places. The first is at Bukchon (북촌)
 Hanok Village, where Rumi attempts to kill Jinu. The scene transition implies
 that Derpy led her there on foot from Lotte Tower, but navigation apps claim
 it's a four hour walk.
 
-// Image: Screenshot of the Naver route.
-
 The second date is within Naksan Park (낙산공원), along its well-known walled
 walkway.
 
-// Image: "For what it's worth, I don't think you're a mistake."
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("naksan-date.png"),
+  ),
+  figure(
+    image("naksan.png"),
+  ),
+)
 
 And the third, the _Free_ duet, is back in Bukchon.
 
 === Names of Unnamed Characters
 
-T-shirt Guy's SNS handle is MrDaveBleich. Did you notice his Gwi-ma shirt?
+Named "Social Media Fan" in the credits, T-shirt Guy's SNS handle is
+MrDaveBleich. Did you notice his Gwi-ma shirt?
 
-// Image: His handle.
-// Image: His shirt.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("dave-bleich.png"),
+  ),
+  figure(
+    image("gwima-shirt.png"),
+  ),
+)
 
 Two of the demon flight attendants also had recognizable nametags.
 
@@ -2229,7 +2237,18 @@ Chinese-style reading of 귀 to mean Demon in these compound words, while 귀 on
 its own as a native Korean word just means "ear". There is a nod to this in the
 English version, during Rumi's assassination attempt on Jinu.
 
-// Image: Do you not hear him in your ear?
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("do-you-not-hear-him.png"),
+    caption: ["Do you not hear him in your ear?"],
+  ),
+  figure(
+    image("what-are-you-talking-about.png"),
+    caption: ["What are you talking about?"],
+  ),
+)
 
 === The Joseon Dynasty
 
@@ -2239,15 +2258,6 @@ During their Date scene when Jinu complains of Rumi being late, she calls him
 old-fashioned by retorting with "What are you, from the 19th century?" In the
 Korean version she instead accuses him of being a person from the "Joseon
 Dynasty" (조선 시대, 1392-1897), which of course he is.
-
-=== Hidden Frames
-
-There are two "subliminal messaging" frames that reveal the true natures of the
-Saja Boys. The first appears before they announce the Namsan concert. The second
-immediately before _Your Idol_ begins.
-
-// Image: Frame 1.
-// Image: Frame 2.
 
 === Real Songs
 
@@ -2259,14 +2269,25 @@ A number of real K-pop songs are featured throughout the film.
 
 Twice also appears in a poster, and of course during the ending credits.
 
-// Image: The poster.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("twice-poster.png"),
+  ),
+  figure(
+    image("twice-recording.png"),
+  ),
+)
 
 === Tax Evasion
 
 You thought the Saja Boys were bad because they murder the innocent? No - they
 don't even pay their taxes.
 
-// Image: Tax evasion.
+#figure(
+  image("tax-evasion.png"),
+)
 
 === Derpy and Sussie
 
@@ -2274,13 +2295,19 @@ The Tiger and Magpie have names - Derpy and Sussie respectively. Derpy because
 of his moronic grin, and Sussie because of his suspicious glare.
 
 At the very end we see Zoey wearing a Derpy hoodie, so by this point they must
-have been introduced.
+have been introduced. And look what can be found on the path down from Namsan
+tower.
 
-// Image: Derpy hoodie.
-
-And look what can be found on the path down from Namsan tower.
-
-// Image: Wooden Sussie.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("derpy-hoodie.png"),
+  ),
+  figure(
+    image("wooden-sussie.png"),
+  ),
+)
 
 === Non-English Dubs
 
