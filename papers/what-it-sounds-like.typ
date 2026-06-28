@@ -1197,11 +1197,11 @@ If only considering the Psychological level, the surface story "isn't really
 happening" and is merely a vehicle by which to describe evolutions within the
 mind of an individual human we've been calling "Rumi". In this sense, Mira and
 Zoey are mainly mental support structures for her, similar to Authorities, and
-this is why we aren't shown much about them throughout the film. Backstage the
-two confront her, and we see the Ego's insistence on independence and control,
-despite having been deeply disturbed by an attack from the Unconscious. Gwi-ma's
-searching influence has found cracks into Mira and Zoey, and the three are
-briefly enemies. The Hero has lost allies - Centralized Consciousness is
+this is why we aren't shown much about them throughout the film. Backstage now
+the two confront her, and we see the Ego's insistence on independence and
+control, despite having been deeply disturbed by an attack from the Unconscious.
+Gwi-ma's searching influence has found cracks into Mira and Zoey, and the three
+are briefly enemies. The Hero has lost allies - Centralized Consciousness is
 dissolving. "Backstage" may itself be a metaphor for lonliness, solitude, sleep,
 or even purgatory. Is it not odd that there is no one else back here, when
 moments ago these halls were flooded with workers?
@@ -1226,7 +1226,6 @@ moments ago these halls were flooded with workers?
 
 == Betrayal (Backstage)
 
-
 #grid(
   columns: (1fr, 1fr),
   rows: auto,
@@ -1249,26 +1248,55 @@ moments ago these halls were flooded with workers?
 Why did Jinu do it? In this instance of the endless variations of the Hero's
 Journey, the Dragon has tried a new trick: turning the Captive against the Hero.
 The brief hope he held during _Free_ has been smothered, and the Captive has
-given up. In this moment he believes will never escape bondage, so his only
+given up. In this moment he believes he will never escape bondage, so his only
 recourse is at least to forget the pain of his #link(<conscience>)[conscience].
 Yet why wait for her backstage? To twist the knife a final time and complete the
 destruction of the Hero along with himself perhaps, but also to plead. Jinu is
 not gone entirely.
 
-// Image: "This is just your demon talking. You have to fight it!" --> "That's not how it works!"  --> "Yes it is!"
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("just-your-demon.png"),
+  ),
+  figure(
+    image("yes-it-is.png"),
+  ),
+
+  // TODO: Fix alignment.
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 3pt,
+    )["This is just your demon talking. You have to fight it!" \
+      "That's not how it works!" \
+      "Yes it is!"]),
+  ),
+)
 
 Both Jinu and Rumi were wrong about how to handle their demons. Jinu's answer
 was despair and wallowing. Rumi's was endless resistance, a strategy she grew up
 believing. She is shocked to realize her futility.
 
-// Image: Rumi, shocked.
-// Image: Honmoon tearing.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("rumi-shocked.png"),
+  ),
+  figure(
+    image("tearing-honmoon.png"),
+  ),
+)
 
 The Honmoon tears along her footsteps because the Honmoon is a part of Rumi
 herself. Recall that it is her own fundamental mental framework, her set of
-filters, basic assumptions, habits, and expectations.
+filters, basic assumptions, habits, and expectations. From here, two paths are
+open to the Hero.  Unravel entirely to die in muted obscurity, or rise back up
+and seize a new reality.
 
-Before it unravels entirely, there is one person left to turn to.
+Rumi choses the former, turning to the one person she has left before the end.
 
 // TODO Mention perhaps somewhere the notion of "undefinition". That by
 // unravelling you become too undefined, and a human mind can't handle that. But
@@ -1282,55 +1310,113 @@ expectation. This is demonstrated by her carriage but also her speech. In the
 English audio, and even more so in the Korean, Seline speaks formally and
 firmly, not at all like a source of warmth and compassion one might expect of a
 mother figure. We could say this is due to her long years of worldly
-responsibility, or simply that she is herself the Honmoon. Seline's existence
-itself thus denies Rumi her independent Consciousness.
+responsibility, or simply that she is herself the Honmoon-Father. Seline's
+existence itself thus denies Rumi her independent Consciousness.
 
-// Image: "Rumi?"
-// Image: "I ran out of time."
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("cover-those-up.png"),
+    caption: ["Cover those up." \ "들키면 안 돼."],
+  ),
+  figure(
+    image("no-rumi.png"),
+    caption: ["No, Rumi." \ "안 돼, 루미."],
+  ),
+)
 
-We don't know exactly where this tree is, but presumably Rumi teleported here
-with Demon magic. We can only imagine what transpired in her mind between her
-parting with Jinu and this moment. Perhaps four hours pass between the opening
-of the Idol Awards (20:00?) and the start of _Your Idol_ at Namsan Tower
+We don't know exactly where this Spirit Tree is, but presumably Rumi teleported
+here with Demon magic. We can only imagine what transpired in her mind between
+her parting with Jinu and this moment. Perhaps four hours pass between the
+opening of the Idol Awards (20:00?) and the start of _Your Idol_ at Namsan Tower
 (midnight). During those four hours we only see Rumi go one place - the Spirit
 Tree. What else was she doing?
 
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("seline-with-sickle.png"),
+    caption: ["Rumi?" \ "루미?"],
+  ),
+  figure(
+    image("ran-out-of-time.png"),
+    caption: ["I ran out of time." \ "그런데 다 끝났어요."],
+  ),
+)
+
 Wherever she went and whatever she did, her conclusion was suicide. Like Jinu
 before her, Rumi now attempts to complete her own castration by offering herself
-as a sacrifice to her mission. "...before I destroy what I swore to protect."
-Her mission is the Honmoon is Seline. Yet the mother essence reappears here and
-Seline's two representations conflict - she is both too loving to accept Rumi's
-sacrifice, but not loving enough to release her from her duty.
+as a sacrifice to her mission and society. "...before I destroy what I swore to
+protect." Her mission is the Honmoon is Seline. Yet the mother essence reappears
+here and Seline's two representations conflict - she is both too loving to
+accept Rumi's sacrifice, but not loving enough to release her from her duty.
+Moreover she is repulsed by Rumi, unable to touch her or even look straight at
+her.
 
-// Image: Seline can't bring her self to touch Rumi's face.
-// Image: "We can still hide it."
-// Image: Rumi incredulous.
-// Image: "Why couldn't you love me?"
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("cant-touch-face.png"),
+  ),
+  figure(
+    image("why-couldnt-you-love-me.png"),
+  ),
 
-The contradiction opens Rumi's eyes. Just as she throws off Seline's sweater we
-are reminded of a core duty of the Hero: the renewal of the world. To renew, one
-must first undo. Rumi abandons the old mission, welcoming the destruction of the
-Honmoon. Likewise to renew the mind, dead wood - old habits - must be cast
-adrift. Rumi teleports away in full acceptance of her nature. Without the
-psychological context we have been discussing thusfar, it seems to the viewer
-that Rumi has "given in" and is lost.
+  // TODO: Fix alignment.
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 5pt,
+    )["Why couldn't you love me?" \ "왜 사랑해 주지 않냐고요!"]),
+  ),
+)
+
+What is an individual to do when realizing that the system around you both
+coddles you and denies you? The contradiction opens Rumi's eyes. Just as she
+throws off Seline's sweater we are reminded of a core duty of the Hero: the
+renewal of the world. To renew, one must first undo. Rumi abandons the old
+mission, welcoming the destruction of the Honmoon. Likewise to renew the mind,
+dead wood - old habits - must be cast adrift. Rumi teleports away in full
+acceptance of her nature. However, without the psychological context we have
+been discussing thusfar, it seems to the viewer that Rumi has "given in" and is
+lost.
 
 // // TODO: Also mention later how even in a renewed world, you still need a
 // // Honmoon! You still need some structure to order your reality.
 
-// Image: Rumi's demonic moment.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("demon-eyes.png"),
+  ),
+  figure(
+    image("shocked-seline.png"),
+  ),
+)
 
 == Communion (Your Idol)
 
-// Image: Initial smiling demons easter egg.
-// Image: The second easter egg.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("saja-hidden-frame.png"),
+  ),
+  figure(
+    image("saja-hidden-frame-2.png"),
+  ),
+)
 
 Midnight at Namsan Tower.
 
 The story and the myth and the psychology are merging. Gwi-ma, the Great
 Mother-Dragon, the Unconscious is here to eat you and fold you back into itself.
 The snake is trying to devour its own tail. And who better to make the opening
-toast but Jinu, the tragic Captive-Animus?
+toast of the meal but Jinu, the tragic Captive-Animus?
 
 The people of Seoul are here because they have been ensnared by a something, and
 that something has seduced them with a call very difficult for a human to
@@ -1342,43 +1428,79 @@ precisely the opposite direction of Conscious Civilization. The achievement of
 independent greatness is what the Great Mother - if unchecked by Hero
 Consciousness - always seeks to prevent. But where is Rumi?
 
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("your-sanctuary.png"),
+    caption: [I can be your sanctuary.],
+  ),
+  figure(
+    image("all-a-part-of-me.png"),
+    caption: [I will make you free when you're all a part of me.],
+  ),
+)
+
 To say that _Your Idol_ is about the perils of boy band worship is to miss the
-deeper warning; that the danger is in the loss of self itself.
+deeper warning; that the danger is in the loss of self itself. Mass movements
+have their own priorities and don't truly care for the welfare of their
+constituent parts, the individuals. The Great Mother loves you in a way, but not
+you for you. She is happy to see you die, or to kill you herself, and have you
+rejoin the endless natural cycle of death and rebirth. The Unconscious doesn't
+need the Conscious, is somewhat annoyed by it, and gets along just fine without
+it in the rest of animalia. The force of Entropy in the universe seeks to smooth
+out higher structure and complexity, such structure in an "uncaring" universe
+seems superfluous to begin with, and yet at every level we see some counter
+force inevitably fighting back. Life within the universe. Individuals within
+society. Consciousness within the mind.
 
-// TODO: Be creepy here with the quotes.
-// TODO: Replace these blocks with quoted images.
-#quote[
-  Keeping you in check, keeping you obsessed.
-]
-
-#quote[
-  I can be your sanctuary.
-]
-
-// Image: Smiling demons during the song.
+#figure(
+  image("your-idol-demons.png"),
+)
 
 This frame is terrifying. It has everything that repels a primate:
 feline-reptilian eyes, fangs, and fingers spread to resemble the legs of our
 ancient enemies the arthropods.
 
-#quote[
-  I will make you free when you're all a part of me.
-]
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("jesus.png"),
+  ),
+  figure(
+    image("jesus-2.png"),
+  ),
+)
+
 
 Arms wide with legs crossed, rising to the sky. The symbol of Jesus as a saviour
 is most obviously invoked here, although perverted, and salvation is not the
 realization of personal freedom but the collapse of the self into a mass.
 Neumann calls this phenomenon #link(<recollectivization>)[Recollectivization]
-and names it a chief threat to humanity. We have witnessed numerous outbreaks
-over the previous century, and in our own time the internet acts as an
-accelerant to this seemingly natural tendency to seek mental slumber. The only
-antidote is Consciousness.
+and names it a chief threat to humanity. It is mental entropy at the societal
+level. We have witnessed numerous outbreaks over the previous century, and in
+our own time the internet acts as an accelerant to this seemingly natural
+tendency to seek mental slumber. The only antidote is Consciousness.
 
 She's almost here. There is one last thing to notice.
 
-// Image: JINU IS WEARING THE BRACELET!
-
-Jinu is wearing the bracelet.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("derpy-bracelet.png"),
+  ),
+  figure(
+    image("jinu-bracelet.png"),
+  ),
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 5pt,
+    )[Jinu is wearing the bracelet.]),
+  ),
+)
 
 == Rebirth (The Dragon Fight)
 
