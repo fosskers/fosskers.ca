@@ -1498,7 +1498,7 @@ She's almost here. There is one last thing to notice.
     colspan: 2,
     align(center, pad(
       top: 5pt,
-    )[Jinu is wearing the bracelet.]),
+    )[Look closely - Jinu is wearing the bracelet.]),
   ),
 )
 
@@ -1514,16 +1514,31 @@ Conscious, will be devoured. Only insanity waits beyond.
 
 Until the Ego appears.
 
-// Image: Rumi standing at the entrance. "A human being."
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("a-human.png"),
+  ),
+  figure(
+    image("a-human-2.png"),
+  ),
+  grid.cell(
+    colspan: 2,
+    align(center, pad(
+      top: 5pt,
+    )[Neither a devil nor an angel - a human being.]),
+  ),
+)
 
 To renew, the Hero must undo. But such undoing is not merely an act of hateful
 destruction. Recall the Hunter's Mantra:
 
 #quote[
 
-  We are hunters, voices strong \
-  Slaying demons with our song \
-  Fix the world and make it right \
+  We are hunters, voices strong, \
+  Slaying demons with our song. \
+  Fix the world and make it right, \
   When darkness finally meets the light.
 
 ]
@@ -1534,7 +1549,12 @@ after the defeat of darkness, but rather its assimilation. It says "Fix the
 world when you have become yourself." Rumi is moments away from this state, and
 fortunately Gwi-ma misunderstands.
 
-// Image: You come here like this?
+#figure(
+  image("you-come-here-like-this.png"),
+  caption: ["You come here like this?" \ "그 꼴로 용케도 나섰군."],
+)
+
+// TODO: Colours
 
 #quote[
 
@@ -1547,14 +1567,11 @@ fortunately Gwi-ma misunderstands.
 
 ]
 
-_You come here like this?_ Imagine that after your centuries of scheming that
-your nemesis appears for the final battle broken down and toothless. You come
-here like this? What did you hope to accomplish? Now imagine the other side -
-Rumi's position. After decades of your own effort and centuries of struggle by
-your predecessors you appear at the war's climax as nothing but your ragged
-self. Just you.
-
-_You come here like this?_
+Imagine that after your centuries of scheming that your nemesis appears for the
+final battle broken down and toothless. _You come here like this?_ Now imagine
+the other side - Rumi's position. After decades of your own effort and centuries
+of struggle by your predecessors you appear at the war's climax as nothing but
+your ragged self. Just you. _You come here like this?_
 
 Yes, and that's enough. Thus begins the Greatest song of the film.
 
@@ -1564,40 +1581,108 @@ they couldn't write. They couldn't write it because they hadn't been ready to
 tell the truth. It's the only song of the entire set that has real lyrical
 content that isn't perverted by the influence of the Honmoon-Mission or their
 insecurities. The song to "win the idol awards" was never going to be _Golden_
-or _Takedown_. "The song we couldn't write - this is what it sounds like." It's
+or _Takedown_. "The song we couldn't write, this is what it sounds like." It's
 what they had been searching for the entire time, and now that they've found it,
 look at how happy they are!
 
-// Image: All smiles.
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  rows: auto,
+  figure(
+    image("mira-smiling.png"),
+  ),
+  figure(
+    image("rumi-smiling.png"),
+  ),
+  figure(
+    image("zoey-smiling.png"),
+  ),
+)
 
 The song opens with Rumi's patterns changing colour. She has integrated the
 Shadow. Her voice and her apology revive her friends, they harmonize, and
-recentralize. The Ego has reunitied itself, but Gwi-ma unleashes his Demons at
-the trio and then pours his Dragon Fire directly at Rumi.
+recentralize. The Ego has restabilized itself.
+
+#quote[
+
+  I broke into a million pieces, and I can't go back. \
+  But now I'm seeing all the beauty in the broken glass. \
+  The scars are part of me, darkness and harmony. \
+  My voice without the lies, this is what it sounds like. \
+
+  Why did I cover up the colors stuck inside my head? \
+  I should've let the jagged edges meet the light instead. \
+  Show me what's underneath, I'll find your harmony. \
+  The song we couldn't write, this is what it sounds like. \
+]
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("gwima-fire.png"),
+  ),
+  figure(
+    image("st-george-oil.jpg"),
+    caption: [_Saint George the Great_ - Gillis Coignet],
+  ),
+)
 
 // Image: Gwi-ma shooting Dragon Fire at her.
 // Image: An midevil painting of a hero shielding fire from a dragon.
 
-This is depicted as fire both to fit the Dragon image, but also to the notion
-that the Unconscious - as the Great Mother - is the source of creation and
-creative energy. Fire is used often in mythological imagery to depict this
+Gwi-ma unleashes his Demons at the trio and then pours his Dragon Fire directly
+at Rumi. This is depicted as fire both to fit the Dragon image, but also to the
+notion that the Unconscious - as the Great Mother - is the source of creation
+and creative energy. Fire is used often in mythological imagery to depict this
 power, and like fire it can burn the wielder. This is where in our culture we
 receive the motif of the "tortured artist"; it is precisely the fire of creation
-that acts as fuel for both their work and their insanity.
+that acts as fuel for both their work and their insanity. Neumann:
 
-Here too it seems that the Unconscious will overwhelm the Conscious and consume
-Rumi, until the Animus finally rises to action and achieves a Hero sacrifice of
-his own.
+// p376
+#quote[
 
-// Image: "I wanted to set you free." -- "You did."
+  [Eccentric individuals] are the founders of religions, sects, philosophies,
+  political sciences, ideologies, and spiritual movements, in the security of
+  which the collective man lives without needing to come into contact with the
+  primordial fire of direct revelation, or to experience the throes of
+  creation.
+
+]
+
+Here too it seems that the fire of the Unconscious will overwhelm the Conscious
+and consume Rumi, until the Animus finally rises to action and achieves a Hero
+sacrifice of his own.
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("set-you-free.png"),
+    caption: ["I wanted to set you free." \ "널 풀어 줘야 한단 말이야."],
+  ),
+  figure(
+    image("you-did.png"),
+    caption: ["You did." \ "넌 해냈어."],
+  ),
+)
 
 Jinu's dissolution into a soul gift and Rumi's acceptance of it is the
 long-awaited unification of the Ego and the Animus. Final contact with her
 masculine Animus has granted her his energy as might, which manifests as a
 sword.
 
-// Image: The Sword - "Unity". 통일
-// Image: Split Gwi-ma.
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+  figure(
+    image("unity-sword.png"),
+    caption: [Unity - 통일],
+  ),
+  figure(
+    image("gwima-split.png"),
+  ),
+)
 
 Rumi splits Gwi-ma. The Conscious mind is precisely that which divides and
 reconstructs. This is akin to Adam's naming of the animals in Genesis and the
@@ -1606,14 +1691,20 @@ does to order our world. To forget, to undefine, to soften, to blur - this is
 the opposite power. Too much of either is death. The Hero is that which stands
 in between these poles and holds the world together.
 
-// Image: Running. "Awakening".
+#figure(
+  image("awakening.png"),
+  caption: [Awakening.],
+)
 
 The song returns to the chorus and the audience adds their voices. This is the
 Conscious mind finally unified in purpose. Rumi has achieved Centroversion and
 begins to fly. Mira and Zoey join her to form the seed of a new Honmoon, the new
 social order, the new mental framework.
 
-// Image: "The Honmoon Seed".
+#figure(
+  image("honmoon-seed.png"),
+  caption: [A Honmoon seed.],
+)
 
 Gwi-ma is blown away, resubjugated to the combined strength of centralized
 Consciousness.
@@ -1622,9 +1713,13 @@ This shot of the final line of the song was made into the album cover of the
 movie's soundtrack because this moment is what the entire film was about. It was
 the outcome we couldn't have guessed, the song they couldn't write.
 
-// Image: The final line.
 
-It was never about K-pop and monsters. It was about Human Beings.
+#figure(
+  image("final-shot.png"),
+  caption: [Human Beings.],
+)
+
+The movie was never about K-pop and monsters. It was about Human Beings.
 
 // TODO: Discuss the lyrics more?
 
@@ -1656,9 +1751,9 @@ This may be my favourite movie. It matches me somehow. I sing, I live in Asia,
 I've always had cats, I love archetypal stories, and I deeply appreciate
 unapologetically multilingual media. My own Honmoon too seems somehow reworked.
 
-I can only say thank you to Maggie Kang and the entire KDH team for giving me
-this experience. Let this article be an expression of my gratitude and love for
-what they created, and an embrace of my own Anima.
+I can only say thank you to the entire KDH team for giving me this experience.
+Let this article be an expression of my gratitude and love for what they
+created, and an embrace of my own Anima.
 
 KPop Demon Hunters is the Hero's Story, and it is a tale we will never stop telling.
 
