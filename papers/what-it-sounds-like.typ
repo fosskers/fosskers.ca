@@ -1,16 +1,39 @@
 #set document(title: [What It Sounds Like])
 
-// #set text(
-//   size: 7pt,
-// )
+// --- COLOURS --- //
+//
+// Gwi-ma: E0357A
+// Rumi: 9B6FD4
 
 #show link: it => text(fill: blue, underline(it))
 
 #set quote(block: true)
+#show quote: set pad(x: 3em)
 
 #set figure(numbering: none)
 
 #let u(body) = underline(body)
+
+#let gwima(body) = text(fill: rgb("#E0357A"), body)
+#let rumi(body) = text(fill: rgb("#9B6FD4"), body)
+#let jinu(body) = text(fill: rgb("#7BAFC4"), body)
+#let mira(body) = text(fill: rgb("#E8457A"), body)
+#let zoey(body) = text(fill: rgb("#2BBFB0"), body)
+#let huntrix(body) = text(
+  fill: gradient.linear(
+    rgb("#E8457A"),
+    rgb("#9B6FD4"),
+    rgb("#2BBFB0"),
+  ),
+  body,
+)
+#let faketrix(body) = text(
+  fill: gradient.linear(
+    rgb("#E8457A"),
+    rgb("#2BBFB0"),
+  ),
+  body,
+)
 
 #place(
   top + center,
@@ -29,21 +52,23 @@
 
 #outline(title: [Table of Contents])
 
+#pagebreak()
+
 = Preface
 
 KPop Demon Hunters is memorable for more than its music. It is a telling of the
-Hero's Story, and beneath the surface it has little to do with K-pop or idols.
-It follows humanity's beloved plot pattern of threat, adventure, doubt,
-collapse, rebirth, and final victory.
+Hero's Story, and beneath its pink and purple surface it has little to do with
+K-pop or idols. It follows humanity's beloved plot pattern of threat, adventure,
+doubt, collapse, rebirth, and final victory.
 
-The book #u[The Origins and History of Consciousness] by Erich Neumann (1949)
+The book _The Origins and History of Consciousness_ by Erich Neumann (1949)
 describes the growth of individual #link(<consciousness>)[consciousness] within
 human beings by tracking our historical development alongside that of our body
 of myths and legends. It then contrasts these evolutions with semi-concurrent
 psychological ones, during which this claim is made:
 
 // Page 263
-#quote[
+#quote(attribution: [Neumann, p. 263])[
   Myth figures are archetypal projections of the collective unconscious; in other words,
   humanity is putting something outside itself in its myths, something of whose meaning
   it is not conscious.
@@ -52,8 +77,8 @@ psychological ones, during which this claim is made:
 This is to say that as humanity's own psychological development advanced, we
 projected that advance into our myths. We didn't "make up" our legends. We
 didn't tell ourselves stories of gods and demons simply to ward off boredom or
-to control each other. When I finally watched KPop Demon Hunters (apparently the
-last one on Earth to have done so), it was like a meteor had struck my mind.
+to control one another. When I finally watched KPop Demon Hunters (apparently
+the last one on Earth to have done so), it was like a meteor had struck my mind.
 While written by people, set in a certain time and place, and filled with
 fictional elements, it also isn't "made up" in the sense that it contains no
 truth about the human experience. Quite the opposite; KPop Demon Hunters is
@@ -63,7 +88,8 @@ story of you.
 Following Neumann, this article observes KPop Demon Hunters from three angles;
 that of the #u[surface story] itself, that of the #u[mythological layer]
 underpinning it, and that of the #u[psychological layer] which reflects those
-myths.
+myths. Through these layers will we see that this movie warns us not about idol
+worship, but as Neumann himself did, about _the mass_.
 
 Enjoy.
 
@@ -176,8 +202,8 @@ school, given that Huntrix has already won the Idol Awards five years in a row,
 and Zoey states:
 
 #quote[
-  Before I joined Huntrix, I felt like my thoughts and my lyrics and all my
-  notebooks were just useless and weird.
+  #zoey[Before I joined Huntrix, I felt like my thoughts and my lyrics and all my
+    notebooks were just useless and weird.]
 ]
 
 It's not clear if Mira and Zoey had spiritual powers to begin with, or whether
@@ -308,8 +334,8 @@ Psychologically, the Honmoon is your set of habits and behaviours, some yours,
 but many absorbed from your culture and environment. A Golden one is the idea
 that you can perfectly seal away all the darkness and imperfection within you if
 you just work hard enough. Here the movie speaks for itself: a Golden Honmoon is
-probably not desirable, even if the world shouts to you that it is and you
-believe you agree. _Golden_ is a good song, but self-congratulation and
+probably not desirable, even if the world shouts to you that it is and you've
+always agreed. _Golden_ is a good song, but self-congratulation and
 self-deception nonetheless. A far greater song comes later.
 
 #grid(
@@ -329,9 +355,9 @@ self-deception nonetheless. A far greater song comes later.
   ),
 )
 
-We are shown that demonic influence weakens the Honmoon, but at the same time a
-weakening and complete destruction is necessary for Rebirth, as we shall see
-below.
+We are shown that demonic influence weakens the Honmoon, destabilizing the world
+and the mind, but at the same time a weakening and complete destruction is
+necessary for Rebirth, as we shall see below.
 
 == Demons (The Shadow)
 
@@ -371,11 +397,10 @@ although this doesn't explain the old man in the bathhouse.
   ),
 )
 
-Psychologically, the collective of Demons represents #link(<shadow>)[The Shadow]. Quoting Neumann:
+Psychologically, the collective of Demons represents #link(<shadow>)[The Shadow].
 
 // TODO: Get Steven to voice these quotes?
-// p.351
-#quote[
+#quote(attribution: [Neumann, p. 351])[
 
   The Shadow contains all those elements in the personality which the ego
   condemns as negative values. This selective valuation is collectively
@@ -392,8 +417,7 @@ against the Ego, preventing it from running away with itself. It plays this role
 as a kind of intermediary between the Conscious and Unconscious. Indeed, Neumann
 goes on to say:
 
-// p.353
-#quote[
+#quote(attribution: [Neumann, p. 353])[
 
   In psychological development, the self lies hidden in the shadow; he is the
   "keeper of the gate", the guardian of the threshold. The way to the self
@@ -528,8 +552,7 @@ The fans know better.
 
 == Rumi (The Hero)
 
-// p. 348
-#quote[
+#quote(attribution: [Neumann, p. 348])[
   Only by overcoming its guilt-feelings can the ego consciousness realize its true values.
 ]
 
@@ -651,9 +674,9 @@ released _Golden_. Mira hints that with their influence, this could be at
 minimum only a few days, but perhaps a week or longer is more realistic.
 
 The second block is clearer, as we are given two direct hints. The first is a
-quote from Mira after Rumi admits her problem: "Okay, we have two weeks to fix
-Rumi's voice." The second is that there seem to be weekly song ranking awards,
-and we are shown two victory ceremonies.
+quote from Mira after Rumi admits her problem: #mira["Okay, we have two weeks to
+  fix Rumi's voice."] The second is that there seem to be weekly song ranking
+awards, and we are shown two victory ceremonies.
 
 The story largely takes place in the latter time block, and we will focus on
 Rumi and Jinu's meetings. The Climax is given its own section further below as
@@ -764,7 +787,7 @@ expected.
 
 Back in the underworld, Gwi-ma praises Jinu, which Jinu subtly rejects. While
 mostly fallen, Jinu is still what Neumann would call a "Struggler" against the
-Great Mother.
+Great Mother. Neither fully in nor out, yet nonetheless locked.
 
 == The Talk
 
@@ -969,49 +992,49 @@ voice recover, and when did the spark of love ignite? I see these possibilities:
 3. Rumi and Jinu met again off-screen and had a deep conversion.
 
 (3) is my chosen interpretation. The first thing that bothered me was this line
-from Rumi before the _Free_ duet:
+before the _Free_ duet:
 
-#quote[
+#quote(attribution: [Rumi])[
 
-  But since I've met you, and the more I talk to you, I don't understand it,
-  but somehow, my voice has healed.
+  #rumi[But since I've met you, and the more I talk to you, I don't understand it,
+    but somehow, my voice has healed.]
 
 ]
 
 The more I talk to you? We're only shown three conversations between them,
 totaling mere minutes. The second clue is these lines from _Free_ itself:
 
-#quote[
+#align(center, quote[
 
-  Here with you I can finally breathe, \
-  You say you're no good, \
-  but you're good for me. \
-  I've been hoping to change, \
-  now I know we can change. \
-  But I won't if you're not by my side. \
+  #rumi[Here with you I can finally breathe, \
+    You say you're no good, \
+    but you're good for me. \
+    I've been hoping to change, \
+    now I know we can change. \
+    But I won't if you're not by my side. \
 
-  Why does it feel right \
-  every time I let you in? \
-  Why does it feel like \
-  I can tell you anything? \
+    Why does it feel right \
+    every time I let you in? \
+    Why does it feel like \
+    I can tell you anything?]
 
-]
+])
 
 and during Jinu's rap:
 
-#quote[
-  It's just easy when I'm with you, \
-  no one sees me the way you do.
-]
+#align(center, quote[
+  #jinu[It's just easy when I'm with you, \
+    no one sees me the way you do.]
+])
 
 The third clue is from the Betrayal:
 
 #quote[
 
-  J: It was all a lie. \
-  R: It was real, what we had was real, I know it was! \
-  J: The things I said, I just needed you to trust me. \
-  R: No, no!
+  #jinu[It was all a lie.] \
+  #rumi[It was real, what we had was real, I know it was!] \
+  #jinu[The things I said, I just needed you to trust me.] \
+  #rumi[No, no!]
 
 ]
 
@@ -1149,17 +1172,17 @@ Jinu's plan is put into action.
   ),
 )
 
-#quote[
+#align(center, quote[
 
-  So sweet, so easy on the eyes, but hideous on the inside. \
-  Whole life spreading lies, but you can't hide, baby, nice try. \
+  #faketrix[So sweet, so easy on the eyes, but hideous on the inside. \
+    Whole life spreading lies, but you can't hide, baby, nice try.] \
   ... \
-  'Cause I see your real face, and it's ugly as sin. \
-  Time to put you in your place, 'cause you're rotten within. \
-  When your patterns start to show \
-  It makes the hatred wanna grow outta my veins.
+  #faketrix['Cause I see your real face, and it's ugly as sin. \
+    Time to put you in your place, 'cause you're rotten within. \
+    When your patterns start to show \
+    It makes the hatred wanna grow outta my veins.]
 
-]
+])
 
 Fake Mira and fake Zoey sing the _Takedown_ lyrics, now directed toward Rumi
 herself. They tear off her long sleeves - her lies - and she is completely
@@ -1249,14 +1272,13 @@ not gone entirely.
     image("yes-it-is.png"),
   ),
 
-  // TODO: Fix alignment.
   grid.cell(
     colspan: 2,
     align(center, pad(
       top: 3pt,
-    )["This is just your demon talking. You have to fight it!" \
-      "That's not how it works!" \
-      "Yes it is!"]),
+    )[#rumi["This is just your demon talking. You have to fight it!"] \
+      #jinu["That's not how it works!"] \
+      #rumi["Yes it is!"]]),
   ),
 )
 
@@ -1333,12 +1355,12 @@ Tree. What else was she doing?
 
 Wherever she went and whatever she did, her conclusion was suicide. Like Jinu
 before her, Rumi now attempts to complete her own castration by offering herself
-as a sacrifice to her mission and society. "...before I destroy what I swore to
-protect." Her mission is the Honmoon is Seline. Yet the mother essence reappears
-here and Seline's two representations conflict - she is both too loving to
-accept Rumi's sacrifice, but not loving enough to release her from her duty.
-Moreover she is repulsed by Rumi, unable to touch her or even look straight at
-her. The old abhors the new.
+as a sacrifice to her mission and society. #rumi["...before I destroy what I
+  swore to protect."] Her mission is the Honmoon is Seline. Yet the mother essence
+reappears here and Seline's two representations conflict - she is both too
+loving to accept Rumi's sacrifice, but not loving enough to release her from her
+duty. Moreover, a part of her is repulsed by Rumi, unable to touch her or even
+look straight at her. The old abhors the new.
 
 #grid(
   columns: (1fr, 1fr),
@@ -1350,7 +1372,6 @@ her. The old abhors the new.
     image("why-couldnt-you-love-me.png"),
   ),
 
-  // TODO: Fix alignment.
   grid.cell(
     colspan: 2,
     align(center, pad(
@@ -1392,6 +1413,10 @@ thusfar, it seems to the viewer that Rumi has given in and is lost.
   ),
   figure(
     image("saja-hidden-frame-2.png"),
+  ),
+  grid.cell(
+    colspan: 2,
+    align(center, pad(top: 5pt)[Hidden frames.]),
   ),
 )
 
@@ -1435,8 +1460,9 @@ need the Conscious, is somewhat annoyed by it, and gets along just fine without
 it in the rest of animalia. Within the universe as a whole, the force of Entropy
 seeks to smooth out higher structure and complexity. Such structure in an
 "uncaring" universe seems superfluous to begin with, and yet at every level we
-see some counter force inevitably fighting back. Life within the universe.
-Individuals within society. Consciousness within the mind.
+see some counter force inevitably fighting back. Galactic filaments within the
+universe. Life upon planets. Individuals within society. Consciousness within
+the mind.
 
 #figure(
   image("your-idol-demons.png"),
@@ -1458,10 +1484,10 @@ ancient enemies the arthropods.
 )
 
 
-Arms wide with legs crossed, rising to the sky. The symbol of Jesus as a saviour
-is most obviously invoked here, although perverted, and salvation is not the
-realization of personal freedom but the collapse of the self into a mass. This
-is the aim of the concert. Neumann calls this phenomenon
+The Saja Boys rise to the sky with legs crossed and arms wide. The symbol of
+Jesus as a saviour is most obviously invoked here, although perverted, and
+salvation is not the realization of personal freedom but the collapse of the
+self into a mass. This is the aim of the concert. Neumann calls this phenomenon
 #link(<recollectivization>)[Recollectivization] and names it a chief threat to
 humanity. It is mental entropy at the societal level. We have witnessed numerous
 outbreaks over the previous century, and in our own time the internet acts as an
@@ -1519,14 +1545,14 @@ Until the Ego appears.
 To renew, the Hero must undo. But such undoing is not merely an act of hateful
 destruction. Recall the Hunter's Mantra:
 
-#quote[
+#align(center, quote[
 
   We are hunters, voices strong, \
   Slaying demons with our song. \
   Fix the world and make it right, \
   When darkness finally meets the light.
 
-]
+])
 
 "Meet" can mean "to meet in battle", but also "to contact" or "to bond with" as
 encompassed by the Hanja 合. The Mantra isn't describing a renewal of the world
@@ -1539,24 +1565,27 @@ fortunately Gwi-ma misunderstands.
   caption: ["You come here like this?" \ "그 꼴로 용케도 나섰군."],
 )
 
-// TODO: Colours
+#align(center, pad(x: 6em, [
 
-#quote[
+  #align(left)[#gwima[You come here like this?]]
+  #align(
+    left,
+  )[#gwima[You think you can fix the world - you can't even fix yourself.]]
+  #align(right)[#rumi[I can't.]]
+  #align(
+    left,
+  )[#gwima[And now everyone finally sees you for what you really are.]]
+  #align(right)[#rumi[They do.]]
+  #align(left)[#gwima[And the Honmoon is gone.]]
+  #align(right)[#rumi[It is.]]
 
-  G: You come here like this? You think you can fix the world - you can't even fix yourself. \
-  R: I can't. \
-  G: And now everyone finally sees you for what you really are. \
-  R: They do. \
-  G: And the Honmoon is gone. \
-  R: It is.
+]))
 
-]
-
-Imagine that after your centuries of scheming that your nemesis appears for the
-final battle broken down and toothless. _You come here like this?_ Now consider
-Rumi's position. After decades of your own effort and centuries of struggle by
-your predecessors you appear at the war's climax as nothing but your ragged
-self. Just you. _You come here like this?_
+Imagine that after your centuries of scheming, your nemesis appears for the
+final battle broken down and toothless. #gwima[_You come here like this?_] Now
+consider Rumi's position. After decades of your own effort and centuries of
+struggle by your predecessors you appear at the war's climax as nothing but your
+ragged self. Just you. #gwima[_You come here like this?_]
 
 Yes, and that's enough. Thus begins the Greatest song of the film.
 
@@ -1588,18 +1617,18 @@ The song opens with Rumi's patterns changing colour. She has integrated the
 Shadow. Her voice and her apology revive her friends, they harmonize, and
 recentralize. The Ego has restabilized itself.
 
-#quote[
+#align(center, quote[
 
-  I broke into a million pieces, and I can't go back. \
-  But now I'm seeing all the beauty in the broken glass. \
-  The scars are part of me, darkness and harmony. \
-  My voice without the lies, this is what it sounds like. \
+  #rumi[I broke into a million pieces, and I can't go back.] \
+  #rumi[But now I'm seeing all the beauty in the broken glass.] \
+  #rumi[The scars are part of me, darkness and harmony.] \
+  #rumi[My voice without the lies, this is what it sounds like.] \
 
-  Why did I cover up the colors stuck inside my head? \
-  I should've let the jagged edges meet the light instead. \
-  Show me what's underneath, I'll find your harmony. \
-  The song we couldn't write, this is what it sounds like. \
-]
+  #zoey[Why did I cover up the colors stuck inside my head?] \
+  #mira[I should've let the jagged edges meet the light instead.] \
+  #huntrix[Show me what's underneath, I'll find your harmony.] \
+  #huntrix[The song we couldn't write, this is what it sounds like.] \
+])
 
 #grid(
   columns: (1fr, 1fr),
@@ -1619,10 +1648,9 @@ notion that the Unconscious - as the Great Mother - is the source of creation
 and creative energy. Fire is used often in mythological imagery to depict this
 power, and like fire it can burn the wielder. This is where in our culture we
 receive the motif of the "tortured artist"; it is precisely the fire of creation
-that acts as fuel for both their work and their insanity. Neumann:
+that acts as fuel for both their work and their insanity.
 
-// p376
-#quote[
+#quote(attribution: [Neumann, p. 376])[
 
   [Eccentric individuals] are the founders of religions, sects, philosophies,
   political sciences, ideologies, and spiritual movements, in the security of
@@ -1740,12 +1768,12 @@ created, and an embrace of my own Anima.
 
 KPop Demon Hunters is the Hero's Story, and it is a tale we will never stop telling.
 
-#quote[
-  My voice without the lies, this is what it sounds like. \
-  Fearless and undefined, this is what it sounds like. \
-  Truth after all this time, our voices all combined, \
-  When darkness meets the light, this is what it sounds like.
-]
+#align(center, quote[
+  #huntrix[My voice without the lies, this is what it sounds like.] \
+  #huntrix[Fearless and undefined, this is what it sounds like.] \
+  #huntrix[Truth after all this time, our voices all combined,] \
+  #huntrix[When darkness meets the light, this is what it sounds like.]
+])
 
 감사합니다!
 
@@ -1762,10 +1790,9 @@ By Colin. 2026/05/03 in Seoul.
 
 === Mythological
 
-#u[Archetype] <archetype> From Neumann:
+#u[Archetype] <archetype> A shared symbol within the mind.
 
-//p xv
-#quote[
+#quote(attribution: [Neumann, p. xv])[
 
   The structural elements of the collective unconscious are named by Jung
   "archetypes" or "primordial images." They are the pictorial forms of the
@@ -1798,9 +1825,10 @@ its body often corresponds with the creation of the gods or the creation of the
 world.
 
 #u[Dragon Fight] <dragon-fight> The Hero's final test. If victorious, he is
-fundamentally transformed. From Neumann:
+fundamentally transformed.
 
-#quote[
+// TODO Page!
+#quote(attribution: [Neumann, p. ???])[
 
   The dragon fight is correlated psychologically with different phases of the
   ontogenetic development of consciousness. The conditions of the fight, its
@@ -1813,10 +1841,9 @@ fundamentally transformed. From Neumann:
 
 #u[Great Mother] <mother> As the Ego awakens, it finds itself in the earthly
 world of nature, and that that world has a governor. A being simultaneously of
-Love and Destruction. From Neumann:
+Love and Destruction.
 
-// p39-40
-#quote[
+#quote(attribution: [Neumann, p. 39-40])[
 
   The overwhelming might of the unconscious, i.e., the devouring, destructive
   aspect under which it may also manifest itself, is seen figuratively as the
@@ -1834,8 +1861,7 @@ Love and Destruction. From Neumann:
 She is also also the force behind the Collective Unconscious, and in being so
 stands against the Ego.
 
-// p 285
-#quote[
+#quote(attribution: [Neumann, p. 285])[
 
   It is not her pleasure-loving or wishful nature, but rather her collective
   character, that sets the Great Mother in opposition to ego consciousness.
@@ -1845,10 +1871,8 @@ stands against the Ego.
 #u[Hero] <hero> The redeemer who often must sacrifice himself for the quest. To
 be "great" is to be different, and to be different is to stand apart from the
 group. He is one who _"brings the new and shatters the fabric of old values"._
-From Neumann:
 
-// p191
-#quote[
+#quote(attribution: [Neumann, p. 191])[
 
   The three basic elements in the hero myth were the hero, the dragon, and the
   treasure. [His] goal, whether it be the beloved, the maiden in distress, or
@@ -1865,8 +1889,7 @@ From Neumann:
 Uroboros. Represents an old spiritual / thought system that holds the son (the
 Hero) back and prevents his psychic development.
 
-// p187
-#quote[
+#quote(attribution: [Neumann, p. 187])[
 
   This spiritual system appears as the binding force of the old law, the old
   religion, the old morality, the old order; as conscience, convention,
@@ -1876,9 +1899,10 @@ Hero) back and prevents his psychic development.
 ]
 
 #u[Uroboros] <uroboros> The _"most ancient deity of the prehistoric world."_
-Independently appears as a symbol across many ancient cultures. From Neumann:
+Independently appears as a symbol across many ancient cultures.
 
-#quote[
+// TODO: Page!
+#quote(attribution: [Neumann, p. ???])[
 
   Although absolute rest is something static and eternal, unchanging and
   therefore without history, it is at the same time the place of origin and the
@@ -1907,10 +1931,9 @@ association is positive and creative.
 of Consciousness". The Animus/Anima, the Shadow, the collective voice of your
 society, etc.
 
-#u[Castration] <castration> From Neumann:
+#u[Castration] <castration> Self-decimation.
 
-// p53
-#quote[
+#quote(attribution: [Neumann, p. 53])[
 
   In order to avoid misunderstanding let it be emphasized once and for all
   that wherever in our discussion we speak of castration we mean a symbolic
@@ -1950,8 +1973,7 @@ know."_ Consciousness is the capacity for independent action, and therefore is
 the path to individual deliverance. Fatigue exhausts it. Even of we of the
 present day, Neumann states:
 
-// p 281
-#quote[
+#quote(attribution: [Neumann, p. 281])[
 
   It seems that the organ of consciousness is still at an early state of
   development and relatively unstable.
@@ -1960,8 +1982,7 @@ present day, Neumann states:
 
 And further, of society as a whole:
 
-// Page 271
-#quote[
+#quote(attribution: [Neumann, p. 271])[
 
   Group unity in participation is still so widely prevalent, even in modern man,
   that it is only through the ceaseless conscious efforts of certain individuals
@@ -1971,8 +1992,7 @@ And further, of society as a whole:
 
 ]
 
-// Page 274
-#quote[
+#quote(attribution: [Neumann, p. 274])[
 
   Even today, the ruled are mostly supine members of the herd with no direct
   orientation of their own. The ruler, the State, etc., acts as a substitute
@@ -2010,9 +2030,10 @@ society. A _"workable and successful sham personality"._
 within society, often under the banner of a mass movement. There have been
 several large-scale examples of this within the past century. Despite a focus on
 group unity, Recollectivization is one of the greatest threats to the long-term
-success of humanity. From Neumann:
+success of humanity.
 
-#quote[
+// TODO: Page!
+#quote(attribution: [Neumann, p. ???])[
 
   Common descent from the same tribe, the sharing of a common life, and, above
   all, common experiences create emotional bonds even today, as we well know.
@@ -2039,11 +2060,6 @@ impulse.
 
 #u[The Shadow] <shadow> _"All those elements in the personality which the ego
 condemns as negative values."_ Within the movie, these are the Demons.
-
-== Bibliography
-
-// Netflix article of locations.
-// That guy's Korean culture article.
 
 == Easter Eggs
 
@@ -2115,7 +2131,7 @@ sprint across the city?
 #figure(image("running-by-stadium.png"))
 
 After failing to save the train passengers, the station that the Hunters get off
-at (Jayang - 자양역) is somewhat darker in reality than what we're shown. The
+at (Jayang - 자양역) is somewhat dimmer in reality than what we're shown. The
 station name in the movie is 섬유원지 (Island Amusement Park), and there is such
 a facility for children on the river bank among a kilometer of public park land.
 
@@ -2257,7 +2273,9 @@ Gentlemen, if your sweetheart tries to kill you, just be persistent.
 During their Date scene when Jinu complains of Rumi being late, she calls him
 old-fashioned by retorting with "What are you, from the 19th century?" In the
 Korean version she instead accuses him of being a person from the "Joseon
-Dynasty" (조선 시대, 1392-1897), which of course he is.
+Dynasty" (조선 시대, 1392-1897), which of course he is. While in the modern day
+South Korea calls itself 한국 (Han-guk, the "Han Country"), North Korea still
+calls itself Joseon.
 
 === Real Songs
 
@@ -2287,6 +2305,7 @@ don't even pay their taxes.
 
 #figure(
   image("tax-evasion.png"),
+  caption: ["Tax Evasion"],
 )
 
 === Derpy and Sussie
@@ -2294,9 +2313,9 @@ don't even pay their taxes.
 The Tiger and Magpie have names - Derpy and Sussie respectively. Derpy because
 of his moronic grin, and Sussie because of his suspicious glare.
 
-At the very end we see Zoey wearing a Derpy hoodie, so by this point they must
-have been introduced. And look what can be found on the path down from Namsan
-tower.
+In the final scene we see Zoey wearing a Derpy hoodie, so by this point they
+must have been introduced. And look what can be found on the path down from
+Namsan tower. The wood and paint seemed old, surely predating the movie.
 
 #grid(
   columns: (1fr, 1fr),
@@ -2408,8 +2427,7 @@ No.
 Prefer "tamed" or "relegated to his proper place". You can't kill the
 Unconscious, nor would you want to, because:
 
-// p389
-#quote[
+#quote(attribution: [Neumann, p. 389])[
 
   The splitting off of the unconscious leads on one hand to an ego life
   emptied of meaning, and on the other hand to an activation of the deeper
@@ -2512,9 +2530,18 @@ entirely self-contained, meaning there are no content distribution servers to
 contact for additional assets, etc. Given #link("https://typst.app/")[the right
   tooling], it was also quite nice to type up and style.
 
+== Bibliography
+
+- Erich Neumann, "The Origins and History of Consciousness", 1949
+- Morgan Scott Peck, "The Road Less Traveled", 1978
+- Eknath Easwaran, "The Bhagavad Gita" (English Translation), 1985
+
 == Version History
 
 === 2026-05-03
 
 Initial draft completed.
 
+=== 2026-06-29
+
+All images added, content polished. PDF handed to friends.
