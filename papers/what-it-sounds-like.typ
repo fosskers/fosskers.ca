@@ -67,7 +67,6 @@ human beings by tracking our historical development alongside that of our body
 of myths and legends. It then contrasts these evolutions with semi-concurrent
 psychological ones, during which this claim is made:
 
-// Page 263
 #quote(attribution: [Neumann, p. 263])[
   Myth figures are archetypal projections of the collective unconscious; in other words,
   humanity is putting something outside itself in its myths, something of whose meaning
@@ -1828,7 +1827,9 @@ world.
 fundamentally transformed.
 
 // TODO Page!
-#quote(attribution: [Neumann, p. ???])[
+//
+// 2026-07-01 Can't find this one...
+#quote(attribution: [Neumann])[
 
   The dragon fight is correlated psychologically with different phases of the
   ontogenetic development of consciousness. The conditions of the fight, its
@@ -1901,8 +1902,7 @@ Hero) back and prevents his psychic development.
 #u[Uroboros] <uroboros> The _"most ancient deity of the prehistoric world."_
 Independently appears as a symbol across many ancient cultures.
 
-// TODO: Page!
-#quote(attribution: [Neumann, p. ???])[
+#quote(attribution: [Neumann, p. 10])[
 
   Although absolute rest is something static and eternal, unchanging and
   therefore without history, it is at the same time the place of origin and the
@@ -2032,8 +2032,7 @@ several large-scale examples of this within the past century. Despite a focus on
 group unity, Recollectivization is one of the greatest threats to the long-term
 success of humanity.
 
-// TODO: Page!
-#quote(attribution: [Neumann, p. ???])[
+#quote(attribution: [Neumann, p. 272])[
 
   Common descent from the same tribe, the sharing of a common life, and, above
   all, common experiences create emotional bonds even today, as we well know.
