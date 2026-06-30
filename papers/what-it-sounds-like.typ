@@ -1,14 +1,20 @@
 #set document(title: [What It Sounds Like])
 
-// --- COLOURS --- //
-//
-// Gwi-ma: E0357A
-// Rumi: 9B6FD4
-
 #show link: it => text(fill: blue, underline(it))
 
 #set quote(block: true)
-#show quote: set pad(x: 3em)
+#show quote: it => pad(x: 2em)[
+  #block(
+    radius: 5pt,
+    inset: 1em,
+    sticky: true,
+    stroke: gradient.linear(
+      rgb("#E8457A"),
+      rgb("#9B6FD4"),
+      rgb("#2BBFB0"),
+    ),
+  )[#it]
+]
 
 #set figure(numbering: none)
 
@@ -993,7 +999,7 @@ voice recover, and when did the spark of love ignite? I see these possibilities:
 (3) is my chosen interpretation. The first thing that bothered me was this line
 before the _Free_ duet:
 
-#quote(attribution: [Rumi])[
+#quote[
 
   #rumi[But since I've met you, and the more I talk to you, I don't understand it,
     but somehow, my voice has healed.]
@@ -1028,14 +1034,14 @@ and during Jinu's rap:
 
 The third clue is from the Betrayal:
 
-#quote[
+#align(center, quote[
 
   #jinu[It was all a lie.] \
   #rumi[It was real, what we had was real, I know it was!] \
   #jinu[The things I said, I just needed you to trust me.] \
   #rumi[No, no!]
 
-]
+])
 
 It is possible to feel this way about another person even early in a
 relationship, but as-is expressions like "what we had" are hard to reconcile
@@ -1564,7 +1570,15 @@ fortunately Gwi-ma misunderstands.
   caption: ["You come here like this?" \ "그 꼴로 용케도 나섰군."],
 )
 
-#align(center, pad(x: 6em, [
+#align(center, block(
+  radius: 5pt,
+  inset: 1em,
+  stroke: gradient.linear(
+    rgb("#E8457A"),
+    rgb("#9B6FD4"),
+    rgb("#2BBFB0"),
+  ),
+)[
 
   #align(left)[#gwima[You come here like this?]]
   #align(
@@ -1578,7 +1592,7 @@ fortunately Gwi-ma misunderstands.
   #align(left)[#gwima[And the Honmoon is gone.]]
   #align(right)[#rumi[It is.]]
 
-]))
+])
 
 Imagine that after your centuries of scheming, your nemesis appears for the
 final battle broken down and toothless. #gwima[_You come here like this?_] Now
