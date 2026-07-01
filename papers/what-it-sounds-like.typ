@@ -1455,6 +1455,8 @@ Consciousness - always seeks to prevent. But where is Rumi?
   ),
 )
 
+// TODO: Is it actually thermodynamics and not "entropy"?
+
 To say that _Your Idol_ is about the perils of boy band worship is to miss the
 deeper warning; that the danger is in the loss of self itself. Mass movements
 have their own priorities and don't truly care for the welfare of their
@@ -1488,6 +1490,7 @@ ancient enemies the arthropods.
   ),
 )
 
+// TODO: Check "entropy" use here too.
 
 The Saja Boys rise to the sky with legs crossed and arms wide. The symbol of
 Jesus as a saviour is most obviously invoked here, although perverted, and
@@ -1796,283 +1799,6 @@ By Colin. 2026/05/03 in Seoul.
 
 // TODO Mention somewhere that they should really need OaHoC if they want more.
 
-== Glossary
-
-// TODO Fix the styling.
-// TODO Add back links to the original usage sites?
-
-=== Mythological
-
-#u[Archetype] <archetype> A shared symbol within the mind.
-
-#quote(attribution: [Neumann, p. xv])[
-
-  The structural elements of the collective unconscious are named by Jung
-  "archetypes" or "primordial images." They are the pictorial forms of the
-  instincts, for the unconscious reveals itself to the conscious mind in
-  images which, as in dreams and fantasies, initiate the process of conscious
-  reaction and assimilation.
-
-  The archetypal structural elements of the psyche are psychic organs upon
-  whose functioning the well-being of the individual depends, and whose injury
-  has disastrous consequences.
-
-]
-
-It should be emphasized that Archetypes and their characteristics are not wholly
-distinct and separated within the mind - they flow in a kind of gradient. When
-we speak of the chain of symbols from, say, Uroboros -> World Parents -> Great
-Mother -> Terrible Mother, and their relationship to the image of the Dragon,
-there is overlap between them and certainly further reasonable subdivisions. We
-give them names, as if distinct, to aid our understanding.
-
-#u[Captive] <captive> Something precious, a treasure. The prisoner of the Dragon
-and that which the Hero seeks to liberate.
-
-#u[Dragon] <dragon> A consuming and destructive form of the Uroboros / Great
-Mother as they are related to the creative origin of all things, the "abyss", or
-the source of eternal chaos, change, and undifferentiated energy and potential.
-Enemy of the Hero, forever guarding the "treasure" or "captive". Within various
-myths (e.g. Babylonian Tiamat), the defeat of the Dragon and the splitting up of
-its body often corresponds with the creation of the gods or the creation of the
-world.
-
-#u[Dragon Fight] <dragon-fight> The Hero's final test. If victorious, he is
-fundamentally transformed.
-
-// TODO Page!
-//
-// 2026-07-01 Can't find this one...
-#quote(attribution: [Neumann])[
-
-  The dragon fight is correlated psychologically with different phases of the
-  ontogenetic development of consciousness. The conditions of the fight, its
-  aim and also the period in which it takes place, vary. It occurs during the
-  childhood phase, during puberty, and at the change of consciousness in the
-  second half of life, whenever in fact a rebirth or a reorientation of
-  consciousness is indicated.
-
-]
-
-#u[Great Mother] <mother> As the Ego awakens, it finds itself in the earthly
-world of nature, and that that world has a governor. A being simultaneously of
-Love and Destruction.
-
-#quote(attribution: [Neumann, p. 39-40])[
-
-  The overwhelming might of the unconscious, i.e., the devouring, destructive
-  aspect under which it may also manifest itself, is seen figuratively as the
-  evil mother, whether as the bloodstained goddess of death, plague, famine,
-  flood, and the force of instinct, or as the sweetness that lures to
-  destruction. But, as the good mother, she is fullness and abundance; the
-  dispenser of life and happiness, the nutrient earth, the cornucopia of the
-  fruitful womb. She is mankind's instinctive experience of the world's depth
-  and beauty, of the goodness and graciousness of Mother Nature who daily
-  fulfills the promise of redemption and resurrection, of new life and new
-  birth.
-
-]
-
-She is also also the force behind the Collective Unconscious, and in being so
-stands against the Ego.
-
-#quote(attribution: [Neumann, p. 285])[
-
-  It is not her pleasure-loving or wishful nature, but rather her collective
-  character, that sets the Great Mother in opposition to ego consciousness.
-
-]
-
-#u[Hero] <hero> The redeemer who often must sacrifice himself for the quest. To
-be "great" is to be different, and to be different is to stand apart from the
-group. He is one who _"brings the new and shatters the fabric of old values"._
-
-#quote(attribution: [Neumann, p. 191])[
-
-  The three basic elements in the hero myth were the hero, the dragon, and the
-  treasure. [His] goal, whether it be the beloved, the maiden in distress, or
-  the "treasure hard to obtain," is intimately linked with what happens to the
-  hero in the course of the fight.
-
-  Only in this struggle does the hero show himself a hero and change his nature;
-  for whether he is the doer who redeems or the conqueror who liberates, what he
-  transforms transforms him too.
-
-]
-
-#u[Spirit Father] <father> An aspect of The Father, itself one half of the
-Uroboros. Represents an old spiritual / thought system that holds the son (the
-Hero) back and prevents his psychic development.
-
-#quote(attribution: [Neumann, p. 187])[
-
-  This spiritual system appears as the binding force of the old law, the old
-  religion, the old morality, the old order; as conscience, convention,
-  tradition, or any other spiritual phenomenon that seizes hold of the son and
-  obstructs his progress into the future.
-
-]
-
-#u[Uroboros] <uroboros> The _"most ancient deity of the prehistoric world."_
-Independently appears as a symbol across many ancient cultures.
-
-#quote(attribution: [Neumann, p. 10])[
-
-  Although absolute rest is something static and eternal, unchanging and
-  therefore without history, it is at the same time the place of origin and the
-  germ cell of creativity. Living the cycle of its own life, it is the circular
-  snake, the primal dragon of the beginning that bites its own tail, the
-  self-begetting "οὐροβόρος".
-
-  This is the ancient Egyptian symbol of which it is said: "Draco interfecit se
-  ipsum, maritat se ipsum, impraegnat se ipsum." It slays, weds, and impregnates
-  itself. It is man and woman, begetting and conceiving, devouring and giving
-  birth, active and passive, above and below, at once.
-
-]
-
-// TODO: Include an image.
-
-=== Psychological
-
-#u[Anima] <anima> The feminine energy within a man.
-
-#u[Animus] <animus> The masculine energy within a woman. Both Anima and Animus
-are part of the Unconscious, but when voluntarily connected to the Ego the
-association is positive and creative.
-
-#u[Authorities] <authorities> Alongside the Ego, the other "seats at the table
-of Consciousness". The Animus/Anima, the Shadow, the collective voice of your
-society, etc.
-
-#u[Castration] <castration> Self-decimation.
-
-#quote(attribution: [Neumann, p. 53])[
-
-  In order to avoid misunderstanding let it be emphasized once and for all
-  that wherever in our discussion we speak of castration we mean a symbolic
-  castration, and never a personalistic castration complex acquired in
-  childhood and having concretistic reference to the male genitalia.
-
-  The stage of the son-lover and of his relation to the Great Mother has a
-  phallic accent; that is, the activity of the adolescent is symbolized by the
-  phallus and his world is ruled by fertility ritual. Hence the dangers that
-  threaten his destruction are associated with the symbolism of a castration
-  that was often carried out in the actual ritual. But castration symbolism must
-  be understood in a general sense, even when its terminology is derived from
-  the phallic adolescent phase.
-
-  Negative castration symbolism is typical of the hostility of the unconscious
-  to the ego and consciousness, but is closely associated with the positive
-  symbol of sacrifice, which stands for an active offering up of the ego to
-  the unconscious. Both symbols - castration and sacrifice - are united in the
-  archetype of surrender, which can be active and passive, positive and
-  negative, and rules the ego's relation to the self in the various stages of
-  development.
-
-]
-
-#u[Centroversion] <centroversion> _"The innate tendency of a whole to create
-unity within its parts and to synthesize their differences in unified systems."_
-A striving for wholeness. _"Centroversion expresses itself in an organism through
-its regulation of the whole and through its compensatory striving for balance
-and systemization."_
-
-#u[Conscience] <conscience> _"The advocacy of the canon of values inherited from
-the fathers and enforced by education manifests itself in the psychic structure
-of the individual as 'conscience'."_ // p173
-
-#u[Consciousness] <consciousness> _"Only in the light of consciousness can man
-know."_ Consciousness is the capacity for independent action, and therefore is
-the path to individual deliverance. Fatigue exhausts it. Even of we of the
-present day, Neumann states:
-
-#quote(attribution: [Neumann, p. 281])[
-
-  It seems that the organ of consciousness is still at an early state of
-  development and relatively unstable.
-
-]
-
-And further, of society as a whole:
-
-#quote(attribution: [Neumann, p. 271])[
-
-  Group unity in participation is still so widely prevalent, even in modern man,
-  that it is only through the ceaseless conscious efforts of certain individuals
-  of genius that we gradually become aware of the psychic factors which, as the
-  unconscious "cultural pattern" we so blindly accept, regulate the life and
-  death of each one of us.
-
-]
-
-#quote(attribution: [Neumann, p. 274])[
-
-  Even today, the ruled are mostly supine members of the herd with no direct
-  orientation of their own. The ruler, the State, etc., acts as a substitute
-  for individual consciousness and sweeps us blindly into mass movements,
-  wars, etc.
-
-]
-
-#u[Ego] <ego> The central complex in the psychic system. Your main "you". Has
-two main powers, Analytic and Synthetic.
-
-- Analytic: The power to separate, dissect, pull apart, classify, name, distinguish, judge.
-- Synthetic: The power to put what was split back together again.
-
-These two powers are also what fuel the Scientific Method, perhaps the chief
-tool of mankind.
-
-Against the eternal draw of the Unconscious, the Ego has a tendency to want to
-dissolve, and this dissolution is perceived as pleasurable. This is the ecstasy
-felt by those possessed by mass movements in politics or religion. It is
-pleasurable because it is a release of tension, the dropping of the weight of
-your reality. Sleep and dreaming are miniature varieties of this, although
-seemingly critical for our health.
-
-#u[Extroversion] <extroversion> The tendency of a person to explore the outer
-world of people, places, and things.
-
-#u[Introversion] <introversion> The tendency of a person to explore the inner
-world of the soul.
-
-#u[Persona] <persona> The "you" that you build to interface well enough with
-society. A _"workable and successful sham personality"._
-
-#u[Recollectivization] <recollectivization> A lowering of total Consciousness
-within society, often under the banner of a mass movement. There have been
-several large-scale examples of this within the past century. Despite a focus on
-group unity, Recollectivization is one of the greatest threats to the long-term
-success of humanity.
-
-#quote(attribution: [Neumann, p. 272])[
-
-  Common descent from the same tribe, the sharing of a common life, and, above
-  all, common experiences create emotional bonds even today, as we well know.
-  Social, religious, aesthetic, and other collective experiences of whatever
-  coloring - from the tribal head-hunt to the modern mass meeting - activate the
-  unconscious emotional foundations of the group psyche. The individual has not
-  yet broken loose from the emotional undercurrent, and any excitation of one
-  part of the group can affect the whole, as a fever seizes upon all parts of
-  the organism. The emotional fusion then sweeps away the still feebly developed
-  differences of conscious structure in the individuals concerned and
-  continually restores the original group unity. This phenomenon still exerts a
-  powerful influence upon the life of the individual in relation to the
-  community.
-
-]
-
-From the movie: the lure of the Saja Boys and the feeding of fans to Gwi-ma.
-
-#u[Repression] <repression> Thrusting out of the conscious and into the
-unconscious without knowing it.
-
-#u[Suppression] <suppression> Consciously holding down or restricting some
-impulse.
-
-#u[The Shadow] <shadow> _"All those elements in the personality which the ego
-condemns as negative values."_ Within the movie, these are the Demons.
 
 == Easter Eggs
 
@@ -2114,7 +1840,7 @@ shown don't make sense.
     colspan: 2,
     align(center, pad(
       top: 5pt,
-    )[North. Namsan Tower is visible while Han River isn't.]),
+    )[North. Namsan Tower is visible while the Han River isn't.]),
   ),
 )
 
@@ -2542,6 +2268,284 @@ hard-to-track ways and can disappear entirely. This file and its contents are
 entirely self-contained, meaning there are no content distribution servers to
 contact for additional assets, etc. Given #link("https://typst.app/")[the right
   tooling], it was also quite nice to type up and style.
+
+== Glossary
+
+// TODO Fix the styling.
+// TODO Add back links to the original usage sites?
+
+=== Mythological
+
+#u[Archetype] <archetype> A shared symbol within the mind.
+
+#quote(attribution: [Neumann, p. xv])[
+
+  The structural elements of the collective unconscious are named by Jung
+  "archetypes" or "primordial images." They are the pictorial forms of the
+  instincts, for the unconscious reveals itself to the conscious mind in
+  images which, as in dreams and fantasies, initiate the process of conscious
+  reaction and assimilation.
+
+  The archetypal structural elements of the psyche are psychic organs upon
+  whose functioning the well-being of the individual depends, and whose injury
+  has disastrous consequences.
+
+]
+
+It should be emphasized that Archetypes and their characteristics are not wholly
+distinct and separated within the mind - they flow in a kind of gradient. When
+we speak of the chain of symbols from, say, Uroboros -> World Parents -> Great
+Mother -> Terrible Mother, and their relationship to the image of the Dragon,
+there is overlap between them and certainly further reasonable subdivisions. We
+give them names, as if distinct, to aid our understanding.
+
+#u[Captive] <captive> Something precious, a treasure. The prisoner of the Dragon
+and that which the Hero seeks to liberate.
+
+#u[Dragon] <dragon> A consuming and destructive form of the Uroboros / Great
+Mother as they are related to the creative origin of all things, the "abyss", or
+the source of eternal chaos, change, and undifferentiated energy and potential.
+Enemy of the Hero, forever guarding the "treasure" or "captive". Within various
+myths (e.g. Babylonian Tiamat), the defeat of the Dragon and the splitting up of
+its body often corresponds with the creation of the gods or the creation of the
+world.
+
+#u[Dragon Fight] <dragon-fight> The Hero's final test. If victorious, he is
+fundamentally transformed.
+
+// TODO Page!
+//
+// 2026-07-01 Can't find this one...
+#quote(attribution: [Neumann])[
+
+  The dragon fight is correlated psychologically with different phases of the
+  ontogenetic development of consciousness. The conditions of the fight, its
+  aim and also the period in which it takes place, vary. It occurs during the
+  childhood phase, during puberty, and at the change of consciousness in the
+  second half of life, whenever in fact a rebirth or a reorientation of
+  consciousness is indicated.
+
+]
+
+#u[Great Mother] <mother> As the Ego awakens, it finds itself in the earthly
+world of nature, and that that world has a governor. A being simultaneously of
+Love and Destruction.
+
+#quote(attribution: [Neumann, p. 39-40])[
+
+  The overwhelming might of the unconscious, i.e., the devouring, destructive
+  aspect under which it may also manifest itself, is seen figuratively as the
+  evil mother, whether as the bloodstained goddess of death, plague, famine,
+  flood, and the force of instinct, or as the sweetness that lures to
+  destruction. But, as the good mother, she is fullness and abundance; the
+  dispenser of life and happiness, the nutrient earth, the cornucopia of the
+  fruitful womb. She is mankind's instinctive experience of the world's depth
+  and beauty, of the goodness and graciousness of Mother Nature who daily
+  fulfills the promise of redemption and resurrection, of new life and new
+  birth.
+
+]
+
+She is also also the force behind the Collective Unconscious, and in being so
+stands against the Ego.
+
+#quote(attribution: [Neumann, p. 285])[
+
+  It is not her pleasure-loving or wishful nature, but rather her collective
+  character, that sets the Great Mother in opposition to ego consciousness.
+
+]
+
+#u[Hero] <hero> The redeemer who often must sacrifice himself for the quest. To
+be "great" is to be different, and to be different is to stand apart from the
+group. He is one who _"brings the new and shatters the fabric of old values"._
+
+#quote(attribution: [Neumann, p. 191])[
+
+  The three basic elements in the hero myth were the hero, the dragon, and the
+  treasure. [His] goal, whether it be the beloved, the maiden in distress, or
+  the "treasure hard to obtain," is intimately linked with what happens to the
+  hero in the course of the fight.
+
+  Only in this struggle does the hero show himself a hero and change his nature;
+  for whether he is the doer who redeems or the conqueror who liberates, what he
+  transforms transforms him too.
+
+]
+
+#u[Spirit Father] <father> An aspect of The Father, itself one half of the
+Uroboros. Represents an old spiritual / thought system that holds the son (the
+Hero) back and prevents his psychic development.
+
+#quote(attribution: [Neumann, p. 187])[
+
+  This spiritual system appears as the binding force of the old law, the old
+  religion, the old morality, the old order; as conscience, convention,
+  tradition, or any other spiritual phenomenon that seizes hold of the son and
+  obstructs his progress into the future.
+
+]
+
+#u[Uroboros] <uroboros> The _"most ancient deity of the prehistoric world."_
+Independently appears as a symbol across many ancient cultures.
+
+#quote(attribution: [Neumann, p. 10])[
+
+  Although absolute rest is something static and eternal, unchanging and
+  therefore without history, it is at the same time the place of origin and the
+  germ cell of creativity. Living the cycle of its own life, it is the circular
+  snake, the primal dragon of the beginning that bites its own tail, the
+  self-begetting "οὐροβόρος".
+
+  This is the ancient Egyptian symbol of which it is said: "Draco interfecit se
+  ipsum, maritat se ipsum, impraegnat se ipsum." It slays, weds, and impregnates
+  itself. It is man and woman, begetting and conceiving, devouring and giving
+  birth, active and passive, above and below, at once.
+
+]
+
+// TODO: Include an image.
+
+=== Psychological
+
+#u[Anima] <anima> The feminine energy within a man.
+
+#u[Animus] <animus> The masculine energy within a woman. Both Anima and Animus
+are part of the Unconscious, but when voluntarily connected to the Ego the
+association is positive and creative.
+
+#u[Authorities] <authorities> Alongside the Ego, the other "seats at the table
+of Consciousness". The Animus/Anima, the Shadow, the collective voice of your
+society, etc.
+
+#u[Castration] <castration> Self-decimation.
+
+#quote(attribution: [Neumann, p. 53])[
+
+  In order to avoid misunderstanding let it be emphasized once and for all
+  that wherever in our discussion we speak of castration we mean a symbolic
+  castration, and never a personalistic castration complex acquired in
+  childhood and having concretistic reference to the male genitalia.
+
+  The stage of the son-lover and of his relation to the Great Mother has a
+  phallic accent; that is, the activity of the adolescent is symbolized by the
+  phallus and his world is ruled by fertility ritual. Hence the dangers that
+  threaten his destruction are associated with the symbolism of a castration
+  that was often carried out in the actual ritual. But castration symbolism must
+  be understood in a general sense, even when its terminology is derived from
+  the phallic adolescent phase.
+
+  Negative castration symbolism is typical of the hostility of the unconscious
+  to the ego and consciousness, but is closely associated with the positive
+  symbol of sacrifice, which stands for an active offering up of the ego to
+  the unconscious. Both symbols - castration and sacrifice - are united in the
+  archetype of surrender, which can be active and passive, positive and
+  negative, and rules the ego's relation to the self in the various stages of
+  development.
+
+]
+
+#u[Centroversion] <centroversion> _"The innate tendency of a whole to create
+unity within its parts and to synthesize their differences in unified systems."_
+A striving for wholeness. _"Centroversion expresses itself in an organism through
+its regulation of the whole and through its compensatory striving for balance
+and systemization."_
+
+#u[Conscience] <conscience> _"The advocacy of the canon of values inherited from
+the fathers and enforced by education manifests itself in the psychic structure
+of the individual as 'conscience'."_ // p173
+
+#u[Consciousness] <consciousness> _"Only in the light of consciousness can man
+know."_ Consciousness is the capacity for independent action, and therefore is
+the path to individual deliverance. Fatigue exhausts it. Even of we of the
+present day, Neumann states:
+
+#quote(attribution: [Neumann, p. 281])[
+
+  It seems that the organ of consciousness is still at an early state of
+  development and relatively unstable.
+
+]
+
+And further, of society as a whole:
+
+#quote(attribution: [Neumann, p. 271])[
+
+  Group unity in participation is still so widely prevalent, even in modern man,
+  that it is only through the ceaseless conscious efforts of certain individuals
+  of genius that we gradually become aware of the psychic factors which, as the
+  unconscious "cultural pattern" we so blindly accept, regulate the life and
+  death of each one of us.
+
+]
+
+#quote(attribution: [Neumann, p. 274])[
+
+  Even today, the ruled are mostly supine members of the herd with no direct
+  orientation of their own. The ruler, the State, etc., acts as a substitute
+  for individual consciousness and sweeps us blindly into mass movements,
+  wars, etc.
+
+]
+
+#u[Ego] <ego> The central complex in the psychic system. Your main "you". Has
+two main powers, Analytic and Synthetic.
+
+- Analytic: The power to separate, dissect, pull apart, classify, name, distinguish, judge.
+- Synthetic: The power to put what was split back together again.
+
+These two powers are also what fuel the Scientific Method, perhaps the chief
+tool of mankind.
+
+Against the eternal draw of the Unconscious, the Ego has a tendency to want to
+dissolve, and this dissolution is perceived as pleasurable. This is the ecstasy
+felt by those possessed by mass movements in politics or religion. It is
+pleasurable because it is a release of tension, the dropping of the weight of
+your reality. Sleep and dreaming are miniature varieties of this, although
+seemingly critical for our health.
+
+#u[Extroversion] <extroversion> The tendency of a person to explore the outer
+world of people, places, and things.
+
+#u[Introversion] <introversion> The tendency of a person to explore the inner
+world of the soul.
+
+#u[Persona] <persona> The "you" that you build to interface well enough with
+society. A _"workable and successful sham personality"._
+
+#u[Recollectivization] <recollectivization> A lowering of total Consciousness
+within society, often under the banner of a mass movement. There have been
+several large-scale examples of this within the past century. Despite a focus on
+group unity, Recollectivization is one of the greatest threats to the long-term
+success of humanity.
+
+#quote(attribution: [Neumann, p. 272])[
+
+  Common descent from the same tribe, the sharing of a common life, and, above
+  all, common experiences create emotional bonds even today, as we well know.
+  Social, religious, aesthetic, and other collective experiences of whatever
+  coloring - from the tribal head-hunt to the modern mass meeting - activate the
+  unconscious emotional foundations of the group psyche. The individual has not
+  yet broken loose from the emotional undercurrent, and any excitation of one
+  part of the group can affect the whole, as a fever seizes upon all parts of
+  the organism. The emotional fusion then sweeps away the still feebly developed
+  differences of conscious structure in the individuals concerned and
+  continually restores the original group unity. This phenomenon still exerts a
+  powerful influence upon the life of the individual in relation to the
+  community.
+
+]
+
+From the movie: the lure of the Saja Boys and the feeding of fans to Gwi-ma.
+
+#u[Repression] <repression> Thrusting out of the conscious and into the
+unconscious without knowing it.
+
+#u[Suppression] <suppression> Consciously holding down or restricting some
+impulse.
+
+#u[The Shadow] <shadow> _"All those elements in the personality which the ego
+condemns as negative values."_ Within the movie, these are the Demons.
 
 == Bibliography
 
