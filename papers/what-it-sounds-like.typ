@@ -94,7 +94,7 @@ Following Neumann, this article observes KPop Demon Hunters from three angles;
 that of the #u[surface story] itself, that of the #u[mythological layer]
 underpinning it, and that of the #u[psychological layer] which reflects those
 myths. Through these layers will we see that this movie warns us not about idol
-worship, but as Neumann himself did, about _the mass_.
+worship, but as Neumann himself did, about _the mass_ and how we can overcome it.
 
 Enjoy.
 
@@ -189,9 +189,11 @@ In the context of the #link(<dragon-fight>)[Hero's final challenge], Gwi-ma is
   rows: auto,
   figure(
     image("Serpiente_alquimica.jpg"),
+    caption: [Alchemical sketch, 15th centry CE.],
   ),
   figure(
-    image("uro-dragon.jpg", width: 100%),
+    image("king-tut-uro.jpg"),
+    caption: [The Tomb of Tutankhamun, 14th century BCE.],
   ),
 )
 
@@ -332,13 +334,13 @@ outside world. Through blind dedication to this idea we risk what Neumann calls
 "patriarchal castration". #link(<castration>)[Castration] here refers to being
 cut off from one's core energy, vitality, and purpose. The patriarchal variety
 comes from over-devotion, "rising too high", and a disconnect from the creative
-forces that well up from below. This Father, in his Terrible form, holds back
-the Hero.
+forces that well up from below. This Father, in his own Terrible form, holds
+back the Hero.
 
 Psychologically, the Honmoon is your set of habits and behaviours, some yours,
 but many absorbed from your culture and environment. A Golden one is the idea
 that you can perfectly seal away all the darkness and imperfection within you if
-you just work hard enough. Here the movie speaks for itself: a Golden Honmoon is
+you work hard enough. Here the movie speaks for itself: a Golden Honmoon is
 probably not desirable, even if the world shouts to you that it is and you've
 always agreed. _Golden_ is a good song, but self-congratulation and
 self-deception nonetheless. A far greater song comes later.
@@ -362,7 +364,7 @@ self-deception nonetheless. A far greater song comes later.
 
 We are shown that demonic influence weakens the Honmoon, destabilizing the world
 and the mind, but at the same time a weakening and complete destruction is
-necessary for Rebirth, as we shall see below.
+necessary for Rebirth, as we shall see in the Climax.
 
 == Demons (The Shadow)
 
@@ -507,8 +509,8 @@ Mythologically, Jinu serves two roles. Firstly he is a victim of matriarchal
 castration. As with patriarchal castration, he is cut off from everything that
 makes one great, now a slave to the Great Mother. Instead of rising too high, he
 has fallen too low. In seeking to erase his memories, he is attempting to
-complete the castration. Secondly, he is the #link(<captive>)[Captive], the
-prisoner of the Dragon to be rescued by the Hero.
+complete the castration and fade away. Secondly, he is the
+#link(<captive>)[Captive], the prisoner of the Dragon to be rescued by the Hero.
 
 #grid(
   columns: (1fr, 1fr),
@@ -562,12 +564,12 @@ The fans know better.
 ]
 
 Rumi is a half-demon through her father, but she has always rejected that part
-of herself. She believes that the Goldening of the Honmoon will result in her
-purification, allowing her to finally live as "the girl they all see". This is
-despite the fact that a Golden Honmoon has never been achieved before, thus no
-living Hunter can predict its full effects. Following our psychological thinking
-thusfar, we should assume that the Golden Honmoon would instead kill Rumi. Every
-time they saw a flash of gold, Rumi was inches from death.
+of herself. She believes that the goldening of the Honmoon will result in her
+purification, allowing her to finally live as #rumi["the girl they all see"].
+This is despite the fact that a Golden Honmoon has never been achieved before,
+thus no living Hunter can predict its full effects. Following our psychological
+thinking thusfar, we should assume that the Golden Honmoon would instead kill
+Rumi. Every time they saw a flash of gold, Rumi was inches from death.
 
 #grid(
   columns: (1fr, 1fr),
@@ -716,7 +718,9 @@ piece of yourself. Rumi has a lifetime of practice "fighting demons", so she
 isn't immediately deceived.
 
 Jinu however is different. He appears wreathed in a halo and Rumi is instantly
-struck. The Ego and Animus have reunited.
+struck. The Ego and Animus have reunited. This isn't to say that the characters
+within the surface story have ever met, but rather that as elements of a single
+mind the two have always existed, and in infancy were originally combined.
 
 #grid(
   columns: (1fr, 1fr),
@@ -754,7 +758,7 @@ of Jinu's playfulness, yet there is still some malice in his actions.
   ),
 )
 
-Especially after Jinu's puddle slip and hall giggling, on my first viewing I
+Especially after Jinu's puddle slip and hall giggling, upon my first viewing I
 found myself thrown off. Jinu had been disarmed. He was not simply an implacable
 enemy with a one-dimensional, evil nature, which to the chagrin of the audience
 makes him harder to hate.
@@ -791,8 +795,9 @@ expected.
 )
 
 Back in the underworld, Gwi-ma praises Jinu, which Jinu subtly rejects. While
-mostly fallen, Jinu is still what Neumann would call a "Struggler" against the
-Great Mother. Neither fully in nor out, yet nonetheless locked.
+mostly fallen, Jinu is still what Neumann would call a
+#link(<strugglers>)[Struggler] against the Great Mother. Neither fully in nor
+out, yet nonetheless locked.
 
 == The Talk
 
@@ -894,7 +899,7 @@ Ego's benefit.
 )
 
 Critically, the Ego and Animus have had a turning point in their relationship
-here.
+here. The are not entirely enemies.
 
 == The Date
 
@@ -1044,10 +1049,10 @@ The third clue is from the Betrayal:
 ])
 
 It is possible to feel this way about another person even early in a
-relationship, but as-is expressions like "what we had" are hard to reconcile
-without "Disney pacing". The awkward parting after their Date is not enough to
-justify the affection during _Free_. Hence I propose that after they walked
-away, either:
+relationship, but as-is expressions like #rumi["what we had"] are hard to
+reconcile without "Disney pacing". The awkward parting after their Date is not
+enough to justify the affection during _Free_. Hence I propose that after they
+walked away, either:
 
 1. One of them immediately turned back to catch the other.
 2. They met again on another day.
@@ -1061,15 +1066,15 @@ Let us establish that the Date we're shown occurred in the evening, and that the
 _Takedown_ / Train scenes happened in the morning, either the next day or some
 days later. All three scenes have ambiguous, pinkish lighting, but the Train
 scene seems brighter overall than the rehearsal, implying an early morning
-session. We know that the Idol Awards "are tomorrow", and that _Free_ occurs
-that same night, so it seems impossible that Rumi could have gone from the Date
-we're shown directly to the _Takedown_ rehearsal scene. This is our window: Rumi
-and Jinu met again.
+session. We know that the Idol Awards #mira["are tomorrow"], and that _Free_
+occurs that same night, so it seems impossible that Rumi could have gone from
+the Date we're shown directly to the _Takedown_ rehearsal scene. This is our
+window: Rumi and Jinu met again.
 
-Reasons not to believe this:
+Reasons not to accept this:
 
 1. During the Idol Awards, the demons only mocked her with the exact line she
-  said to Jinu: "You're a mistake, you have been since the moment you were born." If Rumi and Jinu had talked more,
+  said to Jinu: #faketrix["You're a mistake, you have been since the moment you were born."] If Rumi and Jinu had talked more,
   there should have been more ammunition.
 2. If you disagree about the day-night cycles of the Date/Train/Free scenes.
 3. Gwi-ma only tormented Jinu after _Free_ about sticking to the plan. Since Gwi-ma can see everything Jinu
@@ -1081,7 +1086,7 @@ Reasons not to believe this:
 Finally, let it be pointed out that notions of romantic love and dating only
 make sense within the top-level story and perhaps the Mythological layer, but
 not at the Psychological one. The Anima / Animus are indeed targets of love, but
-more familial.
+a more familial one.
 
 == Free
 
@@ -1146,7 +1151,7 @@ Unconscious is loathe to permit any further integration.
   grid.cell(
     colspan: 2,
     align(center, pad(
-      top: 3pt,
+      top: 5pt,
     )["Yeah, that's... that's funny." \ "네, 뭐, 재밌네요."]),
   ),
 )
@@ -1215,9 +1220,12 @@ the two confront her, and we see the Ego's insistence on independence and
 control, despite having been deeply disturbed by an attack from the Unconscious.
 Gwi-ma's searching influence has found cracks into Mira and Zoey, and the three
 are briefly enemies. The Hero has lost allies - Centralized Consciousness is
-dissolving. "Backstage" may itself be a metaphor for lonliness, solitude, sleep,
-or even purgatory. Is it not odd that there is no one else back here, when
-moments ago these halls were flooded with workers?
+dissolving.
+
+"Backstage" may itself be a metaphor for lonliness, solitude, sleep, or even
+purgatory. Is it not odd that there is no one else back here, when moments ago
+these halls were flooded with workers? The sense of ethereal emptiness continues
+in the next scene.
 
 #grid(
   columns: (1fr, 1fr),
@@ -1263,9 +1271,9 @@ Journey, the Dragon has tried a new trick: turning the Captive against the Hero.
 The brief hope he held during _Free_ has been smothered, and the Captive has
 given up. In this moment he believes he will never escape bondage, so his only
 recourse is at least to forget the pain of his #link(<conscience>)[conscience].
-Yet why wait for her backstage? To twist the knife a final time and complete the
-destruction of the Hero along with himself perhaps, but also to plead. Jinu is
-not gone entirely.
+Yet why wait for her backstage? To twist the knife and complete the destruction
+of the Hero along with himself perhaps, but also to plead. Jinu is not gone
+entirely.
 
 #grid(
   columns: (1fr, 1fr),
@@ -1280,7 +1288,7 @@ not gone entirely.
   grid.cell(
     colspan: 2,
     align(center, pad(
-      top: 3pt,
+      top: 5pt,
     )[#rumi["This is just your demon talking. You have to fight it!"] \
       #jinu["That's not how it works!"] \
       #rumi["Yes it is!"]]),
@@ -1289,7 +1297,7 @@ not gone entirely.
 
 Both Jinu and Rumi were wrong about how to handle their demons. Jinu's answer
 was despair and wallowing. Rumi's was endless resistance, a strategy she grew up
-believing. She is shocked to realize her futility.
+trusting. She is shocked to realize her futility.
 
 #grid(
   columns: (1fr, 1fr),
@@ -1308,7 +1316,7 @@ filters, basic assumptions, habits, and expectations. From here, two paths are
 open to the Hero.  Unravel entirely to die in muted obscurity, or rise back up
 and seize a new reality.
 
-Rumi choses the former, turning to the one person she has left before the end.
+Rumi chooses the former, turning to the one person she has left before the end.
 
 // TODO Mention perhaps somewhere the notion of "undefinition". That by
 // unravelling you become too undefined, and a human mind can't handle that. But
@@ -1318,7 +1326,7 @@ Rumi choses the former, turning to the one person she has left before the end.
 
 Seline is the Honmoon in human form, an emissary of the Spirit Father. From
 Rumi's perspective, Seline is the source of the message of culture and
-expectation. This is demonstrated by her carriage but also her speech. In the
+expectation. This is demonstrated by her carriage but also by her speech. In the
 English audio, and even more so in the Korean, Seline speaks formally and
 firmly, not at all like a source of warmth and compassion one might expect of a
 mother figure. We could say this is due to her long years of worldly
@@ -1360,7 +1368,7 @@ Tree. What else was she doing?
 
 Wherever she went and whatever she did, her conclusion was suicide. Like Jinu
 before her, Rumi now attempts to complete her own castration by offering herself
-as a sacrifice to her mission and society. #rumi["...before I destroy what I
+as a sacrifice to her mission and society #rumi["before I destroy what I
   swore to protect."] Her mission is the Honmoon is Seline. Yet the mother essence
 reappears here and Seline's two representations conflict - she is both too
 loving to accept Rumi's sacrifice, but not loving enough to release her from her
@@ -1437,10 +1445,11 @@ that something has seduced them with a call very difficult for a human to
 resist: "Come home." While not as hive-minded as ants, we are not solitary cats
 either, and the urge to belong can degrade into a preconscious desire to
 dissolve individual identity into a mass of oneness, a never-beginning and
-never-ending togetherness in the embrace of the Great Mother. Yet this is
-precisely the opposite direction of Conscious Civilization. The achievement of
-independent greatness is what the Great Mother - if unchecked by Hero
-Consciousness - always seeks to prevent. But where is Rumi?
+never-ending togetherness in the embrace of the Great Mother. Yet this is what
+we _homō sapiēns_ have laboured for hundreds of thousands of years to escape
+from, and is precisely the opposite direction of Conscious Civilization. The
+achievement of independent greatness is what the Great Mother - if unchecked by
+Hero Consciousness - always seeks to prevent. But where is Rumi?
 
 #grid(
   columns: (1fr, 1fr),
@@ -1464,12 +1473,12 @@ constituent parts, the individuals. The Great Mother loves you in a way, but not
 you for you. She is happy to see you die, or to kill you herself, and have you
 rejoin the endless natural cycle of death and rebirth. The Unconscious doesn't
 need the Conscious, is somewhat annoyed by it, and gets along just fine without
-it in the rest of animalia. Within the universe as a whole, the force of Entropy
-seeks to smooth out higher structure and complexity. Such structure in an
-"uncaring" universe seems superfluous to begin with, and yet at every level we
-see some counter force inevitably fighting back. Galactic filaments within the
-universe. Life upon planets. Individuals within society. Consciousness within
-the mind.
+it in the rest of animalia. Within the universe as a whole, the effects of
+thermodynamics seeks to smooth out higher structure and complexity. Such
+structure in an "uncaring" universe seems superfluous to begin with, and yet at
+every level we see some counter force inevitably fighting back. Galactic
+filaments within the universe. Life upon planets. Individuals within society.
+Consciousness within the mind.
 
 #figure(
   image("your-idol-demons.png"),
@@ -1477,7 +1486,8 @@ the mind.
 
 This frame is terrifying. It has everything that repels a primate:
 feline-reptilian eyes, fangs, and fingers spread to resemble the legs of our
-ancient enemies the arthropods.
+ancient enemies the arthropods. The Saja Boys pose asymmetrically to unsettle
+you.
 
 #grid(
   columns: (1fr, 1fr),
@@ -1492,15 +1502,16 @@ ancient enemies the arthropods.
 
 // TODO: Check "entropy" use here too.
 
-The Saja Boys rise to the sky with legs crossed and arms wide. The symbol of
-Jesus as a saviour is most obviously invoked here, although perverted, and
-salvation is not the realization of personal freedom but the collapse of the
-self into a mass. This is the aim of the concert. Neumann calls this phenomenon
-#link(<recollectivization>)[Recollectivization] and names it a chief threat to
-humanity. It is mental entropy at the societal level. We have witnessed numerous
-outbreaks over the previous century, and in our own time the internet acts as an
-accelerant to this seemingly natural tendency to seek mental slumber. The only
-antidote is Consciousness.
+Now they rise to the sky with legs crossed and arms wide. The symbol of Jesus as
+a saviour is most obviously invoked here, although perverted, and salvation is
+not the realization of personal freedom but the collapse of the self into a
+mass. This is the aim of the concert and the prime warning of the film. Neumann
+calls this phenomenon #link(<recollectivization>)[Recollectivization] and names
+it a chief threat to humanity. It is a lowering of mental alertness and
+discernment at the societal level. We have witnessed numerous outbreaks over the
+previous century, and in our own time the internet acts as an accelerant to this
+seemingly natural tendency to seek mental slumber. The only antidote is
+Consciousness.
 
 She's almost here. There is one last thing to notice.
 
@@ -1546,7 +1557,7 @@ Until the Ego appears.
     colspan: 2,
     align(center, pad(
       top: 5pt,
-    )[Neither a devil nor an angel - a human being.]),
+    )[A human being.]),
   ),
 )
 
@@ -1610,10 +1621,10 @@ most immediately memorable. It isn't. It's the Greatest because it's the song
 they couldn't write. They couldn't write it because they hadn't been ready to
 tell the truth. It's the only song of the entire set that has real lyrical
 content that isn't perverted by the influence of the Honmoon-Mission or their
-insecurities. The song to "win the idol awards" was never going to be _Golden_
-or _Takedown_. "The song we couldn't write, this is what it sounds like." It's
-what they had been searching for the entire time, and now that they've found it,
-look at how happy they are!
+insecurities. The song to "win the idol awards" was never going to be something
+forced liked _Golden_ or _Takedown_. #huntrix["The song we couldn't write, this
+  is what it sounds like."] It's what they had been searching for the entire time,
+and now that they've found it, look at how happy they are!
 
 #grid(
   columns: (1fr, 1fr, 1fr),
@@ -1651,6 +1662,7 @@ recentralize. The Ego has restabilized itself.
   rows: auto,
   figure(
     image("gwima-fire.png"),
+    caption: [Dragon fire.],
   ),
   figure(
     image("st-george-oil.jpg"),
@@ -1703,7 +1715,7 @@ sword.
   rows: auto,
   figure(
     image("unity-sword.png"),
-    caption: [Unity - 통일],
+    caption: [The Unity Sword: 통일],
   ),
   figure(
     image("gwima-split.png"),
@@ -1728,13 +1740,26 @@ Conscious mind finally unified in purpose. Rumi has achieved Centroversion and
 begins to fly. Mira and Zoey join her to form the seed of a new Honmoon, the new
 social order, the new mental framework.
 
-#figure(
-  image("honmoon-seed.png"),
-  caption: [A Honmoon seed.],
+#grid(
+  columns: (1fr, 1fr),
+  rows: auto,
+
+  figure(
+    image("honmoon-seed.png"),
+    caption: [A Honmoon seed.],
+  ),
+  figure(
+    image("new-honmoon.png"),
+    caption: [The new order.],
+  ),
 )
 
+
+
 Gwi-ma is blown away, resubjugated to the combined strength of centralized
-Consciousness.
+Consciousness. A new Honmoon spreads across the earth, establishing the new
+status quo. The collapse of the mind and of society into an undefined mass has
+been prevented. Tomorrow is a new day, both inside and out.
 
 This shot of the final line of the song was made into the album cover of the
 movie's soundtrack because this moment is what the entire film was about. It was
@@ -1782,7 +1807,7 @@ I can only say thank you to the entire KDH team for giving me this experience.
 Let this article be an expression of my gratitude and love for what they
 created, and an embrace of my own Anima.
 
-KPop Demon Hunters is the Hero's Story, and it is a tale we will never stop telling.
+KPop Demon Hunters is the Hero's Story, our favourite story.
 
 #align(center, quote[
   #huntrix[My voice without the lies, this is what it sounds like.] \
@@ -1791,9 +1816,7 @@ KPop Demon Hunters is the Hero's Story, and it is a tale we will never stop tell
   #huntrix[When darkness meets the light, this is what it sounds like.]
 ])
 
-감사합니다!
-
-By Colin. 2026/05/03 in Seoul.
+감사합니다! By Colin. 2026/05/03 in Seoul.
 
 = Appendices
 
@@ -2383,6 +2406,24 @@ Hero) back and prevents his psychic development.
   religion, the old morality, the old order; as conscience, convention,
   tradition, or any other spiritual phenomenon that seizes hold of the son and
   obstructs his progress into the future.
+
+]
+
+#u[Struggler] <strugglers> One who pushes away from the Great Mother.
+
+#quote(attribution: [Neumann, p. 88])[
+
+  We can distinguish several stages in the youthful lover's relation to the
+  Great Mother. The earliest is marked by a natural surrender to fate, to the
+  power of the mother or uroboros.
+
+  ...
+
+  The transition to the next stage is formed by the "strugglers." In them, fear
+  of the Great Mother is the first sign of centroversion, self-formation, and
+  ego stability. This fear expresses itself in various forms of flight and
+  resistence. The primary expression of flight, which is still completely under
+  the dominance of the Great Mother, is self-castration and suicide.
 
 ]
 
