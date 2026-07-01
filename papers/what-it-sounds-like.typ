@@ -1240,7 +1240,7 @@ in the next scene.
   grid.cell(
     colspan: 2,
     align(center, pad(
-      top: 3pt,
+      top: 5pt,
     )[Insanity is not far away.]),
   ),
 )
@@ -1260,7 +1260,7 @@ in the next scene.
   grid.cell(
     colspan: 2,
     align(center, pad(
-      top: 3pt,
+      top: 5pt,
     )["How could you do this?" \ "네가 어떻게 이래!"]),
   ),
 )
@@ -1622,7 +1622,7 @@ they couldn't write. They couldn't write it because they hadn't been ready to
 tell the truth. It's the only song of the entire set that has real lyrical
 content that isn't perverted by the influence of the Honmoon-Mission or their
 insecurities. The song to "win the idol awards" was never going to be something
-forced liked _Golden_ or _Takedown_. #huntrix["The song we couldn't write, this
+forced like _Golden_ or _Takedown_. #huntrix["The song we couldn't write, this
   is what it sounds like."] It's what they had been searching for the entire time,
 and now that they've found it, look at how happy they are!
 
@@ -1771,7 +1771,7 @@ the outcome we couldn't have guessed, the song they couldn't write.
   caption: [Human Beings.],
 )
 
-The movie was never about K-pop and monsters. It was about Human Beings.
+The movie was never about K-pop and monsters. It was about you.
 
 // TODO: Discuss the lyrics more?
 
