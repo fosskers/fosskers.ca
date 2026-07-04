@@ -1,5 +1,7 @@
 #set document(title: [What It Sounds Like])
 
+#set page(numbering: "1")
+
 #show link: it => text(fill: blue, underline(it))
 
 #set quote(block: true)
@@ -567,7 +569,7 @@ of herself. She believes that the goldening of the Honmoon will result in her
 purification, allowing her to finally live as #rumi["the girl they all see"].
 This is despite the fact that a Golden Honmoon has never been achieved before,
 thus no living Hunter can predict its full effects. Following our psychological
-thinking thusfar, we should assume that the Golden Honmoon would instead kill
+thinking thus far, we should assume that the Golden Honmoon would instead kill
 Rumi. Every time they saw a flash of gold, Rumi was inches from death.
 
 #grid(
@@ -1221,7 +1223,7 @@ Gwi-ma's searching influence has found cracks into Mira and Zoey, and the three
 are briefly enemies. The Hero has lost allies - Centralized Consciousness is
 dissolving.
 
-"Backstage" may itself be a metaphor for lonliness, solitude, sleep, or even
+"Backstage" may itself be a metaphor for loneliness, solitude, sleep, or even
 purgatory. Is it not odd that there is no one else back here, when moments ago
 these halls were flooded with workers? The sense of ethereal emptiness continues
 in the next scene.
@@ -1399,7 +1401,7 @@ the world. To renew, one must first undo. Rumi abandons the old mission,
 welcoming the destruction of the Honmoon. Likewise to renew the mind, dead wood
 -- old habits -- must be cast adrift. Rumi teleports away in full acceptance of
 her nature. However, without the psychological context we have been discussing
-thusfar, it seems to the viewer that Rumi has given in and is lost.
+thus far, it seems to the viewer that Rumi has given in and is lost.
 
 // // TODO: Also mention later how even in a renewed world, you still need a
 // // Honmoon! You still need some structure to order your reality.
@@ -1445,7 +1447,7 @@ resist: "Come home." While not as hive-minded as ants, we are not solitary cats
 either, and the urge to belong can degrade into a preconscious desire to
 dissolve individual identity into a mass of oneness, a never-beginning and
 never-ending togetherness in the embrace of the Great Mother. Yet this is what
-we _homō sapiēns_ have laboured for hundreds of thousands of years to escape
+we _Homō sapiēns_ have laboured for hundreds of thousands of years to escape
 from, and is precisely the opposite direction of Conscious Civilization. The
 achievement of independent greatness is what the Great Mother - if unchecked by
 Hero Consciousness - always seeks to prevent. But where is Rumi?
@@ -1462,8 +1464,6 @@ Hero Consciousness - always seeks to prevent. But where is Rumi?
     caption: [I will make you free when you're all a part of me.],
   ),
 )
-
-// TODO: Is it actually thermodynamics and not "entropy"?
 
 To say that _Your Idol_ is about the perils of boy band worship is to miss the
 deeper warning; that the danger is in the loss of self itself. Mass movements
@@ -1787,9 +1787,11 @@ trip to Thailand or it would bother me. A few nights before the trip I signed up
 for Netflix and watched it, and it blew me away. I watched it again several
 times during the trip, going back and forth over the songs and scenes, and the
 content of this article welled up naturally. I took copious notes in a strange
-preoccupation. I write these exact sentences at 3:30 in the morning, having
-woken up with a realization about a clever rhyming pattern in Jinu's lyrics
-within _Free_.
+preoccupation.
+
+// I write these exact sentences at 3:30 in the morning, having
+// woken up with a realization about a clever rhyming pattern in Jinu's lyrics
+// within _Free_.
 
 // TODO: Show the rhyming pattern in a footnote.
 //
