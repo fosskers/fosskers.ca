@@ -173,7 +173,7 @@ engravings and artwork independently across the world for thousands of years. It
 represents, among other things, the cycle of energy and time, and thus that of
 life and death. Specifically the Gwi-ma we see is an incarnation of a subtype of
 the Great Mother: The Terrible Mother. This is not a comment on Gwi-ma's
-parenting; "Terrible" here does not mean "lacking skill", but instead "of
+parenting; "terrible" here does not mean "lacking skill", but instead "of
 terror". Gwi-ma is vindictive, merciless, cannibalistic, and bloodthirsty. His
 goal is nothing less than the reabsorption of all conscious humanity back into
 himself.
@@ -483,7 +483,9 @@ of regret is still raw after 400 years.
 Jinu shows us that people can have conflicting motivations and follow through on
 each simultaneously. During the Signing, their "Date", and then again at the
 reveal of his betryal, Jinu didn't have to tell Rumi anything about his true
-thoughts and motivations, but he did. He wanted to be understood.
+thoughts and motivations, but he did. He wanted to be understood. Recall too
+that after their first fight in the bathhouse, he was genuinely curious about
+her as he strolled the alleyway.
 
 #grid(
   columns: (1fr, 1fr),
@@ -497,9 +499,6 @@ thoughts and motivations, but he did. He wanted to be understood.
     caption: ["A hunter who's part demon..." \ "악귀의 문양을 가진 헌터?"],
   ),
 )
-
-Recall too that after their first fight in the bathhouse, he was genuinely
-curious about her as he strolled the alleyway.
 
 // TODO Who did Neumann say was a victim of this?
 //
@@ -685,9 +684,9 @@ quote from Mira after Rumi admits her problem: #mira["Okay, we have two weeks to
   fix Rumi's voice."] The second is that there seem to be weekly song ranking
 awards, and we are shown two victory ceremonies.
 
-The story largely takes place in the latter time block, and we will focus on
-Rumi and Jinu's meetings. The Climax is given its own section further below as
-it follows common mythological development stages.
+The story largely takes place in the latter time block (21 minutes vs 65
+minutes), and we will focus on Rumi and Jinu's meetings. The Climax is given its
+own section further below as it follows common mythological development stages.
 
 == The Alley
 
@@ -899,7 +898,7 @@ Ego's benefit.
 )
 
 Critically, the Ego and Animus have had a turning point in their relationship
-here. The are not entirely enemies.
+here. They are not entirely enemies.
 
 == The Date
 
@@ -1069,7 +1068,7 @@ scene seems brighter overall than the rehearsal, implying an early morning
 session. We know that the Idol Awards #mira["are tomorrow"], and that _Free_
 occurs that same night, so it seems impossible that Rumi could have gone from
 the Date we're shown directly to the _Takedown_ rehearsal scene. This is our
-window: Rumi and Jinu met again.
+window: Rumi and Jinu met again, perhaps more than once.
 
 Reasons not to accept this:
 
@@ -1474,11 +1473,12 @@ you for you. She is happy to see you die, or to kill you herself, and have you
 rejoin the endless natural cycle of death and rebirth. The Unconscious doesn't
 need the Conscious, is somewhat annoyed by it, and gets along just fine without
 it in the rest of animalia. Within the universe as a whole, the effects of
-thermodynamics seeks to smooth out higher structure and complexity. Such
+thermodynamics seek to smooth out higher structure and complexity. Such
 structure in an "uncaring" universe seems superfluous to begin with, and yet at
 every level we see some counter force inevitably fighting back. Galactic
 filaments within the universe. Life upon planets. Individuals within society.
-Consciousness within the mind.
+Consciousness within the mind. In other words, our reality is built to produce
+conscious people, but this process isn't without resistance.
 
 #figure(
   image("your-idol-demons.png"),
@@ -1757,21 +1757,20 @@ social order, the new mental framework.
 
 
 Gwi-ma is blown away, resubjugated to the combined strength of centralized
-Consciousness. A new Honmoon spreads across the earth, establishing the new
-status quo. The collapse of the mind and of society into an undefined mass has
-been prevented. Tomorrow is a new day, both inside and out.
+Consciousness. A new blue-and-purple Honmoon spreads across the earth,
+establishing the new status quo. The collapse of the mind and of society into an
+undefined mass has been prevented. Tomorrow is a new day, both inside and out.
 
 This shot of the final line of the song was made into the album cover of the
 movie's soundtrack because this moment is what the entire film was about. It was
-the outcome we couldn't have guessed, the song they couldn't write.
-
+the outcome we couldn't have guessed, the song they couldn't write. The movie
+was never about K-pop and monsters. It was about you.
 
 #figure(
   image("final-shot.png"),
   caption: [Human Beings.],
 )
 
-The movie was never about K-pop and monsters. It was about you.
 
 // TODO: Discuss the lyrics more?
 
@@ -1807,8 +1806,6 @@ I can only say thank you to the entire KDH team for giving me this experience.
 Let this article be an expression of my gratitude and love for what they
 created, and an embrace of my own Anima.
 
-KPop Demon Hunters is the Hero's Story, our favourite story.
-
 #align(center, quote[
   #huntrix[My voice without the lies, this is what it sounds like.] \
   #huntrix[Fearless and undefined, this is what it sounds like.] \
@@ -1816,7 +1813,9 @@ KPop Demon Hunters is the Hero's Story, our favourite story.
   #huntrix[When darkness meets the light, this is what it sounds like.]
 ])
 
-감사합니다! By Colin. 2026/05/03 in Seoul.
+감사합니다! By Colin.
+
+2026/05/03 in Seoul.
 
 = Appendices
 
@@ -2244,11 +2243,11 @@ compromised their greater goal of sabotaging the entire Honmoon.
 
 The beauty is that it doesn't matter if they didn't. Recall the claim made in
 the beginning of the article; that as humanity matured, we projected the growth
-of our consciousness as images into our myths and legends. These kinds of
-stories are fundamental to us. We've been naturally retelling them for thousands
-of years with different characters and settings, and we've never gotten bored.
-Does that lessen the achievement of the writers? Not at all. And perhaps they're
-fans of Jung after all.
+of our consciousness as archetypal images into our myths and legends. These
+kinds of stories are fundamental to us. We've been naturally retelling them for
+thousands of years with different characters and settings, and we've never
+gotten bored. Does that lessen the achievement of the writers? Not at all. And
+perhaps they're fans of Jung after all.
 
 === Who was Erich Neumann?
 
@@ -2299,7 +2298,7 @@ contact for additional assets, etc. Given #link("https://typst.app/")[the right
 
 === Mythological
 
-#u[Archetype] <archetype> A shared symbol within the mind.
+#u[Archetype] <archetype> A symbol within the mind, common across people.
 
 #quote(attribution: [Neumann, p. xv])[
 
@@ -2545,10 +2544,10 @@ pleasurable because it is a release of tension, the dropping of the weight of
 your reality. Sleep and dreaming are miniature varieties of this, although
 seemingly critical for our health.
 
-#u[Extroversion] <extroversion> The tendency of a person to explore the outer
+#u[Extroversion] <extroversion> The personal disposition to explore the outer
 world of people, places, and things.
 
-#u[Introversion] <introversion> The tendency of a person to explore the inner
+#u[Introversion] <introversion> The personal disposition to explore the inner
 world of the soul.
 
 #u[Persona] <persona> The "you" that you build to interface well enough with
