@@ -1475,7 +1475,7 @@ need the Conscious, is somewhat annoyed by it, and gets along just fine without
 it in the rest of animalia. Within the universe as a whole, the effects of
 thermodynamics seek to smooth out higher structure and complexity. Such
 structure in an "uncaring" universe seems superfluous to begin with, and yet at
-every level we see some counter force inevitably fighting back. Galactic
+every level we see some counter force inevitably fight back. Galactic
 filaments within the universe. Life upon planets. Individuals within society.
 Consciousness within the mind. In other words, our reality is built to produce
 conscious people, but this process isn't without resistance.
@@ -1569,7 +1569,7 @@ destruction. Recall the Hunter's Mantra:
   We are hunters, voices strong, \
   Slaying demons with our song. \
   Fix the world and make it right, \
-  When darkness finally meets the light.
+  When darkness finally meets the light. \
 
 ])
 
@@ -2128,6 +2128,35 @@ Languages which dubbed their songs:
 - Latin American Spanish // but not from Spain!
 - Russian // bad
 - Turkish
+
+=== The Original Hunter's Mantra
+
+There are two versions of the Hunter's Mantra in Korean. One appears in the Korean
+dub as Rumi interrupts _Your Idol_:
+
+#align(center, quote[
+
+  우리는 혼터, 목소리의 힘을 빋어 \
+  우리의 노래로 악귀 부찌르리. \
+  세상을 구하고 바르게 세우니 \
+  어둠은 결국 빛을 만나리.
+
+])
+
+This is mostly a directly translation of the English. However a different
+version can be heard sung by Ejae in the very beginning as Seline narrates the
+history of demons and the first Hunters defend the village:
+
+#align(center, quote[
+
+  어둠을 밝히려 \
+  우니 노래 부르리라. \
+  굳건한 이 소리로 \
+  이 세상을 고치리라.
+
+])
+
+This is distinctly more succinct and poetic.
 
 // --- Rest --- //
 
