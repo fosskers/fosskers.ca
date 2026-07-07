@@ -1594,17 +1594,13 @@ fortunately Gwi-ma misunderstands.
   ),
 )[
 
-  #align(left)[#gwima[You come here like this?]]
-  #align(
-    left,
-  )[#gwima[You think you can fix the world - you can't even fix yourself.]]
-  #align(right)[#rumi[I can't.]]
-  #align(
-    left,
-  )[#gwima[And now everyone finally sees you for what you really are.]]
-  #align(right)[#rumi[They do.]]
-  #align(left)[#gwima[And the Honmoon is gone.]]
-  #align(right)[#rumi[It is.]]
+  #gwima[You come here like this?] \
+  #gwima[You think you can fix the world - you can't even fix yourself.] \
+  #rumi[I can't.] \
+  #gwima[And now everyone finally sees you for what you really are.] \
+  #rumi[They do.] \
+  #gwima[And the Honmoon is gone.] \
+  #rumi[It is.]
 
 ])
 
