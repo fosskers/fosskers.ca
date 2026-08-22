@@ -43,7 +43,7 @@ In Common Lisp, each type is a _set_, and each piece of Lisp data belongs to at
 least one. We can ask any such data value for its type:
 
 #+begin_src lisp :results verbatim :exports both
-(type-of 37)
+(type-of 8)
 #+end_src
 
 #+begin_example
@@ -66,10 +66,10 @@ A one-dimensional, length-one ~array~ of ~character~ values.
 We can interrogate these values a bit further:
 
 #+begin_src lisp :results verbatim :exports both
-(list (typep 37 'integer)
-      (typep 37 'real)
-      (typep 37 'number)
-      (typep 37 t))
+(list (typep 8 'integer)
+      (typep 8 'real)
+      (typep 8 'number)
+      (typep 8 t))
 #+end_src
 
 #+begin_example
@@ -103,13 +103,13 @@ from these considerations for now.
 The age old test: can I add an int to a string?
 
 #+begin_src lisp :results verbatim :exports both
-(+ 37 "漣")
+(+ 8 "漣")
 #+end_src
 
 If we try to run this in our REPL, we're told:
 
 #+begin_example
-Value of #1="漣" in (+ 37 "漣") is #1#, not a NUMBER.
+Value of #1="漣" in (+ 8 "漣") is #1#, not a NUMBER.
 #+end_example
 
 Thank goodness. And if we try to really compile it?
@@ -190,7 +190,7 @@ Let's improve our ~rigourous-addition~ function.
 
 #+begin_src lisp
 (defun rigourous-addition (n)
-  (+ n 37))
+  (+ n 8))
 #+end_src
 
 If we compile this and run ~(disassemble #'rigourous-addition)~, we see:
@@ -259,7 +259,7 @@ It seems that we've achieved strong typing, until we see something like this:
 
 #+begin_src lisp :results output
 (let ((a 1)
-      (b 37))
+      (b 8))
   (format t "A:   ~a~%" (type-of a))
   (format t "B:   ~a~%" (type-of b))
   (format t "SUM: ~a~%" (type-of (+ a b)))
@@ -284,7 +284,7 @@ Lisp itself. See for yourself:
 
 #+begin_src lisp :results output
 (let ((a 1)
-      (b 37))
+      (b 8))
   (format t "A:   ~a~%" (class-of a))
   (format t "B:   ~a~%" (class-of b))
   (format t "SUM: ~a~%" (class-of (+ a b)))
@@ -485,6 +485,7 @@ For Common Lisp development, we can mostly think in terms of types. Specifically
 - For OO inheritance, it's the _class_ that matters.
 
 Please let me know if I've overlooked or mistaken any detail.
+
 * Feedback
 ** Defining "Common Lisp"
 
