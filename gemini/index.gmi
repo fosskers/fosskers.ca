@@ -1,0 +1,13 @@
+# Colin's Gemcapsule
+
+Hi, I'm Colin, also known as Fosskers online. I'm a Canadian living in Japan. I write Rust for a living, Common Lisp for myself, and as of 2026 I'm currently studying Korean. 
+
+こんにちは、こりんといいます。ネット上では主に「fosskers」と知られ、日本在住のカナダ人です。職場では「Rust」などを書くんですが個人のプロジェクトでは「Common Lisp」が一番自由なのでそれを使います。2026年の時点で趣味で韓国語を勉強しています。
+
+안녕하세요, 컬린이라고 합니다. 일본에 사는데 원래 캐나다 사람입니다. 회사에서 거의 다 Rust을 쓰는데 개인적으로 Common Lisp을 사용하는 것은 많습니다. 2026년부터 한국어를 공부합니다.
+
+## Posts
+
+### 2026
+
+=> /setting-up-gemini.gmi (2026-09-06) Setting up Gemini for the First Time
