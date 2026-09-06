@@ -1,5 +1,7 @@
 # Setting up Gemini for the First Time
 
+2026-09-06
+
 ## Preamble
 
 I enjoy RSS for its simplicity and I don't really use social media. I follow Ploum, and after reading his article about Offpunk Culture I found his Offpunk Browser and started playing with it. What a relaxing world! I'm already one to pay with cash, code in Common Lisp for personal projects, and avoid LLM technology entirely, so this place fits my preferences. Already on Day 3 I've found myself setting up this little server. It's 08:00 on Sunday and I have nothing scheduled until 18:00. Why not?
