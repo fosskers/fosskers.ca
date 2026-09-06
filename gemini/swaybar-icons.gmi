@@ -1,0 +1,53 @@
+# Icons in Swaybar
+
+While at work on a fresh install the same settings defaulted to nice looking Swaybar icons, at home they were coloured and awkward. I fixed this this morning with a combination of:
+
+* An explicit `font` declaration.
+* Replacing emoji usage with icon unicode points.
+
+Here is the `bar` section of my Sway config:
+
+```
+bar {
+    position top
+    font pango:SourceCodePro Regular 9
+
+    status_command while /home/colin/dotfiles/sway/status.sh; do sleep 5; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #323232 #323232 #5c5c5c
+    }
+}
+```
+
+And the status script:
+
+```
+#!/usr/bin/env sh
+
+date_formatted=$(date +"%Y-%m-%d %R")
+
+battery_status=$(cat /sys/class/power_supply/BAT0/capacity)%
+
+if ip link | rg enp0s31f6 | rg "state UP" >/dev/null; then
+	eth_status="$(printf '\uef44')"
+else
+	eth_status=""
+fi
+
+if ip link | rg wlp4s0 | rg "state UP" >/dev/null; then
+	ssid="$(iwgetid -r) $(printf '\uf1eb')"
+else
+	ssid=""
+fi
+
+echo "$eth_status $ssid $battery_status $(printf '\uf240') $date_formatted $(printf '\uf073')"
+```
+
+The key for nice icons are the `$(printf '\uf1eb')` parts. The codes themselves can be looked up manually via the Nerd Font Cheatsheet:
+
+=> https://www.nerdfonts.com/cheat-sheet
+
+I used to have a more involved status bar, but recently reverted back to vanilla `sway-bar`. It looks nice, it works, and moreover I understand it. With enough languages, tools, configuration rules, and project contexts packed into my head, the ability to "recontextualize" effectively after being away from a particular project or file for a long time is critical. Using tools that are a simple as possible is becoming more and more important for me.
