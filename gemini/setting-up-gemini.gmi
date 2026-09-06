@@ -21,9 +21,42 @@ I installed Agate from the Arch Linux AUR to ensure it's tracked by my system's 
 
 The Gemtext markup format is also fine, no real surprises other than the expectation that all paragraphs are written on a single line. That's a hindrance to users of anything Emacs or Vim-like (Emacs for myself), since while my editor does do visual line wrapping automatically, I can no longer easily move between what appear to be individual lines to make corrections. Oh well.
 
+I considered for a moment installing an Emacs major mode for Gemtext, but it's really not needed. Manually switching to `text-mode` seems fine.
+
+=> gemini://geminiprotocol.net/docs/gemtext.gmi Official Gemtext Introduction
+
 ### Deployment
 
 I will commit these files once in order to have something to serve, try some things, then return here. Just a moment, please.
+
+I'm trying to get Agate running on the same physical server as my normal website. Steps:
+
+* Update the machine.
+* Fix broken packages.
+* Install Agate.
+* Pull these files.
+* Run the server.
+* Connect from Offpunk.
+
+I installed the `agate-bin` package in order to avoid problems with building packages as the root user.
+
+Running Agate on my remote server with:
+
+```
+agate --content gemini/ --addr 0.0.0.0:1965 --hostname www.fosskers.ca --lang en-US
+```
+
+was successful. I can connect to it from Offpunk with:
+
+```
+go gemini://www.fosskers.ca
+```
+
+Since this is running on a different port than the normal webserver, there was no need to specify a subdomain or go into my Domain's DNS settings. They don't appear to be fighting over the `0.0.0.0` IP.
+
+Now, updating the files should just be a matter of committing changes, and pulling them on the server's end. The Agate server need not be restarted.
+
+A success! And all before breakfast. As we say in Japanese, that was 朝飯前. Now how do I get the various Gemini aggregators to find this Capsule?
 
 ## Non-goals
 
