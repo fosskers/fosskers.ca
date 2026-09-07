@@ -1,0 +1,58 @@
+# A Return to Cash
+
+Two weeks ago I bought myself a new wallet to celebrate my return to a cash-only lifestyle. Yesterday I canceled and shredded a credit card, subsequently deleting 3 related apps off my phone.
+
+## Motivation
+
+In live in Japan, a place mostly considered a cash country. Since COVID however there has been a rapid adoption of digital payment alternatives. Not just credit cards and Apple Pay, but also Japan-born, bank-connected, preloaded apps that function like debit cards and are as simple as scanning a QR code or having yours scanned by a teller. The largest is called Paypay, and most people that I know have it. I did some research and came up with a figure of 30-40% of people still being considered "cash centric", and although some people are staunchly one or the other, many use both, and most digital-first people still carry some token amount of cash for emergencies. Despite the advance of these digital services, being Asia, you never know when you'll be hit with "Sorry, cash only."
+
+Credit card companies make most of their money not from interest, but from swipe fees. This is the 2% (or so) that they charge stores for the privilege of offering credit card payments in the first place. Japan's digital payment services also charge such a fee (but reportedly less), and wanting a piece of the pie, many business and even some cities now offer their own service and associated app. Although yesterday exorcised of Rakuten Pay, I currently have these on my phone:
+
+* Paypay
+* JalPay
+* (Custom app for the Ward of Tokyo I live in. Sometimes they offer residents free money or 10-20% cashback at local stores)
+* Merucari's internal wallet (usable like Paypay)
+* Suica (my in-phone transit card, which can also be used at vending machines and certain stores)
+
+About a year ago I switched most of my payment to JalPay (Japan Airlines) and its associated Neobank. I wanted to see if I could "beat the man" and gain more in various mile accumulation schemes than I spent. Today, although I've hoarded a decent amount, I see that these miles are actually quite a pain to use, are easily devalued at flight-purchase-time, and honestly were turning me into a "chaser".
+
+So that's the real reason I'm returning to cash: I had lost myself for a time, caught up by cashback programs and the lure of exclusive benefits. Some recent expense calculations also demonstrated that I've been spending too much money overall, and cash usage increases such awareness. I want to live a simpler life, and how I handle money is part of that.
+
+## The New Rules
+
+I actually had this realization early on:
+
+> Cash itself is the best kind of point.
+
+You should not be rewarded for spending money. There has been research into this, and it seems that any insentive beyond the purchase of the thing itself nudges us into unconscious overspending. Even for simple 2% cashback cards, the amount of overspending often eclipses that. Can I claim that didn't happen to me? Probably not, given how difficult these miles seem to redeem.
+
+Not spending money is always "cheaper" than any form of cashback.
+
+### Cash
+
+At the beginning of every month I withdraw a fixed amount of cash, easily dividable into 5 fractions. One fraction is my "float" and stays in the wallet at all times, hopefully never broken. Another fraction is granted at the start of each 7-day period. If the money runs out, it runs out. This is already forcing me to plan my meals better and how I socialize. It's very easy to eat out all the time here, although luckily I don't drink alcohol.
+
+At the end of the month, whatever is left in the wallet becomes discretionary personal savings, and I can use this later however I wish. But worry not; "real" savings happens every month, and is a fixed percentage of my take-home pay in the style of "The Richest Man in Babylon".
+
+### Cards and Digital
+
+Credit Cards: I got rid of one and have one (JAL) remaining. It has a low annual fee. This is basically not to be used except for online services which accept nothing but credit. I don't like credit cards because I don't like debt. For me, any form a reward is outweighed by the stress of knowing that a massive expense bomb is coming at some point next month.
+
+Apple Pay: All credit cards removed, only JalPay left for paying for apps, etc.
+
+Paypay: My plan is to keep Paypay for sending money to friends. This makes social gatherings when one person grabs the whole bill a lot smoother to settle afterwards. Paypay allows usage without KYC, so in theory they still don't know who I am years later.
+
+Merucari: Once I've exhaused the remaining balance I will delete it.
+
+Ward App: Once I've exhaused the remaining balance I will delete it.
+
+Suica: I could switch back to the physical card, but the app has the convenience of being able to buy certain special ticket types within it. I will however load it with cash and not through Apple Pay.
+
+JalPay: I am unfortunately stuck with this, as it is the only way to access my Neobank account. I can't even do so through a browser - perhaps that should give me pause. Service outages would also lock me away from most of my money. So, given that I still have my original bank account, I will be moving most of my cash back there. 
+
+## Final Thoughts
+
+I am making my life simpler. Luckily I enjoy cash, so I don't feel impending burden, and writing this has helped me come to a decision about my bank accounts.
+
+=> mailto:colin@fosskers.ca Reply to this post
+

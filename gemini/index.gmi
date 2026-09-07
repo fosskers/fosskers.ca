@@ -14,9 +14,10 @@ Hi, I'm Colin, also known as Fosskers online. I'm a Canadian living in Japan. I 
 
 ### 2026
 
+=> cash.gmi                2026-09-08 - A return to cash
 => past-future-bugs.gmi    2026-09-07 - Are there more bugs in the past or the future?
 => swaybar-icons.gmi       2026-09-07 - Icons in Swaybar
-=> setting-up-gemini.gmi   2026-09-06 - Setting up Gemini for the First Time
+=> setting-up-gemini.gmi   2026-09-06 - Setting up Gemini for the first time
 
 ## Contact
 
