@@ -23,3 +23,10 @@ Hi, I'm Colin, also known as Fosskers online. I'm a Canadian living in Japan. I 
 Feel free to email me at:
 
 => mailto:colin@fosskers.ca
+
+## Rings
+
+=> gemini://raek.se/orbits/space-elevator/ About Space Elevator
+=> gemini://raek.se/orbits/space-elevator/next?gemini%3A%2F%2Fwww.fosskers.ca%2F Next Page
+=> gemini://raek.se/orbits/space-elevator/prev?gemini%3A%2F%2Fwww.fosskers.ca%2F Previous Page
+=> gemini://raek.se/orbits/space-elevator/random?gemini%3A%2F%2Fwww.fosskers.ca%2F Random Page
