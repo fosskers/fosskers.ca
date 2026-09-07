@@ -1,0 +1,46 @@
+# Are there more bugs in the past or the future?
+
+This question has been on my mind for perhaps 6 or 7 years.
+
+If there are more bugs in the past, then being on the "bleeding edge" of your ecosystem at all times is the only responsible state, and you're likely to gravitate toward a rolling Linux distribution like Arch, or otherwise see no problem with frequently bumping your project's package pins, etc.
+
+If there are more bugs in the future, then waiting to upgrade until the last possible moment is the only way to minimize the pain of betrayal by upstream developers who constantly break their APIs from under your feet and introduce fresh vulnerabilities. You pick slow-moving distributions like Ubuntu and always hang back a few language versions. A software package doesn't need to be upgraded unless it fixes a bug you do have or adds a feature you explicitly need.
+
+So which is it?
+
+## Arguments
+
+### There are more bugs in the past
+
+> Software trends toward correctness over time.
+
+* Collective understanding of software by its maintainers matures over time, gradually reducing bugs until "none" are left.
+* The older a piece of software is, the more time it has had for worldwide users to discover its cracks and report problems.
+* Barring major rewrites, new features aren't likely to add more bugs than you're already fixing. It's still a net decrease.
+* For most projects, feature addition slows over time, while bugs are addressed for long afterward.
+* Many software projects die. Dead software can have no future, therefore locking their still-hidden bugs forever in the past.
+
+Therefore, there are more bugs in the past and updates should be proactive.
+
+### There are more bugs in the future
+
+> The future is deeper than the past, thus containing the potential for infinite bugs.
+
+* Software can take an infinite variety of shapes, most of which are incorrect.
+* Software constantly grows and changes, introducing new complexity and increasing the surface area for new problems.
+* New releases frequently need to be rolled back or hotpatched to fix oversights.
+* Dependency graphs are often massive and bumping any part of them can have cascading effects that are impractical to guess.
+* The very existence of LTS kernels, stable distributions, and package services like Stackage prove that premature updates have caused enough people enough pain in the past.
+
+Therefore, there are more bugs in the future and updates should be abhorred.
+
+=> https://www.stackage.org/
+
+### The Middle Path
+
+> It doesn't matter because you have to be ready for the Reaper of Bitrot anyway. Rather than worrying about where the bugs are, equip yourself to deal with their inevitability.
+
+* You can't know that you've exhausted all past bugs, no matter how old the software is. Devastating bugs are often discovered years after being first introduced.
+
+## Final Thoughts
+
