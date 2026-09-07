@@ -53,3 +53,5 @@ There is probably little benefit to holding back on earlier versions of web brow
 ## Final Thoughts
 
 I do believe that software that survives trends toward correctness over time. It has to have, or it wouldn't have survived. That said, the forward-looker's fear comes from evidence. I will continue to keep my Linux system on the bleeding edge while being careful what I depend on and vendor.
+
+=> mailto:colin@fosskers.ca Reply to this post

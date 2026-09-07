@@ -63,3 +63,5 @@ A success! And all before breakfast. As we say in Japanese, that was 朝飯前. 
 ## Non-goals
 
 I've decided that for the moment there's no point in trying to unify my current website with this Capsule, or to worry about converting the OrgMode-based blog posts into Gemtext. Perhaps later when I redo my website in general, but not now. For now, simply using Agate to serve these files in sufficient.
+
+=> mailto:colin@fosskers.ca Reply to this post

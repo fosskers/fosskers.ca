@@ -51,3 +51,5 @@ The key for nice icons are the `$(printf '\uf1eb')` parts. The codes themselves 
 => https://www.nerdfonts.com/cheat-sheet
 
 I used to have a more involved status bar, but recently reverted back to vanilla `sway-bar`. It looks nice, it works, and moreover I understand it. With enough languages, tools, configuration rules, and project contexts packed into my head, the ability to "recontextualize" effectively after being away from a particular project or file for a long time is critical. Using tools that are a simple as possible is becoming more and more important for me.
+
+=> mailto:colin@fosskers.ca Reply to this post
