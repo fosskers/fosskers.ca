@@ -24,9 +24,9 @@ Therefore, there are more bugs in the past and updates should be proactive.
 
 ### There are more bugs in the future
 
-> The future is deeper than the past, thus containing the potential for infinite bugs.
+> Compared to the past the future is outbounded, thus it contains the potential for infinite bugs.
 
-* Software can take an infinite variety of shapes, most of which are incorrect.
+* Software can take an unlimited variety of shapes, most of which are incorrect.
 * Software constantly grows and changes, introducing new complexity and increasing the surface area for new problems.
 * New releases frequently need to be rolled back or hotpatched to fix oversights.
 * Dependency graphs are often massive and bumping any part of them can have cascading effects that are impractical to guess.
@@ -38,9 +38,18 @@ Therefore, there are more bugs in the future and updates should be abhorred.
 
 ### The Middle Path
 
-> It doesn't matter because you have to be ready for the Reaper of Bitrot anyway. Rather than worrying about where the bugs are, equip yourself to deal with their inevitability.
+> Focus, my friend: there are bugs. It doesn't matter where they are.
 
-* You can't know that you've exhausted all past bugs, no matter how old the software is. Devastating bugs are often discovered years after being first introduced.
+* Writing flawless software is impossible. Formal correctness proofs collapse before the realities of interacting with the real world, and even if you think you've handled that, let's see how well your program does when I cut the power.
+* You can't know that you've exhausted all past bugs, no matter how old the software is. Devastating bugs are often discovered years after being first introduced, despite project maturity.
+* However, you can't simply never upgrade. Bitrot is real, and being forced to upgrade upon threat of total system collapse can incur far higher caloric and stress costs than had you simply "kept your room tidy" as you went along. Are you just afraid?
+
+Therefore, it is better to "stay relevant" while equipping yourself for the inevitability of the appearance of problems.
+
+There is probably little benefit to holding back on earlier versions of web browsers, editors, kernels, and compilers. Applications, in others words. However, there is good reason to suspect that software libraries should be wary of upgrading their dependencies without care. Better yet, have as few dependencies as possible (to avoid undue betrayal and over-reliance) and vendor the ones you do need (to weather supply chain outages).
+
+=> https://github.com/fosskers/vend Vendoring dependencies in Common Lisp
 
 ## Final Thoughts
 
+I do believe that software that survives trends toward correctness over time. It has to have, or it wouldn't have survived. That said, the forward-looker's fear comes from evidence. I will continue to keep my Linux system on the bleeding edge while being careful what I depend on and vendor.
