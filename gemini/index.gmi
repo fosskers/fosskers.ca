@@ -6,18 +6,25 @@ Hi, I'm Colin, also known as Fosskers online. I'm a Canadian living in Japan. I 
 職場では「Rust」などを書くんですが個人のプロジェクトでは「Common Lisp」が一番自由なのでそれを使います。
 2026年の時点で趣味で韓国語を勉強しています。
 
-안녕하세요, 컬린이라고 합니다. 일본에 사는데 원래 캐나다 사람입니다.
-회사에서 거의 다 Rust을 쓰는데 개인적으로 Common Lisp을 사용하는 것은 많습니다.
+안녕하세요, 컬린이라고 합니다. 일본에 살지만 원래 캐나다 사람입니다.
+회사에서 거의 다 Rust을 쓰지만 개인적으로 Common Lisp을 사용하는 것은 많습니다.
 2026년부터 한국어를 공부합니다.
 
 ## Posts
 
-### 2026
+### Philosophy
 
-=> cash.gmi                2026-09-08 - A return to cash
+=> six-sides.gmi           2026-09-09 - Six Sides of an Argument
+
+### Software
+
 => past-future-bugs.gmi    2026-09-07 - Are there more bugs in the past or the future?
 => swaybar-icons.gmi       2026-09-07 - Icons in Swaybar
 => setting-up-gemini.gmi   2026-09-06 - Setting up Gemini for the first time
+
+### Living
+
+=> cash.gmi                2026-09-08 - A Return to Cash
 
 ## Contact
 
