@@ -26,11 +26,10 @@ Hi, I'm Colin, also known as Fosskers online. I'm a Canadian living in Japan. I 
 
 => cash.gmi                2026-09-08 - A Return to Cash
 
-## Contact
+## Links
 
-Feel free to email me at:
-
-=> mailto:colin@fosskers.ca
+=> bookmarks.gmi Bookmarks
+=> mailto:colin@fosskers.ca Contact Me
 
 ## Rings
 
