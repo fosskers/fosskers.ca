@@ -14,6 +14,7 @@ Hi, I'm Colin, also known as Fosskers online. I'm a Canadian living in Japan. I 
 
 ### Philosophy
 
+=> assets.gmi              2026-09-19 - The Fundamental Human Assets
 => six-sides.gmi           2026-09-09 - Six Sides of an Argument
 
 ### Software
