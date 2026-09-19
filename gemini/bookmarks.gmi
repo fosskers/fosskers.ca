@@ -2,5 +2,6 @@
 
 Articles by others that I quite liked.
 
+=> gemini://schreibfaultier.pollux.casa/blog/2026-09-11-culture-is-stuck.en.gmi  2026-09-11 Culture is Stuck
 => gemini://ploum.net/2026-09-09-ai_policy.gmi  2026-09-09 - Ploum: I Don't Want to Interact With Stochastic Parrots
 => gemini://larsthebear.me/why_i_degoogled.gmi  2026-04-19 - Lars the Bear: Why I de-Googled
