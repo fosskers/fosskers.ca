@@ -61,5 +61,7 @@ I am making my life simpler. Luckily I enjoy cash, so I don't feel impending bur
 * 2026-09-12: I bought a physical transit card (Suica). This is charged with cash and entirely unassociated with me, meaning that my transit patterns can't be tracked.
 * 2026-09-15: I drained and deleted the Merucari app.
 * 2026-09-20: I drained and deleted my Ward's local payment app. I also cleared out a giftcard.
+* 2026-09-2x: I drained and deleted the Paypay app.
+* 2026-09-2x: My old digital Suica is now deactivated.
 
 => mailto:colin@fosskers.ca Reply to this post

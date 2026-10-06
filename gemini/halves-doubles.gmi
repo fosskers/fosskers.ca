@@ -1,0 +1,61 @@
+# Halves and Doubles
+
+2026-10-07
+
+A few years ago I developed a mental tool for determining the optimal amount of "energy" to devote to something. It helps answer questions like:
+
+> How much should I spend on rent?
+
+or
+
+> How long should I study?
+
+It also helps me calibrate when I'm being too easy or too hard on myself with regards to a certain initiative. 
+
+## The Formulation
+
+I pick a pleasant, round number within the category I'm considering. For rent, say $1000. For study, say 1 hour. I ask myself how much this cost "hurts" relative to what it grants me. Now I double it and reevaluate. Still good? I double it again, continuing until the cost is clearly unreasonable to me. Then I go back down one step, and that's my answer. If instead the starting number is already unreasonable, I simply go in the other direction.
+
+Let's consider this in detail.
+
+### Rent
+
+If I were to spend $1000 on rent in my city, the location may be good but it will be cramped and old. If I move further out from the city centre, I could manage that figure, but will be too inconvenienced by transit and general disconnection.
+
+If I were to spend $2000, the price tag annoys me but it's not fatal. I could improve my location or get an older place that's nonetheless much bigger. Moving further out would grant me a palace.
+
+If I were to spend $4000, I feel like an idiot just saying those words. Alright, no need to go further. 
+
+For the sake of completeness, if we briefly consider $500 the options are either true, deep countryside or the equivalent of a jail cell in the city centre.
+
+So $2000 seems reasonable as an upper bound.
+
+### Study
+
+How much effort is necessary to learn something new? 10,000 hours is the oft-quoted number for mastery, but it's premature to consider the road to mastery if you don't even yet know if you like something.
+
+> It takes 100 hours to really get a feel for a new thing. It takes 1000 to have truly put an effort in.
+
+When starting something new, begin by throwing 100 hours at it and see what happens. If it turns out you hate it or didn't find the aptitude you were hoping for, great! Leave it behind knowing that you gave it a fair shot, and you need not be bothered by that "what if" in old age. Now, where to find those first 100 hours?
+
+If I study for 15 minutes every morning, that's a nice, light commitment. Resting on the Lord's Day, that's 6 study days per week, a total of 1.5 hours. Reaching 100 thus takes 67 weeks, over a year. A bit long to determine if I have a taste for something, no?
+
+What about 30 minutes? Still easy enough to carve out each morning. This brings me down to 33 weeks, a bit less than 8 months. Will I get distracted?
+
+An hour starts to feel "serious". I'm now down to 4 months, where the end already seems close enough should I need to extract myself and take up swing dancing instead.
+
+2 hours per day? That's 100 hours in 2 months, but it means that the morning is now centered around this, especially if I need to go to work afterwards. I'd need to manage my sleep and morning routine efficiently to enable this. For a technical area or creative project this is probably an ideal number for "zone" concentration, but for something with an emotional component like language learning, 2 hours is likely overkill. Personally I would get tired and pull away from it. 
+
+4 hours! This is now a part-time job. I'm hitting my 100 hours in a single month, but I'm probably sick of the thing. For the record, professional musicians practice about this much per day, but they already have 1000s of hours behind them before they even establish such a routine.
+
+So, 1 or 2 hours is probably ideal, depending on what I'm working on.
+
+## Conclusion
+
+Trying to find an upper bound? Double the cost until the pain is obvious.
+
+Trying to find a lower bound? Halve the cost until the sacrifices are their own pain.
+
+Hopefully this can be of use to you when considering costs in your own life.
+
+=> mailto:colin@fosskers.ca Reply to this post
